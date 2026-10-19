@@ -5,570 +5,283 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>EchtPrüfung</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- مكتبة التشفير -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = { 
       darkMode: 'class',
       theme: { extend: { fontFamily: { sans: ['Cairo', 'system-ui', 'sans-serif'] },
-      colors: { 
-        ink: '#0F1B33', gold: '#F5B82E', paper: '#F3F5F9',
-        brandBlue: '#3B82F6', brandPurple: '#8B5CF6', brandOrange: '#F59E0B', brandRed: '#F43F5E', brandGreen: '#10b981'
-      } } } };
+      colors: { gold: '#F5B82E' } } } };
   </script>
   <style>
-    body { font-family: 'Cairo', system-ui, sans-serif; background-color: #F3F5F9; direction: rtl; margin: 0; color: #0F1B33; -webkit-font-smoothing: antialiased; }
-    .dark body { background-color: #0B1120; color: #F8FAFC; }
-    .bg-dots { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 25px 25px; }
-    .dark .bg-dots { background-image: radial-gradient(#1e293b 1px, transparent 1px); }
-    .de { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+    body { font-family: 'Cairo', system-ui, sans-serif; background-color: #F8FAFC; direction: rtl; margin: 0; -webkit-font-smoothing: antialiased; }
+    .de { font-family: system-ui, -apple-system, sans-serif; }
+    
+    .german-flag-progress {
+      background: linear-gradient(to right, #000000 0%, #000000 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%, #FFCE00 100%);
+    }
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .animate-toast { animation: slideDown 0.3s ease-out forwards; }
   </style>
 </head>
 <body>
   <div id="root"></div>
   <script type="text/babel">
     const { useState, useEffect } = React;
+
+    // 🔐 المفتاح السري
+    const SECRET_KEY = "EchtPruefungSecret2024!";
+
+    // 🔒 هنا كتحط النص المشفر ديالك
+    const ENCRYPTED_DATA = "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";
     
-    const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
-    const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
-    
-    // كنخليو السوبابيز غير للدخول (Auth)
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
-      auth: { 
-        autoRefreshToken: false, 
-        persistSession: false, 
-        detectSessionInUrl: false 
+    // دالة فك التشفير
+    const getDecryptedExams = () => {
+      try {
+        const bytes = CryptoJS.AES.decrypt(ENCRYPTED_DATA, SECRET_KEY);
+        const decryptedStr = bytes.toString(CryptoJS.enc.Utf8);
+        return JSON.parse(decryptedStr);
+      } catch (e) {
+        console.error("خطأ فـ فك التشفير", e);
+        return [];
       }
-    });
-
-    const loadPref = (k, d) => {
-      try { const v = localStorage.getItem('ep_' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; }
-    };
-    const savePref = (k, v) => {
-      try { localStorage.setItem('ep_' + k, JSON.stringify(v)); } catch (e) {}
     };
 
-    const Icons = {
-      home: { f: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z', t: 'M10 21v-5a2 2 0 0 1 4 0v5z', s: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z', a: 'M10 21v-5a2 2 0 0 1 4 0v5M16.5 7V4.5h2.5v4.6' },
-      book: { f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', t: 'M12 6.5c1.5-1.5 4-2 9-2V18c-5 0-7.5.5-9 2z', s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', a: 'M12 6.5V20M6 8.2c1.6.1 3 .4 4 1M6 11.7c1.6.1 3 .4 4 1M14 9.2c1-.6 2.4-.9 4-1' },
-      headphones: { f: 'M4 14.5V12a8 8 0 0 1 16 0v2.5z', t: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', s: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', a: 'M4 14.5V12a8 8 0 0 1 16 0v2.5' },
-      pen: { f: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', t: 'M3 20.2l1.2-4.5 3.3 3.3z', s: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', a: 'M14.5 6l3.5 3.5M12 21h9' },
-      mic: { f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', t: 'M8.5 9h7v2a3.5 3.5 0 0 1-7 0z', s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7M8.5 6h2M8.5 8.5h2' },
-      cap: { f: 'M2 9.5l10-5 10 5-10 5z', t: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4l-6 3z', s: 'M2 9.5l10-5 10 5-10 5z', a: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4M22 9.5v6M21 15.5h2' },
-      moon: { f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', t: 'M20 14.5a6.5 6.5 0 0 1-8.2-9.6A8.5 8.5 0 1 0 20 14.5z', s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', a: 'M18 2.5v3M16.5 4h3M21 8.5v2M20 9.5h2' },
-      sun: { f: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z', t: 'M12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z', s: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z', a: 'M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4' },
-      settings: { 
-        f: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z', 
-        t: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', 
-        s: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z', 
-        a: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' 
-      },
-      menu: { s: 'M4 7h16M4 12h10M4 17h16' },
-      lock: { f: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', t: 'M12 17.2a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z', s: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', a: 'M8 10.5V7a4 4 0 0 1 8 0v3.5M12 17v1.5' },
-      search: { f: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', t: 'M10.5 15.5a5 5 0 1 0 0-10 5 5 0 0 0 0 10z', s: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', a: 'M16 16l5 5M7.8 9.2a3.2 3.2 0 0 1 2.2-2.2' },
-      sort: { s: 'M8 9l4-4 4 4M8 15l4 4 4-4' },
-      file: { f: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', t: 'M14 3v5h5z', s: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', a: 'M14 3v5h5M9 13h6M9 17h4' },
-      users: { f: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20z', t: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z', s: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20', a: 'M15.5 5.2a3.5 3.5 0 0 1 0 6.6M20.5 20v-1.5a3.5 3.5 0 0 0-2.5-3.35' },
-      arrowLeft: { s: 'M15 5l-7 7 7 7' },
-      x: { s: 'M6 6l12 12M18 6L6 18' },
-      check: { s: 'M5 12.5l4.5 4.5L19 7.5' },
-      square: { f: 'M8 2.5h8a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2z', t: 'M8 2.5h8a2 2 0 0 1 2 2V6H6V4.5a2 2 0 0 1 2-2z', s: 'M8 2.5h8a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2z', a: 'M10.5 18.5h3M6 6h12' },
-      refresh: { s: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4' },
-      clock: { f: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', t: 'M12 12V3a9 9 0 0 1 9 9z', s: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', a: 'M12 7v5l3 2' },
-      bulb: { f: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', t: 'M9 14h6v3H9z', s: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', a: 'M9.5 19.5h5M10.5 22h3M12 14v-3.5M10.5 10.5L12 9l1.5 1.5' }
-    };
-
-    const Icon = ({ n, s = 20, w = 2, className = "", onClick }) => {
-      const ic = Icons[n] || {};
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className} onClick={onClick}>
-          {ic.f && <path d={ic.f} fill="currentColor" fillOpacity="0.14" stroke="none" />}
-          {ic.t && <path d={ic.t} fill="currentColor" fillOpacity="0.3" stroke="none" />}
-          {ic.s && <path d={ic.s} />}
-          {ic.a && <path d={ic.a} />}
-        </svg>
-      );
-    };
-
-    // 📚 هادا هو الجزء اللي تبدل: درنا الدروس فـ الكود مباشرة
-    const localExams = [
-      {
-        id: 'alex-cora-local',
-        title: 'Alex Und Cora',
-        level: 'B1',
-        skill: 'Lesen',
-        sub_section: 'Teile 1',
-        is_pro: false,
-        exam_data: {
-          options: [
-            { key: "a", de: "Eltern trotz Kritik mit der Schule zufrieden", ar: "الآباء راضون عن المدرسة رغم الانتقادات" },
-            { key: "b", de: "Elektromobilität für Angestellte", ar: "التنقل الكهربائي للموظفين" },
-            { key: "c", de: "STÄRKUNG VON BUS UND BAHN", ar: "تعزيز الحافلات والقطارات" },
-            { key: "d", de: "Schule und Umweltschutz", ar: "المدرسة وحماية البيئة" },
-            { key: "e", de: "Bald keine Firmenwagen mehr?", ar: "هل ستختفي سيارات الشركات قريباً؟" },
-            { key: "f", de: "Ticketpreise bei der Bahn", ar: "أسعار التذاكر في السكك الحديدية" },
-            { key: "g", de: "Lehrerberuf wird immer attraktiver", ar: "مهنة التدريس تصبح أكثر جاذبية" },
-            { key: "h", de: "Engagement für die Natur", ar: "الالتزام بالطبيعة" },
-            { key: "i", de: "Preissenkungen bei Bus, Straßenbahn und U-Bahn!", ar: "تخفيضات في الحافلات والترام والمترو" },
-            { key: "j", de: "ZU WENIG LEHRER - STADT REAGIERT", ar: "نقص في المعلمين - المدينة تتخذ إجراءات" }
-          ],
-          texts: [
-            { id: 1, content: "Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen? Gerade In Städten kommt man mit einem E-Bike schneller und bequemer ans Ziel als mit dem Auto. Und Parkplatzprobleme gibt es auch nicht. Sie fördern zudem die Gesundheit Ihrer Mitarbeiter und schonen die Umwelt, und dabei können Sie noch Steuern sparen. Bei der BikeLeasing GmbH bekommen Sie Angebote, die zu Ihnen passen. Melden Sie sich bei uns an, und wir kümmern uns um den Rest", correct: "b", exp_ar: "ملخص الإعلان: تأجير الدراجات الكهربائية: البديل الذكي لسيارات الشركة. فوائد صحية وبيئية: تعزيز صحة الموظفين البدنية مع الحفاظ على البيئة. مزايا مالية: توفير في الضرائب للشركة." },
-            { id: 2, content: "Die Bahn erhöht dieses Jahr die Ticketipreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit. dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!", correct: "c", exp_ar: "ملخص الإعلان: تثبيت أسعار التذاكر: قررت هيئة السكك الحديدية عدم رفع الأسعار هذا العام. تخفيضات النقل العام المحلي: سيتم تخفيض أسعار تذاكر النقل الداخلي لتقليل عدد الموظفين الذين يعتمدون على سياراتهم." },
-            { id: 3, content: "Vergangeren Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eitern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.", correct: "a", exp_ar: "ملخص الإعلان: رضا عام مرتفع: عبر 80% من المشاركين عن رضاهم عن المدارس. ضعف التأهيل المهني: يرى 40% فقط من الأهالي أن المدرسة تجهز أطفالهم بشكل كافٍ لدخول سوق العمل." },
-            { id: 4, content: "Berlin. in der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studie- rende die Schülerinnen und Schüler der Haupt- stadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität lei- det stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attrakti- ver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden, die denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.", correct: "j", exp_ar: "ملخص الإعلان: عجز كبير في الكوادر: يغيب آلاف المعلمين المؤهلين عن المدارس. خطة السينات للإنقاذ: إطلاق حملة إعلانية تهدف لتحسين صورة مهنة التدريس وجعلها أكثر جاذبية. دراسة خيار زيادة الرواتب كحافز مادي للمعلمين." },
-            { id: 5, content: "KaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz. Sie wollen sich auch aktiv gegen Umweltverschmutzung einsetzen? Sie wöllen sich für mehr Naturschutz engagieren? ‚Dann sind Sie bei uns richtig. Wir haben regelmäßige Treffen und führen Informationsveran- staltungen zu verschiedenen aktuellen Themen durch, außerdem gibt es eine monatliche Mit- gliederzeitschrift, Melden Sie sich einfach bei uns.", correct: "h", exp_ar: "ملخص الإعلان: مجالات العمل: تركز بشكل أساسي على حماية البيئة وحماية الحيوانات. ما تقدمه للأعضاء: لقاءات دورية، فعاليات إعلامية، ومجلة شهرية." }
-          ]
-        }
-      }
-    ];
+    const localExams = getDecryptedExams();
 
     function App() {
-      const [session, setSession] = useState(null);
-      const [isGuest, setIsGuest] = useState(false);
-      const [exams, setExams] = useState([]);
-      const [loading, setLoading] = useState(true);
-      const [view, setView] = useState('lesen');
-      const [activeTab, setActiveTab] = useState('Teile 1');
-      const [isDarkMode, setIsDarkMode] = useState(() => loadPref('dark', false));
-      const [showSettings, setShowSettings] = useState(false);
-      const [showMenu, setShowMenu] = useState(false);
-      const [selectedExam, setSelectedExam] = useState(null);
-      
-      const [fontSize, setFontSize] = useState(() => loadPref('fontSize', 100));
-      const [showAr, setShowAr] = useState(() => loadPref('showAr', true));
-
-      const [email, setEmail] = useState(''); 
-      const [password, setPassword] = useState('');
-      const [isLogin, setIsLogin] = useState(true); 
-      const [error, setError] = useState('');
-
-      useEffect(() => {
-        if (isDarkMode) document.documentElement.classList.add('dark');
-        else document.documentElement.classList.remove('dark');
-        savePref('dark', isDarkMode);
-      }, [isDarkMode]);
-
-      useEffect(() => { savePref('fontSize', fontSize); }, [fontSize]);
-      useEffect(() => { savePref('showAr', showAr); }, [showAr]);
-
-      const fetchExams = async () => {
-        // دابا كنقراو غير من الكود المحلي، مكاينش تأخير
-        setExams(localExams);
-        setLoading(false);
-      };
-
-      useEffect(() => {
-        localStorage.removeItem('sb-mgsfzvmewuiuebccanyf-auth-token');
-        const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
-        
-        fetchExams();
-
-        return () => sub.subscription.unsubscribe();
-      }, []);
-
-      const handleAuth = async (e) => {
-        e.preventDefault(); setError('');
-        if (isLogin) {
-          const { error } = await supabase.auth.signInWithPassword({ email, password });
-          if (error) setError(error.message);
-        } else {
-          const { error } = await supabase.auth.signUp({ email, password });
-          if (error) setError(error.message); else alert('تم إنشاء الحساب بنجاح!');
-        }
-      };
-
-      if (!session && !isGuest) {
-        return (
-          <div className="min-h-screen flex flex-col bg-paper dark:bg-[#0B1120] transition-colors">
-            <div className="h-1 bg-gradient-to-r from-ink via-gold to-ink" />
-            <div className="flex-1 flex items-center justify-center p-5">
-              <div className="w-full max-w-sm">
-                <div className="text-center mb-8">
-                  <div className="w-20 h-20 bg-ink text-gold rounded-2xl flex items-center justify-center font-extrabold text-3xl shadow-lg mx-auto mb-4 de">EP</div>
-                  <h1 className="text-3xl font-extrabold de text-ink dark:text-white">EchtPrüfung</h1>
-                  <p className="text-slate-500 mt-1">تدرّب على امتحان الألمانية بنفس أسلوب الامتحان الحقيقي</p>
-                </div>
-                <div className="bg-white dark:bg-[#1E293B] p-6 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
-                  <h2 className="text-lg font-bold mb-4 dark:text-white">{isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد'}</h2>
-                  {error && <div className="bg-red-50 text-red-700 text-sm rounded-xl px-3 py-2 mb-4 border border-red-100">{error}</div>}
-                  <form onSubmit={handleAuth} className="space-y-3">
-                    <input type="email" dir="ltr" placeholder="البريد الإلكتروني" value={email} onChange={e => setEmail(e.target.value)} required className="w-full py-3 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-gold text-left dark:text-white" />
-                    <input type="password" dir="ltr" placeholder="كلمة السر" value={password} onChange={e => setPassword(e.target.value)} required className="w-full py-3 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-gold text-left dark:text-white" />
-                    <button type="submit" className="w-full py-3 bg-ink dark:bg-gold text-white dark:text-ink font-bold rounded-xl hover:bg-slate-800 transition shadow-lg">{isLogin ? 'دخول' : 'تسجيل'}</button>
-                  </form>
-                  <button type="button" className="w-full text-center mt-5 text-sm text-slate-600 dark:text-slate-400" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
-                    {isLogin ? 'ما عندكش حساب؟ ' : 'عندك حساب؟ '}<span className="font-bold text-ink dark:text-gold underline decoration-gold decoration-2 underline-offset-4">{isLogin ? 'سجل دابا' : 'دخل'}</span>
-                  </button>
-                  <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" onClick={() => setIsGuest(true)} className="w-full py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-200 transition">
-                      دخول كزائر (للتجربة)
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      }
-
-      if (selectedExam) return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} fontSize={fontSize} showAr={showAr} />;
-
-      const skillMap = { 'lesen': 'Lesen', 'horen': 'Hören', 'schreiben': 'Schreiben', 'sprechen': 'Sprechen', 'pruefung': 'Pruefung' };
-      let filteredExams = exams.filter(e => e.skill === skillMap[view]);
-      
-      if (view === 'lesen') {
-         if (activeTab !== 'Prüfungen') filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
-      }
-
-      return (
-        <div className="min-h-screen pb-24 bg-dots relative transition-colors duration-300">
-          <div className="bg-white dark:bg-[#1E293B] rounded-b-3xl shadow-sm px-5 py-4 flex justify-between items-center mb-6 mx-4 mt-4 sticky top-4 z-40 border border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-ink rounded-xl flex items-center justify-center font-extrabold text-xl text-gold shadow-sm">EP</div>
-              <div>
-                <h1 className="font-extrabold text-lg text-ink dark:text-white leading-tight">EchtPrüfung</h1>
-                <p className="text-[10px] text-slate-500 de">Deutsch B1 / B2</p>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => fetchExams()} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-gold">
-                <Icon n="refresh" s={20} />
-              </button>
-              <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-gold">
-                <Icon n={isDarkMode ? 'sun' : 'moon'} s={20} />
-              </button>
-              <button onClick={() => setShowSettings(true)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300">
-                <Icon n="settings" s={20} />
-              </button>
-              <button onClick={() => setShowMenu(true)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold">
-                <Icon n="menu" s={24} w={2.5} />
-              </button>
-            </div>
-          </div>
-
-          <div className="max-w-2xl mx-auto px-5">
-            <h1 className="text-5xl font-extrabold text-ink dark:text-white de mb-8">
-              {view === 'lesen' ? 'Lesen' : view === 'horen' ? 'Hören' : view === 'schreiben' ? 'Schreiben' : view === 'sprechen' ? 'Sprechen' : 'Zufällige Prüfungen'}
-            </h1>
-
-            <div className="flex justify-center mb-8">
-              <div className="inline-flex bg-slate-100 dark:bg-[#1E293B] rounded-2xl p-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
-                <button className="px-10 py-3 rounded-xl font-bold bg-gold text-ink shadow-md de">B1</button>
-                <button className="px-10 py-3 rounded-xl font-bold text-slate-500 dark:text-slate-400 bg-transparent de">B2</button>
-              </div>
-            </div>
-
-            {view === 'lesen' && (
-              <div className="bg-white dark:bg-[#1E293B] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 transition-colors">
-                <div className="grid grid-cols-3 gap-y-6 gap-x-2 text-center">
-                  {['Prüfungen', 'Teile 1', 'Teile 2', 'Teile 3', 'Sprach 1', 'Sprach 2'].map((item, i) => (
-                    <div key={item} onClick={() => setActiveTab(item)} className="flex flex-col items-center gap-2 cursor-pointer">
-                      <div className={`w-16 h-14 flex items-center justify-center rounded-2xl ${activeTab === item ? 'bg-gold text-ink shadow-lg shadow-gold-200 dark:shadow-none' : 'bg-transparent text-slate-400 dark:text-slate-500'}`}>
-                        <Icon n={i === 0 ? 'book' : 'file'} s={28} w={2.5} />
-                      </div>
-                      <span className={`text-xs font-bold de ${activeTab === item ? 'text-ink dark:text-gold' : 'text-slate-500 dark:text-slate-400'}`}>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-extrabold text-ink dark:text-white">قائمة الامتحانات</h3>
-              {filteredExams.length > 0 && <span className="text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-full">{filteredExams.length} امتحان</span>}
-            </div>
-
-            <div className="space-y-3 pb-8">
-               {loading ? (
-                 <div className="text-center text-slate-400 py-4">جاري التحميل...</div>
-               ) : filteredExams.length === 0 ? (
-                 <div className="text-center text-slate-400 py-4 text-sm bg-white dark:bg-[#1E293B] rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">ما كاين حتى امتحان دابا</div>
-               ) : (
-                 filteredExams.map((exam) => (
-                   <div key={exam.id} onClick={() => setSelectedExam(exam)} className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4 cursor-pointer transition-colors">
-                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${exam.is_pro ? 'bg-orange-50 text-orange-500 border border-orange-200' : 'bg-ink text-gold'}`}>
-                       {exam.is_pro ? <Icon n="lock" s={22} /> : <Icon n="file" s={22} />}
-                     </div>
-                     <div className="flex-1">
-                       <h3 className="font-bold text-ink dark:text-white de text-sm">{exam.title}</h3>
-                       <div className="flex items-center gap-2 mt-1">
-                         <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-bold de">{exam.level}</span>
-                         {exam.skill === 'Lesen' && <span className="text-slate-400 text-[10px] flex items-center gap-1"><Icon n="clock" s={12} />90 Min</span>}
-                       </div>
-                     </div>
-                     <Icon n="arrowLeft" s={20} className="text-slate-300 dark:text-slate-600 rotate-180" />
-                   </div>
-                 ))
-               )}
-            </div>
-          </div>
-
-          <a href="https://wa.me/212600000000" target="_blank" rel="noreferrer" className="fixed bottom-24 right-5 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-green-300 z-50 text-white hover:scale-105 transition-transform">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.554 4.19 1.6 6.018L.064 24l6.094-1.598A11.96 11.96 0 0012.031 24c6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 22.015c-1.83 0-3.63-.492-5.205-1.422l-.373-.22-3.87 1.015 1.033-3.77-.24-.387A9.97 9.97 0 012.015 12.03c0-5.523 4.493-10.015 10.016-10.015 5.524 0 10.016 4.492 10.016 10.015 0 5.524-4.492 10.016-10.016 10.016zm5.497-7.502c-.3-.15-1.778-.877-2.054-.977-.276-.1-.478-.15-.678.15-.2.3-.778.977-.955 1.178-.176.2-.352.225-.652.075-.3-.15-1.267-.467-2.413-1.49-.892-.795-1.494-1.778-1.67-2.078-.176-.3-.02-.462.13-.612.136-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.678-1.63-.928-2.23-.243-.588-.49-.508-.678-.518-.176-.01-.376-.01-.576-.01-.2 0-.525.075-.8.375-.275.3-1.053 1.028-1.053 2.505 0 1.477 1.078 2.905 1.228 3.105.15.2 2.12 3.238 5.135 4.542.717.31 1.277.496 1.714.636.723.23 1.38.197 1.9.12.58-.086 1.778-.727 2.028-1.428.25-.7.25-1.3.175-1.428-.075-.125-.275-.2-.575-.35z"/></svg>
-          </a>
-
-          <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1E293B] px-2 pb-6 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center z-40 rounded-t-3xl shadow-[0_-5px_20px_-10px_rgba(0,0,0,0.05)] transition-colors">
-            <NavItem icon="home" label="الرئيسية" active={view === 'home'} onClick={() => setView('home')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="book" label="Lesen" active={view === 'lesen'} onClick={() => setView('lesen')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="headphones" label="Hören" active={view === 'horen'} onClick={() => setView('horen')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="pen" label="Schreiben" active={view === 'schreiben'} onClick={() => setView('schreiben')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="mic" label="Sprechen" active={view === 'sprechen'} onClick={() => setView('sprechen')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="cap" label="امتحان" active={view === 'pruefung'} onClick={() => setView('pruefung')} activeColor="text-gold" activeBg="bg-gold/10" />
-          </div>
-
-          {showSettings && (
-            <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center p-4 backdrop-blur-sm" onClick={() => setShowSettings(false)}>
-              <div className="bg-white dark:bg-[#1E293B] w-full max-w-sm rounded-3xl p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-4 text-slate-700 dark:text-slate-200 font-bold">
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold"><Icon n="square" s={20}/></div>
-                    أنت الان في وضع التطبيق
-                  </div>
-                  <div onClick={() => setShowAr(!showAr)} className="flex items-center justify-between gap-4 text-slate-700 dark:text-slate-200 font-bold cursor-pointer">
-                    <span>إظهار الترجمة العربية في الامتحان</span>
-                    <span className={`w-12 h-7 rounded-full p-1 flex items-center transition-colors shrink-0 ${showAr ? 'bg-gold justify-end' : 'bg-slate-200 dark:bg-slate-700 justify-start'}`}>
-                      <span className="w-5 h-5 rounded-full bg-white shadow"></span>
-                    </span>
-                  </div>
-                  <hr className="border-slate-100 dark:border-slate-800 my-2" />
-                  <div className="flex justify-between items-center text-slate-700 dark:text-slate-200 font-bold">
-                    <span>حجم الخط</span>
-                    <Icon n="refresh" s={18} className="text-slate-400 cursor-pointer" onClick={() => { setFontSize(100); setShowAr(true); }} />
-                  </div>
-                  <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
-                    <button onClick={() => setFontSize(Math.max(70, fontSize - 10))} className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition">-</button>
-                    <span className="font-bold text-ink dark:text-white de">{fontSize}%</span>
-                    <button onClick={() => setFontSize(Math.min(160, fontSize + 10))} className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {showMenu && (
-            <div className="fixed inset-0 bg-black/40 z-50 flex justify-end backdrop-blur-sm" onClick={() => setShowMenu(false)}>
-              <div className="bg-white dark:bg-[#0B1120] w-[85%] max-w-sm h-full shadow-2xl flex flex-col transition-transform translate-x-0" onClick={e => e.stopPropagation()}>
-                <div className="p-6 flex justify-between items-center border-b border-slate-100 dark:border-slate-800">
-                   <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-ink rounded-xl flex items-center justify-center font-extrabold text-sm text-gold shadow-sm">EP</div>
-                      <div>
-                        <h1 className="font-extrabold text-sm text-ink dark:text-white leading-tight">EchtPrüfung</h1>
-                      </div>
-                   </div>
-                   <button onClick={() => setShowMenu(false)} className="w-10 h-10 bg-gold/10 text-gold rounded-xl flex items-center justify-center"><Icon n="x" s={24} w={2.5}/></button>
-                </div>
-                <div className="flex-1 overflow-y-auto py-4 px-4 space-y-2">
-                  <MenuItem icon="book" label="Lesen" color="text-brandBlue" bg="bg-blue-50 dark:bg-blue-900/20" onClick={() => {setView('lesen'); setShowMenu(false)}} />
-                  <MenuItem icon="headphones" label="Hören" color="text-brandPurple" bg="bg-purple-50 dark:bg-purple-900/20" onClick={() => {setView('horen'); setShowMenu(false)}} />
-                  <MenuItem icon="pen" label="Schreiben" color="text-brandOrange" bg="bg-orange-50 dark:bg-orange-900/20" onClick={() => {setView('schreiben'); setShowMenu(false)}} />
-                  <MenuItem icon="mic" label="Sprechen" color="text-brandRed" bg="bg-red-50 dark:bg-red-900/20" onClick={() => {setView('sprechen'); setShowMenu(false)}} />
-                </div>
-                <div className="p-6">
-                  <button onClick={() => { localStorage.removeItem('sb-mgsfzvmewuiuebccanyf-auth-token'); window.location.reload(); }} className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-xl py-3 text-slate-700 dark:text-slate-300 font-bold">
-                    تسجيل الخروج <Icon n="arrowLeft" s={20} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-      );
-    }
-
-    function ExamView({ exam, onBack, fontSize, showAr }) {
+      const [currentExamIndex, setCurrentExamIndex] = useState(0);
       const [answers, setAnswers] = useState({});
       const [corrected, setCorrected] = useState(false);
+      const [showAr, setShowAr] = useState(false);
+      const [toast, setToast] = useState(null);
+      const [shuffledOptions, setShuffledOptions] = useState([]);
 
-      // الحماية باش ما يطيحش التطبيق
-      if (!exam.exam_data || !exam.exam_data.texts || !exam.exam_data.options) {
-        return (
-          <div className="min-h-screen bg-paper dark:bg-[#0B1120] p-5 flex flex-col items-center justify-center">
-            <button onClick={onBack} className="absolute top-5 right-5 flex items-center gap-1 font-bold text-ink dark:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
-              <Icon n="arrowLeft" s={20} /> رجوع
-            </button>
-            <Icon n="file" s={60} className="text-slate-300 mb-4" />
-            <h2 className="text-xl font-bold text-ink dark:text-white mb-2">{exam.title}</h2>
-            <p className="text-slate-500 text-center">هاد الدرس مازال ما تعمرش مزيان.</p>
-          </div>
-        );
+      if (!localExams || localExams.length === 0) {
+        return <div className="min-h-screen flex items-center justify-center font-bold text-red-500">خطأ فـ التشفير: تأكد من النص المشفر والمفتاح.</div>;
       }
 
-      const texts = exam.exam_data.texts;
-      const options = exam.exam_data.options;
-      const answeredCount = Object.keys(answers).length;
+      const exam = localExams[currentExamIndex];
+
+      const resetState = () => {
+        setAnswers({});
+        setCorrected(false);
+        setShowAr(false);
+        setToast(null);
+        setShuffledOptions(exam.exam_data.options);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
 
       const handleSelect = (textId, key) => {
         if (corrected) return;
+        const usedElsewhere = Object.entries(answers).some(([tid, k]) => Number(tid) !== textId && k === key);
+        if (usedElsewhere) return;
         setAnswers(prev => ({ ...prev, [textId]: key }));
       };
+
+      const toggleTranslation = () => {
+        setShowAr(!showAr);
+        setToast(!showAr ? "تم إظهار الترجمة" : "تم إخفاء الترجمة");
+        setTimeout(() => setToast(null), 2000);
+      };
+
+      const shuffleOptions = () => {
+        const shuffled = [...exam.exam_data.options].sort(() => Math.random() - 0.5);
+        setShuffledOptions(shuffled);
+        setToast("تم تفعيل الترتيب العشوائي");
+        setTimeout(() => setToast(null), 2000);
+      };
+
+      const nextExam = () => {
+        if (currentExamIndex < localExams.length - 1) {
+          setCurrentExamIndex(currentExamIndex + 1);
+          resetState();
+        } else {
+          alert("مبروك! لقد أكملت جميع الامتحانات المتاحة.");
+        }
+      };
+
+      const currentOptions = shuffledOptions.length > 0 ? shuffledOptions : exam.exam_data.options;
+      const texts = exam.exam_data.texts;
+      const answeredCount = Object.keys(answers).length;
+      const usedOptions = Object.values(answers);
+      const allAnswered = answeredCount === texts.length;
 
       let score = 0;
       if (corrected) {
         texts.forEach(t => { if (answers[t.id] === t.correct) score += 5; });
       }
 
+      const scrollToNext = () => {
+        const unanswered = texts.find(t => !answers[t.id]);
+        if (unanswered) {
+          const el = document.getElementById(`text-${unanswered.id}`);
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
+      useEffect(() => {
+        setShuffledOptions(exam.exam_data.options);
+      }, [currentExamIndex]);
+
       return (
-        <div className="min-h-screen bg-paper dark:bg-[#0B1120] pb-24" style={{ fontSize: `${fontSize}%` }}>
-          <div className="bg-white dark:bg-[#1E293B] px-5 py-4 shadow-sm flex items-center justify-between sticky top-0 z-40">
-            <button onClick={onBack} className="flex items-center gap-1 font-bold text-ink dark:text-white">
-              <Icon n="arrowLeft" s={20} /> رجوع
-            </button>
-            <h2 className="font-bold text-ink dark:text-white de">{exam.title}</h2>
-            <div className="w-8"></div>
-          </div>
-
-          <div className="max-w-2xl mx-auto p-4 space-y-6">
-            <div className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
-               <h1 className="font-extrabold text-xl text-ink dark:text-white de mb-1">{exam.title}</h1>
-               <p className="text-sm text-slate-500 mb-2">{exam.level} • {exam.skill} {exam.sub_section}</p>
-               <div className="flex justify-between text-xs font-bold text-slate-400 mb-1">
-                 <span>ÜBERSCHRIFTEN</span>
-                 <span>{answeredCount} / {texts.length}</span>
-               </div>
-               <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
-                 <div className="bg-gold h-2 rounded-full transition-all" style={{ width: `${(answeredCount/texts.length)*100}%` }}></div>
-               </div>
-            </div>
-
-            <div className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-              <h3 className="font-bold text-ink dark:text-white mb-3 text-sm">الاختيارات (a - j):</h3>
-              <div className="grid grid-cols-1 gap-2">
-                {options.map(opt => (
-                  <div key={opt.key} className="flex items-start gap-2 text-sm">
-                    <span className="font-bold text-gold de">{opt.key})</span>
-                    <div className="flex flex-col">
-                      <span className="font-semibold text-ink dark:text-white de" dir="ltr">{opt.de}</span>
-                      {showAr && <span className="text-xs text-slate-500">{opt.ar}</span>}
-                    </div>
-                  </div>
-                ))}
+        <div className="min-h-screen bg-[#F8FAFC] pb-32 relative">
+          
+          {toast && (
+            <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-toast">
+              <div className={`px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg ${
+                toast.includes('العشوائي') ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-blue-50 border border-blue-200 text-blue-700'
+              }`}>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                {toast}
               </div>
             </div>
+          )}
 
-            {texts.map((text, index) => {
-              const selectedKey = answers[text.id];
-              const isCorrect = selectedKey === text.correct;
-              const selectedOpt = options.find(o => o.key === selectedKey);
+          <div className="bg-white px-4 py-3 flex items-center gap-3 border-b border-slate-100 sticky top-0 z-40">
+            <div className="flex-1">
+              <h1 className="font-bold text-base text-slate-900 de">{exam.title.substring(0, 12)}...</h1>
+              <div className="flex items-center gap-2 mt-0.5">
+                <span className="bg-blue-50 text-blue-600 text-[10px] px-1.5 py-0.5 rounded font-bold">{exam.level}</span>
+                <span className="text-[10px] text-slate-500 uppercase tracking-wide de">{exam.skill} {exam.sub_section}</span>
+              </div>
+            </div>
+          </div>
 
-              return (
-                <div key={text.id} className="bg-white dark:bg-[#1E293B] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-                  <div className="p-5 border-b border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-extrabold text-lg text-ink dark:text-white de">{index + 1}</h3>
-                      {corrected && (
-                        <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${isCorrect ? 'bg-green-500' : 'bg-red-500'}`}>
-                          <Icon n={isCorrect ? 'check' : 'x'} s={18} w={3} />
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-[15px] leading-8 text-slate-800 dark:text-slate-200 de" dir="ltr">{text.content}</p>
-                  </div>
-
-                  <div className="p-4 bg-slate-50 dark:bg-slate-900/50">
-                    <p className="text-xs font-bold text-slate-500 mb-3">اختر الجواب المناسب:</p>
-                    <div className="grid grid-cols-5 gap-2">
-                      {options.map(opt => {
-                        const isSelected = selectedKey === opt.key;
-                        let btnClass = "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-ink dark:text-white hover:border-gold";
-                        
-                        if (isSelected) btnClass = "bg-gold text-ink border-gold shadow-md";
-                        
-                        if (corrected) {
-                          if (opt.key === text.correct) btnClass = "bg-green-500 text-white border-green-500";
-                          else if (isSelected && !isCorrect) btnClass = "bg-red-500 text-white border-red-500";
-                          else btnClass = "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400 opacity-50";
-                        }
-
-                        return (
-                          <button
-                            key={opt.key}
-                            onClick={() => handleSelect(text.id, opt.key)}
-                            disabled={corrected}
-                            className={`h-10 rounded-xl border-2 font-bold transition-all de ${btnClass}`}
-                          >
-                            {opt.key}
-                          </button>
-                        );
-                      })}
-                    </div>
-                    {selectedOpt && (
-                      <p className="mt-3 text-xs font-semibold text-slate-600 dark:text-slate-300 de" dir="ltr">{selectedOpt.key}) {selectedOpt.de}</p>
-                    )}
-                  </div>
-
-                  {corrected && (
-                    <div className="p-4 bg-amber-50 dark:bg-yellow-900/20 border-t border-amber-100 dark:border-yellow-900/30">
-                      <div className="flex gap-2">
-                        <span className="text-amber-500 shrink-0 mt-0.5"><Icon n="bulb" s={18}/></span>
-                        <div>
-                          <p className="text-sm font-bold text-ink dark:text-white mb-1">
-                            {isCorrect ? 'أحسنت! جواب صحيح.' : `الجواب الصحيح هو: ${text.correct}`}
-                          </p>
-                          <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{text.exp_ar}</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+          <div className="bg-white px-4 pb-3 border-b border-slate-100">
+            <div className="flex items-center justify-between mt-2">
+              <div className="flex items-center gap-2">
+                <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
                 </div>
-              );
-            })}
-
-            {!corrected ? (
-              <button 
-                onClick={() => setCorrected(true)} 
-                disabled={answeredCount < texts.length}
-                className={`w-full p-4 rounded-2xl font-extrabold text-lg shadow-lg transition-all ${
-                  answeredCount === texts.length 
-                    ? 'bg-gold text-ink hover:brightness-95 shadow-gold/40' 
-                    : 'bg-slate-200 text-slate-400 dark:bg-slate-800 dark:text-slate-600 cursor-not-allowed'
-                }`}
-              >
-                {answeredCount === texts.length ? 'تصحيح الإجابات' : `أجب على جميع الأسئلة (${answeredCount}/${texts.length})`}
-              </button>
-            ) : (
-              <div className="bg-ink text-white p-6 rounded-2xl text-center shadow-xl">
-                <h2 className="text-slate-300 font-semibold mb-2">Ergebnis</h2>
-                <div className="text-5xl font-extrabold text-gold de mb-4">{score} / {texts.length * 5}</div>
-                <button 
-                  onClick={() => { setAnswers({}); setCorrected(false); window.scrollTo(0,0); }} 
-                  className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl font-bold transition-colors"
-                >
-                  إعادة المحاولة
+                <span className="font-bold text-sm text-slate-900">ÜBERSCHRIFTEN {answeredCount} / {texts.length}</span>
+              </div>
+              <div className="flex gap-2">
+                <button onClick={shuffleOptions} className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
                 </button>
+                <button onClick={toggleTranslation} className={`w-9 h-9 rounded-lg border flex items-center justify-center transition-colors ${showAr ? 'bg-blue-50 border-blue-200 text-blue-600' : 'bg-white border-slate-200 text-slate-600'}`}>
+                  <span className="text-xs font-bold">A/أ</span>
+                </button>
+              </div>
+            </div>
+            
+            <div className="w-full h-2 bg-slate-100 rounded-full mt-2 overflow-hidden">
+              <div className="h-full rounded-full transition-all duration-300 german-flag-progress" style={{width: `${(answeredCount/texts.length)*100}%`}}></div>
+            </div>
+          </div>
+
+          <div className="max-w-3xl mx-auto px-3 mt-3 space-y-3">
+            <div className="bg-white rounded-2xl p-4 border border-slate-100">
+              <h2 className="font-extrabold text-lg text-slate-900 mb-1 de">{exam.title}</h2>
+              <p className="text-xs text-slate-500 uppercase tracking-wide de">LESEVERSTEHEN · TEIL 1</p>
+            </div>
+
+            {texts.map((text, index) => (
+              <div key={text.id} id={`text-${text.id}`} className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
+                <div className="p-4 pb-2">
+                  <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center font-bold text-slate-700 mb-3 text-base">{index + 1}</div>
+                  <p className="text-[16px] leading-[2] text-slate-800 de" dir="ltr">{text.content}</p>
+                </div>
+
+                <div className="px-3 pb-3 space-y-1.5">
+                  {currentOptions.map(opt => {
+                    const isSelected = answers[text.id] === opt.key;
+                    const usedElsewhere = !isSelected && usedOptions.includes(opt.key);
+                    const isCorrectOpt = corrected && opt.key === text.correct;
+                    const isWrongOpt = corrected && isSelected && !isCorrectOpt;
+                    
+                    let containerClass = "flex items-start gap-3 p-3 rounded-xl transition-all ";
+                    let letterClass = "w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold shrink-0 mt-0.5 ";
+                    let textClass = "text-[15px] leading-relaxed de ";
+                    let arTextClass = "text-[13px] mt-1 ";
+                    
+                    if (corrected) {
+                      if (isCorrectOpt) {
+                        containerClass += "bg-green-50 border-2 border-green-500";
+                        letterClass += "bg-green-500 text-white";
+                        textClass += "text-green-900 font-semibold";
+                        arTextClass += "text-green-700";
+                      } else if (isWrongOpt) {
+                        containerClass += "bg-red-50 border-2 border-red-500";
+                        letterClass += "bg-red-500 text-white";
+                        textClass += "text-red-900";
+                        arTextClass += "text-red-700";
+                      } else {
+                        containerClass += "bg-slate-50 opacity-40";
+                        letterClass += "bg-white text-slate-400";
+                        textClass += "text-slate-500";
+                        arTextClass += "text-slate-400";
+                      }
+                    } else {
+                      if (isSelected) {
+                        containerClass += "bg-blue-500 border-2 border-blue-500 cursor-pointer";
+                        letterClass += "bg-white/20 text-white";
+                        textClass += "text-white font-semibold";
+                        arTextClass += "text-blue-100";
+                      } else if (usedElsewhere) {
+                        containerClass += "bg-slate-50 opacity-30 cursor-not-allowed";
+                        letterClass += "bg-white text-slate-300";
+                        textClass += "text-slate-300";
+                        arTextClass += "text-slate-300";
+                      } else {
+                        containerClass += "bg-slate-50 border-2 border-transparent hover:bg-slate-100 cursor-pointer";
+                        letterClass += "bg-white text-slate-600 shadow-sm";
+                        textClass += "text-slate-800";
+                        arTextClass += "text-slate-500";
+                      }
+                    }
+                    
+                    return (
+                      <div key={opt.key} onClick={() => handleSelect(text.id, opt.key)} className={containerClass}>
+                        <div className={letterClass}>{opt.key}</div>
+                        <div className="flex-1">
+                          <div className={textClass} dir="ltr">{opt.de}</div>
+                          {showAr && <div className={arTextClass}>{opt.ar}</div>}
+                        </div>
+                        {isSelected && !corrected && (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" className="shrink-0 mt-1"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+                        )}
+                        {corrected && isCorrectOpt && (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" className="shrink-0 mt-1"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {corrected && (
+                  <div className="p-4 bg-blue-50 border-t border-blue-100">
+                    <div className="flex items-center gap-2 mb-2">
+                      <div className="w-6 h-6 rounded-md bg-blue-100 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2.5"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
+                      <h4 className="font-bold text-sm text-blue-900">ملخص الإعلان</h4>
+                    </div>
+                    <p className="text-[13px] text-slate-700 leading-[1.9]">{text.exp_ar}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {corrected && (
+              <div className="bg-slate-900 text-white rounded-2xl p-6 text-center shadow-xl">
+                <h3 className="text-xs text-slate-400 uppercase tracking-widest mb-1 de">ERGEBNIS</h3>
+                <div className="text-5xl font-extrabold text-gold mb-4 de">{score} / {texts.length * 5}</div>
+                <button onClick={() => { setAnswers({}); setCorrected(false); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl font-bold text-sm transition">إعادة المحاولة</button>
               </div>
             )}
           </div>
-        </div>
-      );
-    }
 
-    function NavItem({ icon, label, active, activeColor, activeBg, onClick }) {
-      return (
-        <div onClick={onClick} className="flex flex-col items-center gap-1 cursor-pointer w-14">
-          <div className={`px-3 py-1.5 rounded-xl transition-colors ${active ? activeBg : ''}`}>
-            <Icon n={icon} s={22} className={active ? activeColor : 'text-slate-400 dark:text-slate-500'} />
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-3 py-3 flex gap-2 z-40 shadow-lg">
+            <button onClick={() => { if (allAnswered && !corrected) setCorrected(true); }} disabled={!allAnswered || corrected} className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition ${allAnswered && !corrected ? 'bg-blue-500 text-white shadow-lg shadow-blue-200' : 'bg-slate-100 text-slate-400'}`}>تصحيح</button>
+            <button onClick={nextExam} className="flex-1 py-3 rounded-xl font-bold text-sm bg-blue-500 text-white flex items-center justify-center gap-2 shadow-lg shadow-blue-200">التالي</button>
           </div>
-          <span className={`text-[10px] font-bold ${active ? activeColor : 'text-slate-400 dark:text-slate-500'}`}>{label}</span>
-        </div>
-      );
-    }
-
-    function MenuItem({ icon, label, color, bg, onClick }) {
-      return (
-        <div onClick={onClick} className="flex items-center justify-between p-3 rounded-2xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${bg} ${color}`}>
-              <Icon n={icon} s={24} />
-            </div>
-            <span className="font-bold text-ink dark:text-white">{label}</span>
-          </div>
-          <Icon n="arrowLeft" s={20} className="text-slate-300 dark:text-slate-600" />
         </div>
       );
     }
