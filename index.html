@@ -37,6 +37,7 @@
     const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
     const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
     
+    // كنخليو السوبابيز غير للدخول (Auth)
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
       auth: { 
         autoRefreshToken: false, 
@@ -94,27 +95,38 @@
       );
     };
 
-    const fallbackExamData = {
-      options: [
-        { key: "a", de: "Eltern trotz Kritik mit der Schule zufrieden", ar: "الآباء راضون عن المدرسة رغم الانتقادات" },
-        { key: "b", de: "Elektromobilität für Angestellte", ar: "التنقل الكهربائي للموظفين" },
-        { key: "c", de: "STÄRKUNG VON BUS UND BAHN", ar: "تعزيز الحافلات والقطارات" },
-        { key: "d", de: "Schule und Umweltschutz", ar: "المدرسة وحماية البيئة" },
-        { key: "e", de: "Bald keine Firmenwagen mehr?", ar: "هل ستختفي سيارات الشركات قريباً؟" },
-        { key: "f", de: "Ticketpreise bei der Bahn", ar: "أسعار التذاكر في السكك الحديدية" },
-        { key: "g", de: "Lehrerberuf wird immer attraktiver", ar: "مهنة التدريس تصبح أكثر جاذبية" },
-        { key: "h", de: "Engagement für die Natur", ar: "الالتزام بالطبيعة" },
-        { key: "i", de: "Preissenkungen bei Bus, Straßenbahn und U-Bahn!", ar: "تخفيضات في الحافلات والترام والمترو" },
-        { key: "j", de: "ZU WENIG LEHRER - STADT REAGIERT", ar: "نقص في المعلمين - المدينة تتخذ إجراءات" }
-      ],
-      texts: [
-        { id: 1, content: "Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen? Gerade In Städten kommt man mit einem E-Bike schneller und bequemer ans Ziel als mit dem Auto. Und Parkplatzprobleme gibt es auch nicht. Sie fördern zudem die Gesundheit Ihrer Mitarbeiter und schonen die Umwelt, und dabei können Sie noch Steuern sparen. Bei der BikeLeasing GmbH bekommen Sie Angebote, die zu Ihnen passen. Melden Sie sich bei uns an, und wir kümmern uns um den Rest", correct: "b", exp_ar: "ملخص الإعلان: تأجير الدراجات الكهربائية: البديل الذكي لسيارات الشركة. فوائد صحية وبيئية: تعزيز صحة الموظفين البدنية مع الحفاظ على البيئة. مزايا مالية: توفير في الضرائب للشركة." },
-        { id: 2, content: "Die Bahn erhöht dieses Jahr die Ticketipreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit. dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!", correct: "c", exp_ar: "ملخص الإعلان: تثبيت أسعار التذاكر: قررت هيئة السكك الحديدية عدم رفع الأسعار هذا العام. تخفيضات النقل العام المحلي: سيتم تخفيض أسعار تذاكر النقل الداخلي لتقليل عدد الموظفين الذين يعتمدون على سياراتهم." },
-        { id: 3, content: "Vergangeren Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eitern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.", correct: "a", exp_ar: "ملخص الإعلان: رضا عام مرتفع: عبر 80% من المشاركين عن رضاهم عن المدارس. ضعف التأهيل المهني: يرى 40% فقط من الأهالي أن المدرسة تجهز أطفالهم بشكل كافٍ لدخول سوق العمل." },
-        { id: 4, content: "Berlin. in der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studie- rende die Schülerinnen und Schüler der Haupt- stadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität lei- det stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attrakti- ver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden, die denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.", correct: "j", exp_ar: "ملخص الإعلان: عجز كبير في الكوادر: يغيب آلاف المعلمين المؤهلين عن المدارس. خطة السينات للإنقاذ: إطلاق حملة إعلانية تهدف لتحسين صورة مهنة التدريس وجعلها أكثر جاذبية. دراسة خيار زيادة الرواتب كحافز مادي للمعلمين." },
-        { id: 5, content: "KaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz. Sie wollen sich auch aktiv gegen Umweltverschmutzung einsetzen? Sie wöllen sich für mehr Naturschutz engagieren? ‚Dann sind Sie bei uns richtig. Wir haben regelmäßige Treffen und führen Informationsveran- staltungen zu verschiedenen aktuellen Themen durch, außerdem gibt es eine monatliche Mit- gliederzeitschrift, Melden Sie sich einfach bei uns.", correct: "h", exp_ar: "ملخص الإعلان: مجالات العمل: تركز بشكل أساسي على حماية البيئة وحماية الحيوانات. ما تقدمه للأعضاء: لقاءات دورية، فعاليات إعلامية، ومجلة شهرية." }
-      ]
-    };
+    // 📚 هادا هو الجزء اللي تبدل: درنا الدروس فـ الكود مباشرة
+    const localExams = [
+      {
+        id: 'alex-cora-local',
+        title: 'Alex Und Cora',
+        level: 'B1',
+        skill: 'Lesen',
+        sub_section: 'Teile 1',
+        is_pro: false,
+        exam_data: {
+          options: [
+            { key: "a", de: "Eltern trotz Kritik mit der Schule zufrieden", ar: "الآباء راضون عن المدرسة رغم الانتقادات" },
+            { key: "b", de: "Elektromobilität für Angestellte", ar: "التنقل الكهربائي للموظفين" },
+            { key: "c", de: "STÄRKUNG VON BUS UND BAHN", ar: "تعزيز الحافلات والقطارات" },
+            { key: "d", de: "Schule und Umweltschutz", ar: "المدرسة وحماية البيئة" },
+            { key: "e", de: "Bald keine Firmenwagen mehr?", ar: "هل ستختفي سيارات الشركات قريباً؟" },
+            { key: "f", de: "Ticketpreise bei der Bahn", ar: "أسعار التذاكر في السكك الحديدية" },
+            { key: "g", de: "Lehrerberuf wird immer attraktiver", ar: "مهنة التدريس تصبح أكثر جاذبية" },
+            { key: "h", de: "Engagement für die Natur", ar: "الالتزام بالطبيعة" },
+            { key: "i", de: "Preissenkungen bei Bus, Straßenbahn und U-Bahn!", ar: "تخفيضات في الحافلات والترام والمترو" },
+            { key: "j", de: "ZU WENIG LEHRER - STADT REAGIERT", ar: "نقص في المعلمين - المدينة تتخذ إجراءات" }
+          ],
+          texts: [
+            { id: 1, content: "Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen? Gerade In Städten kommt man mit einem E-Bike schneller und bequemer ans Ziel als mit dem Auto. Und Parkplatzprobleme gibt es auch nicht. Sie fördern zudem die Gesundheit Ihrer Mitarbeiter und schonen die Umwelt, und dabei können Sie noch Steuern sparen. Bei der BikeLeasing GmbH bekommen Sie Angebote, die zu Ihnen passen. Melden Sie sich bei uns an, und wir kümmern uns um den Rest", correct: "b", exp_ar: "ملخص الإعلان: تأجير الدراجات الكهربائية: البديل الذكي لسيارات الشركة. فوائد صحية وبيئية: تعزيز صحة الموظفين البدنية مع الحفاظ على البيئة. مزايا مالية: توفير في الضرائب للشركة." },
+            { id: 2, content: "Die Bahn erhöht dieses Jahr die Ticketipreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit. dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!", correct: "c", exp_ar: "ملخص الإعلان: تثبيت أسعار التذاكر: قررت هيئة السكك الحديدية عدم رفع الأسعار هذا العام. تخفيضات النقل العام المحلي: سيتم تخفيض أسعار تذاكر النقل الداخلي لتقليل عدد الموظفين الذين يعتمدون على سياراتهم." },
+            { id: 3, content: "Vergangeren Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eitern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.", correct: "a", exp_ar: "ملخص الإعلان: رضا عام مرتفع: عبر 80% من المشاركين عن رضاهم عن المدارس. ضعف التأهيل المهني: يرى 40% فقط من الأهالي أن المدرسة تجهز أطفالهم بشكل كافٍ لدخول سوق العمل." },
+            { id: 4, content: "Berlin. in der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studie- rende die Schülerinnen und Schüler der Haupt- stadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität lei- det stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attrakti- ver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden, die denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.", correct: "j", exp_ar: "ملخص الإعلان: عجز كبير في الكوادر: يغيب آلاف المعلمين المؤهلين عن المدارس. خطة السينات للإنقاذ: إطلاق حملة إعلانية تهدف لتحسين صورة مهنة التدريس وجعلها أكثر جاذبية. دراسة خيار زيادة الرواتب كحافز مادي للمعلمين." },
+            { id: 5, content: "KaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz. Sie wollen sich auch aktiv gegen Umweltverschmutzung einsetzen? Sie wöllen sich für mehr Naturschutz engagieren? ‚Dann sind Sie bei uns richtig. Wir haben regelmäßige Treffen und führen Informationsveran- staltungen zu verschiedenen aktuellen Themen durch, außerdem gibt es eine monatliche Mit- gliederzeitschrift, Melden Sie sich einfach bei uns.", correct: "h", exp_ar: "ملخص الإعلان: مجالات العمل: تركز بشكل أساسي على حماية البيئة وحماية الحيوانات. ما تقدمه للأعضاء: لقاءات دورية، فعاليات إعلامية، ومجلة شهرية." }
+          ]
+        }
+      }
+    ];
 
     function App() {
       const [session, setSession] = useState(null);
@@ -146,57 +158,18 @@
       useEffect(() => { savePref('showAr', showAr); }, [showAr]);
 
       const fetchExams = async () => {
-        const alexExam = { 
-          id: 'alex-cora-fallback', 
-          title: 'Alex Und Cora', 
-          level: 'B1', 
-          skill: 'Lesen', 
-          sub_section: 'Teile 1', 
-          is_pro: false, 
-          exam_data: fallbackExamData 
-        };
-        
-        setExams([alexExam]);
+        // دابا كنقراو غير من الكود المحلي، مكاينش تأخير
+        setExams(localExams);
         setLoading(false);
-
-        try {
-          const { data, error } = await supabase.from('exams').select('*');
-          
-          if (!error && data) {
-            const supabaseExams = data.filter(exam => exam.exam_data && exam.exam_data.texts && exam.exam_data.options);
-            setExams([alexExam, ...supabaseExams]);
-          }
-        } catch (err) {
-          console.error("🚨 خطأ فـ جلب الداتا فـ الخلفية:", err);
-        }
       };
 
       useEffect(() => {
         localStorage.removeItem('sb-mgsfzvmewuiuebccanyf-auth-token');
-        
         const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
         
-        // 1. جلب البيانات أول مرة
         fetchExams();
 
-        // 2. التحديث التلقائي ملي كترجع لهاد التطبيق (مثلاً من واتساب)
-        const handleFocus = () => fetchExams();
-        window.addEventListener('focus', handleFocus);
-
-        // 3. 🔥 التحديث الفوري (Real-time) ملي كبدل شي حاجة فـ سوبابيز
-        const realtimeSub = supabase
-          .channel('exams-channel')
-          .on('postgres_changes', { event: '*', schema: 'public', table: 'exams' }, (payload) => {
-            console.log('🔥 تغيير جديد فـ سوبابيز...', payload);
-            fetchExams(); 
-          })
-          .subscribe();
-
-        return () => {
-          sub.subscription.unsubscribe();
-          window.removeEventListener('focus', handleFocus);
-          supabase.removeChannel(realtimeSub); 
-        };
+        return () => sub.subscription.unsubscribe();
       }, []);
 
       const handleAuth = async (e) => {
@@ -412,8 +385,22 @@
       const [answers, setAnswers] = useState({});
       const [corrected, setCorrected] = useState(false);
 
-      const texts = exam.exam_data?.texts || fallbackExamData.texts;
-      const options = exam.exam_data?.options || fallbackExamData.options;
+      // الحماية باش ما يطيحش التطبيق
+      if (!exam.exam_data || !exam.exam_data.texts || !exam.exam_data.options) {
+        return (
+          <div className="min-h-screen bg-paper dark:bg-[#0B1120] p-5 flex flex-col items-center justify-center">
+            <button onClick={onBack} className="absolute top-5 right-5 flex items-center gap-1 font-bold text-ink dark:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
+              <Icon n="arrowLeft" s={20} /> رجوع
+            </button>
+            <Icon n="file" s={60} className="text-slate-300 mb-4" />
+            <h2 className="text-xl font-bold text-ink dark:text-white mb-2">{exam.title}</h2>
+            <p className="text-slate-500 text-center">هاد الدرس مازال ما تعمرش مزيان.</p>
+          </div>
+        );
+      }
+
+      const texts = exam.exam_data.texts;
+      const options = exam.exam_data.options;
       const answeredCount = Object.keys(answers).length;
 
       const handleSelect = (textId, key) => {
