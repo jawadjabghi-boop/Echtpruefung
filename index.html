@@ -34,11 +34,12 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
     
+    // مفاتيح السوبابيز ديالك
     const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
     const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    // أيقونات Duotone Pro
+    // الأيقونات
     const Icons = {
       home: { f: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z', s: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z', a: 'M10 21v-5a2 2 0 0 1 4 0v5' },
       book: { f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', a: 'M12 6.5V20' },
@@ -77,17 +78,20 @@
 
     function App() {
       const [session, setSession] = useState(null);
+      const [isGuest, setIsGuest] = useState(false);
       const [exams, setExams] = useState([]);
-      const [loading, setLoading] = useState(false);
+      const [loading, setLoading] = useState(true);
       const [view, setView] = useState('lesen');
-      const [activeTab, setActiveTab] = useState('Prüfungen');
+      const [activeTab, setActiveTab] = useState('Teile 1');
       const [isDarkMode, setIsDarkMode] = useState(false);
       const [showSettings, setShowSettings] = useState(false);
       const [showMenu, setShowMenu] = useState(false);
       const [selectedExam, setSelectedExam] = useState(null);
       
-      const [email, setEmail] = useState(''); const [password, setPassword] = useState('');
-      const [isLogin, setIsLogin] = useState(true); const [error, setError] = useState('');
+      const [email, setEmail] = useState(''); 
+      const [password, setPassword] = useState('');
+      const [isLogin, setIsLogin] = useState(true); 
+      const [error, setError] = useState('');
 
       useEffect(() => {
         if (isDarkMode) document.documentElement.classList.add('dark');
@@ -100,8 +104,22 @@
         
         const fetchExams = async () => {
           setLoading(true);
-          const { data } = await supabase.from('exams').select('*');
-          if (data) setExams(data);
+          console.log("⏳ جاري الاتصال بـ Supabase...");
+          
+          try {
+            const { data, error } = await supabase.from('exams').select('*');
+            
+            if (error) {
+              console.error("🚨 خطأ في Supabase:", error);
+              alert("خطأ في الربط: " + error.message);
+            } else {
+              console.log("✅ البيانات المستلمة:", data);
+              setExams(data || []);
+            }
+          } catch (err) {
+            console.error("🚨 خطأ شبكة:", err);
+            alert("تعذر الاتصال بالسيرفر. تأكد من الإنترنت.");
+          }
           setLoading(false);
         };
         fetchExams();
@@ -119,7 +137,8 @@
         }
       };
 
-      if (!session) {
+      // شاشة تسجيل الدخول
+      if (!session && !isGuest) {
         return (
           <div className="min-h-screen flex flex-col bg-paper dark:bg-[#0B1120] transition-colors">
             <div className="h-1 bg-gradient-to-r from-ink via-gold to-ink" />
@@ -141,6 +160,11 @@
                   <button type="button" className="w-full text-center mt-5 text-sm text-slate-600 dark:text-slate-400" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
                     {isLogin ? 'ما عندكش حساب؟ ' : 'عندك حساب؟ '}<span className="font-bold text-ink dark:text-gold underline decoration-gold decoration-2 underline-offset-4">{isLogin ? 'سجل دابا' : 'دخل'}</span>
                   </button>
+                  <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <button type="button" onClick={() => setIsGuest(true)} className="w-full py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-200 transition">
+                      دخول كزائر (للتجربة)
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -150,16 +174,11 @@
 
       if (selectedExam) return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} />;
 
-      // ✅ هنا الفيكس: كنقلبو على الحرف الكبير
       const skillMap = { 'lesen': 'Lesen', 'horen': 'Hören', 'schreiben': 'Schreiben', 'sprechen': 'Sprechen', 'pruefung': 'Pruefung' };
       let filteredExams = exams.filter(e => e.skill === skillMap[view]);
       
       if (view === 'lesen') {
          if (activeTab !== 'Prüfungen') filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
-      } else if (view === 'horen') {
-         if (activeTab !== 'الأكواد' && activeTab !== 'الجمل') filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
-      } else if (view === 'sprechen') {
-         filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
       }
 
       return (
@@ -212,54 +231,6 @@
               </div>
             )}
 
-            {view === 'horen' && (
-              <div className="bg-white dark:bg-[#1E293B] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 transition-colors">
-                <div className="grid grid-cols-3 gap-y-6 gap-x-2 text-center">
-                  {['الأكواد', 'الجمل', 'Teil 1', 'Teil 2', 'Teil 3'].map((item, i) => (
-                    <div key={item} onClick={() => setActiveTab(item)} className={`flex flex-col items-center gap-2 cursor-pointer ${i === 0 ? 'col-start-1' : ''}`}>
-                      <div className={`w-16 h-14 flex items-center justify-center rounded-2xl ${activeTab === item ? 'bg-gold text-ink shadow-lg' : 'bg-transparent text-slate-400 dark:text-slate-500'}`}>
-                        <Icon n={i > 1 ? 'headphones' : 'file'} s={28} w={2.5} />
-                      </div>
-                      <span className={`text-xs font-bold de ${activeTab === item ? 'text-ink dark:text-gold' : 'text-slate-500 dark:text-slate-400'}`}>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {view === 'sprechen' && (
-              <div className="bg-white dark:bg-[#1E293B] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 transition-colors">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  {['Teil 1', 'Teil 2', 'Teil 3'].map((item, i) => {
-                    const isActive = activeTab === item;
-                    let activeColor = 'bg-gold text-ink';
-                    if (i === 0) activeColor = 'bg-brandGreen text-white';
-                    if (i === 1) activeColor = 'bg-brandOrange text-white';
-                    if (i === 2) activeColor = 'bg-brandBlue text-white';
-
-                    return (
-                      <div key={item} onClick={() => setActiveTab(item)} className="flex flex-col items-center gap-2 cursor-pointer">
-                        <div className={`w-20 h-16 flex items-center justify-center rounded-2xl ${isActive ? activeColor + ' shadow-lg' : 'bg-transparent text-slate-400 dark:text-slate-500'}`}>
-                          <Icon n={i === 0 ? 'mic' : i === 1 ? 'file' : 'users'} s={28} w={2.5} />
-                        </div>
-                        <span className={`text-xs font-bold de ${isActive ? 'text-ink dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}>{item}</span>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            <div className="bg-white dark:bg-[#1E293B] rounded-2xl flex items-center px-4 py-3 shadow-sm border border-slate-100 dark:border-slate-800 mb-4 transition-colors">
-              <Icon n="search" s={20} className="text-slate-400" />
-              <input type="text" placeholder="بحث عن موضوع..." className="flex-1 bg-transparent border-none outline-none text-sm px-3 dark:text-white" />
-            </div>
-            <div className="flex justify-center mb-6">
-              <button className="bg-slate-100 dark:bg-[#1E293B] text-slate-500 dark:text-slate-400 rounded-xl px-5 py-2 text-xs font-bold flex items-center gap-2 border border-transparent dark:border-slate-700">
-                <Icon n="sort" s={16} className="text-gold" /> ترتيب الافتراضي
-              </button>
-            </div>
-
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-extrabold text-ink dark:text-white">قائمة الامتحانات</h3>
               {filteredExams.length > 0 && <span className="text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-full">{filteredExams.length} امتحان</span>}
@@ -281,7 +252,6 @@
                        <div className="flex items-center gap-2 mt-1">
                          <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-bold de">{exam.level}</span>
                          {exam.skill === 'Lesen' && <span className="text-slate-400 text-[10px] flex items-center gap-1"><Icon n="clock" s={12} />90 Min</span>}
-                         {exam.is_pro && <span className="bg-yellow-50 text-yellow-600 px-2 py-0.5 rounded text-[10px] font-bold de border border-yellow-200">PRO</span>}
                        </div>
                      </div>
                      <Icon n="arrowLeft" s={20} className="text-slate-300 dark:text-slate-600 rotate-180" />
@@ -304,33 +274,6 @@
             <NavItem icon="cap" label="امتحان" active={view === 'pruefung'} onClick={() => setView('pruefung')} activeColor="text-gold" activeBg="bg-gold/10" />
           </div>
 
-          {showSettings && (
-            <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center p-4 backdrop-blur-sm" onClick={() => setShowSettings(false)}>
-              <div className="bg-white dark:bg-[#1E293B] w-full max-w-sm rounded-3xl p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-4 text-slate-700 dark:text-slate-200 font-bold">
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold"><Icon n="square" s={20}/></div>
-                    أنت الان في وضع التطبيق
-                  </div>
-                  <div className="flex items-center gap-4 text-slate-700 dark:text-slate-200 font-bold">
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold"><Icon n="square" s={20}/></div>
-                    عرض البطاقات (مُفعَّل)
-                  </div>
-                  <hr className="border-slate-100 dark:border-slate-800 my-2" />
-                  <div className="flex justify-between items-center text-slate-700 dark:text-slate-200 font-bold">
-                    <span>حجم الخط</span>
-                    <Icon n="refresh" s={18} className="text-slate-400 cursor-pointer" />
-                  </div>
-                  <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
-                    <button className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500">-</button>
-                    <span className="font-bold text-ink dark:text-white de">110%</span>
-                    <button className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500">+</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
           {showMenu && (
             <div className="fixed inset-0 bg-black/40 z-50 flex justify-end backdrop-blur-sm" onClick={() => setShowMenu(false)}>
               <div className="bg-white dark:bg-[#0B1120] w-[85%] max-w-sm h-full shadow-2xl flex flex-col transition-transform translate-x-0" onClick={e => e.stopPropagation()}>
@@ -339,24 +282,19 @@
                       <div className="w-10 h-10 bg-ink rounded-xl flex items-center justify-center font-extrabold text-sm text-gold shadow-sm">EP</div>
                       <div>
                         <h1 className="font-extrabold text-sm text-ink dark:text-white leading-tight">EchtPrüfung</h1>
-                        <p className="text-[10px] text-slate-500 de">Deutsch B1 / B2</p>
                       </div>
                    </div>
                    <button onClick={() => setShowMenu(false)} className="w-10 h-10 bg-gold/10 text-gold rounded-xl flex items-center justify-center"><Icon n="x" s={24} w={2.5}/></button>
                 </div>
-                
                 <div className="flex-1 overflow-y-auto py-4 px-4 space-y-2">
                   <MenuItem icon="book" label="Lesen" color="text-brandBlue" bg="bg-blue-50 dark:bg-blue-900/20" onClick={() => {setView('lesen'); setShowMenu(false)}} />
                   <MenuItem icon="headphones" label="Hören" color="text-brandPurple" bg="bg-purple-50 dark:bg-purple-900/20" onClick={() => {setView('horen'); setShowMenu(false)}} />
                   <MenuItem icon="pen" label="Schreiben" color="text-brandOrange" bg="bg-orange-50 dark:bg-orange-900/20" onClick={() => {setView('schreiben'); setShowMenu(false)}} />
                   <MenuItem icon="mic" label="Sprechen" color="text-brandRed" bg="bg-red-50 dark:bg-red-900/20" onClick={() => {setView('sprechen'); setShowMenu(false)}} />
-                  <MenuItem icon="sort" label="طور مستواك" color="text-brandGreen" bg="bg-green-50 dark:bg-green-900/20" />
-                  <MenuItem icon="file" label="التجارب" color="text-brandBlue" bg="bg-blue-50 dark:bg-blue-900/20" />
                 </div>
-
                 <div className="p-6">
-                  <button onClick={() => supabase.auth.signOut()} className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-xl py-3 text-slate-700 dark:text-slate-300 font-bold">
-                    تسجيل الدخول <Icon n="arrowLeft" s={20} />
+                  <button onClick={() => { supabase.auth.signOut(); setIsGuest(false); }} className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-xl py-3 text-slate-700 dark:text-slate-300 font-bold">
+                    تسجيل الخروج <Icon n="arrowLeft" s={20} />
                   </button>
                 </div>
               </div>
