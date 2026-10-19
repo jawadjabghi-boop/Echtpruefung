@@ -99,26 +99,29 @@
       }, [isDarkMode]);
 
       useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
+        // 🔥 إصلاح مشكل JWT expired: كيمسح الجلسة القديمة فوراً
+        supabase.auth.signOut().catch(() => {});
+        
         const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
         
         const fetchExams = async () => {
           setLoading(true);
-          console.log("⏳ جاري الاتصال بـ Supabase...");
-          
           try {
             const { data, error } = await supabase.from('exams').select('*');
             
             if (error) {
               console.error("🚨 خطأ في Supabase:", error);
-              alert("خطأ في الربط: " + error.message);
+              setExams([]);
+            } else if (data) {
+              // 🔥 الحماية: كيتجاهل الدروس الناقصة باش ما يطيحش التطبيق وتختفي الأيقونات
+              const safeData = data.filter(exam => exam.exam_data && exam.exam_data.texts && exam.exam_data.options);
+              setExams(safeData);
             } else {
-              console.log("✅ البيانات المستلمة:", data);
-              setExams(data || []);
+              setExams([]);
             }
           } catch (err) {
             console.error("🚨 خطأ شبكة:", err);
-            alert("تعذر الاتصال بالسيرفر. تأكد من الإنترنت.");
+            setExams([]);
           }
           setLoading(false);
         };
@@ -308,7 +311,8 @@
       const [answers, setAnswers] = useState({});
       const [corrected, setCorrected] = useState(false);
 
-      if (!exam.exam_data || !exam.exam_data.texts) {
+      // 🔥 الحماية: كيتأكد من الداتا كاملة قبل ما يعرض الدرس
+      if (!exam.exam_data || !exam.exam_data.texts || !exam.exam_data.options) {
         return (
           <div className="min-h-screen bg-paper dark:bg-[#0B1120] p-5 flex flex-col items-center justify-center">
             <button onClick={onBack} className="absolute top-5 right-5 flex items-center gap-1 font-bold text-ink dark:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
@@ -316,7 +320,7 @@
             </button>
             <Icon n="file" s={60} className="text-slate-300 mb-4" />
             <h2 className="text-xl font-bold text-ink dark:text-white mb-2">{exam.title}</h2>
-            <p className="text-slate-500">هاد الدرس مازال ما تعمرش، غادي نزيدوه من بعد.</p>
+            <p className="text-slate-500 text-center">هاد الدرس مازال ما تعمرش مزيان فـ السوبابيز.<br/>خاصو يكون فيه <b>options</b> و <b>texts</b>.</p>
           </div>
         );
       }
