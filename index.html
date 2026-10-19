@@ -1,34 +1,562 @@
-const Icons = {
-  home: 'M3 10.5L12 3l9 7.5V19a2 2 0 0 1-2 2h-3.5v-6h-7v6H5a2 2 0 0 1-2-2z',
-  book: 'M4 19.5V5.5A2.5 2.5 0 0 1 6.5 3H20v14H6.5A2.5 2.5 0 0 0 4 19.5zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5M9 7.5h6',
-  headphones: 'M4 15v-3a8 8 0 0 1 16 0v3M4 15a2 2 0 0 1 2-2h1v7H6a2 2 0 0 1-2-2zM20 15a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2z',
-  pen: 'M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4zM14.5 5.5l3 3',
-  mic: 'M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v4M8 22h8',
-  cap: 'M2 9l10-5 10 5-10 5zM6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5M22 9v6',
-  moon: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z',
-  sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
-  settings: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z',
-  menu: 'M4 7h16M4 12h10M4 17h16',
-  lock: 'M6 11h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zM8 11V7a4 4 0 0 1 8 0v4M12 15v2',
-  search: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3',
-  sort: 'M8 9l4-4 4 4M8 15l4 4 4-4',
-  file: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4',
-  users: 'M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM20 20v-1.5a3.5 3.5 0 0 0-2.5-3.35M15.5 5.2a3.5 3.5 0 0 1 0 6.6',
-  arrowLeft: 'M15 5l-7 7 7 7',
-  x: 'M6 6l12 12M18 6L6 18',
-  check: 'M5 12.5l4.5 4.5L19 7.5',
-  square: 'M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z',
-  refresh: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4',
-  clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2',
-  bulb: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z'
-};
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>EchtPrüfung</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { 
+      darkMode: 'class',
+      theme: { extend: { fontFamily: { sans: ['Cairo', 'system-ui', 'sans-serif'] },
+      colors: { 
+        ink: '#0F1B33', 
+        gold: '#F5B82E', 
+        paper: '#F3F5F9',
+        brandBlue: '#3B82F6',
+        brandPurple: '#8B5CF6',
+        brandOrange: '#F59E0B',
+        brandRed: '#F43F5E',
+        brandGreen: '#10b981'
+      } } } };
+  </script>
+  <style>
+    body { font-family: 'Cairo', system-ui, sans-serif; background-color: #F3F5F9; direction: rtl; margin: 0; color: #0F1B33; -webkit-font-smoothing: antialiased; transition: background-color 0.3s, color 0.3s; }
+    .dark body { background-color: #0B1120; color: #F8FAFC; }
+    .bg-dots { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 25px 25px; }
+    .dark .bg-dots { background-image: radial-gradient(#1e293b 1px, transparent 1px); }
+    .de { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    
+    // المفاتيح ديالك
+    const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
+    const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-// أيقونات مغلقة تاخد طبقة Duotone ناعمة (عصرية)
-const DuoIcons = ['home','book','headphones','pen','mic','cap','moon','sun','settings','lock','file','users','square','clock','bulb'];
+    // الأيقونات الجديدة (Duotone)
+    const Icons = {
+      home: 'M3 10.5L12 3l9 7.5V19a2 2 0 0 1-2 2h-3.5v-6h-7v6H5a2 2 0 0 1-2-2z',
+      book: 'M4 19.5V5.5A2.5 2.5 0 0 1 6.5 3H20v14H6.5A2.5 2.5 0 0 0 4 19.5zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5M9 7.5h6',
+      headphones: 'M4 15v-3a8 8 0 0 1 16 0v3M4 15a2 2 0 0 1 2-2h1v7H6a2 2 0 0 1-2-2zM20 15a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2z',
+      pen: 'M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4zM14.5 5.5l3 3',
+      mic: 'M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v4M8 22h8',
+      cap: 'M2 9l10-5 10 5-10 5zM6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5M22 9v6',
+      moon: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z',
+      sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+      settings: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z',
+      menu: 'M4 7h16M4 12h10M4 17h16',
+      lock: 'M6 11h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zM8 11V7a4 4 0 0 1 8 0v4M12 15v2',
+      search: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3',
+      sort: 'M8 9l4-4 4 4M8 15l4 4 4-4',
+      file: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4',
+      users: 'M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM20 20v-1.5a3.5 3.5 0 0 0-2.5-3.35M15.5 5.2a3.5 3.5 0 0 1 0 6.6',
+      arrowLeft: 'M15 5l-7 7 7 7',
+      x: 'M6 6l12 12M18 6L6 18',
+      check: 'M5 12.5l4.5 4.5L19 7.5',
+      square: 'M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z',
+      refresh: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4',
+      clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2',
+      bulb: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z'
+    };
 
-const Icon = ({ n, s = 20, w = 2, className = "" }) => (
-  <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className}>
-    {DuoIcons.includes(n) && <path d={Icons[n]} fill="currentColor" fillOpacity="0.16" stroke="none" />}
-    <path d={Icons[n]} />
-  </svg>
-);
+    const DuoIcons = ['home','book','headphones','pen','mic','cap','moon','sun','settings','lock','file','users','square','clock','bulb'];
+
+    const Icon = ({ n, s = 20, w = 2, className = "" }) => (
+      <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className}>
+        {DuoIcons.includes(n) && <path d={Icons[n]} fill="currentColor" fillOpacity="0.16" stroke="none" />}
+        <path d={Icons[n]} />
+      </svg>
+    );
+
+    function App() {
+      const [session, setSession] = useState(null);
+      const [exams, setExams] = useState([]);
+      const [loading, setLoading] = useState(false);
+      const [view, setView] = useState('lesen');
+      const [activeTab, setActiveTab] = useState('Prüfungen');
+      const [isDarkMode, setIsDarkMode] = useState(false);
+      const [showSettings, setShowSettings] = useState(false);
+      const [showMenu, setShowMenu] = useState(false);
+      const [selectedExam, setSelectedExam] = useState(null);
+      
+      const [email, setEmail] = useState(''); const [password, setPassword] = useState('');
+      const [isLogin, setIsLogin] = useState(true); const [error, setError] = useState('');
+
+      useEffect(() => {
+        if (isDarkMode) document.documentElement.classList.add('dark');
+        else document.documentElement.classList.remove('dark');
+      }, [isDarkMode]);
+
+      useEffect(() => {
+        supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
+        const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
+        
+        const fetchExams = async () => {
+          setLoading(true);
+          const { data } = await supabase.from('exams').select('*');
+          if (data) setExams(data);
+          setLoading(false);
+        };
+        fetchExams();
+        return () => sub.subscription.unsubscribe();
+      }, []);
+
+      const handleAuth = async (e) => {
+        e.preventDefault(); setError('');
+        if (isLogin) {
+          const { error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) setError(error.message);
+        } else {
+          const { error } = await supabase.auth.signUp({ email, password });
+          if (error) setError(error.message); else alert('تم إنشاء الحساب بنجاح!');
+        }
+      };
+
+      if (!session) {
+        return (
+          <div className="min-h-screen flex flex-col bg-paper dark:bg-[#0B1120] transition-colors">
+            <div className="h-1 bg-gradient-to-r from-ink via-gold to-ink" />
+            <div className="flex-1 flex items-center justify-center p-5">
+              <div className="w-full max-w-sm">
+                <div className="text-center mb-8">
+                  <div className="w-20 h-20 bg-ink text-gold rounded-2xl flex items-center justify-center font-extrabold text-3xl shadow-lg mx-auto mb-4 de">EP</div>
+                  <h1 className="text-3xl font-extrabold de text-ink dark:text-white">EchtPrüfung</h1>
+                  <p className="text-slate-500 mt-1">تدرّب على امتحان الألمانية بنفس أسلوب الامتحان الحقيقي</p>
+                </div>
+                <div className="bg-white dark:bg-[#1E293B] p-6 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
+                  <h2 className="text-lg font-bold mb-4 dark:text-white">{isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد'}</h2>
+                  {error && <div className="bg-red-50 text-red-700 text-sm rounded-xl px-3 py-2 mb-4 border border-red-100">{error}</div>}
+                  <form onSubmit={handleAuth} className="space-y-3">
+                    <input type="email" dir="ltr" placeholder="البريد الإلكتروني" value={email} onChange={e => setEmail(e.target.value)} required className="w-full py-3 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-gold text-left dark:text-white" />
+                    <input type="password" dir="ltr" placeholder="كلمة السر" value={password} onChange={e => setPassword(e.target.value)} required className="w-full py-3 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-gold text-left dark:text-white" />
+                    <button type="submit" className="w-full py-3 bg-ink dark:bg-gold text-white dark:text-ink font-bold rounded-xl hover:bg-slate-800 transition shadow-lg">{isLogin ? 'دخول' : 'تسجيل'}</button>
+                  </form>
+                  <button type="button" className="w-full text-center mt-5 text-sm text-slate-600 dark:text-slate-400" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
+                    {isLogin ? 'ما عندكش حساب؟ ' : 'عندك حساب؟ '}<span className="font-bold text-ink dark:text-gold underline decoration-gold decoration-2 underline-offset-4">{isLogin ? 'سجل دابا' : 'دخل'}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      }
+
+      if (selectedExam) return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} />;
+
+      let filteredExams = exams.filter(e => e.skill === view);
+      
+      if (view === 'lesen') {
+         if (activeTab !== 'Prüfungen') filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
+      } else if (view === 'horen') {
+         if (activeTab !== 'الأكواد' && activeTab !== 'الجمل') filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
+      } else if (view === 'sprechen') {
+         filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
+      }
+
+      return (
+        <div className="min-h-screen pb-24 bg-dots relative transition-colors duration-300">
+          
+          {/* Header */}
+          <div className="bg-white dark:bg-[#1E293B] rounded-b-3xl shadow-sm px-5 py-4 flex justify-between items-center mb-6 mx-4 mt-4 sticky top-4 z-40 border border-slate-100 dark:border-slate-800">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-ink rounded-xl flex items-center justify-center font-extrabold text-xl text-gold shadow-sm">EP</div>
+              <div>
+                <h1 className="font-extrabold text-lg text-ink dark:text-white leading-tight">EchtPrüfung</h1>
+                <p className="text-[10px] text-slate-500 de">Deutsch B1 / B2</p>
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-gold">
+                <Icon n={isDarkMode ? 'sun' : 'moon'} s={20} />
+              </button>
+              <button onClick={() => setShowSettings(true)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300">
+                <Icon n="settings" s={20} />
+              </button>
+              <button onClick={() => setShowMenu(true)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold">
+                <Icon n="menu" s={24} w={2.5} />
+              </button>
+            </div>
+          </div>
+
+          <div className="max-w-2xl mx-auto px-5">
+            <h1 className="text-5xl font-extrabold text-ink dark:text-white de mb-8">
+              {view === 'lesen' ? 'Lesen' : view === 'horen' ? 'Hören' : view === 'schreiben' ? 'Schreiben' : view === 'sprechen' ? 'Sprechen' : 'Zufällige Prüfungen'}
+            </h1>
+
+            <div className="flex justify-center mb-8">
+              <div className="inline-flex bg-slate-100 dark:bg-[#1E293B] rounded-2xl p-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
+                <button className="px-10 py-3 rounded-xl font-bold bg-gold text-ink shadow-md de">B1</button>
+                <button className="px-10 py-3 rounded-xl font-bold text-slate-500 dark:text-slate-400 bg-transparent de">B2</button>
+              </div>
+            </div>
+
+            {view === 'lesen' && (
+              <div className="bg-white dark:bg-[#1E293B] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 transition-colors">
+                <div className="grid grid-cols-3 gap-y-6 gap-x-2 text-center">
+                  {['Prüfungen', 'Teile 1', 'Teile 2', 'Teile 3', 'Sprach 1', 'Sprach 2'].map((item, i) => (
+                    <div key={item} onClick={() => setActiveTab(item)} className="flex flex-col items-center gap-2 cursor-pointer">
+                      <div className={`w-16 h-14 flex items-center justify-center rounded-2xl ${activeTab === item ? 'bg-gold text-ink shadow-lg shadow-gold-200 dark:shadow-none' : 'bg-transparent text-slate-400 dark:text-slate-500'}`}>
+                        <Icon n={i === 0 ? 'book' : 'file'} s={28} w={2.5} />
+                      </div>
+                      <span className={`text-xs font-bold de ${activeTab === item ? 'text-ink dark:text-gold' : 'text-slate-500 dark:text-slate-400'}`}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {view === 'horen' && (
+              <div className="bg-white dark:bg-[#1E293B] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 transition-colors">
+                <div className="grid grid-cols-3 gap-y-6 gap-x-2 text-center">
+                  {['الأكواد', 'الجمل', 'Teil 1', 'Teil 2', 'Teil 3'].map((item, i) => (
+                    <div key={item} onClick={() => setActiveTab(item)} className={`flex flex-col items-center gap-2 cursor-pointer ${i === 0 ? 'col-start-1' : ''}`}>
+                      <div className={`w-16 h-14 flex items-center justify-center rounded-2xl ${activeTab === item ? 'bg-gold text-ink shadow-lg' : 'bg-transparent text-slate-400 dark:text-slate-500'}`}>
+                        <Icon n={i > 1 ? 'headphones' : 'file'} s={28} w={2.5} />
+                      </div>
+                      <span className={`text-xs font-bold de ${activeTab === item ? 'text-ink dark:text-gold' : 'text-slate-500 dark:text-slate-400'}`}>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {view === 'sprechen' && (
+              <div className="bg-white dark:bg-[#1E293B] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 transition-colors">
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  {['Teil 1', 'Teil 2', 'Teil 3'].map((item, i) => {
+                    const isActive = activeTab === item;
+                    let activeColor = 'bg-gold text-ink';
+                    if (i === 0) activeColor = 'bg-brandGreen text-white';
+                    if (i === 1) activeColor = 'bg-brandOrange text-white';
+                    if (i === 2) activeColor = 'bg-brandBlue text-white';
+
+                    return (
+                      <div key={item} onClick={() => setActiveTab(item)} className="flex flex-col items-center gap-2 cursor-pointer">
+                        <div className={`w-20 h-16 flex items-center justify-center rounded-2xl ${isActive ? activeColor + ' shadow-lg' : 'bg-transparent text-slate-400 dark:text-slate-500'}`}>
+                          <Icon n={i === 0 ? 'mic' : i === 1 ? 'file' : 'users'} s={28} w={2.5} />
+                        </div>
+                        <span className={`text-xs font-bold de ${isActive ? 'text-ink dark:text-white' : 'text-slate-500 dark:text-slate-400'}`}>{item}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            <div className="bg-white dark:bg-[#1E293B] rounded-2xl flex items-center px-4 py-3 shadow-sm border border-slate-100 dark:border-slate-800 mb-4 transition-colors">
+              <Icon n="search" s={20} className="text-slate-400" />
+              <input type="text" placeholder="بحث عن موضوع..." className="flex-1 bg-transparent border-none outline-none text-sm px-3 dark:text-white" />
+            </div>
+            <div className="flex justify-center mb-6">
+              <button className="bg-slate-100 dark:bg-[#1E293B] text-slate-500 dark:text-slate-400 rounded-xl px-5 py-2 text-xs font-bold flex items-center gap-2 border border-transparent dark:border-slate-700">
+                <Icon n="sort" s={16} className="text-gold" /> ترتيب الافتراضي
+              </button>
+            </div>
+
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-extrabold text-ink dark:text-white">قائمة الامتحانات</h3>
+              {filteredExams.length > 0 && <span className="text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-full">{filteredExams.length} امتحان</span>}
+            </div>
+
+            <div className="space-y-3 pb-8">
+               {loading ? (
+                 <div className="text-center text-slate-400 py-4">جاري التحميل...</div>
+               ) : filteredExams.length === 0 ? (
+                 <div className="text-center text-slate-400 py-4 text-sm bg-white dark:bg-[#1E293B] rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">ما كاين حتى امتحان دابا</div>
+               ) : (
+                 filteredExams.map((exam) => (
+                   <div key={exam.id} onClick={() => setSelectedExam(exam)} className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4 cursor-pointer transition-colors">
+                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${exam.is_pro ? 'bg-orange-50 text-orange-500 border border-orange-200' : 'bg-ink text-gold'}`}>
+                       {exam.is_pro ? <Icon n="lock" s={22} /> : <Icon n="file" s={22} />}
+                     </div>
+                     <div className="flex-1">
+                       <h3 className="font-bold text-ink dark:text-white de text-sm">{exam.title}</h3>
+                       <div className="flex items-center gap-2 mt-1">
+                         <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-bold de">{exam.level}</span>
+                         {exam.skill === 'Lesen' && <span className="text-slate-400 text-[10px] flex items-center gap-1"><Icon n="clock" s={12} />90 Min</span>}
+                         {exam.is_pro && <span className="bg-yellow-50 text-yellow-600 px-2 py-0.5 rounded text-[10px] font-bold de border border-yellow-200">PRO</span>}
+                       </div>
+                     </div>
+                     <Icon n="arrowLeft" s={20} className="text-slate-300 dark:text-slate-600 rotate-180" />
+                   </div>
+                 ))
+               )}
+            </div>
+          </div>
+
+          {/* WhatsApp Float */}
+          <a href="https://wa.me/212600000000" target="_blank" rel="noreferrer" className="fixed bottom-24 right-5 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-green-300 z-50 text-white hover:scale-105 transition-transform">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.554 4.19 1.6 6.018L.064 24l6.094-1.598A11.96 11.96 0 0012.031 24c6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 22.015c-1.83 0-3.63-.492-5.205-1.422l-.373-.22-3.87 1.015 1.033-3.77-.24-.387A9.97 9.97 0 012.015 12.03c0-5.523 4.493-10.015 10.016-10.015 5.524 0 10.016 4.492 10.016 10.015 0 5.524-4.492 10.016-10.016 10.016zm5.497-7.502c-.3-.15-1.778-.877-2.054-.977-.276-.1-.478-.15-.678.15-.2.3-.778.977-.955 1.178-.176.2-.352.225-.652.075-.3-.15-1.267-.467-2.413-1.49-.892-.795-1.494-1.778-1.67-2.078-.176-.3-.02-.462.13-.612.136-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.678-1.63-.928-2.23-.243-.588-.49-.508-.678-.518-.176-.01-.376-.01-.576-.01-.2 0-.525.075-.8.375-.275.3-1.053 1.028-1.053 2.505 0 1.477 1.078 2.905 1.228 3.105.15.2 2.12 3.238 5.135 4.542.717.31 1.277.496 1.714.636.723.23 1.38.197 1.9.12.58-.086 1.778-.727 2.028-1.428.25-.7.25-1.3.175-1.428-.075-.125-.275-.2-.575-.35z"/></svg>
+          </a>
+
+          {/* Bottom Nav */}
+          <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1E293B] px-2 pb-6 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center z-40 rounded-t-3xl shadow-[0_-5px_20px_-10px_rgba(0,0,0,0.05)] transition-colors">
+            <NavItem icon="home" label="الرئيسية" active={view === 'home'} onClick={() => setView('home')} activeColor="text-gold" activeBg="bg-gold/10" />
+            <NavItem icon="book" label="Lesen" active={view === 'lesen'} onClick={() => setView('lesen')} activeColor="text-gold" activeBg="bg-gold/10" />
+            <NavItem icon="headphones" label="Hören" active={view === 'horen'} onClick={() => setView('horen')} activeColor="text-gold" activeBg="bg-gold/10" />
+            <NavItem icon="pen" label="Schreiben" active={view === 'schreiben'} onClick={() => setView('schreiben')} activeColor="text-gold" activeBg="bg-gold/10" />
+            <NavItem icon="mic" label="Sprechen" active={view === 'sprechen'} onClick={() => setView('sprechen')} activeColor="text-gold" activeBg="bg-gold/10" />
+            <NavItem icon="cap" label="امتحان" active={view === 'pruefung'} onClick={() => setView('pruefung')} activeColor="text-gold" activeBg="bg-gold/10" />
+          </div>
+
+          {/* Settings Modal (Bla Download w Bla Check) */}
+          {showSettings && (
+            <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center p-4 backdrop-blur-sm" onClick={() => setShowSettings(false)}>
+              <div className="bg-white dark:bg-[#1E293B] w-full max-w-sm rounded-3xl p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-4 text-slate-700 dark:text-slate-200 font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold"><Icon n="square" s={20}/></div>
+                    أنت الان في وضع التطبيق
+                  </div>
+                  <div className="flex items-center gap-4 text-slate-700 dark:text-slate-200 font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold"><Icon n="square" s={20}/></div>
+                    عرض البطاقات (مُفعَّل)
+                  </div>
+                  <hr className="border-slate-100 dark:border-slate-800 my-2" />
+                  <div className="flex justify-between items-center text-slate-700 dark:text-slate-200 font-bold">
+                    <span>حجم الخط</span>
+                    <Icon n="refresh" s={18} className="text-slate-400 cursor-pointer" />
+                  </div>
+                  <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
+                    <button className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500">-</button>
+                    <span className="font-bold text-ink dark:text-white de">110%</span>
+                    <button className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Sidebar Menu */}
+          {showMenu && (
+            <div className="fixed inset-0 bg-black/40 z-50 flex justify-end backdrop-blur-sm" onClick={() => setShowMenu(false)}>
+              <div className="bg-white dark:bg-[#0B1120] w-[85%] max-w-sm h-full shadow-2xl flex flex-col transition-transform translate-x-0" onClick={e => e.stopPropagation()}>
+                <div className="p-6 flex justify-between items-center border-b border-slate-100 dark:border-slate-800">
+                   <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-ink rounded-xl flex items-center justify-center font-extrabold text-sm text-gold shadow-sm">EP</div>
+                      <div>
+                        <h1 className="font-extrabold text-sm text-ink dark:text-white leading-tight">EchtPrüfung</h1>
+                        <p className="text-[10px] text-slate-500 de">Deutsch B1 / B2</p>
+                      </div>
+                   </div>
+                   <button onClick={() => setShowMenu(false)} className="w-10 h-10 bg-gold/10 text-gold rounded-xl flex items-center justify-center"><Icon n="x" s={24} w={2.5}/></button>
+                </div>
+                
+                <div className="flex-1 overflow-y-auto py-4 px-4 space-y-2">
+                  <MenuItem icon="book" label="Lesen" color="text-brandBlue" bg="bg-blue-50 dark:bg-blue-900/20" onClick={() => {setView('lesen'); setShowMenu(false)}} />
+                  <MenuItem icon="headphones" label="Hören" color="text-brandPurple" bg="bg-purple-50 dark:bg-purple-900/20" onClick={() => {setView('horen'); setShowMenu(false)}} />
+                  <MenuItem icon="pen" label="Schreiben" color="text-brandOrange" bg="bg-orange-50 dark:bg-orange-900/20" onClick={() => {setView('schreiben'); setShowMenu(false)}} />
+                  <MenuItem icon="mic" label="Sprechen" color="text-brandRed" bg="bg-red-50 dark:bg-red-900/20" onClick={() => {setView('sprechen'); setShowMenu(false)}} />
+                  <MenuItem icon="sort" label="طور مستواك" color="text-brandGreen" bg="bg-green-50 dark:bg-green-900/20" />
+                  <MenuItem icon="file" label="التجارب" color="text-brandBlue" bg="bg-blue-50 dark:bg-blue-900/20" />
+                </div>
+
+                <div className="p-6">
+                  <button onClick={() => supabase.auth.signOut()} className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-xl py-3 text-slate-700 dark:text-slate-300 font-bold">
+                    تسجيل الدخول <Icon n="arrowLeft" s={20} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      );
+    }
+
+    // Exam View - صفحة وحدة
+    function ExamView({ exam, onBack }) {
+      const [answers, setAnswers] = useState({});
+      const [corrected, setCorrected] = useState(false);
+
+      if (!exam.exam_data || !exam.exam_data.texts) {
+        return (
+          <div className="min-h-screen bg-paper dark:bg-[#0B1120] p-5 flex flex-col items-center justify-center">
+            <button onClick={onBack} className="absolute top-5 right-5 flex items-center gap-1 font-bold text-ink dark:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
+              <Icon n="arrowLeft" s={20} /> رجوع
+            </button>
+            <Icon n="file" s={60} className="text-slate-300 mb-4" />
+            <h2 className="text-xl font-bold text-ink dark:text-white mb-2">{exam.title}</h2>
+            <p className="text-slate-500">هاد الدرس مازال ما تعمرش، غادي نزيدوه من بعد.</p>
+          </div>
+        );
+      }
+
+      const texts = exam.exam_data.texts;
+      const options = exam.exam_data.options;
+      const answeredCount = Object.keys(answers).length;
+
+      const handleSelect = (textId, key) => {
+        if (corrected) return;
+        setAnswers(prev => ({ ...prev, [textId]: key }));
+      };
+
+      let score = 0;
+      if (corrected) {
+        texts.forEach(t => { if (answers[t.id] === t.correct) score += 5; });
+      }
+
+      return (
+        <div className="min-h-screen bg-paper dark:bg-[#0B1120] pb-24">
+          <div className="bg-white dark:bg-[#1E293B] px-5 py-4 shadow-sm flex items-center justify-between sticky top-0 z-40">
+            <button onClick={onBack} className="flex items-center gap-1 font-bold text-ink dark:text-white">
+              <Icon n="arrowLeft" s={20} /> رجوع
+            </button>
+            <h2 className="font-bold text-ink dark:text-white de">{exam.title}</h2>
+            <div className="w-8"></div>
+          </div>
+
+          <div className="max-w-2xl mx-auto p-4 space-y-6">
+            
+            {/* Options List */}
+            <div className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <h3 className="font-bold text-ink dark:text-white mb-3 text-sm">الاختيارات (a - j):</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {options.map(opt => (
+                  <div key={opt.key} className="flex items-start gap-2 text-sm">
+                    <span className="font-bold text-gold de">{opt.key})</span>
+                    <div className="flex flex-col">
+                      <span className="font-semibold text-ink dark:text-white de" dir="ltr">{opt.de}</span>
+                      <span className="text-xs text-slate-500">{opt.ar}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Texts */}
+            {texts.map((text, index) => {
+              const selectedKey = answers[text.id];
+              const isCorrect = selectedKey === text.correct;
+
+              return (
+                <div key={text.id} className="bg-white dark:bg-[#1E293B] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+                  <div className="p-5 border-b border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="font-extrabold text-lg text-ink dark:text-white de">Text {index + 1}</h3>
+                      {corrected && (
+                        <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${isCorrect ? 'bg-green-500' : 'bg-red-500'}`}>
+                          <Icon n={isCorrect ? 'check' : 'x'} s={18} w={3} />
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[15px] leading-8 text-slate-800 dark:text-slate-200 de" dir="ltr">{text.content}</p>
+                  </div>
+
+                  <div className="p-4 bg-slate-50 dark:bg-slate-900/50">
+                    <p className="text-xs font-bold text-slate-500 mb-3">اختر الجواب المناسب:</p>
+                    <div className="grid grid-cols-5 gap-2">
+                      {options.map(opt => {
+                        const isSelected = selectedKey === opt.key;
+                        let btnClass = "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-ink dark:text-white hover:border-gold";
+                        
+                        if (isSelected) {
+                          btnClass = "bg-gold text-ink border-gold shadow-md";
+                        }
+                        if (corrected) {
+                          if (opt.key === text.correct) btnClass = "bg-green-500 text-white border-green-500";
+                          else if (isSelected && !isCorrect) btnClass = "bg-red-500 text-white border-red-500";
+                          else btnClass = "bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400 opacity-50";
+                        }
+
+                        return (
+                          <button
+                            key={opt.key}
+                            onClick={() => handleSelect(text.id, opt.key)}
+                            disabled={corrected}
+                            className={`h-10 rounded-xl border-2 font-bold transition-all de ${btnClass}`}
+                          >
+                            {opt.key}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {corrected && (
+                    <div className="p-4 bg-amber-50 dark:bg-yellow-900/20 border-t border-amber-100 dark:border-yellow-900/30">
+                      <div className="flex gap-2">
+                        <span className="text-amber-500 shrink-0 mt-0.5"><Icon n="bulb" s={18}/></span>
+                        <div>
+                          <p className="text-sm font-bold text-ink dark:text-white mb-1">
+                            {isCorrect ? 'أحسنت! جواب صحيح.' : `الجواب الصحيح هو: ${text.correct}`}
+                          </p>
+                          <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{text.exp_ar}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            {!corrected ? (
+              <button 
+                onClick={() => setCorrected(true)} 
+                disabled={answeredCount < texts.length}
+                className={`w-full p-4 rounded-2xl font-extrabold text-lg shadow-lg transition-all ${
+                  answeredCount === texts.length 
+                    ? 'bg-gold text-ink hover:brightness-95 shadow-gold/40' 
+                    : 'bg-slate-200 text-slate-400 dark:bg-slate-800 dark:text-slate-600 cursor-not-allowed'
+                }`}
+              >
+                {answeredCount === texts.length ? 'تصحيح الإجابات' : `أجب على جميع الأسئلة (${answeredCount}/${texts.length})`}
+              </button>
+            ) : (
+              <div className="bg-ink text-white p-6 rounded-2xl text-center shadow-xl">
+                <h2 className="text-slate-300 font-semibold mb-2">النتيجة النهائية</h2>
+                <div className="text-5xl font-extrabold text-gold de mb-4">{score} / {texts.length * 5}</div>
+                <button 
+                  onClick={() => { setAnswers({}); setCorrected(false); window.scrollTo(0,0); }} 
+                  className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl font-bold transition-colors"
+                >
+                  إعادة المحاولة
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function NavItem({ icon, label, active, activeColor, activeBg, onClick }) {
+      return (
+        <div onClick={onClick} className="flex flex-col items-center gap-1 cursor-pointer w-14">
+          <div className={`px-3 py-1.5 rounded-xl transition-colors ${active ? activeBg : ''}`}>
+            <Icon n={icon} s={22} className={active ? activeColor : 'text-slate-400 dark:text-slate-500'} />
+          </div>
+          <span className={`text-[10px] font-bold ${active ? activeColor : 'text-slate-400 dark:text-slate-500'}`}>{label}</span>
+        </div>
+      );
+    }
+
+    function MenuItem({ icon, label, color, bg, onClick }) {
+      return (
+        <div onClick={onClick} className="flex items-center justify-between p-3 rounded-2xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+          <div className="flex items-center gap-4">
+            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${bg} ${color}`}>
+              <Icon n={icon} s={24} />
+            </div>
+            <span className="font-bold text-ink dark:text-white">{label}</span>
+          </div>
+          <Icon n="arrowLeft" s={20} className="text-slate-300 dark:text-slate-600" />
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
