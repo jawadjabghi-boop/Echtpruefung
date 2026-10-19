@@ -1,302 +1,34 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>EchtPrüfung</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Cairo', 'system-ui', 'sans-serif'] },
-      colors: { ink: '#0F1B33', gold: '#F5B82E', paper: '#F3F5F9' } } } };
-  </script>
-  <style>
-    body { font-family: 'Cairo', system-ui, sans-serif; background: #F3F5F9; direction: rtl; margin: 0; color: #0F1B33; -webkit-font-smoothing: antialiased; }
-    .flag { height: 4px; background: linear-gradient(90deg, #111 0 33.3%, #D64545 33.3% 66.6%, #F5B82E 66.6%); }
-    .de { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
-    button:focus-visible, input:focus-visible, [tabindex]:focus-visible { outline: 3px solid #F5B82E; outline-offset: 2px; }
-    .card { transition: transform .15s, box-shadow .15s; }
-    .card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -12px rgba(15,27,51,.35); }
-    .ring { transition: stroke-dashoffset .9s ease; }
-    @media (prefers-reduced-motion: reduce) { *, .ring { transition: none !important; } }
-  </style>
-</head>
-<body>
-  <div id="root"></div>
-  <script type="text/babel">
-    const { useState, useEffect } = React;
-    
-    // ⚠️ المفاتيح الجديدة ديال السوبابيز الجديد
-    const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
-    const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
-    
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+const Icons = {
+  home: 'M3 10.5L12 3l9 7.5V19a2 2 0 0 1-2 2h-3.5v-6h-7v6H5a2 2 0 0 1-2-2z',
+  book: 'M4 19.5V5.5A2.5 2.5 0 0 1 6.5 3H20v14H6.5A2.5 2.5 0 0 0 4 19.5zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5M9 7.5h6',
+  headphones: 'M4 15v-3a8 8 0 0 1 16 0v3M4 15a2 2 0 0 1 2-2h1v7H6a2 2 0 0 1-2-2zM20 15a2 2 0 0 0-2-2h-1v7h1a2 2 0 0 0 2-2z',
+  pen: 'M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4zM14.5 5.5l3 3',
+  mic: 'M12 2a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM5 11a7 7 0 0 0 14 0M12 18v4M8 22h8',
+  cap: 'M2 9l10-5 10 5-10 5zM6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5M22 9v6',
+  moon: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z',
+  sun: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4',
+  settings: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z',
+  menu: 'M4 7h16M4 12h10M4 17h16',
+  lock: 'M6 11h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-8a1 1 0 0 1 1-1zM8 11V7a4 4 0 0 1 8 0v4M12 15v2',
+  search: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3',
+  sort: 'M8 9l4-4 4 4M8 15l4 4 4-4',
+  file: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4',
+  users: 'M16 20v-1.5a3.5 3.5 0 0 0-3.5-3.5h-5A3.5 3.5 0 0 0 4 18.5V20M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM20 20v-1.5a3.5 3.5 0 0 0-2.5-3.35M15.5 5.2a3.5 3.5 0 0 1 0 6.6',
+  arrowLeft: 'M15 5l-7 7 7 7',
+  x: 'M6 6l12 12M18 6L6 18',
+  check: 'M5 12.5l4.5 4.5L19 7.5',
+  square: 'M7 4h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3z',
+  refresh: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4',
+  clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2',
+  bulb: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-1.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z'
+};
 
-    const PATHS = {
-      logout: 'M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9',
-      book: 'M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5v14zM4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5',
-      mail: 'M3 5h18v14H3zM3 7l9 6 9-6',
-      lock: 'M5 11h14v10H5zM8 11V7a4 4 0 0 1 8 0v4',
-      back: 'M9 18l6-6-6-6',
-      check: 'M20 6L9 17l-5-5',
-      x: 'M18 6L6 18M6 6l12 12',
-      redo: 'M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5',
-      clock: 'M12 7v5l3 2M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z',
-      file: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8zM14 3v5h5M9 13h6M9 17h4',
-      bulb: 'M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z',
-      right: 'M15 18l-6-6 6-6',
-    };
-    function Icon({ n, s = 20, w = 2 }) {
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d={PATHS[n]} />
-        </svg>
-      );
-    }
-    function Logo({ size = 44 }) {
-      return (
-        <div style={{ width: size, height: size }} className="bg-ink text-gold rounded-xl flex items-center justify-center font-extrabold shadow-md" >
-          <span className="de" style={{ fontSize: size * 0.4 }}>EP</span>
-        </div>
-      );
-    }
+// أيقونات مغلقة تاخد طبقة Duotone ناعمة (عصرية)
+const DuoIcons = ['home','book','headphones','pen','mic','cap','moon','sun','settings','lock','file','users','square','clock','bulb'];
 
-    function App() {
-      const [session, setSession] = useState(null);
-      const [email, setEmail] = useState(''); const [password, setPassword] = useState('');
-      const [isLogin, setIsLogin] = useState(true); const [error, setError] = useState('');
-      const [exams, setExams] = useState([]); const [selectedExam, setSelectedExam] = useState(null);
-      const [loading, setLoading] = useState(false);
-      
-      useEffect(() => {
-        supabase.auth.getSession().then(({ data: { session } }) => setSession(session));
-        const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
-        
-        const fetchExams = async () => {
-          const { data, error } = await supabase.from('exams').select('*');
-          if (data) setExams(data);
-          if (error) console.error("Error fetching exams:", error);
-          setLoading(false);
-        };
-        setLoading(true); fetchExams();
-        
-        return () => sub.subscription.unsubscribe();
-      }, []);
-
-      const handleAuth = async (e) => {
-        e.preventDefault(); setError('');
-        if (isLogin) {
-          const { error } = await supabase.auth.signInWithPassword({ email, password });
-          if (error) setError(error.message);
-        } else {
-          const { error } = await supabase.auth.signUp({ email, password });
-          if (error) setError(error.message); else alert('تم إنشاء الحساب بنجاح!');
-        }
-      };
-
-      if (!session) {
-        return (
-          <div className="min-h-screen flex flex-col">
-            <div className="flag" />
-            <div className="flex-1 flex items-center justify-center p-5">
-              <div className="w-full max-w-sm">
-                <div className="text-center mb-8">
-                  <div className="flex justify-center mb-4"><Logo size={68} /></div>
-                  <h1 className="text-3xl font-extrabold de">EchtPrüfung</h1>
-                  <p className="text-slate-500 mt-1">تدرّب على امتحان الألمانية بنفس أسلوب الامتحان الحقيقي</p>
-                </div>
-                <div className="bg-white p-6 rounded-3xl shadow-[0_20px_50px_-20px_rgba(15,27,51,.25)] border border-slate-100">
-                  <h2 className="text-lg font-bold mb-4">{isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد'}</h2>
-                  {error && <div role="alert" className="bg-red-50 text-red-700 text-sm rounded-xl px-3 py-2 mb-4 border border-red-100">{error}</div>}
-                  <form onSubmit={handleAuth} className="space-y-3">
-                    <label className="relative block">
-                      <span className="absolute top-1/2 -translate-y-1/2 right-3 text-slate-400"><Icon n="mail" s={18} /></span>
-                      <input type="email" dir="ltr" placeholder="البريد الإلكتروني" value={email} onChange={e => setEmail(e.target.value)} required className="w-full py-3 pr-10 pl-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-gold focus:bg-white text-left" />
-                    </label>
-                    <label className="relative block">
-                      <span className="absolute top-1/2 -translate-y-1/2 right-3 text-slate-400"><Icon n="lock" s={18} /></span>
-                      <input type="password" dir="ltr" placeholder="كلمة السر" value={password} onChange={e => setPassword(e.target.value)} required className="w-full py-3 pr-10 pl-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-gold focus:bg-white text-left" />
-                    </label>
-                    <button type="submit" className="w-full py-3 bg-ink text-white font-bold rounded-xl hover:bg-slate-800 active:scale-[.99] transition shadow-lg shadow-ink/20">{isLogin ? 'دخول' : 'تسجيل'}</button>
-                  </form>
-                  <button type="button" className="w-full text-center mt-5 text-sm text-slate-600" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
-                    {isLogin ? 'ما عندكش حساب؟ ' : 'عندك حساب؟ '}<span className="font-bold text-ink underline decoration-gold decoration-2 underline-offset-4">{isLogin ? 'سجل دابا' : 'دخل'}</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        );
-      }
-      if (selectedExam) return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} />;
-
-      return (
-        <div className="min-h-screen pb-16 max-w-2xl mx-auto">
-          <div className="bg-ink text-white rounded-b-[2rem] shadow-xl overflow-hidden">
-            <div className="flag" />
-            <header className="flex justify-between items-center px-5 pt-4">
-              <div className="flex items-center gap-3">
-                <div className="bg-gold text-ink w-11 h-11 rounded-xl flex items-center justify-center font-extrabold de">EP</div>
-                <div><h1 className="font-extrabold text-lg leading-tight de">EchtPrüfung</h1><p className="text-xs text-slate-300 de">Deutsch B1 / B2</p></div>
-              </div>
-              <button onClick={() => supabase.auth.signOut()} aria-label="تسجيل الخروج" className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition"><Icon n="logout" s={18} /></button>
-            </header>
-            <div className="px-5 pt-8 pb-8 text-center">
-              <div className="inline-flex items-center gap-2 text-gold mb-2"><Icon n="book" s={22} /><span className="font-bold">قسم القراءة</span></div>
-              <h2 className="text-5xl font-extrabold de">Lesen</h2>
-              <div className="inline-flex bg-white/10 rounded-full p-1 mt-6" role="tablist">
-                <button role="tab" aria-selected="true" className="px-9 py-2 rounded-full font-bold bg-gold text-ink de">B1</button>
-                <button role="tab" aria-selected="false" className="px-9 py-2 rounded-full font-bold text-slate-300 de">B2</button>
-              </div>
-            </div>
-          </div>
-
-          <div className="px-4 mt-7">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-extrabold">قائمة الامتحانات</h3>
-              {exams.length > 0 && <span className="text-xs font-bold bg-slate-200 text-slate-600 px-3 py-1 rounded-full">{exams.length} امتحان</span>}
-            </div>
-            {loading ? (
-               <div className="text-center text-slate-500 py-12">جاري تحميل الامتحانات...</div>
-            ) : exams.length === 0 ? (
-              <div className="text-center text-slate-500 py-12 bg-white rounded-2xl border border-dashed border-slate-200">
-                <div className="flex justify-center mb-2 text-slate-300"><Icon n="file" s={36} /></div>
-                ما كاين حتى امتحان دابا
-              </div>
-            ) : (
-              exams.map((exam) => (
-                <div key={exam.id} role="button" tabIndex={0} onClick={() => setSelectedExam(exam)} onKeyDown={e => e.key === 'Enter' && setSelectedExam(exam)}
-                  className="card bg-white p-4 rounded-2xl border border-slate-100 mb-3 cursor-pointer flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-xl bg-ink text-gold flex items-center justify-center shrink-0"><Icon n="file" s={22} /></div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-bold truncate de" dir="auto">{exam.title}</h3>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="bg-amber-100 text-amber-800 px-2 py-0.5 rounded-md text-xs font-bold de">{exam.level}</span>
-                      <span className="text-xs text-slate-400 flex items-center gap-1"><Icon n="clock" s={13} />Lesen</span>
-                    </div>
-                  </div>
-                  <span className="text-slate-300"><Icon n="back" s={22} /></span>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      );
-    }
-
-    function ExamView({ exam, onBack }) {
-      const [step, setStep] = useState(0); const [answers, setAnswers] = useState({}); const [corrected, setCorrected] = useState(false);
-      const texts = exam.exam_data.texts; const options = exam.exam_data.options; const currentText = texts[step];
-      const handleSelect = (key) => { setAnswers({ ...answers, [currentText.id]: key }); if (step < texts.length - 1) setTimeout(() => setStep(step + 1), 400); };
-      const BackBtn = () => (
-        <button onClick={onBack} className="flex items-center gap-1 text-ink font-bold bg-white border border-slate-200 rounded-full pl-4 pr-2 py-1.5 hover:bg-slate-50 transition">
-          <Icon n="right" s={20} />رجوع
-        </button>
-      );
-
-      if (corrected) {
-        let score = 0; texts.forEach(t => { if (answers[t.id] === t.correct) score += 5; });
-        const total = texts.length * 5; const pct = total ? score / total : 0; const pass = pct >= 0.6;
-        const R = 52, C = 2 * Math.PI * R;
-        return (
-          <div className="p-4 max-w-2xl mx-auto pb-12">
-            <div className="mb-4"><BackBtn /></div>
-            <div className="bg-ink text-white p-6 rounded-3xl text-center mb-5 shadow-xl relative overflow-hidden">
-              <div className="flag absolute top-0 inset-x-0" />
-              <h2 className="text-slate-300 font-semibold mb-3 mt-1">النتيجة</h2>
-              <div className="relative w-36 h-36 mx-auto" dir="ltr">
-                <svg viewBox="0 0 120 120" className="w-full h-full -rotate-90">
-                  <circle cx="60" cy="60" r={R} fill="none" stroke="rgba(255,255,255,.12)" strokeWidth="10" />
-                  <circle className="ring" cx="60" cy="60" r={R} fill="none" stroke={pass ? '#F5B82E' : '#F87171'} strokeWidth="10" strokeLinecap="round" strokeDasharray={C} strokeDashoffset={C * (1 - pct)} />
-                </svg>
-                <div className="absolute inset-0 flex flex-col items-center justify-center de">
-                  <span className="text-4xl font-extrabold leading-none">{score}</span>
-                  <span className="text-sm text-slate-300">/ {total}</span>
-                </div>
-              </div>
-              <p className={`mt-4 inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold ${pass ? 'bg-emerald-500/20 text-emerald-300' : 'bg-red-500/20 text-red-300'}`}>
-                <Icon n={pass ? 'check' : 'x'} s={16} />{pass ? 'ناجح — أحسنت!' : 'ما وصلتيش للنجاح، عاود'}
-              </p>
-            </div>
-
-            {texts.map(t => {
-              const isCorrect = answers[t.id] === t.correct;
-              return (
-                <div key={t.id} className={`bg-white p-4 rounded-2xl mb-3 border border-slate-100 border-r-4 ${isCorrect ? 'border-r-emerald-500' : 'border-r-red-500'}`}>
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="font-extrabold de">Text {t.id}</h4>
-                    <span className={`w-7 h-7 rounded-full flex items-center justify-center text-white ${isCorrect ? 'bg-emerald-500' : 'bg-red-500'}`}><Icon n={isCorrect ? 'check' : 'x'} s={16} w={3} /></span>
-                  </div>
-                  <div className="flex flex-wrap gap-2 text-sm">
-                    <span className={`px-3 py-1 rounded-lg font-semibold ${isCorrect ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'}`}>اختيارك: <b className="de">{answers[t.id] || 'لم تجب'}</b></span>
-                    {!isCorrect && <span className="px-3 py-1 rounded-lg bg-emerald-50 text-emerald-700 font-semibold">الصحيح: <b className="de">{t.correct}</b></span>}
-                  </div>
-                  {t.exp_ar && (
-                    <div className="mt-3 flex gap-2 text-sm text-slate-600 bg-amber-50/70 border border-amber-100 p-3 rounded-xl leading-relaxed">
-                      <span className="text-amber-500 shrink-0 mt-0.5"><Icon n="bulb" s={18} /></span><p>{t.exp_ar}</p>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-            <button onClick={() => { setAnswers({}); setStep(0); setCorrected(false); }} className="w-full bg-ink text-white p-4 rounded-2xl font-bold mt-4 flex items-center justify-center gap-2 hover:bg-slate-800 transition shadow-lg shadow-ink/20">
-              <Icon n="redo" s={18} />إعادة المحاولة
-            </button>
-          </div>
-        );
-      }
-
-      const answered = Object.keys(answers).length;
-      return (
-        <div className="p-4 max-w-2xl mx-auto pb-12">
-          <div className="flex justify-between items-center mb-4">
-            <BackBtn />
-            <span className="font-extrabold bg-ink text-white px-4 py-1.5 rounded-full text-sm de" dir="ltr">{step + 1} / {texts.length}</span>
-          </div>
-          <div className="h-2 bg-slate-200 rounded-full overflow-hidden mb-3" role="progressbar" aria-valuenow={answered} aria-valuemax={texts.length}>
-            <div className="h-full bg-gold rounded-full transition-all duration-300" style={{ width: `${(answered / texts.length) * 100}%` }} />
-          </div>
-          <div className="flex gap-2 justify-center mb-5 flex-wrap">
-            {texts.map((t, i) => (
-              <button key={t.id} onClick={() => setStep(i)} aria-label={`Text ${t.id}`}
-                className={`w-9 h-9 rounded-full text-sm font-bold de transition border-2 ${i === step ? 'border-ink bg-ink text-white' : answers[t.id] ? 'border-gold bg-amber-100 text-ink' : 'border-slate-200 bg-white text-slate-400'}`}>{i + 1}</button>
-            ))}
-          </div>
-
-          <div className="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm mb-5">
-            <p className="leading-8 text-[15px] de text-slate-800 whitespace-pre-line" dir="ltr">{currentText.content}</p>
-          </div>
-
-          <div className="space-y-2.5">
-            {options.map(opt => {
-              const on = answers[currentText.id] === opt.key;
-              return (
-                <button key={opt.key} onClick={() => handleSelect(opt.key)} dir="ltr"
-                  className={`w-full text-left p-3 rounded-xl border-2 transition flex items-center gap-3 ${on ? 'border-gold bg-amber-50 shadow-sm' : 'border-slate-200 bg-white hover:border-slate-300'}`}>
-                  <span className={`w-9 h-9 rounded-lg flex items-center justify-center font-extrabold shrink-0 de ${on ? 'bg-gold text-ink' : 'bg-slate-100 text-slate-600'}`}>{opt.key}</span>
-                  <span className="text-sm font-semibold text-ink de flex-1">{opt.de}</span>
-                  {on && <span className="text-amber-500"><Icon n="check" s={20} w={3} /></span>}
-                </button>
-              );
-            })}
-          </div>
-
-          {answered === texts.length && (
-            <button onClick={() => setCorrected(true)} className="w-full bg-gold text-ink p-4 rounded-2xl font-extrabold mt-6 flex items-center justify-center gap-2 hover:brightness-95 transition shadow-lg shadow-amber-300/40">
-              <Icon n="check" s={20} w={3} />تصحيح الإجابات
-            </button>
-          )}
-        </div>
-      );
-    }
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
-</body>
-</html>
+const Icon = ({ n, s = 20, w = 2, className = "" }) => (
+  <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className}>
+    {DuoIcons.includes(n) && <path d={Icons[n]} fill="currentColor" fillOpacity="0.16" stroke="none" />}
+    <path d={Icons[n]} />
+  </svg>
+);
