@@ -17,18 +17,12 @@
       darkMode: 'class',
       theme: { extend: { fontFamily: { sans: ['Cairo', 'system-ui', 'sans-serif'] },
       colors: { 
-        ink: '#0F1B33', 
-        gold: '#F5B82E', 
-        paper: '#F3F5F9',
-        brandBlue: '#3B82F6',
-        brandPurple: '#8B5CF6',
-        brandOrange: '#F59E0B',
-        brandRed: '#F43F5E',
-        brandGreen: '#10b981'
+        ink: '#0F1B33', gold: '#F5B82E', paper: '#F3F5F9',
+        brandBlue: '#3B82F6', brandPurple: '#8B5CF6', brandOrange: '#F59E0B', brandRed: '#F43F5E', brandGreen: '#10b981'
       } } } };
   </script>
   <style>
-    body { font-family: 'Cairo', system-ui, sans-serif; background-color: #F3F5F9; direction: rtl; margin: 0; color: #0F1B33; -webkit-font-smoothing: antialiased; transition: background-color 0.3s, color 0.3s; }
+    body { font-family: 'Cairo', system-ui, sans-serif; background-color: #F3F5F9; direction: rtl; margin: 0; color: #0F1B33; -webkit-font-smoothing: antialiased; }
     .dark body { background-color: #0B1120; color: #F8FAFC; }
     .bg-dots { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 25px 25px; }
     .dark .bg-dots { background-image: radial-gradient(#1e293b 1px, transparent 1px); }
@@ -44,113 +38,37 @@
     const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
     const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-    // الأيقونات (Duotone Pro) — f: طبقة التعبئة الناعمة | s: الإطار الرئيسي | a: تفاصيل إضافية
+    // أيقونات Duotone Pro
     const Icons = {
-      home: {
-        f: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z',
-        s: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z',
-        a: 'M10 21v-5a2 2 0 0 1 4 0v5'
-      },
-      book: {
-        f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z',
-        s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z',
-        a: 'M12 6.5V20'
-      },
-      headphones: {
-        f: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z',
-        s: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z',
-        a: 'M4 14.5V12a8 8 0 0 1 16 0v2.5'
-      },
-      pen: {
-        f: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z',
-        s: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z',
-        a: 'M14.5 6l3.5 3.5'
-      },
-      mic: {
-        f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z',
-        s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z',
-        a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7'
-      },
-      cap: {
-        f: 'M2 9.5l10-5 10 5-10 5z',
-        s: 'M2 9.5l10-5 10 5-10 5z',
-        a: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4M22 9.5v6'
-      },
-      moon: {
-        f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z',
-        s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z',
-        a: 'M18 2.5v3M16.5 4h3'
-      },
-      sun: {
-        f: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
-        s: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z',
-        a: 'M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4'
-      },
-      settings: {
-        f: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z',
-        s: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z',
-        a: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'
-      },
-      menu: {
-        s: 'M4 7h16M4 12h10M4 17h16'
-      },
-      lock: {
-        f: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z',
-        s: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z',
-        a: 'M8 10.5V7a4 4 0 0 1 8 0v3.5M12 14.5v3'
-      },
-      search: {
-        f: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z',
-        s: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z',
-        a: 'M16 16l5 5'
-      },
-      sort: {
-        s: 'M8 9l4-4 4 4M8 15l4 4 4-4'
-      },
-      file: {
-        f: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z',
-        s: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z',
-        a: 'M14 3v5h5M9 13h6M9 17h4'
-      },
-      users: {
-        f: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20z',
-        s: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20',
-        a: 'M15.5 5.2a3.5 3.5 0 0 1 0 6.6M20.5 20v-1.5a3.5 3.5 0 0 0-2.5-3.35'
-      },
-      arrowLeft: {
-        s: 'M15 5l-7 7 7 7'
-      },
-      x: {
-        s: 'M6 6l12 12M18 6L6 18'
-      },
-      check: {
-        s: 'M5 12.5l4.5 4.5L19 7.5'
-      },
-      square: {
-        f: 'M7.5 3.5h9a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-9a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z',
-        s: 'M7.5 3.5h9a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-9a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z',
-        a: 'M8.5 12.5l2.5 2.5 4.5-5'
-      },
-      refresh: {
-        s: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4'
-      },
-      clock: {
-        f: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z',
-        s: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z',
-        a: 'M12 7v5l3 2'
-      },
-      bulb: {
-        f: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z',
-        s: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z',
-        a: 'M9.5 19.5h5M10.5 22h3'
-      }
+      home: { f: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z', s: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z', a: 'M10 21v-5a2 2 0 0 1 4 0v5' },
+      book: { f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', a: 'M12 6.5V20' },
+      headphones: { f: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', s: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', a: 'M4 14.5V12a8 8 0 0 1 16 0v2.5' },
+      pen: { f: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', s: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', a: 'M14.5 6l3.5 3.5' },
+      mic: { f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7' },
+      cap: { f: 'M2 9.5l10-5 10 5-10 5z', s: 'M2 9.5l10-5 10 5-10 5z', a: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4M22 9.5v6' },
+      moon: { f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', a: 'M18 2.5v3M16.5 4h3' },
+      sun: { f: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', s: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', a: 'M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4' },
+      settings: { f: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', s: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z', a: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' },
+      menu: { s: 'M4 7h16M4 12h10M4 17h16' },
+      lock: { f: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', s: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', a: 'M8 10.5V7a4 4 0 0 1 8 0v3.5M12 14.5v3' },
+      search: { f: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', s: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', a: 'M16 16l5 5' },
+      sort: { s: 'M8 9l4-4 4 4M8 15l4 4 4-4' },
+      file: { f: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', s: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', a: 'M14 3v5h5M9 13h6M9 17h4' },
+      users: { f: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20z', s: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20', a: 'M15.5 5.2a3.5 3.5 0 0 1 0 6.6M20.5 20v-1.5a3.5 3.5 0 0 0-2.5-3.35' },
+      arrowLeft: { s: 'M15 5l-7 7 7 7' },
+      x: { s: 'M6 6l12 12M18 6L6 18' },
+      check: { s: 'M5 12.5l4.5 4.5L19 7.5' },
+      square: { f: 'M7.5 3.5h9a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-9a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z', s: 'M7.5 3.5h9a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-9a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z' },
+      refresh: { s: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4' },
+      clock: { f: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', s: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', a: 'M12 7v5l3 2' },
+      bulb: { f: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', s: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', a: 'M9.5 19.5h5M10.5 22h3' }
     };
 
     const Icon = ({ n, s = 20, w = 2, className = "" }) => {
-      const ic = Icons[n];
+      const ic = Icons[n] || {};
       return (
         <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className}>
-          {ic.f && <path d={ic.f} fill="currentColor" fillOpacity="0.16" fillRule="evenodd" stroke="none" />}
+          {ic.f && <path d={ic.f} fill="currentColor" fillOpacity="0.16" stroke="none" />}
           {ic.s && <path d={ic.s} />}
           {ic.a && <path d={ic.a} />}
         </svg>
@@ -232,7 +150,9 @@
 
       if (selectedExam) return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} />;
 
-      let filteredExams = exams.filter(e => e.skill === view);
+      // ✅ هنا الفيكس: كنقلبو على الحرف الكبير
+      const skillMap = { 'lesen': 'Lesen', 'horen': 'Hören', 'schreiben': 'Schreiben', 'sprechen': 'Sprechen', 'pruefung': 'Pruefung' };
+      let filteredExams = exams.filter(e => e.skill === skillMap[view]);
       
       if (view === 'lesen') {
          if (activeTab !== 'Prüfungen') filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
@@ -244,7 +164,6 @@
 
       return (
         <div className="min-h-screen pb-24 bg-dots relative transition-colors duration-300">
-          
           <div className="bg-white dark:bg-[#1E293B] rounded-b-3xl shadow-sm px-5 py-4 flex justify-between items-center mb-6 mx-4 mt-4 sticky top-4 z-40 border border-slate-100 dark:border-slate-800">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 bg-ink rounded-xl flex items-center justify-center font-extrabold text-xl text-gold shadow-sm">EP</div>
