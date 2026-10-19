@@ -34,46 +34,165 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
     
-    // مفاتيح السوبابيز ديالك
     const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
     const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+    
+    // 🔥 إعدادات صارمة باش نمنعو مشكل JWT expired ونمسحو أي جلسة قديمة
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
+      auth: { 
+        autoRefreshToken: false, 
+        persistSession: false, 
+        detectSessionInUrl: false 
+      }
+    });
 
-    // الأيقونات
+    // حفظ الإعدادات في الجهاز
+    const loadPref = (k, d) => {
+      try { const v = localStorage.getItem('ep_' + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; }
+    };
+    const savePref = (k, v) => {
+      try { localStorage.setItem('ep_' + k, JSON.stringify(v)); } catch (e) {}
+    };
+
+    // الأيقونات (Duotone Pro) — f: تعبئة ناعمة | t: تعبئة أقوى للعمق | s: الإطار | a: التفاصيل
     const Icons = {
-      home: { f: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z', s: 'M4 10.5L12 4l8 6.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z', a: 'M10 21v-5a2 2 0 0 1 4 0v5' },
-      book: { f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', a: 'M12 6.5V20' },
-      headphones: { f: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', s: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', a: 'M4 14.5V12a8 8 0 0 1 16 0v2.5' },
-      pen: { f: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', s: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', a: 'M14.5 6l3.5 3.5' },
-      mic: { f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7' },
-      cap: { f: 'M2 9.5l10-5 10 5-10 5z', s: 'M2 9.5l10-5 10 5-10 5z', a: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4M22 9.5v6' },
-      moon: { f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', a: 'M18 2.5v3M16.5 4h3' },
-      sun: { f: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', s: 'M12 16a4 4 0 1 0 0-8 4 4 0 0 0 0 8z', a: 'M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4' },
-      settings: { f: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', s: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z', a: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' },
+      home: {
+        f: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z',
+        t: 'M10 21v-5a2 2 0 0 1 4 0v5z',
+        s: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z',
+        a: 'M10 21v-5a2 2 0 0 1 4 0v5M16.5 7V4.5h2.5v4.6'
+      },
+      book: {
+        f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z',
+        t: 'M12 6.5c1.5-1.5 4-2 9-2V18c-5 0-7.5.5-9 2z',
+        s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z',
+        a: 'M12 6.5V20M6 8.2c1.6.1 3 .4 4 1M6 11.7c1.6.1 3 .4 4 1M14 9.2c1-.6 2.4-.9 4-1'
+      },
+      headphones: {
+        f: 'M4 14.5V12a8 8 0 0 1 16 0v2.5z',
+        t: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z',
+        s: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z',
+        a: 'M4 14.5V12a8 8 0 0 1 16 0v2.5'
+      },
+      pen: {
+        f: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z',
+        t: 'M3 20.2l1.2-4.5 3.3 3.3z',
+        s: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z',
+        a: 'M14.5 6l3.5 3.5M12 21h9'
+      },
+      mic: {
+        f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z',
+        t: 'M8.5 9h7v2a3.5 3.5 0 0 1-7 0z',
+        s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z',
+        a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7M8.5 6h2M8.5 8.5h2'
+      },
+      cap: {
+        f: 'M2 9.5l10-5 10 5-10 5z',
+        t: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4l-6 3z',
+        s: 'M2 9.5l10-5 10 5-10 5z',
+        a: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4M22 9.5v6M21 15.5h2'
+      },
+      moon: {
+        f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z',
+        t: 'M20 14.5a6.5 6.5 0 0 1-8.2-9.6A8.5 8.5 0 1 0 20 14.5z',
+        s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z',
+        a: 'M18 2.5v3M16.5 4h3M21 8.5v2M20 9.5h2'
+      },
+      sun: {
+        f: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z',
+        t: 'M12 14.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z',
+        s: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z',
+        a: 'M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4'
+      },
+      settings: {
+        f: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z',
+        t: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
+        s: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z',
+        a: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'
+      },
       menu: { s: 'M4 7h16M4 12h10M4 17h16' },
-      lock: { f: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', s: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', a: 'M8 10.5V7a4 4 0 0 1 8 0v3.5M12 14.5v3' },
-      search: { f: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', s: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', a: 'M16 16l5 5' },
+      lock: {
+        f: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z',
+        t: 'M12 17.2a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4z',
+        s: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z',
+        a: 'M8 10.5V7a4 4 0 0 1 8 0v3.5M12 17v1.5'
+      },
+      search: {
+        f: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z',
+        t: 'M10.5 15.5a5 5 0 1 0 0-10 5 5 0 0 0 0 10z',
+        s: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z',
+        a: 'M16 16l5 5M7.8 9.2a3.2 3.2 0 0 1 2.2-2.2'
+      },
       sort: { s: 'M8 9l4-4 4 4M8 15l4 4 4-4' },
-      file: { f: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', s: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', a: 'M14 3v5h5M9 13h6M9 17h4' },
-      users: { f: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20z', s: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20', a: 'M15.5 5.2a3.5 3.5 0 0 1 0 6.6M20.5 20v-1.5a3.5 3.5 0 0 0-2.5-3.35' },
+      file: {
+        f: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z',
+        t: 'M14 3v5h5z',
+        s: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z',
+        a: 'M14 3v5h5M9 13h6M9 17h4'
+      },
+      users: {
+        f: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20z',
+        t: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z',
+        s: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20',
+        a: 'M15.5 5.2a3.5 3.5 0 0 1 0 6.6M20.5 20v-1.5a3.5 3.5 0 0 0-2.5-3.35'
+      },
       arrowLeft: { s: 'M15 5l-7 7 7 7' },
       x: { s: 'M6 6l12 12M18 6L6 18' },
       check: { s: 'M5 12.5l4.5 4.5L19 7.5' },
-      square: { f: 'M7.5 3.5h9a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-9a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z', s: 'M7.5 3.5h9a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-9a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z' },
+      square: {
+        f: 'M8 2.5h8a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2z',
+        t: 'M8 2.5h8a2 2 0 0 1 2 2V6H6V4.5a2 2 0 0 1 2-2z',
+        s: 'M8 2.5h8a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2z',
+        a: 'M10.5 18.5h3M6 6h12'
+      },
       refresh: { s: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4' },
-      clock: { f: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', s: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', a: 'M12 7v5l3 2' },
-      bulb: { f: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', s: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', a: 'M9.5 19.5h5M10.5 22h3' }
+      clock: {
+        f: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z',
+        t: 'M12 12V3a9 9 0 0 1 9 9z',
+        s: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z',
+        a: 'M12 7v5l3 2'
+      },
+      bulb: {
+        f: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z',
+        t: 'M9 14h6v3H9z',
+        s: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z',
+        a: 'M9.5 19.5h5M10.5 22h3M12 14v-3.5M10.5 10.5L12 9l1.5 1.5'
+      }
     };
 
-    const Icon = ({ n, s = 20, w = 2, className = "" }) => {
+    const Icon = ({ n, s = 20, w = 2, className = "", onClick }) => {
       const ic = Icons[n] || {};
       return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className}>
-          {ic.f && <path d={ic.f} fill="currentColor" fillOpacity="0.16" stroke="none" />}
+        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className} onClick={onClick}>
+          {ic.f && <path d={ic.f} fill="currentColor" fillOpacity="0.14" stroke="none" />}
+          {ic.t && <path d={ic.t} fill="currentColor" fillOpacity="0.3" stroke="none" />}
           {ic.s && <path d={ic.s} />}
           {ic.a && <path d={ic.a} />}
         </svg>
       );
+    };
+
+    // بيانات Alex Und Cora الثابتة
+    const fallbackExamData = {
+      options: [
+        { key: "a", de: "Eltern trotz Kritik mit der Schule zufrieden", ar: "الآباء راضون عن المدرسة رغم الانتقادات" },
+        { key: "b", de: "Elektromobilität für Angestellte", ar: "التنقل الكهربائي للموظفين" },
+        { key: "c", de: "STÄRKUNG VON BUS UND BAHN", ar: "تعزيز الحافلات والقطارات" },
+        { key: "d", de: "Schule und Umweltschutz", ar: "المدرسة وحماية البيئة" },
+        { key: "e", de: "Bald keine Firmenwagen mehr?", ar: "هل ستختفي سيارات الشركات قريباً؟" },
+        { key: "f", de: "Ticketpreise bei der Bahn", ar: "أسعار التذاكر في السكك الحديدية" },
+        { key: "g", de: "Lehrerberuf wird immer attraktiver", ar: "مهنة التدريس تصبح أكثر جاذبية" },
+        { key: "h", de: "Engagement für die Natur", ar: "الالتزام بالطبيعة" },
+        { key: "i", de: "Preissenkungen bei Bus, Straßenbahn und U-Bahn!", ar: "تخفيضات في الحافلات والترام والمترو" },
+        { key: "j", de: "ZU WENIG LEHRER - STADT REAGIERT", ar: "نقص في المعلمين - المدينة تتخذ إجراءات" }
+      ],
+      texts: [
+        { id: 1, content: "Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen? Gerade In Städten kommt man mit einem E-Bike schneller und bequemer ans Ziel als mit dem Auto. Und Parkplatzprobleme gibt es auch nicht. Sie fördern zudem die Gesundheit Ihrer Mitarbeiter und schonen die Umwelt, und dabei können Sie noch Steuern sparen. Bei der BikeLeasing GmbH bekommen Sie Angebote, die zu Ihnen passen. Melden Sie sich bei uns an, und wir kümmern uns um den Rest", correct: "b", exp_ar: "ملخص الإعلان: تأجير الدراجات الكهربائية: البديل الذكي لسيارات الشركة. فوائد صحية وبيئية: تعزيز صحة الموظفين البدنية مع الحفاظ على البيئة. مزايا مالية: توفير في الضرائب للشركة." },
+        { id: 2, content: "Die Bahn erhöht dieses Jahr die Ticketipreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit. dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!", correct: "c", exp_ar: "ملخص الإعلان: تثبيت أسعار التذاكر: قررت هيئة السكك الحديدية عدم رفع الأسعار هذا العام. تخفيضات النقل العام المحلي: سيتم تخفيض أسعار تذاكر النقل الداخلي لتقليل عدد الموظفين الذين يعتمدون على سياراتهم." },
+        { id: 3, content: "Vergangeren Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eitern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.", correct: "a", exp_ar: "ملخص الإعلان: رضا عام مرتفع: عبر 80% من المشاركين عن رضاهم عن المدارس. ضعف التأهيل المهني: يرى 40% فقط من الأهالي أن المدرسة تجهز أطفالهم بشكل كافٍ لدخول سوق العمل." },
+        { id: 4, content: "Berlin. in der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studie- rende die Schülerinnen und Schüler der Haupt- stadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität lei- det stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attrakti- ver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden, die denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.", correct: "j", exp_ar: "ملخص الإعلان: عجز كبير في الكوادر: يغيب آلاف المعلمين المؤهلين عن المدارس. خطة السينات للإنقاذ: إطلاق حملة إعلانية تهدف لتحسين صورة مهنة التدريس وجعلها أكثر جاذبية. دراسة خيار زيادة الرواتب كحافز مادي للمعلمين." },
+        { id: 5, content: "KaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz. Sie wollen sich auch aktiv gegen Umweltverschmutzung einsetzen? Sie wöllen sich für mehr Naturschutz engagieren? ‚Dann sind Sie bei uns richtig. Wir haben regelmäßige Treffen und führen Informationsveran- staltungen zu verschiedenen aktuellen Themen durch, außerdem gibt es eine monatliche Mit- gliederzeitschrift, Melden Sie sich einfach bei uns.", correct: "h", exp_ar: "ملخص الإعلان: مجالات العمل: تركز بشكل أساسي على حماية البيئة وحماية الحيوانات. ما تقدمه للأعضاء: لقاءات دورية، فعاليات إعلامية، ومجلة شهرية." }
+      ]
     };
 
     function App() {
@@ -83,11 +202,16 @@
       const [loading, setLoading] = useState(true);
       const [view, setView] = useState('lesen');
       const [activeTab, setActiveTab] = useState('Teile 1');
-      const [isDarkMode, setIsDarkMode] = useState(false);
+      const [isDarkMode, setIsDarkMode] = useState(() => loadPref('dark', false));
       const [showSettings, setShowSettings] = useState(false);
       const [showMenu, setShowMenu] = useState(false);
       const [selectedExam, setSelectedExam] = useState(null);
       
+      const [fontSize, setFontSize] = useState(() => loadPref('fontSize', 100));
+      const [showCards, setShowCards] = useState(true);
+      const [showAr, setShowAr] = useState(() => loadPref('showAr', true));
+
+      // إعدادات الحساب
       const [email, setEmail] = useState(''); 
       const [password, setPassword] = useState('');
       const [isLogin, setIsLogin] = useState(true); 
@@ -96,36 +220,52 @@
       useEffect(() => {
         if (isDarkMode) document.documentElement.classList.add('dark');
         else document.documentElement.classList.remove('dark');
+        savePref('dark', isDarkMode);
       }, [isDarkMode]);
 
+      useEffect(() => { savePref('fontSize', fontSize); }, [fontSize]);
+      useEffect(() => { savePref('showAr', showAr); }, [showAr]);
+
+      const fetchExams = async () => {
+        setLoading(true);
+        try {
+          // نجيبو الداتا من السوبابيز
+          const { data, error } = await supabase.from('exams').select('*');
+          
+          let supabaseExams = [];
+          if (!error && data) {
+            // كنحيدو غير الدروس الناقصة
+            supabaseExams = data.filter(exam => exam.exam_data && exam.exam_data.texts && exam.exam_data.options);
+          }
+
+          // كنزيدو دائماً امتحان Alex Und Cora كضمانة باش ما يبانش التطبيق خاوي
+          const alexExam = { 
+            id: 'alex-cora-fallback', 
+            title: 'Alex Und Cora', 
+            level: 'B1', 
+            skill: 'Lesen', 
+            sub_section: 'Teile 1', 
+            is_pro: false, 
+            exam_data: fallbackExamData 
+          };
+
+          // كنعرضو الداتا ديال السوبابيز + أليكس
+          setExams([alexExam, ...supabaseExams]);
+
+        } catch (err) {
+          console.error("🚨 خطأ:", err);
+          setExams([{ id: 'alex-cora-fallback', title: 'Alex Und Cora', level: 'B1', skill: 'Lesen', sub_section: 'Teile 1', is_pro: false, exam_data: fallbackExamData }]);
+        }
+        setLoading(false);
+      };
+
       useEffect(() => {
-        // 🔥 إصلاح مشكل JWT expired: كيمسح الجلسة القديمة فوراً
-        supabase.auth.signOut().catch(() => {});
+        // 🔥 حيدنا أي توكن قديم (JWT) بلا ما نعيطو للسيرفر
+        localStorage.removeItem('sb-mgsfzvmewuiuebccanyf-auth-token');
         
         const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => setSession(s));
-        
-        const fetchExams = async () => {
-          setLoading(true);
-          try {
-            const { data, error } = await supabase.from('exams').select('*');
-            
-            if (error) {
-              console.error("🚨 خطأ في Supabase:", error);
-              setExams([]);
-            } else if (data) {
-              // 🔥 الحماية: كيتجاهل الدروس الناقصة باش ما يطيحش التطبيق وتختفي الأيقونات
-              const safeData = data.filter(exam => exam.exam_data && exam.exam_data.texts && exam.exam_data.options);
-              setExams(safeData);
-            } else {
-              setExams([]);
-            }
-          } catch (err) {
-            console.error("🚨 خطأ شبكة:", err);
-            setExams([]);
-          }
-          setLoading(false);
-        };
         fetchExams();
+
         return () => sub.subscription.unsubscribe();
       }, []);
 
@@ -140,7 +280,6 @@
         }
       };
 
-      // شاشة تسجيل الدخول
       if (!session && !isGuest) {
         return (
           <div className="min-h-screen flex flex-col bg-paper dark:bg-[#0B1120] transition-colors">
@@ -175,7 +314,7 @@
         );
       }
 
-      if (selectedExam) return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} />;
+      if (selectedExam) return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} fontSize={fontSize} showAr={showAr} />;
 
       const skillMap = { 'lesen': 'Lesen', 'horen': 'Hören', 'schreiben': 'Schreiben', 'sprechen': 'Sprechen', 'pruefung': 'Pruefung' };
       let filteredExams = exams.filter(e => e.skill === skillMap[view]);
@@ -195,6 +334,9 @@
               </div>
             </div>
             <div className="flex gap-2">
+              <button onClick={() => fetchExams()} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-gold">
+                <Icon n="refresh" s={20} />
+              </button>
               <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-gold">
                 <Icon n={isDarkMode ? 'sun' : 'moon'} s={20} />
               </button>
@@ -277,6 +419,36 @@
             <NavItem icon="cap" label="امتحان" active={view === 'pruefung'} onClick={() => setView('pruefung')} activeColor="text-gold" activeBg="bg-gold/10" />
           </div>
 
+          {/* إعدادات الخط */}
+          {showSettings && (
+            <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center p-4 backdrop-blur-sm" onClick={() => setShowSettings(false)}>
+              <div className="bg-white dark:bg-[#1E293B] w-full max-w-sm rounded-3xl p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center gap-4 text-slate-700 dark:text-slate-200 font-bold">
+                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold"><Icon n="square" s={20}/></div>
+                    أنت الان في وضع التطبيق
+                  </div>
+                  <div onClick={() => setShowAr(!showAr)} className="flex items-center justify-between gap-4 text-slate-700 dark:text-slate-200 font-bold cursor-pointer">
+                    <span>إظهار الترجمة العربية في الامتحان</span>
+                    <span className={`w-12 h-7 rounded-full p-1 flex items-center transition-colors shrink-0 ${showAr ? 'bg-gold justify-end' : 'bg-slate-200 dark:bg-slate-700 justify-start'}`}>
+                      <span className="w-5 h-5 rounded-full bg-white shadow"></span>
+                    </span>
+                  </div>
+                  <hr className="border-slate-100 dark:border-slate-800 my-2" />
+                  <div className="flex justify-between items-center text-slate-700 dark:text-slate-200 font-bold">
+                    <span>حجم الخط</span>
+                    <Icon n="refresh" s={18} className="text-slate-400 cursor-pointer" onClick={() => { setFontSize(100); setShowAr(true); }} />
+                  </div>
+                  <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-800 rounded-xl p-1 border border-slate-200 dark:border-slate-700">
+                    <button onClick={() => setFontSize(Math.max(70, fontSize - 10))} className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition">-</button>
+                    <span className="font-bold text-ink dark:text-white de">{fontSize}%</span>
+                    <button onClick={() => setFontSize(Math.min(160, fontSize + 10))} className="w-10 h-10 flex items-center justify-center text-xl font-bold text-slate-500 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-lg transition">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
           {showMenu && (
             <div className="fixed inset-0 bg-black/40 z-50 flex justify-end backdrop-blur-sm" onClick={() => setShowMenu(false)}>
               <div className="bg-white dark:bg-[#0B1120] w-[85%] max-w-sm h-full shadow-2xl flex flex-col transition-transform translate-x-0" onClick={e => e.stopPropagation()}>
@@ -296,7 +468,7 @@
                   <MenuItem icon="mic" label="Sprechen" color="text-brandRed" bg="bg-red-50 dark:bg-red-900/20" onClick={() => {setView('sprechen'); setShowMenu(false)}} />
                 </div>
                 <div className="p-6">
-                  <button onClick={() => { supabase.auth.signOut(); setIsGuest(false); }} className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-xl py-3 text-slate-700 dark:text-slate-300 font-bold">
+                  <button onClick={() => { localStorage.removeItem('sb-mgsfzvmewuiuebccanyf-auth-token'); window.location.reload(); }} className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-xl py-3 text-slate-700 dark:text-slate-300 font-bold">
                     تسجيل الخروج <Icon n="arrowLeft" s={20} />
                   </button>
                 </div>
@@ -307,26 +479,12 @@
       );
     }
 
-    function ExamView({ exam, onBack }) {
+    function ExamView({ exam, onBack, fontSize, showAr }) {
       const [answers, setAnswers] = useState({});
       const [corrected, setCorrected] = useState(false);
 
-      // 🔥 الحماية: كيتأكد من الداتا كاملة قبل ما يعرض الدرس
-      if (!exam.exam_data || !exam.exam_data.texts || !exam.exam_data.options) {
-        return (
-          <div className="min-h-screen bg-paper dark:bg-[#0B1120] p-5 flex flex-col items-center justify-center">
-            <button onClick={onBack} className="absolute top-5 right-5 flex items-center gap-1 font-bold text-ink dark:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full px-4 py-1.5">
-              <Icon n="arrowLeft" s={20} /> رجوع
-            </button>
-            <Icon n="file" s={60} className="text-slate-300 mb-4" />
-            <h2 className="text-xl font-bold text-ink dark:text-white mb-2">{exam.title}</h2>
-            <p className="text-slate-500 text-center">هاد الدرس مازال ما تعمرش مزيان فـ السوبابيز.<br/>خاصو يكون فيه <b>options</b> و <b>texts</b>.</p>
-          </div>
-        );
-      }
-
-      const texts = exam.exam_data.texts;
-      const options = exam.exam_data.options;
+      const texts = exam.exam_data?.texts || fallbackExamData.texts;
+      const options = exam.exam_data?.options || fallbackExamData.options;
       const answeredCount = Object.keys(answers).length;
 
       const handleSelect = (textId, key) => {
@@ -340,7 +498,7 @@
       }
 
       return (
-        <div className="min-h-screen bg-paper dark:bg-[#0B1120] pb-24">
+        <div className="min-h-screen bg-paper dark:bg-[#0B1120] pb-24" style={{ fontSize: `${fontSize}%` }}>
           <div className="bg-white dark:bg-[#1E293B] px-5 py-4 shadow-sm flex items-center justify-between sticky top-0 z-40">
             <button onClick={onBack} className="flex items-center gap-1 font-bold text-ink dark:text-white">
               <Icon n="arrowLeft" s={20} /> رجوع
@@ -350,15 +508,28 @@
           </div>
 
           <div className="max-w-2xl mx-auto p-4 space-y-6">
+            <div className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm text-center">
+               <h1 className="font-extrabold text-xl text-ink dark:text-white de mb-1">{exam.title}</h1>
+               <p className="text-sm text-slate-500 mb-2">{exam.level} • {exam.skill} {exam.sub_section}</p>
+               <div className="flex justify-between text-xs font-bold text-slate-400 mb-1">
+                 <span>ÜBERSCHRIFTEN</span>
+                 <span>{answeredCount} / {texts.length}</span>
+               </div>
+               <div className="w-full bg-slate-100 dark:bg-slate-800 rounded-full h-2">
+                 <div className="bg-gold h-2 rounded-full transition-all" style={{ width: `${(answeredCount/texts.length)*100}%` }}></div>
+               </div>
+            </div>
+
+            {/* كل العناوين (a - j) مرة واحدة في أعلى الصفحة كأنه امتحان واحد */}
             <div className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
               <h3 className="font-bold text-ink dark:text-white mb-3 text-sm">الاختيارات (a - j):</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div className="grid grid-cols-1 gap-2">
                 {options.map(opt => (
                   <div key={opt.key} className="flex items-start gap-2 text-sm">
                     <span className="font-bold text-gold de">{opt.key})</span>
                     <div className="flex flex-col">
                       <span className="font-semibold text-ink dark:text-white de" dir="ltr">{opt.de}</span>
-                      <span className="text-xs text-slate-500">{opt.ar}</span>
+                      {showAr && <span className="text-xs text-slate-500">{opt.ar}</span>}
                     </div>
                   </div>
                 ))}
@@ -368,12 +539,13 @@
             {texts.map((text, index) => {
               const selectedKey = answers[text.id];
               const isCorrect = selectedKey === text.correct;
+              const selectedOpt = options.find(o => o.key === selectedKey);
 
               return (
                 <div key={text.id} className="bg-white dark:bg-[#1E293B] rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
                   <div className="p-5 border-b border-slate-100 dark:border-slate-800">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-extrabold text-lg text-ink dark:text-white de">Text {index + 1}</h3>
+                      <h3 className="font-extrabold text-lg text-ink dark:text-white de">{index + 1}</h3>
                       {corrected && (
                         <span className={`w-8 h-8 rounded-full flex items-center justify-center text-white ${isCorrect ? 'bg-green-500' : 'bg-red-500'}`}>
                           <Icon n={isCorrect ? 'check' : 'x'} s={18} w={3} />
@@ -390,9 +562,8 @@
                         const isSelected = selectedKey === opt.key;
                         let btnClass = "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-ink dark:text-white hover:border-gold";
                         
-                        if (isSelected) {
-                          btnClass = "bg-gold text-ink border-gold shadow-md";
-                        }
+                        if (isSelected) btnClass = "bg-gold text-ink border-gold shadow-md";
+                        
                         if (corrected) {
                           if (opt.key === text.correct) btnClass = "bg-green-500 text-white border-green-500";
                           else if (isSelected && !isCorrect) btnClass = "bg-red-500 text-white border-red-500";
@@ -411,6 +582,9 @@
                         );
                       })}
                     </div>
+                    {selectedOpt && (
+                      <p className="mt-3 text-xs font-semibold text-slate-600 dark:text-slate-300 de" dir="ltr">{selectedOpt.key}) {selectedOpt.de}</p>
+                    )}
                   </div>
 
                   {corrected && (
@@ -444,7 +618,7 @@
               </button>
             ) : (
               <div className="bg-ink text-white p-6 rounded-2xl text-center shadow-xl">
-                <h2 className="text-slate-300 font-semibold mb-2">النتيجة النهائية</h2>
+                <h2 className="text-slate-300 font-semibold mb-2">Ergebnis</h2>
                 <div className="text-5xl font-extrabold text-gold de mb-4">{score} / {texts.length * 5}</div>
                 <button 
                   onClick={() => { setAnswers({}); setCorrected(false); window.scrollTo(0,0); }} 
