@@ -7,10 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   
-  <!-- مكتبة التشفير -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
-  
-  <!-- مكتبات React و Tailwind و Supabase -->
   <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
   <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
   <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
@@ -34,19 +31,10 @@
     .dark .bg-dots { background-image: radial-gradient(#1e293b 1px, transparent 1px); }
     .de { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
     
-    /* ألوان العلم الألماني للخط */
     .german-flag-progress {
-      background: linear-gradient(to right, 
-        #000000 0%, #000000 33.33%, 
-        #DD0000 33.33%, #DD0000 66.66%, 
-        #FFCE00 66.66%, #FFCE00 100%);
+      background: linear-gradient(to right, #000000 0%, #000000 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%, #FFCE00 100%);
     }
-    
-    /* أنيميشن للرسالة (Toast) */
-    @keyframes slideDown {
-      from { transform: translateY(-20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
     .animate-toast { animation: slideDown 0.3s ease-out forwards; }
   </style>
 </head>
@@ -56,7 +44,6 @@
   <script type="text/babel">
     const { useState, useEffect } = React;
     
-    // 🔑 مفاتيح السوبابيز
     const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
     const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
     
@@ -64,35 +51,93 @@
       auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false }
     });
 
-    // 🔐 المفتاح السري ديال الدروس المشفرة
     const SECRET_KEY = "EchtPruefungSecret2024!";
     
-    // 🔒 النص المشفر (Alex Und Cora + Rita)
     const ENCRYPTED_DATA = "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";
 
-    // 🔓 دالة فك التشفير
+    const fallbackExams = [
+      {
+        id: 'alex-cora-fallback',
+        title: 'Alex Und Cora',
+        level: 'B1',
+        skill: 'Lesen',
+        sub_section: 'Teile 1',
+        is_pro: false,
+        exam_data: {
+          options: [
+            { key: "a", de: "Eltern trotz Kritik mit der Schule zufrieden", ar: "الآباء راضون عن المدرسة رغم الانتقادات" },
+            { key: "b", de: "Elektromobilität für Angestellte", ar: "التنقل الكهربائي للموظفين" },
+            { key: "c", de: "STÄRKUNG VON BUS UND BAHN", ar: "تعزيز الحافلات والقطارات" },
+            { key: "d", de: "Schule und Umweltschutz", ar: "المدرسة وحماية البيئة" },
+            { key: "e", de: "Bald keine Firmenwagen mehr?", ar: "هل ستختفي سيارات الشركات قريباً؟" },
+            { key: "f", de: "Ticketpreise bei der Bahn", ar: "أسعار التذاكر في السكك الحديدية" },
+            { key: "g", de: "Lehrerberuf wird immer attraktiver", ar: "مهنة التدريس تصبح أكثر جاذبية" },
+            { key: "h", de: "Engagement für die Natur", ar: "الالتزام بالطبيعة" },
+            { key: "i", de: "Preissenkungen bei Bus, Straßenbahn und U-Bahn!", ar: "تخفيضات في الحافلات والترام والمترو!" },
+            { key: "j", de: "ZU WENIG LEHRER - STADT REAGIERT", ar: "نقص في المعلمين - المدينة تتخذ إجراءات" }
+          ],
+          texts: [
+            { id: 1, content: "Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen? Gerade In Städten kommt man mit einem E-Bike schneller und bequemer ans Ziel als mit dem Auto. Und Parkplatzprobleme gibt es auch nicht. Sie fördern zudem die Gesundheit Ihrer Mitarbeiter und schonen die Umwelt, und dabei können Sie noch Steuern sparen. Bei der BikeLeasing GmbH bekommen Sie Angebote, die zu Ihnen passen. Melden Sie sich bei uns an, und wir kümmern uns um den Rest", correct: "b", exp_ar: "ملخص الإعلان: تأجير الدراجات الكهربائية: البديل الذكي لسيارات الشركة. فوائد صحية وبيئية: تعزيز صحة الموظفين البدنية مع الحفاظ على البيئة. مزايا مالية: توفير في الضرائب للشركة." },
+            { id: 2, content: "Die Bahn erhöht dieses Jahr die Ticketipreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit. dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!", correct: "f", exp_ar: "ملخص الإعلان: تثبيت أسعار التذاكر: قررت هيئة السكك الحديدية عدم رفع الأسعار هذا العام. تخفيضات النقل العام المحلي: سيتم تخفيض أسعار تذاكر النقل الداخلي لتقليل عدد الموظفين الذين يعتمدون على سياراتهم." },
+            { id: 3, content: "Vergangeren Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eitern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.", correct: "a", exp_ar: "ملخص الإعلان: رضا عام مرتفع: عبر 80% من المشاركين عن رضاهم عن المدارس. ضعف التأهيل المهني: يرى 40% فقط من الأهالي أن المدرسة تجهز أطفالهم بشكل كافٍ لدخول سوق العمل." },
+            { id: 4, content: "Berlin. in der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studie- rende die Schülerinnen und Schüler der Haupt- stadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität lei- det stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attrakti- ver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden, die denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.", correct: "j", exp_ar: "ملخص الإعلان: عجز كبير في الكوادر: يغيب آلاف المعلمين المؤهلين عن المدارس. خطة السينات للإنقاذ: إطلاق حملة إعلانية تهدف لتحسين صورة مهنة التدريس وجعلها أكثر جاذبية. دراسة خيار زيادة الرواتب كحافز مادي للمعلمين." },
+            { id: 5, content: "KaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz. Sie wollen sich auch aktiv gegen Umweltverschmutzung einsetzen? Sie wöllen sich für mehr Naturschutz engagieren? ‚Dann sind Sie bei uns richtig. Wir haben regelmäßige Treffen und führen Informationsveran- staltungen zu verschiedenen aktuellen Themen durch, außerdem gibt es eine monatliche Mit- gliederzeitschrift, Melden Sie sich einfach bei uns.", correct: "h", exp_ar: "ملخص الإعلان: مجالات العمل: تركز بشكل أساسي على حماية البيئة وحماية الحيوانات. ما تقدمه للأعضاء: لقاءات دورية، فعاليات إعلامية، ومجلة شهرية." }
+          ]
+        }
+      },
+      {
+        id: 'rita-fallback',
+        title: 'Rita',
+        level: 'B1',
+        skill: 'Lesen',
+        sub_section: 'Teile 1',
+        is_pro: false,
+        exam_data: {
+          options: [
+            { key: "a", de: "Japanische Studie: Vielschläfer leben länger", ar: "دراسة يابانية: من ينامون كثيرًا يعيشون أطول" },
+            { key: "b", de: "USA: Nachfrage nach freuen Lebensmitteln geht zurück", ar: "الولايات المتحدة: تراجع الطلب على الأطعمة المجانية" },
+            { key: "c", de: "Studie zeigt: Heiraten macht dick", ar: "دراسة تظهر: الزواج يزيد الوزن" },
+            { key: "d", de: "Die Mehrheit der Schweizer treibt aktiv Sport", ar: "غالبية السويسريين يمارسون الرياضة بانتظام" },
+            { key: "e", de: "Neu im Trend: Jung und Gesund - mit dem Schokolade", ar: "الجديد في الموضة: الشباب والصحة - مع الشوكولاتة" },
+            { key: "f", de: "Schweizer sollen gesunder leben", ar: "يجب على السويسريين أن يعيشوا حياة أكثر صحة" },
+            { key: "g", de: "Statistik: Unverheiratete haben oft ein paar Kilos zu viel", ar: "إحصائية: العازبون غالبًا ما يعانون من زيادة في الوزن" },
+            { key: "h", de: "Teures Essen für mehr Jugend und Schönheit", ar: "طعام باهظ الثمن من أجل المزيد من الشباب والجمال" },
+            { key: "i", de: "Weniger schlafen - länger leben", ar: "النوم أقل - العيش أطول" },
+            { key: "j", de: "Schokolade essen - jung bleiben", ar: "تناول الشوكولاتة - البقاء شابًا" }
+          ],
+          texts: [
+            { id: 1, content: "Der Schokolade-Boom zeigt sich hierzulande nicht nur im hohen Verbrauch (jeder Schweizer isst fast 12 Kilo Schokolade im Jahr!), nein, er hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy zahlreiche kosmetische Behandlungsmethoden mit Schokolade an Die Bäder Massagen und Hautcremes mit Kakao sind durchaus ernst gemeint, denn Kakao soll eine belebende Eigenschaft haben, die den Menschen jung und gesund aussehen lässt.", correct: "e", exp_ar: "ملخص الإعلان: يركز النص على استخدام الشوكولاتة في العلاجات التجميلية والحمامات والمساج. الهدف هو الاستفادة من خصائص الكاكاو المنشطة التي تجعل الشخص يبدو أصغر سناً وأكثر صحة وجمالاً." },
+            { id: 2, content: "Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern. Das belegt eine neue Studie. In Deutschland sind fast die Hälfte der verheirateten Frauen und circa zwei Drittel der Ehrenmänner übergewichtig. Alleinstehende sind vermutlich schlanker, weil sie besonderen Wert auf ihr Äußeres legen, mehr Sport treiben und sich selten Zeit für gemütliche Mahlzeiten nehmen.", correct: "c", exp_ar: "ملخص الإعلان: تشير دراسة إلى أن المتزوجين حديثاً يكتسبون وزناً بسبب تغير عاداتهم الغذائية. العازبون عادة ما يكونون أنحف لأنهم يهتمون بمظهرهم ويمارسون الرياضة أكثر." },
+            { id: 3, content: "Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit am Mittwoch und bezog sich dabei auf eine neue japanische Studie Schlecht für die Männer, denn laut dieser Studie schlafen Männer im Durchschnitt eine halbe Stunde länger pro Nacht als Frauen. Aber es gibt auch eine gute Nachricht für die Viel-und Langschläfer: Wer lange schläft, hat weniger Gewichtsprobleme und fünf sich gesünder.", correct: "i", exp_ar: "ملخص الإعلان: دراسة يابانية جديدة تظهر أن النوم لأكثر من 8 ساعات يقلل من متوسط العمر المتوقع. وتشير الدراسة إلى أن الرجال ينامون أكثر من النساء، لكن النوم الطويل له أيضاً مزايا مثل تقليل مشاكل الوزن." },
+            { id: 4, content: "Du bist,was du isst hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Der Trend kommt aus den USA: Dort kaufen bereits viele Leute neue teure Lebensmittel mit wissenschaftlichen Inhaltsstoffen, die dem Kunden jüngeres und schöneres Aussehen versprechen. So bietet z.B. ein New Yorker Nobelhotel das Menü Gegen-Graue-Haare an, das gegen das Älterwerden wirken soll. Aber wer wird schon eine solche Mahlzeit bestellen? Millionen von Leuten, so die Trendforscher. Und zwar aus dem einfachen Grund, weil jeder jung und gut aussehen will, und das mit möglichst wenig Aufwand.", correct: "h", exp_ar: "ملخص الإعلان: اتجاه جديد قادم من أمريكا يعتمد على أغذية باهظة الثمن تحتوي على مكونات علمية تَعِد بمظهر أصغر وأجمل. الفكرة أن الناس مستعدون لدفع الكثير ليبدوا شباباً بأقل مجهود." },
+            { id: 5, content: "Nach dem Motto beschwingt und bewegt starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei sollte die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen. Fast zwei Drittel der Bevölkerung in der Schweiz sind wenig aktiv und essen zu viel. Die Kampagne soll den Leuten zeigen, wie Sport und gesunde Ernährung ohne großen Aufwand in den Alltag integriert werden können, z.B. mit einem Spaziergang am Mittag oder mit einem Apfel zum Znüni statt Schokolade.", correct: "f", exp_ar: "ملخص الإعلان: السلطات الصحية السويسرية تطلق حملة وطنية لتشجيع الناس على ممارسة الرياضة وتناول طعام متوازن. الحملة تهدف لتعليم الناس كيفية دمج النشاط البدني والتغذية الصحية في حياتهم اليومية." }
+          ]
+        }
+      }
+    ];
+
     const getDecryptedExams = () => {
       try {
         const bytes = CryptoJS.AES.decrypt(ENCRYPTED_DATA, SECRET_KEY);
-        const decryptedStr = bytes.toString(CryptoJS.enc.Utf8);
-        return JSON.parse(decryptedStr);
-      } catch (e) {
-        console.error("خطأ فـ فك التشفير", e);
-        return [];
+        const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+        const parsed = JSON.parse(decrypted);
+        if (parsed && parsed.length > 0) return parsed;
+      } catch (e) { 
+        console.error("Decryption failed:", e); 
       }
+      return fallbackExams;
     };
 
     const localExams = getDecryptedExams();
 
-    // 🎨 الأيقونات
     const Icons = {
       home: { f: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z', s: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z', a: 'M10 21v-5a2 2 0 0 1 4 0v5M16.5 7V4.5h2.5v4.6' },
       book: { f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', a: 'M12 6.5V20M6 8.2c1.6.1 3 .4 4 1M6 11.7c1.6.1 3 .4 4 1M14 9.2c1-.6 2.4-.9 4-1' },
       headphones: { f: 'M4 14.5V12a8 8 0 0 1 16 0v2.5z', s: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', a: 'M4 14.5V12a8 8 0 0 1 16 0v2.5' },
       pen: { f: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', s: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', a: 'M14.5 6l3.5 3.5M12 21h9' },
-      mic: { f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7M8.5 6h2M8.5 8.5h2' },
+      mic: { f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7' },
       cap: { f: 'M2 9.5l10-5 10 5-10 5z', s: 'M2 9.5l10-5 10 5-10 5z', a: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4M22 9.5v6' },
-      moon: { f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', a: 'M18 2.5v3M16.5 4h3M21 8.5v2M20 9.5h2' },
+      moon: { f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', a: 'M18 2.5v3M16.5 4h3' },
       sun: { f: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z', s: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z', a: 'M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4' },
       settings: { f: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', s: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z', a: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' },
       menu: { s: 'M4 7h16M4 12h10M4 17h16' },
@@ -121,7 +166,6 @@
       );
     };
 
-    // 🏠 المكون الرئيسي
     function App() {
       const [session, setSession] = useState(null);
       const [isGuest, setIsGuest] = useState(false);
@@ -139,16 +183,17 @@
       const [isLogin, setIsLogin] = useState(true); 
       const [error, setError] = useState('');
 
-      // الوضع الليلي
       useEffect(() => {
         if (isDarkMode) document.documentElement.classList.add('dark');
         else document.documentElement.classList.remove('dark');
       }, [isDarkMode]);
 
-      // تحميل الدروس
       useEffect(() => {
         setExams(localExams);
         setLoading(false);
+        if(localExams.length === 0) {
+          alert("خطأ: الدروس ما وصلاتش!");
+        }
       }, []);
 
       const handleAuth = async (e) => {
@@ -162,7 +207,6 @@
         }
       };
 
-      // شاشة تسجيل الدخول
       if (!session && !isGuest) {
         return (
           <div className="min-h-screen flex flex-col bg-paper dark:bg-[#0B1120] transition-colors">
@@ -197,7 +241,6 @@
         );
       }
 
-      // صفحة الامتحان
       if (selectedExam) {
         const currentIndex = localExams.findIndex(e => e.id === selectedExam.id);
         const handleNext = () => {
@@ -211,15 +254,24 @@
         return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} onNext={handleNext} />;
       }
 
-      // فلترة الدروس
-      const skillMap = { 'lesen': 'Lesen', 'horen': 'Hören', 'schreiben': 'Schreiben', 'sprechen': 'Sprechen', 'pruefung': 'Pruefung' };
-      let filteredExams = exams.filter(e => e.skill === skillMap[view]);
+      const normalize = (str) => str ? str.toLowerCase().replace(/\s+/g, '') : '';
       
-      if (view === 'lesen') {
-         if (activeTab !== 'Prüfungen') filteredExams = filteredExams.filter(e => e.sub_section === activeTab);
-      }
+      let filteredExams = exams.filter(e => {
+        const skillMatch = normalize(e.skill).includes(normalize(view).substring(0, 4));
+        if (!skillMatch) return false;
 
-      // الواجهة الرئيسية
+        if (activeTab === 'Prüfungen') return true;
+
+        const sub = normalize(e.sub_section);
+        const tab = normalize(activeTab);
+        
+        if (tab.includes('teile1')) return sub.includes('teil') && sub.includes('1');
+        if (tab.includes('teile2')) return sub.includes('teil') && sub.includes('2');
+        if (tab.includes('teile3')) return sub.includes('teil') && sub.includes('3');
+        
+        return sub.includes(tab);
+      });
+
       return (
         <div className="min-h-screen pb-24 bg-dots relative transition-colors duration-300">
           <div className="bg-white dark:bg-[#1E293B] rounded-b-3xl shadow-sm px-5 py-4 flex justify-between items-center mb-6 mx-4 mt-4 sticky top-4 z-40 border border-slate-100 dark:border-slate-800">
@@ -279,7 +331,11 @@
                {loading ? (
                  <div className="text-center text-slate-400 py-4">جاري التحميل...</div>
                ) : filteredExams.length === 0 ? (
-                 <div className="text-center text-slate-400 py-4 text-sm bg-white dark:bg-[#1E293B] rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">ما كاين حتى امتحان دابا</div>
+                 <div className="text-center text-slate-400 py-4 text-sm bg-white dark:bg-[#1E293B] rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
+                    ما كاين حتى امتحان دابا
+                    <br/>
+                    <span className="text-xs">(تأكد من اسم القسم أو المستوى)</span>
+                 </div>
                ) : (
                  filteredExams.map((exam) => (
                    <div key={exam.id} onClick={() => setSelectedExam(exam)} className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4 cursor-pointer transition-colors">
@@ -300,12 +356,10 @@
             </div>
           </div>
 
-          {/* زر الواتساب */}
           <a href="https://wa.me/212600000000" target="_blank" rel="noreferrer" className="fixed bottom-24 right-5 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-green-300 z-50 text-white hover:scale-105 transition-transform">
             <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.554 4.19 1.6 6.018L.064 24l6.094-1.598A11.96 11.96 0 0012.031 24c6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 22.015c-1.83 0-3.63-.492-5.205-1.422l-.373-.22-3.87 1.015 1.033-3.77-.24-.387A9.97 9.97 0 012.015 12.03c0-5.523 4.493-10.015 10.016-10.015 5.524 0 10.016 4.492 10.016 10.015 0 5.524-4.492 10.016-10.016 10.016zm5.497-7.502c-.3-.15-1.778-.877-2.054-.977-.276-.1-.478-.15-.678.15-.2.3-.778.977-.955 1.178-.176.2-.352.225-.652.075-.3-.15-1.267-.467-2.413-1.49-.892-.795-1.494-1.778-1.67-2.078-.176-.3-.02-.462.13-.612.136-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.678-1.63-.928-2.23-.243-.588-.49-.508-.678-.518-.176-.01-.376-.01-.576-.01-.2 0-.525.075-.8.375-.275.3-1.053 1.028-1.053 2.505 0 1.477 1.078 2.905 1.228 3.105.15.2 2.12 3.238 5.135 4.542.717.31 1.277.496 1.714.636.723.23 1.38.197 1.9.12.58-.086 1.778-.727 2.028-1.428.25-.7.25-1.3.175-1.428-.075-.125-.275-.2-.575-.35z"/></svg>
           </a>
 
-          {/* القائمة السفلية */}
           <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1E293B] px-2 pb-6 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center z-40 rounded-t-3xl shadow-[0_-5px_20px_-10px_rgba(0,0,0,0.05)] transition-colors">
             <NavItem icon="home" label="الرئيسية" active={view === 'home'} onClick={() => setView('home')} activeColor="text-gold" activeBg="bg-gold/10" />
             <NavItem icon="book" label="Lesen" active={view === 'lesen'} onClick={() => setView('lesen')} activeColor="text-gold" activeBg="bg-gold/10" />
@@ -315,7 +369,6 @@
             <NavItem icon="cap" label="امتحان" active={view === 'pruefung'} onClick={() => setView('pruefung')} activeColor="text-gold" activeBg="bg-gold/10" />
           </div>
 
-          {/* القائمة الجانبية */}
           {showMenu && (
             <div className="fixed inset-0 bg-black/40 z-50 flex justify-end backdrop-blur-sm" onClick={() => setShowMenu(false)}>
               <div className="bg-white dark:bg-[#0B1120] w-[85%] max-w-sm h-full shadow-2xl flex flex-col transition-transform translate-x-0" onClick={e => e.stopPropagation()}>
@@ -343,7 +396,6 @@
             </div>
           )}
 
-          {/* إعدادات الخط والترجمة */}
           {showSettings && (
             <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center p-4 backdrop-blur-sm" onClick={() => setShowSettings(false)}>
               <div className="bg-white dark:bg-[#1E293B] w-full max-w-sm rounded-3xl p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
@@ -362,7 +414,6 @@
       );
     }
 
-    // 📝 صفحة الامتحان
     function ExamView({ exam, onBack, onNext }) {
       const [answers, setAnswers] = useState({});
       const [corrected, setCorrected] = useState(false);
@@ -509,7 +560,6 @@
                         textClass += "text-white font-semibold";
                         arTextClass += "text-blue-100";
                       } else if (usedElsewhere) {
-                        // هنا القفل: كيبان باهت ومكتوب لكن ماكيتضغطش
                         containerClass += "bg-slate-100 opacity-50 cursor-not-allowed";
                         letterClass += "bg-slate-200 text-slate-400";
                         textClass += "text-slate-400";
@@ -569,7 +619,6 @@
       );
     }
 
-    // 🧭 مكونات القائمة
     function NavItem({ icon, label, active, activeColor, activeBg, onClick }) {
       return (
         <div onClick={onClick} className="flex flex-col items-center gap-1 cursor-pointer w-14">
@@ -600,3 +649,4 @@
   </script>
 </body>
 </html>
+سافي دب كامل غيبة 
