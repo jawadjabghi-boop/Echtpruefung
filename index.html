@@ -1,673 +1,987 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>EchtPrüfung</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>EchtPrüfung</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+<style>
+:root{--ink:#0F1B33;--gold:#F5B82E;--paper:#F3F5F9;--card:#FFFFFF;--text:#0F1B33;--muted:#64748B;--line:#E2E8F0;--okc:#15803D;--okbg:#DCFCE7;--badc:#B91C1C;--badbg:#FEE2E2;--fs:1}
+.dark{--paper:#0B1120;--card:#1E293B;--text:#F8FAFC;--muted:#94A3B8;--line:#334155;--okbg:#14532D;--badbg:#7F1D1D;--okc:#86EFAC;--badc:#FCA5A5}
+html{font-size:calc(16px * var(--fs))}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:'Cairo',system-ui,sans-serif;direction:rtl;min-height:100vh;padding-bottom:104px;transition:background .3s}
+button{font-family:inherit;cursor:pointer}
+.de{direction:ltr;text-align:left;font-family:system-ui,-apple-system,sans-serif}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,0,0,0.02)}
+.header{position:sticky;top:10px;z-index:30;margin:10px;display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:22px;padding:10px 12px;box-shadow:0 4px 15px rgba(0,0,0,0.05)}
+.brand{display:flex;align-items:center;gap:10px}
+.logo{width:44px;height:44px;border-radius:12px;background:var(--ink);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2em}
+.btnI{width:40px;height:40px;border:none;border-radius:50%;background:var(--line);color:var(--text);font-size:1.05em;font-weight:800;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.btnI:active{background:#CBD5E1}
+.btn{border:none;border-radius:12px;padding:11px 14px;font-weight:800;background:var(--ink);color:var(--gold);width:100%;transition:opacity .2s}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.chip{display:inline-block;border-radius:8px;padding:2px 8px;font-size:.75em;font-weight:800;background:var(--okbg);color:var(--okc)}
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:10px;margin-bottom:12px}
+.tab{border:none;background:transparent;color:var(--muted);padding:10px 4px;border-radius:14px;font-weight:700;font-size:.85em;transition:all .2s}
+.tab.on{background:var(--gold);color:var(--ink);box-shadow:0 2px 8px rgba(245,184,46,0.4)}
+.bar{height:8px;border-radius:99px;background:var(--line);overflow:hidden}
+.fill{height:100%;background:linear-gradient(to right,#000 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%);transition:width .3s}
+.opt{display:flex;gap:10px;align-items:flex-start;border:2px solid transparent;background:var(--paper);color:var(--text);border-radius:12px;padding:10px;margin-bottom:6px;width:100%;text-align:right;transition:all .2s}
+.opt.dis{opacity:.4;cursor:not-allowed}
+.opt.sel{border-color:var(--gold);background:rgba(245,184,46,.15)}
+.opt.good{border-color:var(--okc);background:var(--okbg)}
+.opt.bad{border-color:var(--badc);background:var(--badbg)}
+.opt.faded{opacity:.4}
+.letter{width:28px;height:28px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.fb{border-radius:12px;padding:10px;margin-top:6px;font-size:.9em;line-height:1.7}
+.fb.good{background:var(--okbg);color:var(--okc)}
+.fb.bad{background:var(--badbg);color:var(--badc)}
+.toast{position:fixed;top:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--gold);padding:8px 16px;border-radius:12px;font-weight:800;z-index:60;font-size:.9em;box-shadow:0 4px 12px rgba(0,0,0,0.2);animation:slideDown .3s}
+@keyframes slideDown{from{top:-20px;opacity:0}to{top:90px;opacity:1}}
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px 18px;z-index:40}
+.nav button{border:none;background:transparent;color:var(--muted);font-size:.7em;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:52px}
+.nav button.on{color:var(--text)}
+.nav .ic{padding:4px 12px;border-radius:12px;transition:background .2s}
+.nav button.on .ic{background:rgba(245,184,46,.25)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:50;display:flex;justify-content:center;align-items:center;padding:16px;backdrop-filter:blur(4px)}
+.sheet{background:var(--card);border-radius:24px;padding:20px;width:100%;max-width:420px;box-shadow:0 10px 25px rgba(0,0,0,0.2);max-height:85vh;overflow-y:auto}
+textarea{width:100%;min-height:90px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--text);padding:10px;font-family:inherit}
+.modeBtn{flex:1;padding:9px 6px;border-radius:10px;border:2px solid var(--line);background:transparent;color:var(--muted);font-weight:800;font-size:.85em;font-family:inherit;cursor:pointer;transition:all .2s}
+.modeBtn.on{border-color:var(--gold);background:var(--gold);color:var(--ink)}
 
-  <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-  <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+/* Inline Gaps for Sprach 1 & 2 */
+.inline-gap{display:inline-flex;align-items:center;justify-content:center;min-width:80px;border-bottom:2px dashed var(--gold);padding:2px 6px;margin:0 4px;cursor:pointer;font-weight:800;color:var(--ink);transition:all .2s;vertical-align:middle;background:rgba(245,184,46,0.05);border-radius:6px 6px 0 0}
+.dark .inline-gap{color:var(--gold)}
+.inline-gap:hover{background:rgba(245,184,46,0.15)}
+.inline-gap.filled{border-bottom-style:solid;background:rgba(245,184,46,0.15);color:var(--gold)}
+.inline-gap.correct{border-color:var(--okc);background:var(--okbg);color:var(--okc)}
+.inline-gap.wrong{border-color:var(--badc);background:var(--badbg);color:var(--badc);text-decoration:line-through}
 
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: { extend: { fontFamily: { sans: ['Cairo', 'system-ui', 'sans-serif'] },
-      colors: {
-        ink: '#0F1B33', gold: '#F5B82E', paper: '#F3F5F9',
-        brandBlue: '#3B82F6', brandPurple: '#8B5CF6', brandOrange: '#F59E0B', brandRed: '#F43F5E', brandGreen: '#10b981'
-      } } } };
-  </script>
+/* Word Bank for Sprach 2 */
+.word-bank{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;padding:12px;background:var(--paper);border-radius:12px;margin-bottom:12px;border:1px dashed var(--line)}
+.word-btn{padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:700;font-size:.9em;text-align:right;transition:all .2s;display:flex;gap:8px;align-items:center}
+.word-btn.used{opacity:.3;text-decoration:line-through;pointer-events:none}
+.word-btn:hover:not(.used){border-color:var(--gold);box-shadow:0 2px 8px rgba(245,184,46,0.2)}
 
-  <style>
-    body { font-family: 'Cairo', system-ui, sans-serif; background-color: #F3F5F9; direction: rtl; margin: 0; color: #0F1B33; -webkit-font-smoothing: antialiased; }
-    .dark body { background-color: #0B1120; color: #F8FAFC; }
-    .bg-dots { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 25px 25px; }
-    .dark .bg-dots { background-image: radial-gradient(#1e293b 1px, transparent 1px); }
-    .de { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; }
-    .german-flag-progress {
-      background: linear-gradient(to right, #000000 0%, #000000 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%, #FFCE00 100%);
-    }
-    @keyframes slideDown { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .animate-toast { animation: slideDown 0.3s ease-out forwards; }
-  </style>
+/* Modal Lists */
+.modal-list{display:flex;flex-direction:column;gap:10px;margin-top:15px}
+.modal-item{padding:14px;border-radius:12px;border:1px solid var(--line);background:var(--paper);font-weight:800;font-size:1.05em;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .2s;text-align:right}
+.modal-item.selected{border-color:var(--gold);background:rgba(245,184,46,0.15)}
+.modal-item.disabled{opacity:0.4;pointer-events:none;text-decoration:line-through}
+</style>
 </head>
 <body>
-  <div id="root"></div>
+<div id="root"></div>
 
-  <script type="text/babel">
-    const { useState, useEffect } = React;
+<script type="text/babel">
+const { useState, useEffect } = React;
 
-    const supabaseUrl = 'https://mgsfzvmewuiuebccanyf.supabase.co';
-    const supabaseKey = 'sb_publishable__WAEoRdEEY2SNtNrVh2qLA_fiktEZqL';
+const WA = "212600000000";
+const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey, {
-      auth: { autoRefreshToken: false, persistSession: false, detectSessionInUrl: false }
-    });
+const EXAMS = [
+/* ---------- TEIL 1 ---------- */
+{ id:"alex-t1", title:"Alex Und Cora", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a",de:"Eltern trotz Kritik mit der Schule zufrieden",ar:"الآباء راضون عن المدرسة رغم الانتقادات"},
+    {k:"b",de:"Elektromobilität für Angestellte",ar:"التنقل الكهربائي للموظفين"},
+    {k:"c",de:"STÄRKUNG VON BUS UND BAHN",ar:"تعزيز الحافلات والقطارات"},
+    {k:"d",de:"Schule und Umweltschutz",ar:"المدرسة وحماية البيئة"},
+    {k:"e",de:"Bald keine Firmenwagen mehr?",ar:"هل ستختفي سيارات الشركات قريباً؟"},
+    {k:"f",de:"Ticketpreise bei der Bahn",ar:"أسعار التذاكر في السكك الحديدية"},
+    {k:"g",de:"Lehrerberuf wird immer attraktiver",ar:"مهنة التدريس تصبح أكثر جاذبية"},
+    {k:"h",de:"Engagement für die Natur",ar:"الالتزام بالطبيعة"},
+    {k:"i",de:"Preissenkungen bei Bus, Straßenbahn und U-Bahn!",ar:"تخفيضات في الحافلات والترام والمترو!"},
+    {k:"j",de:"ZU WENIG LEHRER - STADT REAGIERT",ar:"نقص في المعلمين - المدينة تتخذ إجراءات"}
+  ],
+  items:[
+    {n:1,c:"b",de:"Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen? Gerade in Städten kommt man mit einem E-Bike schneller und bequemer ans Ziel als mit dem Auto. Und Parkplatzprobleme gibt es auch nicht. Sie fördern zudem die Gesundheit Ihrer Mitarbeiter und schonen die Umwelt, und dabei können Sie noch Steuern sparen. Bei der BikeLeasing GmbH bekommen Sie Angebote, die zu Ihnen passen. Melden Sie sich bei uns an, und wir kümmern uns um den Rest.",ar:"الإعلان يروّج لتأجير الدراجات الكهربائية بدل سيارات الشركة، لأنها صحية وبيئية وتوفر الضرائب."},
+    {n:2,c:"h",de:"NaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz. Sie wollen sich auch aktiv gegen Umweltverschmutzung einsetzen? Sie wollen sich für mehr Naturschutz engagieren? Dann sind Sie bei uns richtig. Wir haben regelmäßige Treffen und führen Informationsveranstaltungen zu verschiedenen aktuellen Themen durch. Außerdem gibt es eine monatliche Mitgliederzeitschrift. Melden Sie sich einfach bei uns.",ar:"جمعية تعمل في حماية البيئة والحيوانات، وتقدم لقاءات ومجلة شهرية."},
+    {n:3,c:"f",de:"Die Bahn erhöht dieses Jahr die Ticketpreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!",ar:"النص يتكلم عن عدم رفع أسعار تذاكر القطار هذا العام."},
+    {n:4,c:"a",de:"Vergangenen Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eltern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.",ar:"80% من الآباء راضون عن المدرسة، لكن 40% فقط يرون أن أبناءهم مجهزون للمهنة."},
+    {n:5,c:"j",de:"Berlin. In der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studierende die Schülerinnen und Schüler der Hauptstadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität leidet stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attraktiver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden. Außerdem denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.",ar:"نقص كبير في المعلمين في برلين، والمدينة تطلق حملة لجذب المعلمين."}
+  ]
+},
+{ id:"rita-t1", title:"Rita", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a",de:"Japanische Studie: Vielschläfer leben länger",ar:"دراسة يابانية: من ينامون كثيراً يعيشون أطول"},
+    {k:"b",de:"USA: Nachfrage nach funktionellen Lebensmitteln geht zurück",ar:"الولايات المتحدة: تراجع الطلب على الأطعمة الوظيفية"},
+    {k:"c",de:"Studie zeigt: Heiraten macht dick",ar:"دراسة تظهر: الزواج يزيد الوزن"},
+    {k:"d",de:"Die Mehrheit der Schweizer treibt aktiv Sport",ar:"غالبية السويسريين يمارسون الرياضة بانتظام"},
+    {k:"e",de:"Neu im Trend: Jung und Gesund - mit Schokolade",ar:"الجديد في الموضة: الشباب والصحة - مع الشوكولاتة"},
+    {k:"f",de:"Schweizer sollen gesünder leben",ar:"يجب على السويسريين أن يعيشوا حياة أكثر صحة"},
+    {k:"g",de:"Statistik: Unverheiratete haben oft ein paar Kilos zu viel",ar:"إحصائية: العازبون غالباً ما يعانون من زيادة الوزن"},
+    {k:"h",de:"Teures Essen für mehr Jugend und Schönheit",ar:"طعام باهظ الثمن من أجل المزيد من الشباب والجمال"},
+    {k:"i",de:"Weniger schlafen - länger leben",ar:"النوم أقل - العيش أطول"},
+    {k:"j",de:"Schokolade essen - jung bleiben",ar:"تناول الشوكولاتة - البقاء شاباً"}
+  ],
+  items:[
+    {n:1,c:"h",de:"Du bist, was du isst, hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Der Trend kommt aus den USA: Dort kaufen bereits viele Leute neue teure Lebensmittel mit wissenschaftlichen Inhaltsstoffen, die dem Kunden jüngeres und schöneres Aussehen versprechen. So bietet z.B. ein New Yorker Nobelhotel das Menü Gegen-Graue-Haare an. Aber wer wird schon eine solche Mahlzeit bestellen? Millionen von Leuten, so die Trendforscher. Und zwar aus dem einfachen Grund, weil jeder jung und gut aussehen will, und das mit möglichst wenig Aufwand.",ar:"اتجاه جديد من أمريكا: أطعمة غالية تعد بمظهر أصغر، والناس مستعدون لدفع الكثير."},
+    {n:2,c:"c",de:"Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern. Das belegt eine neue Studie. In Deutschland sind fast die Hälfte der verheirateten Frauen und circa zwei Drittel der Ehemänner übergewichtig. Alleinstehende sind vermutlich schlanker, weil sie besonderen Wert auf ihr Äußeres legen, mehr Sport treiben und sich selten Zeit für gemütliche Mahlzeiten nehmen.",ar:"المتزوجون حديثاً يكتسبون وزناً بسبب تغيير عاداتهم الغذائية."},
+    {n:3,c:"e",de:"Der Schokolade-Boom zeigt sich hierzulande nicht nur im hohen Verbrauch (jeder Schweizer isst fast 12 Kilo Schokolade im Jahr!), nein, er hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy zahlreiche kosmetische Behandlungsmethoden mit Schokolade an. Die Bäder, Massagen und Hautcremes mit Kakao sind durchaus ernst gemeint, denn Kakao soll eine belebende Eigenschaft haben, die den Menschen jung und gesund aussehen lässt.",ar:"النص يتكلم عن علاجات تجميل بالشوكولاتة في فندق سويسري."},
+    {n:4,c:"f",de:"Nach dem Motto „beschwingt und bewegt“ starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei soll die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen. Fast zwei Drittel der Bevölkerung in der Schweiz sind wenig aktiv und essen zu viel. Die Kampagne soll den Leuten zeigen, wie Sport und gesunde Ernährung ohne großen Aufwand in den Alltag integriert werden können, z.B. mit einem Spaziergang am Mittag oder mit einem Apfel zum Znüni statt Schokolade.",ar:"حملة صحية سويسرية لتشجيع الناس على الرياضة وأكل متوازن."},
+    {n:5,c:"i",de:"Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit am Mittwoch und bezog sich dabei auf eine neue japanische Studie. Schlecht für die Männer, denn laut dieser Studie schlafen Männer im Durchschnitt eine halbe Stunde länger pro Nacht als Frauen. Aber es gibt auch eine gute Nachricht für die Viel- und Langschläfer: Wer lange schläft, hat weniger Gewichtsprobleme und fühlt sich gesünder.",ar:"الدراسة اليابانية تقول إن النوم الطويل يقلل العمر، والعنوان الصحيح هو النوم أقل."}
+  ]
+},
+{ id:"caroline-t1", title:"Caroline", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a",de:"Diskussion über Flughafen und Arbeitsplätze",ar:"نقاش حول المطار وفرص العمل"},
+    {k:"b",de:"Flughafen Frankfurt beliebter Veranstaltungsort",ar:"مطار فرانكفورت: مكان مفضل للفعاليات"},
+    {k:"c",de:"Umwelt und Flughafen: Ein Informationsabend der Bürger",ar:"البيئة والمطار: أمسية معلوماتية للمواطنين"},
+    {k:"d",de:"Neue Kurse: Museumsführung für junge Väter",ar:"دورات جديدة: جولات في المتحف للآباء الشباب"},
+    {k:"e",de:"Neue Kurse für Kinder",ar:"دورات جديدة للأطفال"},
+    {k:"f",de:"Experten gegen Vergrößerung des Flughafens",ar:"خبراء يعارضون توسيع المطار"},
+    {k:"g",de:"Demonstration gegen Fluglärm",ar:"مظاهرة ضد الضوضاء الناتجة عن الطيران"},
+    {k:"h",de:"Familienbildung Schwerpunkt Beruf und Familie",ar:"التوفيق بين العمل والأسرة: محور تعليم الأسرة"},
+    {k:"i",de:"Flughafen Frankfurt wird 10 Jahre",ar:"مطار فرانكفورت يحتفل بمرور 10 سنوات"},
+    {k:"j",de:"Neue Kurse: Spiele für Mütter und Kinder",ar:"دورات جديدة: ألعاب للأمهات والأطفال"}
+  ],
+  items:[
+    {n:1,c:"b",de:"Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen und Tagungen. Dies zeigt ein Bericht des Frankfurter Flughafens, der beim zehnjährigen Jubiläum des Kongresszentruns vorgelegt wurde. Im Jubiläumsjahr haben am Frankfurter Flughafen 6800 Veranstaltungen mit insgesamt 72000 Teilnehmern stattgefunden. Im Jahr davor waren es nur 6300 Veranstaltungen mit 70000 Gästen. Im Kongresszentrum, das direkt gegenüber dem Hauptgebäude des Flughafens liegt, gibt es 28 Konferenzräume für bis zu 200 Teilnehmer. Modernste Technik wie Laptop-Anschlüsse und Internetzugänge in allen Konferenzräumen sind ebenso vorhanden, wie ein Dolmetscherdienst und verschiedene Speisemöglichkeiten. Eine transportable Videokonferenz-Anlage ermöglicht Verbindungen in die ganze Welt.",ar:"مطار فرانكفورت مكان مفضل للشركات لتنظيم الفعاليات والمؤتمرات."},
+    {n:2,c:"h",de:"Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht über viele Veranstaltungen. Neben Kursen wie Geburtsvorbereitung und Babypflege steht diesmal das Thema Berufstätige Eltern im Mittelpunkt. In Gruppen und Kursen vor allem für Frauen geht es darum, wie sich nach der Geburt eines Kindes Beruf und Familie miteinander vereinbaren lassen. Das Verhältnis zwischen Mann und Frau spielt eine große Rolle im Angebot der Familienbildung; hierzu gibt es wieder spezielle Programme nur für Frauen oder nur für Männer. Auch zum Verhältnis der Generationen (Großeltern und Enkelkinder) gibt es wieder Angebote. Darüber hinaus wartet das Programm mit Kursen für Entspannung und Zeitmanagement auf, die bei Fragen des Alltags helfen wollen.",ar:"برنامج لمراكز التعليم الأسري حول التوفيق بين العمل والأسرة."},
+    {n:3,c:"e",de:"Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch nächster Woche beginnen zwei Malkurse für Kinder. Zweieinhalb- bis vierjährige Kinder treffen sich um 15.30 Uhr, Kinder im Alter von fünf und sechs Jahren um 17.00 Uhr. Für Kinder im Alter zwischen eineinhalb und sechs Jahren und ihre Väter beginnt am Samstag um 10.00 Uhr eine feste Vater-Kind-Gruppe. Am darauf-folgenden Samstag gibt es dann auch ein Treffen für Väter und Kinder bis dreieinhalb Jahren. Etwas anderes ist die Kultur- und Kreativwerkstatt am Montag nächster Woche. Aus Ton und Erde sollen Figuren nach afrikanischen Beispielen gebastelt werden. Zur Vorbereitung treffen sich die Teilnehmer am kommenden Montag zuerst im Museum. Anmeldung spätestens morgen bis 15.00 Uhr.",ar:"دورات جديدة للأطفال، من رسم وأنشطة للآباء والأطفال وورشة طين."},
+    {n:4,c:"c",de:"Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern aus den östlichen Stadtteilen, die sich seit Jahren aktiv für den Naturschutz und die Umwelt einsetzt, lädt für Donnerstag dieser Woche um 19.30 Uhr zu einem Informationsabend über den Ausbau des Frankfurter Flughafens ein. Im Bürgerhaus Ostend, Parkstraße 24, Clubraurn 12, werden verschiedene Sprecher zu hören sein. Die Gruppe möchte Antworten auf folgende Fragen suchen: Wie viel Lärm durch Flugzeuge verträgt die Stadt? Oder Welche Auswirkungen hat der Flugverkehr auf Umwelt und Natur?",ar:"أمسية معلومات يدعو إليها مواطنون ناشطون في البيئة حول توسعة المطار."},
+    {n:5,c:"a",de:"Eine Bürgergruppe mit dem Namen Südliches Frankfurt lädt für Montag kommender Woche, um 19.30 Uhr ins Pfarrhaus St. Mauritius, Mauritiusstraße 14, zu einer öffentlichen Expertenbefragung zum Thema Arbeitsplätze am Frankfurter Flughafen ein. Der Gruppe liegen Berichte und Daten vor, die nach den Worten der Sprecher der Gruppe sehr fantastisch und zweifelhaft sind. Deshalb hat die Bürgergruppe Südliches Frankfurt den Personalleiter des Frankfurter Flughafens, einen Experten aus dem Wirtschaftsministerium, einen bekannten Stadtentwicklungsplaner und einen Soziologen, der sich mit der Arbeitsplatzentwicklung in der Frankfurter Region beschäftigt, eingeladen. Im Anschluss an die Vorträge der Experten haben die Gäste Zeit, Fragen zu stellen.",ar:"لقاء عام مع خبراء حول فرص العمل في المطار."}
+  ]
+},
+{ id:"vera-t1", title:"Vera", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a",de:"Abendwanderungen ab 89 Euro",ar:"جولات مسائية من 89 يورو"},
+    {k:"b",de:"Ausflugsziele für Literaturinteressierte",ar:"أهداف سياحية لمحبي الأدب"},
+    {k:"c",de:"Hinweis für Besucher der Bregenzer Festspiele",ar:"ملاحظة لزوار مهرجان بريغنتس"},
+    {k:"d",de:"Ihre Zeitung folgt Ihnen in den Urlaub",ar:"صحيفتك تتبعك في العطلة"},
+    {k:"e",de:"Laute Musik stört den Nachbarn",ar:"الموسيقى الصاخبة تزعج الجار"},
+    {k:"f",de:"Musikveranstaltungen am Nachmittag",ar:"فعاليات موسيقية بعد الظهر"},
+    {k:"g",de:"Neue Zeitung für Ihre Urlaubsplanung",ar:"صحيفة جديدة لتخطيط عطلتك"},
+    {k:"h",de:"Rekord: 70.000 Besucher im Bücherdorf",ar:"رقم قياسي: 70,000 زائر في قرية الكتب"},
+    {k:"i",de:"Schlechtes Wetter: Festspiele abgesagt",ar:"طقس سيئ: إلغاء المهرجانات"},
+    {k:"j",de:"Wandern ohne Gepäck",ar:"المشي بدون أمتعة"}
+  ],
+  items:[
+    {n:1,c:"d",de:"Wenn Sie verreisen, wünschen wir ihnen erholsame und angenehme Ferienlage Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen. Denn mit den Neuigkeiten von zu Hause und aus aller Weil lässt sich die schönste Zeit des Jahres erst richtig genießen ganz Europa kostenlos, Die Höhe des Bezeugendes bleibt unverändert. Ausführliche Informationen und entsprechende Coupons ihrem Europabericht. Griechisch wird meistens von Zwölftklässlern als dritte Fremdsprache neben Französisch und Englisch gewählt. finden Sie in unserem großen Reise Service – Anzeigen oder rufen Sie uns einfach an: Telefon 01 30-18 58 50 zum Nulltarif. Hannoversche Allgemeine Neue Presse",ar:"تقدم صحيفة هانوفرشه ألغماينه لقرائها المسافرين خدمة مميزة تتيح لهم متابعة أخبار وطنهم والعالم من خلال شحن النسخ الورقية إلى أماكن قضاء عطلاتهم في مختلف أنحاء أوروبا دون أي تكاليف إضافية حيث تظل قيمة الاشتراك ثابتة دون تغيير."},
+    {n:2,c:"j",de:"Im Luftkurort Stadtkylf in der Mittelgebirgslandschaft des Oberen Kullas werden dreitägige Wanderungen ohne Gepäck veranstaltet Die Rundwanderung im deutsch – bei gischen Naturpark führt abends zu reservierten Zimmern. Die Betriebe übernehmen den Gepäcktransport zum nächsten Tagesziel. Die Wanderungen werden ganzjährig angeboten. In den Wanderprogramm sind drei Übernachtungen mit Frühstück dreimal Gepäcktransport, eine Wanderkarte, eine Wegbeschreibung und ein Wanderpass enthalten. Der Pauschalbetrag beträgt pro Person 89 Euro. Auskünfte: Verkehrsverein Erholungsgebiet Oberes Kylltal. Kurallee, 54589 Stadtkylf, Telefon ( 06597) 28 78.",ar:"تنظم منطقة شتادت كيل السياحية جولات مشي دائرية تمتد لثلاثة أيام في المحمية الطبيعية وتتميز هذه الرحلات بخدمة نقل الأمتعة بين الفنادق بشكل مستقل ليتفرغ السائح للمشي."},
+    {n:3,c:"e",de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Gemeint ist Musik, die aus Lautsprechen, Radios oder durch Musikinstrumente durch geöffnet Türen und Fenster bei sommerlichen Temperaturen ins Freie dringt. Die Gemeinde weist darauf hin, dass der Mittagsruhe von 13 bis 15 Uhr und nachts von 22 bis 7 Uhr keine musikalische Ruhestörung erfolgen darf. Gartengeräte mit Motoren dürfen montags bis freitags nur von 8 bis 13 und von 15 bis 19 Uhr benutzt werden, an Sonnabenden von 9 bis 13 Uhr. An Sonn - und Feiertagen dürfen die Geräte nicht zum Einsatz kommen.",ar:"أصدرت البلدية توجيهات صارمة بخصوص الضوضاء الناتجة عن الموسيقى والأدوات ذات المحركات لضمان راحة السكان."},
+    {n:4,c:"b",de:"Das erste deutsche Bücherdorf hat in Mühlbeck/ Fredersdorf (Sachsen – Anhalt ) seit Ende September seine Tore geöffnet. In acht Antiquarten warten über 70 000 Bücher aus allen Bereichen der Literatur auf Interessenten. Das in reizvoller landschaftlicher Umgebung liegende Bücherdorf nahe Bitterfeld - unweit der A19 und des Flughafens Leipzig - ist aus allen Teilen Deutschlands leicht zu erreich. Geöffnet sind die Antiquariate auch am Samstag und Sonntag. In Europa gibt es bereits acht solcher Bücherdörfer in Belgien, Frankreich, Großbritannien, den Niederlanden, Norwegen und der Schweiz. Initiatorin des deutschen Bücherdorfes ist Heidi Dehne (Tel. 03493/4 30 43).",ar:"أصبحت منطقة مولبيك فريدرسدورف مقراً لأول قرية كتب ألمانية حيث تضم ثمانية متاجر متخصصة في الكتب القديمة تعرض ما يزيد عن سبعين ألف مؤلف."},
+    {n:5,c:"c",de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei zweifelhafter Witterung bzw. leichtem Regen auf der Seebühne abzuhalten, weshalb es zu Verzögerungen des Beginns oder zu Unterbrechungen kommen kann. Sollte die Seeaufführung nicht stattfinden können, wird eine halbszenische Version von Porgy and Bess im Festspielhaus gegeben. Wir empfehlen unseren Gästen , bei unsicherer Wetterlage regenfester Kleidung den Vorzug zu geben und auf Schirme zu verzichten, da diese die Sicht beeinträchtigen. Das Spiel auf dem See wird ohne Pause gespielt. Die Spieldauer beträgt ca.2 Std. 45 Min.",ar:"تبذل إدارة مهرجان بريغنتس قصارى جهدها لتقديم العروض على المسرح العائم حتى في حال تقلب الطقس."}
+  ]
+},
 
-    const localExams = [
-      {
-        id: 'alex-cora',
-        title: 'Alex Und Cora',
-        level: 'B1',
-        skill: 'Lesen',
-        sub_section: 'Teile 1',
-        is_pro: false,
-        exam_data: {
-          options: [
-            { key: "a", de: "Eltern trotz Kritik mit der Schule zufrieden", ar: "الآباء راضون عن المدرسة رغم الانتقادات" },
-            { key: "b", de: "Elektromobilität für Angestellte", ar: "التنقل الكهربائي للموظفين" },
-            { key: "c", de: "STÄRKUNG VON BUS UND BAHN", ar: "تعزيز الحافلات والقطارات" },
-            { key: "d", de: "Schule und Umweltschutz", ar: "المدرسة وحماية البيئة" },
-            { key: "e", de: "Bald keine Firmenwagen mehr?", ar: "هل ستختفي سيارات الشركات قريباً؟" },
-            { key: "f", de: "Ticketpreise bei der Bahn", ar: "أسعار التذاكر في السكك الحديدية" },
-            { key: "g", de: "Lehrerberuf wird immer attraktiver", ar: "مهنة التدريس تصبح أكثر جاذبية" },
-            { key: "h", de: "Engagement für die Natur", ar: "الالتزام بالطبيعة" },
-            { key: "i", de: "Preissenkungen bei Bus, Straßenbahn und U-Bahn!", ar: "تخفيضات في الحافلات والترام والمترو!" },
-            { key: "j", de: "ZU WENIG LEHRER - STADT REAGIERT", ar: "نقص في المعلمين - المدينة تتخذ إجراءات" }
-          ],
-          texts: [
-            { id: 1, correct: "b", content: "Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen? Gerade in Städten kommt man mit einem E-Bike schneller und bequemer ans Ziel als mit dem Auto. Und Parkplatzprobleme gibt es auch nicht. Sie fördern zudem die Gesundheit Ihrer Mitarbeiter und schonen die Umwelt, und dabei können Sie noch Steuern sparen. Bei der BikeLeasing GmbH bekommen Sie Angebote, die zu Ihnen passen. Melden Sie sich bei uns an, und wir kümmern uns um den Rest.", exp_ar: "ملخص الإعلان: تأجير الدراجات الكهربائية: البديل الذكي لسيارات الشركة. فوائد صحية وبيئية: تعزيز صحة الموظفين البدنية مع الحفاظ على البيئة. مزايا مالية: توفير في الضرائب للشركة." },
-            { id: 2, correct: "f", content: "Die Bahn erhöht dieses Jahr die Ticketpreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!", exp_ar: "ملخص الإعلان: تثبيت أسعار التذاكر: قررت هيئة السكك الحديدية عدم رفع الأسعار هذا العام. تخفيضات النقل العام المحلي: سيتم تخفيض أسعار تذاكر النقل الداخلي لتقليل عدد الموظفين الذين يعتمدون على سياراتهم." },
-            { id: 3, correct: "a", content: "Vergangenen Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eltern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.", exp_ar: "ملخص الإعلان: رضا عام مرتفع: عبر 80% من المشاركين عن رضاهم عن المدارس. ضعف التأهيل المهني: يرى 40% فقط من الأهالي أن المدرسة تجهز أطفالهم بشكل كافٍ لدخول سوق العمل." },
-            { id: 4, correct: "j", content: "Berlin. In der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studierende die Schülerinnen und Schüler der Hauptstadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität leidet stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attraktiver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden. Außerdem denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.", exp_ar: "ملخص الإعلان: عجز كبير في الكوادر: يغيب آلاف المعلمين المؤهلين عن المدارس. خطة للإنقاذ: إطلاق حملة إعلانية تهدف لتحسين صورة مهنة التدريس وجعلها أكثر جاذبية. دراسة خيار زيادة الرواتب كحافز مادي للمعلمين." },
-            { id: 5, correct: "h", content: "NaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz. Sie wollen sich auch aktiv gegen Umweltverschmutzung einsetzen? Sie wollen sich für mehr Naturschutz engagieren? Dann sind Sie bei uns richtig. Wir haben regelmäßige Treffen und führen Informationsveranstaltungen zu verschiedenen aktuellen Themen durch. Außerdem gibt es eine monatliche Mitgliederzeitschrift. Melden Sie sich einfach bei uns.", exp_ar: "ملخص الإعلان: مجالات العمل: تركز بشكل أساسي على حماية البيئة وحماية الحيوانات. ما تقدمه للأعضاء: لقاءات دورية، فعاليات إعلامية، ومجلة شهرية." }
-          ]
-        }
-      },
-      {
-        id: 'rita',
-        title: 'Rita',
-        level: 'B1',
-        skill: 'Lesen',
-        sub_section: 'Teile 1',
-        is_pro: false,
-        exam_data: {
-          options: [
-            { key: "a", de: "Japanische Studie: Vielschläfer leben länger", ar: "دراسة يابانية: من ينامون كثيرًا يعيشون أطول" },
-            { key: "b", de: "USA: Nachfrage nach funktionellen Lebensmitteln geht zurück", ar: "الولايات المتحدة: تراجع الطلب على الأطعمة الوظيفية" },
-            { key: "c", de: "Studie zeigt: Heiraten macht dick", ar: "دراسة تظهر: الزواج يزيد الوزن" },
-            { key: "d", de: "Die Mehrheit der Schweizer treibt aktiv Sport", ar: "غالبية السويسريين يمارسون الرياضة بانتظام" },
-            { key: "e", de: "Neu im Trend: Jung und Gesund - mit Schokolade", ar: "الجديد في الموضة: الشباب والصحة - مع الشوكولاتة" },
-            { key: "f", de: "Schweizer sollen gesünder leben", ar: "يجب على السويسريين أن يعيشوا حياة أكثر صحة" },
-            { key: "g", de: "Statistik: Unverheiratete haben oft ein paar Kilos zu viel", ar: "إحصائية: العازبون غالبًا ما يعانون من زيادة في الوزن" },
-            { key: "h", de: "Teures Essen für mehr Jugend und Schönheit", ar: "طعام باهظ الثمن من أجل المزيد من الشباب والجمال" },
-            { key: "i", de: "Weniger schlafen - länger leben", ar: "النوم أقل - العيش أطول" },
-            { key: "j", de: "Schokolade essen - jung bleiben", ar: "تناول الشوكولاتة - البقاء شابًا" }
-          ],
-          texts: [
-            { id: 1, correct: "e", content: "Der Schokolade-Boom zeigt sich hierzulande nicht nur im hohen Verbrauch (jeder Schweizer isst fast 12 Kilo Schokolade im Jahr!), nein, er hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy zahlreiche kosmetische Behandlungsmethoden mit Schokolade an. Die Bäder, Massagen und Hautcremes mit Kakao sind durchaus ernst gemeint, denn Kakao soll eine belebende Eigenschaft haben, die den Menschen jung und gesund aussehen lässt.", exp_ar: "ملخص الإعلان: يركز النص على استخدام الشوكولاتة في العلاجات التجميلية والحمامات والمساج. الهدف هو الاستفادة من خصائص الكاكاو المنشطة التي تجعل الشخص يبدو أصغر سناً وأكثر صحة وجمالاً." },
-            { id: 2, correct: "c", content: "Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern. Das belegt eine neue Studie. In Deutschland sind fast die Hälfte der verheirateten Frauen und circa zwei Drittel der Ehemänner übergewichtig. Alleinstehende sind vermutlich schlanker, weil sie besonderen Wert auf ihr Äußeres legen, mehr Sport treiben und sich selten Zeit für gemütliche Mahlzeiten nehmen.", exp_ar: "ملخص الإعلان: تشير دراسة إلى أن المتزوجين حديثاً يكتسبون وزناً بسبب تغير عاداتهم الغذائية. العازبون عادة ما يكونون أنحف لأنهم يهتمون بمظهرهم ويمارسون الرياضة أكثر." },
-            { id: 3, correct: "i", content: "Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit am Mittwoch und bezog sich dabei auf eine neue japanische Studie. Schlecht für die Männer, denn laut dieser Studie schlafen Männer im Durchschnitt eine halbe Stunde länger pro Nacht als Frauen. Aber es gibt auch eine gute Nachricht für die Viel- und Langschläfer: Wer lange schläft, hat weniger Gewichtsprobleme und fühlt sich gesünder.", exp_ar: "ملخص الإعلان: دراسة يابانية جديدة تظهر أن النوم لأكثر من 8 ساعات يقلل من متوسط العمر المتوقع. وتشير الدراسة إلى أن الرجال ينامون أكثر من النساء، لكن النوم الطويل له أيضاً مزايا مثل تقليل مشاكل الوزن." },
-            { id: 4, correct: "h", content: "Du bist, was du isst, hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Der Trend kommt aus den USA: Dort kaufen bereits viele Leute neue teure Lebensmittel mit wissenschaftlichen Inhaltsstoffen, die dem Kunden jüngeres und schöneres Aussehen versprechen. So bietet z.B. ein New Yorker Nobelhotel das Menü Gegen-Graue-Haare an, das gegen das Älterwerden wirken soll. Aber wer wird schon eine solche Mahlzeit bestellen? Millionen von Leuten, so die Trendforscher. Und zwar aus dem einfachen Grund, weil jeder jung und gut aussehen will, und das mit möglichst wenig Aufwand.", exp_ar: "ملخص الإعلان: اتجاه جديد قادم من أمريكا يعتمد على أغذية باهظة الثمن تحتوي على مكونات علمية تَعِد بمظهر أصغر وأجمل. الفكرة أن الناس مستعدون لدفع الكثير ليبدوا شباباً بأقل مجهود." },
-            { id: 5, correct: "f", content: "Nach dem Motto „beschwingt und bewegt“ starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei soll die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen. Fast zwei Drittel der Bevölkerung in der Schweiz sind wenig aktiv und essen zu viel. Die Kampagne soll den Leuten zeigen, wie Sport und gesunde Ernährung ohne großen Aufwand in den Alltag integriert werden können, z.B. mit einem Spaziergang am Mittag oder mit einem Apfel zum Znüni statt Schokolade.", exp_ar: "ملخص الإعلان: السلطات الصحية السويسرية تطلق حملة وطنية لتشجيع الناس على ممارسة الرياضة وتناول طعام متوازن. الحملة تهدف لتعليم الناس كيفية دمج النشاط البدني والتغذية الصحية في حياتهم اليومية." }
-          ]
-        }
-      },
-      {
-        id: 'caroline',
-        title: 'Caroline',
-        level: 'B1',
-        skill: 'Lesen',
-        sub_section: 'Teile 1',
-        is_pro: false,
-        exam_data: {
-          options: [
-            { key: "a", de: "Flughafen Frankfurt beliebter Veranstaltungsort", ar: "مطار فرانكفورت: مكان مفضل للفعاليات" },
-            { key: "b", de: "Flughafen Frankfurt wird 10 Jahre", ar: "مطار فرانكفورت يحتفل بمرور 10 سنوات" },
-            { key: "c", de: "Neue Kurse für Kinder", ar: "دورات جديدة للأطفال" },
-            { key: "d", de: "Neue Kurse: Spiele für Mütter und Kinder", ar: "دورات جديدة: ألعاب للأمهات والأطفال" },
-            { key: "e", de: "Demonstration gegen Fluglärm", ar: "مظاهرة ضد الضوضاء الناتجة عن الطيران" },
-            { key: "f", de: "Experten gegen Vergrößerung des Flughafens", ar: "خبراء يعارضون توسيع المطار" },
-            { key: "g", de: "Diskussion über Flughafen und Arbeitsplätze", ar: "نقاش حول المطار وفرص العمل" },
-            { key: "h", de: "Umwelt und Flughafen: Ein Informationsabend der Bürger", ar: "البيئة والمطار: أمسية معلوماتية للمواطنين" },
-            { key: "i", de: "Neue Kurse: Museumsführung für junge Väter", ar: "دورات جديدة: جولات في المتحف للآباء الشباب" },
-            { key: "j", de: "Familienbildung Schwerpunkt Beruf und Familie", ar: "التوفيق بين العمل والأسرة: محور تعليم الأسرة" }
-          ],
-          texts: [
-            { id: 1, correct: "c", content: "Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch nächster Woche beginnen zwei Malkurse für Kinder. Zweieinhalb- bis vierjährige Kinder treffen sich um 15.30 Uhr, Kinder im Alter von fünf und sechs Jahren um 17.00 Uhr. Für Kinder im Alter zwischen eineinhalb und sechs Jahren und ihre Väter beginnt am Samstag um 10.00 Uhr eine feste Vater-Kind-Gruppe. Am darauffolgenden Samstag gibt es dann auch ein Treffen für Väter und Kinder bis dreieinhalb Jahren. Etwas anderes ist die Kultur- und Kreativwerkstatt am Montag nächster Woche. Aus Ton und Erde sollen Figuren nach afrikanischen Beispielen gebastelt werden. Zur Vorbereitung treffen sich die Teilnehmer am kommenden Montag zuerst im Museum. Anmeldung spätestens morgen bis 15.00 Uhr.", exp_ar: "ملخص الإعلان: دورات جديدة في مركز التعليم بدورنبيرن، منها دورات رسم للأطفال حسب أعمارهم، ومجموعة منتظمة للآباء والأطفال، وورشة لصنع تماثيل من الطين. يجب التسجيل قبل الغد." },
-            { id: 2, correct: "h", content: "Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern aus den östlichen Stadtteilen, die sich seit Jahren aktiv für den Naturschutz und die Umwelt einsetzt, lädt für Donnerstag dieser Woche um 19.30 Uhr zu einem Informationsabend über den Ausbau des Frankfurter Flughafens ein. Im Bürgerhaus Ostend, Parkstraße 24, Clubraum 12, werden verschiedene Sprecher zu hören sein. Die Gruppe möchte Antworten auf folgende Fragen suchen: Wie viel Lärm durch Flugzeuge verträgt die Stadt? Oder Welche Auswirkungen hat der Flugverkehr auf Umwelt und Natur?", exp_ar: "ملخص الإعلان: مجموعة من المواطنين تدعو إلى أمسية معلوماتية حول توسيع مطار فرانكفورت، للبحث في حجم الضوضاء وتأثير حركة الطيران على البيئة والطبيعة." },
-            { id: 3, correct: "a", content: "Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen und Tagungen. Dies zeigt ein Bericht des Frankfurter Flughafens, der beim zehnjährigen Jubiläum des Kongresszentrums vorgelegt wurde. Im Jubiläumsjahr haben am Frankfurter Flughafen 6800 Veranstaltungen mit insgesamt 72000 Teilnehmern stattgefunden. Im Jahr davor waren es nur 6300 Veranstaltungen mit 70000 Gästen. Im Kongresszentrum, das direkt gegenüber dem Hauptgebäude des Flughafens liegt, gibt es 28 Konferenzräume für bis zu 200 Teilnehmer. Modernste Technik wie Laptop-Anschlüsse und Internetzugänge in allen Konferenzräumen sind ebenso vorhanden, wie ein Dolmetscherdienst und verschiedene Speisemöglichkeiten. Eine transportable Videokonferenz-Anlage ermöglicht Verbindungen in die ganze Welt.", exp_ar: "ملخص الإعلان: مطار فرانكفورت أصبح مكاناً مفضلاً للشركات لتنظيم الفعاليات والمؤتمرات، وقد ارتفع عدد الفعاليات والمشاركين في سنة الذكرى العاشرة لمركز المؤتمرات." },
-            { id: 4, correct: "g", content: "Eine Bürgergruppe mit dem Namen Südliches Frankfurt lädt für Montag kommender Woche, um 19.30 Uhr ins Pfarrhaus St. Mauritius, Mauritiusstraße 14, zu einer öffentlichen Expertenbefragung zum Thema Arbeitsplätze am Frankfurter Flughafen ein. Der Gruppe liegen Berichte und Daten vor, die nach den Worten der Sprecher der Gruppe sehr fantastisch und zweifelhaft sind. Deshalb hat die Bürgergruppe Südliches Frankfurt den Personalleiter des Frankfurter Flughafens, einen Experten aus dem Wirtschaftsministerium, einen bekannten Stadtentwicklungsplaner und einen Soziologen, der sich mit der Arbeitsplatzentwicklung in der Frankfurter Region beschäftigt, eingeladen. Im Anschluss an die Vorträge der Experten haben die Gäste Zeit, Fragen zu stellen.", exp_ar: "ملخص الإعلان: مجموعة مواطنين تنظم نقاشاً عاماً مع خبراء حول فرص العمل في المطار، لأن التقارير والأرقام المتوفرة تبدو لهم مشكوكاً فيها، ويمكن للحاضرين طرح الأسئلة بعد المحاضرات." },
-            { id: 5, correct: "j", content: "Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht über viele Veranstaltungen. Neben Kursen wie Geburtsvorbereitung und Babypflege steht diesmal das Thema Berufstätige Eltern im Mittelpunkt. In Gruppen und Kursen vor allem für Frauen geht es darum, wie sich nach der Geburt eines Kindes Beruf und Familie miteinander vereinbaren lassen. Das Verhältnis zwischen Mann und Frau spielt eine große Rolle im Angebot der Familienbildung; hierzu gibt es wieder spezielle Programme nur für Frauen oder nur für Männer. Auch zum Verhältnis der Generationen (Großeltern und Enkelkinder) gibt es wieder Angebote. Darüber hinaus wartet das Programm mit Kursen für Entspannung und Zeitmanagement auf, die bei Fragen des Alltags helfen wollen.", exp_ar: "ملخص الإعلان: برنامج جديد لمراكز التعليم الأسري يركز على التوفيق بين العمل والأسرة بعد ولادة الطفل، ويشمل دورات للعلاقة بين الرجل والمرأة، والعلاقات بين الأجيال، والاسترخاء وإدارة الوقت." }
-          ]
-        }
+/* ---------- TEIL 2 ---------- */
+{ id:"alex-t2", title:"Alex und Cora", sub:"Teile 2", type:"mcq",
+  texts:[
+    "Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt. Markus Kleinoth aus der Freizeitredaktion hat sich mit diesem Thema beschäftigt.",
+    "In deutschen Haushalten gibt es rund 34 Millionen Haustiere. Besonders Katzen sind sehr beliebt, denn davon leben 14 Millionen in Deutschland. Und das, obwohl Deutschland als Land der Hundefans gilt. Insgesamt gibt es aber etwa 10 Millionen Hunde.",
+    "Für den Hund ist manchen Menschen nichts zu teuer. Eine Hundebesitzerin, die überdurchschnittlich viel Geld für ihren Liebling ausgibt, ist Bettina Schröther: Morgens vor der Arbeit bringe ich meinen Hund in eine sehr gute Tagesbetreuung, in der es auch eine Hundeschule gibt. Aber wenn ich frei habe, sind wir immer zusammen, auch im Urlaub. Ich war mit ihm sogar schon in einem Wellnesshotel für Hunde.",
+    "Der Hundeexperte Marius Klotz kennt solche Fälle, sieht das aber kritisch: Viele Besitzer meinen es gut und tun zu viel für ihre Hunde. Hier sollte man aufpassen. Für einen Hund ist es sehr wichtig, eine gute Erziehung zu bekommen. Wichtig sind klare Regeln, die er verstehen kann. Außerdem braucht er viel Bewegung und unbedingt passendes Futter. Frisches Futter ist nicht unbedingt das beste, da sollte man sich gut informieren, am besten Fachleute fragen.",
+    "Viele Menschen sehen ihre Katzen und Hunde als Teil der Familie. So auch Ellie Herfried, Hundebesitzerin aus Erfurt: Unsere Familie feiert jedes Jahr mit unserem kleinen Schatz Geburtstag. Er bekommt einen Geburtstagshundekuchen, natürlich mit Kerzen, und auch ein Geschenk. Dieses Jahr haben wir außerdem seine Hundefreunde eingeladen.",
+    "Auch in einigen Seniorenheimen sind mittlerweile Tiere erlaubt. Sandra Bärenweger ist Altenpflegerin in Hamburg: Bei uns im Haus haben einige Senioren einen Hund oder eine Katze. Dadurch haben sie eine Aufgabe, denn sie müssen sich ja um ihr Tier kümmern, es füttern, oder mit ihm rausgehen, wenn er ein Hund ist. So haben sie jeden Tag eine sinnvolle Beschäftigung. Das tut den älteren Menschen gut; viele bleiben dadurch fit.",
+    "Der tägliche Spaziergang mit dem Hund oder das Spielen mit der Katze bietet vielen Haustierbesitzern Ruhe und Entspannung, eine kleine Erholung vom Alltag. Das bestätigen auch Fachleute: Haustiere können gerade bei Stress für viele Menschen ein guter Ausgleich sein. Das Haustier ist dabei auch viel mehr als ein Hobby, da es ein Lebewesen ist, das schnell zum Familienmitglied wird und das Leben bereichert."
+  ],
+  items:[
+    {n:1,c:"C",q:"Die Hundebesitzerin Elli Herfeld",opts:[{k:"A",de:"feiert ihren Geburtstag immer mit ihrem Hund."},{k:"B",de:"sieht ihren Hund als festes Familienmitglied."},{k:"C",de:"backt ihrem Hund zum Geburtstag einen Kuchen."}],ar:"النص يقول إنها تحضر كعكة عيد ميلاد لكلبها."},
+    {n:2,c:"A",q:"In Seniorenheimen gibt es oft Tiere, damit",opts:[{k:"A",de:"die Senioren etwas tun, was gut für sie ist."},{k:"B",de:"sie auf die älteren Menschen aufpassen."},{k:"C",de:"die Senioren mehr spazieren gehen."}],ar:"الحيوانات تعطي المسنين مهمة مفيدة لصحتهم."},
+    {n:3,c:"A",q:"Bettina Schröther …",opts:[{k:"A",de:"verbringt die ganze Freizeit mit ihrem Hund."},{k:"B",de:"macht mit ihrem Hund regelmäßig Wellnessurlaube."},{k:"C",de:"lässt ihren Hund in einer Hundeschule erziehen."}],ar:"النص يقول إنها تكون مع كلبها كل وقت فراغها."},
+    {n:4,c:"C",q:"Nach Meinung von Hundeexperte Marius Klotz sollte man",opts:[{k:"A",de:"sich zur Ernährung des Tiers beraten lassen."},{k:"B",de:"seinen Hund immer gut behandeln."},{k:"C",de:"die Regeln bei der Hundeerziehung beachten."}],ar:"الخبير يشدد على قواعد واضحة في تربية الكلب."},
+    {n:5,c:"A",q:"Fachleute meinen, dass",opts:[{k:"A",de:"man sich durch sein Haustier erholen kann."},{k:"B",de:"man mit seinem Hund täglich spazieren gehen sollte."},{k:"C",de:"ein Haustier ein sinnvolles Hobby ist."}],ar:"الحيوان الأليف يساعد على الراحة والاسترخاء."}
+  ]
+},
+{ id:"rita-t2", title:"Rita", sub:"Teile 2", type:"mcq",
+  texts:[
+    "Von Antje Blinda Coz-Ausstoß: null. Geplante Strecke: einmal um die Welt. Endlich wird der Traum von Louis Palmer wahr: Der Schweizer startet mit seinem Auto, das mit Sonnenenergie fährt, zur Weltumrundung. Er will damit zeigen, dass Autofahren auch geht, ohne der Umwelt zu schaden.",
+    "Entwickelt für mich ein Fahrzeug für eine Weltreise, die mit Sonnenenergie fährt, forderte Louis Palmer Studenten an Schweizer Universitäten auf. Das war vor drei Jahren. Heute ist das Auto fertig: ein dreirädriges Fahrzeug mit zwei Sitzplätzen. Und die Weltreise? Am 3. Juli starten er und sein 7-köpfiges Team in Luzern: Das Auto soll als erstes Solarfahrzeug die Welt umrunden.",
+    "Die ganze Welt wartet auf revolutionäre Erfindungen für ein umweltbewusstes Auto, sagt der Schweizer, ich will darauf aufmerksam machen, dass die technischen Lösungen schon jetzt vorhanden sind. Mit 14 Jahren hatte Louis den Entschluss gefasst. Gegen die Veränderung des Klimas muss etwas getan werden. Die Lösung hatte er auch schon: Mit kräftigen Strichen zeichnete er ein Rennauto, verziert mit lachendem Sonnen. Der Rest war nur eine Frage der Organisation und der konsequenten Lebensplanung. Ich unterteile mein Leben in drei Phasen, sagt Palmer und lacht über sich selbst: zwischen 20 und 30 die Welt kennen lernen, zwischen 30 und 40 die Welt aufmerksam machen und zwischen 40 und 50 die Welt verändern.",
+    "Phase eins begann mit 23 Jahren: Er zog aus, um 50 Länder auf allen Kontinenten zu bereisen: Anstatt an die Uni zu gehen, habe ich die Welt studiert. Mit dem Fahrrad fuhr er von Kenia nach Kapstadt, mit einem Segelflugzeug überflog er Südamerika und als Fotograf reiste er mehrmals nach Afghanistan.",
+    "Phase zwei startete vor drei Jahren: Palmer konnte Studenten von vier Universitäten gewinnen, die für ihn das Auto bauten. Schwierig war es aber, Firmen und private Sponsoren für die finanzielle Unterstützung zu finden, meint Palmer. Doch auch das hat dann schließlich geklappt.",
+    "Nun ist Palmer bereit für die Tour. Ich habe keine Ahnung, was auf uns zukommt, sagt der erfahrene Globetrotter, der sechs Sprachen spricht. Ich habe schon etwas Angst, z.B. vor dem Straßenverkehr in Millionenstädten oder unvorhersehbaren Zwischenfällen. Das Schlimmste ist aber, wenn jeder Tag wie der andere ist. In den nächsten 16 Monaten wird es dazu nicht kommen."
+  ],
+  items:[
+    {n:1,c:"C",q:"Mit 23 Jahren wollte Louis Palmer",opts:[{k:"A",de:"für Studenten Reisen nach Südamerika organisieren"},{k:"B",de:"mit dem Fahrrad durch 50 verschiedene Länder fahren"},{k:"C",de:"viele verschiedene Länder kennen lernen"}],ar:"في سن 23 أراد أن يتعرف على دول كثيرة ويسافر حول العالم."},
+    {n:2,c:"C",q:"Sein Projekt konnte Palmer realisieren,",opts:[{k:"A",de:"weil er einen Preis von einer Universität gewonnen hat"},{k:"B",de:"weil er finanzielle Unterstützung von vier Universitäten erhalten hat."},{k:"C",de:"weil ihn Firmen und Universitäten unterstützt haben"}],ar:"الطلاب من أربع جامعات بنوا السيارة، لكن الدعم جاء في النهاية من الشركات والممولين."},
+    {n:3,c:"A",q:"Palmers Auto",opts:[{k:"A",de:"fährt mit alternativer Energie"},{k:"B",de:"geht auf eine dreijährige Weltreise"},{k:"C",de:"hat genug Platz für sieben Personen"}],ar:"السيارة تسير بالطاقة الشمسية."},
+    {n:4,c:"A",q:"Louis Palmer",opts:[{k:"A",de:"wird sich in nächster Zeit nicht langweilen"},{k:"B",de:"möchte mit seinem Auto nicht durch Großstädte fahren"},{k:"C",de:"hat für die Weltreise sechs Sprachen gelernt"}],ar:"هو يقول إن الأيام القادمة لن تكون مملة."},
+    {n:5,c:"C",q:"Schon als Jugendlicher",opts:[{k:"A",de:"baute Louis an einem umweltfreundlichen Auto"},{k:"B",de:"wollte Louis etwas für die Umwelt tun."},{k:"C",de:"wusste Louis genau, wie er sein Leben einteilen will"}],ar:"وهو صغير عرف كيف يقسم حياته إلى ثلاث مراحل."}
+  ]
+},
+{ id:"caroline-t2", title:"Caroline", sub:"Teile 2", type:"mcq",
+  texts:[
+    "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite. Von Christiane Altenberger, Sie sind die Problemlöser im Kindergarten an der Munckerstraße. Wenn das Malprogram spinnt, plötzlich ein Spiel auftaucht, das keiner kennt, dann rufen die Erzieherinnen nach Anne und Melanie. Die sind zwar erst sechs Jahre alt, aber mit den Computerspielen kennen sie sich aus. Die Kinder wissen manchmal mehr als wir sagt Eva Schilling. Leiterin des Kindergartens. Gelernt haben die beiden ihr Know-how bei Multimedia - Landschaften für Kinder, einem Projekt, das das Schulamt zusammen mit dem Studio im Netz gestartet hat.",
+    "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia- Computern und einem Farbdrucker installiert. Die Stationen wandern durch 14 Kindergärten, wo sie jeweils für vier Wochen installiert werden. Mit dabei in den Kindergärten: ein ganzer Satz von Spiel – Software. Vierjährige am Computer? In Pädagogen kreisen sind viele Berührungsängste da, weiß Edith llg, Fachberaterin für Kindergärten beim Schulamt, aber wir können uns aus dieser Entwicklung nicht ausklinken. Die Kinder wollen sich mit ihrer Umwelt auseinandersetzen. Angefangen hat diese Auseinandersetzung im Studio im Netz – 193 Kinder waren eingeladen, um erste Erfahrungen am Computer zu sammeln. Die Kinder waren absolut begeistert, haben immer wieder gefragt, wann gehen wir da wieder hin, so Frau llg.",
+    "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus nach dem Motto: Mein fröhliches, gesundes Kind setzt sich vor den Computer und steht sechs Stunden später krank, sprachlos und einsam wieder auf.",
+    "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend über flüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm.",
+    "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte. Dabei entwickeln gerade Kinder, die sich sonst nur schwer auf etwas konzentrieren können, plötzlich ungeahnte Konzentrationszeiten. Eva Schilling kann sich deshalb die Computer als Dauereinrichtung im Kindergarten vorstellen."
+  ],
+  items:[
+    {n:1,c:"A",q:"Das Schulamt hat ein Projekt gestartet, bei dem",opts:[{k:"A",de:"Computer in Kindergärten aufgestellt werden."},{k:"B",de:"Computerspiele für Vierjährige entwickelt werden sollen."},{k:"C",de:"Kinder neue Farbdrucker ausprobieren sollen."}],ar:"المشروع يهدف لتجهيز روض الأطفال بالحواسيب."},
+    {n:2,c:"A",q:"Die Kinder",opts:[{k:"A",de:"hatten großen Spaß bei dem Projekt."},{k:"B",de:"wollten lieber draußen im Freien spielen."},{k:"C",de:"wussten nicht, wann sie ins Studio im Netz gehen sollten."}],ar:"النص يقول إنهم كانوا مبسوطين بزاف (absolut begeistert)."},
+    {n:3,c:"A",q:"Eltern fürchten, dass",opts:[{k:"A",de:"der Computer ihren Kindern schadet."},{k:"B",de:"ihre Kinder nicht so früh aufstehen können."},{k:"C",de:"ihre Kinder vor dem Computer Angst haben."}],ar:"الآباء كان عندهم خوف أن الحاسوب يضر بصحة أطفالهم."},
+    {n:4,c:"C",q:"Die Erzieherinnen",opts:[{k:"A",de:"arbeiten jeden Tag 15 bis 20 Minuten am Computer."},{k:"B",de:"spielen immer mit zwei oder drei Kindern am Computer."},{k:"C",de:"wählen für die Kinder die Software aus."}],ar:"المربيات هن اللي كيختارو البرامج الإبداعية."},
+    {n:5,c:"B",q:"Wenn die Kinder am Computer sitzen, dann",opts:[{k:"A",de:"gibt es häufig Streit."},{k:"B",de:"hilft ein Kind dem anderen."},{k:"C",de:"können sich die meisten nicht lange konzentrieren."}],ar:"النص يقول إنهم يتعاونون (helfen sich gegenseitig)."}
+  ]
+},
+
+/* ---------- TEIL 3 ---------- */
+{ id:"alex-t3", title:"Alex Und Cora", sub:"Teile 3", type:"matching",
+  ads:[
+    {k:"A",t:"Café Simon",de:"Hausgemachte Pralinen, Kuchen, Torten und Eis",ar:"مقهى حلويات وآيس كريم"},
+    {k:"B",t:"Tourismusschulen",de:"Höhere Lehranstalt, Hotelhandelsschule, Tourismusfachschule",ar:"مدارس السياحة والفندقة"},
+    {k:"C",t:"Rathausekeller",de:"Originelles Weinkeller mit österreichischen, italienischen und französischen Weinen",ar:"مطعم نبيذ بأنواع أوروبية"},
+    {k:"D",t:"Liederbühne Robinson",de:"Kleinkunst, Vegetarische Spezialitäten",ar:"مسرح وطعام مع أكلات نباتية"},
+    {k:"E",t:"Interkulturelle Arbeit",de:"Berufsbegleitende Fortbildung für Fachkräfte",ar:"تكوين مهني في العمل بين الثقافات"},
+    {k:"F",t:"MortizCafé",de:"Kaffee so viel du willst",ar:"قهوة بلا حد بثمن قليل"},
+    {k:"G",t:"USA-Aufenthalt für Schüler",de:"Ein Schuljahr an einer High School",ar:"سنة دراسية في أمريكا للطلاب"},
+    {k:"H",t:"Abendkurs für Einsteiger",de:"Keine Angst vor neuen Technologien, Computer",ar:"دورة مسائية للمبتدئين في الكمبيوتر"},
+    {k:"I",t:"Bachls Kerzenstub'n",de:"TANZEN + ESSEN, Live-Musik",ar:"رقص وأكل وموسيقى حية"},
+    {k:"J",t:"Restaurantcafé Chesa",de:"Schweizer und bayerische Küche, Fischspezialitäten",ar:"مطعم بالمطبخ السويسري والبافاري والسمك"},
+    {k:"K",t:"Internationales Studium",de:"Fremdsprachen + Betriebswirtschaft, B.A. in European Administration",ar:"دراسة دولية مع لغات وإدارة في الخارج"},
+    {k:"L",t:"BIZ (Berufsinformationszentrum)",de:"Informationen zu Ausbildung und Studium",ar:"مركز معلومات للتكوين والدراسة"}
+  ],
+  items:[
+    {n:1,c:"K",de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren, um später vielleicht auch dort zu arbeiten.",ar:"الدراسة الدولية مع اللغات تناسب هذا الهدف."},
+    {n:2,c:"E",de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein.",ar:"دورة العمل بين الثقافات تناسب العاملين في الصحة."},
+    {n:3,c:"H",de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer.",ar:"دورة مسائية للمبتدئين في الكمبيوتر."},
+    {n:4,c:"X",de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit.",ar:"ما كاين إعلان مناسب لهذه الوضعية."},
+    {n:5,c:"D",de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.",ar:"مكان فيه ترفيه وأكلات نباتية."},
+    {n:6,c:"X",de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen.",ar:"ما كاين إعلان مناسب لهذه الوضعية."},
+    {n:7,c:"F",de:"Sie verbringen gern viele Stunden im Café, wollen aber nicht viel Geld ausgeben.",ar:"قهوة بلا حد بثمن قليل."},
+    {n:8,c:"C",de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren.",ar:"مطعم نبيذ بأنواع أوروبية."},
+    {n:9,c:"L",de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung.",ar:"مركز المعلومات والاستشارة المهنية."},
+    {n:10,c:"A",de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am liebsten süße Sachen isst.",ar:"مقهى حلويات يناسب هذا الصديق."}
+  ]
+},
+{ id:"rita-t3", title:"Rita", sub:"Teile 3", type:"matching",
+  ads:[
+    {k:"A",t:"Jung gebliebener Rentner",de:"Sucht Freizeitpartnerin (bis 40) für Kultur, Kino, Reisen",ar:"متقاعد يبحث عن شريكة للسينما والسفر"},
+    {k:"B",t:"Surf & Travel",de:"Kurztrips der Deutschen Bahn, Berlin, Oktoberfest",ar:"رحلات قصيرة بالقطار إلى برلين وأكتوبرفست"},
+    {k:"C",t:"Feng Shui für den Garten",de:"Vortragsabend, Beratung für die Gestaltung des Gartens",ar:"أمسية حول تصميم الحدائق بالفنغ شوي"},
+    {k:"D",t:"Für den Fernsehfilm",de:"Kleindarsteller und Statisten gesucht, Gage 40 Euro/Tag",ar:"مطلوب ممثلون إضافيون في فيلم تلفزيوني"},
+    {k:"E",t:"Messejobs",de:"Hostessen und Promoter für Messen in Leipzig",ar:"عمل كمضيفين في المعارض"},
+    {k:"F",t:"Verkehrsmuseum Erfurt",de:"Mobilität und Technik, Geschichte des Autos",ar:"متحف النقل وتاريخ السيارات"},
+    {k:"G",t:"ADAC Urlaub mobil",de:"Berlin plus Autoreise durch Deutschland",ar:"باقة برلين ثم رحلة بالسيارة في ألمانيا"},
+    {k:"H",t:"Filmclub",de:"Filmvorführungen, Kino",ar:"نادي سينما"},
+    {k:"I",t:"Samstagswerkstatt",de:"Aufbau des Autos, Reparatur und Pflege",ar:"ورشة لتعلم إصلاح السيارة"},
+    {k:"J",t:"Ökomobil",de:"Garten- und Landschaftsbau, Ausbildung",ar:"مؤسسة لتكوين في البستنة"},
+    {k:"K",t:"Studentinnen/SchülerInnen gesucht",de:"Betreuung im Kinderferienlager, Taschengeld 125 €",ar:"مشرفون لمخيم صيفي للأطفال"},
+    {k:"L",t:"Gemeinsam schöne Dinge genießen",de:"Akademikerin sucht sportlich eleganten Partner",ar:"أكاديمية تبحث عن شريك للحفلات والسفر"}
+  ],
+  items:[
+    {n:1,c:"A",de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann.",ar:"المتقاعد يبحث عن شريكة للسينما."},
+    {n:2,c:"D",de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen.",ar:"الإعلان عن كومبارس مدفوع الأجر."},
+    {n:3,c:"L",de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann.",ar:"الإعلان يبحث عن شريكة للسفر."},
+    {n:4,c:"X",de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen.",ar:"ما كاين إعلان مناسب لهذه الوضعية."},
+    {n:5,c:"I",de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.",ar:"ورشة لإصلاح السيارة."},
+    {n:6,c:"F",de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen.",ar:"متحف النقل وتاريخ السيارات."},
+    {n:7,c:"C",de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps.",ar:"أمسية حول تصميم الحديقة."},
+    {n:8,c:"K",de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job.",ar:"عمل صيفي كمشرف في مخيم."},
+    {n:9,c:"X",de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen.",ar:"ما كاين إعلان مناسب لهذه الوضعية."},
+    {n:10,c:"G",de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot.",ar:"باقة رحلة بالسيارة في ألمانيا."}
+  ]
+},
+{ id:"caroline-t3", title:"Caroline", sub:"Teile 3", type:"matching",
+  ads:[
+    {k:"A",t:"Sprachen lernen & Leute treffen",de:"Bildungsurlaub für Erwachsene in England, Malta, Frankreich",ar:"دورات لغات للبالغين في الخارج"},
+    {k:"B",t:"Amadeus",de:"Cafe, Bistro, Schlagernacht, Schnitzel-Woche",ar:"مقهى وفعاليات موسيقية"},
+    {k:"C",t:"Ritterstub’n",de:"Fischspezialitäten, Restaurant in der Altstadt",ar:"مطعم متخصص في الأسماك"},
+    {k:"D",t:"Museum der Stadt Füssen",de:"Öffnungszeiten April bis Oktober: Di–So, Mo. geschlossen",ar:"متحف مغلق يوم الاثنين"},
+    {k:"E",t:"Das Heimatmuseum Füssen",de:"Öffnungszeiten: Montag bis Freitag",ar:"متحف مفتوح يوم الاثنين"},
+    {k:"F",t:"Franziskaner Stüberl",de:"Gutbürgerliche Allgäuer und Bayerische Küche",ar:"مطعم بالمطبخ البافاري"},
+    {k:"G",t:"Alpenrösle",de:"Hotel-Restaurant, Hotel • Café • Pension",ar:"فندق ومطعم مع إقامة"},
+    {k:"H",t:"Free-System",de:"Englisch, Französisch, Deutsch für Ausländer, Intensivkurse",ar:"معهد لغات بدروس مرنة"},
+    {k:"I",t:"Alfa Sprachreisen",de:"Sprachkurse und High-School-Programme für 12- bis 18-Jährige",ar:"برامج لغات للمراهقين من 12 إلى 18 سنة"},
+    {k:"J",t:"bonCas",de:"Spezialitätenkäserei, Schweiz",ar:"مصنع أجبان سويسري"},
+    {k:"K",t:"Jahreskonzert Füssen",de:"Mozart, Klavierkonzert Nr. 21 in C-Dur",ar:"حفل موسيقي لموتسارت"},
+    {k:"L",t:"Sennerei-Genossenschaft Bayern",de:"Allgäuer Emmentaler, Bergkäse, Tilsiter",ar:"تعاونية أجبان بافارية"}
+  ],
+  items:[
+    {n:1,c:"E",de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.",ar:"حفل كونسيرت البيانو لموتسارت."},
+    {n:2,c:"F",de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.",ar:"متحف الحي مفتوح يوم الاثنين."},
+    {n:3,c:"B",de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",ar:"مطعم بالمطبخ البافاري."},
+    {n:4,c:"K",de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.",ar:"مطعم الأسماك هو الاختيار الصحيح."},
+    {n:5,c:"C",de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",ar:"تعاونية الأجبان البافارية."},
+    {n:6,c:"X",de:"Sie möchten einen Deutschkurs in Wien besuchen.",ar:"ما كاين إعلان مناسب لهذه الوضعية."},
+    {n:7,c:"H",de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.",ar:"برامج للمراهقين من 12 إلى 18 سنة."},
+    {n:8,c:"X",de:"Sie interessieren sich für einen Sprachkurs auf CD.",ar:"ما كاين إعلان مناسب لهذه الوضعية."},
+    {n:9,c:"X",de:"Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt.",ar:"ما كاين إعلان مناسب لعمر 10 سنوات."},
+    {n:10,c:"L",de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",ar:"فندق ومطعم مع إقامة."}
+  ]
+},
+
+/* ---------- SPRACHBAUSTEINE 1 ---------- */
+{ id:"alex-sp1", title:"Alex Und Cora", sub:"Sprach 1", type:"sprach1",
+  text: `Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, .....(1)..... ich seit zwei Monaten in einem Altersheim .....(2)..... der Nähe von Schaffhausen. Die Arbeit in .....(3)..... Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge .....(4)..... zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich .....(5)..... gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir .....(6)..... ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr .....(7)..... gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, .....(8)..... ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna .....(9)..... auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du .....(10)..... bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie`,
+  items:[
+    {n:1,c:"arbeite",opts:["arbeite","arbeiten","arbeiteten"],exp:"بما أننا في زمن الحاضر (Präsens) مع الضمير 'ich'، فالفعل يأخذ النهاية 'e'."},
+    {n:2,c:"in",opts:["auf","bei","in"],exp:"العبارة 'in der Nähe von' تعبير محفوظ بمعنى 'بالقرب من'."},
+    {n:3,c:"diesem",opts:["diesem","diesen","dieses"],exp:"الاسم 'Haus' محايد، وحرف الجر 'in' هنا للموقع (Wo?) في حالة الـ Dativ."},
+    {n:4,c:"Kontakt",opts:["Kontakt","Kontakte","Kontakten"],exp:"المقصود هنا المفرد 'der Kontakt' لأن الصفة 'enge' في المفرد."},
+    {n:5,c:"besonders",opts:["besondere","besonderes","besonders"],exp:"'besonders' تأتي كظرف (Adverb) لوصف 'gern'، والظروف لا تأخذ نهايات."},
+    {n:6,c:"ihr",opts:["ihr","ihre","ihres"],exp:"الاسم 'Leben' محايد في حالة Akkusativ، ونسبته للملكية 'هي' تأخذ 'ihr'."},
+    {n:7,c:"hart",opts:["hart","harte","härter"],exp:"'hart' صفة تصف طريقة العمل (Adverb) ولا تأخذ نهاية."},
+    {n:8,c:"weil",opts:["daher","deshalb","weil"],exp:"الفعل 'konnten' في نهاية الجملة، مما يدل على جملة ثانوية والرابط المناسب للسبب هو 'weil'."},
+    {n:9,c:"aber",opts:["aber","als","wie"],exp:"'aber' تستخدم للتعبير عن الاستدراك (ولكن)."},
+    {n:10,c:"hast",opts:["bist","hast","wirst"],exp:"الفعل 'erleben' يأخذ الفعل المساعد 'haben' في الماضي، ومع 'du' تصبح 'hast'."}
+  ]
+},
+{ id:"rita-sp1", title:"Rita", sub:"Sprach 1", type:"sprach1",
+  text: `Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich .....(1)..... erzählen. Am Anfang .....(2)..... ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt .....(3)..... zwei Antworten bekommen habe. Aber zum Glück hat einer davon .....(4).....: Ich werde nun zwei Nachmittage in der Woche als Babysitterin .....(5)..... einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und .....(6)..... sind sehr nett. Wir haben in der .....(7)..... Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und .....(8)..... Kindermuseum gegangen. .....(9)..... kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir .....(10)..... .\nLiebe Grüße\nDeine Tanja`,
+  items:[
+    {n:1,c:"davon",opts:["dafür","damit","davon"],exp:"الفعل erzählen يأخذ حرف الجر von. نلصق da مع von لتصبح davon."},
+    {n:2,c:"war",opts:["bin","habe","war"],exp:"نصف الحالة النفسية في الماضي، ومع ich نستخدم war."},
+    {n:3,c:"nur",opts:["doch","nur","schon"],exp:"لبيان أن العدد قليل جداً (إحباط)، نستخدم nur (فقط)."},
+    {n:4,c:"gepasst",opts:["gepasst","passen","passt"],exp:"بعد الفعل المساعد hat، نستخدم Partizip II للفعل passen وهو gepasst."},
+    {n:5,c:"bei",opts:["an","bei","zu"],exp:"للعمل عند شخص أو عائلة، نستخدم دائماً حرف الجر bei."},
+    {n:6,c:"beide",opts:["beide","beiden","beides"],exp:"للإشارة إلى شخصين (الطفلين)، نستخدم beide."},
+    {n:7,c:"ersten",opts:["erster","ersten","erstes"],exp:"الصفة قبل الاسم في حالة Dativ مع أداة التعريف تأخذ النهاية en."},
+    {n:8,c:"ins",opts:["im","in","ins"],exp:"بسبب فعل الحركة (gegangen) نستخدم Akkusativ، و in + das = ins."},
+    {n:9,c:"Besser",opts:["Am besten","Besser","Gut"],exp:"لنقول أن شيئاً أفضل من شيء آخر، نستخدم Besser (المضارع التفضيلي)."},
+    {n:10,c:"geht",opts:["geht","geht's","ging"],exp:"التعبير الشهير wie es dir geht (كيف حالك) يبقى كما هو."}
+  ]
+},
+{ id:"caroline-sp1", title:"Caroline", sub:"Sprach 1", type:"sprach1",
+  text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
+  items:[
+    {n:1,c:"erzählt",opts:["erzähle","erzählen","erzählt"],exp:"الجملة في الماضي (Perfekt)، استخدمنا habe + Partizip II (erzählt)."},
+    {n:2,c:"dieses",opts:["diese","diesen","dieses"],exp:"كلمة Land محايدة، وفي حالة Akkusativ تبقى أداة الإشارة dieses."},
+    {n:3,c:"aber",opts:["aber","obwohl","sondern"],exp:"نستخدم aber (ولكن) لنبين تناقضاً (مساحة صغيرة لكن تنوع لغوي كبير)."},
+    {n:4,c:"für",opts:["an","für","vor"],exp:"التعبير 'بالنسبة ليا' هو für mich."},
+    {n:5,c:"wenn",opts:["als","wann","wenn"],exp:"نستخدم wenn للحديث عن حالة عامة أو متكررة في الحاضر."},
+    {n:6,c:"schon",opts:["wenn","ganz","schon"],exp:"كلمة schon للتأكيد على الحيرة والدهشة."},
+    {n:7,c:"jetzt",opts:["früher","jetzt","seit"],exp:"المقارنة بين الماضي والبداية مع الحاضر، نستخدم jetzt (الآن)."},
+    {n:8,c:"Unterschiede",opts:["Unterschied","Unterschiede","Unterschieden"],exp:"كلمة einige (بعض) تأخذ الاسم بعدها في الجمع (Unterschiede)."},
+    {n:9,c:"müssen",opts:["brauchen","haben","müssen"],exp:"للتعبير عن الإلزام في المدرسة، الفعل المناسب هو müssen (يجب/لازم)."},
+    {n:10,c:"dem",opts:["dem","den","der"],exp:"حرف الجر auf للموقع يأخذ Dativ. Computer مذكر (der)، في Dativ تصبح dem."}
+  ]
+},
+
+/* ---------- SPRACHBAUSTEINE 2 ---------- */
+{ id:"alex-sp2", title:"Alex Und Cora", sub:"Sprach 2", type:"sprach2",
+  wordBank:[{k:"a",w:"an"},{k:"b",w:"Bekannte"},{k:"c",w:"bereits"},{k:"d",w:"dafür"},{k:"e",w:"darüber"},{k:"f",w:"dass"},{k:"g",w:"Familie"},{k:"h",w:"kann"},{k:"i",w:"mich"},{k:"j",w:"mit"},{k:"k",w:"muss"},{k:"l",w:"ob"},{k:"m",w:"sehr"},{k:"n",w:"was"},{k:"o",w:"welche"}],
+  text: `Sehr geehrte Damen und Herren,\n\nnachdem ich Ihr Inserat gelesen habe, möchte ich .....(1)..... gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und .....(2)..... einladen. .....(3)..... wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen .....(4)..... Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und .....(5)..... Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, .....(6)..... genügend Parkplätze vorhanden sind.\n\nEs wäre .....(7)..... freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken .....(8)...... Bitte senden Sie mir einen Prospekt Ihres Hotels .....(9)..... genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai .....(10)..... ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\n\nMit freundlichen Grüßen\nBarbara Heuberger`,
+  items:[
+    {n:1,c:"mich",exp:"الفعل هو sich informieren (منعكس)، ومع ich تصبح mich."},
+    {n:2,c:"Bekannte",exp:"كلمة Bekannte تعني المعارف. في الثقافة الألمانية كتمشي Freunde مع Bekannte."},
+    {n:3,c:"dafür",exp:"باش ما نكرروش كلمة العراضة، كنختصروها فـ dafür (لهاد المناسبة)."},
+    {n:4,c:"an",exp:"قاعدة: Fragen an jemanden stellen (طرح أسئلة على شخص)."},
+    {n:5,c:"welche",exp:"أداة استفهام تستعمل للاختيار بين عدة أشياء (أي أطباق؟)."},
+    {n:6,c:"dass",exp:"رابط بمعنى (بأن)، يربط الجملة الثانوية."},
+    {n:7,c:"sehr",exp:"ظرف بمعنى (بزاف)، يزيد في قوة الصفة freundlich."},
+    {n:8,c:"kann",exp:"تصريف الفعل können مع الضمير ich، بمعنى (أقدر)."},
+    {n:9,c:"mit",exp:"حرف جر بمعنى (مع/بـ) للربط بين الكتيب والوصف."},
+    {n:10,c:"bereits",exp:"ظرف بمعنى (دابا/بالفعل)، للتأكيد على أن الحالة واقعة."}
+  ]
+},
+{ id:"rita-sp2", title:"Rita", sub:"Sprach 2", type:"sprach2",
+  wordBank:[{k:"a",w:"der"},{k:"b",w:"die"},{k:"c",w:"Erst"},{k:"d",w:"geeignet"},{k:"e",w:"gerne"},{k:"f",w:"hätte"},{k:"g",w:"in"},{k:"h",w:"muss"},{k:"i",w:"nach"},{k:"j",w:"noch"},{k:"k",w:"schon"},{k:"l",w:"wann"},{k:"m",w:"wäre"},{k:"n",w:"wenn"},{k:"o",w:"wo"}],
+  text: `Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC`,
+  items:[
+    {n:1,c:"muss",exp:"الفعل umziehen في الآخر (Infinitiv)، يعني خاصنا فعل ناقص في المركز الثاني. اخترنا muss حيت كاين التزام مهني."},
+    {n:2,c:"nach",exp:"مع المدن والبلدان التي لا تحمل أداة تعريف، نستخدم حرف الجر nach للاتجاه."},
+    {n:3,c:"die",exp:"جملة صلة، الضمير die يعود على Wohnung (مؤنث) وهو الفاعل (Nominativ)."},
+    {n:4,c:"wäre",exp:"صيغة Konjunktiv II للتعبير عن شيء مثالي أو متمنى."},
+    {n:5,c:"geeignet",exp:"تعبير محفوظ: geeignet für (مناسب لـ)."},
+    {n:6,c:"wo",exp:"لوصف مكان (Spielplatz)، نستخدم wo كأداة صلة (فين)."},
+    {n:7,c:"gerne",exp:"gerne wissen تعني (بكل سرور بغيت نعرف) - طلب مؤدب."},
+    {n:8,c:"der",exp:"حرف الجر in للموقع (Wo?) يأخذ Dativ. die Wohnung تصبح der Wohnung."},
+    {n:9,c:"wenn",exp:"الرابط wenn يعطينا الشرط (إذا)."},
+    {n:10,c:"schon",exp:"عبارة danke schon jetzt تعني (شكراً مسبقاً)."}
+  ]
+},
+{ id:"caroline-sp2", title:"Caroline", sub:"Sprach 2", type:"sprach2",
+  wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
+  text: `QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……`,
+  items:[
+    {n:1,c:"einmal",exp:"كلمة einmal تعطي معنى (ولو لمرة واحدة)."},
+    {n:2,c:"nur",exp:"نستخدم nur للتعبير عن (فقط)، أي لا تعتمد على الحظ فقط."},
+    {n:3,c:"können",exp:"الفعل können يعبر عن القدرة (Ability)."},
+    {n:4,c:"wenn",exp:"الرابط wenn للشرط (إذا)."},
+    {n:5,c:"statt",exp:"كلمة statt تعني (عوض/بلاصت ما) وتأخذ zu + Infinitiv."},
+    {n:6,c:"ganz",exp:"ganz كظرف يزيد في قوة الصفة (تماماً)."},
+    {n:7,c:"bei",exp:"حرف الجر bei يعني (مع/باستعمال)، هنا بمعنى بفضل النظام."},
+    {n:8,c:"garantieren",exp:"الفعل garantieren يعني (كنضمنوا)."},
+    {n:9,c:"Über",exp:"كلمة Über تعني (أكثر من) 700 مجموعة."},
+    {n:10,c:"machen",exp:"في صيغة الأمر (Imperativ)، الفعل mitmachen يتفرق: Machen في الأول و mit في الآخر."}
+  ]
+}
+];
+
+/* ============================================================
+   صفحة الامتحان
+   ============================================================ */
+const SUBS = ["Prüfungen","Teile 1","Teile 2","Teile 3","Sprach 1","Sprach 2"];
+const useRef = React.useRef;
+
+const pointsOf = (ex) => {
+  if (ex.type === "matching") return 2.5;
+  if (ex.type === "sprach1" || ex.type === "sprach2") return 1.5;
+  return 5;
+};
+const maxOf = (ex) => ex.items.length * pointsOf(ex);
+
+const shuffle = (arr) => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+function ExamView({ exam, onBack, dark, setDark, onSave }) {
+  const [ans, setAns] = useState({});
+  const [showAr, setShowAr] = useState(false);
+  const [done, setDone] = useState(null);
+  const [toast, setToast] = useState(null);
+  const [mode, setMode] = useState("exam");
+  const [modalGap, setModalGap] = useState(null);
+  const [modalTeil3, setModalTeil3] = useState(null);
+  const [activeGap, setActiveGap] = useState(null);
+  const [shuffledOpts, setShuffledOpts] = useState(null);
+  const toastTimer = useRef(null);
+
+  const pts = pointsOf(exam);
+  const total = maxOf(exam);
+  const answered = Object.keys(ans).length;
+  const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
+
+  useEffect(() => () => clearTimeout(toastTimer.current), []);
+
+  const flash = (m) => {
+    setToast(m);
+    clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 2000);
+  };
+
+  const changeMode = (m) => {
+    if (m === mode) return;
+    if (answered > 0 && !window.confirm("تغيير النمط غادي يعاود الامتحان من الأول. متأكد؟")) return;
+    setMode(m);
+    setAns({});
+    setDone(null);
+    setActiveGap(null);
+    flash(m === "exam" ? "🎯 نمط الامتحان — الأجوبة مخفية حتى التصحيح" : "📚 نمط التدريب — تصحيح فوري");
+    window.scrollTo(0, 0);
+  };
+
+  const toggleShuffle = () => {
+    if (done !== null) return;
+    if (shuffledOpts) {
+      setShuffledOpts(null);
+      flash("تم استرجاع الترتيب الأصلي");
+    } else {
+      if (exam.type === "headings") {
+        setShuffledOpts(shuffle(exam.options));
+      } else if (exam.type === "mcq") {
+        const newOpts = {};
+        exam.items.forEach(it => { newOpts[it.n] = shuffle(it.opts); });
+        setShuffledOpts(newOpts);
       }
-    ];
+      flash("تم تفعيل الترتيب العشوائي");
+    }
+  };
 
-    const Icons = {
-      home: { f: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z', s: 'M3.5 10.8L12 3.8l8.5 7V19a2 2 0 0 1-2 2h-13a2 2 0 0 1-2-2z', a: 'M10 21v-5a2 2 0 0 1 4 0v5M16.5 7V4.5h2.5v4.6' },
-      book: { f: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', s: 'M12 6.5C10.5 5 8 4.5 3 4.5V18c5 0 7.5.5 9 2 1.5-1.5 4-2 9-2V4.5c-5 0-7.5.5-9 2z', a: 'M12 6.5V20M6 8.2c1.6.1 3 .4 4 1M6 11.7c1.6.1 3 .4 4 1M14 9.2c1-.6 2.4-.9 4-1' },
-      headphones: { f: 'M4 14.5V12a8 8 0 0 1 16 0v2.5z', s: 'M4 14.5a2 2 0 0 1 2-2h1.5a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1H6a2 2 0 0 1-2-2zM20 14.5a2 2 0 0 0-2-2h-1.5a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1H18a2 2 0 0 0 2-2z', a: 'M4 14.5V12a8 8 0 0 1 16 0v2.5' },
-      pen: { f: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', s: 'M17 3.5a2.12 2.12 0 0 1 3 3L7.5 19l-4.5 1.2L4.2 15.7z', a: 'M14.5 6l3.5 3.5M12 21h9' },
-      mic: { f: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', s: 'M12 2.5a3.5 3.5 0 0 0-3.5 3.5v5a3.5 3.5 0 0 0 7 0V6A3.5 3.5 0 0 0 12 2.5z', a: 'M5 11a7 7 0 0 0 14 0M12 18v3.5M8.5 21.5h7' },
-      cap: { f: 'M2 9.5l10-5 10 5-10 5z', s: 'M2 9.5l10-5 10 5-10 5z', a: 'M6 12.5v4c0 1.5 2.7 3 6 3s6-1.5 6-3v-4M22 9.5v6' },
-      moon: { f: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', s: 'M20 14.5A8.5 8.5 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z', a: 'M18 2.5v3M16.5 4h3' },
-      sun: { f: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z', s: 'M12 16.5a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9z', a: 'M12 2.5v2M12 19.5v2M4.6 4.6L6 6M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4' },
-      settings: { f: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z', s: 'M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z', a: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z' },
-      menu: { s: 'M4 7h16M4 12h10M4 17h16' },
-      lock: { f: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', s: 'M7 10.5h10a2 2 0 0 1 2 2V19a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-6.5a2 2 0 0 1 2-2z', a: 'M8 10.5V7a4 4 0 0 1 8 0v3.5M12 14.5v3' },
-      search: { f: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', s: 'M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15z', a: 'M16 16l5 5' },
-      sort: { s: 'M8 9l4-4 4 4M8 15l4 4 4-4' },
-      file: { f: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', s: 'M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z', a: 'M14 3v5h5M9 13h6M9 17h4' },
-      users: { f: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20z', s: 'M10 12a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM3.5 20v-1.5A3.5 3.5 0 0 1 7 15h6a3.5 3.5 0 0 1 3.5 3.5V20', a: 'M15.5 5.2a3.5 3.5 0 0 1 0 6.6M20.5 20v-1.5a3.5 3.5 0 0 0-2.5-3.35' },
-      arrowLeft: { s: 'M15 5l-7 7 7 7' },
-      x: { s: 'M6 6l12 12M18 6L6 18' },
-      check: { s: 'M5 12.5l4.5 4.5L19 7.5' },
-      square: { f: 'M8 2.5h8a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2z', s: 'M8 2.5h8a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2v-15a2 2 0 0 1 2-2z', a: 'M10.5 18.5h3M6 6h12' },
-      refresh: { s: 'M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4' },
-      clock: { f: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', s: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z', a: 'M12 7v5l3 2' },
-      bulb: { f: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', s: 'M12 2.5a6.5 6.5 0 0 0-3.9 11.7c.6.5.9 1.1.9 1.8V17h6v-1c0-.7.3-1.3.9-1.8A6.5 6.5 0 0 0 12 2.5z', a: 'M9.5 19.5h5M10.5 22h3' }
-    };
+  const optsFor = (it) => {
+    if (exam.type === "headings") return shuffledOpts || exam.options;
+    if (exam.type === "mcq") return (shuffledOpts && shuffledOpts[it.n]) || it.opts;
+    if (exam.type === "matching") return [...exam.ads.map(a => ({ k: a.k, de: a.t })), { k: "X", de: "لا يوجد إعلان مناسب" }];
+    return [];
+  };
 
-    const Icon = ({ n, s = 20, w = 2, className = "", onClick }) => {
-      const ic = Icons[n] || {};
-      return (
-        <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={w} strokeLinecap="round" strokeLinejoin="round" className={className} onClick={onClick}>
-          {ic.f && <path d={ic.f} fill="currentColor" fillOpacity="0.14" stroke="none" />}
-          {ic.s && <path d={ic.s} />}
-          {ic.a && <path d={ic.a} />}
-        </svg>
-      );
-    };
+  const usedElsewhere = (n, k) => {
+    if (exam.type !== "matching" || k === "X") return false;
+    return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
+  };
 
-    function App() {
-      const [session, setSession] = useState(null);
-      const [isGuest, setIsGuest] = useState(false);
-      const [exams, setExams] = useState([]);
-      const [loading, setLoading] = useState(true);
-      const [view, setView] = useState('lesen');
-      const [activeTab, setActiveTab] = useState('Teile 1');
-      const [isDarkMode, setIsDarkMode] = useState(false);
-      const [showSettings, setShowSettings] = useState(false);
-      const [showMenu, setShowMenu] = useState(false);
-      const [selectedExam, setSelectedExam] = useState(null);
-      const [fontScale, setFontScale] = useState(() => {
-        try { return Number(localStorage.getItem('fontScale')) || 100; } catch (e) { return 100; }
+  const pick = (it, k) => {
+    if (done !== null) return;
+    // اصلاح: السماح بتبديل الجواب فـ matching حتى فـ نمط التدريب
+    if (mode === "practice" && ans[it.n] !== undefined && exam.type !== "matching" && exam.type !== "sprach1" && exam.type !== "sprach2") return;
+    if (usedElsewhere(it.n, k)) return;
+
+    const newAns = { ...ans, [it.n]: k };
+    if (exam.type === "sprach2") {
+      Object.keys(newAns).forEach(key => {
+        if (Number(key) !== it.n && newAns[key] === k) delete newAns[key];
       });
+    }
+    setAns(newAns);
+    if (modalGap) setModalGap(null);
+    if (modalTeil3) setModalTeil3(null);
+  };
 
-      const [email, setEmail] = useState('');
-      const [password, setPassword] = useState('');
-      const [isLogin, setIsLogin] = useState(true);
-      const [error, setError] = useState('');
+  const clearAns = (n) => {
+    if (done !== null) return;
+    const newAns = { ...ans };
+    delete newAns[n];
+    setAns(newAns);
+  };
 
-      useEffect(() => {
-        if (isDarkMode) document.documentElement.classList.add('dark');
-        else document.documentElement.classList.remove('dark');
-      }, [isDarkMode]);
+  const cls = (it, k) => {
+    const sel = ans[it.n];
+    if (done !== null) {
+      if (k === it.c) return "opt good";
+      if (sel === k) return "opt bad";
+      if (sel !== undefined) return "opt faded";
+      return "opt";
+    }
+    if (mode === "exam") {
+      if (sel === k) return "opt sel";
+      return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
+    }
+    if (sel === undefined) return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
+    if (k === it.c) return "opt good";
+    if (sel === k) return "opt bad";
+    return "opt faded";
+  };
 
-      useEffect(() => {
-        document.documentElement.style.fontSize = (16 * fontScale / 100) + 'px';
-        try { localStorage.setItem('fontScale', fontScale); } catch (e) {}
-      }, [fontScale]);
+  const reset = () => { setAns({}); setDone(null); setShuffledOpts(null); setActiveGap(null); window.scrollTo(0, 0); };
+  const finish = () => {
+    setDone(score);
+    onSave(exam.id, score, total);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
-      useEffect(() => {
-        setExams(localExams);
-        setLoading(false);
-      }, []);
+  const onWordClick = (w) => {
+    if (done !== null) return;
+    const target = activeGap !== null ? activeGap : (exam.items.find(x => ans[x.n] === undefined) || {}).n;
+    if (!target) return;
+    
+    if (mode === "practice" && ans[target] !== undefined) return;
+    if (usedElsewhere(target, w)) return;
 
-      const handleAuth = async (e) => {
-        e.preventDefault(); setError('');
-        if (isLogin) {
-          const { error } = await supabase.auth.signInWithPassword({ email, password });
-          if (error) setError(error.message);
-        } else {
-          const { error } = await supabase.auth.signUp({ email, password });
-          if (error) setError(error.message); else alert('تم إنشاء الحساب بنجاح!');
-        }
-      };
+    const newAns = { ...ans, [target]: w };
+    if (exam.type === "sprach2") {
+      Object.keys(newAns).forEach(key => {
+        if (Number(key) !== target && newAns[key] === w) delete newAns[key];
+      });
+    }
+    setAns(newAns);
+    
+    const next = exam.items.find(x => x.n !== target && newAns[x.n] === undefined);
+    setActiveGap(next ? next.n : null);
+  };
 
-      if (!session && !isGuest) {
+  const renderSprachText = () => {
+    const parts = exam.text.split(/\.{3,}\s*\((\d+)\)\s*\.{3,}/g);
+    return parts.map((part, i) => {
+      if (i % 2 === 1) {
+        const gapNum = parseInt(part);
+        const it = exam.items.find(x => x.n === gapNum);
+        const selected = ans[gapNum];
+        const isCorrect = done !== null && selected === it.c;
+        const isWrong = done !== null && selected && selected !== it.c;
+
+        let gapClass = "inline-gap";
+        if (selected) gapClass += " filled";
+        if (isCorrect) gapClass += " correct";
+        if (isWrong) gapClass += " wrong";
+
         return (
-          <div className="min-h-screen flex flex-col bg-paper dark:bg-[#0B1120] transition-colors">
-            <div className="h-1 bg-gradient-to-r from-ink via-gold to-ink" />
-            <div className="flex-1 flex items-center justify-center p-5">
-              <div className="w-full max-w-sm">
-                <div className="text-center mb-8">
-                  <div className="w-20 h-20 bg-ink text-gold rounded-2xl flex items-center justify-center font-extrabold text-3xl shadow-lg mx-auto mb-4 de">EP</div>
-                  <h1 className="text-3xl font-extrabold de text-ink dark:text-white">EchtPrüfung</h1>
-                  <p className="text-slate-500 mt-1">تدرّب على امتحان الألمانية بنفس أسلوب الامتحان الحقيقي</p>
-                </div>
-                <div className="bg-white dark:bg-[#1E293B] p-6 rounded-3xl shadow-xl border border-slate-100 dark:border-slate-800">
-                  <h2 className="text-lg font-bold mb-4 dark:text-white">{isLogin ? 'تسجيل الدخول' : 'إنشاء حساب جديد'}</h2>
-                  {error && <div className="bg-red-50 text-red-700 text-sm rounded-xl px-3 py-2 mb-4 border border-red-100">{error}</div>}
-                  <form onSubmit={handleAuth} className="space-y-3">
-                    <input type="email" dir="ltr" placeholder="البريد الإلكتروني" value={email} onChange={e => setEmail(e.target.value)} required className="w-full py-3 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-gold text-left dark:text-white" />
-                    <input type="password" dir="ltr" placeholder="كلمة السر" value={password} onChange={e => setPassword(e.target.value)} required className="w-full py-3 px-3 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl outline-none focus:border-gold text-left dark:text-white" />
-                    <button type="submit" className="w-full py-3 bg-ink dark:bg-gold text-white dark:text-ink font-bold rounded-xl hover:bg-slate-800 transition shadow-lg">{isLogin ? 'دخول' : 'تسجيل'}</button>
-                  </form>
-                  <button type="button" className="w-full text-center mt-5 text-sm text-slate-600 dark:text-slate-400" onClick={() => { setIsLogin(!isLogin); setError(''); }}>
-                    {isLogin ? 'ما عندكش حساب؟ ' : 'عندك حساب؟ '}<span className="font-bold text-ink dark:text-gold underline decoration-gold decoration-2 underline-offset-4">{isLogin ? 'سجل دابا' : 'دخل'}</span>
-                  </button>
-                  <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-                    <button type="button" onClick={() => setIsGuest(true)} className="w-full py-2 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-200 transition">
-                      دخول كزائر (للتجربة)
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <span key={i} className={gapClass}
+            style={{ ...(activeGap === gapNum && done === null ? { outline: "2px solid var(--gold)" } : {}), ...(isWrong ? { textDecoration: "none" } : {}) }}
+            onClick={() => {
+              if (done !== null) return;
+              if (exam.type === "sprach2") setActiveGap(gapNum);
+              else setModalGap(gapNum);
+            }}>
+            {done !== null && isWrong && <span style={{ textDecoration: "line-through", marginRight: 4, opacity: 0.7 }}>{selected}</span>}
+            {selected ? (isWrong ? ` ${it.c}` : selected) : `(${gapNum})`}
+          </span>
         );
       }
+      return <span key={i} className="de" style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
+    });
+  };
 
-      if (selectedExam) {
-        const currentIndex = localExams.findIndex(e => e.id === selectedExam.id);
-        const handleNext = () => {
-          if (currentIndex < localExams.length - 1) {
-            setSelectedExam(localExams[currentIndex + 1]);
-          } else {
-            alert("مبروك! لقد أكملت جميع الامتحانات المتاحة.");
-            setSelectedExam(null);
-          }
-        };
-        return <ExamView exam={selectedExam} onBack={() => setSelectedExam(null)} onNext={handleNext} />;
-      }
-
-      const normalize = (str) => str ? str.toLowerCase().replace(/\s+/g, '') : '';
-
-      let filteredExams = exams.filter(e => {
-        const skillMatch = normalize(e.skill).includes(normalize(view).substring(0, 4));
-        if (!skillMatch) return false;
-
-        if (activeTab === 'Prüfungen') return true;
-
-        const sub = normalize(e.sub_section);
-        const tab = normalize(activeTab);
-
-        if (tab.includes('teile1')) return sub.includes('teil') && sub.includes('1');
-        if (tab.includes('teile2')) return sub.includes('teil') && sub.includes('2');
-        if (tab.includes('teile3')) return sub.includes('teil') && sub.includes('3');
-
-        return sub.includes(tab);
-      });
-
-      return (
-        <div className="min-h-screen pb-24 bg-dots relative transition-colors duration-300">
-          <div className="bg-white dark:bg-[#1E293B] rounded-b-3xl shadow-sm px-5 py-4 flex justify-between items-center mb-6 mx-4 mt-4 sticky top-4 z-40 border border-slate-100 dark:border-slate-800">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-ink rounded-xl flex items-center justify-center font-extrabold text-xl text-gold shadow-sm">EP</div>
-              <div>
-                <h1 className="font-extrabold text-lg text-ink dark:text-white leading-tight">EchtPrüfung</h1>
-                <p className="text-[10px] text-slate-500 de">Deutsch B1 / B2</p>
-              </div>
-            </div>
-            <div className="flex gap-2">
-              <button onClick={() => setIsDarkMode(!isDarkMode)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-gold">
-                <Icon n={isDarkMode ? 'sun' : 'moon'} s={20} />
-              </button>
-              <button onClick={() => setShowSettings(true)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-300">
-                <Icon n="settings" s={20} />
-              </button>
-              <button onClick={() => setShowMenu(true)} className="w-10 h-10 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold">
-                <Icon n="menu" s={24} w={2.5} />
-              </button>
-            </div>
+  return (
+    <div>
+      {toast && <div className="toast">{toast}</div>}
+      <div className="header" style={{ top: 10 }}>
+        <button className="btnI" onClick={onBack} aria-label="رجوع">→</button>
+        <div style={{ flex: 1 }}>
+          <div className="de" style={{ fontWeight: 800 }}>{exam.title}</div>
+          <div style={{ display: "flex", gap: 6, marginTop: 4, alignItems: "center" }}>
+            <span className="chip">B1</span>
+            <span className="de" style={{ fontSize: ".7em", color: "var(--muted)" }}>LESEN · {exam.sub.toUpperCase()}</span>
           </div>
-
-          <div className="max-w-2xl mx-auto px-5">
-            <h1 className="text-5xl font-extrabold text-ink dark:text-white de mb-8">
-              {view === 'lesen' ? 'Lesen' : view === 'horen' ? 'Hören' : view === 'schreiben' ? 'Schreiben' : view === 'sprechen' ? 'Sprechen' : 'Zufällige Prüfungen'}
-            </h1>
-
-            <div className="flex justify-center mb-8">
-              <div className="inline-flex bg-slate-100 dark:bg-[#1E293B] rounded-2xl p-1.5 shadow-sm border border-slate-200 dark:border-slate-700">
-                <button className="px-10 py-3 rounded-xl font-bold bg-gold text-ink shadow-md de">B1</button>
-                <button className="px-10 py-3 rounded-xl font-bold text-slate-500 dark:text-slate-400 bg-transparent de">B2</button>
-              </div>
-            </div>
-
-            {view === 'lesen' && (
-              <div className="bg-white dark:bg-[#1E293B] rounded-3xl p-5 shadow-sm border border-slate-100 dark:border-slate-800 mb-8 transition-colors">
-                <div className="grid grid-cols-3 gap-y-6 gap-x-2 text-center">
-                  {['Prüfungen', 'Teile 1', 'Teile 2', 'Teile 3', 'Sprach 1', 'Sprach 2'].map((item, i) => (
-                    <div key={item} onClick={() => setActiveTab(item)} className="flex flex-col items-center gap-2 cursor-pointer">
-                      <div className={`w-16 h-14 flex items-center justify-center rounded-2xl ${activeTab === item ? 'bg-gold text-ink shadow-lg shadow-gold-200 dark:shadow-none' : 'bg-transparent text-slate-400 dark:text-slate-500'}`}>
-                        <Icon n={i === 0 ? 'book' : 'file'} s={28} w={2.5} />
-                      </div>
-                      <span className={`text-xs font-bold de ${activeTab === item ? 'text-ink dark:text-gold' : 'text-slate-500 dark:text-slate-400'}`}>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-extrabold text-ink dark:text-white">قائمة الامتحانات</h3>
-              {filteredExams.length > 0 && <span className="text-xs font-bold bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 py-1 rounded-full">{filteredExams.length} امتحان</span>}
-            </div>
-
-            <div className="space-y-3 pb-8">
-               {loading ? (
-                 <div className="text-center text-slate-400 py-4">جاري التحميل...</div>
-               ) : filteredExams.length === 0 ? (
-                 <div className="text-center text-slate-400 py-4 text-sm bg-white dark:bg-[#1E293B] rounded-2xl border border-dashed border-slate-200 dark:border-slate-700">
-                    ما كاين حتى امتحان دابا
-                    <br/>
-                    <span className="text-xs">(تأكد من اسم القسم أو المستوى)</span>
-                 </div>
-               ) : (
-                 filteredExams.map((exam) => (
-                   <div key={exam.id} onClick={() => setSelectedExam(exam)} className="bg-white dark:bg-[#1E293B] p-4 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm flex items-center gap-4 cursor-pointer transition-colors">
-                     <div className={`w-12 h-12 rounded-xl flex items-center justify-center shrink-0 ${exam.is_pro ? 'bg-orange-50 text-orange-500 border border-orange-200' : 'bg-ink text-gold'}`}>
-                       {exam.is_pro ? <Icon n="lock" s={22} /> : <Icon n="file" s={22} />}
-                     </div>
-                     <div className="flex-1">
-                       <h3 className="font-bold text-ink dark:text-white de text-sm">{exam.title}</h3>
-                       <div className="flex items-center gap-2 mt-1">
-                         <span className="bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded text-[10px] font-bold de">{exam.level}</span>
-                         {exam.skill === 'Lesen' && <span className="text-slate-400 text-[10px] flex items-center gap-1"><Icon n="clock" s={12} />90 Min</span>}
-                       </div>
-                     </div>
-                     <Icon n="arrowLeft" s={20} className="text-slate-300 dark:text-slate-600 rotate-180" />
-                   </div>
-                 ))
-               )}
-            </div>
-          </div>
-
-          <a href="https://wa.me/212600000000" target="_blank" rel="noreferrer" className="fixed bottom-24 right-5 w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center shadow-lg shadow-green-300 z-50 text-white hover:scale-105 transition-transform">
-            <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 0C5.385 0 0 5.385 0 12.031c0 2.12.554 4.19 1.6 6.018L.064 24l6.094-1.598A11.96 11.96 0 0012.031 24c6.646 0 12.031-5.385 12.031-12.031S18.677 0 12.031 0zm0 22.015c-1.83 0-3.63-.492-5.205-1.422l-.373-.22-3.87 1.015 1.033-3.77-.24-.387A9.97 9.97 0 012.015 12.03c0-5.523 4.493-10.015 10.016-10.015 5.524 0 10.016 4.492 10.016 10.015 0 5.524-4.492 10.016-10.016 10.016zm5.497-7.502c-.3-.15-1.778-.877-2.054-.977-.276-.1-.478-.15-.678.15-.2.3-.778.977-.955 1.178-.176.2-.352.225-.652.075-.3-.15-1.267-.467-2.413-1.49-.892-.795-1.494-1.778-1.67-2.078-.176-.3-.02-.462.13-.612.136-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525-.075-.15-.678-1.63-.928-2.23-.243-.588-.49-.508-.678-.518-.176-.01-.376-.01-.576-.01-.2 0-.525.075-.8.375-.275.3-1.053 1.028-1.053 2.505 0 1.477 1.078 2.905 1.228 3.105.15.2 2.12 3.238 5.135 4.542.717.31 1.277.496 1.714.636.723.23 1.38.197 1.9.12.58-.086 1.778-.727 2.028-1.428.25-.7.25-1.3.175-1.428-.075-.125-.275-.2-.575-.35z"/></svg>
-          </a>
-
-          <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-[#1E293B] px-2 pb-6 pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-between items-center z-40 rounded-t-3xl shadow-[0_-5px_20px_-10px_rgba(0,0,0,0.05)] transition-colors">
-            <NavItem icon="home" label="الرئيسية" active={view === 'home'} onClick={() => setView('home')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="book" label="Lesen" active={view === 'lesen'} onClick={() => setView('lesen')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="headphones" label="Hören" active={view === 'horen'} onClick={() => setView('horen')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="pen" label="Schreiben" active={view === 'schreiben'} onClick={() => setView('schreiben')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="mic" label="Sprechen" active={view === 'sprechen'} onClick={() => setView('sprechen')} activeColor="text-gold" activeBg="bg-gold/10" />
-            <NavItem icon="cap" label="امتحان" active={view === 'pruefung'} onClick={() => setView('pruefung')} activeColor="text-gold" activeBg="bg-gold/10" />
-          </div>
-
-          {showMenu && (
-            <div className="fixed inset-0 bg-black/40 z-50 flex justify-end backdrop-blur-sm" onClick={() => setShowMenu(false)}>
-              <div className="bg-white dark:bg-[#0B1120] w-[85%] max-w-sm h-full shadow-2xl flex flex-col transition-transform translate-x-0" onClick={e => e.stopPropagation()}>
-                <div className="p-6 flex justify-between items-center border-b border-slate-100 dark:border-slate-800">
-                   <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-ink rounded-xl flex items-center justify-center font-extrabold text-sm text-gold shadow-sm">EP</div>
-                      <div>
-                        <h1 className="font-extrabold text-sm text-ink dark:text-white leading-tight">EchtPrüfung</h1>
-                      </div>
-                   </div>
-                   <button onClick={() => setShowMenu(false)} className="w-10 h-10 bg-gold/10 text-gold rounded-xl flex items-center justify-center"><Icon n="x" s={24} w={2.5}/></button>
-                </div>
-                <div className="flex-1 overflow-y-auto py-4 px-4 space-y-2">
-                  <MenuItem icon="book" label="Lesen" color="text-brandBlue" bg="bg-blue-50 dark:bg-blue-900/20" onClick={() => {setView('lesen'); setShowMenu(false)}} />
-                  <MenuItem icon="headphones" label="Hören" color="text-brandPurple" bg="bg-purple-50 dark:bg-purple-900/20" onClick={() => {setView('horen'); setShowMenu(false)}} />
-                  <MenuItem icon="pen" label="Schreiben" color="text-brandOrange" bg="bg-orange-50 dark:bg-orange-900/20" onClick={() => {setView('schreiben'); setShowMenu(false)}} />
-                  <MenuItem icon="mic" label="Sprechen" color="text-brandRed" bg="bg-red-50 dark:bg-red-900/20" onClick={() => {setView('sprechen'); setShowMenu(false)}} />
-                </div>
-                <div className="p-6">
-                  <button onClick={() => { supabase.auth.signOut(); setIsGuest(false); }} className="w-full flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 rounded-xl py-3 text-slate-700 dark:text-slate-300 font-bold">
-                    تسجيل الخروج <Icon n="arrowLeft" s={20} />
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {showSettings && (
-            <div className="fixed inset-0 bg-black/40 z-50 flex justify-center items-center p-4 backdrop-blur-sm" onClick={() => setShowSettings(false)}>
-              <div className="bg-white dark:bg-[#1E293B] w-full max-w-sm rounded-3xl p-6 shadow-2xl" onClick={e => e.stopPropagation()}>
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center gap-4 text-slate-700 dark:text-slate-200 font-bold">
-                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-ink dark:text-gold"><Icon n="square" s={20}/></div>
-                    أنت الان في وضع التطبيق
-                  </div>
-                  <hr className="border-slate-100 dark:border-slate-800 my-2" />
-                  <div className="flex items-center justify-between">
-                    <span className="font-bold text-slate-700 dark:text-slate-200">حجم الخط</span>
-                    <div className="flex items-center gap-2">
-                      <button onClick={() => setFontScale(s => Math.max(80, s - 10))} className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-ink dark:text-gold">−</button>
-                      <span className="w-14 text-center font-bold text-slate-700 dark:text-slate-200">{fontScale}%</span>
-                      <button onClick={() => setFontScale(s => Math.min(150, s + 10))} className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-ink dark:text-gold">+</button>
-                    </div>
-                  </div>
-                  <button onClick={() => setFontScale(100)} className="text-sm text-slate-500 underline">إعادة الحجم الأصلي</button>
-                </div>
-              </div>
-            </div>
-          )}
         </div>
-      );
-    }
+        <button className="btnI" aria-label="الوضع الليلي" onClick={() => setDark(!dark)}>{dark ? "☀" : "☾"}</button>
+        {(exam.type === "headings" || exam.type === "mcq") && (
+          <button className="btnI" aria-label="خلط الاختيارات" style={{ color: shuffledOpts ? "var(--gold)" : "inherit" }} onClick={toggleShuffle} title="خلط الاختيارات">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+          </button>
+        )}
+        <button className="btnI" aria-label="ترجمة" onClick={() => { setShowAr(!showAr); flash(showAr ? "تم إخفاء الترجمة" : "تم إظهار الترجمة"); }}>أ</button>
+      </div>
 
-    function ExamView({ exam, onBack, onNext }) {
-      const [answers, setAnswers] = useState({});
-      const [corrected, setCorrected] = useState(false);
-      const [showAr, setShowAr] = useState(false);
-      const [toast, setToast] = useState(null);
-      const [shuffledOptions, setShuffledOptions] = useState([]);
-
-      const texts = exam.exam_data?.texts || [];
-      const options = exam.exam_data?.options || [];
-      const answeredCount = Object.keys(answers).length;
-      const usedOptions = Object.values(answers);
-      const allAnswered = answeredCount === texts.length;
-
-      const handleSelect = (textId, key) => {
-        if (corrected) return;
-        const usedElsewhere = Object.entries(answers).some(([tid, k]) => Number(tid) !== textId && k === key);
-        if (usedElsewhere) return;
-        setAnswers(prev => ({ ...prev, [textId]: key }));
-      };
-
-      const toggleTranslation = () => {
-        setShowAr(!showAr);
-        setToast(!showAr ? "تم إظهار الترجمة" : "تم إخفاء الترجمة");
-        setTimeout(() => setToast(null), 2000);
-      };
-
-      const shuffleOptions = () => {
-        const shuffled = [...options].sort(() => Math.random() - 0.5);
-        setShuffledOptions(shuffled);
-        setToast("تم تفعيل الترتيب العشوائي");
-        setTimeout(() => setToast(null), 2000);
-      };
-
-      const currentOptions = shuffledOptions.length > 0 ? shuffledOptions : options;
-
-      let score = 0;
-      if (corrected) {
-        texts.forEach(t => { if (answers[t.id] === t.correct) score += 5; });
-      }
-
-      useEffect(() => {
-        setShuffledOptions(exam.exam_data.options);
-        setAnswers({});
-        setCorrected(false);
-        window.scrollTo(0, 0);
-      }, [exam]);
-
-      return (
-        <div className="min-h-screen bg-[#F8FAFC] pb-32 relative">
-
-          {toast && (
-            <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 animate-toast">
-              <div className={`px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-2 shadow-lg ${
-                toast.includes('العشوائي') ? 'bg-green-50 border border-green-200 text-green-700' : 'bg-blue-50 border border-blue-200 text-blue-700'
-              }`}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-                {toast}
-              </div>
-            </div>
-          )}
-
-          <div className="bg-white px-4 py-3 flex items-center gap-3 border-b border-slate-100 sticky top-0 z-40">
-            <button onClick={onBack} className="p-2 -mr-2 text-slate-600">
-               <Icon n="arrowLeft" s={24} />
-            </button>
-            <div className="flex-1">
-              <h1 className="font-bold text-base text-slate-900 de">{exam.title.substring(0, 12)}...</h1>
-              <div className="flex items-center gap-2 mt-0.5">
-                <span className="bg-blue-50 text-blue-600 text-[10px] px-1.5 py-0.5 rounded font-bold">{exam.level}</span>
-                <span className="text-[10px] text-slate-500 uppercase tracking-wide de">{exam.skill} {exam.sub_section}</span>
-              </div>
-            </div>
+      <div className="card" style={{ margin: "0 10px 12px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 800, marginBottom: 8 }}>
+          <span className="de">{exam.type.startsWith("sprach") ? "WÖRTER" : exam.type === "matching" ? "SITUATIONEN" : "ÜBERSCHRIFTEN"} {answered} / {exam.items.length}</span>
+          <span className="de">{(done !== null || mode === "practice") ? score : "–"} / {total}</span>
+        </div>
+        <div className="bar"><div className="fill" style={{ width: (answered / exam.items.length * 100) + "%" }} /></div>
+        {done === null && (
+          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <button className={"modeBtn" + (mode === "exam" ? " on" : "")} onClick={() => changeMode("exam")}>🎯 امتحان</button>
+            <button className={"modeBtn" + (mode === "practice" ? " on" : "")} onClick={() => changeMode("practice")}>📚 تدريب</button>
           </div>
+        )}
+      </div>
 
-          <div className="bg-white px-4 pb-3 border-b border-slate-100">
-            <div className="flex items-center justify-between mt-2">
-              <div className="flex items-center gap-2">
-                <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
-                </div>
-                <span className="font-bold text-sm text-slate-900">ÜBERSCHRIFTEN {answeredCount} / {texts.length}</span>
-              </div>
-              <div className="flex gap-2">
-                <button onClick={shuffleOptions} className="w-9 h-9 rounded-lg border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+      <div style={{ margin: "0 10px" }}>
+        {exam.type === "sprach2" && (
+          <div className="word-bank">
+            {exam.wordBank.map(w => {
+              const isUsed = Object.values(ans).includes(w.w);
+              return (
+                <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => onWordClick(w.w)}>
+                  <span style={{ opacity: 0.6, marginRight: 4 }}>{w.k}</span> {w.w}
                 </button>
-                <button onClick={toggleTranslation} className={`w-9 h-9 rounded-lg border flex items-center justify-center transition-colors ${showAr ? 'bg-blue-50 border-blue-200 text-blue-600' : 'bg-white border-slate-200 text-slate-600'}`}>
-                  <span className="text-xs font-bold">A/أ</span>
-                </button>
-              </div>
-            </div>
-
-            <div className="w-full h-2 bg-slate-100 rounded-full mt-2 overflow-hidden">
-              <div className="h-full rounded-full transition-all duration-300 german-flag-progress" style={{width: `${(answeredCount/texts.length)*100}%`}}></div>
-            </div>
+              );
+            })}
           </div>
+        )}
 
-          <div className="max-w-3xl mx-auto px-3 mt-3 space-y-3">
-            <div className="bg-white rounded-2xl p-4 border border-slate-100">
-              <h2 className="font-extrabold text-lg text-slate-900 mb-1 de">{exam.title}</h2>
-              <p className="text-xs text-slate-500 uppercase tracking-wide de">LESEVERSTEHEN · TEIL 1</p>
-            </div>
+        {exam.type === "mcq" && (
+          <div className="card">
+            {exam.texts.map((t, i) => <p key={i} className="de" style={{ lineHeight: 1.9, margin: "0 0 10px" }}>{t}</p>)}
+          </div>
+        )}
+        {(exam.type === "sprach1" || exam.type === "sprach2") && (
+          <div className="card" style={{ fontSize: "1.05em", lineHeight: 2.2 }}>
+            {renderSprachText()}
+          </div>
+        )}
 
-            {texts.map((text, index) => (
-              <div key={text.id} id={`text-${text.id}`} className="bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm">
-                <div className="p-4 pb-2">
-                  <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center font-bold text-slate-700 mb-3 text-base">{index + 1}</div>
-                  <p className="text-[16px] leading-[2] text-slate-800 de" dir="ltr">{text.content}</p>
-                </div>
-
-                <div className="px-3 pb-3 space-y-1.5">
-                  {currentOptions.map(opt => {
-                    const isSelected = answers[text.id] === opt.key;
-                    const usedElsewhere = !isSelected && usedOptions.includes(opt.key);
-                    const isCorrectOpt = corrected && opt.key === text.correct;
-                    const isWrongOpt = corrected && isSelected && !isCorrectOpt;
-
-                    let containerClass = "flex items-start gap-3 p-3 rounded-xl transition-all ";
-                    let letterClass = "w-7 h-7 flex items-center justify-center rounded-full text-xs font-bold shrink-0 mt-0.5 ";
-                    let textClass = "text-[15px] leading-relaxed de ";
-                    let arTextClass = "text-[13px] mt-1 ";
-
-                    if (corrected) {
-                      if (isCorrectOpt) {
-                        containerClass += "bg-green-50 border-2 border-green-500";
-                        letterClass += "bg-green-500 text-white";
-                        textClass += "text-green-900 font-semibold";
-                        arTextClass += "text-green-700";
-                      } else if (isWrongOpt) {
-                        containerClass += "bg-red-50 border-2 border-red-500";
-                        letterClass += "bg-red-500 text-white";
-                        textClass += "text-red-900";
-                        arTextClass += "text-red-700";
-                      } else {
-                        containerClass += "bg-slate-50 opacity-40";
-                        letterClass += "bg-white text-slate-400";
-                        textClass += "text-slate-500";
-                        arTextClass += "text-slate-400";
-                      }
-                    } else {
-                      if (isSelected) {
-                        containerClass += "bg-blue-500 border-2 border-blue-500 cursor-pointer";
-                        letterClass += "bg-white/20 text-white";
-                        textClass += "text-white font-semibold";
-                        arTextClass += "text-blue-100";
-                      } else if (usedElsewhere) {
-                        containerClass += "bg-slate-100 opacity-50 cursor-not-allowed";
-                        letterClass += "bg-slate-200 text-slate-400";
-                        textClass += "text-slate-400";
-                        arTextClass += "text-slate-400";
-                      } else {
-                        containerClass += "bg-slate-50 border-2 border-transparent hover:bg-slate-100 cursor-pointer";
-                        letterClass += "bg-white text-slate-600 shadow-sm";
-                        textClass += "text-slate-800";
-                        arTextClass += "text-slate-500";
-                      }
-                    }
-
-                    return (
-                      <div key={opt.key} onClick={() => handleSelect(text.id, opt.key)} className={containerClass}>
-                        <div className={letterClass}>{opt.key}</div>
-                        <div className="flex-1">
-                          <div className={textClass} dir="ltr">{opt.de}</div>
-                          {showAr && <div className={arTextClass}>{opt.ar}</div>}
-                        </div>
-                        {isSelected && !corrected && (
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" className="shrink-0 mt-1"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-                        )}
-                        {corrected && isCorrectOpt && (
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="3" className="shrink-0 mt-1"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
-                        )}
-                      </div>
-                    );
-                  })}
-                </div>
-
-                {corrected && (
-                  <div className="p-4 bg-blue-50 border-t border-blue-100">
-                    <div className="flex items-center gap-2 mb-2">
-                      <div className="w-6 h-6 rounded-md bg-blue-100 flex items-center justify-center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" strokeWidth="2.5"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
-                      <h4 className="font-bold text-sm text-blue-900">ملخص الإعلان</h4>
-                    </div>
-                    <p className="text-[13px] text-slate-700 leading-[1.9]">{text.exp_ar}</p>
-                  </div>
-                )}
+        {exam.type === "matching" && (
+          <div className="card">
+            <div className="de" style={{ fontWeight: 800, marginBottom: 8 }}>ANZEIGEN</div>
+            {exam.ads.map(a => (
+              <div key={a.k} style={{ borderBottom: "1px solid var(--line)", padding: "8px 0" }}>
+                <div className="de" style={{ fontWeight: 800 }}>{a.k}. {a.t}</div>
+                <div className="de" style={{ fontSize: ".9em", color: "var(--muted)" }}>{a.de}</div>
+                {showAr && <div style={{ fontSize: ".85em", color: "var(--muted)" }}>{a.ar}</div>}
               </div>
             ))}
+          </div>
+        )}
 
-            {corrected && (
-              <div className="bg-slate-900 text-white rounded-2xl p-6 text-center shadow-xl">
-                <h3 className="text-xs text-slate-400 uppercase tracking-widest mb-1 de">ERGEBNIS</h3>
-                <div className="text-5xl font-extrabold text-gold mb-4 de">{score} / {texts.length * 5}</div>
-                <button onClick={() => { setAnswers({}); setCorrected(false); window.scrollTo({top: 0, behavior: 'smooth'}); }} className="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-xl font-bold text-sm transition">إعادة المحاولة</button>
+        {exam.type !== "sprach1" && exam.type !== "sprach2" && exam.items.map((it, idx) => {
+          const sel = ans[it.n];
+          const showFeedback = sel !== undefined && (mode === "practice" || done !== null);
+          const isLocked = done !== null || (mode === "practice" && sel !== undefined && exam.type !== "matching");
+
+          return (
+            <div key={it.n} className="card">
+              <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 10 }}>
+                <span className="letter" style={{ width: 34, height: 34 }}>{idx + 1}</span>
+                {exam.type === "headings" && <p className="de" style={{ lineHeight: 1.9, margin: 0, flex: 1 }}>{it.de}</p>}
+                {exam.type === "mcq" && <p className="de" style={{ fontWeight: 800, margin: 0, flex: 1 }}>{it.q}</p>}
+                {exam.type === "matching" && <p className="de" style={{ margin: 0, flex: 1 }}>{it.de}</p>}
               </div>
-            )}
-          </div>
 
-          <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-100 px-3 py-3 flex gap-2 z-40 shadow-lg">
-            <button onClick={() => { if (allAnswered && !corrected) setCorrected(true); }} disabled={!allAnswered || corrected} className={`flex-1 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition ${allAnswered && !corrected ? 'bg-blue-500 text-white shadow-lg shadow-blue-200' : 'bg-slate-100 text-slate-400'}`}>تصحيح</button>
-            <button onClick={onNext} className="flex-1 py-3 rounded-xl font-bold text-sm bg-blue-500 text-white flex items-center justify-center gap-2 shadow-lg shadow-blue-200">التالي</button>
-          </div>
-        </div>
-      );
-    }
+              {exam.type === "matching" ? (
+                <>
+                  {!sel ? (
+                    <button className="btn ghost" onClick={() => setModalTeil3(it.n)} disabled={done !== null} style={{ borderStyle: "dashed" }}>
+                      اختيار الإعلان (A - L)
+                    </button>
+                  ) : (
+                    <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                      <div className={done !== null ? (sel === it.c ? "fb good" : "fb bad") : ""} style={{ flex: 1, padding: 10, border: "1px solid var(--line)", borderRadius: 8, background: "var(--paper)" }}>
+                        <span style={{ fontWeight: 800 }}>{sel}</span> - {(optsFor(it).find(o => o.k === sel) || {}).de}
+                      </div>
+                      {done === null && (
+                        <button className="btnI" aria-label="مسح" onClick={() => clearAns(it.n)} style={{ color: "var(--badc)", background: "var(--badbg)", flexShrink: 0 }}>✕</button>
+                      )}
+                    </div>
+                  )}
+                </>
+              ) : (
+                optsFor(it).map(o => (
+                  <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isLocked}>
+                    <span className="letter">{o.k}</span>
+                    <span className="de" style={{ flex: 1 }}>
+                      {o.de}
+                      {exam.type === "headings" && showAr && <span style={{ display: "block", color: "var(--muted)", fontSize: ".85em" }}>{o.ar}</span>}
+                    </span>
+                  </button>
+                ))
+              )}
 
-    function NavItem({ icon, label, active, activeColor, activeBg, onClick }) {
-      return (
-        <div onClick={onClick} className="flex flex-col items-center gap-1 cursor-pointer w-14">
-          <div className={`px-3 py-1.5 rounded-xl transition-colors ${active ? activeBg : ''}`}>
-            <Icon n={icon} s={22} className={active ? activeColor : 'text-slate-400 dark:text-slate-500'} />
-          </div>
-          <span className={`text-[10px] font-bold ${active ? activeColor : 'text-slate-400 dark:text-slate-500'}`}>{label}</span>
-        </div>
-      );
-    }
-
-    function MenuItem({ icon, label, color, bg, onClick }) {
-      return (
-        <div onClick={onClick} className="flex items-center justify-between p-3 rounded-2xl cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
-          <div className="flex items-center gap-4">
-            <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${bg} ${color}`}>
-              <Icon n={icon} s={24} />
+              {(exam.type === "matching" ? ((mode === "practice" && sel) || done !== null) : showFeedback) && (
+                <div className={sel === it.c ? "fb good" : "fb bad"} style={{ marginTop: 10 }}>
+                  <b>{sel === it.c ? "✓ صحيح" : "✗ غلط"}</b>
+                  {sel !== it.c && <span> — الجواب الصحيح: {it.c}</span>}
+                  <div>{it.ar}</div>
+                </div>
+              )}
             </div>
-            <span className="font-bold text-ink dark:text-white">{label}</span>
-          </div>
-          <Icon n="arrowLeft" s={20} className="text-slate-300 dark:text-slate-600" />
-        </div>
-      );
-    }
+          );
+        })}
 
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(<App />);
-  </script>
+        {(exam.type === "sprach1" || exam.type === "sprach2") && done !== null && (
+          <div className="card">
+            <h3 style={{ marginTop: 0, marginBottom: 15 }}>الشرح (توضيح)</h3>
+            {exam.items.map(it => (
+              <div key={it.n} style={{ borderBottom: "1px solid var(--line)", paddingBottom: 10, marginBottom: 10 }}>
+                <div style={{ display: "flex", gap: 10, marginBottom: 5 }}>
+                  <span className="chip" style={{ background: "var(--paper)", color: "var(--text)" }}>{it.n}</span>
+                  <span style={{ fontWeight: 800, color: ans[it.n] === it.c ? "var(--okc)" : "var(--badc)" }}>{ans[it.n] || "-"}</span>
+                  {ans[it.n] !== it.c && <span style={{ fontWeight: 800, color: "var(--okc)" }}> (الصحيح: {it.c})</span>}
+                </div>
+                <p style={{ margin: 0, fontSize: ".9em", color: "var(--muted)" }}>{it.exp}</p>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {modalGap !== null && exam.type === "sprach1" && (
+          <div className="overlay" onClick={() => setModalGap(null)}>
+            <div className="sheet" onClick={e => e.stopPropagation()}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                <h3 style={{ margin: 0, fontSize: "1.2em" }}>الفراغ ({modalGap})</h3>
+                <button className="btnI" onClick={() => setModalGap(null)}>✕</button>
+              </div>
+              <div className="modal-list">
+                {exam.items.find(x => x.n === modalGap).opts.map((opt, i) => (
+                  <button
+                    key={i}
+                    className={"modal-item" + (ans[modalGap] === opt ? " selected" : "")}
+                    onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}
+                  >
+                    <span style={{ opacity: 0.5 }}>{String.fromCharCode(65 + i)}</span>
+                    <span className="de">{opt}</span>
+                    {ans[modalGap] === opt && <span style={{ color: "var(--gold)" }}>✓</span>}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {modalTeil3 !== null && (
+          <div className="overlay" onClick={() => setModalTeil3(null)}>
+            <div className="sheet" onClick={e => e.stopPropagation()} style={{ maxHeight: "80vh", overflowY: "auto" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+                <h3 style={{ margin: 0, fontSize: "1.2em" }}>اختر الإعلان المناسب ({modalTeil3})</h3>
+                <button className="btnI" onClick={() => setModalTeil3(null)}>✕</button>
+              </div>
+              <div className="modal-list">
+                {exam.ads.map(a => {
+                  const isUsed = usedElsewhere(modalTeil3, a.k);
+                  return (
+                    <button
+                      key={a.k}
+                      className={"modal-item" + (ans[modalTeil3] === a.k ? " selected" : "") + (isUsed ? " disabled" : "")}
+                      onClick={() => pick(exam.items.find(x => x.n === modalTeil3), a.k)}
+                    >
+                      <span style={{ opacity: 0.5, width: 20 }}>{a.k}</span>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 800 }} className="de">{a.t}</div>
+                        <div style={{ fontSize: ".8em", opacity: .7 }} className="de">{a.de}</div>
+                      </div>
+                      {ans[modalTeil3] === a.k && <span style={{ color: "var(--gold)" }}>✓</span>}
+                    </button>
+                  );
+                })}
+                <button
+                  className={"modal-item" + (ans[modalTeil3] === "X" ? " selected" : "")}
+                  onClick={() => pick(exam.items.find(x => x.n === modalTeil3), "X")}
+                >
+                  <span style={{ opacity: 0.5, width: 20 }}>X</span>
+                  <span style={{ flex: 1, fontWeight: 800 }}>لا يوجد إعلان مناسب</span>
+                  {ans[modalTeil3] === "X" && <span style={{ color: "var(--gold)" }}>✓</span>}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {done === null && (
+          <button className="btn" disabled={answered !== exam.items.length} onClick={finish} style={{ marginBottom: 12 }}>
+            تصحيح النتيجة
+          </button>
+        )}
+
+        {done !== null && (
+          <div className="card" style={{ textAlign: "center" }}>
+            <div className="de" style={{ fontSize: "2.2em", fontWeight: 900, color: "var(--okc)" }}>{done} / {total}</div>
+            <button className="btn ghost" onClick={reset} style={{ marginTop: 10 }}>إعادة المحاولة</button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [view, setView] = useState("home");
+  const [tab, setTab] = useState("Teile 1");
+  const [exam, setExam] = useState(null);
+  const [dark, setDark] = useState(false);
+  const [fs, setFs] = useState(() => { try { return Number(localStorage.getItem("ep_fs")) || 100; } catch (e) { return 100; } });
+  const [menu, setMenu] = useState(false);
+  const [settings, setSettings] = useState(false);
+  const [problem, setProblem] = useState("");
+  const [results, setResults] = useState(() => { try { return JSON.parse(localStorage.getItem("ep_results") || "{}"); } catch (e) { return {}; } });
+
+  useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
+  useEffect(() => {
+    document.documentElement.style.setProperty("--fs", fs / 100);
+    try { localStorage.setItem("ep_fs", fs); } catch (e) {}
+  }, [fs]);
+  useEffect(() => { try { localStorage.setItem("ep_results", JSON.stringify(results)); } catch (e) {} }, [results]);
+
+  const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
+  const go = (v) => { setView(v); setExam(null); setMenu(false); window.scrollTo(0, 0); };
+
+  if (exam) {
+    return <ExamView key={exam.id} exam={exam} dark={dark} setDark={setDark} onBack={() => setExam(null)} onSave={saveResult} />;
+  }
+
+  const list = EXAMS.filter(e => tab === "Prüfungen" || e.sub === tab);
+
+  return (
+    <div>
+      <div className="header">
+        <div className="brand">
+          <div className="logo">EP</div>
+          <div>
+            <div style={{ fontWeight: 900 }}>EchtPrüfung</div>
+            <div className="de" style={{ fontSize: ".7em", color: "var(--muted)" }}>Deutsch B1 / B2</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button className="btnI" aria-label="الوضع الليلي" onClick={() => setDark(!dark)}>{dark ? "☀" : "☾"}</button>
+          <button className="btnI" aria-label="الإعدادات" onClick={() => setSettings(true)}>⚙</button>
+          <button className="btnI" aria-label="القائمة" onClick={() => setMenu(true)}>☰</button>
+        </div>
+      </div>
+
+      <main style={{ margin: "0 12px", paddingTop: 10 }}>
+        {view === "home" && (
+          <div>
+            <div className="card" style={{ padding: 18 }}>
+              <h2 className="de" style={{ margin: "0 0 6px", fontSize: "1.5em", fontWeight: 900 }}>Üben wie in der Prüfung.</h2>
+              <p style={{ margin: 0, color: "var(--muted)" }}>تدرّب بنفس شكل الامتحان، مع ترجمة عربية وتصحيح فوري.</p>
+            </div>
+            <div className="card">
+              <h3 style={{ margin: "0 0 6px" }}>محتاج استشارة؟</h3>
+              <p style={{ margin: "0 0 10px", color: "var(--muted)", fontSize: ".9em" }}>كلمنا على واتساب ونجاوبك.</p>
+              <button className="btn" onClick={() => wa("السلام، بغيت استشارة بخصوص امتحانات EchtPrüfung.")}>تواصل على واتساب</button>
+            </div>
+            <div className="card">
+              <h3 style={{ margin: "0 0 6px" }}>بلّغ عن مشكل</h3>
+              <textarea value={problem} onChange={e => setProblem(e.target.value)} placeholder="شنو وقع؟" />
+              <button className="btn" style={{ marginTop: 10 }} disabled={!problem.trim()} onClick={() => wa("مشكل: " + problem.trim())}>صيفط المشكل</button>
+            </div>
+          </div>
+        )}
+
+        {view === "lesen" && (
+          <div>
+            <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px" }}>Lesen</h1>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4 }}>
+                <button className="tab on" style={{ padding: "8px 28px" }}>B1</button>
+                <button className="tab" style={{ padding: "8px 28px", opacity: .5 }} disabled>B2</button>
+              </div>
+            </div>
+            <div className="tabs">
+              {SUBS.map(s => (
+                <button key={s} className={"tab" + (tab === s ? " on" : "")} onClick={() => setTab(s)}>{s}</button>
+              ))}
+            </div>
+
+            <div style={{ display: "flex", justifyContent: "space-between", margin: "8px 0" }}>
+              <span className="chip" style={{ background: "var(--card)", color: "var(--text)" }}>{list.length} امتحان</span>
+              <strong>قائمة الامتحانات</strong>
+            </div>
+
+            {list.map(ex => {
+              const r = results[ex.id];
+              return (
+                <button key={ex.id} className="card" onClick={() => setExam(ex)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div>
+                      <div className="de" style={{ fontWeight: 800, fontSize: "1.05em" }}>{ex.title}</div>
+                      <div style={{ display: "flex", gap: 8, marginTop: 6, alignItems: "center", color: "var(--muted)", fontSize: ".85em" }}>
+                        <span className="chip">B1</span>
+                        <span>{ex.type === "mcq" ? "Nur Teil 2" : ex.type === "matching" ? "Nur Teil 3" : ex.type.startsWith("sprach") ? `Nur Sprach ${ex.sub.split(" ")[1]}` : "90 Min"}</span>
+                      </div>
+                    </div>
+                    {r && <span className="chip" style={{ background: "var(--badbg)", color: "var(--badc)" }}>{r.score}/{r.max}</span>}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
+        {(view === "horen" || view === "schreiben" || view === "sprechen" || view === "pruefung") && (
+          <div className="card" style={{ textAlign: "center", padding: 30 }}>
+            <h2 style={{ margin: "0 0 6px" }}>
+              {view === "horen" ? "Hören" : view === "schreiben" ? "Schreiben" : view === "sprechen" ? "Sprechen" : "امتحان"}
+            </h2>
+            <p style={{ color: "var(--muted)", margin: 0 }}>هاد القسم قريباً.</p>
+          </div>
+        )}
+      </main>
+
+      <nav className="nav">
+        {[["home","الرئيسية","⌂"],["lesen","Lesen","📖"],["horen","Hören","🎧"],["schreiben","Schreiben","✎"],["sprechen","Sprechen","🎙"],["pruefung","امتحان","🎓"]].map(([k, label, ic]) => (
+          <button key={k} className={view === k ? "on" : ""} onClick={() => go(k)}>
+            <span className="ic">{ic}</span>
+            <span>{label}</span>
+          </button>
+        ))}
+      </nav>
+
+      {menu && (
+        <div className="overlay" onClick={() => setMenu(false)}>
+          <div className="sheet" onClick={e => e.stopPropagation()} style={{ maxWidth: 360 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+              <strong>القائمة</strong>
+              <button className="btnI" onClick={() => setMenu(false)}>✕</button>
+            </div>
+            {[["lesen","Lesen"],["horen","Hören"],["schreiben","Schreiben"],["sprechen","Sprechen"]].map(([k, l]) => (
+              <button key={k} className="btn ghost" style={{ marginBottom: 8 }} onClick={() => go(k)}>{l}</button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {settings && (
+        <div className="overlay" onClick={() => setSettings(false)}>
+          <div className="sheet" onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+              <strong>الإعدادات</strong>
+              <button className="btnI" onClick={() => setSettings(false)}>✕</button>
+            </div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+              <span>حجم النص</span>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <button className="btnI" onClick={() => setFs(Math.max(80, fs - 10))}>−</button>
+                <span style={{ minWidth: 48, textAlign: "center", fontWeight: 800 }}>{fs}%</span>
+                <button className="btnI" onClick={() => setFs(Math.min(150, fs + 10))}>+</button>
+              </div>
+            </div>
+            <p className="de" style={{ background: "var(--paper)", padding: 10, borderRadius: 12, margin: "0 0 12px" }}>
+              Lesen Teil 1 — Beispieltext
+            </p>
+            <button className="btn ghost" onClick={() => setFs(100)}>إعادة الحجم الأصلي</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
 </body>
 </html>
