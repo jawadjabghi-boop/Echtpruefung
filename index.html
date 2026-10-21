@@ -246,7 +246,7 @@ const EXAMS = [
 },
 
 /* ============ TEIL 2 ============ */
-{ id:"alex-t2", title:"Alex und Cora", level:"B1", sub:"Teile 2", type:"mcq",
+{ id:"alex-t2", title:"Alex Und Cora", level:"B1", sub:"Teile 2", type:"mcq",
   paragraphs: [
     { de: "Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt. Markus Kleinoth aus der Freizeitredaktion hat sich mit diesem Thema beschäftigt.", ar: "سواء كان كلباً أو قطة أو فأراً: الحيوانات الأليفة تحظى بشعبية كبيرة في ألمانيا. ماركوس كلاينوت من قسم الترفيه تناول هذا الموضوع." },
     { de: "In deutschen Haushalten gibt es rund 34 Millionen Haustiere. Besonders Katzen sind sehr beliebt, denn davon leben 14 Millionen in Deutschland. Und das, obwohl Deutschland als Land der Hundefans gilt. Insgesamt gibt es aber etwa 10 Millionen Hunde.", ar: "يوجد في الأسر الألمانية حوالي 34 مليون حيوان أليف. القطط تحظى بشعبية خاصة، حيث يعيش منها 14 مليوناً في ألمانيا. وهذا على الرغم من أن ألمانيا تعتبر بلد محبي الكلاب. ومع ذلك، هناك حوالي 10 ملايين كلب في المجموع." },
@@ -529,6 +529,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   const lastScrollY = React.useRef(0);
   const toastTimer = React.useRef(null);
 
+  // إخفاء الهيدر وشريط التقدم مع السكرول
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -562,10 +563,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     setMode(m); setAns({}); setDone(null); setItemDone({}); setShowTranslation(false); setActiveGap(null); setExcluded({});
     flash(m === "exam" ? "🎯 نمط الامتحان" : "📚 نمط التدريب");
     window.scrollTo(0, 0);
-  };
-
-  const toggleShuffle = () => {
-    // removed to match new UI, keeping function empty to prevent errors if called
   };
 
   const optsFor = (it) => {
@@ -682,6 +679,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     });
   };
 
+  // تصميم Teil 3 الجديد
   const renderTeil3 = () => {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -798,7 +796,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
       </div>
 
       <div style={{ margin: "0 10px" }}>
-        {/* Teil 2 */}
         {exam.type === "mcq" && (
           <div className="card" style={{ padding: "20px 16px" }}>
             {exam.paragraphs && exam.paragraphs.map((p, i) => (
@@ -807,23 +804,17 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
                 {showTranslation && <div className="t2-ar" style={{ marginTop: 0 }}>{p.ar}</div>}
               </div>
             ))}
-            {!showTranslation && (
-              <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.9em", marginTop: 20 }}>اضغط على أيقونة الترجمة (文A) في الأعلى لعرض الترجمة.</p>
-            )}
           </div>
         )}
 
-        {/* Sprach 1 & 2 */}
         {(exam.type === "sprach1" || exam.type === "sprach2") && (
           <div className="card" style={{ fontSize: "1.1em", lineHeight: 2.2, padding: "24px 16px" }}>
             {renderSprachText()}
           </div>
         )}
 
-        {/* Teil 3 */}
         {exam.type === "matching" && renderTeil3()}
 
-        {/* باقي الأسئلة */}
         {exam.type !== "sprach1" && exam.type !== "sprach2" && exam.type !== "matching" && exam.items.map((it, idx) => {
           const sel = ans[it.n];
           const isDone = done !== null || itemDone[it.n];
@@ -860,7 +851,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
           );
         })}
 
-        {/* المودالات */}
         {modalGap !== null && exam.type === "sprach1" && (
           <div className="overlay" onClick={() => setModalGap(null)}>
             <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -903,27 +893,32 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
         )}
       </div>
 
-      {/* الأزرار العائمة لتحت */}
+      {/* الأزرار العائمة لتحت (صغار، زجاجيين، ولاصقين فالقنتة) */}
       <div style={{ 
-        position: 'fixed', bottom: 20, left: 20, right: 20, zIndex: 40,
+        position: 'fixed', bottom: 12, left: 16, right: 16, zIndex: 40,
         display: 'flex', justifyContent: 'space-between', pointerEvents: 'none'
       }}>
         <button onClick={done !== null ? reset : finish} style={{ 
-          pointerEvents: 'auto', padding: "14px 24px", fontSize: "1.05em", fontWeight: 900, borderRadius: 30, 
-          background: done !== null ? "var(--okbg)" : "var(--ink)", color: done !== null ? "var(--okc)" : "var(--gold)", 
-          border: "none", boxShadow: "0 8px 25px rgba(0,0,0,0.3)", cursor: "pointer",
-          display: "flex", alignItems: "center", gap: 8
+          pointerEvents: 'auto', padding: "8px 18px", fontSize: "0.85em", fontWeight: 800, borderRadius: 20, 
+          background: done !== null ? "rgba(220, 252, 231, 0.85)" : "rgba(15, 27, 51, 0.85)", 
+          color: done !== null ? "var(--okc)" : "var(--gold)", 
+          border: "1px solid rgba(255,255,255,0.1)", 
+          backdropFilter: "blur(8px)",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.15)", cursor: "pointer",
+          display: "flex", alignItems: "center", gap: 6
         }}>
           {done !== null ? "إعادة" : "تصحيح"}
         </button>
         <button onClick={() => { if(done !== null) onBack(); else onNext(); }} style={{ 
-          pointerEvents: 'auto', padding: "14px 24px", fontSize: "1.05em", fontWeight: 900, borderRadius: 30, 
-          background: "var(--card)", color: "var(--text)", border: "1px solid var(--line)", 
-          boxShadow: "0 8px 25px rgba(0,0,0,0.1)", cursor: "pointer",
-          display: "flex", alignItems: "center", gap: 8
+          pointerEvents: 'auto', padding: "8px 18px", fontSize: "0.85em", fontWeight: 800, borderRadius: 20, 
+          background: "rgba(255, 255, 255, 0.85)", color: "var(--text)", 
+          border: "1px solid rgba(0,0,0,0.05)", 
+          backdropFilter: "blur(8px)",
+          boxShadow: "0 4px 15px rgba(0,0,0,0.1)", cursor: "pointer",
+          display: "flex", alignItems: "center", gap: 6
         }}>
           {done !== null ? "رجوع" : "التالي"}
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </button>
       </div>
     </div>
@@ -944,6 +939,7 @@ function App() {
   
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
+  const [showSubscription, setShowSubscription] = useState(false); // حالة نافذة الاشتراك
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -952,9 +948,33 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
+  // إظهار نافذة الاشتراك بعد ثانية من الدخول
+  useEffect(() => {
+    if (user && view === "home" && !sessionStorage.getItem("subShown")) {
+      const timer = setTimeout(() => {
+        setShowSubscription(true);
+        sessionStorage.setItem("subShown", "true");
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [user, view]);
+
   const handleGuest = () => { const guest = { name: "زائر", isGuest: true }; setUser(guest); localStorage.setItem("ep_user", JSON.stringify(guest)); };
-  const handleAuth = (e) => { e.preventDefault(); const name = e.target.name.value; const pass = e.target.pass.value; if(name && pass) { const newUser = { name, pass }; setUser(newUser); localStorage.setItem("ep_user", JSON.stringify(newUser)); } };
-  const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
+  
+  // إضافة ميزة تذكرني
+  const handleAuth = (e) => { 
+    e.preventDefault(); 
+    const name = e.target.name.value; 
+    const pass = e.target.pass.value; 
+    const remember = e.target.remember.checked;
+    if(name && pass) { 
+      const newUser = { name, pass, remember }; 
+      setUser(newUser); 
+      localStorage.setItem("ep_user", JSON.stringify(newUser)); 
+    } 
+  };
+  
+  const logout = () => { localStorage.removeItem("ep_user"); sessionStorage.removeItem("subShown"); setUser(null); };
 
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
   useEffect(() => { document.documentElement.style.setProperty("--fs", fs / 100); try { localStorage.setItem("ep_fs", fs); } catch (e) {} }, [fs]);
@@ -1001,6 +1021,10 @@ function App() {
           <form onSubmit={handleAuth}>
             <input className="auth-input" name="name" placeholder="الاسم الفريد" required />
             <input className="auth-input" name="pass" type="password" placeholder="رقم سري" required />
+            <div style={{ display: "flex", alignItems: "center", marginBottom: 16, gap: 8 }}>
+              <input type="checkbox" name="remember" id="remember" style={{ width: 18, height: 18, accentColor: "var(--gold)" }} />
+              <label htmlFor="remember" style={{ fontSize: "0.95em", color: "var(--text)", cursor: "pointer" }}>تذكرني (الحفاظ على كلمة السر)</label>
+            </div>
             <button type="submit" className="auth-btn">تسجيل الدخول</button>
           </form>
         </div>
@@ -1047,31 +1071,18 @@ function App() {
         {view === "home" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <div style={{
-              position: "relative",
-              borderRadius: 24,
-              overflow: "hidden",
-              minHeight: "450px",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              padding: "40px 20px",
-              border: "1px solid var(--line)",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
+              position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px",
+              display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
+              padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
             }}>
               <div style={{
-                position: "absolute",
-                top: 0, left: 0, right: 0, bottom: 0,
+                position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
                 backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", // ⚠️ بدل هذا الرابط برابط صورتك
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                zIndex: 0
+                backgroundSize: "cover", backgroundPosition: "center", zIndex: 0
               }} />
               <div style={{
-                position: "absolute",
-                top: 0, left: 0, right: 0, bottom: 0,
-                background: "linear-gradient(to bottom, rgba(15,27,51,0.4) 0%, rgba(15,27,51,0.95) 100%)",
-                zIndex: 1
+                position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
+                background: "linear-gradient(to bottom, rgba(15,27,51,0.4) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1
               }} />
 
               <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
@@ -1093,13 +1104,8 @@ function App() {
             <div className="card" style={{ padding: 24, textAlign: "center", borderRadius: 24 }}>
               <h3 style={{ margin: "0 0 16px", fontSize: "1.2em", fontWeight: 900, color: "var(--text)" }}>الدعم الفني</h3>
               <p className="de" style={{ margin: "0 0 20px", color: "var(--muted)", fontSize: "0.95em", fontWeight: 600 }}>Support & Problemmeldung</p>
-              <button 
-                style={{ width: "100%", padding: "16px", borderRadius: "16px", background: "#25D366", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.05em", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", boxShadow: "0 8px 25px rgba(37, 211, 102, 0.4)", cursor: "pointer", transition: "transform 0.2s" }} 
-                onClick={() => wa("مرحباً، بغيت نبلغ على مشكل فالتطبيق / Ich möchte ein Problem melden.")}
-              >
-                <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
-                </svg>
+              <button style={{ width: "100%", padding: "16px", borderRadius: "16px", background: "#25D366", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.05em", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", boxShadow: "0 8px 25px rgba(37, 211, 102, 0.4)", cursor: "pointer", transition: "transform 0.2s" }} onClick={() => wa("مرحباً، بغيت نبلغ على مشكل فالتطبيق / Ich möchte ein Problem melden.")}>
+                <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1.2 }}>
                   <span>تواصل مع الدعم / إبلاغ عن مشكل</span>
                   <span className="de" style={{ fontSize: "0.75em", opacity: 0.9 }}>Support kontaktieren</span>
@@ -1121,13 +1127,7 @@ function App() {
             </div>
 
             <div style={{ marginBottom: 16 }}>
-              <input 
-                type="text" 
-                placeholder="...بحث عن موضوع" 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                style={{ width: "100%", padding: "14px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }}
-              />
+              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "14px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", margin: "8px 0" }}>
@@ -1135,23 +1135,20 @@ function App() {
               <strong style={{fontSize:"1.1em"}}>قائمة الامتحانات</strong>
             </div>
 
-            {uniqueTitles.map(title => {
-              const partsForExam = EXAMS.filter(e => e.title === title && e.level === level);
-              return (
-                <button key={title} className="card" onClick={() => setSelectedExamTitle(title)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 16 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div>
-                      <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div>
-                      <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
-                        <span className="chip">{level}</span>
-                        <span>90 Min</span>
-                      </div>
+            {uniqueTitles.map(title => (
+              <button key={title} className="card" onClick={() => setSelectedExamTitle(title)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 16 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div>
+                    <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
+                      <span className="chip">{level}</span>
+                      <span>90 Min</span>
                     </div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: "var(--muted)" }}><path d="M9 18l6-6-6-6"/></svg>
                   </div>
-                </button>
-              );
-            })}
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: "var(--muted)" }}><path d="M9 18l6-6-6-6"/></svg>
+                </div>
+              </button>
+            ))}
           </div>
         )}
 
@@ -1174,6 +1171,85 @@ function App() {
         ))}
       </nav>
 
+      {/* نافذة الاشتراك الجديدة */}
+      {showSubscription && (
+        <div className="overlay" onClick={() => setShowSubscription(false)}>
+          <div className="sheet" onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>عروض الاشتراك</h3>
+              <button className="btnI" onClick={() => setShowSubscription(false)}>✕</button>
+            </div>
+            
+            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+              {/* العرض 1 */}
+              <div className="card" style={{ margin: 0, padding: 16, border: "2px solid var(--gold)", background: "rgba(245,184,46,0.05)" }}>
+                <h4 style={{ margin: "0 0 8px", fontSize: "1.1em", color: "var(--gold)" }}>تجربة مجانية</h4>
+                <p style={{ margin: "0 0 12px", fontSize: "1.5em", fontWeight: 900 }}>0 درهم <span style={{ fontSize: "0.5em", color: "var(--muted)" }}>/ يومين</span></p>
+                <button className="btn" style={{ background: "#25D366", color: "#fff", padding: "10px" }} onClick={() => wa("مرحباً، بغيت نستافد من تجربة يومين مجانية فـ EchtPrüfung.")}>واتساب - تجربة مجانية</button>
+              </div>
+
+              {/* العرض 2 */}
+              <div className="card" style={{ margin: 0, padding: 16 }}>
+                <h4 style={{ margin: "0 0 8px", fontSize: "1.1em" }}>اشتراك 15 يوم</h4>
+                <p style={{ margin: "0 0 12px", fontSize: "1.5em", fontWeight: 900 }}>30 درهم</p>
+                <button className="btn ghost" style={{ padding: "10px" }} onClick={() => wa("مرحباً، بغيت نشترك لمدة 15 يوم بـ 30 درهم فـ EchtPrüfung.")}>واتساب - اشتراك 15 يوم</button>
+              </div>
+
+              {/* العرض 3 */}
+              <div className="card" style={{ margin: 0, padding: 16, position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", top: 10, left: 10, background: "var(--badc)", color: "#fff", padding: "2px 8px", borderRadius: 4, fontSize: "0.7em", fontWeight: 900 }}>عرض خاص</div>
+                <h4 style={{ margin: "0 0 8px", fontSize: "1.1em" }}>اشتراك شهر كامل</h4>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+                  <span style={{ fontSize: "1.5em", fontWeight: 900, color: "var(--gold)" }}>60 درهم</span>
+                  <span style={{ fontSize: "1em", textDecoration: "line-through", color: "var(--badc)" }}>125 درهم</span>
+                </div>
+                <button className="btn" style={{ padding: "10px" }} onClick={() => wa("مرحباً، بغيت نستافد من عرض الشهر بـ 60 درهم فـ EchtPrüfung.")}>واتساب - اشتراك شهر كامل</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* قائمة الأجزاء (تظهر عند اختيار امتحان) */}
+      {selectedExamTitle && (
+        <div className="overlay" onClick={() => setSelectedExamTitle(null)}>
+          <div className="sheet" onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <h3 className="de" style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>{selectedExamTitle}</h3>
+              <button className="btnI" onClick={() => setSelectedExamTitle(null)}>✕</button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {/* هنا كنعرضو 5 ديال الأجزاء دايما */}
+              {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(subName => {
+                const existingExam = EXAMS.find(e => e.title === selectedExamTitle && e.level === level && e.sub === subName);
+                return (
+                  <button 
+                    key={subName} 
+                    className="btn ghost" 
+                    style={{ 
+                      padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center",
+                      opacity: existingExam ? 1 : 0.5
+                    }} 
+                    onClick={() => { 
+                      if (existingExam) { 
+                        setExam(existingExam); 
+                        setSelectedExamTitle(null); 
+                      } else {
+                        flash("هذا الجزء فارغ حالياً / Dieses Teil ist leer"); 
+                      }
+                    }}
+                  >
+                    <span className="de" style={{ fontWeight: 800 }}>{subName}</span>
+                    {existingExam && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* القائمة الجانبية (Menu) */}
       {menu && (
         <div className="overlay" onClick={() => setMenu(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ maxWidth: 360, padding: 0, overflow: "hidden", borderRadius: 24 }}>
@@ -1205,9 +1281,19 @@ function App() {
                 </button>
               ))}
 
-              <button className="btn" style={{ marginTop: 10, padding: "14px 16px", fontSize: "1.05em", display: "flex", justifyContent: "flex-start", alignItems: "center", gap: 12, background: "#25D366", color: "#fff", border: "none" }} onClick={() => wa("مرحباً، بغيت استشارة بخصوص EchtPrüfung.")}>
-                <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                <span style={{ fontWeight: 800 }}>استشارة مع الدعم</span>
+              {/* زر الاشتراك والدعم الصغير */}
+              <button 
+                style={{ 
+                  marginTop: 10, padding: "12px", borderRadius: "14px", background: "rgba(37, 211, 102, 0.1)", 
+                  color: "#15803D", border: "1.5px solid #25D366", fontWeight: 900, fontSize: "0.95em", 
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", cursor: "pointer", transition: "all 0.2s"
+                }} 
+                onClick={() => wa("مرحباً، بغيت نستفسر على الاشتراك وتواصل مع الدعم فـ EchtPrüfung.")}
+              >
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+                </svg>
+                <span>الاشتراك وتواصل مع الدعم</span>
               </button>
             </div>
 
@@ -1222,25 +1308,7 @@ function App() {
         </div>
       )}
 
-      {selectedExamTitle && (
-        <div className="overlay" onClick={() => setSelectedExamTitle(null)}>
-          <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <h3 className="de" style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>{selectedExamTitle}</h3>
-              <button className="btnI" onClick={() => setSelectedExamTitle(null)}>✕</button>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {EXAMS.filter(e => e.title === selectedExamTitle && e.level === level).map(ex => (
-                <button key={ex.id} className="btn ghost" style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center" }} onClick={() => { setExam(ex); setSelectedExamTitle(null); }}>
-                  <span className="de" style={{ fontWeight: 800 }}>{ex.sub}</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
+      {/* الإعدادات */}
       {settings && (
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
