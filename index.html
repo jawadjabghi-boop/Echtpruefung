@@ -5,132 +5,281 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EchtPrüfung</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
 <style>
   :root{
-    --ink:#0F1B33;
-    --gold:#F5B82E;
-    --paper:#F4F6F9;
-    --card:#FFFFFF;
-    --text:#1E293B;
-    --muted:#64748B;
-    --line:#E2E8F0;
-    --okc:#15803D;
-    --okbg:#DCFCE7;
-    --badc:#B91C1C;
-    --badbg:#FEE2E2;
+    --ink:#0F1B33; --gold:#F5B82E; --red:#DD0000;
+    --paper:#EEF1F6; --card:#FFFFFF; --text:#1E293B; --muted:#64748B; --line:#DCE3EC;
+    --okc:#15803D; --okbg:#DCFCE7; --badc:#B91C1C; --badbg:#FEE2E2;
     --fs:1;
+    --flag:linear-gradient(90deg,#111 0 33.33%,#DD0000 33.33% 66.66%,#FFCE00 66.66% 100%);
+    --german-grad:linear-gradient(135deg,#111111 0%,#DD0000 50%,#FFCE00 100%);
+    --raise:0 1px 0 rgba(255,255,255,.9) inset,0 5px 0 rgba(15,27,51,.07),0 14px 28px rgba(15,27,51,.10);
+    --press:0 1px 0 rgba(255,255,255,.9) inset,0 2px 0 rgba(15,27,51,.08),0 4px 10px rgba(15,27,51,.08);
   }
   .dark{
-    --paper:#0B1120;
-    --card:#1E293B;
-    --text:#F8FAFC;
-    --muted:#94A3B8;
-    --line:#334155;
-    --okc:#86EFAC;
-    --okbg:#14532D;
-    --badc:#FCA5A5;
-    --badbg:#7F1D1D;
+    --paper:#0A0F1E; --card:#17213A; --text:#F1F5F9; --muted:#94A3B8; --line:#2A3858;
+    --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
+    --raise:0 1px 0 rgba(255,255,255,.06) inset,0 5px 0 rgba(0,0,0,.40),0 14px 28px rgba(0,0,0,.45);
+    --press:0 1px 0 rgba(255,255,255,.06) inset,0 2px 0 rgba(0,0,0,.40),0 4px 10px rgba(0,0,0,.35);
   }
 
-  html { font-size: calc(18px * var(--fs)); }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--paper); color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:110px; transition:background .3s, color .3s; }
-  button { font-family:inherit; cursor:pointer; }
-  .de { direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
-  
-  .card { background:var(--card); border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:14px; box-shadow:0 4px 12px rgba(0,0,0,0.03); color: var(--text); }
-  
-  .header { position:sticky; top:10px; z-index:30; margin:10px; display:flex; justify-content:space-between; align-items:center; gap:10px; background:var(--card); border:1px solid var(--line); border-radius:22px; padding:12px 16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s ease; }
-  
-  .brand { display:flex; align-items:center; gap:12px; }
-  .logo { width:50px; height:50px; border-radius:14px; background:var(--ink); display:flex; align-items:center; justify-content:center; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
-  
-  .btnI { width:46px; height:46px; border:none; border-radius:50%; background:var(--line); color:var(--text); display:flex; align-items:center; justify-content:center; transition:background .2s; }
-  
-  .btn { border:none; border-radius:14px; padding:14px 16px; font-weight:800; background:var(--ink); color:var(--gold); width:100%; transition:opacity .2s; font-size:1.05em; }
-  .btn.ghost { background:transparent; color:var(--text); border:1.5px solid var(--line); }
-  .btn:disabled { opacity:.5; cursor:not-allowed; }
-  .chip { display:inline-block; border-radius:8px; padding:3px 10px; font-size:.8em; font-weight:800; background:var(--okbg); color:var(--okc); }
-  
-  .tabs { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; background:var(--card); border:1px solid var(--line); border-radius:20px; padding:12px; margin-bottom:14px; }
-  .tab { border:none; background:transparent; color:var(--muted); padding:12px 6px; border-radius:14px; font-weight:800; font-size:.95em; transition:all .2s; }
-  .tab.on { background:var(--gold); color:var(--ink); box-shadow:0 4px 12px rgba(245,184,46,0.4); }
-  
-  .bar { height:10px; border-radius:99px; background:var(--line); overflow:hidden; }
-  .fill { height:100%; background:linear-gradient(to right,#000 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); transition:width .3s; }
-  
-  .opt { display:flex; gap:12px; align-items:center; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:14px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; }
-  .opt.dis { opacity:.4; cursor:not-allowed; }
-  .opt.sel { border-color:var(--gold); background:rgba(245,184,46,.15); }
-  .opt.good { border-color:var(--okc); background:var(--okbg); color: var(--okc); }
-  .opt.bad { border-color:var(--badc); background:var(--badbg); color: var(--badc); }
-  .opt.faded { opacity:.4; }
-  
-  .letter { width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; box-shadow:0 2px 5px rgba(0,0,0,0.1); font-size:1.1em; color:var(--text); }
-  
-  .fb { border-radius:14px; padding:14px; margin-top:10px; font-size:.95em; line-height:1.8; }
-  .fb.good { background:var(--okbg); color:var(--okc); }
-  .fb.bad { background:var(--badbg); color:var(--badc); }
-  
-  .toast { position:fixed; top:100px; left:50%; transform:translateX(-50%); background:var(--ink); color:var(--gold); padding:10px 20px; border-radius:14px; font-weight:800; z-index:60; font-size:.95em; box-shadow:0 10px 25px rgba(0,0,0,0.2); animation:slideDown .3s; }
-  @keyframes slideDown { from{top:-20px;opacity:0} to{top:100px;opacity:1} }
-  
-  .nav { position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:10px 4px 22px; z-index:40; }
-  .nav button { border:none; background:transparent; color:var(--muted); font-size:.8em; font-weight:800; display:flex; flex-direction:column; align-items:center; gap:6px; min-width:56px; }
-  .nav button.on { color:var(--text); }
-  .nav .ic { padding:6px 14px; border-radius:14px; transition:background .2s; }
-  .nav button.on .ic { background:rgba(245,184,46,.25); }
-  
-  .overlay { position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:50; display:flex; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(4px); }
-  
-  .sheet { background:var(--card); border: 1px solid var(--line); border-radius:26px; padding:24px; width:100%; max-width:440px; box-shadow:0 20px 40px rgba(0,0,0,0.3); max-height:85vh; overflow-y:auto; color: var(--text); }
-  
-  .modeBtn { flex:1; padding:12px 8px; border-radius:12px; border:2px solid var(--line); background:transparent; color:var(--muted); font-weight:800; font-size:.95em; font-family:inherit; cursor:pointer; transition:all .2s; }
-  .modeBtn.on { border-color:var(--gold); background:var(--gold); color:var(--ink); }
-  
-  .inline-gap { display:inline-flex; align-items:center; justify-content:center; min-width:90px; border-bottom:3px dashed var(--gold); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900; color:var(--text); transition:all .2s; vertical-align:middle; background:rgba(245,184,46,0.08); border-radius:8px 8px 0 0; font-size:1.1em; }
-  .inline-gap.filled { border-bottom-style:solid; background:rgba(245,184,46,0.2); color:var(--gold); }
-  .sp1-correct-box { background: var(--okbg); color: var(--okc); padding: 4px 12px; border-radius: 8px; font-weight: 900; font-size: 1.05em; margin: 0 4px; display: inline-block; border: 1px solid var(--okc); }
-  .sp1-wrong-box { background: var(--badbg); color: var(--badc); text-decoration: line-through; padding: 4px 12px; border-radius: 8px; font-weight: 900; font-size: 1.05em; margin: 0 4px; display: inline-block; border: 1px solid var(--badc); }
-  
-  .word-bank { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:14px; background:var(--paper); border-radius:14px; margin-bottom:14px; border:1px dashed var(--line); }
-  
-  .word-btn { padding:12px; border-radius:10px; border:1.5px solid var(--line); background:var(--card); color:var(--text); font-weight:800; font-size:1em; text-align:right; transition:all .2s; display:flex; gap:10px; align-items:center; }
-  .word-btn.used { opacity:.3; text-decoration:line-through; pointer-events:none; }
-  
-  .modal-list { display:flex; flex-direction:column; gap:12px; margin-top:15px; }
-  
-  .modal-item { padding:16px; border-radius:14px; border:1.5px solid var(--line); background:var(--paper); color:var(--text); font-weight:800; font-size:1.05em; display:flex; justify-content:space-between; align-items:center; cursor:pointer; transition:all .2s; text-align:right; }
-  .modal-item.selected { border-color:var(--gold); background:rgba(245,184,46,0.15); color: var(--text); }
-  .modal-item.disabled { opacity:0.4; pointer-events:none; text-decoration:line-through; }
-  
-  .highlight-yellow { background-color: #FEF08A; color: #854D0E; border-radius: 4px; padding: 0 4px; font-weight: bold; transition: all 0.3s; }
-  .dark .highlight-yellow { background-color: #854D0E; color: #FEF08A; }
-  
-  .splash-screen { position: fixed; inset: 0; background: #0F1B33; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s; }
-  .splash-logo { width: 180px; height: 180px; margin-bottom: 20px; animation: pulse 2s infinite; }
-  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.08); } 100% { transform: scale(1); } }
-  
-  .auth-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; background: var(--paper); }
-  .auth-card { background: var(--card); padding: 32px; border-radius: 28px; box-shadow: 0 15px 35px rgba(0,0,0,0.08); width: 100%; max-width: 420px; }
-  .auth-input { width: 100%; padding: 16px; margin-bottom: 16px; border-radius: 14px; border: 1.5px solid var(--line); background: var(--paper); color: var(--text); font-family: inherit; outline: none; font-size: 1.05em; }
-  .auth-btn { width: 100%; padding: 16px; border-radius: 14px; border: none; background: var(--ink); color: var(--gold); font-weight: 800; font-size: 1.1em; cursor: pointer; margin-bottom: 12px; }
-  .auth-btn.guest { background: var(--gold); color: var(--ink); }
-  
-  .t2-para { margin-bottom: 20px; border-bottom: 2px dashed var(--line); padding-bottom: 18px; }
-  .t2-ar { background: var(--paper); padding: 16px; border-radius: 12px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--gold); direction: rtl; text-align: right; }
-  .t2-trans-btn { background: transparent; border: 1.5px solid var(--line); padding: 8px 16px; border-radius: 20px; font-size: 0.9em; font-weight: bold; color: var(--muted); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; margin-top: 10px; transition: all 0.2s; }
+  html{ font-size:calc(18px * var(--fs)); }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body{
+    margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl;
+    min-height:100vh; padding-bottom:110px; transition:background .3s,color .3s;
+    background:
+      radial-gradient(900px 420px at 100% -10%, rgba(245,184,46,.10), transparent 60%),
+      radial-gradient(800px 400px at -10% 0%, rgba(221,0,0,.06), transparent 60%),
+      var(--paper);
+    background-attachment:fixed;
+  }
+  button{ font-family:inherit; cursor:pointer; }
+  .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
+
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:22px;
+    padding:16px; margin-bottom:14px; color:var(--text);
+    box-shadow:var(--raise); position:relative;
+  }
+
+  .header{
+    position:sticky; top:10px; z-index:30; margin:10px; display:flex; justify-content:space-between;
+    align-items:center; gap:10px; background:var(--card); border:1px solid var(--line);
+    border-radius:24px; padding:12px 16px; box-shadow:var(--raise); transition:transform .3s ease;
+  }
+  .header::after{
+    content:""; position:absolute; left:24px; right:24px; bottom:-1px; height:4px;
+    border-radius:4px 4px 0 0; background:var(--flag);
+  }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .logo{
+    width:50px; height:50px; border-radius:15px; background:var(--ink);
+    display:flex; align-items:center; justify-content:center; overflow:hidden;
+    box-shadow:0 4px 0 rgba(0,0,0,.35),0 8px 16px rgba(15,27,51,.25);
+  }
+
+  .btnI{
+    width:46px; height:46px; border:none; border-radius:50%; background:var(--line); color:var(--text);
+    display:flex; align-items:center; justify-content:center; transition:transform .12s,box-shadow .12s;
+    box-shadow:0 4px 0 rgba(0,0,0,.22),0 8px 14px rgba(0,0,0,.14);
+  }
+  .btnI:active{ transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.22),0 3px 6px rgba(0,0,0,.12); }
+
+  .icon-de{
+    background:var(--german-grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .svg-de{ stroke:url(#germanGradient); fill:none; }
+
+  .btn{
+    border:none; border-radius:16px; padding:14px 16px; font-weight:800; background:var(--ink);
+    color:var(--gold); width:100%; font-size:1.05em; transition:transform .12s,box-shadow .12s,opacity .2s;
+    box-shadow:0 5px 0 #000,0 10px 18px rgba(15,27,51,.25);
+  }
+  .btn:active{ transform:translateY(4px); box-shadow:0 1px 0 #000,0 3px 8px rgba(15,27,51,.2); }
+  .btn.ghost{
+    background:var(--card); color:var(--text); border:1.5px solid var(--line);
+    box-shadow:0 4px 0 var(--line),0 8px 14px rgba(15,27,51,.06);
+  }
+  .btn.ghost:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--line); }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .chip{
+    display:inline-block; border-radius:9px; padding:3px 10px; font-size:.8em; font-weight:800;
+    background:var(--okbg); color:var(--okc); box-shadow:0 2px 0 rgba(0,0,0,.08);
+  }
+
+  .tabs{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; background:var(--card);
+    border:1px solid var(--line); border-radius:22px; padding:12px; margin-bottom:14px; box-shadow:var(--raise);
+  }
+  .tab{
+    border:none; background:transparent; color:var(--muted); padding:12px 6px; border-radius:14px;
+    font-weight:800; font-size:.95em; transition:all .2s;
+  }
+  .tab.on{
+    background:var(--gold); color:var(--ink);
+    box-shadow:0 4px 0 #C48F12,0 8px 14px rgba(245,184,46,.35);
+  }
+  .tab:active{ transform:translateY(2px); }
+
+  .bar{ height:10px; border-radius:99px; background:var(--line); overflow:hidden; box-shadow:inset 0 2px 3px rgba(0,0,0,.12); }
+  .fill{
+    height:100%; background:linear-gradient(to right,#000 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%);
+    transition:width .3s;
+  }
+
+  .opt{
+    display:flex; gap:12px; align-items:center; border:2px solid var(--line); background:var(--card);
+    color:var(--text); border-radius:16px; padding:14px; margin-bottom:10px; width:100%; text-align:right;
+    transition:transform .12s,box-shadow .12s,border-color .2s,background .2s; font-size:1.05em;
+    box-shadow:0 4px 0 var(--line),0 8px 12px rgba(15,27,51,.05);
+  }
+  .opt:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--line); }
+  .opt.dis{ opacity:.4; cursor:not-allowed; }
+  .opt.sel{
+    border-color:var(--gold); background:rgba(245,184,46,.16);
+    box-shadow:0 4px 0 #C48F12,0 8px 14px rgba(245,184,46,.25);
+  }
+  .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); box-shadow:0 4px 0 var(--okc); }
+  .opt.bad{ border-color:var(--badc); background:var(--badbg); color:var(--badc); box-shadow:0 4px 0 var(--badc); }
+  .opt.faded{ opacity:.4; box-shadow:none; }
+
+  .letter{
+    width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center;
+    justify-content:center; font-weight:900; flex-shrink:0; font-size:1.1em; color:var(--text);
+    border:1px solid var(--line); box-shadow:0 3px 0 var(--line),0 5px 8px rgba(0,0,0,.08);
+  }
+
+  .fb{ border-radius:16px; padding:14px; margin-top:10px; font-size:.95em; line-height:1.8; box-shadow:0 3px 0 rgba(0,0,0,.08); }
+  .fb.good{ background:var(--okbg); color:var(--okc); }
+  .fb.bad{ background:var(--badbg); color:var(--badc); }
+
+  .toast{
+    position:fixed; top:100px; left:50%; transform:translateX(-50%); background:var(--ink); color:var(--gold);
+    padding:10px 20px; border-radius:16px; font-weight:800; z-index:60; font-size:.95em;
+    box-shadow:0 4px 0 #000,0 12px 25px rgba(0,0,0,.25); animation:slideDown .3s;
+  }
+  @keyframes slideDown{ from{top:-20px;opacity:0} to{top:100px;opacity:1} }
+
+  .nav{
+    position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--line);
+    display:flex; justify-content:space-around; padding:10px 4px 22px; z-index:40;
+    box-shadow:0 -8px 24px rgba(15,27,51,.08);
+  }
+  .nav::before{ content:""; position:absolute; top:-1px; left:0; right:0; height:3px; background:var(--flag); }
+  .nav button{
+    border:none; background:transparent; color:var(--muted); font-size:.8em; font-weight:800;
+    display:flex; flex-direction:column; align-items:center; gap:6px; min-width:56px;
+  }
+  .nav button.on{ color:var(--text); }
+  .nav .ic{ padding:6px 14px; border-radius:14px; transition:all .2s; }
+  .nav button.on .ic{ background:rgba(245,184,46,.28); box-shadow:0 3px 0 rgba(196,143,18,.55); transform:translateY(-2px); }
+  .nav button:active .ic{ transform:translateY(1px); }
+
+  .overlay{
+    position:fixed; inset:0; background:rgba(8,12,24,.62); z-index:50; display:flex;
+    justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(5px);
+  }
+  .sheet{
+    background:var(--card); border:1px solid var(--line); border-radius:28px; padding:24px; width:100%;
+    max-width:440px; max-height:85vh; overflow-y:auto; color:var(--text);
+    box-shadow:0 8px 0 rgba(0,0,0,.18),0 30px 60px rgba(0,0,0,.35);
+  }
+
+  .modeBtn{
+    flex:1; padding:12px 8px; border-radius:14px; border:2px solid var(--line); background:var(--card);
+    color:var(--muted); font-weight:800; font-size:.95em; font-family:inherit; cursor:pointer;
+    transition:all .15s; box-shadow:0 3px 0 var(--line);
+  }
+  .modeBtn.on{ border-color:var(--gold); background:var(--gold); color:var(--ink); box-shadow:0 3px 0 #C48F12; }
+  .modeBtn:active{ transform:translateY(2px); }
+
+  .inline-gap{
+    display:inline-flex; align-items:center; justify-content:center; min-width:90px;
+    border-bottom:3px dashed var(--gold); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900;
+    color:var(--text); transition:all .2s; vertical-align:middle; background:rgba(245,184,46,.10);
+    border-radius:10px 10px 0 0; font-size:1.1em;
+  }
+  .inline-gap.filled{ border-bottom-style:solid; background:rgba(245,184,46,.22); color:var(--gold); }
+  .sp1-correct-box{
+    background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:10px; font-weight:900;
+    font-size:1.05em; margin:0 4px; display:inline-block; border:1px solid var(--okc); box-shadow:0 2px 0 var(--okc);
+  }
+  .sp1-wrong-box{
+    background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:10px;
+    font-weight:900; font-size:1.05em; margin:0 4px; display:inline-block; border:1px solid var(--badc);
+  }
+
+  .word-bank{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:14px; background:var(--paper);
+    border-radius:16px; margin-bottom:14px; border:1px dashed var(--line); box-shadow:inset 0 2px 6px rgba(0,0,0,.06);
+  }
+  .word-btn{
+    padding:12px; border-radius:12px; border:1.5px solid var(--line); background:var(--card); color:var(--text);
+    font-weight:800; font-size:1em; text-align:right; transition:all .12s; display:flex; gap:10px; align-items:center;
+    box-shadow:0 3px 0 var(--line);
+  }
+  .word-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--line); }
+  .word-btn.used{ opacity:.3; text-decoration:line-through; pointer-events:none; }
+
+  .modal-list{ display:flex; flex-direction:column; gap:12px; margin-top:15px; }
+  .modal-item{
+    padding:16px; border-radius:16px; border:1.5px solid var(--line); background:var(--card); color:var(--text);
+    font-weight:800; font-size:1.05em; display:flex; justify-content:space-between; align-items:center;
+    cursor:pointer; transition:all .12s; text-align:right; box-shadow:0 4px 0 var(--line);
+  }
+  .modal-item:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--line); }
+  .modal-item.selected{ border-color:var(--gold); background:rgba(245,184,46,.16); color:var(--text); box-shadow:0 4px 0 #C48F12; }
+  .modal-item.disabled{ opacity:.4; pointer-events:none; text-decoration:line-through; }
+
+  .highlight-yellow{ background-color:#FEF08A; color:#854D0E; border-radius:4px; padding:0 4px; font-weight:bold; transition:all .3s; }
+  .dark .highlight-yellow{ background-color:#854D0E; color:#FEF08A; }
+
+  .splash-screen{
+    position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center;
+    z-index:9999; transition:opacity .5s;
+    background:
+      radial-gradient(circle at 20% 15%, rgba(221,0,0,.35), transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(255,206,0,.28), transparent 45%),
+      #0F1B33;
+  }
+  .splash-logo{ width:180px; height:180px; margin-bottom:20px; animation:pulse 2s infinite; filter:drop-shadow(0 18px 24px rgba(0,0,0,.5)); }
+  @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
+
+  .auth-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
+  .auth-card{
+    background:var(--card); padding:32px; border-radius:30px; width:100%; max-width:420px;
+    border:1px solid var(--line); box-shadow:0 8px 0 rgba(15,27,51,.08),0 28px 50px rgba(15,27,51,.14); position:relative;
+  }
+  .auth-card::before{ content:""; position:absolute; top:0; left:30px; right:30px; height:5px; border-radius:0 0 6px 6px; background:var(--flag); }
+  .auth-input{
+    width:100%; padding:16px; margin-bottom:16px; border-radius:16px; border:1.5px solid var(--line);
+    background:var(--paper); color:var(--text); font-family:inherit; outline:none; font-size:1.05em;
+    box-shadow:inset 0 3px 6px rgba(0,0,0,.07); transition:border-color .2s;
+  }
+  .auth-input:focus{ border-color:var(--gold); }
+  .auth-btn{
+    width:100%; padding:16px; border-radius:16px; border:none; background:var(--ink); color:var(--gold);
+    font-weight:800; font-size:1.1em; cursor:pointer; margin-bottom:12px; transition:transform .12s,box-shadow .12s;
+    box-shadow:0 5px 0 #000,0 10px 18px rgba(15,27,51,.25);
+  }
+  .auth-btn:active{ transform:translateY(4px); box-shadow:0 1px 0 #000; }
+  .auth-btn.guest{ background:var(--gold); color:var(--ink); box-shadow:0 5px 0 #C48F12,0 10px 18px rgba(245,184,46,.3); }
+  .auth-btn.guest:active{ box-shadow:0 1px 0 #C48F12; }
+
+  .t2-para{ margin-bottom:20px; border-bottom:2px dashed var(--line); padding-bottom:18px; }
+  .t2-ar{
+    background:var(--paper); padding:16px; border-radius:14px; margin-top:12px; color:var(--text);
+    font-size:1.05em; line-height:1.8; border-right:5px solid var(--gold); direction:rtl; text-align:right;
+    box-shadow:inset 0 2px 6px rgba(0,0,0,.05);
+  }
+  .t2-trans-btn{
+    background:var(--card); border:1.5px solid var(--line); padding:8px 16px; border-radius:20px; font-size:.9em;
+    font-weight:bold; color:var(--muted); display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+    margin-top:10px; transition:all .15s; box-shadow:0 3px 0 var(--line);
+  }
+  .t2-trans-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--line); }
 </style>
 </head>
 <body>
 <div id="root"></div>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="germanGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#111111" />
+      <stop offset="50%" stop-color="#DD0000" />
+      <stop offset="100%" stop-color="#FFCE00" />
+    </linearGradient>
+  </defs>
+</svg>
+
 <script type="text/babel">
 const { useState, useEffect } = React;
-const WA = "212600000000"; // ⚠️ بدل هذا الرقم برقم الواتساب الحقيقي
+const WA = "212600000000";
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
 const LogoImage = ({ size = 50 }) => (
@@ -159,7 +308,6 @@ const LogoImage = ({ size = 50 }) => (
 );
 
 const EXAMS = [
-/* ============ TEIL 1 ============ */
 { id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings",
   options:[
     {k:"a",de:"Eltern trotz Kritik mit der Schule zufrieden",ar:"الآباء راضون عن المدرسة رغم الانتقادات"},
@@ -244,8 +392,6 @@ const EXAMS = [
     {n:5,c:"c",hl:"Hinweis für Besucher",de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei zweifelhafter Witterung bzw. leichtem Regen auf der Seebühne abzuhalten, weshalb es zu Verzögerungen des Beginns oder zu Unterbrechungen kommen kann. Sollte die Seeaufführung nicht stattfinden können, wird eine halbszenische Version von Porgy and Bess im Festspielhaus gegeben. Wir empfehlen unseren Gästen , bei unsicherer Wetterlage regenfester Kleidung den Vorzug zu geben und auf Schirme zu verzichten, da diese die Sicht beeinträchtigen. Das Spiel auf dem See wird ohne Pause gespielt. Die Spieldauer beträgt ca.2 Std. 45 Min.",ar:"تبذل إدارة مهرجان بريغنتس قصارى جهدها لتقديم العروض على المسرح العائم حتى في حال تقلب الطقس."}
   ]
 },
-
-/* ============ TEIL 2 ============ */
 { id:"alex-t2", title:"Alex Und Cora", level:"B1", sub:"Teile 2", type:"mcq",
   paragraphs: [
     { de: "Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt. Markus Kleinoth aus der Freizeitredaktion hat sich mit diesem Thema beschäftigt.", ar: "سواء كان كلباً أو قطة أو فأراً: الحيوانات الأليفة تحظى بشعبية كبيرة في ألمانيا. ماركوس كلاينوت من قسم الترفيه تناول هذا الموضوع." },
@@ -297,8 +443,6 @@ const EXAMS = [
     {n:5,c:"B",q:"Wenn die Kinder am Computer sitzen, dann",opts:[{k:"A",de:"gibt es häufig Streit."},{k:"B",de:"hilft ein Kind dem anderen."},{k:"C",de:"können sich die meisten nicht lange konzentrieren."}],ar:"النص يقول إنهم يتعاونون (helfen sich gegenseitig)."}
   ]
 },
-
-/* ============ TEIL 3 (تم تصحيح الأجوبة 100% بحال Sahlab) ============ */
 { id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching",
   ads:[
     {k:"A",t:"Café Simon",de:"Hausgemachte Pralinen, Kuchen, Torten und Eis",ar:"مقهى حلويات وآيس كريم"},
@@ -315,16 +459,16 @@ const EXAMS = [
     {k:"L",t:"BIZ (Berufsinformationszentrum)",de:"Informationen zu Ausbildung und Studium",ar:"مركز معلومات للتكوين والدراسة"}
   ],
   items:[
-    {n:1,c:"H",hl:"Computer",de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.",ar:"Abendkurs für Einsteiger (دورة مسائية للمبتدئين)"},
-    {n:2,c:"G",hl:"Grundkenntnisse für die Arbeit am Computer",de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer.",ar:"Abendkurs für Einsteiger (دورة مسائية للمبتدئين)"},
-    {n:3,c:"D",hl:"besser qualifiziert sein",de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein.",ar:"Liederbühne Robinson (مسرح وطعام)"},
-    {n:4,c:"X",hl:"Tanzkurs für Anfänger",de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit.",ar:"لا يوجد إعلان مناسب"},
-    {n:5,c:"J",hl:"mit Fremdsprachen",de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren, um später vielleicht auch dort zu arbeiten.",ar:"Restaurantcafé Chesa"},
-    {n:6,c:"A",hl:"süße Sachen isst",de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am liebsten süße Sachen isst.",ar:"Café Simon (مقهى حلويات)"},
-    {n:7,c:"I",hl:"europäische Weine",de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren.",ar:"Bachls Kerzenstub'n"},
-    {n:8,c:"X",hl:"fremden Kulturen",de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen.",ar:"لا يوجد إعلان مناسب"},
-    {n:9,c:"F",hl:"Informationen und Beratung",de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung.",ar:"MortizCafé"},
-    {n:10,c:"C",hl:"weder Fleisch noch Fisch",de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.",ar:"Rathausekeller (مطعم نبيذ)"}
+    {n:1,c:"H",hl:"Computer",de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.",ar:"تحب قضاء ساعات طويلة في المقهى، ولكنك لا ترغب في إنفاق الكثير من المال."},
+    {n:2,c:"G",hl:"Grundkenntnisse für die Arbeit am Computer",de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer.",ar:"لقد غيرت مهنتك مؤخرًا وتحتاج إلى معرفة أساسية للعمل على الكمبيوتر من أجل المهمة الجديدة."},
+    {n:3,c:"D",hl:"besser qualifiziert sein",de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein.",ar:"تعمل في مستشفى وتتعامل غالبًا مع مرضى من جميع أنحاء العالم. ترغب في أن تكون أكثر تأهيلاً لهذه الوظيفة."},
+    {n:4,c:"X",hl:"Tanzkurs für Anfänger",de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit.",ar:"ترغب في حضور دورة رقص للمبتدئين. لديك وقت فقط في المساء."},
+    {n:5,c:"J",hl:"mit Fremdsprachen",de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren, um später vielleicht auch dort zu arbeiten.",ar:"ترغب في العمل في مجال يتعلق باللغات الأجنبية. لذلك تريد الدراسة في الخارج وربما العمل هناك لاحقًا."},
+    {n:6,c:"A",hl:"süße Sachen isst",de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am liebsten süße Sachen isst.",ar:"تريد قضاء فترة بعد الظهر المريحة في المدينة مع أحد معارفك. تعلم أن صديقك يفضل تناول الأشياء الحلوة."},
+    {n:7,c:"I",hl:"europäische Weine",de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren.",ar:"صديقك من الولايات المتحدة يزورك. هو خبير في النبيذ ويرغب في تذوق النبيذ الأوروبي."},
+    {n:8,c:"X",hl:"fremden Kulturen",de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen.",ar:"في وقت فراغك، ترغب في التعرف على بلدان أخرى وثقافات وتقاليد مختلفة."},
+    {n:9,c:"F",hl:"Informationen und Beratung",de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung.",ar:"ابنة أصدقائك أنهت للتو الثانوية العامة وهي غير متأكدة مما تريد فعله لاحقًا. تحتاج إلى معلومات واستشارة."},
+    {n:10,c:"C",hl:"weder Fleisch noch Fisch",de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.",ar:"ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاؤك لا يتناولون اللحوم أو الأسماك."}
   ]
 },
 { id:"rita-t3", title:"Rita", level:"B1", sub:"Teile 3", type:"matching",
@@ -343,16 +487,16 @@ const EXAMS = [
     {k:"L",t:"Gemeinsam schöne Dinge genießen",de:"Akademikerin sucht sportlich eleganten Partner",ar:"أكاديمية تبحث عن شريك للحفلات والسفر"}
   ],
   items:[
-    {n:1,c:"H",hl:"regelmäßig ins Kino gehen",de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann.",ar:"Filmclub (نادي سينما)"},
-    {n:2,c:"I",hl:"Garten verändern",de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps.",ar:"Samstagswerkstatt"},
-    {n:3,c:"J",hl:"einen Job",de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job.",ar:"Ökomobil"},
-    {n:4,c:"X",hl:"Gartenarbeiten",de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen.",ar:"لا يوجد إعلان مناسب"},
-    {n:5,c:"K",hl:"zusammen verreisen",de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann.",ar:"Studentinnen/SchülerInnen gesucht"},
-    {n:6,c:"B",hl:"bei einem Film mitspielen",de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen.",ar:"Surf & Travel"},
-    {n:7,c:"D",hl:"Geschichte des Autos",de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen.",ar:"Für den Fernsehfilm"},
-    {n:8,c:"X",hl:"Tipps für ihre Bewerbungen",de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen.",ar:"لا يوجد إعلان مناسب"},
-    {n:9,c:"E",hl:"Reise durch Deutschland",de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot.",ar:"Messejobs"},
-    {n:10,c:"L",hl:"Reparaturen",de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.",ar:"Gemeinsam schöne Dinge genießen"}
+    {n:1,c:"H",hl:"regelmäßig ins Kino gehen",de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann.",ar:"معرفتك في منتصف الثلاثينيات وتبحث عن شريك يمكنها الذهاب معه إلى السينما بانتظام."},
+    {n:2,c:"I",hl:"Garten verändern",de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps.",ar:"ترغب في تغيير حديقتك وتبحث عن استشارات أو نصائح."},
+    {n:3,c:"J",hl:"einen Job",de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job.",ar:"ابن أصدقائك قد أنهى للتو الثانوية العامة ويبحث عن عمل لمدة شهرين في الصيف."},
+    {n:4,c:"X",hl:"Gartenarbeiten",de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen.",ar:"يريد صديقك العمل في وظيفة جانبية تتعلق بأعمال الحدائق."},
+    {n:5,c:"K",hl:"zusammen verreisen",de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann.",ar:"عمك البالغ من العمر 45 عامًا يبحث عن شريكة يمكنه السفر معها."},
+    {n:6,c:"B",hl:"bei einem Film mitspielen",de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen.",ar:"ترغب في المشاركة في فيلم وكسب بعض المال."},
+    {n:7,c:"D",hl:"Geschichte des Autos",de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen.",ar:"ابن أصدقائك مهتم بتاريخ السيارات، وتريد أن تقدم له شيئًا مثيرًا للاهتمام يوم الأحد."},
+    {n:8,c:"X",hl:"Tipps für ihre Bewerbungen",de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen.",ar:"تبحث عن وظيفة وتحتاج إلى نصائح لطلبات التوظيف الخاصة بك."},
+    {n:9,c:"E",hl:"Reise durch Deutschland",de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot.",ar:"في الإجازة، تريد القيام برحلة بالسيارة عبر ألمانيا وتبحث عن عرض مناسب."},
+    {n:10,c:"L",hl:"Reparaturen",de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.",ar:"ترغب معارفك في تعلم كيفية إجراء إصلاحات بسيطة على سيارتها بنفسها."}
   ]
 },
 { id:"caroline-t3", title:"Caroline", level:"B1", sub:"Teile 3", type:"matching",
@@ -371,131 +515,119 @@ const EXAMS = [
     {k:"L",t:"Sennerei-Genossenschaft Bayern",de:"Allgäuer Emmentaler, Bergkäse, Tilsiter",ar:"تعاونية أجبان بافارية"}
   ],
   items:[
-    {n:1,c:"E",hl:"Klavierkonzert",de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.",ar:"حفل موسيقي لموتسارت (Jahreskonzert Füssen)"},
-    {n:2,c:"F",hl:"Montag ins Museum",de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.",ar:"متحف مفتوح يوم الاثنين (Heimatmuseum)"},
-    {n:3,c:"B",hl:"bayerische Spezialität",de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",ar:"مطعم بالمطبخ البافاري (Franziskaner Stüberl)"},
-    {n:4,c:"K",hl:"Fischessen",de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.",ar:"مطعم الأسماك (Ritterstub’n)"},
-    {n:5,c:"C",hl:"Käsespezialitäten",de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",ar:"تعاونية الأجبان (Sennerei-Genossenschaft)"},
-    {n:6,c:"X",hl:"Deutschkurs in Wien",de:"Sie möchten einen Deutschkurs in Wien besuchen.",ar:"لا يوجد إعلان مناسب"},
-    {n:7,c:"H",hl:"Englisch lernen",de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.",ar:"برامج لغات للمراهقين (Free-System)"},
-    {n:8,c:"X",hl:"Sprachkurs auf CD",de:"Sie interessieren sich für einen Sprachkurs auf CD.",ar:"لا يوجد إعلان مناسب"},
-    {n:9,c:"X",hl:"10-jährige Tochter",de:"Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt.",ar:"لا يوجد إعلان مناسب"},
-    {n:10,c:"L",hl:"übernachten",de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",ar:"فندق ومطعم (Alpenrösle)"}
+    {n:1,c:"E",hl:"Klavierkonzert",de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.",ar:"ترغب في الذهاب إلى حفل بيانو في عطلة نهاية الأسبوع."},
+    {n:2,c:"F",hl:"Montag ins Museum",de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.",ar:"أنت في فوسن وتريد الذهاب إلى المتحف يوم الاثنين."},
+    {n:3,c:"B",hl:"bayerische Spezialität",de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",ar:"أنت في عطلة في جنوب ألمانيا وتود تناول طبق بافاري مميز."},
+    {n:4,c:"K",hl:"Fischessen",de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.",ar:"لقد اتفقت مع معارف على تناول وجبة سمك."},
+    {n:5,c:"C",hl:"Käsespezialitäten",de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",ar:"أنت في بافاريا وتريد شراء أنواع خاصة من الجبن."},
+    {n:6,c:"X",hl:"Deutschkurs in Wien",de:"Sie möchten einen Deutschkurs in Wien besuchen.",ar:"ترغب في حضور دورة لغة ألمانية في فيينا."},
+    {n:7,c:"H",hl:"Englisch lernen",de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.",ar:"ابنك البالغ من العمر 16 عامًا يجب أن يتعلم الإنجليزية في الخارج خلال العطلة."},
+    {n:8,c:"X",hl:"Sprachkurs auf CD",de:"Sie interessieren sich für einen Sprachkurs auf CD.",ar:"أنت مهتم بدورة لغة على قرص مضغوط."},
+    {n:9,c:"X",hl:"10-jährige Tochter",de:"Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt.",ar:"تريد أن تتعلم ابنتك البالغة من العمر 10 سنوات لغة أجنبية خلال العطلة."},
+    {n:10,c:"L",hl:"übernachten",de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",ar:"تريد إحدى معارفك الاحتفال بعيد ميلادها في مطعم والإقامة هناك أيضًا."}
   ]
 },
-
-/* SPRACH 1 */
 { id:"alex-sp1", title:"Alex Und Cora", level:"B1", sub:"Sprach 1", type:"sprach1",
   text: `Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, .....(1)..... ich seit zwei Monaten in einem Altersheim .....(2)..... der Nähe von Schaffhausen. Die Arbeit in .....(3)..... Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge .....(4)..... zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich .....(5)..... gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir .....(6)..... ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr .....(7)..... gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, .....(8)..... ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna .....(9)..... auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du .....(10)..... bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie`,
   items:[
-    {n:1,c:"arbeite",opts:["arbeite","arbeiten","arbeiteten"],exp:"بما أننا في زمن الحاضر (Präsens) مع الضمير 'ich'، فالفعل يأخذ النهاية 'e'."},
-    {n:2,c:"in",opts:["auf","bei","in"],exp:"العبارة 'in der Nähe von' تعبير محفوظ بمعنى 'بالقرب من'."},
-    {n:3,c:"diesem",opts:["diesem","diesen","dieses"],exp:"الاسم 'Haus' محايد، وحرف الجر 'in' هنا للموقع (Wo?) في حالة الـ Dativ."},
-    {n:4,c:"Kontakt",opts:["Kontakt","Kontakte","Kontakten"],exp:"المقصود هنا المفرد 'der Kontakt' لأن الصفة 'enge' في المفرد."},
-    {n:5,c:"besonders",opts:["besondere","besonderes","besonders"],exp:"'besonders' تأتي كظرف (Adverb) لوصف 'gern'، والظروف لا تأخذ نهايات."},
-    {n:6,c:"ihr",opts:["ihr","ihre","ihres"],exp:"الاسم 'Leben' محايد في حالة Akkusativ، ونسبته للملكية 'هي' تأخذ 'ihr'."},
-    {n:7,c:"hart",opts:["hart","harte","härter"],exp:"'hart' صفة تصف طريقة العمل (Adverb) ولا تأخذ نهاية."},
-    {n:8,c:"weil",opts:["daher","deshalb","weil"],exp:"الفعل 'konnten' في نهاية الجملة، مما يدل على جملة ثانوية والرابط المناسب للسبب هو 'weil'."},
-    {n:9,c:"aber",opts:["aber","als","wie"],exp:"'aber' تستخدم للتعبير عن الاستدراك (ولكن)."},
-    {n:10,c:"hast",opts:["bist","hast","wirst"],exp:"الفعل 'erleben' يأخذ الفعل المساعد 'haben' في الماضي، ومع 'du' تصبح 'hast'."}
+    {n:1,c:"arbeite",opts:["arbeite","arbeiten","arbeiteten"],exp:"Präsens مع ich → arbeite"},
+    {n:2,c:"in",opts:["auf","bei","in"],exp:"in der Nähe von = بالقرب من"},
+    {n:3,c:"diesem",opts:["diesem","diesen","dieses"],exp:"Haus محايد + Dativ → diesem"},
+    {n:4,c:"Kontakt",opts:["Kontakt","Kontakte","Kontakten"],exp:"المفرد der Kontakt"},
+    {n:5,c:"besonders",opts:["besondere","besonderes","besonders"],exp:"ظرف لا يأخذ نهايات"},
+    {n:6,c:"ihr",opts:["ihr","ihre","ihres"],exp:"Leben محايد + Akkusativ"},
+    {n:7,c:"hart",opts:["hart","harte","härter"],exp:"ظرف يصف العمل"},
+    {n:8,c:"weil",opts:["daher","deshalb","weil"],exp:"جملة ثانوية بفعل في النهاية"},
+    {n:9,c:"aber",opts:["aber","als","wie"],exp:"للاستدراك"},
+    {n:10,c:"hast",opts:["bist","hast","wirst"],exp:"erleben + haben"}
   ]
 },
 { id:"rita-sp1", title:"Rita", level:"B1", sub:"Sprach 1", type:"sprach1",
   text: `Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich .....(1)..... erzählen. Am Anfang .....(2)..... ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt .....(3)..... zwei Antworten bekommen habe. Aber zum Glück hat einer davon .....(4).....: Ich werde nun zwei Nachmittage in der Woche als Babysitterin .....(5)..... einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und .....(6)..... sind sehr nett. Wir haben in der .....(7)..... Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und .....(8)..... Kindermuseum gegangen. .....(9)..... kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir .....(10)..... .\nLiebe Grüße\nDeine Tanja`,
   items:[
-    {n:1,c:"davon",opts:["dafür","damit","davon"],exp:"الفعل erzählen يأخذ حرف الجر von. نلصق da مع von لتصبح davon."},
-    {n:2,c:"war",opts:["bin","habe","war"],exp:"نصف الحالة النفسية في الماضي، ومع ich نستخدم war."},
-    {n:3,c:"nur",opts:["doch","nur","schon"],exp:"لبيان أن العدد قليل جداً (إحباط)، نستخدم nur (فقط)."},
-    {n:4,c:"gepasst",opts:["gepasst","passen","passt"],exp:"بعد الفعل المساعد hat، نستخدم Partizip II للفعل passen وهو gepasst."},
-    {n:5,c:"bei",opts:["an","bei","zu"],exp:"للعمل عند شخص أو عائلة، نستخدم دائماً حرف الجر bei."},
-    {n:6,c:"beide",opts:["beide","beiden","beides"],exp:"للإشارة إلى شخصين (الطفلين)، نستخدم beide."},
-    {n:7,c:"ersten",opts:["erster","ersten","erstes"],exp:"الصفة قبل الاسم في حالة Dativ مع أداة التعريف تأخذ النهاية en."},
-    {n:8,c:"ins",opts:["im","in","ins"],exp:"بسبب فعل الحركة (gegangen) نستخدم Akkusativ، و in + das = ins."},
-    {n:9,c:"Besser",opts:["Am besten","Besser","Gut"],exp:"لنقول أن شيئاً أفضل من شيء آخر، نستخدم Besser (المضارع التفضيلي)."},
-    {n:10,c:"geht",opts:["geht","geht's","ging"],exp:"التعبير الشهير wie es dir geht (كيف حالك) يبقى كما هو."}
+    {n:1,c:"davon",opts:["dafür","damit","davon"],exp:"erzählen von → davon"},
+    {n:2,c:"war",opts:["bin","habe","war"],exp:"war + ich في الماضي"},
+    {n:3,c:"nur",opts:["doch","nur","schon"],exp:"nur = فقط"},
+    {n:4,c:"gepasst",opts:["gepasst","passen","passt"],exp:"Partizip II بعد hat"},
+    {n:5,c:"bei",opts:["an","bei","zu"],exp:"bei einer Familie"},
+    {n:6,c:"beide",opts:["beide","beiden","beides"],exp:"لطفلين"},
+    {n:7,c:"ersten",opts:["erster","ersten","erstes"],exp:"Dativ مؤنث + die"},
+    {n:8,c:"ins",opts:["im","in","ins"],exp:"in + das = ins (حركة)"},
+    {n:9,c:"Besser",opts:["Am besten","Besser","Gut"],exp:"مقارنة"},
+    {n:10,c:"geht",opts:["geht","geht's","ging"],exp:"wie es dir geht"}
   ]
 },
 { id:"caroline-sp1", title:"Caroline", level:"B1", sub:"Sprach 1", type:"sprach1",
   text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
   items:[
-    {n:1,c:"erzählt",opts:["erzähle","erzählen","erzählt"],exp:"الجملة في الماضي (Perfekt)، استخدمنا habe + Partizip II (erzählt)."},
-    {n:2,c:"dieses",opts:["diese","diesen","dieses"],exp:"كلمة Land محايدة، وفي حالة Akkusativ تبقى أداة الإشارة dieses."},
-    {n:3,c:"aber",opts:["aber","obwohl","sondern"],exp:"نستخدم aber (ولكن) لنبين تناقضاً (مساحة صغيرة لكن تنوع لغوي كبير)."},
-    {n:4,c:"für",opts:["an","für","vor"],exp:"التعبير 'بالنسبة ليا' هو für mich."},
-    {n:5,c:"wenn",opts:["als","wann","wenn"],exp:"نستخدم wenn للحديث عن حالة عامة أو متكررة في الحاضر."},
-    {n:6,c:"schon",opts:["wenn","ganz","schon"],exp:"كلمة schon للتأكيد على الحيرة والدهشة."},
-    {n:7,c:"jetzt",opts:["früher","jetzt","seit"],exp:"المقارنة بين الماضي والبداية مع الحاضر، نستخدم jetzt (الآن)."},
-    {n:8,c:"Unterschiede",opts:["Unterschied","Unterschiede","Unterschieden"],exp:"كلمة einige (بعض) تأخذ الاسم بعدها في الجمع (Unterschiede)."},
-    {n:9,c:"müssen",opts:["brauchen","haben","müssen"],exp:"للتعبير عن الإلزام في المدرسة، الفعل المناسب هو müssen (يجب/لازم)."},
-    {n:10,c:"dem",opts:["dem","den","der"],exp:"حرف الجر auf للموقع يأخذ Dativ. Computer مذكر (der)، في Dativ تصبح dem."}
+    {n:1,c:"erzählt",opts:["erzähle","erzählen","erzählt"],exp:"Perfekt + habe + Partizip II"},
+    {n:2,c:"dieses",opts:["diese","diesen","dieses"],exp:"Land محايد + Akkusativ"},
+    {n:3,c:"aber",opts:["aber","obwohl","sondern"],exp:"تناقض"},
+    {n:4,c:"für",opts:["an","für","vor"],exp:"für mich = بالنسبة ليا"},
+    {n:5,c:"wenn",opts:["als","wann","wenn"],exp:"حالة عامة متكررة"},
+    {n:6,c:"schon",opts:["wenn","ganz","schon"],exp:"تأكيد الدهشة"},
+    {n:7,c:"jetzt",opts:["früher","jetzt","seit"],exp:"مقارنة مع الحاضر"},
+    {n:8,c:"Unterschiede",opts:["Unterschied","Unterschiede","Unterschieden"],exp:"einige + جمع"},
+    {n:9,c:"müssen",opts:["brauchen","haben","müssen"],exp:"إلزام"},
+    {n:10,c:"dem",opts:["dem","den","der"],exp:"auf + Dativ مذكر"}
   ]
 },
-
-/* SPRACH 2 */
 { id:"alex-sp2", title:"Alex Und Cora", level:"B1", sub:"Sprach 2", type:"sprach2",
   wordBank:[{k:"a",w:"an"},{k:"b",w:"Bekannte"},{k:"c",w:"bereits"},{k:"d",w:"dafür"},{k:"e",w:"darüber"},{k:"f",w:"dass"},{k:"g",w:"Familie"},{k:"h",w:"kann"},{k:"i",w:"mich"},{k:"j",w:"mit"},{k:"k",w:"muss"},{k:"l",w:"ob"},{k:"m",w:"sehr"},{k:"n",w:"was"},{k:"o",w:"welche"}],
   text: `Sehr geehrte Damen und Herren,\n\nnachdem ich Ihr Inserat gelesen habe, möchte ich .....(1)..... gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und .....(2)..... einladen. .....(3)..... wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen .....(4)..... Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und .....(5)..... Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, .....(6)..... genügend Parkplätze vorhanden sind.\n\nEs wäre .....(7)..... freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken .....(8)...... Bitte senden Sie mir einen Prospekt Ihres Hotels .....(9)..... genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai .....(10)..... ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\n\nMit freundlichen Grüßen\nBarbara Heuberger`,
   items:[
-    {n:1,c:"mich",exp:"الفعل هو sich informieren (منعكس)، ومع ich تصبح mich."},
-    {n:2,c:"Bekannte",exp:"كلمة Bekannte تعني المعارف. في الثقافة الألمانية كتمشي Freunde مع Bekannte."},
-    {n:3,c:"dafür",exp:"باش ما نكرروش كلمة العراضة، كنختصروها فـ dafür (لهاد المناسبة)."},
-    {n:4,c:"an",exp:"قاعدة: Fragen an jemanden stellen (طرح أسئلة على شخص)."},
-    {n:5,c:"welche",exp:"أداة استفهام تستعمل للاختيار بين عدة أشياء (أي أطباق؟)."},
-    {n:6,c:"dass",exp:"رابط بمعنى (بأن)، يربط الجملة الثانوية."},
-    {n:7,c:"sehr",exp:"ظرف بمعنى (بزاف)، يزيد في قوة الصفة freundlich."},
-    {n:8,c:"kann",exp:"تصريف الفعل können مع الضمير ich، بمعنى (أقدر)."},
-    {n:9,c:"mit",exp:"حرف جر بمعنى (مع/بـ) للربط بين الكتيب والوصف."},
-    {n:10,c:"bereits",exp:"ظرف بمعنى (دابا/بالفعل)، للتأكيد على أن الحالة واقعة."}
+    {n:1,c:"mich",exp:"sich informieren + mich"},
+    {n:2,c:"Bekannte",exp:"Freunde und Bekannte"},
+    {n:3,c:"dafür",exp:"dafür = لهذا الغرض"},
+    {n:4,c:"an",exp:"Fragen an Sie"},
+    {n:5,c:"welche",exp:"أداة استفهام"},
+    {n:6,c:"dass",exp:"جملة ثانوية"},
+    {n:7,c:"sehr",exp:"ظرف"},
+    {n:8,c:"kann",exp:"können + ich"},
+    {n:9,c:"mit",exp:"mit Wegbeschreibung"},
+    {n:10,c:"bereits",exp:"bereits = بالفعل"}
   ]
 },
 { id:"rita-sp2", title:"Rita", level:"B1", sub:"Sprach 2", type:"sprach2",
   wordBank:[{k:"a",w:"der"},{k:"b",w:"die"},{k:"c",w:"Erst"},{k:"d",w:"geeignet"},{k:"e",w:"gerne"},{k:"f",w:"hätte"},{k:"g",w:"in"},{k:"h",w:"muss"},{k:"i",w:"nach"},{k:"j",w:"noch"},{k:"k",w:"schon"},{k:"l",w:"wann"},{k:"m",w:"wäre"},{k:"n",w:"wenn"},{k:"o",w:"wo"}],
   text: `Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC`,
   items:[
-    {n:1,c:"muss",exp:"الفعل umziehen في الآخر (Infinitiv)، يعني خاصنا فعل ناقص في المركز الثاني. اخترنا muss حيت كاين التزام مهني."},
-    {n:2,c:"nach",exp:"مع المدن والبلدان التي لا تحمل أداة تعريف، نستخدم حرف الجر nach للاتجاه."},
-    {n:3,c:"die",exp:"جملة صلة، الضمير die يعود على Wohnung (مؤنث) وهو الفاعل (Nominativ)."},
-    {n:4,c:"wäre",exp:"صيغة Konjunktiv II للتعبير عن شيء مثالي أو متمنى."},
-    {n:5,c:"geeignet",exp:"تعبير محفوظ: geeignet für (مناسب لـ)."},
-    {n:6,c:"wo",exp:"لوصف مكان (Spielplatz)، نستخدم wo كأداة صلة (فين)."},
-    {n:7,c:"gerne",exp:"gerne wissen تعني (بكل سرور بغيت نعرف) - طلب مؤدب."},
-    {n:8,c:"der",exp:"حرف الجر in للموقع (Wo?) يأخذ Dativ. die Wohnung تصبح der Wohnung."},
-    {n:9,c:"wenn",exp:"الرابط wenn يعطينا الشرط (إذا)."},
-    {n:10,c:"schon",exp:"عبارة danke schon jetzt تعني (شكراً مسبقاً)."}
+    {n:1,c:"muss",exp:"فعل مساعد"},
+    {n:2,c:"nach",exp:"nach Frankfurt"},
+    {n:3,c:"die",exp:"جملة صلة للمؤنث"},
+    {n:4,c:"wäre",exp:"Konjunktiv II"},
+    {n:5,c:"geeignet",exp:"geeignet für"},
+    {n:6,c:"wo",exp:"أداة صلة مكان"},
+    {n:7,c:"gerne",exp:"طلب مؤدب"},
+    {n:8,c:"der",exp:"Dativ مؤنث"},
+    {n:9,c:"wenn",exp:"شرط"},
+    {n:10,c:"schon",exp:"schon jetzt"}
   ]
 },
 { id:"caroline-sp2", title:"Caroline", level:"B1", sub:"Sprach 2", type:"sprach2",
   wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
   text: `QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……`,
   items:[
-    {n:1,c:"einmal",exp:"كلمة einmal تعطي معنى (ولو لمرة واحدة)."},
-    {n:2,c:"nur",exp:"نستخدم nur للتعبير عن (فقط)، أي لا تعتمد على الحظ فقط."},
-    {n:3,c:"können",exp:"الفعل können يعبر عن القدرة (Ability)."},
-    {n:4,c:"wenn",exp:"الرابط wenn للشرط (إذا)."},
-    {n:5,c:"statt",exp:"كلمة statt تعني (عوض/بلاصت ما) وتأخذ zu + Infinitiv."},
-    {n:6,c:"ganz",exp:"ganz كظرف يزيد في قوة الصفة (تماماً)."},
-    {n:7,c:"bei",exp:"حرف الجر bei يعني (مع/باستعمال)، هنا بمعنى بفضل النظام."},
-    {n:8,c:"garantieren",exp:"الفعل garantieren يعني (كنضمنوا)."},
-    {n:9,c:"Über",exp:"كلمة Über تعني (أكثر من) 700 مجموعة."},
-    {n:10,c:"machen",exp:"في صيغة الأمر (Imperativ)، الفعل mitmachen يتفرق: Machen في الأول و mit في الآخر."}
+    {n:1,c:"einmal",exp:"einmal = مرة واحدة"},
+    {n:2,c:"nur",exp:"nur = فقط"},
+    {n:3,c:"können",exp:"können = قدرة"},
+    {n:4,c:"wenn",exp:"wenn = شرط"},
+    {n:5,c:"statt",exp:"statt + zu"},
+    {n:6,c:"ganz",exp:"ganz = تماماً"},
+    {n:7,c:"bei",exp:"bei = مع"},
+    {n:8,c:"garantieren",exp:"garantieren = نضمن"},
+    {n:9,c:"Über",exp:"Über = أكثر من"},
+    {n:10,c:"machen",exp:"machen Sie mit (Imperativ)"}
   ]
 }
 ];
-  const SUBS = ["Prüfungen","Teile 1","Teile 2","Teile 3","Sprach 1","Sprach 2"];
+
 const pointsOf = (ex) => {
   if (ex.type === "matching") return 2.5;
   if (ex.type === "sprach1" || ex.type === "sprach2") return 1.5;
   return 5;
 };
 const maxOf = (ex) => ex.items.length * pointsOf(ex);
-const shuffle = (arr) => {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-};
 
 const HighlightText = ({ text, phrase, active }) => {
   if (!active || !phrase || !text.includes(phrase)) return <span className="de" dir="ltr">{text}</span>;
@@ -515,12 +647,9 @@ const HighlightText = ({ text, phrase, active }) => {
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
-  const [itemDone, setItemDone] = useState({});
   const [toast, setToast] = useState(null);
-  const [mode, setMode] = useState("exam");
   const [modalGap, setModalGap] = useState(null);
   const [activeGap, setActiveGap] = useState(null);
-  const [showHighlight, setShowHighlight] = useState(false);
   const [showTranslation, setShowTranslation] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const [excluded, setExcluded] = useState({});
@@ -529,14 +658,12 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   const lastScrollY = React.useRef(0);
   const toastTimer = React.useRef(null);
 
-  // إخفاء الهيدر وشريط التقدم مع السكرول
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY < 50) setShowHeader(true);
       else if (currentScrollY > lastScrollY.current && currentScrollY > 100) setShowHeader(false);
       lastScrollY.current = currentScrollY;
-
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       if (totalScroll > 0) setScrollProgress((currentScrollY / totalScroll) * 100);
     };
@@ -557,14 +684,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     toastTimer.current = setTimeout(() => setToast(null), 2000);
   };
 
-  const changeMode = (m) => {
-    if (m === mode) return;
-    if (answered > 0 && !window.confirm("تغيير النمط غادي يعاود الامتحان من الأول. متأكد؟")) return;
-    setMode(m); setAns({}); setDone(null); setItemDone({}); setShowTranslation(false); setActiveGap(null); setExcluded({});
-    flash(m === "exam" ? "🎯 نمط الامتحان" : "📚 نمط التدريب");
-    window.scrollTo(0, 0);
-  };
-
   const optsFor = (it) => {
     if (exam.type === "headings") return exam.options;
     if (exam.type === "mcq") return it.opts;
@@ -578,7 +697,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   };
 
   const selectSituation = (n, k) => {
-    if (done !== null || itemDone[n]) return;
+    if (done !== null) return;
+    if (ans[n] === k) {
+      const newAns = { ...ans };
+      delete newAns[n];
+      setAns(newAns);
+      return;
+    }
     if (ans[n] !== undefined && ans[n] !== k) return;
     setAns(prev => ({ ...prev, [n]: k }));
     setExcluded(prev => {
@@ -589,8 +714,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   };
 
   const toggleExclude = (n, k) => {
-    if (done !== null || itemDone[n]) return;
-    if (ans[n] !== undefined) return; 
+    if (done !== null) return;
+    if (ans[n] !== undefined) return;
     setExcluded(prev => {
       const newExc = { ...prev };
       if (!newExc[n]) newExc[n] = {};
@@ -602,7 +727,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
 
   const pick = (it, k) => {
     if (done !== null) return;
-    if (mode === "practice" && ans[it.n] !== undefined && exam.type !== "matching" && exam.type !== "sprach1" && exam.type !== "sprach2") return;
     if (usedElsewhere(it.n, k)) return;
     const newAns = { ...ans, [it.n]: k };
     if (exam.type === "sprach2") {
@@ -614,31 +738,23 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
 
   const cls = (it, k) => {
     const sel = ans[it.n];
-    const isDone = done !== null || itemDone[it.n];
+    const isDone = done !== null;
     if (isDone) {
       if (k === it.c) return "opt good";
       if (sel === k) return "opt bad";
-      if (sel !== undefined) return "opt faded";
-      return "opt faded"; 
+      return "opt faded";
     }
-    if (mode === "exam") {
-      if (sel === k) return "opt sel";
-      return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
-    }
-    if (sel === undefined) return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
-    if (k === it.c) return "opt good";
-    if (sel === k) return "opt bad";
-    return "opt faded";
+    if (sel === k) return "opt sel";
+    return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
   };
 
-  const reset = () => { setAns({}); setDone(null); setItemDone({}); setActiveGap(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
+  const reset = () => { setAns({}); setDone(null); setActiveGap(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
   const finish = () => { setDone(score); onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
   const onWordClick = (w) => {
     if (done !== null) return;
     const target = activeGap !== null ? activeGap : (exam.items.find(x => ans[x.n] === undefined) || {}).n;
     if (!target) return;
-    if (mode === "practice" && ans[target] !== undefined) return;
     if (usedElsewhere(target, w)) return;
     const newAns = { ...ans, [target]: w };
     if (exam.type === "sprach2") {
@@ -650,11 +766,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   };
 
   const renderSprachText = () => {
-    if (showTranslation && exam.textAr) {
-      return <div className="de" style={{ whiteSpace: "pre-wrap", direction: "rtl", textAlign: "right", lineHeight: 1.8, color: "var(--text)" }}>{exam.textAr}</div>;
-    }
-    if (showTranslation && !exam.textAr) {
-       return <div style={{ textAlign: "center", color: "var(--muted)", padding: 20, fontSize: "1.1em" }}>الترجمة العربية لهذا النص غير متوفرة حالياً.</div>
+    if (showTranslation) {
+      return <div style={{ textAlign: "center", color: "var(--muted)", padding: 20, fontSize: "1.1em" }}>الترجمة العربية لهذا النص غير متوفرة حالياً.</div>;
     }
     const parts = exam.text.split(/\.{3,}\s*\((\d+)\)\s*\.{3,}/g);
     return parts.map((part, i) => {
@@ -662,8 +775,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
         const gapNum = parseInt(part);
         const it = exam.items.find(x => x.n === gapNum);
         const selected = ans[gapNum];
-        const isDone = done !== null || itemDone[gapNum];
-        
+        const isDone = done !== null;
         let gapContent = <span className="inline-gap" onClick={() => { if(!isDone) { exam.type === "sprach2" ? setActiveGap(gapNum) : setModalGap(gapNum); } }}>{selected ? selected : `(${gapNum})`}</span>;
         if (isDone && selected) {
           if (selected === it.c) gapContent = <span className="sp1-correct-box">{selected}</span>;
@@ -679,7 +791,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     });
   };
 
-  // تصميم Teil 3 الجديد
   const renderTeil3 = () => {
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
@@ -691,22 +802,20 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
               </div>
               <div className="de" style={{ fontWeight: 900, marginTop: 8, fontSize: "1.05em" }}>{ad.t}</div>
               <div className="de" style={{ fontSize: "0.95em", color: "var(--muted)", marginTop: 4, lineHeight: 1.5 }}>{ad.de}</div>
+              {showTranslation && <div style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4, direction: "rtl", textAlign: "right" }}>{ad.ar}</div>}
             </div>
-
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {exam.items.map(it => {
                 const isSelected = ans[it.n] === ad.k;
                 const isSelectedElsewhere = ans[it.n] !== undefined && ans[it.n] !== ad.k;
                 const isExcluded = excluded[it.n]?.[ad.k];
-                const isDone = done !== null || itemDone[it.n];
-
+                const isDone = done !== null;
                 let textStyle = {
                   flex: 1, padding: "12px 14px", borderRadius: 10,
                   border: "1.5px solid transparent", background: "var(--paper)", color: "var(--text)",
                   textAlign: "left", direction: "ltr", cursor: "pointer", transition: "all 0.2s", opacity: 1,
                   fontSize: "0.95em", lineHeight: 1.6
                 };
-
                 if (isSelected) {
                   textStyle.background = "rgba(37, 99, 235, 0.1)"; textStyle.borderColor = "#2563EB"; textStyle.color = "#2563EB";
                 } else if (isSelectedElsewhere) {
@@ -714,19 +823,17 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
                 } else if (isExcluded) {
                   textStyle.opacity = 0.3; textStyle.textDecoration = "line-through"; textStyle.cursor = "not-allowed";
                 }
-
                 if (isDone) {
-                  if (ad.k === it.c) { textStyle.background = "var(--okbg)"; textStyle.borderColor = "var(--okc)"; textStyle.color = "var(--okc)"; } 
+                  if (ad.k === it.c) { textStyle.background = "var(--okbg)"; textStyle.borderColor = "var(--okc)"; textStyle.color = "var(--okc)"; }
                   else if (isSelected) { textStyle.background = "var(--badbg)"; textStyle.borderColor = "var(--badc)"; textStyle.color = "var(--badc)"; }
                 }
-
                 return (
-                  <div key={it.n} style={{ display: "flex", gap: 12, alignItems: "center", direction: "ltr" }}>
+                  <div key={it.n} style={{ display: "flex", gap: 12, alignItems: "flex-start", direction: "ltr" }}>
                      <button
                         onClick={() => toggleExclude(it.n, ad.k)}
                         disabled={isSelected || isSelectedElsewhere || isDone}
                         style={{
-                          width: 28, height: 28, borderRadius: 6,
+                          width: 28, height: 28, borderRadius: 6, marginTop: 4,
                           border: `1.5px solid ${isExcluded ? "var(--badc)" : "var(--line)"}`,
                           background: isExcluded ? "var(--badbg)" : "transparent",
                           color: isExcluded ? "var(--badc)" : "var(--muted)",
@@ -736,11 +843,12 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
                      >
                        {isExcluded ? "✕" : ""}
                      </button>
-
-                     <span style={{ fontWeight: 900, width: 20, textAlign: "center", color: isSelected ? "#2563EB" : "var(--muted)" }}>{it.n}</span>
-
+                     <span style={{ fontWeight: 900, width: 20, textAlign: "center", marginTop: 8, color: isSelected ? "#2563EB" : "var(--muted)" }}>{it.n}</span>
                      <div onClick={() => selectSituation(it.n, ad.k)} style={textStyle}>
-                       {it.de}
+                       <div className="de">{it.de}</div>
+                       <div style={{ marginTop: 6, color: isSelected ? "#2563EB" : "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}>
+                         {it.ar}
+                       </div>
                      </div>
                   </div>
                 )
@@ -752,9 +860,15 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     );
   };
 
+  const iconStyle = {
+    width: 36, height: 36, borderRadius: "50%", background: "var(--card)",
+    border: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "center",
+    color: "var(--text)", padding: 2
+  };
+  const germanBorder = { background: "linear-gradient(135deg, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)" };
+
   return (
     <div style={{ paddingBottom: 100 }}>
-      {/* الشريط الألماني الرقيق فوق الشاشة */}
       <div style={{
         position: "fixed", top: 0, left: 0, right: 0, height: 4, zIndex: 100,
         backgroundImage: "linear-gradient(to right, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)",
@@ -764,34 +878,38 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
       }} />
 
       {toast && <div className="toast">{toast}</div>}
-      
-      {/* الهيدر الرقيق */}
-      <div style={{ 
+
+      <div style={{
         position: "sticky", top: 0, zIndex: 30, background: "var(--paper)",
         display: "flex", justifyContent: "space-between", alignItems: "center",
         padding: "12px 16px", transition: 'transform 0.3s ease-in-out',
         transform: showHeader ? 'translateY(0)' : 'translateY(-100%)'
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button onClick={onBack} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--card)", border: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text)" }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-          </button>
+          <div style={{ ...germanBorder, padding: 2, borderRadius: "50%" }}>
+            <button onClick={onBack} style={{ ...iconStyle, width: 32, height: 32 }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+          </div>
           <div>
             <div className="de" style={{ fontWeight: 900, fontSize: "1em", lineHeight: 1.2 }}>{exam.title}</div>
             <div className="de" style={{ fontSize: ".75em", color: "var(--muted)", fontWeight: "bold" }}>LESEN · {exam.sub.toUpperCase()}</div>
           </div>
         </div>
-
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
            <div style={{ fontWeight: 900, fontSize: "0.9em", color: "var(--muted)", marginRight: 4 }}>
              <span className="de">{answered} / {exam.items.length}</span>
            </div>
-           <button onClick={() => setShowTranslation(!showTranslation)} style={{ width: 36, height: 36, borderRadius: "50%", background: showTranslation ? "rgba(37, 99, 235, 0.1)" : "var(--card)", border: "1px solid var(--line)", color: showTranslation ? "#2563EB" : "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
-           </button>
-           <button onClick={() => setDark(!dark)} style={{ width: 36, height: 36, borderRadius: "50%", background: "var(--card)", border: "1px solid var(--line)", color: "var(--text)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {dark ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
-           </button>
+           <div style={{ ...germanBorder, padding: 2, borderRadius: "50%" }}>
+             <button onClick={() => setShowTranslation(!showTranslation)} style={{ ...iconStyle, color: showTranslation ? "#2563EB" : "var(--text)" }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
+             </button>
+           </div>
+           <div style={{ ...germanBorder, padding: 2, borderRadius: "50%" }}>
+             <button onClick={() => setDark(!dark)} style={{ ...iconStyle }}>
+              {dark ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+             </button>
+           </div>
         </div>
       </div>
 
@@ -817,29 +935,32 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
 
         {exam.type !== "sprach1" && exam.type !== "sprach2" && exam.type !== "matching" && exam.items.map((it, idx) => {
           const sel = ans[it.n];
-          const isDone = done !== null || itemDone[it.n];
-          
+          const isDone = done !== null;
           return (
             <div key={it.n} className="card" style={{ padding: 14 }}>
               <div style={{ display: "flex", gap: 10, alignItems: "flex-start", marginBottom: 12 }}>
                 <span className="letter" style={{ width: 32, height: 32, fontSize: "1em" }}>{idx + 1}</span>
                 <div style={{flex: 1, paddingTop: 4}}>
                   {exam.type === "headings" && (
-                    <p style={{ lineHeight: 1.8, margin: 0, fontSize: "1.05em" }}>
-                      <HighlightText text={it.de} phrase={it.hl} active={showHighlight} />
-                    </p>
+                    <div style={{ lineHeight: 1.8, margin: 0, fontSize: "1.05em" }}>
+                      <span className="de">{it.de}</span>
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em" }}>{it.ar}</div>}
+                    </div>
                   )}
-                  {exam.type === "mcq" && <p className="de" style={{ fontWeight: 900, margin: 0, fontSize: "1.05em" }}>{it.q}</p>}
+                  {exam.type === "mcq" && (
+                    <div>
+                      <p className="de" style={{ fontWeight: 900, margin: 0, fontSize: "1.05em" }}>{it.q}</p>
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em" }}>{it.ar}</div>}
+                    </div>
+                  )}
                 </div>
               </div>
-
               {optsFor(it).map(o => (
-                <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isDone || (mode === "practice" && sel !== undefined)} style={{ padding: "12px", fontSize: "0.95em" }}>
+                <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isDone} style={{ padding: "12px", fontSize: "0.95em" }}>
                   <span className="letter" style={{ width: 26, height: 26, fontSize: "0.9em" }}>{o.k}</span>
                   <span className="de" style={{ flex: 1, lineHeight: 1.5 }}>{o.de}</span>
                 </button>
               ))}
-
               {isDone && (
                 <div className={sel === it.c ? "fb good" : "fb bad"} style={{ marginTop: 10, padding: 12, fontSize: "0.95em" }}>
                   <b>{sel === it.c ? "✓ صحيح" : (sel ? "✗ غلط" : "⚠️ لم تجب")}</b>
@@ -893,26 +1014,25 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
         )}
       </div>
 
-      {/* الأزرار العائمة لتحت (صغار، زجاجيين، ولاصقين فالقنتة) */}
-      <div style={{ 
+      <div style={{
         position: 'fixed', bottom: 12, left: 16, right: 16, zIndex: 40,
         display: 'flex', justifyContent: 'space-between', pointerEvents: 'none'
       }}>
-        <button onClick={done !== null ? reset : finish} style={{ 
-          pointerEvents: 'auto', padding: "8px 18px", fontSize: "0.85em", fontWeight: 800, borderRadius: 20, 
-          background: done !== null ? "rgba(220, 252, 231, 0.85)" : "rgba(15, 27, 51, 0.85)", 
-          color: done !== null ? "var(--okc)" : "var(--gold)", 
-          border: "1px solid rgba(255,255,255,0.1)", 
+        <button onClick={done !== null ? reset : finish} style={{
+          pointerEvents: 'auto', padding: "8px 18px", fontSize: "0.85em", fontWeight: 800, borderRadius: 20,
+          background: done !== null ? "rgba(220, 252, 231, 0.85)" : "rgba(15, 27, 51, 0.85)",
+          color: done !== null ? "var(--okc)" : "var(--gold)",
+          border: "1px solid rgba(255,255,255,0.1)",
           backdropFilter: "blur(8px)",
           boxShadow: "0 4px 15px rgba(0,0,0,0.15)", cursor: "pointer",
           display: "flex", alignItems: "center", gap: 6
         }}>
           {done !== null ? "إعادة" : "تصحيح"}
         </button>
-        <button onClick={() => { if(done !== null) onBack(); else onNext(); }} style={{ 
-          pointerEvents: 'auto', padding: "8px 18px", fontSize: "0.85em", fontWeight: 800, borderRadius: 20, 
-          background: "rgba(255, 255, 255, 0.85)", color: "var(--text)", 
-          border: "1px solid rgba(0,0,0,0.05)", 
+        <button onClick={() => { if(done !== null) onBack(); else onNext(); }} style={{
+          pointerEvents: 'auto', padding: "8px 18px", fontSize: "0.85em", fontWeight: 800, borderRadius: 20,
+          background: "rgba(255, 255, 255, 0.85)", color: "var(--text)",
+          border: "1px solid rgba(0,0,0,0.05)",
           backdropFilter: "blur(8px)",
           boxShadow: "0 4px 15px rgba(0,0,0,0.1)", cursor: "pointer",
           display: "flex", alignItems: "center", gap: 6
@@ -928,7 +1048,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
 function App() {
   const [user, setUser] = useState(null);
   const [isReady, setIsReady] = useState(false);
-  const [view, setView] = useState("home"); 
+  const [view, setView] = useState("home");
   const [level, setLevel] = useState("B1");
   const [exam, setExam] = useState(null);
   const [dark, setDark] = useState(false);
@@ -936,10 +1056,17 @@ function App() {
   const [menu, setMenu] = useState(false);
   const [settings, setSettings] = useState(false);
   const [results, setResults] = useState(() => { try { return JSON.parse(localStorage.getItem("ep_results") || "{}"); } catch (e) { return {}; } });
-  
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
-  const [showSubscription, setShowSubscription] = useState(false); // حالة نافذة الاشتراك
+  const [showSubscription, setShowSubscription] = useState(false);
+
+  const [toast, setToast] = useState(null);
+  const toastTimer = React.useRef(null);
+  const flash = (m) => {
+    setToast(m);
+    clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setToast(null), 2000);
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -948,7 +1075,6 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // إظهار نافذة الاشتراك بعد ثانية من الدخول
   useEffect(() => {
     if (user && view === "home" && !sessionStorage.getItem("subShown")) {
       const timer = setTimeout(() => {
@@ -960,20 +1086,17 @@ function App() {
   }, [user, view]);
 
   const handleGuest = () => { const guest = { name: "زائر", isGuest: true }; setUser(guest); localStorage.setItem("ep_user", JSON.stringify(guest)); };
-  
-  // إضافة ميزة تذكرني
-  const handleAuth = (e) => { 
-    e.preventDefault(); 
-    const name = e.target.name.value; 
-    const pass = e.target.pass.value; 
+  const handleAuth = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const pass = e.target.pass.value;
     const remember = e.target.remember.checked;
-    if(name && pass) { 
-      const newUser = { name, pass, remember }; 
-      setUser(newUser); 
-      localStorage.setItem("ep_user", JSON.stringify(newUser)); 
-    } 
+    if(name && pass) {
+      const newUser = { name, pass, remember };
+      setUser(newUser);
+      localStorage.setItem("ep_user", JSON.stringify(newUser));
+    }
   };
-  
   const logout = () => { localStorage.removeItem("ep_user"); sessionStorage.removeItem("subShown"); setUser(null); };
 
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
@@ -994,7 +1117,7 @@ function App() {
       const nextParts = EXAMS.filter(e => e.title === nextTitle && e.level === level);
       if (nextParts.length > 0) setExam(nextParts[0]);
     } else {
-      setExam(null); 
+      setExam(null);
     }
   };
 
@@ -1032,16 +1155,16 @@ function App() {
     );
   }
 
-  if (exam) { 
-    return <ExamView 
-      key={exam.id} 
-      exam={exam} 
-      dark={dark} 
-      setDark={setDark} 
-      onBack={() => setExam(null)} 
-      onNext={() => handleNextExam(exam)} 
-      onSave={saveResult} 
-    />; 
+  if (exam) {
+    return <ExamView
+      key={exam.id}
+      exam={exam}
+      dark={dark}
+      setDark={setDark}
+      onBack={() => setExam(null)}
+      onNext={() => handleNextExam(exam)}
+      onSave={saveResult}
+    />;
   }
 
   return (
@@ -1055,13 +1178,13 @@ function App() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
-          <button className="btnI" aria-label="الوضع الليلي" onClick={() => setDark(!dark)}>
+          <button className="btnI" aria-label="الوضع الليلي" onClick={() => setDark(!dark)} style={{ background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", color: "#fff" }}>
             {dark ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
           </button>
-          <button className="btnI" aria-label="الإعدادات" onClick={() => setSettings(true)}>
+          <button className="btnI" aria-label="الإعدادات" onClick={() => setSettings(true)} style={{ background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", color: "#fff" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           </button>
-          <button className="btnI" aria-label="القائمة" onClick={() => setMenu(true)}>
+          <button className="btnI" aria-label="القائمة" onClick={() => setMenu(true)} style={{ background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", color: "#fff" }}>
              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 7h16M4 12h10M4 17h16"/></svg>
           </button>
         </div>
@@ -1073,38 +1196,35 @@ function App() {
             <div style={{
               position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px",
               display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
-              padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
+              padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 8px 0 rgba(15,27,51,.10), 0 24px 40px rgba(0,0,0,0.18)"
             }}>
               <div style={{
                 position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-                backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", // ⚠️ بدل هذا الرابط برابط صورتك
-                backgroundSize: "cover", backgroundPosition: "center", zIndex: 0
+                backgroundImage: "radial-gradient(circle at 20% 15%, rgba(221,0,0,.55), transparent 45%), radial-gradient(circle at 85% 90%, rgba(255,206,0,.45), transparent 45%), linear-gradient(160deg,#111 0%,#1a2646 100%)",
+                zIndex: 0
               }} />
               <div style={{
                 position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-                background: "linear-gradient(to bottom, rgba(15,27,51,0.4) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1
+                background: "linear-gradient(to bottom, rgba(15,27,51,0.2) 0%, rgba(15,27,51,0.85) 100%)", zIndex: 1
               }} />
-
               <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
                 <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
                   <LogoImage size={90} />
                 </div>
-                <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
+                <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px", textAlign: "center" }}>EchtPrüfung</h2>
                 <p style={{ margin: "0 0 16px", color: "#E2E8F0", fontSize: "1.1em", fontWeight: 700 }}>تطبيقك الأول للتحضير لامتحان</p>
-                <p className="de" style={{ margin: "0 0 24px", color: "#94A3B8", fontSize: "1em", fontWeight: 600 }}>Deine Nr. 1 für die Prüfungsvorbereitung</p>
-                
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "2em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "10px 28px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}>
+                <p className="de" style={{ margin: "0 0 24px", color: "#94A3B8", fontSize: "1em", fontWeight: 600, textAlign: "center" }}>Deine Nr. 1 für die Prüfungsvorbereitung</p>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "2em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "10px 28px", borderRadius: 20, boxShadow: "0 5px 0 rgba(0,0,0,.25), 0 14px 24px rgba(0,0,0,0.3)" }}>
                   <span style={{ color: "#0F1B33" }}>B1</span>
                   <span style={{ color: "#DD0000" }}>&</span>
                   <span style={{ color: "#F5B82E" }}>B2</span>
                 </div>
               </div>
             </div>
-
             <div className="card" style={{ padding: 24, textAlign: "center", borderRadius: 24 }}>
               <h3 style={{ margin: "0 0 16px", fontSize: "1.2em", fontWeight: 900, color: "var(--text)" }}>الدعم الفني</h3>
-              <p className="de" style={{ margin: "0 0 20px", color: "var(--muted)", fontSize: "0.95em", fontWeight: 600 }}>Support & Problemmeldung</p>
-              <button style={{ width: "100%", padding: "16px", borderRadius: "16px", background: "#25D366", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.05em", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", boxShadow: "0 8px 25px rgba(37, 211, 102, 0.4)", cursor: "pointer", transition: "transform 0.2s" }} onClick={() => wa("مرحباً، بغيت نبلغ على مشكل فالتطبيق / Ich möchte ein Problem melden.")}>
+              <p className="de" style={{ margin: "0 0 20px", color: "var(--muted)", fontSize: "0.95em", fontWeight: 600, textAlign: "center" }}>Support & Problemmeldung</p>
+              <button style={{ width: "100%", padding: "16px", borderRadius: "16px", background: "#25D366", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.05em", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", boxShadow: "0 5px 0 #128C7E, 0 12px 22px rgba(37, 211, 102, 0.4)", cursor: "pointer", transition: "transform 0.2s" }} onClick={() => wa("مرحباً، بغيت نبلغ على مشكل فالتطبيق / Ich möchte ein Problem melden.")}>
                 <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1.2 }}>
                   <span>تواصل مع الدعم / إبلاغ عن مشكل</span>
@@ -1118,23 +1238,19 @@ function App() {
         {view === "lesen" && (
           <div>
             <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px" }}>Lesen</h1>
-            
             <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4 }}>
+              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4, boxShadow: "var(--raise)" }}>
                 <button className={`tab ${level === "B1" ? "on" : ""}`} onClick={() => setLevel("B1")} style={{ padding: "8px 28px", fontSize: "1.1em" }}>B1</button>
                 <button className={`tab ${level === "B2" ? "on" : ""}`} onClick={() => setLevel("B2")} style={{ padding: "8px 28px", fontSize: "1.1em" }}>B2</button>
               </div>
             </div>
-
             <div style={{ marginBottom: 16 }}>
-              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "14px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "14px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none", boxShadow: "inset 0 3px 6px rgba(0,0,0,.07)" }} />
             </div>
-
             <div style={{ display: "flex", justifyContent: "space-between", margin: "8px 0" }}>
               <span className="chip" style={{ background: "var(--card)", color: "var(--text)", fontSize: ".9em" }}>{uniqueTitles.length} امتحان</span>
               <strong style={{fontSize:"1.1em"}}>قائمة الامتحانات</strong>
             </div>
-
             {uniqueTitles.map(title => (
               <button key={title} className="card" onClick={() => setSelectedExamTitle(title)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 16 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -1171,7 +1287,6 @@ function App() {
         ))}
       </nav>
 
-      {/* نافذة الاشتراك الجديدة */}
       {showSubscription && (
         <div className="overlay" onClick={() => setShowSubscription(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1179,23 +1294,17 @@ function App() {
               <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>عروض الاشتراك</h3>
               <button className="btnI" onClick={() => setShowSubscription(false)}>✕</button>
             </div>
-            
             <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              {/* العرض 1 */}
               <div className="card" style={{ margin: 0, padding: 16, border: "2px solid var(--gold)", background: "rgba(245,184,46,0.05)" }}>
                 <h4 style={{ margin: "0 0 8px", fontSize: "1.1em", color: "var(--gold)" }}>تجربة مجانية</h4>
                 <p style={{ margin: "0 0 12px", fontSize: "1.5em", fontWeight: 900 }}>0 درهم <span style={{ fontSize: "0.5em", color: "var(--muted)" }}>/ يومين</span></p>
                 <button className="btn" style={{ background: "#25D366", color: "#fff", padding: "10px" }} onClick={() => wa("مرحباً، بغيت نستافد من تجربة يومين مجانية فـ EchtPrüfung.")}>واتساب - تجربة مجانية</button>
               </div>
-
-              {/* العرض 2 */}
               <div className="card" style={{ margin: 0, padding: 16 }}>
                 <h4 style={{ margin: "0 0 8px", fontSize: "1.1em" }}>اشتراك 15 يوم</h4>
                 <p style={{ margin: "0 0 12px", fontSize: "1.5em", fontWeight: 900 }}>30 درهم</p>
                 <button className="btn ghost" style={{ padding: "10px" }} onClick={() => wa("مرحباً، بغيت نشترك لمدة 15 يوم بـ 30 درهم فـ EchtPrüfung.")}>واتساب - اشتراك 15 يوم</button>
               </div>
-
-              {/* العرض 3 */}
               <div className="card" style={{ margin: 0, padding: 16, position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 10, left: 10, background: "var(--badc)", color: "#fff", padding: "2px 8px", borderRadius: 4, fontSize: "0.7em", fontWeight: 900 }}>عرض خاص</div>
                 <h4 style={{ margin: "0 0 8px", fontSize: "1.1em" }}>اشتراك شهر كامل</h4>
@@ -1210,7 +1319,6 @@ function App() {
         </div>
       )}
 
-      {/* قائمة الأجزاء (تظهر عند اختيار امتحان) */}
       {selectedExamTitle && (
         <div className="overlay" onClick={() => setSelectedExamTitle(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1219,23 +1327,24 @@ function App() {
               <button className="btnI" onClick={() => setSelectedExamTitle(null)}>✕</button>
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {/* هنا كنعرضو 5 ديال الأجزاء دايما */}
               {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(subName => {
                 const existingExam = EXAMS.find(e => e.title === selectedExamTitle && e.level === level && e.sub === subName);
                 return (
-                  <button 
-                    key={subName} 
-                    className="btn ghost" 
-                    style={{ 
+                  <button
+                    key={subName}
+                    className="btn ghost"
+                    disabled={!existingExam}
+                    style={{
                       padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center",
-                      opacity: existingExam ? 1 : 0.5
-                    }} 
-                    onClick={() => { 
-                      if (existingExam) { 
-                        setExam(existingExam); 
-                        setSelectedExamTitle(null); 
+                      opacity: existingExam ? 1 : 0.5,
+                      cursor: existingExam ? "pointer" : "not-allowed"
+                    }}
+                    onClick={() => {
+                      if (existingExam) {
+                        setExam(existingExam);
+                        setSelectedExamTitle(null);
                       } else {
-                        flash("هذا الجزء فارغ حالياً / Dieses Teil ist leer"); 
+                        flash("هذا الجزء فارغ حالياً / Dieses Teil ist leer");
                       }
                     }}
                   >
@@ -1249,25 +1358,21 @@ function App() {
         </div>
       )}
 
-      {/* القائمة الجانبية (Menu) */}
       {menu && (
         <div className="overlay" onClick={() => setMenu(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ maxWidth: 360, padding: 0, overflow: "hidden", borderRadius: 24 }}>
-            
             <div style={{ padding: "30px 20px 20px", background: "var(--paper)", borderBottom: "1px solid var(--line)", position: "relative", textAlign: "center" }}>
               <button className="btnI" style={{ position: "absolute", top: 16, left: 16, background: "var(--card)", width: 32, height: 32 }} onClick={() => setMenu(false)}>✕</button>
-              
               <div style={{ width: 76, height: 76, margin: "0 auto 12px", borderRadius: "50%", background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", padding: 3, boxShadow: "0 6px 20px rgba(0,0,0,0.15)" }}>
                  <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: "var(--card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "2em", fontWeight: 900, color: "var(--text)" }}>
                    {user?.name?.charAt(0).toUpperCase() || "ز"}
                  </div>
               </div>
               <h2 style={{ margin: 0, fontSize: "1.4em", fontWeight: 900 }}>{user?.name || "زائر"}</h2>
-              <div className="de" style={{ margin: "6px 0 0", fontSize: "0.9em", color: "var(--muted)", fontWeight: "bold" }}>
+              <div className="de" style={{ margin: "6px 0 0", fontSize: "0.9em", color: "var(--muted)", fontWeight: "bold", textAlign: "center" }}>
                 {user?.isGuest ? "Gast-Modus" : "Profil"} • B1 / B2
               </div>
             </div>
-
             <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 10 }}>
               {[
                 { k: "lesen", l: "Lesen", icon: "📖" },
@@ -1280,14 +1385,12 @@ function App() {
                   <span style={{ fontWeight: 800 }}>{item.l}</span>
                 </button>
               ))}
-
-              {/* زر الاشتراك والدعم الصغير */}
-              <button 
-                style={{ 
-                  marginTop: 10, padding: "12px", borderRadius: "14px", background: "rgba(37, 211, 102, 0.1)", 
-                  color: "#15803D", border: "1.5px solid #25D366", fontWeight: 900, fontSize: "0.95em", 
+              <button
+                style={{
+                  marginTop: 10, padding: "12px", borderRadius: "14px", background: "rgba(37, 211, 102, 0.1)",
+                  color: "#15803D", border: "1.5px solid #25D366", fontWeight: 900, fontSize: "0.95em",
                   display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", cursor: "pointer", transition: "all 0.2s"
-                }} 
+                }}
                 onClick={() => wa("مرحباً، بغيت نستفسر على الاشتراك وتواصل مع الدعم فـ EchtPrüfung.")}
               >
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -1296,19 +1399,16 @@ function App() {
                 <span>الاشتراك وتواصل مع الدعم</span>
               </button>
             </div>
-
             <div style={{ padding: "0 20px 20px" }}>
               <button className="btn" style={{ background: "rgba(185, 28, 28, 0.1)", color: "var(--badc)", border: "1px solid var(--badc)", padding: "14px", fontSize: "1.05em", display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }} onClick={logout}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4m7 14l5-5-5-5m5 5H9"/></svg>
                 تسجيل الخروج
               </button>
             </div>
-            
           </div>
         </div>
       )}
 
-      {/* الإعدادات */}
       {settings && (
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1331,6 +1431,9 @@ function App() {
           </div>
         </div>
       )}
+
+      {toast && <div className="toast">{toast}</div>}
+
     </div>
   );
 }
