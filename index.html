@@ -14,92 +14,81 @@
     --paper:#F8FAFC; --card:#FFFFFF; --text:#1E293B; --muted:#64748B; --line:#E2E8F0;
     --okc:#15803D; --okbg:#DCFCE7; --badc:#B91C1C; --badbg:#FEE2E2;
     --fs:1;
-    --flag-splash: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.06) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.08) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 50%);
+    --splash: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.05) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.07) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 50%);
   }
   .dark{
     --paper:#0B1120; --card:#1E293B; --text:#F8FAFC; --muted:#94A3B8; --line:#334155;
     --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
-    --flag-splash: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.12) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 50%);
+    --splash: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.12) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 50%);
   }
-  html { font-size: calc(18px * var(--fs)); }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body { margin: 0; background-color: var(--paper); background-image: var(--flag-splash); background-attachment: fixed; color: var(--text); font-family: 'Cairo', system-ui, sans-serif; direction: rtl; min-height: 100vh; padding-bottom: 100px; transition: background .3s, color .3s; }
-  button { font-family: inherit; cursor: pointer; }
-  .de { direction: ltr; text-align: left; font-family: system-ui, -apple-system, sans-serif; }
+  html{ font-size:calc(18px * var(--fs)); }
+  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+  body{ margin:0; background-color:var(--paper); background-image:var(--splash); background-attachment:fixed; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s; }
+  button{ font-family:inherit; cursor:pointer; border:none; background:transparent; }
+  .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
+  .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:12px; box-shadow:0 4px 15px rgba(0,0,0,0.02); }
   
-  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); color: var(--text); }
+  .header{ position:sticky; top:12px; z-index:30; margin:12px; display:flex; justify-content:space-between; align-items:center; background:var(--card); border:1px solid var(--line); border-radius:18px; padding:12px 16px; box-shadow:0 4px 15px rgba(0,0,0,0.03); overflow:hidden; }
+  .header::after{ content:""; position:absolute; bottom:0; left:20px; right:20px; height:3px; border-radius:3px 3px 0 0; background:linear-gradient(90deg,#111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); opacity:0.8; }
+  .brand{ display:flex; align-items:center; gap:12px; }
+  .logo{ width:46px; height:46px; border-radius:12px; background:var(--ink); display:flex; align-items:center; justify-content:center; }
   
-  .header { position: sticky; top: 12px; z-index: 30; margin: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 12px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.3s ease; overflow: hidden; }
-  .header::after { content: ""; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; border-radius: 3px 3px 0 0; background: linear-gradient(90deg, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%); opacity: 0.8; }
-  
-  .brand { display: flex; align-items: center; gap: 12px; }
-  .logo { width: 46px; height: 46px; border-radius: 12px; background: var(--ink); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  .btnI { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--text); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-  .btnI:active { background: var(--paper); transform: scale(0.95); }
+  .btnI{ width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--text); display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+  .btnI:active{ background:var(--paper); transform:scale(0.95); }
 
-  .btn { border: none; border-radius: 12px; padding: 14px 16px; font-weight: 800; background: var(--ink); color: var(--gold); width: 100%; transition: opacity .2s; font-size: 1.05em; }
-  .btn.ghost { background: var(--card); color: var(--text); border: 1.5px solid var(--line); }
-  .btn:disabled { opacity: .5; cursor: not-allowed; }
-  .chip { display: inline-block; border-radius: 8px; padding: 3px 10px; font-size: .8em; font-weight: 800; background: var(--okbg); color: var(--okc); }
+  .btn{ border-radius:12px; padding:14px 16px; font-weight:800; background:var(--ink); color:var(--gold); width:100%; font-size:1.05em; }
+  .btn.ghost{ background:var(--card); color:var(--text); border:1.5px solid var(--line); }
+  .btn:disabled{ opacity:.5; cursor:not-allowed; }
   
-  .tabs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 10px; margin-bottom: 14px; }
-  .tab { border: none; background: transparent; color: var(--muted); padding: 10px 6px; border-radius: 12px; font-weight: 800; font-size: .95em; transition: all .2s; }
-  .tab.on { background: var(--gold); color: var(--ink); box-shadow: 0 2px 8px rgba(245,184,46,0.3); }
+  .opt{ display:flex; gap:12px; align-items:flex-start; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:14px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; }
+  .opt.sel{ border-color:var(--gold); background:rgba(245,184,46,.1); }
+  .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); }
+  .opt.bad{ border-color:var(--badc); background:var(--badbg); color:var(--badc); }
+  .opt.faded{ opacity:.4; }
+  .letter{ width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; font-size:1.1em; border:1px solid var(--line); }
   
-  .opt { display: flex; gap: 12px; align-items: center; border: 2px solid transparent; background: var(--paper); color: var(--text); border-radius: 14px; padding: 14px; margin-bottom: 8px; width: 100%; text-align: right; transition: all .2s; font-size: 1.05em; }
-  .opt.dis { opacity: .4; cursor: not-allowed; }
-  .opt.sel { border-color: var(--gold); background: rgba(245,184,46,.1); }
-  .opt.good { border-color: var(--okc); background: var(--okbg); color: var(--okc); }
-  .opt.bad { border-color: var(--badc); background: var(--badbg); color: var(--badc); }
-  .opt.faded { opacity: .4; }
+  .fb{ border-radius:12px; padding:14px; margin-top:10px; font-size:.95em; line-height:1.8; }
+  .fb.good{ background:var(--okbg); color:var(--okc); }
+  .fb.bad{ background:var(--badbg); color:var(--badc); }
   
-  .letter { width: 32px; height: 32px; border-radius: 50%; background: var(--card); display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-size: 1.1em; color: var(--text); border: 1px solid var(--line); }
+  .toast{ position:fixed; top:100px; left:50%; transform:translateX(-50%); background:var(--ink); color:var(--gold); padding:10px 20px; border-radius:14px; font-weight:800; z-index:60; font-size:.95em; box-shadow:0 10px 25px rgba(0,0,0,0.2); animation:slideDown .3s; }
+  @keyframes slideDown{ from{top:-20px;opacity:0} to{top:100px;opacity:1} }
   
-  .fb { border-radius: 12px; padding: 14px; margin-top: 10px; font-size: .95em; line-height: 1.8; }
-  .fb.good { background: var(--okbg); color: var(--okc); }
-  .fb.bad { background: var(--badbg); color: var(--badc); }
+  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; }
+  .nav button{ color:var(--muted); font-size:.8em; font-weight:800; display:flex; flex-direction:column; align-items:center; gap:2px; min-width:60px; transition:all 0.2s; }
+  .nav button.on{ color:var(--ink); }
+  .dark .nav button.on{ color:var(--gold); }
+  .nav .ic{ font-size:1.8em; padding:6px 12px; border-radius:12px; transition:background .2s; }
+  .nav button.on .ic{ background:rgba(245,184,46,.15); }
   
-  .toast { position: fixed; top: 100px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--gold); padding: 10px 20px; border-radius: 14px; font-weight: 800; z-index: 60; font-size: .95em; box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: slideDown .3s; }
-  @keyframes slideDown { from{top:-20px;opacity:0} to{top:100px;opacity:1} }
+  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.5); z-index:50; display:flex; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(4px); }
+  .sheet{ background:var(--card); border:1px solid var(--line); border-radius:24px; padding:24px; width:100%; max-width:440px; max-height:85vh; overflow-y:auto; }
   
-  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 8px 4px 20px; z-index: 40; }
-  .nav button { border: none; background: transparent; color: var(--muted); font-size: .8em; font-weight: 800; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 60px; transition: all 0.2s; }
-  .nav button.on { color: var(--ink); }
-  .dark .nav button.on { color: var(--gold); }
-  .nav .ic { font-size: 1.8em; padding: 6px 12px; border-radius: 12px; transition: background .2s; }
-  .nav button.on .ic { background: rgba(245,184,46,.15); }
+  .word-bank{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:14px; background:var(--paper); border-radius:14px; border:1px dashed var(--line); }
+  .word-btn{ padding:12px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--text); font-weight:800; font-size:1em; text-align:right; display:flex; gap:10px; align-items:center; }
+  .word-btn.used{ opacity:.3; text-decoration:line-through; pointer-events:none; }
   
-  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 50; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
-  .sheet { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; width: 100%; max-width: 440px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 85vh; overflow-y: auto; color: var(--text); }
+  .splash-screen{ position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999; background:var(--splash), #FFF; }
+  .splash-logo{ width:180px; height:180px; animation:pulse 2s infinite; }
+  @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
   
-  .inline-gap { display: inline-flex; align-items: center; justify-content: center; min-width: 90px; border-bottom: 2px dashed var(--gold); padding: 2px 8px; margin: 0 6px; cursor: pointer; font-weight: 900; color: var(--text); transition: all .2s; vertical-align: middle; background: rgba(245,184,46,0.05); border-radius: 6px 6px 0 0; font-size: 1.1em; }
-  .inline-gap.filled { border-bottom-style: solid; background: rgba(245,184,46,0.15); color: var(--gold); }
-  .sp1-correct-box { background: var(--okbg); color: var(--okc); padding: 4px 12px; border-radius: 6px; font-weight: 900; font-size: 1.05em; margin: 0 4px; display: inline-block; border: 1px solid var(--okc); }
-  .sp1-wrong-box { background: var(--badbg); color: var(--badc); text-decoration: line-through; padding: 4px 12px; border-radius: 6px; font-weight: 900; font-size: 1.05em; margin: 0 4px; display: inline-block; border: 1px solid var(--badc); }
+  .lang-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; max-height:300px; overflow-y:auto; padding-right:5px; }
+  .lang-btn{ display:flex; align-items:center; gap:10px; padding:12px; border-radius:14px; background:var(--paper); border:2px solid var(--line); color:var(--text); font-weight:800; transition:all 0.2s; }
+  .lang-btn.on{ background:rgba(245,184,46,0.15); border-color:var(--gold); }
   
-  .word-bank { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; padding: 14px; background: var(--paper); border-radius: 14px; margin-bottom: 14px; border: 1px dashed var(--line); }
-  .word-btn { padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 1em; text-align: right; transition: all .2s; display: flex; gap: 10px; align-items: center; }
-  .word-btn.used { opacity: .3; text-decoration: line-through; pointer-events: none; }
-  
-  .modal-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
-  .modal-item { padding: 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--text); font-weight: 800; font-size: 1.05em; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all .2s; text-align: right; }
-  .modal-item.selected { border-color: var(--gold); background: rgba(245,184,46,0.1); }
-  
-  .highlight-yellow { background-color: #FEF08A; color: #854D0E; border-radius: 4px; padding: 0 4px; font-weight: bold; }
-  .dark .highlight-yellow { background-color: #854D0E; color: #FEF08A; }
-  
-  .splash-screen { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; background: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.06) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.08) 0%, transparent 45%), #FFFFFF; transition: opacity 0.5s; }
-  .splash-logo { width: 180px; height: 180px; margin-bottom: 20px; animation: pulse 2s infinite; }
-  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
-  
-  .auth-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; background: var(--paper); }
-  .auth-card { background: var(--card); padding: 32px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--line); width: 100%; max-width: 420px; }
-  .auth-input { width: 100%; padding: 16px; margin-bottom: 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--text); font-family: inherit; outline: none; font-size: 1.05em; }
-  .auth-input:focus { border-color: var(--gold); }
-  .auth-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: var(--ink); color: var(--gold); font-weight: 800; font-size: 1.1em; cursor: pointer; margin-bottom: 12px; }
-  .auth-btn.guest { background: var(--gold); color: var(--ink); }
-  
-  .t2-ar { background: var(--paper); padding: 16px; border-radius: 12px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 4px solid var(--gold); direction: rtl; text-align: right; }
+  .inline-gap{ display:inline-flex; align-items:center; justify-content:center; min-width:90px; border-bottom:2px dashed var(--gold); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900; vertical-align:middle; background:rgba(245,184,46,0.05); border-radius:6px 6px 0 0; }
+  .inline-gap.filled{ border-bottom-style:solid; background:rgba(245,184,46,0.15); color:var(--gold); }
+  .sp1-correct{ background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--okc); }
+  .sp1-wrong{ background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--badc); }
+
+  /* Hören specific styles */
+  .rf-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
+  .rf-circle.sel { border-color: var(--gold); background: rgba(245,184,46,0.1); }
+  .rf-circle.good { border-color: var(--okc); background: var(--okbg); }
+  .rf-circle.bad { border-color: var(--badc); background: var(--badbg); }
+  .rf-circle.sel::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); }
+  .rf-circle.good::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--okc); }
+  .rf-circle.bad::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--badc); }
 </style>
 </head>
 <body>
@@ -116,21 +105,15 @@
 </svg>
 
 <script type="text/babel">
-const { useState, useEffect } = React;
-const WA = "212600000000"; // ⚠️ بدل هذا الرقم
+const { useState, useEffect, useRef } = React;
+const WA = "212600000000"; // ⚠️ بدل رقم الواتساب هنا
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
 const LogoImage = ({ size = 50 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#1E293B" />
-        <stop offset="100%" stopColor="#0F1B33" />
-      </linearGradient>
-      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#FDE047" />
-        <stop offset="100%" stopColor="#F5B82E" />
-      </linearGradient>
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#1E293B" /><stop offset="100%" stopColor="#0F1B33" /></linearGradient>
+      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#FDE047" /><stop offset="100%" stopColor="#F5B82E" /></linearGradient>
     </defs>
     <rect width="100" height="100" rx="24" fill="url(#bgGrad)" />
     <rect width="98" height="98" x="1" y="1" rx="23" stroke="rgba(255,255,255,0.08)" strokeWidth="2" fill="none" />
@@ -142,6 +125,17 @@ const LogoImage = ({ size = 50 }) => (
   </svg>
 );
 
+const LANGS = [
+  {c:"ar", n:"العربية", f:"📜"}, {c:"ma", n:"المغربية", f:"🇲🇦"}, {c:"dz", n:"الجزائرية", f:"🇩🇿"},
+  {c:"tn", n:"التونسية", f:"🇹🇳"}, {c:"eg", n:"المصرية", f:"🇪🇬"}, {c:"sa", n:"السعودية", f:"🇸🇦"},
+  {c:"iq", n:"العراقية", f:"🇮🇶"}, {c:"sy", n:"السورية", f:"🇸🇾"}, {c:"ye", n:"اليمنية", f:"🇾🇪"},
+  {c:"jo", n:"الأردنية", f:"🇯🇴"}, {c:"lb", n:"اللبنانية", f:"🇱🇧"}, {c:"ps", n:"الفلسطينية", f:"🇵🇸"},
+  {c:"kw", n:"الكويتية", f:"🇰🇼"}, {c:"qa", n:"القطرية", f:"🇶🇦"}, {c:"bh", n:"البحرينية", f:"🇧🇭"},
+  {c:"om", n:"العمانية", f:"🇴🇲"}, {c:"sd", n:"السودانية", f:"🇸🇩"}, {c:"ly", n:"الليبية", f:"🇱🇾"},
+  {c:"mr", n:"الموريتانية", f:"🇲🇷"}, {c:"en", n:"English", f:"🇬🇧"}, {c:"fr", n:"Français", f:"🇫🇷"}
+];
+
+// ================= DATA =================
 const EXAMS = [
 { id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -162,48 +156,6 @@ const EXAMS = [
     {n:3,c:"f",hl:"Ticketpreise",de:"Die Bahn erhöht dieses Jahr die Ticketpreise nicht. Dies soll die Bahn attraktiver machen, sodass mehr Menschen die Züge nutzen. Ob dies wirklich erfolgreich ist, bestreiten manche Experten. Sie argumentieren, dass das Auto in Deutschland zu beliebt ist. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr, weil dann nicht mehr so viele Berufstätige mit dem Auto zur Arbeit fahren. Ob diese Maßnahmen wirklich erfolgreich sind, wird sich zeigen. Experten sind sich einig: Ein Schritt in die richtige Richtung!",ar:"النص يتكلم عن عدم رفع أسعار تذاكر القطار هذا العام."},
     {n:4,c:"a",hl:"Eltern trotz Kritik mit der Schule zufrieden",de:"Vergangenen Monat wurden etwa tausend Eltern von der Stiftung Schulqualität befragt, ob sie mit der Schule ihrer Kinder zufrieden sind. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei. Und das, obwohl nur 40% der Eltern denken, dass die Kinder in der Schule auf den Beruf vorbereitet werden. Die Schülerinnen und Schüler sollten mehr über Ökonomie lernen. Außerdem sagten über 60%, dass das Thema Umweltschutz im Unterricht eine größere Rolle spielen sollte.",ar:"80% من الآباء راضون عن المدرسة، لكن 40% فقط يرون أن أبناءهم مجهزون للمهنة."},
     {n:5,c:"j",hl:"Lehrermangel",de:"Berlin. In der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Mittlerweile unterrichten sogar schon Studierende die Schülerinnen und Schüler der Hauptstadt, weil sich nicht genügend ausgebildete Lehrkräfte finden. Die Unterrichtsqualität leidet stark. Daher plant der Berliner Senat eine Werbekampagne, um den Lehrerberuf attraktiver zu gestalten. Dabei sollen auch Menschen in anderen Berufen angesprochen werden. Außerdem denkt man über eine Erhöhung der Gehälter für Lehrerinnen und Lehrer nach.",ar:"نقص كبير في المعلمين في برلين، والمدينة تطلق حملة لجذب المعلمين."}
-  ]
-},
-{ id:"rita-t1", title:"Rita", level:"B1", sub:"Teile 1", type:"headings",
-  options:[
-    {k:"a",de:"Japanische Studie: Vielschläfer leben länger",ar:"دراسة يابانية: من ينامون كثيراً يعيشون أطول"},
-    {k:"b",de:"USA: Nachfrage nach funktionellen Lebensmitteln geht zurück",ar:"الولايات المتحدة: تراجع الطلب على الأطعمة الوظيفية"},
-    {k:"c",de:"Studie zeigt: Heiraten macht dick",ar:"دراسة تظهر: الزواج يزيد الوزن"},
-    {k:"d",de:"Die Mehrheit der Schweizer treibt aktiv Sport",ar:"غالبية السويسريين يمارسون الرياضة بانتظام"},
-    {k:"e",de:"Neu im Trend: Jung und Gesund - mit Schokolade",ar:"الجديد في الموضة: الشباب والصحة - مع الشوكولاتة"},
-    {k:"f",de:"Schweizer sollen gesünder leben",ar:"يجب على السويسريين أن يعيشوا حياة أكثر صحة"},
-    {k:"g",de:"Statistik: Unverheiratete haben oft ein paar Kilos zu viel",ar:"إحصائية: العزاب غالباً ما يعانون من زيادة الوزن"},
-    {k:"h",de:"Teures Essen für mehr Jugend und Schönheit",ar:"طعام باهظ الثمن من أجل المزيد من الشباب والجمال"},
-    {k:"i",de:"Weniger schlafen - länger leben",ar:"النوم أقل - العيش أطول"},
-    {k:"j",de:"Schokolade essen - jung bleiben",ar:"تناول الشوكولاتة - البقاء شاباً"}
-  ],
-  items:[
-    {n:1,c:"h",hl:"Gut aussehen mit dem richtigen Essen",de:"Du bist, was du isst, hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Der Trend kommt aus den USA: Dort kaufen bereits viele Leute neue teure Lebensmittel mit wissenschaftlichen Inhaltsstoffen, die dem Kunden jüngeres und schöneres Aussehen versprechen. So bietet z.B. ein New Yorker Nobelhotel das Menü Gegen-Graue-Haare an. Aber wer wird schon eine solche Mahlzeit bestellen? Millionen von Leuten, so die Trendforscher. Und zwar aus dem einfachen Grund, weil jeder jung und gut aussehen will, und das mit möglichst wenig Aufwand.",ar:"اتجاه جديد من أمريكا: أطعمة غالية تعد بمظهر أصغر، والناس مستعدون لدفع الكثير."},
-    {n:2,c:"c",hl:"nehmen oft schon in den Flitterwochen einige Kilos zu",de:"Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern. Das belegt eine neue Studie. In Deutschland sind fast die Hälfte der verheirateten Frauen und circa zwei Drittel der Ehemänner übergewichtig. Alleinstehende sind vermutlich schlanker, weil sie besonderen Wert auf ihr Äußeres legen, mehr Sport treiben und sich selten Zeit für gemütliche Mahlzeiten nehmen.",ar:"المتزوجون حديثاً يكتسبون وزناً بسبب تغيير عاداتهم الغذائية."},
-    {n:3,c:"e",hl:"Therapiemethoden mit Schokolade",de:"Der Schokolade-Boom zeigt sich hierzulande nicht nur im hohen Verbrauch (jeder Schweizer isst fast 12 Kilo Schokolade im Jahr!), nein, er hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy zahlreiche kosmetische Behandlungsmethoden mit Schokolade an. Die Bäder, Massagen und Hautcremes mit Kakao sind durchaus ernst gemeint, denn Kakao soll eine belebende Eigenschaft haben, die den Menschen jung und gesund aussehen lässt.",ar:"النص يتكلم عن علاجات تجميل بالشوكولاتة في فندق سويسري."},
-    {n:4,c:"f",hl:"ausgewogen zu essen und sich täglich zu bewegen",de:"Nach dem Motto „beschwingt und bewegt“ starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei soll die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen. Fast zwei Drittel der Bevölkerung in der Schweiz sind wenig aktiv und essen zu viel. Die Kampagne soll den Leuten zeigen, wie Sport und gesunde Ernährung ohne großen Aufwand in den Alltag integriert werden können, z.B. mit einem Spaziergang am Mittag oder mit einem Apfel zum Znüni statt Schokolade.",ar:"حملة صحية سويسرية لتشجيع الناس على الرياضة وأكل متوازن."},
-    {n:5,c:"i",hl:"kürzere Lebenserwartung",de:"Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit am Mittwoch und bezog sich dabei auf eine neue japanische Studie. Schlecht für die Männer, denn laut dieser Studie schlafen Männer im Durchschnitt eine halbe Stunde länger pro Nacht als Frauen. Aber es gibt auch eine gute Nachricht für die Viel- und Langschläfer: Wer lange schläft, hat weniger Gewichtsprobleme und fühlt sich gesünder.",ar:"الدراسة اليابانية تقول إن النوم الطويل يقلل العمر، والعنوان الصحيح هو النوم أقل."}
-  ]
-},
-{ id:"caroline-t1", title:"Caroline", level:"B1", sub:"Teile 1", type:"headings",
-  options:[
-    {k:"a",de:"Diskussion über Flughafen und Arbeitsplätze",ar:"نقاش حول المطار وفرص العمل"},
-    {k:"b",de:"Flughafen Frankfurt beliebter Veranstaltungsort",ar:"مطار فرانكفورت: مكان مفضل للفعاليات"},
-    {k:"c",de:"Umwelt und Flughafen: Ein Informationsabend der Bürger",ar:"البيئة والمطار: أمسية معلوماتية للمواطنين"},
-    {k:"d",de:"Neue Kurse: Museumsführung für junge Väter",ar:"دورات جديدة: جولات في المتحف للآباء الشباب"},
-    {k:"e",de:"Neue Kurse für Kinder",ar:"دورات جديدة للأطفال"},
-    {k:"f",de:"Experten gegen Vergrößerung des Flughafens",ar:"خبراء يعارضون توسيع المطار"},
-    {k:"g",de:"Demonstration gegen Fluglärm",ar:"مظاهرة ضد الضوضاء الناتجة عن الطيران"},
-    {k:"h",de:"Familienbildung Schwerpunkt Beruf und Familie",ar:"التوفيق بين العمل والأسرة: محور تعليم الأسرة"},
-    {k:"i",de:"Flughafen Frankfurt wird 10 Jahre",ar:"مطار فرانكفورت يحتفل بمرور 10 سنوات"},
-    {k:"j",de:"Neue Kurse: Spiele für Mütter und Kinder",ar:"دورات جديدة: ألعاب للأمهات والأطفال"}
-  ],
-  items:[
-    {n:1,c:"b",hl:"beliebter Ort für Veranstaltungen",de:"Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen und Tagungen. Dies zeigt ein Bericht des Frankfurter Flughafens, der beim zehnjährigen Jubiläum des Kongresszentruns vorgelegt wurde. Im Jubiläumsjahr haben am Frankfurter Flughafen 6800 Veranstaltungen mit insgesamt 72000 Teilnehmern stattgefunden. Im Jahr davor waren es nur 6300 Veranstaltungen mit 70000 Gästen. Im Kongresszentrum, das direkt gegenüber dem Hauptgebäude des Flughafens liegt, gibt es 28 Konferenzräume für bis zu 200 Teilnehmer. Modernste Technik wie Laptop-Anschlüsse und Internetzugänge in allen Konferenzräumen sind ebenso vorhanden, wie ein Dolmetscherdienst und verschiedene Speisemöglichkeiten. Eine transportable Videokonferenz-Anlage ermöglicht Verbindungen in die ganze Welt.",ar:"مطار فرانكفورت مكان مفضل للشركات لتنظيم الفعاليات والمؤتمرات."},
-    {n:2,c:"h",hl:"Thema Berufstätige Eltern",de:"Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht über viele Veranstaltungen. Neben Kursen wie Geburtsvorbereitung und Babypflege steht diesmal das Thema Berufstätige Eltern im Mittelpunkt. In Gruppen und Kursen vor allem für Frauen geht es darum, wie sich nach der Geburt eines Kindes Beruf und Familie miteinander vereinbaren lassen. Das Verhältnis zwischen Mann und Frau spielt eine große Rolle im Angebot der Familienbildung; hierzu gibt es wieder spezielle Programme nur für Frauen oder nur für Männer. Auch zum Verhältnis der Generationen (Großeltern und Enkelkinder) gibt es wieder Angebote. Darüber hinaus wartet das Programm mit Kursen für Entspannung und Zeitmanagement auf, die bei Fragen des Alltags helfen wollen.",ar:"برنامج لمراكز التعليم الأسري حول التوفيق بين العمل والأسرة."},
-    {n:3,c:"e",hl:"neue Kurse für Kinder",de:"Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch nächster Woche beginnen zwei Malkurse für Kinder. Zweieinhalb- bis vierjährige Kinder treffen sich um 15.30 Uhr, Kinder im Alter von fünf und sechs Jahren um 17.00 Uhr. Für Kinder im Alter zwischen eineinhalb und sechs Jahren und ihre Väter beginnt am Samstag um 10.00 Uhr eine feste Vater-Kind-Gruppe. Am darauf-folgenden Samstag gibt es dann auch ein Treffen für Väter und Kinder bis dreieinhalb Jahren. Etwas anderes ist die Kultur- und Kreativwerkstatt am Montag nächster Woche. Aus Ton und Erde sollen Figuren nach afrikanischen Beispielen gebastelt werden. Zur Vorbereitung treffen sich die Teilnehmer am kommenden Montag zuerst im Museum. Anmeldung spätestens morgen bis 15.00 Uhr.",ar:"دورات جديدة للأطفال، من رسم وأنشطة للآباء والأطفال وورشة طين."},
-    {n:4,c:"c",hl:"Informationsabend über den Ausbau",de:"Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern aus den östlichen Stadtteilen, die sich seit Jahren aktiv für den Naturschutz und die Umwelt einsetzt, lädt für Donnerstag dieser Woche um 19.30 Uhr zu einem Informationsabend über den Ausbau des Frankfurter Flughafens ein. Im Bürgerhaus Ostend, Parkstraße 24, Clubraurn 12, werden verschiedene Sprecher zu hören sein. Die Gruppe möchte Antworten auf folgende Fragen suchen: Wie viel Lärm durch Flugzeuge verträgt die Stadt? Oder Welche Auswirkungen hat der Flugverkehr auf Umwelt und Natur?",ar:"أمسية معلومات يدعو إليها مواطنون ناشطون في البيئة حول توسعة المطار."},
-    {n:5,c:"a",hl:"Thema Arbeitsplätze am Frankfurter Flughafen",de:"Eine Bürgergruppe mit dem Namen Südliches Frankfurt lädt für Montag kommender Woche, um 19.30 Uhr ins Pfarrhaus St. Mauritius, Mauritiusstraße 14, zu einer öffentlichen Expertenbefragung zum Thema Arbeitsplätze am Frankfurter Flughafen ein. Der Gruppe liegen Berichte und Daten vor, die nach den Worten der Sprecher der Gruppe sehr fantastisch und zweifelhaft sind. Deshalb hat die Bürgergruppe Südliches Frankfurt den Personalleiter des Frankfurter Flughafens, einen Experten aus dem Wirtschaftsministerium, einen bekannten Stadtentwicklungsplaner und einen Soziologen, der sich mit der Arbeitsplatzentwicklung in der Frankfurter Region beschäftigt, eingeladen. Im Anschluss an die Vorträge der Experten haben die Gäste Zeit, Fragen zu stellen.",ar:"لقاء عام مع خبراء حول فرص العمل في المطار."}
   ]
 },
 { id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings",
@@ -238,44 +190,11 @@ const EXAMS = [
     { de: "Der tägliche Spaziergang mit dem Hund oder das Spielen mit der Katze bietet vielen Haustierbesitzern Ruhe und Entspannung, eine kleine Erholung vom Alltag. Das bestätigen auch Fachleute: Haustiere können gerade bei Stress für viele Menschen ein guter Ausgleich sein. Das Haustier ist dabei auch viel mehr als ein Hobby, da es ein Lebewesen ist, das schnell zum Familienmitglied wird und das Leben bereichert.", ar: "التنزه اليومي مع الكلب أو اللعب مع القطة يوفر للعديد من أصحاب الحيوانات الأليفة الهدوء والاسترخاء، وهو استراحة صغيرة من الحياة اليومية. يؤكد الخبراء ذلك أيضاً: الحيوانات الأليفة يمكن أن تكون تعويضاً جيداً للكثير من الناس، خاصة في أوقات التوتر. الحيوان الأليف هو أكثر بكثير من مجرد هواية، لأنه كائن حي يصبح بسرعة عضواً في الأسرة ويثري الحياة." }
   ],
   items:[
-    {n:1,c:"C",q:"Die Hundebesitzerin Elli Herfeld",opts:[{k:"A",de:"feiert ihren Geburtstag immer mit ihrem Hund."},{k:"B",de:"sieht ihren Hund als festes Familienmitglied."},{k:"C",de:"backt ihrem Hund zum Geburtstag einen Kuchen."}],ar:"النص يقول إنها تحضر كعكة عيد ميلاد لكلبها."},
-    {n:2,c:"A",q:"In Seniorenheimen gibt es oft Tiere, damit",opts:[{k:"A",de:"die Senioren etwas tun, was gut für sie ist."},{k:"B",de:"sie auf die älteren Menschen aufpassen."},{k:"C",de:"die Senioren mehr spazieren gehen."}],ar:"الحيوانات تعطي المسنين مهمة مفيدة لصحتهم."},
-    {n:3,c:"A",q:"Bettina Schröther …",opts:[{k:"A",de:"verbringt die ganze Freizeit mit ihrem Hund."},{k:"B",de:"macht mit ihrem Hund regelmäßig Wellnessurlaube."},{k:"C",de:"lässt ihren Hund in einer Hundeschule erziehen."}],ar:"النص يقول إنها تكون مع كلبها كل وقت فراغها."},
-    {n:4,c:"C",q:"Nach Meinung von Hundeexperte Marius Klotz sollte man",opts:[{k:"A",de:"sich zur Ernährung des Tiers beraten lassen."},{k:"B",de:"seinen Hund immer gut behandeln."},{k:"C",de:"die Regeln bei der Hundeerziehung beachten."}],ar:"الخبير يشدد على قواعد واضحة في تربية الكلب."},
-    {n:5,c:"A",q:"Fachleute meinen, dass",opts:[{k:"A",de:"man sich durch sein Haustier erholen kann."},{k:"B",de:"man mit seinem Hund täglich spazieren gehen sollte."},{k:"C",de:"ein Haustier ein sinnvolles Hobby ist."}],ar:"الحيوان الأليف يساعد على الراحة والاسترخاء."}
-  ]
-},
-{ id:"rita-t2", title:"Rita", level:"B1", sub:"Teile 2", type:"mcq",
-  paragraphs: [
-    { de: "Von Antje Blinda Coz-Ausstoß: null. Geplante Strecke: einmal um die Welt. Endlich wird der Traum von Louis Palmer wahr: Der Schweizer startet mit seinem Auto, das mit Sonnenenergie fährt, zur Weltumrundung. Er will damit zeigen, dass Autofahren auch geht, ohne der Umwelt zu schaden.", ar: "بقلم أنتيي بليندا. انبعاثات ثاني أكسيد الكربون: صفر. المسار المخطط: مرة واحدة حول العالم. أخيراً يتحقق حلم لويس بالمر: يبدأ السويسري رحلته حول العالم بسيارته التي تعمل بالطاقة الشمسية. يريد أن يثبت بذلك أن قيادة السيارة ممكنة أيضاً دون الإضرار بالبيئة." },
-    { de: "Entwickelt für mich ein Fahrzeug für eine Weltreise, die mit Sonnenenergie fährt, forderte Louis Palmer Studenten an Schweizer Universitäten auf. Das war vor drei Jahren. Heute ist das Auto fertig: ein dreirädriges Fahrzeug mit zwei Sitzplätzen. Und die Weltreise? Am 3. Juli starten er und sein 7-köpfiges Team in Luzern: Das Auto soll als erstes Solarfahrzeug die Welt umrunden.", ar: "\"طوروا لي مركبة لرحلة حول العالم تعمل بالطاقة الشمسية\"، طلب لويس بالمر من طلاب في جامعات سويسرية. كان ذلك قبل ثلاث سنوات. اليوم السيارة جاهزة: مركبة بثلاث عجلات ومقعدين. والرحلة حول العالم؟ في 3 يوليو يبدأ هو وفريقه المكون من 7 أفراد في لوسيرن: من المفترض أن تدور السيارة حول العالم كأول مركبة شمسية." },
-    { de: "Die ganze Welt wartet auf revolutionäre Erfindungen für ein umweltbewusstes Auto, sagt der Schweizer, ich will darauf aufmerksam machen, dass die technischen Lösungen schon jetzt vorhanden sind. Mit 14 Jahren hatte Louis den Entschluss gefasst. Gegen die Veränderung des Klimas muss etwas getan werden. Die Lösung hatte er auch schon: Mit kräftigen Strichen zeichnete er ein Rennauto, verziert mit lachendem Sonnen. Der Rest war nur eine Frage der Organisation und der konsequenten Lebensplanung. Ich unterteile mein Leben in drei Phasen, sagt Palmer und lacht über sich selbst: zwischen 20 und 30 die Welt kennen lernen, zwischen 30 und 40 die Welt aufmerksam machen und zwischen 40 und 50 die Welt verändern.", ar: "\"العالم كله ينتظر اختراعات ثورية لسيارة صديقة للبيئة\"، يقول السويسري، \"أريد أن ألفت الانتباه إلى أن الحلول التقنية موجودة بالفعل الآن\". في سن 14 عاماً اتخذ لويس قراره. يجب فعل شيء ضد تغير المناخ. كان لديه الحل بالفعل: بخطوط قوية رسم سيارة سباق، مزينة بشمس ضاحكة. كان الباقي مجرد مسألة تنظيم وتخطيط حياة متسق. \"أقسم حياتي إلى ثلاث مراحل\"، يقول بالمر ويضحك على نفسه: بين 20 و 30 تعلم العالم، بين 30 و 40 لفت انتباه العالم، وبين 40 و 50 تغيير العالم." },
-    { de: "Phase eins begann mit 23 Jahren: Er zog aus, um 50 Länder auf allen Kontinenten zu bereisen: Anstatt an die Uni zu gehen, habe ich die Welt studiert. Mit dem Fahrrad fuhr er von Kenia nach Kapstadt, mit einem Segelflugzeug überflog er Südamerika und als Fotograf reiste er mehrmals nach Afghanistan.", ar: "بدأت المرحلة الأولى في سن 23: خرج للسفر إلى 50 دولة في جميع القارات: \"بدلاً من الذهاب إلى الجامعة، درست العالم\". سافر بالدراجة من كينيا إلى كيب تاون، وحلق فوق أمريكا الجنوبية بطائرة شراعية، وسافر عدة مرات إلى أفغانستان كمصور." },
-    { de: "Phase zwei startete vor drei Jahren: Palmer konnte Studenten von vier Universitäten gewinnen, die für ihn das Auto bauten. Schwierig war es aber, Firmen und private Sponsoren für die finanzielle Unterstützung zu finden, meint Palmer. Doch auch das hat dann schließlich geklappt.", ar: "بدأت المرحلة الثانية قبل ثلاث سنوات: تمكن بالمر من إقناع طلاب من أربع جامعات ببناء السيارة له. لكن كان من الصعب العثور على شركات ورعاة من القطاع الخاص لتقديم الدعم المالي، كما يقول بالمر. لكن ذلك نجح في النهاية أيضاً." },
-    { de: "Nun ist Palmer bereit für die Tour. Ich habe keine Ahnung, was auf uns zukommt, sagt der erfahrene Globetrotter, der sechs Sprachen spricht. Ich habe schon etwas Angst, z.B. vor dem Straßenverkehr in Millionenstädten oder unvorhersehbaren Zwischenfällen. Das Schlimmste ist aber, wenn jeder Tag wie der andere ist. In den nächsten 16 Monaten wird es dazu nicht kommen.", ar: "الآن بالمر مستعد للجولة. \"ليس لدي فكرة عما ينتظرنا\"، يقول الرحالة ذو الخبرة الذي يتحدث ست لغات. \"لدي بعض الخوف، على سبيل المثال من حركة المرور في المدن المليونية أو الحوادث غير المتوقعة. لكن الأسوأ هو أن يكون كل يوم مثل الآخر. في الـ 16 شهراً القادمة لن يحدث ذلك\"." }
-  ],
-  items:[
-    {n:1,c:"C",q:"Mit 23 Jahren wollte Louis Palmer",opts:[{k:"A",de:"für Studenten Reisen nach Südamerika organisieren"},{k:"B",de:"mit dem Fahrrad durch 50 verschiedene Länder fahren"},{k:"C",de:"viele verschiedene Länder kennen lernen"}],ar:"في سن 23 أراد أن يتعرف على دول كثيرة ويسافر حول العالم."},
-    {n:2,c:"C",q:"Sein Projekt konnte Palmer realisieren,",opts:[{k:"A",de:"weil er einen Preis von einer Universität gewonnen hat"},{k:"B",de:"weil er finanzielle Unterstützung von vier Universitäten erhalten hat."},{k:"C",de:"weil ihn Firmen und Universitäten unterstützt haben"}],ar:"الطلاب من أربع جامعات بنوا السيارة، لكن الدعم جاء في النهاية من الشركات والممولين."},
-    {n:3,c:"A",q:"Palmers Auto",opts:[{k:"A",de:"fährt mit alternativer Energie"},{k:"B",de:"geht auf eine dreijährige Weltreise"},{k:"C",de:"hat genug Platz für sieben Personen"}],ar:"السيارة تسير بالطاقة الشمسية."},
-    {n:4,c:"A",q:"Louis Palmer",opts:[{k:"A",de:"wird sich in nächster Zeit nicht langweilen"},{k:"B",de:"möchte mit seinem Auto nicht durch Großstädte fahren"},{k:"C",de:"hat für die Weltreise sechs Sprachen gelernt"}],ar:"هو يقول إن الأيام القادمة لن تكون مملة."},
-    {n:5,c:"C",q:"Schon als Jugendlicher",opts:[{k:"A",de:"baute Louis an einem umweltfreundlichen Auto"},{k:"B",de:"wollte Louis etwas für die Umwelt tun."},{k:"C",de:"wusste Louis genau, wie er sein Leben einteilen will"}],ar:"وهو صغير عرف كيف يقسم حياته إلى ثلاث مراحل."}
-  ]
-},
-{ id:"caroline-t2", title:"Caroline", level:"B1", sub:"Teile 2", type:"mcq",
-  paragraphs: [
-    { de: "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite. Von Christiane Altenberger, Sie sind die Problemlöser im Kindergarten an der Munckerstraße. Wenn das Malprogram spinnt, plötzlich ein Spiel auftaucht, das keiner kennt, dann rufen die Erzieherinnen nach Anne und Melanie. Die sind zwar erst sechs Jahre alt, aber mit den Computerspielen kennen sie sich aus. Die Kinder wissen manchmal mehr als wir sagt Eva Schilling. Leiterin des Kindergartens. Gelernt haben die beiden ihr Know-how bei Multimedia - Landschaften für Kinder, einem Projekt, das das Schulamt zusammen mit dem Studio im Netz gestartet hat.", ar: "آن وميلاني (كلاهما 6 سنوات) تساعدان المربيات باقتراحات مفيدة. بقلم كريستيان ألتنبرغر، هما حلال المشاكل في روضة الأطفال في شارع مونكر. إذا تعطل برنامج الرسم، أو ظهرت فجأة لعبة لا يعرفها أحد، فإن المربيات ينادين آن وميلاني. عمرهما ست سنوات فقط، لكنهما تعرفان ألعاب الكمبيوتر. \"الأطفال يعرفون أحياناً أكثر منا\"، كما تقول إيفا شيلينغ، مديرة الروضة. تعلمت الفتاتان معرفتهما في مشروع \"مناظر الوسائط المتعددة للأطفال\"، وهو مشروع أطلقته إدارة المدرسة مع \"استوديو الإنترنت\"." },
-    { de: "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia- Computern und einem Farbdrucker installiert. Die Stationen wandern durch 14 Kindergärten, wo sie jeweils für vier Wochen installiert werden. Mit dabei in den Kindergärten: ein ganzer Satz von Spiel – Software. Vierjährige am Computer? In Pädagogen kreisen sind viele Berührungsängste da, weiß Edith llg, Fachberaterin für Kindergärten beim Schulamt, aber wir können uns aus dieser Entwicklung nicht ausklinken. Die Kinder wollen sich mit ihrer Umwelt auseinandersetzen. Angefangen hat diese Auseinandersetzung im Studio im Netz – 193 Kinder waren eingeladen, um erste Erfahrungen am Computer zu sammeln. Die Kinder waren absolut begeistert, haben immer wieder gefragt, wann gehen wir da wieder hin, so Frau llg.", ar: "في إطار هذا المشروع، سيتم تركيب محطتين متنقلتين في رياض الأطفال البلدية، كل منهما تحتوي على ثلاثة أجهزة كمبيوتر متعددة الوسائط وطابعة ملونة. تتنقل المحطات عبر 14 روضة أطفال، حيث يتم تركيبها لمدة أربعة أسابيع في كل مرة. معهم في رياض الأطفال: مجموعة كاملة من برامج الألعاب. طفل في الرابعة من العمر أمام الكمبيوتر؟ في أوساط التربويين هناك الكثير من المخاوف من التواصل، كما تعلم إيديث إلغ، المستشارة المتخصصة في رياض الأطفال في إدارة المدرسة، \"لكننا لا يمكننا الانفصال عن هذا التطور. الأطفال يريدون التعامل مع بيئتهم\". بدأ هذا التعامل في \"استوديو الإنترنت\" - تمت دعوة 193 طفلاً لجمع الخبرات الأولى على الكمبيوتر. \"كان الأطفال متحمسين تماماً، وسألوا مراراً وتكراراً متى سنذهب إلى هناك مرة أخرى\"، كما تقول السيدة إلغ." },
-    { de: "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus nach dem Motto: Mein fröhliches, gesundes Kind setzt sich vor den Computer und steht sechs Stunden später krank, sprachlos und einsam wieder auf.", ar: "لكن قبل أن تصل أجهزة الكمبيوتر إلى رياض الأطفال، كان لا بد من توعية الآباء. عند بعض الآباء، أثارت كلمة \"كمبيوتر\" مخاوف حادة وفقاً لشعار: \"طفلي السعيد السليم يجلس أمام الكمبيوتر ويقف بعد ست ساعات مريضاً، صامتاً ووحيداً\"." },
-    { de: "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend über flüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm.", ar: "لقد هدأت هذه المخاوف في غضون ذلك، وتظهر التجربة الميدانية أنها زائدة عن الحاجة إلى حد كبير. يحرص المربيات أيضاً على ألا يجلس الأطفال أمام الكمبيوتر لأكثر من 15 إلى 20 دقيقة، ويجلبون برامج إبداعية إلى الشاشة قبل كل شيء." },
-    { de: "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte. Dabei entwickeln gerade Kinder, die sich sonst nur schwer auf etwas konzentrieren können, plötzlich ungeahnte Konzentrationszeiten. Eva Schilling kann sich deshalb die Computer als Dauereinrichtung im Kindergarten vorstellen.", ar: "على أي حال، فإن النعاس الوحيد أمام الكمبيوتر هو بالأحرى من شؤون البالغين - فالأطفال يلعبون دائماً في مجموعات من شخصين أو ثلاثة على الجهاز. لاحظت إيفا شيلينغ أن الأطفال يتعاملون مع بعضهم البعض بسلام شديد على الكمبيوتر، ويساعدون بعضهم البعض، ولا يوجد سوى القليل من الصراعات. في الوقت نفسه، يطور الأطفال الذين يجدون صعوبة في التركيز على شيء آخر فجأة فترات تركيز غير متوقعة. لذلك يمكن لإيفا شيلينغ أن تتخيل أجهزة الكمبيوتر كمنشأة دائمة في رياض الأطفال." }
-  ],
-  items:[
-    {n:1,c:"A",q:"Das Schulamt hat ein Projekt gestartet, bei dem",opts:[{k:"A",de:"Computer in Kindergärten aufgestellt werden."},{k:"B",de:"Computerspiele für Vierjährige entwickelt werden sollen."},{k:"C",de:"Kinder neue Farbdrucker ausprobieren sollen."}],ar:"المشروع يهدف لتجهيز روض الأطفال بالحواسيب."},
-    {n:2,c:"A",q:"Die Kinder",opts:[{k:"A",de:"hatten großen Spaß bei dem Projekt."},{k:"B",de:"wollten lieber draußen im Freien spielen."},{k:"C",de:"wussten nicht, wann sie ins Studio im Netz gehen sollten."}],ar:"النص يقول إنهم كانوا مبسوطين بزاف (absolut begeistert)."},
-    {n:3,c:"A",q:"Eltern fürchten, dass",opts:[{k:"A",de:"der Computer ihren Kindern schadet."},{k:"B",de:"ihre Kinder nicht so früh aufstehen können."},{k:"C",de:"ihre Kinder vor dem Computer Angst haben."}],ar:"الآباء كان عندهم خوف أن الحاسوب يضر بصحة أطفالهم."},
-    {n:4,c:"C",q:"Die Erzieherinnen",opts:[{k:"A",de:"arbeiten jeden Tag 15 bis 20 Minuten am Computer."},{k:"B",de:"spielen immer mit zwei oder drei Kindern am Computer."},{k:"C",de:"wählen für die Kinder die Software aus."}],ar:"المربيات هن اللي كيختارو البرامج الإبداعية."},
-    {n:5,c:"B",q:"Wenn die Kinder am Computer sitzen, dann",opts:[{k:"A",de:"gibt es häufig Streit."},{k:"B",de:"hilft ein Kind dem anderen."},{k:"C",de:"können sich die meisten nicht lange konzentrieren."}],ar:"النص يقول إنهم يتعاونون (helfen sich gegenseitig)."}
+    {n:1,c:"C",q:"Die Hundebesitzerin Elli Herfeld",opts:[{k:"A",de:"feiert ihren Geburtstag immer mit ihrem Hund.",ar:"تحتفل بعيد ميلادها مع كلبها"},{k:"B",de:"sieht ihren Hund als festes Familienmitglied.",ar:"تعتبر كلبها فرداً ثابتاً في العائلة"},{k:"C",de:"backt ihrem Hund zum Geburtstag einen Kuchen.",ar:"تخبز لكلبها كعكة عيد ميلاد"}],ar:"النص يقول إنها تحضر كعكة عيد ميلاد لكلبها."},
+    {n:2,c:"A",q:"In Seniorenheimen gibt es oft Tiere, damit",opts:[{k:"A",de:"die Senioren etwas tun, was gut für sie ist.",ar:"يقوم المسنون بشيء مفيد لهم"},{k:"B",de:"sie auf die älteren Menschen aufpassen.",ar:"يعتنون بكبار السن"},{k:"C",de:"die Senioren mehr spazieren gehen.",ar:"يمشون أكثر"}],ar:"الحيوانات تعطي المسنين مهمة مفيدة."},
+    {n:3,c:"A",q:"Bettina Schröther …",opts:[{k:"A",de:"verbringt die ganze Freizeit mit ihrem Hund.",ar:"تقضي كل وقت فراغها مع كلبها"},{k:"B",de:"macht regelmäßig Wellnessurlaube.",ar:"تأخذ عطلات صحية"},{k:"C",de:"lässt ihren Hund erziehen.",ar:"تترك كلبها يتدرب"}],ar:"النص يقول إنها تكون مع كلبها كل وقت فراغها."},
+    {n:4,c:"C",q:"Nach Meinung von Hundeexperte Marius Klotz sollte man",opts:[{k:"A",de:"sich zur Ernährung beraten lassen.",ar:"استشارة حول التغذية"},{k:"B",de:"seinen Hund immer gut behandeln.",ar:"معاملة جيدة"},{k:"C",de:"die Regeln bei der Hundeerziehung beachten.",ar:"مراعاة القواعد في التربية"}],ar:"الخبير يشدد على قواعد واضحة."},
+    {n:5,c:"A",q:"Fachleute meinen, dass",opts:[{k:"A",de:"man sich durch sein Haustier erholen kann.",ar:"يمكن للمرء أن يسترخي"},{k:"B",de:"man täglich spazieren gehen sollte.",ar:"المشي يومياً"},{k:"C",de:"ein Haustier ein sinnvolles Hobby ist.",ar:"هواية مفيدة"}],ar:"الحيوان الأليف يساعد على الراحة."}
   ]
 },
 { id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching",
@@ -306,62 +225,6 @@ const EXAMS = [
     {n:10,c:"C",hl:"Vegetarische Spezialitäten",de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.",ar:"ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاؤك لا يتناولون اللحوم أو الأسماك."}
   ]
 },
-{ id:"rita-t3", title:"Rita", level:"B1", sub:"Teile 3", type:"matching",
-  ads:[
-    {k:"A",t:"Surf & Travel",de:"Kurztrips der Deutschen Bahn\nStädtereise oder ab in die See? Entdecken Sie die schönsten Ecken Deutschlands:\nBerlin\n• Entdecken Sie die neue kulturelle Mitte Berlins!\n• Übernachten und relaxen Sie im Hotel “Funkturm”!\n• 2.-Kl.-Bahn ab 178,- EUR.\nOktoberfest München\n• Erleben Sie das berühmte Oktoberfest.\n• Übernachten im Hotel “Wiener Hof”.\n• 2.-Kl.-Bahn, Wiesn-T-Shirt ab 289,- EUR.",ar:"رحلات قصيرة"},
-    {k:"B",t:"Für den Fernsehfilm „Die Schönheit von Bitterfeld”",de:"suchen wir für einige Nachdrehtermine Kleindarsteller und Statisten.\nDrehzeit: 18.03.–25.03.\nGage: 40 Euro/Tag\nCasting: Mi., 19.02., 10–20 Uhr im Hotel Lindner\nWir freuen uns über schriftl. Bewerbung mit Foto und Tel.-Nr. an:\nReinhart/Baum, c/o Hotel Lindner, Hans-Dresch-Str. 27, 04179 Leipzig",ar:"فيلم تلفزيوني"},
-    {k:"C",t:"Messejobs",de:"Sie sind kontaktfreudig, hochmotiviert, zwischen 20 und 35 Jahre alt und möchten auf den Messen in Leipzig arbeiten?\nWir suchen GastgeberInnen, Messe-Hostessen und PromoterInnen.\nLuftfrachtbrief-identisches Formular bitte bis 01.03. an:\nmessejobs Leipzig\nPostfach 1010 85\n04010 Leipzig",ar:"عمل في المعارض"},
-    {k:"D",t:"Verkehrsmuseum Erfurt",de:"• Wie funktioniert ein Ottomotor?\n• Was klingt wie ein Benzin-Motorgewirr?\n• Warum sind Autos auch Designobjekte?\nVon den ersten Schlittenkufen bis zum neuesten Formel-1-Fahrzeug präsentiert das Verkehrsmuseum unter dem Thema „Mobilität und Technik“ die Lust an der Fortbewegung und ihre Geschichte.\nTäglich 9–17 Uhr, Donnerstag 9–20 Uhr\nVerkehrsmuseum Erfurt\nAugust-Bebel-Str. 14a\n99084 Erfurt\nTel. 508006-14\nwww.verkehrsmuseumerfurt.de",ar:"متحف النقل"},
-    {k:"E",t:"ADAC Urlaub mobil",de:"Bummeln und Genießen, Shoppen und Nightlife! 3 Tage lang liegt Ihnen Berlin zu Füßen. Anschließend starten Sie Ihre Autoreise durch die malerischen Landschaften von Nordseeküste bis Alpen.\n3 Nächte in Berlin plus 10 Übernachtungen unterwegs nach Wahl\nmit Frühstück, Parken im Hotel,\nindividueller ADAC-Planer.\nPro Person im Doppelzimmer 839,- €\ninkl. Tankservice 150,- €",ar:"باقة سياحية"},
-    {k:"F",t:"Filmclub",de:"Das Parfum – Die Geschichte eines Mörders\nRegie: Tom Tykwer\nMi., 16:30 Uhr & 21 Uhr\nFluch der Karibik 3\nSa., 14 Uhr\nHappy Feet\nSa., 17 Uhr\nThe Queen — englische Originalfassung\nSa., 19:30 Uhr – 20:30 Uhr\nBabel — englische Originalfassung\nSa.–So., 19:30 Uhr\nScarface\nSo., 21:15 Uhr",ar:"نادي سينما"},
-    {k:"G",t:"Ökomobil",de:"Meisterbetrieb des Garten- und Landschaftsbaus\nWir qualifizieren, bilden aus und schaffen Berufsfelder im Garten- und Landschaftsbau um:\n• geistig Behinderte\n• benachteiligte Jugendliche\n• arbeitslose Menschen\ndurch berufliche Integration.\nIn Zusammenarbeit mit TELOS – berufliche Bildung im sozialen Betrieb – führen wir Ausbildungen zum Gärtner/Werker des Garten- und Landschaftsbaus durch.\nInformation: www.galabau-oekonomobil.de",ar:"مؤسسة بستنة"},
-    {k:"H",t:"Jung gebliebener Rentner",de:"unkompliziert und gut aussehend, mit Verbundenheit zur Natur, sucht Freizeitpartnerin (bis 40) für gemeinsame Unternehmungen: Kultur, Kino, Wanderungen, Radtouren, Reisen.\nZuschriften unter LA 10/14-83/L3, Postf. 84, 04181 Leipzig.",ar:"متقاعد"},
-    {k:"I",t:"Feng Shui für den Garten",de:"Wie sollen Wege im Garten geführt werden? In welchem Bereich können Teiche oder Brunnen angelegt werden? Wo ist der beste Platz für die Gartenbank?\nMit Feng Shui lässt sich die positive Energie des Hauses bis in den Garten hinein fortsetzen.\nÖkologisches Bildungszentrum Dresden\nVortragsabend\nMi., 25.02., 19–21 Uhr\nSa./So., 28./29.02., 10–17 Uhr\nInfo: 0351 254400",ar:"فنغ شوي"},
-    {k:"J",t:"Studentinnen/SchülerInnen gesucht",de:"(ab 18 J.) für Betreuertätigkeit im Kinderferienlager Juli–August für Kinder zw. 6 und 12 J.\nWir bieten Fahrtkosten, Unterkunft, Verpflegung und Taschengeld 125,– € mtl.\nWeitere Infos: Jugendtours\nHebelstr. 32\n04177 Leipzig\n0341 / 4809194\nwww.jutou.de",ar:"عمل صيفي"},
-    {k:"K",t:"Gemeinsam schöne Dinge genießen",de:"Akademikerin, 38 J., mit Phantasie und Leidenschaft für Musik u. Kunst, Italien und das Meer sucht sportlich eleganten Partner, mit dem sie Konzerte besuchen, ausgehen und ferne Länder genießen kann.\nZuschriften an: Neue Presse,\nChiffre CFR-107",ar:"أكاديمية"},
-    {k:"L",t:"Samstagswerkstatt",de:"Kursinhalt: Aufbau des Autos, Störungen und Möglichkeiten zur Behebung, Wartungsarbeiten und Pflege, Tipps zum Gebrauchtswagenkauf.\nDie theoretischen Ausführungen werden in unserer Kfz-Werkstatt in die Praxis umgesetzt. Bitte Arbeitskleidung mitbringen.\nWinfried Mohr, A24 Autowerkstatt\nAdenbachstr. 36, 07743 Jena\nSa. 14.10., von 9–16 Uhr\nTel.: 34 10 44 14",ar:"ورشة السبت"}
-  ],
-  items:[
-    {n:1,c:"H",hl:"regelmaßig ins Kino",de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner. mit dem sie regelmaßig ins Kino gehen kann.",ar:"معرفتك في منتصف الثلاثينيات وتبحث عن شريك يمكنها الذهاب معه إلى السينما بانتظام."},
-    {n:2,c:"I",hl:"Garten verändern",de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps",ar:"ترغب في تغيير حديقتك وتبحث عن استشارات أو نصائح."},
-    {n:3,c:"J",hl:"einen Job",de:"Der Sohn Ihre Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job",ar:"ابن أصدقائك قد أنهى للتو الثانوية العامة ويبحث عن عمل لمدة شهرين في الصيف."},
-    {n:4,c:"X",hl:"Gartenarbeiten",de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen",ar:"يريد صديقك العمل في وظيفة جانبية تتعلق بأعمال الحدائق."},
-    {n:5,c:"K",hl:"zusammen verreisen",de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann",ar:"عمك البالغ من العمر 45 عامًا يبحث عن شريكة يمكنه السفر معها."},
-    {n:6,c:"B",hl:"bei einem Film mitspielen",de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen",ar:"ترغب في المشاركة في فيلم وكسب بعض المال."},
-    {n:7,c:"D",hl:"Geschichte des Autos",de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen",ar:"ابن أصدقائك مهتم بتاريخ السيارات، وتريد أن تقدم له شيئًا مثيرًا للاهتمام يوم الأحد."},
-    {n:8,c:"X",hl:"Bewerbungen",de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen",ar:"تبحث عن وظيفة وتحتاج إلى نصائح لطلبات التوظيف الخاصة بك."},
-    {n:9,c:"E",hl:"Reise durch Deutschland",de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot.",ar:"في الإجازة، تريد القيام برحلة بالسيارة عبر ألمانيا وتبحث عن عرض مناسب."},
-    {n:10,c:"L",hl:"Reparaturen",de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.",ar:"ترغب معارفك في تعلم كيفية إجراء إصلاحات بسيطة على سيارتها بنفسها."}
-  ]
-},
-{ id:"caroline-t3", title:"Caroline", level:"B1", sub:"Teile 3", type:"matching",
-  ads:[
-    {k:"A",t:"MUSEUM DER STADT FÜSSEN",de:"Lechhalde 3 · 87629 Füssen\nTel. (08362) 50 53 – 45 u. -43\nSTAATSGALERIE IM HOHEN SCHLOSS FÜSSEN\nMagnusplatz 10 · 87629 Füssen\nTel. (08362) 50 53 – 64\nÖffnungszeiten:\nApril bis Oktober:\nDi.–So. 11.00–16.00 Uhr\nMo. geschlossen\nNovember bis März:\nDi.–So. 14.00–16.00 Uhr\nMo. geschlossen",ar:"متحف مدينة فوسن"},
-    {k:"B",t:"Franziskaner Stüberl",de:"87629 Füssen – Eingang Fußgängerzone\nKemptener Straße 1\nTelefon (08362) 37124\nInh. Bernd Zientek\nGutbürgerliche Allgäuer und Bayerische Küche\nDer beliebte Treffpunkt in gemütlicher Atmosphäre\nSonntag-Ruhetag\nAuf Ihren Besuch freut sich\nBernd Zientek mit Team",ar:"مطعم بافاري"},
-    {k:"C",t:"SENNEREI–GENOSSENSCHAFT BAYERN",de:"Hochplateau – Lechlenfeld · Telefon (08362) 917214\nFrisch vom Erzeuger:\nAllgäuer Emmentaler\nAllgäuer Bergkäse\nTilsiter\nFrisch-Milch\neigene Butterherstellung\nÖFFNUNGSZEITEN:\nWochentags: 7.30–12.30 h, 16.30–18.30 h\nSa. u. Feiertag: 7.30–13.00 h, 16.30–17.00 h",ar:"تعاونية أجبان"},
-    {k:"D",t:"Sprachen lernen & Leute treffen",de:"Bildungsurlaub für Erwachsene in\nEngland, Malta, Frankreich, Spanien, Italien und Kalifornien\nFordern Sie unsere für Sie kostenlose Broschüre an.\nSchicken Sie uns ein Kennwort Ihrer Wahl, und wir senden Ihnen die Broschüre samt Einstufungstest.\nSPRACHCAFFEE\nHolbeinstr. 16\n60596 Frankfurt\nTel.: 069-61 90 120\nFax: 069-63 13 95",ar:"تعلم اللغات"},
-    {k:"E",t:"Jahreskonzert Füssen",de:"Wolfgang Amadeus Mozart\nKlavierkonzert Nr. 21 in C-Dur\nPianist: Hanno Porter\nLeitung:\nStadtmusikdirektor Robert Maul\nKarten bei der Kurverwaltung Füssen",ar:"حفل موسيقي"},
-    {k:"F",t:"Das Heimatmuseum Füssen",de:"lädt zum Besuch ein\nÖffnungszeiten:\nMontag bis Freitag: 10.00–12.00 Uhr und 14.00–16.45 Uhr\nSamstag und Sonntag: 10.00–12.00 Uhr\nIn der Instrumentensammlung sind wertvolle Geigen von Mittenwalder Meistern ausgestellt. Außerdem kann man in einer besonders eingerichteten Werkstatt dem Geigenbauer bei der Arbeit zuschauen.\nAußerhalb der Öffnungszeiten sind Gruppen ab 20 Personen nach Voranmeldung willkommen.\nTelefon (0 83 62) 25 11",ar:"متحف التراث"},
-    {k:"G",t:"bonCas",de:"Spezialitätenkäserei\nP. und U. Moser-Kolb\nHessenbohlstraße 14\nCH – 8512 Lustdorf\nSchweiz\nE-Mail: kieronkoelbi@bluewin.ch",ar:"مصنع أجبان"},
-    {k:"H",t:"Alfa Sprachreisen",de:"Crash-Kurse für Manager.\nSprachkurse und High-School-Programme für 12- bis 18-Jährige.\nEnglisch, Französisch, Spanisch, 17 Länder, mehr als 60 Kursorte.\nFordern Sie unsere kostenlose Broschüre an!\nAlfa-Sprachreisen GmbH\nRotebühlplatz 75 · 70178 Stuttgart\nTel. 0711-61 55 300 · Fax 0711-61 55 3010\nhttp://www.alfa-sprachreisen.de",ar:"رحلات لغوية"},
-    {k:"I",t:"Amadeus",de:"6. APRIL „Deutsche Schlagernacht“\n12. APRIL Donnerstag: 70er/80er Jahre Party\nNEU: Schnitzel-Woche\nCafe • Bistro\nAmadeus\nZirler Straße 19–21\n87450 FÜSSEN/ALLGÄU\nTel. 08362/93540",ar:"مقهى"},
-    {k:"J",t:"Free-System",de:"Englisch, Französisch, Italienisch, Spanisch, Deutsch für Ausländer\nMaschinenschreiben/Steno\nSie bestimmen die Unterrichtszeit\nSie lernen, so rasch Sie wollen\nIntensivkurse, Einzel-/Privat- und\nKleingruppen (2–3 Teilnehmer)\nIntensivkurse Crash Courses\nBrush up und Business\nSprachkurse für Manager\nEnglisch for Secretaries\nPrüfungen (intern/extern)\nFirst/Proficiency/TOEFL/MAT Alliance Française\nInstitut Grünberger\nRostock, direkt beim Hauptbahnhof",ar:"نظام لغات"},
-    {k:"K",t:"Ritterstub’n",de:"Fischspezialitäten\nDas Restaurant mit gepflegter Gastlichkeit im Herzen der Altstadt\n(geöffnet von 11–14½ Uhr und 17½–24 Uhr)\nMontag Ruhetag\nWarme Küche bis 22 Uhr\nRitterstraße 4, 87629 Füssen\nTel. 08362/7759\nFam. Roth-Winter freut sich auf Ihren Besuch",ar:"مطعم أسماك"},
-    {k:"L",t:"Alpenrösle",de:"Wollen Sie fein essen gehen?\nHotel–Restaurant\nAlpenrösle\nFüssen-Bad Faulenbach\nTel. (08362) 4017\nAuf Ihren Besuch freut sich Familie Hummel\nHotel • Café • Pension",ar:"فندق ومطعم"}
-  ],
-  items:[
-    {n:1,c:"E",hl:"Klavierkonzert",de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.",ar:"ترغب في الذهاب إلى حفل بيانو في نهاية الأسبوع."},
-    {n:2,c:"F",hl:"Montag ins Museum",de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.",ar:"أنت في فوسين وترغب في زيارة المتحف يوم الاثنين."},
-    {n:3,c:"B",hl:"bayerische Spezialität",de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",ar:"أنت في جنوب ألمانيا في إجازة وترغب في تذوق إحدى الأطباق البافارية."},
-    {n:4,c:"K",hl:"Fischessen",de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.",ar:"لقد قمت بترتيب لقاء مع معارفك لتناول وجبة سمك."},
-    {n:5,c:"C",hl:"Käsespezialitäten",de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",ar:"أنت في بافاريا وترغب في شراء منتجات الجبن المتخصصة."},
-    {n:6,c:"X",hl:"Deutschkurs in Wien",de:"Sie möchten einen Deutschkurs in Wien besuchen.",ar:"ترغب في حضور دورة لتعلم اللغة الألمانية في فيينا."},
-    {n:7,c:"H",hl:"Englisch lernen",de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.",ar:"ينبغي على ابنك البالغ من العمر 16 عاماً تعلم اللغة الإنجليزية في الخارج خلال العطلة."},
-    {n:8,c:"X",hl:"Sprachkurs auf CD",de:"Sie interessieren sich für einen Sprachkurs auf CD.",ar:"تهتم بدورة لتعلم اللغة على أقراص مدمجة."},
-    {n:9,c:"X",hl:"10-jährige Tochter",de:"Sie wollen, dass Ihre 10- jährige Tochter in den Ferien eine Fremdsprache lernt.",ar:"ترغب في أن تتعلم ابنتك البالغة من العمر 10 سنوات لغة أجنبية خلال العطلة."},
-    {n:10,c:"L",hl:"übernachten",de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",ar:"ترغب إحدى معارفك في الاحتفال بعيد ميلادها في مطعم والإقامة هناك أيضاً."}
-  ]
-},
 { id:"alex-sp1", title:"Alex Und Cora", level:"B1", sub:"Sprach 1", type:"sprach1",
   text: `Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, .....(1)..... ich seit zwei Monaten in einem Altersheim .....(2)..... der Nähe von Schaffhausen. Die Arbeit in .....(3)..... Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge .....(4)..... zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich .....(5)..... gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir .....(6)..... ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr .....(7)..... gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, .....(8)..... ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna .....(9)..... auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du .....(10)..... bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie`,
   items:[
@@ -375,36 +238,6 @@ const EXAMS = [
     {n:8,c:"weil",opts:["daher","deshalb","weil"],exp:"جملة ثانوية بفعل في النهاية"},
     {n:9,c:"aber",opts:["aber","als","wie"],exp:"للاستدراك"},
     {n:10,c:"hast",opts:["bist","hast","wirst"],exp:"erleben + haben"}
-  ]
-},
-{ id:"rita-sp1", title:"Rita", level:"B1", sub:"Sprach 1", type:"sprach1",
-  text: `Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich .....(1)..... erzählen. Am Anfang .....(2)..... ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt .....(3)..... zwei Antworten bekommen habe. Aber zum Glück hat einer davon .....(4).....: Ich werde nun zwei Nachmittage in der Woche als Babysitterin .....(5)..... einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und .....(6)..... sind sehr nett. Wir haben in der .....(7)..... Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und .....(8)..... Kindermuseum gegangen. .....(9)..... kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir .....(10)..... .\nLiebe Grüße\nDeine Tanja`,
-  items:[
-    {n:1,c:"davon",opts:["dafür","damit","davon"],exp:"erzählen von → davon"},
-    {n:2,c:"war",opts:["bin","habe","war"],exp:"war + ich في الماضي"},
-    {n:3,c:"nur",opts:["doch","nur","schon"],exp:"nur = فقط"},
-    {n:4,c:"gepasst",opts:["gepasst","passen","passt"],exp:"Partizip II بعد hat"},
-    {n:5,c:"bei",opts:["an","bei","zu"],exp:"bei einer Familie"},
-    {n:6,c:"beide",opts:["beide","beiden","beides"],exp:"لطفلين"},
-    {n:7,c:"ersten",opts:["erster","ersten","erstes"],exp:"Dativ مؤنث + die"},
-    {n:8,c:"ins",opts:["im","in","ins"],exp:"in + das = ins (حركة)"},
-    {n:9,c:"Besser",opts:["Am besten","Besser","Gut"],exp:"مقارنة"},
-    {n:10,c:"geht",opts:["geht","geht's","ging"],exp:"wie es dir geht"}
-  ]
-},
-{ id:"caroline-sp1", title:"Caroline", level:"B1", sub:"Sprach 1", type:"sprach1",
-  text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
-  items:[
-    {n:1,c:"erzählt",opts:["erzähle","erzählen","erzählt"],exp:"Perfekt + habe + Partizip II"},
-    {n:2,c:"dieses",opts:["diese","diesen","dieses"],exp:"Land محايد + Akkusativ"},
-    {n:3,c:"aber",opts:["aber","obwohl","sondern"],exp:"تناقض"},
-    {n:4,c:"für",opts:["an","für","vor"],exp:"für mich = بالنسبة ليا"},
-    {n:5,c:"wenn",opts:["als","wann","wenn"],exp:"حالة عامة متكررة"},
-    {n:6,c:"schon",opts:["wenn","ganz","schon"],exp:"تأكيد الدهشة"},
-    {n:7,c:"jetzt",opts:["früher","jetzt","seit"],exp:"مقارنة مع الحاضر"},
-    {n:8,c:"Unterschiede",opts:["Unterschied","Unterschiede","Unterschieden"],exp:"einige + جمع"},
-    {n:9,c:"müssen",opts:["brauchen","haben","müssen"],exp:"إلزام"},
-    {n:10,c:"dem",opts:["dem","den","der"],exp:"auf + Dativ مذكر"}
   ]
 },
 { id:"alex-sp2", title:"Alex Und Cora", level:"B1", sub:"Sprach 2", type:"sprach2",
@@ -422,39 +255,75 @@ const EXAMS = [
     {n:9,c:"mit",exp:"mit Wegbeschreibung"},
     {n:10,c:"bereits",exp:"bereits = بالفعل"}
   ]
-},
-{ id:"rita-sp2", title:"Rita", level:"B1", sub:"Sprach 2", type:"sprach2",
-  wordBank:[{k:"a",w:"der"},{k:"b",w:"die"},{k:"c",w:"Erst"},{k:"d",w:"geeignet"},{k:"e",w:"gerne"},{k:"f",w:"hätte"},{k:"g",w:"in"},{k:"h",w:"muss"},{k:"i",w:"nach"},{k:"j",w:"noch"},{k:"k",w:"schon"},{k:"l",w:"wann"},{k:"m",w:"wäre"},{k:"n",w:"wenn"},{k:"o",w:"wo"}],
-  text: `Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC`,
-  items:[
-    {n:1,c:"muss",exp:"فعل مساعد"},
-    {n:2,c:"nach",exp:"nach Frankfurt"},
-    {n:3,c:"die",exp:"جملة صلة للمؤنث"},
-    {n:4,c:"wäre",exp:"Konjunktiv II"},
-    {n:5,c:"geeignet",exp:"geeignet für"},
-    {n:6,c:"wo",exp:"أداة صلة مكان"},
-    {n:7,c:"gerne",exp:"طلب مؤدب"},
-    {n:8,c:"der",exp:"Dativ مؤنث"},
-    {n:9,c:"wenn",exp:"شرط"},
-    {n:10,c:"schon",exp:"schon jetzt"}
-  ]
-},
-{ id:"caroline-sp2", title:"Caroline", level:"B1", sub:"Sprach 2", type:"sprach2",
-  wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
-  text: `QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……`,
-  items:[
-    {n:1,c:"einmal",exp:"einmal = مرة واحدة"},
-    {n:2,c:"nur",exp:"nur = فقط"},
-    {n:3,c:"können",exp:"können = قدرة"},
-    {n:4,c:"wenn",exp:"wenn = شرط"},
-    {n:5,c:"statt",exp:"statt + zu"},
-    {n:6,c:"ganz",exp:"ganz = تماماً"},
-    {n:7,c:"bei",exp:"bei = مع"},
-    {n:8,c:"garantieren",exp:"garantieren = نضمن"},
-    {n:9,c:"Über",exp:"Über = أكثر من"},
-    {n:10,c:"machen",exp:"machen Sie mit (Imperativ)"}
-  ]
 }
+];
+
+// قسم السمع (Hören) - البيانات الحقيقية مع السيناريوهات المبتكرة
+const HOREN_EXAMS = [
+  { id:"h1", title:"Einkäufe im Internet", level:"B1", sub:"Teile 1", type:"horen", 
+    audio:[
+      { text: "Verstehen. Teil 1. Sie hören nun 5 kurze Texte. Dazu sollen Sie 5 Aufgaben lösen.", pitch: 1, rate: 0.95 },
+      { text: "In der heutigen Sendung geht es um persönliche Erfahrungen mit dem Einkaufen im Internet. Nummer 41.", pitch: 1, rate: 0.95 },
+      { text: "Ich erledige meine Einkäufe fast ausschließlich online. Das spart mir viel Zeit, besonders nach einem langen Arbeitstag. In ein Geschäft gehe ich nur, wenn es wirklich notwendig ist.", pitch: 0.8, rate: 1.0 },
+      { text: "Nummer 42.", pitch: 1, rate: 0.95 },
+      { text: "Ehrlich gesagt ist mir das Zwischenmenschliche beim Einkaufen nicht so wichtig. Ich bevorzuge es, meine Sachen schnell und ohne lange Gespräche zu besorgen.", pitch: 1.2, rate: 1.0 },
+      { text: "Nummer 43.", pitch: 1, rate: 0.95 },
+      { text: "Wenn ich dann im Internet etwas bestellen möchte, werde ich ständig unterbrochen. Ich finde einfach keine ruhige Minute, um in Ruhe Preise zu vergleichen.", pitch: 1.2, rate: 1.0 },
+      { text: "Nummer 44.", pitch: 1, rate: 0.95 },
+      { text: "Ich kaufe regelmäßig im Internet ein. Für mich ist das sehr praktisch, vor allem wenn ich spezielle Produkte suche. Ich hatte bisher keine schlechten Erfahrungen.", pitch: 0.8, rate: 1.0 },
+      { text: "Nummer 45.", pitch: 1, rate: 0.95 },
+      { text: "Ich bestelle meine Medikamente immer über eine Online-Apotheke. Das ist einfacher und meist auch günstiger. Früher bin ich dafür in die Stadt gefahren, aber jetzt finde ich den Lieferservice viel komfortabler.", pitch: 0.85, rate: 1.0 }
+    ],
+    items:[
+      { n:1,c:"R", de:"Herr Pawliczek erledigt alle seine Einkäufe im Internet.", ar:"السيد بافليتشيك كيقضي جميع مشترياتو فالإنترنت.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
+      { n:2,c:"F", de:"Frau Zimmermann legt beim Einkaufen großen Wert auf persönlichen Kontakt.", ar:"السيدة تسيمرمان كتعطي قيمة كبيرة للتواصل الشخصي ملي كتسوق.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
+      { n:3,c:"R", de:"Frau Schmidt findet zu Hause nicht genug Ruhe, um im Internet einzukaufen.", ar:"السيدة شميدت ما كتلقاش الهدوء الكافي فالدار باش تشري من الإنترنت.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
+      { n:4,c:"F", de:"Frau Ruttnigg ist vom Einkaufen im Internet nicht überzeugt.", ar:"السيدة روتنيغ ماشي مقتنعة بالتسوق عبر الإنترنت.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
+      { n:5,c:"F", de:"Herr Krause kauft seine Medikamente am liebsten in der nächsten Stadt.", ar:"السيد كراوزه كيفضل يشري دواوه من المدينة القريبة.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." }
+    ]
+  },
+  { id:"h2", title:"Bus zur Arbeit", level:"B1", sub:"Teile 1", type:"horen", 
+    audio:[
+      { text: "Guten Tag und herzlich willkommen bei Radio Aktuell. Heute hören Sie kurze Beiträge zum Thema Arbeitsweg. Nummer 41.", pitch: 1, rate: 0.95 },
+      { text: "Ich fahre jeden Tag mit dem Auto zur Arbeit. Morgens ist das für mich am bequemsten. Der Bus wäre vielleicht günstiger, aber ich möchte flexibel sein und nicht an Fahrpläne gebunden.", pitch: 0.8, rate: 1.0 },
+      { text: "Nummer 42.", pitch: 1, rate: 0.95 },
+      { text: "Ich arbeite in der Innenstadt und laufe morgens ein kleines Stück zu Fuß. Danach nehme ich die Straßenbahn. Ich finde diese Kombination aus Bewegung und öffentlichem Verkehrsmittel sehr angenehm.", pitch: 1.2, rate: 1.0 },
+      { text: "Nummer 43.", pitch: 1, rate: 0.95 },
+      { text: "Früher bin ich oft mit dem Auto zur Arbeit gefahren, aber seit einem Jahr mache ich das nicht mehr. Ich habe festgestellt, dass ich das Auto eigentlich gar nicht mehr brauche.", pitch: 0.85, rate: 1.0 },
+      { text: "Nummer 44.", pitch: 1, rate: 0.95 },
+      { text: "Ich fahre immer auf dieselbe Weise zur Arbeit. Mit dem Bus. Ich benutze nie andere Verkehrsmittel. Der Bus ist für mich zuverlässig und bequem.", pitch: 0.9, rate: 1.0 },
+      { text: "Nummer 45.", pitch: 1, rate: 0.95 },
+      { text: "Zur Arbeit fahre ich manchmal mit dem Fahrrad, manchmal mit dem Bus. Der Firmenbus ist nur eine von vielen Möglichkeiten. Ich finde es gut, verschiedene Optionen zu haben.", pitch: 1.1, rate: 1.0 }
+    ],
+    items:[
+      { n:1,c:"F", de:"Die Sprecherin könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدثة يمكنها تخيل الذهاب بالحافلة.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
+      { n:2,c:"R", de:"Die Sprecherin findet es gut, dass sie zur Arbeit ein Stück zu Fuß gehen kann.", ar:"المتحدثة تحب أنها تمشي شوية على رجليها.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
+      { n:3,c:"F", de:"Der Sprecher fährt nie mit dem Auto zur Arbeit.", ar:"المتحدث لا يقود السيارة أبداً.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
+      { n:4,c:"R", de:"Der Sprecher benutzt für den Weg zur Arbeit zurzeit verschiedene Verkehrsmittel.", ar:"المتحدث يستخدم وسائل نقل مختلفة.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
+      { n:5,c:"F", de:"Für die Sprecherin ist der Firmenbus die einzige Möglichkeit zur Arbeit zu kommen.", ar:"حافلة الشركة هي الخيار الوحيد.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." }
+    ]
+  },
+  { id:"h3", title:"Arbeitsplatz für Vater", level:"B1", sub:"Teile 1", type:"horen", 
+    audio:[
+      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Mit Beiträgen von Deutschlehrer Orhan Yiğit. Nummer 41.", pitch: 1, rate: 0.95 },
+      { text: "Mein Vater hat eine Arbeit. Er ist nicht immer glücklich, aber er mag seinen Job. Ich finde, er braucht keinen neuen Arbeitsplatz. Wichtiger ist, dass er genug Freizeit hat. Wir könnten dann mehr Zeit zusammen verbringen.", pitch: 1.2, rate: 1.0 },
+      { text: "Nummer 42.", pitch: 1, rate: 0.95 },
+      { text: "Ich bin kein sehr guter Schüler. Manche Fächer sind schwer für mich. Ich versuche besser zu werden, aber das klappt nicht immer. Meine Eltern sagen, ich soll mehr lernen. Trotzdem weiß ich, dass gute Noten wichtig sind.", pitch: 0.8, rate: 1.0 },
+      { text: "Nummer 43.", pitch: 1, rate: 0.95 },
+      { text: "Ich bin gern allein. Manchmal lese ich oder höre Musik. Dann will ich nicht gestört werden. Aber meine Familie klopft oft an meine Tür. Sie fragen etwas oder wollen reden. Ich finde das nervig.", pitch: 1.2, rate: 1.0 },
+      { text: "Nummer 44.", pitch: 1, rate: 0.95 },
+      { text: "Meine Mutter und ich streiten oft. Sie sagt, ich mache zu wenig im Haushalt. Manchmal verstehe ich sie nicht. Ich finde, sie ist zu streng. Aber vielleicht will sie nur das Beste für mich.", pitch: 0.85, rate: 1.0 },
+      { text: "Nummer 45.", pitch: 1, rate: 0.95 },
+      { text: "Meine Eltern sind nett, aber ich verbringe meine Zeit lieber mit Freunden. Wir gehen ins Kino oder treffen uns im Park. Natürlich liebe ich meine Familie, aber ich brauche auch meine Freiheit.", pitch: 1.1, rate: 1.0 }
+    ],
+    items:[
+      { n:1,c:"F", de:"Die Sprecherin wünscht sich einen Arbeitsplatz für ihren Vater.", ar:"المتحدثة تتمنى وظيفة لوالدها.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
+      { n:2,c:"R", de:"Der Sprecher ist kein besonders guter Schüler.", ar:"المتحدث ليس تلميذاً جيداً جداً.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
+      { n:3,c:"R", de:"Die Sprecherin möchte nicht immer gestört werden.", ar:"المتحدثة لا تريد أن يتم إزعاجها دائماً.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
+      { n:4,c:"R", de:"Der Sprecher versteht sich nicht gut mit seiner Mutter.", ar:"المتحدث لا يتفاهم جيداً مع والدته.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
+      { n:5,c:"F", de:"Die Sprecherin ist am liebsten mit ihren Eltern zusammen.", ar:"المتحدثة تفضل أن تكون مع والديها.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." }
+    ]
+  }
 ];
 
 const pointsOf = (ex) => {
@@ -479,6 +348,36 @@ const HighlightText = ({ text, phrase, active }) => {
   );
 };
 
+const playHorenAudio = (segments, onEnd) => {
+  if (!window.speechSynthesis) {
+    alert("المتصفح ديالك ماكيدعمش النطق الصوتي.");
+    return;
+  }
+  window.speechSynthesis.cancel();
+  let currentIndex = 0;
+
+  const playNext = () => {
+    if (currentIndex >= segments.length) {
+      if (onEnd) onEnd();
+      return;
+    }
+    const segment = segments[currentIndex];
+    const utterance = new SpeechSynthesisUtterance(segment.text);
+    utterance.lang = 'de-DE';
+    utterance.pitch = segment.pitch || 1;
+    utterance.rate = segment.rate || 1;
+    utterance.onend = () => {
+      currentIndex++;
+      setTimeout(playNext, 500);
+    };
+    utterance.onerror = () => {
+      if (onEnd) onEnd();
+    };
+    window.speechSynthesis.speak(utterance);
+  };
+  playNext();
+};
+
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
@@ -489,6 +388,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
   const [showHeader, setShowHeader] = useState(true);
   const [excluded, setExcluded] = useState({});
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showStory, setShowStory] = useState(false);
 
   const lastScrollY = React.useRef(0);
   const toastTimer = React.useRef(null);
@@ -571,6 +472,11 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     if (modalGap) setModalGap(null);
   };
 
+  const pickHoren = (n, c) => {
+    if (done !== null) return;
+    setAns(prev => ({ ...prev, [n]: c }));
+  };
+
   const cls = (it, k) => {
     const sel = ans[it.n];
     const isDone = done !== null;
@@ -583,7 +489,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
   };
 
-  const reset = () => { setAns({}); setDone(null); setActiveGap(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
+  const reset = () => { setAns({}); setDone(null); setActiveGap(null); setShowTranslation(false); setExcluded({}); setShowStory(false); window.scrollTo(0, 0); };
   const finish = () => { setDone(score); onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
 
   const onWordClick = (w) => {
@@ -600,6 +506,16 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     setActiveGap(next ? next.n : null);
   };
 
+  const toggleAudio = () => {
+    if (isPlaying) {
+      window.speechSynthesis.cancel();
+      setIsPlaying(false);
+      return;
+    }
+    setIsPlaying(true);
+    playHorenAudio(exam.audio, () => setIsPlaying(false));
+  };
+
   const renderSprachText = () => {
     if (showTranslation) {
       return <div style={{ textAlign: "center", color: "var(--muted)", padding: 20, fontSize: "1.1em" }}>الترجمة العربية لهذا النص غير متوفرة حالياً.</div>;
@@ -613,10 +529,10 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
         const isDone = done !== null;
         let gapContent = <span className="inline-gap" onClick={() => { if(!isDone) { exam.type === "sprach2" ? setActiveGap(gapNum) : setModalGap(gapNum); } }}>{selected ? selected : `(${gapNum})`}</span>;
         if (isDone && selected) {
-          if (selected === it.c) gapContent = <span className="sp1-correct-box">{selected}</span>;
-          else gapContent = <span style={{display: 'inline-flex', alignItems: 'center', gap: '4px'}}><span className="sp1-wrong-box">{selected}</span><span className="sp1-correct-box">{it.c}</span></span>;
+          if (selected === it.c) gapContent = <span className="sp1-correct">{selected}</span>;
+          else gapContent = <span style={{display: 'inline-flex', alignItems: 'center', gap: '4px'}}><span className="sp1-wrong">{selected}</span><span className="sp1-correct">{it.c}</span></span>;
         } else if (isDone && !selected) {
-           gapContent = <span className="sp1-correct-box">{it.c}</span>;
+           gapContent = <span className="sp1-correct">{it.c}</span>;
         } else if (selected) {
            gapContent = <span className="inline-gap filled" onClick={() => { if(!isDone) { exam.type === "sprach2" ? setActiveGap(gapNum) : setModalGap(gapNum); } }}>{selected}</span>;
         }
@@ -695,12 +611,89 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
     );
   };
 
+  const renderHoren = () => {
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+        <div className="card" style={{ padding: 16 }}>
+          <button onClick={toggleAudio} style={{
+            width: "100%", padding: "16px", borderRadius: "16px",
+            background: isPlaying ? "var(--badbg)" : "var(--okbg)",
+            color: isPlaying ? "var(--badc)" : "var(--okc)",
+            border: `2px solid ${isPlaying ? "var(--badc)" : "var(--okc)"}`,
+            fontWeight: 900, fontSize: "1.1em", display: "flex", alignItems: "center", justifyContent: "center", gap: 10
+          }}>
+            {isPlaying ? "⏹ إيقاف الصوت" : "▶️ استمع للنص الألماني"}
+          </button>
+        </div>
+
+        <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+          <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, fontSize: "0.9em", color: "var(--muted)" }}>
+            <div style={{ padding: "12px 8px", width: 60, textAlign: "center" }}>R</div>
+            <div style={{ padding: "12px 8px", width: 60, textAlign: "center" }}>F</div>
+            <div style={{ padding: "12px 8px", flex: 1 }}>AUSSAGE</div>
+            <div style={{ padding: "12px 8px", width: 40 }}></div>
+          </div>
+
+          {exam.items.map((it, idx) => {
+            const isDone = done !== null;
+            const isRight = ans[it.n] === "R";
+            const isFalsch = ans[it.n] === "F";
+            
+            let rClass = "rf-circle", fClass = "rf-circle";
+            if (isRight) rClass += " sel";
+            if (isFalsch) fClass += " sel";
+            
+            if (isDone) {
+              if (it.c === "R") rClass += " good";
+              else if (isRight) rClass += " bad";
+              
+              if (it.c === "F") fClass += " good";
+              else if (isFalsch) fClass += " bad";
+            }
+
+            return (
+              <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", background: isDone ? (ans[it.n] === it.c ? "var(--okbg)" : "var(--badbg)") : "var(--card)" }}>
+                <div style={{ padding: "12px 8px", width: 60, display: "flex", justifyContent: "center" }}>
+                  <div className={rClass} onClick={() => !isDone && pickHoren(it.n, "R")}></div>
+                </div>
+                <div style={{ padding: "12px 8px", width: 60, display: "flex", justifyContent: "center" }}>
+                  <div className={fClass} onClick={() => !isDone && pickHoren(it.n, "F")}></div>
+                </div>
+                <div style={{ padding: "12px 8px", flex: 1, fontSize: "0.95em", lineHeight: 1.5 }}>
+                  <span style={{ opacity: 0.5, marginRight: 8, fontWeight: 900 }}>{it.n}</span>
+                  <span className="de">{it.de}</span>
+                  {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{it.ar}</div>}
+                </div>
+                <div style={{ padding: "12px 8px", width: 40, display: "flex", justifyContent: "center" }}>
+                   {isDone && (ans[it.n] === it.c ? <span style={{ color: "var(--okc)", fontWeight: 900 }}>✓</span> : <span style={{ color: "var(--badc)", fontWeight: 900 }}>✗</span>)}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="card" style={{ padding: 16, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+          <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--muted)", fontWeight: 800 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            قصة سهلة للحفظ
+          </button>
+          {done !== null && <span style={{ fontWeight: 900, color: ans[exam.items[0].n] === exam.items[0].c ? "var(--okc)" : "var(--badc)" }}>النتيجة: {score} / {total}</span>}
+        </div>
+
+        {showStory && (
+          <div className="t2-ar" style={{ marginTop: 0 }}>
+            {exam.items[0].story}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const iconStyle = {
     width: 36, height: 36, borderRadius: "50%", background: "var(--card)",
     border: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "center",
     color: "var(--text)", padding: 2
   };
-  const germanBorder = { background: "linear-gradient(135deg, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)" };
 
   return (
     <div style={{ paddingBottom: 100 }}>
@@ -726,7 +719,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
           </button>
           <div>
             <div className="de" style={{ fontWeight: 900, fontSize: "1em", lineHeight: 1.2 }}>{exam.title}</div>
-            <div className="de" style={{ fontSize: ".75em", color: "var(--muted)", fontWeight: "bold" }}>LESEN · {exam.sub.toUpperCase()}</div>
+            <div className="de" style={{ fontSize: ".75em", color: "var(--muted)", fontWeight: "bold" }}>{exam.type === "horen" ? "HÖREN" : "LESEN"} · {exam.sub.toUpperCase()}</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
@@ -743,6 +736,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
       </div>
 
       <div style={{ margin: "0 10px" }}>
+        {exam.type === "horen" && renderHoren()}
+        
         {exam.type === "mcq" && (
           <div className="card" style={{ padding: "20px 16px" }}>
             {exam.paragraphs && exam.paragraphs.map((p, i) => (
@@ -762,7 +757,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
 
         {exam.type === "matching" && renderTeil3()}
 
-        {exam.type !== "sprach1" && exam.type !== "sprach2" && exam.type !== "matching" && exam.items.map((it, idx) => {
+        {exam.type !== "sprach1" && exam.type !== "sprach2" && exam.type !== "matching" && exam.type !== "horen" && exam.items.map((it, idx) => {
           const sel = ans[it.n];
           const isDone = done !== null;
           return (
@@ -889,8 +884,10 @@ function App() {
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
   const [showSubscription, setShowSubscription] = useState(false);
 
+  const [userLang, setUserLang] = useState(() => { try { return localStorage.getItem("ep_lang") || "ar"; } catch (e) { return "ar"; } });
+
   const [toast, setToast] = useState(null);
-  const toastTimer = React.useRef(null);
+  const toastTimer = useRef(null);
   const flash = (m) => {
     setToast(m);
     clearTimeout(toastTimer.current);
@@ -1003,7 +1000,11 @@ function App() {
           <div className="logo"><LogoImage size={50} /></div>
           <div>
             <div style={{ fontWeight: 900, fontSize: "1.2em" }}>EchtPrüfung</div>
-            <div className="de" style={{ fontSize: ".8em", color: "var(--muted)", fontWeight:"bold" }}>Deutsch B1 / B2</div>
+            <div className="de" style={{ fontSize: ".8em", color: "var(--muted)", fontWeight:"bold", display: "flex", alignItems: "center", gap: 4 }}>
+              <span>Deutsch B1 / B2</span> <span>•</span>
+              <span>{LANGS.find(l => l.c === userLang)?.f}</span>
+              <span>{LANGS.find(l => l.c === userLang)?.n}</span>
+            </div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
@@ -1023,7 +1024,7 @@ function App() {
         {view === "home" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             <div style={{
-              position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px",
+              position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "350px",
               display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
               padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
             }}>
@@ -1041,15 +1042,47 @@ function App() {
                   <LogoImage size={90} />
                 </div>
                 <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
-                <p style={{ margin: "0 0 16px", color: "#E2E8F0", fontSize: "1.1em", fontWeight: 700 }}>تطبيقك الأول للتحضير لامتحان</p>
-                <p className="de" style={{ margin: "0 0 24px", color: "#94A3B8", fontSize: "1em", fontWeight: 600 }}>Deine Nr. 1 für die Prüfungsvorbereitung</p>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "2em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "10px 28px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}>
+                
+                <div style={{ background: "rgba(245,184,46,0.2)", border: "1px solid var(--gold)", padding: "10px 20px", borderRadius: 16, margin: "0 auto 20px", maxWidth: "90%" }}>
+                  <p style={{ margin: 0, color: "#FFF", fontSize: "1.2em", fontWeight: 900 }}>
+                    تدرب على الامتحان الحقيقي واذهب للحصول عليه!
+                  </p>
+                  <p className="de" style={{ margin: "4px 0 0", color: "var(--gold)", fontSize: "0.9em", fontWeight: "bold", textAlign: "center" }}>
+                    Trainiere für die echte Prüfung und hol sie dir!
+                  </p>
+                </div>
+
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.5em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "10px 28px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}>
                   <span style={{ color: "#0F1B33" }}>B1</span>
                   <span style={{ color: "#DD0000" }}>&</span>
                   <span style={{ color: "#F5B82E" }}>B2</span>
                 </div>
               </div>
             </div>
+
+            <div className="card" style={{ padding: 20, borderRadius: 24 }}>
+              <h3 style={{ margin: "0 0 16px", fontSize: "1.2em", fontWeight: 900, textAlign: "center" }}>اختر لغتك / اختر لهجتك</h3>
+              <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.9em", marginBottom: 16 }}>
+                اختر الدولة ديالك باش نترجمو ليك الدروس والامتحانات باللهجة اللي كتفهمها.
+              </p>
+              <div className="lang-grid">
+                {LANGS.map(lang => (
+                  <button 
+                    key={lang.c}
+                    onClick={() => { 
+                      setUserLang(lang.c); 
+                      localStorage.setItem("ep_lang", lang.c); 
+                      flash(`تم اختيار اللغة: ${lang.n}`);
+                    }}
+                    className={`lang-btn ${userLang === lang.c ? "on" : ""}`}
+                  >
+                    <span style={{ fontSize: "1.5em" }}>{lang.f}</span>
+                    <span style={{ fontSize: "0.95em" }}>{lang.n}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div className="card" style={{ padding: 24, textAlign: "center", borderRadius: 24 }}>
               <h3 style={{ margin: "0 0 16px", fontSize: "1.2em", fontWeight: 900, color: "var(--text)" }}>الدعم الفني</h3>
               <p className="de" style={{ margin: "0 0 20px", color: "var(--muted)", fontSize: "0.95em", fontWeight: 600 }}>Support & Problemmeldung</p>
@@ -1097,10 +1130,37 @@ function App() {
           </div>
         )}
 
-        {(view === "horen" || view === "schreiben" || view === "sprechen" || view === "pruefung") && (
+        {view === "horen" && (
+          <div>
+            <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px" }}>Hören</h1>
+            <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
+              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4 }}>
+                <button className={`tab ${level === "B1" ? "on" : ""}`} onClick={() => setLevel("B1")} style={{ padding: "8px 28px", fontSize: "1.1em" }}>B1</button>
+                <button className={`tab ${level === "B2" ? "on" : ""}`} onClick={() => setLevel("B2")} style={{ padding: "8px 28px", fontSize: "1.1em" }}>B2</button>
+              </div>
+            </div>
+            
+            {HOREN_EXAMS.filter(e => e.level === level).map(ex => (
+              <button key={ex.id} className="card" onClick={() => setExam(ex)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 16 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{ex.title}</div>
+                    <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
+                      <span className="chip">{level}</span>
+                      <span>{ex.sub}</span>
+                    </div>
+                  </div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ color: "var(--muted)" }}><path d="M9 18l6-6-6-6"/></svg>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {(view === "schreiben" || view === "sprechen" || view === "pruefung") && (
           <div className="card" style={{ textAlign: "center", padding: 40 }}>
             <h2 style={{ margin: "0 0 6px", fontSize: "1.5em" }}>
-              {view === "horen" ? "Hören" : view === "schreiben" ? "Schreiben" : view === "sprechen" ? "Sprechen" : "امتحان"}
+              {view === "schreiben" ? "Schreiben" : view === "sprechen" ? "Sprechen" : "امتحان"}
             </h2>
             <p style={{ color: "var(--muted)", margin: 0, fontSize: "1.1em" }}>هاد القسم قريباً.</p>
           </div>
