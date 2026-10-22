@@ -5,263 +5,101 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EchtPrüfung</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
 <style>
   :root{
     --ink:#0F1B33; --gold:#F5B82E; --red:#DD0000;
-    --paper:#EEF1F6; --card:#FFFFFF; --text:#1E293B; --muted:#64748B; --line:#DCE3EC;
+    --paper:#F8FAFC; --card:#FFFFFF; --text:#1E293B; --muted:#64748B; --line:#E2E8F0;
     --okc:#15803D; --okbg:#DCFCE7; --badc:#B91C1C; --badbg:#FEE2E2;
     --fs:1;
-    --flag:linear-gradient(90deg,#111 0 33.33%,#DD0000 33.33% 66.66%,#FFCE00 66.66% 100%);
-    --german-grad:linear-gradient(135deg,#111111 0%,#DD0000 50%,#FFCE00 100%);
-    --raise:0 1px 0 rgba(255,255,255,.9) inset,0 5px 0 rgba(15,27,51,.07),0 14px 28px rgba(15,27,51,.10);
-    --press:0 1px 0 rgba(255,255,255,.9) inset,0 2px 0 rgba(15,27,51,.08),0 4px 10px rgba(15,27,51,.08);
+    --flag-splash: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.06) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.08) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(0,0,0,0.02) 0%, transparent 50%);
   }
   .dark{
-    --paper:#0A0F1E; --card:#17213A; --text:#F1F5F9; --muted:#94A3B8; --line:#2A3858;
+    --paper:#0B1120; --card:#1E293B; --text:#F8FAFC; --muted:#94A3B8; --line:#334155;
     --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
-    --raise:0 1px 0 rgba(255,255,255,.06) inset,0 5px 0 rgba(0,0,0,.40),0 14px 28px rgba(0,0,0,.45);
-    --press:0 1px 0 rgba(255,255,255,.06) inset,0 2px 0 rgba(0,0,0,.40),0 4px 10px rgba(0,0,0,.35);
+    --flag-splash: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.12) 0%, transparent 45%), radial-gradient(circle at 50% 50%, rgba(255,255,255,0.02) 0%, transparent 50%);
   }
+  html { font-size: calc(18px * var(--fs)); }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin: 0; background-color: var(--paper); background-image: var(--flag-splash); background-attachment: fixed; color: var(--text); font-family: 'Cairo', system-ui, sans-serif; direction: rtl; min-height: 100vh; padding-bottom: 100px; transition: background .3s, color .3s; }
+  button { font-family: inherit; cursor: pointer; }
+  .de { direction: ltr; text-align: left; font-family: system-ui, -apple-system, sans-serif; }
+  
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.02); color: var(--text); }
+  
+  .header { position: sticky; top: 12px; z-index: 30; margin: 12px; display: flex; justify-content: space-between; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 12px 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.3s ease; overflow: hidden; }
+  .header::after { content: ""; position: absolute; bottom: 0; left: 20px; right: 20px; height: 3px; border-radius: 3px 3px 0 0; background: linear-gradient(90deg, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%); opacity: 0.8; }
+  
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .logo { width: 46px; height: 46px; border-radius: 12px; background: var(--ink); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .btnI { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--text); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+  .btnI:active { background: var(--paper); transform: scale(0.95); }
 
-  html{ font-size:calc(18px * var(--fs)); }
-  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body{
-    margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl;
-    min-height:100vh; padding-bottom:110px; transition:background .3s,color .3s;
-    background:
-      radial-gradient(900px 420px at 100% -10%, rgba(245,184,46,.10), transparent 60%),
-      radial-gradient(800px 400px at -10% 0%, rgba(221,0,0,.06), transparent 60%),
-      var(--paper);
-    background-attachment:fixed;
-  }
-  button{ font-family:inherit; cursor:pointer; }
-  .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
-
-  .card{
-    background:var(--card); border:1px solid var(--line); border-radius:22px;
-    padding:16px; margin-bottom:14px; color:var(--text);
-    box-shadow:var(--raise); position:relative;
-  }
-
-  .header{
-    position:sticky; top:10px; z-index:30; margin:10px; display:flex; justify-content:space-between;
-    align-items:center; gap:10px; background:var(--card); border:1px solid var(--line);
-    border-radius:24px; padding:12px 16px; box-shadow:var(--raise); transition:transform .3s ease;
-  }
-  .header::after{
-    content:""; position:absolute; left:24px; right:24px; bottom:-1px; height:4px;
-    border-radius:4px 4px 0 0; background:var(--flag);
-  }
-  .brand{ display:flex; align-items:center; gap:12px; }
-  .logo{
-    width:50px; height:50px; border-radius:15px; background:var(--ink);
-    display:flex; align-items:center; justify-content:center; overflow:hidden;
-    box-shadow:0 4px 0 rgba(0,0,0,.35),0 8px 16px rgba(15,27,51,.25);
-  }
-
-  .btnI{
-    width:46px; height:46px; border:none; border-radius:50%; background:var(--line); color:var(--text);
-    display:flex; align-items:center; justify-content:center; transition:transform .12s,box-shadow .12s;
-    box-shadow:0 4px 0 rgba(0,0,0,.22),0 8px 14px rgba(0,0,0,.14);
-  }
-  .btnI:active{ transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,.22),0 3px 6px rgba(0,0,0,.12); }
-
-  .icon-de{
-    background:var(--german-grad); -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  .svg-de{ stroke:url(#germanGradient); fill:none; }
-
-  .btn{
-    border:none; border-radius:16px; padding:14px 16px; font-weight:800; background:var(--ink);
-    color:var(--gold); width:100%; font-size:1.05em; transition:transform .12s,box-shadow .12s,opacity .2s;
-    box-shadow:0 5px 0 #000,0 10px 18px rgba(15,27,51,.25);
-  }
-  .btn:active{ transform:translateY(4px); box-shadow:0 1px 0 #000,0 3px 8px rgba(15,27,51,.2); }
-  .btn.ghost{
-    background:var(--card); color:var(--text); border:1.5px solid var(--line);
-    box-shadow:0 4px 0 var(--line),0 8px 14px rgba(15,27,51,.06);
-  }
-  .btn.ghost:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--line); }
-  .btn:disabled{ opacity:.5; cursor:not-allowed; }
-  .chip{
-    display:inline-block; border-radius:9px; padding:3px 10px; font-size:.8em; font-weight:800;
-    background:var(--okbg); color:var(--okc); box-shadow:0 2px 0 rgba(0,0,0,.08);
-  }
-
-  .tabs{
-    display:grid; grid-template-columns:repeat(3,1fr); gap:10px; background:var(--card);
-    border:1px solid var(--line); border-radius:22px; padding:12px; margin-bottom:14px; box-shadow:var(--raise);
-  }
-  .tab{
-    border:none; background:transparent; color:var(--muted); padding:12px 6px; border-radius:14px;
-    font-weight:800; font-size:.95em; transition:all .2s;
-  }
-  .tab.on{
-    background:var(--gold); color:var(--ink);
-    box-shadow:0 4px 0 #C48F12,0 8px 14px rgba(245,184,46,.35);
-  }
-  .tab:active{ transform:translateY(2px); }
-
-  .bar{ height:10px; border-radius:99px; background:var(--line); overflow:hidden; box-shadow:inset 0 2px 3px rgba(0,0,0,.12); }
-  .fill{
-    height:100%; background:linear-gradient(to right,#000 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%);
-    transition:width .3s;
-  }
-
-  .opt{
-    display:flex; gap:12px; align-items:center; border:2px solid var(--line); background:var(--card);
-    color:var(--text); border-radius:16px; padding:14px; margin-bottom:10px; width:100%; text-align:right;
-    transition:transform .12s,box-shadow .12s,border-color .2s,background .2s; font-size:1.05em;
-    box-shadow:0 4px 0 var(--line),0 8px 12px rgba(15,27,51,.05);
-  }
-  .opt:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--line); }
-  .opt.dis{ opacity:.4; cursor:not-allowed; }
-  .opt.sel{
-    border-color:var(--gold); background:rgba(245,184,46,.16);
-    box-shadow:0 4px 0 #C48F12,0 8px 14px rgba(245,184,46,.25);
-  }
-  .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); box-shadow:0 4px 0 var(--okc); }
-  .opt.bad{ border-color:var(--badc); background:var(--badbg); color:var(--badc); box-shadow:0 4px 0 var(--badc); }
-  .opt.faded{ opacity:.4; box-shadow:none; }
-
-  .letter{
-    width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center;
-    justify-content:center; font-weight:900; flex-shrink:0; font-size:1.1em; color:var(--text);
-    border:1px solid var(--line); box-shadow:0 3px 0 var(--line),0 5px 8px rgba(0,0,0,.08);
-  }
-
-  .fb{ border-radius:16px; padding:14px; margin-top:10px; font-size:.95em; line-height:1.8; box-shadow:0 3px 0 rgba(0,0,0,.08); }
-  .fb.good{ background:var(--okbg); color:var(--okc); }
-  .fb.bad{ background:var(--badbg); color:var(--badc); }
-
-  .toast{
-    position:fixed; top:100px; left:50%; transform:translateX(-50%); background:var(--ink); color:var(--gold);
-    padding:10px 20px; border-radius:16px; font-weight:800; z-index:60; font-size:.95em;
-    box-shadow:0 4px 0 #000,0 12px 25px rgba(0,0,0,.25); animation:slideDown .3s;
-  }
-  @keyframes slideDown{ from{top:-20px;opacity:0} to{top:100px;opacity:1} }
-
-  .nav{
-    position:fixed; bottom:0; left:0; right:0; background:var(--card); border-top:1px solid var(--line);
-    display:flex; justify-content:space-around; padding:10px 4px 22px; z-index:40;
-    box-shadow:0 -8px 24px rgba(15,27,51,.08);
-  }
-  .nav::before{ content:""; position:absolute; top:-1px; left:0; right:0; height:3px; background:var(--flag); }
-  .nav button{
-    border:none; background:transparent; color:var(--muted); font-size:.8em; font-weight:800;
-    display:flex; flex-direction:column; align-items:center; gap:6px; min-width:56px;
-  }
-  .nav button.on{ color:var(--text); }
-  .nav .ic{ padding:6px 14px; border-radius:14px; transition:all .2s; }
-  .nav button.on .ic{ background:rgba(245,184,46,.28); box-shadow:0 3px 0 rgba(196,143,18,.55); transform:translateY(-2px); }
-  .nav button:active .ic{ transform:translateY(1px); }
-
-  .overlay{
-    position:fixed; inset:0; background:rgba(8,12,24,.62); z-index:50; display:flex;
-    justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(5px);
-  }
-  .sheet{
-    background:var(--card); border:1px solid var(--line); border-radius:28px; padding:24px; width:100%;
-    max-width:440px; max-height:85vh; overflow-y:auto; color:var(--text);
-    box-shadow:0 8px 0 rgba(0,0,0,.18),0 30px 60px rgba(0,0,0,.35);
-  }
-
-  .modeBtn{
-    flex:1; padding:12px 8px; border-radius:14px; border:2px solid var(--line); background:var(--card);
-    color:var(--muted); font-weight:800; font-size:.95em; font-family:inherit; cursor:pointer;
-    transition:all .15s; box-shadow:0 3px 0 var(--line);
-  }
-  .modeBtn.on{ border-color:var(--gold); background:var(--gold); color:var(--ink); box-shadow:0 3px 0 #C48F12; }
-  .modeBtn:active{ transform:translateY(2px); }
-
-  .inline-gap{
-    display:inline-flex; align-items:center; justify-content:center; min-width:90px;
-    border-bottom:3px dashed var(--gold); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900;
-    color:var(--text); transition:all .2s; vertical-align:middle; background:rgba(245,184,46,.10);
-    border-radius:10px 10px 0 0; font-size:1.1em;
-  }
-  .inline-gap.filled{ border-bottom-style:solid; background:rgba(245,184,46,.22); color:var(--gold); }
-  .sp1-correct-box{
-    background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:10px; font-weight:900;
-    font-size:1.05em; margin:0 4px; display:inline-block; border:1px solid var(--okc); box-shadow:0 2px 0 var(--okc);
-  }
-  .sp1-wrong-box{
-    background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:10px;
-    font-weight:900; font-size:1.05em; margin:0 4px; display:inline-block; border:1px solid var(--badc);
-  }
-
-  .word-bank{
-    display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:14px; background:var(--paper);
-    border-radius:16px; margin-bottom:14px; border:1px dashed var(--line); box-shadow:inset 0 2px 6px rgba(0,0,0,.06);
-  }
-  .word-btn{
-    padding:12px; border-radius:12px; border:1.5px solid var(--line); background:var(--card); color:var(--text);
-    font-weight:800; font-size:1em; text-align:right; transition:all .12s; display:flex; gap:10px; align-items:center;
-    box-shadow:0 3px 0 var(--line);
-  }
-  .word-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--line); }
-  .word-btn.used{ opacity:.3; text-decoration:line-through; pointer-events:none; }
-
-  .modal-list{ display:flex; flex-direction:column; gap:12px; margin-top:15px; }
-  .modal-item{
-    padding:16px; border-radius:16px; border:1.5px solid var(--line); background:var(--card); color:var(--text);
-    font-weight:800; font-size:1.05em; display:flex; justify-content:space-between; align-items:center;
-    cursor:pointer; transition:all .12s; text-align:right; box-shadow:0 4px 0 var(--line);
-  }
-  .modal-item:active{ transform:translateY(3px); box-shadow:0 1px 0 var(--line); }
-  .modal-item.selected{ border-color:var(--gold); background:rgba(245,184,46,.16); color:var(--text); box-shadow:0 4px 0 #C48F12; }
-  .modal-item.disabled{ opacity:.4; pointer-events:none; text-decoration:line-through; }
-
-  .highlight-yellow{ background-color:#FEF08A; color:#854D0E; border-radius:4px; padding:0 4px; font-weight:bold; transition:all .3s; }
-  .dark .highlight-yellow{ background-color:#854D0E; color:#FEF08A; }
-
-  .splash-screen{
-    position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center;
-    z-index:9999; transition:opacity .5s;
-    background:
-      radial-gradient(circle at 20% 15%, rgba(221,0,0,.35), transparent 45%),
-      radial-gradient(circle at 85% 90%, rgba(255,206,0,.28), transparent 45%),
-      #0F1B33;
-  }
-  .splash-logo{ width:180px; height:180px; margin-bottom:20px; animation:pulse 2s infinite; filter:drop-shadow(0 18px 24px rgba(0,0,0,.5)); }
-  @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
-
-  .auth-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
-  .auth-card{
-    background:var(--card); padding:32px; border-radius:30px; width:100%; max-width:420px;
-    border:1px solid var(--line); box-shadow:0 8px 0 rgba(15,27,51,.08),0 28px 50px rgba(15,27,51,.14); position:relative;
-  }
-  .auth-card::before{ content:""; position:absolute; top:0; left:30px; right:30px; height:5px; border-radius:0 0 6px 6px; background:var(--flag); }
-  .auth-input{
-    width:100%; padding:16px; margin-bottom:16px; border-radius:16px; border:1.5px solid var(--line);
-    background:var(--paper); color:var(--text); font-family:inherit; outline:none; font-size:1.05em;
-    box-shadow:inset 0 3px 6px rgba(0,0,0,.07); transition:border-color .2s;
-  }
-  .auth-input:focus{ border-color:var(--gold); }
-  .auth-btn{
-    width:100%; padding:16px; border-radius:16px; border:none; background:var(--ink); color:var(--gold);
-    font-weight:800; font-size:1.1em; cursor:pointer; margin-bottom:12px; transition:transform .12s,box-shadow .12s;
-    box-shadow:0 5px 0 #000,0 10px 18px rgba(15,27,51,.25);
-  }
-  .auth-btn:active{ transform:translateY(4px); box-shadow:0 1px 0 #000; }
-  .auth-btn.guest{ background:var(--gold); color:var(--ink); box-shadow:0 5px 0 #C48F12,0 10px 18px rgba(245,184,46,.3); }
-  .auth-btn.guest:active{ box-shadow:0 1px 0 #C48F12; }
-
-  .t2-para{ margin-bottom:20px; border-bottom:2px dashed var(--line); padding-bottom:18px; }
-  .t2-ar{
-    background:var(--paper); padding:16px; border-radius:14px; margin-top:12px; color:var(--text);
-    font-size:1.05em; line-height:1.8; border-right:5px solid var(--gold); direction:rtl; text-align:right;
-    box-shadow:inset 0 2px 6px rgba(0,0,0,.05);
-  }
-  .t2-trans-btn{
-    background:var(--card); border:1.5px solid var(--line); padding:8px 16px; border-radius:20px; font-size:.9em;
-    font-weight:bold; color:var(--muted); display:inline-flex; align-items:center; gap:8px; cursor:pointer;
-    margin-top:10px; transition:all .15s; box-shadow:0 3px 0 var(--line);
-  }
-  .t2-trans-btn:active{ transform:translateY(2px); box-shadow:0 1px 0 var(--line); }
+  .btn { border: none; border-radius: 12px; padding: 14px 16px; font-weight: 800; background: var(--ink); color: var(--gold); width: 100%; transition: opacity .2s; font-size: 1.05em; }
+  .btn.ghost { background: var(--card); color: var(--text); border: 1.5px solid var(--line); }
+  .btn:disabled { opacity: .5; cursor: not-allowed; }
+  .chip { display: inline-block; border-radius: 8px; padding: 3px 10px; font-size: .8em; font-weight: 800; background: var(--okbg); color: var(--okc); }
+  
+  .tabs { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 10px; margin-bottom: 14px; }
+  .tab { border: none; background: transparent; color: var(--muted); padding: 10px 6px; border-radius: 12px; font-weight: 800; font-size: .95em; transition: all .2s; }
+  .tab.on { background: var(--gold); color: var(--ink); box-shadow: 0 2px 8px rgba(245,184,46,0.3); }
+  
+  .opt { display: flex; gap: 12px; align-items: center; border: 2px solid transparent; background: var(--paper); color: var(--text); border-radius: 14px; padding: 14px; margin-bottom: 8px; width: 100%; text-align: right; transition: all .2s; font-size: 1.05em; }
+  .opt.dis { opacity: .4; cursor: not-allowed; }
+  .opt.sel { border-color: var(--gold); background: rgba(245,184,46,.1); }
+  .opt.good { border-color: var(--okc); background: var(--okbg); color: var(--okc); }
+  .opt.bad { border-color: var(--badc); background: var(--badbg); color: var(--badc); }
+  .opt.faded { opacity: .4; }
+  
+  .letter { width: 32px; height: 32px; border-radius: 50%; background: var(--card); display: flex; align-items: center; justify-content: center; font-weight: 900; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-size: 1.1em; color: var(--text); border: 1px solid var(--line); }
+  
+  .fb { border-radius: 12px; padding: 14px; margin-top: 10px; font-size: .95em; line-height: 1.8; }
+  .fb.good { background: var(--okbg); color: var(--okc); }
+  .fb.bad { background: var(--badbg); color: var(--badc); }
+  
+  .toast { position: fixed; top: 100px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--gold); padding: 10px 20px; border-radius: 14px; font-weight: 800; z-index: 60; font-size: .95em; box-shadow: 0 10px 25px rgba(0,0,0,0.2); animation: slideDown .3s; }
+  @keyframes slideDown { from{top:-20px;opacity:0} to{top:100px;opacity:1} }
+  
+  .nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); border-top: 1px solid var(--line); display: flex; justify-content: space-around; padding: 8px 4px 20px; z-index: 40; }
+  .nav button { border: none; background: transparent; color: var(--muted); font-size: .8em; font-weight: 800; display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 60px; transition: all 0.2s; }
+  .nav button.on { color: var(--ink); }
+  .dark .nav button.on { color: var(--gold); }
+  .nav .ic { font-size: 1.8em; padding: 6px 12px; border-radius: 12px; transition: background .2s; }
+  .nav button.on .ic { background: rgba(245,184,46,.15); }
+  
+  .overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 50; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); }
+  .sheet { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; width: 100%; max-width: 440px; box-shadow: 0 20px 40px rgba(0,0,0,0.2); max-height: 85vh; overflow-y: auto; color: var(--text); }
+  
+  .inline-gap { display: inline-flex; align-items: center; justify-content: center; min-width: 90px; border-bottom: 2px dashed var(--gold); padding: 2px 8px; margin: 0 6px; cursor: pointer; font-weight: 900; color: var(--text); transition: all .2s; vertical-align: middle; background: rgba(245,184,46,0.05); border-radius: 6px 6px 0 0; font-size: 1.1em; }
+  .inline-gap.filled { border-bottom-style: solid; background: rgba(245,184,46,0.15); color: var(--gold); }
+  .sp1-correct-box { background: var(--okbg); color: var(--okc); padding: 4px 12px; border-radius: 6px; font-weight: 900; font-size: 1.05em; margin: 0 4px; display: inline-block; border: 1px solid var(--okc); }
+  .sp1-wrong-box { background: var(--badbg); color: var(--badc); text-decoration: line-through; padding: 4px 12px; border-radius: 6px; font-weight: 900; font-size: 1.05em; margin: 0 4px; display: inline-block; border: 1px solid var(--badc); }
+  
+  .word-bank { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; padding: 14px; background: var(--paper); border-radius: 14px; margin-bottom: 14px; border: 1px dashed var(--line); }
+  .word-btn { padding: 12px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 1em; text-align: right; transition: all .2s; display: flex; gap: 10px; align-items: center; }
+  .word-btn.used { opacity: .3; text-decoration: line-through; pointer-events: none; }
+  
+  .modal-list { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+  .modal-item { padding: 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--text); font-weight: 800; font-size: 1.05em; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all .2s; text-align: right; }
+  .modal-item.selected { border-color: var(--gold); background: rgba(245,184,46,0.1); }
+  
+  .highlight-yellow { background-color: #FEF08A; color: #854D0E; border-radius: 4px; padding: 0 4px; font-weight: bold; }
+  .dark .highlight-yellow { background-color: #854D0E; color: #FEF08A; }
+  
+  .splash-screen { position: fixed; inset: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; background: radial-gradient(circle at 10% 20%, rgba(221,0,0,0.06) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255,206,0,0.08) 0%, transparent 45%), #FFFFFF; transition: opacity 0.5s; }
+  .splash-logo { width: 180px; height: 180px; margin-bottom: 20px; animation: pulse 2s infinite; }
+  @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+  
+  .auth-screen { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; background: var(--paper); }
+  .auth-card { background: var(--card); padding: 32px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--line); width: 100%; max-width: 420px; }
+  .auth-input { width: 100%; padding: 16px; margin-bottom: 16px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); color: var(--text); font-family: inherit; outline: none; font-size: 1.05em; }
+  .auth-input:focus { border-color: var(--gold); }
+  .auth-btn { width: 100%; padding: 16px; border-radius: 12px; border: none; background: var(--ink); color: var(--gold); font-weight: 800; font-size: 1.1em; cursor: pointer; margin-bottom: 12px; }
+  .auth-btn.guest { background: var(--gold); color: var(--ink); }
+  
+  .t2-ar { background: var(--paper); padding: 16px; border-radius: 12px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 4px solid var(--gold); direction: rtl; text-align: right; }
 </style>
 </head>
 <body>
@@ -279,7 +117,7 @@
 
 <script type="text/babel">
 const { useState, useEffect } = React;
-const WA = "212600000000";
+const WA = "212600000000"; // ⚠️ بدل هذا الرقم
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
 const LogoImage = ({ size = 50 }) => (
@@ -293,16 +131,13 @@ const LogoImage = ({ size = 50 }) => (
         <stop offset="0%" stopColor="#FDE047" />
         <stop offset="100%" stopColor="#F5B82E" />
       </linearGradient>
-      <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#000" floodOpacity="0.4"/>
-      </filter>
     </defs>
     <rect width="100" height="100" rx="24" fill="url(#bgGrad)" />
     <rect width="98" height="98" x="1" y="1" rx="23" stroke="rgba(255,255,255,0.08)" strokeWidth="2" fill="none" />
-    <rect x="18" y="28" width="36" height="10" rx="4" fill="#111111" filter="url(#shadow)"/>
-    <rect x="18" y="44" width="36" height="10" rx="4" fill="#DD0000" filter="url(#shadow)"/>
-    <rect x="18" y="60" width="36" height="10" rx="4" fill="url(#goldGrad)" filter="url(#shadow)"/>
-    <path d="M 54 70 L 54 30 L 70 30 C 84 30, 84 52, 70 52 L 54 52" stroke="url(#goldGrad)" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" filter="url(#shadow)"/>
+    <rect x="18" y="28" width="36" height="10" rx="4" fill="#111111" />
+    <rect x="18" y="44" width="36" height="10" rx="4" fill="#DD0000" />
+    <rect x="18" y="60" width="36" height="10" rx="4" fill="url(#goldGrad)" />
+    <path d="M 54 70 L 54 30 L 70 30 C 84 30, 84 52, 70 52 L 54 52" stroke="url(#goldGrad)" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
     <circle cx="80" cy="80" r="5" fill="#DD0000" />
   </svg>
 );
@@ -445,86 +280,86 @@ const EXAMS = [
 },
 { id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching",
   ads:[
-    {k:"A",t:"Café Simon",de:"Hausgemachte Pralinen, Kuchen, Torten und Eis",ar:"مقهى حلويات وآيس كريم"},
-    {k:"B",t:"Tourismusschulen",de:"Höhere Lehranstalt, Hotelhandelsschule, Tourismusfachschule",ar:"مدارس السياحة والفندقة"},
-    {k:"C",t:"Rathausekeller",de:"Originelles Weinkeller mit österreichischen, italienischen und französischen Weinen",ar:"مطعم نبيذ بأنواع أوروبية"},
-    {k:"D",t:"Liederbühne Robinson",de:"Kleinkunst, Vegetarische Spezialitäten",ar:"مسرح وطعام مع أكلات نباتية"},
-    {k:"E",t:"Interkulturelle Arbeit",de:"Berufsbegleitende Fortbildung für Fachkräfte",ar:"تكوين مهني في العمل بين الثقافات"},
-    {k:"F",t:"MortizCafé",de:"Kaffee so viel du willst",ar:"قهوة بلا حد بثمن قليل"},
-    {k:"G",t:"USA-Aufenthalt für Schüler",de:"Ein Schuljahr an einer High School",ar:"سنة دراسية في أمريكا للطلاب"},
-    {k:"H",t:"Abendkurs für Einsteiger",de:"Keine Angst vor neuen Technologien, Computer",ar:"دورة مسائية للمبتدئين في الكمبيوتر"},
-    {k:"I",t:"Bachls Kerzenstub'n",de:"TANZEN + ESSEN, Live-Musik",ar:"رقص وأكل وموسيقى حية"},
-    {k:"J",t:"Restaurantcafé Chesa",de:"Schweizer und bayerische Küche, Fischspezialitäten",ar:"مطعم بالمطبخ السويسري والبافاري والسمك"},
-    {k:"K",t:"Internationales Studium",de:"Fremdsprachen + Betriebswirtschaft, B.A. in European Administration",ar:"دراسة دولية مع لغات وإدارة في الخارج"},
-    {k:"L",t:"BIZ (Berufsinformationszentrum)",de:"Informationen zu Ausbildung und Studium",ar:"مركز معلومات للتكوين والدراسة"}
+    {k:"A",t:"Café Simon",de:"3 × in Passau Ihr Konditor\n1 = Rindermarkt 10\n2 = Ludwigsplatz 6\n3 = Donau-Passage\n• Hausgemachte Pralinen\n• Kuchen, Torten und Eis\n• Kleiner Mittagstisch",ar:"مقهى حلويات وآيس كريم"},
+    {k:"B",t:"Tourismusschulen",de:"4190 Bad Leonfelden\nHagauer Str. 17, Tel. 07213/6955\nHöhere Lehranstalt: 5 Jahre, Matura\nFV-Kolleg: 3 Semester – endet mit Matura\nHotelhandelsschule: 3 Jahre\nTourismufachschule: 3 Jahre",ar:"مدارس السياحة والفندقة"},
+    {k:"C",t:"Liederbühne Robinson",de:"KLEINKUNST VOM FEINSTEN\n• Urgemütliche Gaststube\n• Idyllischer Biergarten\n• Preiswerte Schmankerl\n• Vegetarische Spezialitäten\nSeewog 2 • 93486 Runding-Vierau\nTel. 09971-4651\nan der B20 Cham–Furth i. W.\ngeöffnet von Mi bis Sa von 17:00–1:00 Uhr\nSonn- und Feiertage ab 11:00 Uhr",ar:"مسرح وطعام مع أكلات نباتية"},
+    {k:"D",t:"Interkulturelle Arbeit",de:"Berufsbegleitende Fortbildung für Fachkräfte in pädagogischen, sozialen und Gesundheitsberufen.\nJan./Feb.\nParitätisches Bildungswerk.\nTel.: 0421 / 174720",ar:"تكوين مهني في العمل بين الثقافات"},
+    {k:"E",t:"Restaurantcafé Chesa W. Pressl",de:"Schweizer und bayerische Küche,\nFischspezialitäten aus heimischen Gewässern\nRömerplatz 3 (Hängebrücke)\n94032 Passau\nTel. 0851 / 33331",ar:"مطعم بالمطبخ السويسري والبافاري والسمك"},
+    {k:"F",t:"BIZ (Berufsinformationszentrum)",de:"Sie stehen vor beruflichen Entscheidungen\nDann informieren Sie sich im\nB I Z\nBerufsinformationszentrum\nÖffnungszeiten:\nMo, Di, Mi: 8.00 bis 12.00 Uhr\n14.00 bis 15.30 Uhr\nDo: 8.00 bis 12.00 Uhr • 14.00 bis 18.00 Uhr\nFr: 8.00 bis 12.00 Uhr\nSie finden dort ein breitgefächertes Angebot an Medien zu den Themen:\nAUSBILDUNG • STUDIUM\nArbeitsamt Passau, Innstraße 30, Tel. 0851/590-390",ar:"مركز معلومات للتكوين والدراسة"},
+    {k:"G",t:"Abendkurs für Einsteiger",de:"Keine Angst vor neuen Technologien\nDieser Kurs richtet sich an alle diejenigen, die sich bisher mit dem Computer noch gar nicht befasst haben. Neben theoretischen Grundwissen wird ein praktischer Einstieg in die Betriebssysteme Windows und Linux vermittelt.\nVHS Favoriten · Tel.: 01-785342",ar:"دورة مسائية للمبتدئين في الكمبيوتر"},
+    {k:"H",t:"MortizCafé",de:"Unterer Sand 2 Passau\nAquarium\n• täglich bis 18 Uhr\n• Kaffee so viel du willst\n  eine Tasse Frische\n  eine Tasse Milch\n  eine Tasse Zucker\n• täglich von 18 Uhr bis 21 Uhr\n  Beck’s\n  Jever\n  Bitburger\n  Badeger\n  Budweiser",ar:"قهوة بلا حد بثمن قليل"},
+    {k:"I",t:"Rathausekeller",de:"Originelles Weinkolal mit österreichischen, italienischen und französischen Qualitätsweinen sowie großer Auswahl an kaltem und warmem Buffet.\nMontag und Dienstag – Ruhetage\nA 4785 Halbach/Freinberg\nTel.: 0043/7713/6104",ar:"مطعم نبيذ بأنواع أوروبية"},
+    {k:"J",t:"Internationales Studium",de:"Fremdsprachen +\nBetriebswirtschaft.\nStaatlicher Uni-Abschluss\nB.A. in European\nAdministration. 2 Jahre in\nKöln + 1 Jahr in England\noder Frankreich.\nInfos anfordern:\nEuro Akademie\nElsa-Brandström-Str. 8\n50668 Köln\n(0221) 736074",ar:"دراسة دولية مع لغات وإدارة في الخارج"},
+    {k:"K",t:"USA-Aufenthalt für Schüler",de:"Ein Schuljahr an einer High School, sehr gute Gastfamilien, beste Betreuung, Prospekte und ausführliches Video kostenlos von:\nfee-Sprachreisen\nLeibnizstr. 3\n70193 Stuttgart\nTel. 0711 / 638048\nFax 6365378",ar:"سنة دراسية في أمريكا للطلاب"},
+    {k:"L",t:"Bachls Kerzenstub’n",de:"TANZEN + ESSEN  Live-Musik mit TANZ\nGenießen Sie unsere herzhaft deftigen Fleischspezialitäten!\n93136 Keilberg  Tel.: 08501 / 9111-0\nGeöffnet: Di–Sa ab 17.00 Uhr, Übernachtung für Reisende",ar:"رقص وأكل وموسيقى حية"}
   ],
   items:[
-    {n:1,c:"H",hl:"Computer",de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.",ar:"تحب قضاء ساعات طويلة في المقهى، ولكنك لا ترغب في إنفاق الكثير من المال."},
-    {n:2,c:"G",hl:"Grundkenntnisse für die Arbeit am Computer",de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer.",ar:"لقد غيرت مهنتك مؤخرًا وتحتاج إلى معرفة أساسية للعمل على الكمبيوتر من أجل المهمة الجديدة."},
-    {n:3,c:"D",hl:"besser qualifiziert sein",de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein.",ar:"تعمل في مستشفى وتتعامل غالبًا مع مرضى من جميع أنحاء العالم. ترغب في أن تكون أكثر تأهيلاً لهذه الوظيفة."},
-    {n:4,c:"X",hl:"Tanzkurs für Anfänger",de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit.",ar:"ترغب في حضور دورة رقص للمبتدئين. لديك وقت فقط في المساء."},
-    {n:5,c:"J",hl:"mit Fremdsprachen",de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren, um später vielleicht auch dort zu arbeiten.",ar:"ترغب في العمل في مجال يتعلق باللغات الأجنبية. لذلك تريد الدراسة في الخارج وربما العمل هناك لاحقًا."},
-    {n:6,c:"A",hl:"süße Sachen isst",de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am liebsten süße Sachen isst.",ar:"تريد قضاء فترة بعد الظهر المريحة في المدينة مع أحد معارفك. تعلم أن صديقك يفضل تناول الأشياء الحلوة."},
-    {n:7,c:"I",hl:"europäische Weine",de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren.",ar:"صديقك من الولايات المتحدة يزورك. هو خبير في النبيذ ويرغب في تذوق النبيذ الأوروبي."},
+    {n:1,c:"H",hl:"Kaffee so viel du willst",de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.",ar:"تحب قضاء ساعات طويلة في المقهى، ولكنك لا ترغب في إنفاق الكثير من المال."},
+    {n:2,c:"G",hl:"Computer",de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer.",ar:"لقد غيرت مهنتك مؤخرًا وتحتاج إلى معرفة أساسية للعمل على الكمبيوتر من أجل المهمة الجديدة."},
+    {n:3,c:"D",hl:"Fortbildung für Fachkräfte",de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein.",ar:"تعمل في مستشفى وتتعامل غالبًا مع مرضى من جميع أنحاء العالم. ترغب في أن تكون أكثر تأهيلاً لهذه الوظيفة."},
+    {n:4,c:"X",hl:"Tanzkurs",de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit.",ar:"ترغب في حضور دورة رقص للمبتدئين. لديك وقت فقط في المساء."},
+    {n:5,c:"J",hl:"Fremdsprachen",de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren um später vielleicht auch dort zu arbeiten.",ar:"ترغب في العمل في مجال يتعلق باللغات الأجنبية. لذلك تريد الدراسة في الخارج وربما العمل هناك لاحقًا."},
+    {n:6,c:"A",hl:"süße Sachen",de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am Liebsten süße Sachen isst.",ar:"تريد قضاء فترة بعد الظهر المريحة في المدينة مع أحد معارفك. تعلم أن صديقك يفضل تناول الأشياء الحلوة."},
+    {n:7,c:"I",hl:"Weine probieren",de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren.",ar:"صديقك من الولايات المتحدة يزورك. هو خبير في النبيذ ويرغب في تذوق النبيذ الأوروبي."},
     {n:8,c:"X",hl:"fremden Kulturen",de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen.",ar:"في وقت فراغك، ترغب في التعرف على بلدان أخرى وثقافات وتقاليد مختلفة."},
     {n:9,c:"F",hl:"Informationen und Beratung",de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung.",ar:"ابنة أصدقائك أنهت للتو الثانوية العامة وهي غير متأكدة مما تريد فعله لاحقًا. تحتاج إلى معلومات واستشارة."},
-    {n:10,c:"C",hl:"weder Fleisch noch Fisch",de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.",ar:"ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاؤك لا يتناولون اللحوم أو الأسماك."}
+    {n:10,c:"C",hl:"Vegetarische Spezialitäten",de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.",ar:"ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاؤك لا يتناولون اللحوم أو الأسماك."}
   ]
 },
 { id:"rita-t3", title:"Rita", level:"B1", sub:"Teile 3", type:"matching",
   ads:[
-    {k:"A",t:"Jung gebliebener Rentner",de:"Sucht Freizeitpartnerin (bis 40) für Kultur, Kino, Reisen",ar:"متقاعد يبحث عن شريكة للسينما والسفر"},
-    {k:"B",t:"Surf & Travel",de:"Kurztrips der Deutschen Bahn, Berlin, Oktoberfest",ar:"رحلات قصيرة بالقطار إلى برلين وأكتوبرفست"},
-    {k:"C",t:"Feng Shui für den Garten",de:"Vortragsabend, Beratung für die Gestaltung des Gartens",ar:"أمسية حول تصميم الحدائق بالفنغ شوي"},
-    {k:"D",t:"Für den Fernsehfilm",de:"Kleindarsteller und Statisten gesucht, Gage 40 Euro/Tag",ar:"مطلوب ممثلون إضافيون في فيلم تلفزيوني"},
-    {k:"E",t:"Messejobs",de:"Hostessen und Promoter für Messen in Leipzig",ar:"عمل كمضيفين في المعارض"},
-    {k:"F",t:"Verkehrsmuseum Erfurt",de:"Mobilität und Technik, Geschichte des Autos",ar:"متحف النقل وتاريخ السيارات"},
-    {k:"G",t:"ADAC Urlaub mobil",de:"Berlin plus Autoreise durch Deutschland",ar:"باقة برلين ثم رحلة بالسيارة في ألمانيا"},
-    {k:"H",t:"Filmclub",de:"Filmvorführungen, Kino",ar:"نادي سينما"},
-    {k:"I",t:"Samstagswerkstatt",de:"Aufbau des Autos, Reparatur und Pflege",ar:"ورشة لتعلم إصلاح السيارة"},
-    {k:"J",t:"Ökomobil",de:"Garten- und Landschaftsbau, Ausbildung",ar:"مؤسسة لتكوين في البستنة"},
-    {k:"K",t:"Studentinnen/SchülerInnen gesucht",de:"Betreuung im Kinderferienlager, Taschengeld 125 €",ar:"مشرفون لمخيم صيفي للأطفال"},
-    {k:"L",t:"Gemeinsam schöne Dinge genießen",de:"Akademikerin sucht sportlich eleganten Partner",ar:"أكاديمية تبحث عن شريك للحفلات والسفر"}
+    {k:"A",t:"Surf & Travel",de:"Kurztrips der Deutschen Bahn\nStädtereise oder ab in die See? Entdecken Sie die schönsten Ecken Deutschlands:\nBerlin\n• Entdecken Sie die neue kulturelle Mitte Berlins!\n• Übernachten und relaxen Sie im Hotel “Funkturm”!\n• 2.-Kl.-Bahn ab 178,- EUR.\nOktoberfest München\n• Erleben Sie das berühmte Oktoberfest.\n• Übernachten im Hotel “Wiener Hof”.\n• 2.-Kl.-Bahn, Wiesn-T-Shirt ab 289,- EUR.",ar:"رحلات قصيرة"},
+    {k:"B",t:"Für den Fernsehfilm „Die Schönheit von Bitterfeld”",de:"suchen wir für einige Nachdrehtermine Kleindarsteller und Statisten.\nDrehzeit: 18.03.–25.03.\nGage: 40 Euro/Tag\nCasting: Mi., 19.02., 10–20 Uhr im Hotel Lindner\nWir freuen uns über schriftl. Bewerbung mit Foto und Tel.-Nr. an:\nReinhart/Baum, c/o Hotel Lindner, Hans-Dresch-Str. 27, 04179 Leipzig",ar:"فيلم تلفزيوني"},
+    {k:"C",t:"Messejobs",de:"Sie sind kontaktfreudig, hochmotiviert, zwischen 20 und 35 Jahre alt und möchten auf den Messen in Leipzig arbeiten?\nWir suchen GastgeberInnen, Messe-Hostessen und PromoterInnen.\nLuftfrachtbrief-identisches Formular bitte bis 01.03. an:\nmessejobs Leipzig\nPostfach 1010 85\n04010 Leipzig",ar:"عمل في المعارض"},
+    {k:"D",t:"Verkehrsmuseum Erfurt",de:"• Wie funktioniert ein Ottomotor?\n• Was klingt wie ein Benzin-Motorgewirr?\n• Warum sind Autos auch Designobjekte?\nVon den ersten Schlittenkufen bis zum neuesten Formel-1-Fahrzeug präsentiert das Verkehrsmuseum unter dem Thema „Mobilität und Technik“ die Lust an der Fortbewegung und ihre Geschichte.\nTäglich 9–17 Uhr, Donnerstag 9–20 Uhr\nVerkehrsmuseum Erfurt\nAugust-Bebel-Str. 14a\n99084 Erfurt\nTel. 508006-14\nwww.verkehrsmuseumerfurt.de",ar:"متحف النقل"},
+    {k:"E",t:"ADAC Urlaub mobil",de:"Bummeln und Genießen, Shoppen und Nightlife! 3 Tage lang liegt Ihnen Berlin zu Füßen. Anschließend starten Sie Ihre Autoreise durch die malerischen Landschaften von Nordseeküste bis Alpen.\n3 Nächte in Berlin plus 10 Übernachtungen unterwegs nach Wahl\nmit Frühstück, Parken im Hotel,\nindividueller ADAC-Planer.\nPro Person im Doppelzimmer 839,- €\ninkl. Tankservice 150,- €",ar:"باقة سياحية"},
+    {k:"F",t:"Filmclub",de:"Das Parfum – Die Geschichte eines Mörders\nRegie: Tom Tykwer\nMi., 16:30 Uhr & 21 Uhr\nFluch der Karibik 3\nSa., 14 Uhr\nHappy Feet\nSa., 17 Uhr\nThe Queen — englische Originalfassung\nSa., 19:30 Uhr – 20:30 Uhr\nBabel — englische Originalfassung\nSa.–So., 19:30 Uhr\nScarface\nSo., 21:15 Uhr",ar:"نادي سينما"},
+    {k:"G",t:"Ökomobil",de:"Meisterbetrieb des Garten- und Landschaftsbaus\nWir qualifizieren, bilden aus und schaffen Berufsfelder im Garten- und Landschaftsbau um:\n• geistig Behinderte\n• benachteiligte Jugendliche\n• arbeitslose Menschen\ndurch berufliche Integration.\nIn Zusammenarbeit mit TELOS – berufliche Bildung im sozialen Betrieb – führen wir Ausbildungen zum Gärtner/Werker des Garten- und Landschaftsbaus durch.\nInformation: www.galabau-oekonomobil.de",ar:"مؤسسة بستنة"},
+    {k:"H",t:"Jung gebliebener Rentner",de:"unkompliziert und gut aussehend, mit Verbundenheit zur Natur, sucht Freizeitpartnerin (bis 40) für gemeinsame Unternehmungen: Kultur, Kino, Wanderungen, Radtouren, Reisen.\nZuschriften unter LA 10/14-83/L3, Postf. 84, 04181 Leipzig.",ar:"متقاعد"},
+    {k:"I",t:"Feng Shui für den Garten",de:"Wie sollen Wege im Garten geführt werden? In welchem Bereich können Teiche oder Brunnen angelegt werden? Wo ist der beste Platz für die Gartenbank?\nMit Feng Shui lässt sich die positive Energie des Hauses bis in den Garten hinein fortsetzen.\nÖkologisches Bildungszentrum Dresden\nVortragsabend\nMi., 25.02., 19–21 Uhr\nSa./So., 28./29.02., 10–17 Uhr\nInfo: 0351 254400",ar:"فنغ شوي"},
+    {k:"J",t:"Studentinnen/SchülerInnen gesucht",de:"(ab 18 J.) für Betreuertätigkeit im Kinderferienlager Juli–August für Kinder zw. 6 und 12 J.\nWir bieten Fahrtkosten, Unterkunft, Verpflegung und Taschengeld 125,– € mtl.\nWeitere Infos: Jugendtours\nHebelstr. 32\n04177 Leipzig\n0341 / 4809194\nwww.jutou.de",ar:"عمل صيفي"},
+    {k:"K",t:"Gemeinsam schöne Dinge genießen",de:"Akademikerin, 38 J., mit Phantasie und Leidenschaft für Musik u. Kunst, Italien und das Meer sucht sportlich eleganten Partner, mit dem sie Konzerte besuchen, ausgehen und ferne Länder genießen kann.\nZuschriften an: Neue Presse,\nChiffre CFR-107",ar:"أكاديمية"},
+    {k:"L",t:"Samstagswerkstatt",de:"Kursinhalt: Aufbau des Autos, Störungen und Möglichkeiten zur Behebung, Wartungsarbeiten und Pflege, Tipps zum Gebrauchtswagenkauf.\nDie theoretischen Ausführungen werden in unserer Kfz-Werkstatt in die Praxis umgesetzt. Bitte Arbeitskleidung mitbringen.\nWinfried Mohr, A24 Autowerkstatt\nAdenbachstr. 36, 07743 Jena\nSa. 14.10., von 9–16 Uhr\nTel.: 34 10 44 14",ar:"ورشة السبت"}
   ],
   items:[
-    {n:1,c:"H",hl:"regelmäßig ins Kino gehen",de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann.",ar:"معرفتك في منتصف الثلاثينيات وتبحث عن شريك يمكنها الذهاب معه إلى السينما بانتظام."},
-    {n:2,c:"I",hl:"Garten verändern",de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps.",ar:"ترغب في تغيير حديقتك وتبحث عن استشارات أو نصائح."},
-    {n:3,c:"J",hl:"einen Job",de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job.",ar:"ابن أصدقائك قد أنهى للتو الثانوية العامة ويبحث عن عمل لمدة شهرين في الصيف."},
-    {n:4,c:"X",hl:"Gartenarbeiten",de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen.",ar:"يريد صديقك العمل في وظيفة جانبية تتعلق بأعمال الحدائق."},
-    {n:5,c:"K",hl:"zusammen verreisen",de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann.",ar:"عمك البالغ من العمر 45 عامًا يبحث عن شريكة يمكنه السفر معها."},
-    {n:6,c:"B",hl:"bei einem Film mitspielen",de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen.",ar:"ترغب في المشاركة في فيلم وكسب بعض المال."},
-    {n:7,c:"D",hl:"Geschichte des Autos",de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen.",ar:"ابن أصدقائك مهتم بتاريخ السيارات، وتريد أن تقدم له شيئًا مثيرًا للاهتمام يوم الأحد."},
-    {n:8,c:"X",hl:"Tipps für ihre Bewerbungen",de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen.",ar:"تبحث عن وظيفة وتحتاج إلى نصائح لطلبات التوظيف الخاصة بك."},
+    {n:1,c:"H",hl:"regelmaßig ins Kino",de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner. mit dem sie regelmaßig ins Kino gehen kann.",ar:"معرفتك في منتصف الثلاثينيات وتبحث عن شريك يمكنها الذهاب معه إلى السينما بانتظام."},
+    {n:2,c:"I",hl:"Garten verändern",de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps",ar:"ترغب في تغيير حديقتك وتبحث عن استشارات أو نصائح."},
+    {n:3,c:"J",hl:"einen Job",de:"Der Sohn Ihre Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job",ar:"ابن أصدقائك قد أنهى للتو الثانوية العامة ويبحث عن عمل لمدة شهرين في الصيف."},
+    {n:4,c:"X",hl:"Gartenarbeiten",de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen",ar:"يريد صديقك العمل في وظيفة جانبية تتعلق بأعمال الحدائق."},
+    {n:5,c:"K",hl:"zusammen verreisen",de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann",ar:"عمك البالغ من العمر 45 عامًا يبحث عن شريكة يمكنه السفر معها."},
+    {n:6,c:"B",hl:"bei einem Film mitspielen",de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen",ar:"ترغب في المشاركة في فيلم وكسب بعض المال."},
+    {n:7,c:"D",hl:"Geschichte des Autos",de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen",ar:"ابن أصدقائك مهتم بتاريخ السيارات، وتريد أن تقدم له شيئًا مثيرًا للاهتمام يوم الأحد."},
+    {n:8,c:"X",hl:"Bewerbungen",de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen",ar:"تبحث عن وظيفة وتحتاج إلى نصائح لطلبات التوظيف الخاصة بك."},
     {n:9,c:"E",hl:"Reise durch Deutschland",de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot.",ar:"في الإجازة، تريد القيام برحلة بالسيارة عبر ألمانيا وتبحث عن عرض مناسب."},
     {n:10,c:"L",hl:"Reparaturen",de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.",ar:"ترغب معارفك في تعلم كيفية إجراء إصلاحات بسيطة على سيارتها بنفسها."}
   ]
 },
 { id:"caroline-t3", title:"Caroline", level:"B1", sub:"Teile 3", type:"matching",
   ads:[
-    {k:"A",t:"Sprachen lernen & Leute treffen",de:"Bildungsurlaub für Erwachsene in England, Malta, Frankreich",ar:"دورات لغات للبالغين في الخارج"},
-    {k:"B",t:"Amadeus",de:"Cafe, Bistro, Schlagernacht, Schnitzel-Woche",ar:"مقهى وفعاليات موسيقية"},
-    {k:"C",t:"Ritterstub’n",de:"Fischspezialitäten, Restaurant in der Altstadt",ar:"مطعم متخصص في الأسماك"},
-    {k:"D",t:"Museum der Stadt Füssen",de:"Öffnungszeiten April bis Oktober: Di–So, Mo. geschlossen",ar:"متحف مغلق يوم الاثنين"},
-    {k:"E",t:"Das Heimatmuseum Füssen",de:"Öffnungszeiten: Montag bis Freitag",ar:"متحف مفتوح يوم الاثنين"},
-    {k:"F",t:"Franziskaner Stüberl",de:"Gutbürgerliche Allgäuer und Bayerische Küche",ar:"مطعم بالمطبخ البافاري"},
-    {k:"G",t:"Alpenrösle",de:"Hotel-Restaurant, Hotel • Café • Pension",ar:"فندق ومطعم مع إقامة"},
-    {k:"H",t:"Free-System",de:"Englisch, Französisch, Deutsch für Ausländer, Intensivkurse",ar:"معهد لغات بدروس مرنة"},
-    {k:"I",t:"Alfa Sprachreisen",de:"Sprachkurse und High-School-Programme für 12- bis 18-Jährige",ar:"برامج لغات للمراهقين من 12 إلى 18 سنة"},
-    {k:"J",t:"bonCas",de:"Spezialitätenkäserei, Schweiz",ar:"مصنع أجبان سويسري"},
-    {k:"K",t:"Jahreskonzert Füssen",de:"Mozart, Klavierkonzert Nr. 21 in C-Dur",ar:"حفل موسيقي لموتسارت"},
-    {k:"L",t:"Sennerei-Genossenschaft Bayern",de:"Allgäuer Emmentaler, Bergkäse, Tilsiter",ar:"تعاونية أجبان بافارية"}
+    {k:"A",t:"MUSEUM DER STADT FÜSSEN",de:"Lechhalde 3 · 87629 Füssen\nTel. (08362) 50 53 – 45 u. -43\nSTAATSGALERIE IM HOHEN SCHLOSS FÜSSEN\nMagnusplatz 10 · 87629 Füssen\nTel. (08362) 50 53 – 64\nÖffnungszeiten:\nApril bis Oktober:\nDi.–So. 11.00–16.00 Uhr\nMo. geschlossen\nNovember bis März:\nDi.–So. 14.00–16.00 Uhr\nMo. geschlossen",ar:"متحف مدينة فوسن"},
+    {k:"B",t:"Franziskaner Stüberl",de:"87629 Füssen – Eingang Fußgängerzone\nKemptener Straße 1\nTelefon (08362) 37124\nInh. Bernd Zientek\nGutbürgerliche Allgäuer und Bayerische Küche\nDer beliebte Treffpunkt in gemütlicher Atmosphäre\nSonntag-Ruhetag\nAuf Ihren Besuch freut sich\nBernd Zientek mit Team",ar:"مطعم بافاري"},
+    {k:"C",t:"SENNEREI–GENOSSENSCHAFT BAYERN",de:"Hochplateau – Lechlenfeld · Telefon (08362) 917214\nFrisch vom Erzeuger:\nAllgäuer Emmentaler\nAllgäuer Bergkäse\nTilsiter\nFrisch-Milch\neigene Butterherstellung\nÖFFNUNGSZEITEN:\nWochentags: 7.30–12.30 h, 16.30–18.30 h\nSa. u. Feiertag: 7.30–13.00 h, 16.30–17.00 h",ar:"تعاونية أجبان"},
+    {k:"D",t:"Sprachen lernen & Leute treffen",de:"Bildungsurlaub für Erwachsene in\nEngland, Malta, Frankreich, Spanien, Italien und Kalifornien\nFordern Sie unsere für Sie kostenlose Broschüre an.\nSchicken Sie uns ein Kennwort Ihrer Wahl, und wir senden Ihnen die Broschüre samt Einstufungstest.\nSPRACHCAFFEE\nHolbeinstr. 16\n60596 Frankfurt\nTel.: 069-61 90 120\nFax: 069-63 13 95",ar:"تعلم اللغات"},
+    {k:"E",t:"Jahreskonzert Füssen",de:"Wolfgang Amadeus Mozart\nKlavierkonzert Nr. 21 in C-Dur\nPianist: Hanno Porter\nLeitung:\nStadtmusikdirektor Robert Maul\nKarten bei der Kurverwaltung Füssen",ar:"حفل موسيقي"},
+    {k:"F",t:"Das Heimatmuseum Füssen",de:"lädt zum Besuch ein\nÖffnungszeiten:\nMontag bis Freitag: 10.00–12.00 Uhr und 14.00–16.45 Uhr\nSamstag und Sonntag: 10.00–12.00 Uhr\nIn der Instrumentensammlung sind wertvolle Geigen von Mittenwalder Meistern ausgestellt. Außerdem kann man in einer besonders eingerichteten Werkstatt dem Geigenbauer bei der Arbeit zuschauen.\nAußerhalb der Öffnungszeiten sind Gruppen ab 20 Personen nach Voranmeldung willkommen.\nTelefon (0 83 62) 25 11",ar:"متحف التراث"},
+    {k:"G",t:"bonCas",de:"Spezialitätenkäserei\nP. und U. Moser-Kolb\nHessenbohlstraße 14\nCH – 8512 Lustdorf\nSchweiz\nE-Mail: kieronkoelbi@bluewin.ch",ar:"مصنع أجبان"},
+    {k:"H",t:"Alfa Sprachreisen",de:"Crash-Kurse für Manager.\nSprachkurse und High-School-Programme für 12- bis 18-Jährige.\nEnglisch, Französisch, Spanisch, 17 Länder, mehr als 60 Kursorte.\nFordern Sie unsere kostenlose Broschüre an!\nAlfa-Sprachreisen GmbH\nRotebühlplatz 75 · 70178 Stuttgart\nTel. 0711-61 55 300 · Fax 0711-61 55 3010\nhttp://www.alfa-sprachreisen.de",ar:"رحلات لغوية"},
+    {k:"I",t:"Amadeus",de:"6. APRIL „Deutsche Schlagernacht“\n12. APRIL Donnerstag: 70er/80er Jahre Party\nNEU: Schnitzel-Woche\nCafe • Bistro\nAmadeus\nZirler Straße 19–21\n87450 FÜSSEN/ALLGÄU\nTel. 08362/93540",ar:"مقهى"},
+    {k:"J",t:"Free-System",de:"Englisch, Französisch, Italienisch, Spanisch, Deutsch für Ausländer\nMaschinenschreiben/Steno\nSie bestimmen die Unterrichtszeit\nSie lernen, so rasch Sie wollen\nIntensivkurse, Einzel-/Privat- und\nKleingruppen (2–3 Teilnehmer)\nIntensivkurse Crash Courses\nBrush up und Business\nSprachkurse für Manager\nEnglisch for Secretaries\nPrüfungen (intern/extern)\nFirst/Proficiency/TOEFL/MAT Alliance Française\nInstitut Grünberger\nRostock, direkt beim Hauptbahnhof",ar:"نظام لغات"},
+    {k:"K",t:"Ritterstub’n",de:"Fischspezialitäten\nDas Restaurant mit gepflegter Gastlichkeit im Herzen der Altstadt\n(geöffnet von 11–14½ Uhr und 17½–24 Uhr)\nMontag Ruhetag\nWarme Küche bis 22 Uhr\nRitterstraße 4, 87629 Füssen\nTel. 08362/7759\nFam. Roth-Winter freut sich auf Ihren Besuch",ar:"مطعم أسماك"},
+    {k:"L",t:"Alpenrösle",de:"Wollen Sie fein essen gehen?\nHotel–Restaurant\nAlpenrösle\nFüssen-Bad Faulenbach\nTel. (08362) 4017\nAuf Ihren Besuch freut sich Familie Hummel\nHotel • Café • Pension",ar:"فندق ومطعم"}
   ],
   items:[
-    {n:1,c:"E",hl:"Klavierkonzert",de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.",ar:"ترغب في الذهاب إلى حفل بيانو في عطلة نهاية الأسبوع."},
-    {n:2,c:"F",hl:"Montag ins Museum",de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.",ar:"أنت في فوسن وتريد الذهاب إلى المتحف يوم الاثنين."},
-    {n:3,c:"B",hl:"bayerische Spezialität",de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",ar:"أنت في عطلة في جنوب ألمانيا وتود تناول طبق بافاري مميز."},
-    {n:4,c:"K",hl:"Fischessen",de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.",ar:"لقد اتفقت مع معارف على تناول وجبة سمك."},
-    {n:5,c:"C",hl:"Käsespezialitäten",de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",ar:"أنت في بافاريا وتريد شراء أنواع خاصة من الجبن."},
-    {n:6,c:"X",hl:"Deutschkurs in Wien",de:"Sie möchten einen Deutschkurs in Wien besuchen.",ar:"ترغب في حضور دورة لغة ألمانية في فيينا."},
-    {n:7,c:"H",hl:"Englisch lernen",de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.",ar:"ابنك البالغ من العمر 16 عامًا يجب أن يتعلم الإنجليزية في الخارج خلال العطلة."},
-    {n:8,c:"X",hl:"Sprachkurs auf CD",de:"Sie interessieren sich für einen Sprachkurs auf CD.",ar:"أنت مهتم بدورة لغة على قرص مضغوط."},
-    {n:9,c:"X",hl:"10-jährige Tochter",de:"Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt.",ar:"تريد أن تتعلم ابنتك البالغة من العمر 10 سنوات لغة أجنبية خلال العطلة."},
-    {n:10,c:"L",hl:"übernachten",de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",ar:"تريد إحدى معارفك الاحتفال بعيد ميلادها في مطعم والإقامة هناك أيضًا."}
+    {n:1,c:"E",hl:"Klavierkonzert",de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.",ar:"ترغب في الذهاب إلى حفل بيانو في نهاية الأسبوع."},
+    {n:2,c:"F",hl:"Montag ins Museum",de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.",ar:"أنت في فوسين وترغب في زيارة المتحف يوم الاثنين."},
+    {n:3,c:"B",hl:"bayerische Spezialität",de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.",ar:"أنت في جنوب ألمانيا في إجازة وترغب في تذوق إحدى الأطباق البافارية."},
+    {n:4,c:"K",hl:"Fischessen",de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.",ar:"لقد قمت بترتيب لقاء مع معارفك لتناول وجبة سمك."},
+    {n:5,c:"C",hl:"Käsespezialitäten",de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.",ar:"أنت في بافاريا وترغب في شراء منتجات الجبن المتخصصة."},
+    {n:6,c:"X",hl:"Deutschkurs in Wien",de:"Sie möchten einen Deutschkurs in Wien besuchen.",ar:"ترغب في حضور دورة لتعلم اللغة الألمانية في فيينا."},
+    {n:7,c:"H",hl:"Englisch lernen",de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.",ar:"ينبغي على ابنك البالغ من العمر 16 عاماً تعلم اللغة الإنجليزية في الخارج خلال العطلة."},
+    {n:8,c:"X",hl:"Sprachkurs auf CD",de:"Sie interessieren sich für einen Sprachkurs auf CD.",ar:"تهتم بدورة لتعلم اللغة على أقراص مدمجة."},
+    {n:9,c:"X",hl:"10-jährige Tochter",de:"Sie wollen, dass Ihre 10- jährige Tochter in den Ferien eine Fremdsprache lernt.",ar:"ترغب في أن تتعلم ابنتك البالغة من العمر 10 سنوات لغة أجنبية خلال العطلة."},
+    {n:10,c:"L",hl:"übernachten",de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.",ar:"ترغب إحدى معارفك في الاحتفال بعيد ميلادها في مطعم والإقامة هناك أيضاً."}
   ]
 },
 { id:"alex-sp1", title:"Alex Und Cora", level:"B1", sub:"Sprach 1", type:"sprach1",
@@ -847,7 +682,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
                      <div onClick={() => selectSituation(it.n, ad.k)} style={textStyle}>
                        <div className="de">{it.de}</div>
                        <div style={{ marginTop: 6, color: isSelected ? "#2563EB" : "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}>
-                         {it.ar}
+                         {showTranslation && it.ar}
                        </div>
                      </div>
                   </div>
@@ -886,11 +721,9 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
         transform: showHeader ? 'translateY(0)' : 'translateY(-100%)'
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{ ...germanBorder, padding: 2, borderRadius: "50%" }}>
-            <button onClick={onBack} style={{ ...iconStyle, width: 32, height: 32 }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-          </div>
+          <button onClick={onBack} style={{ ...iconStyle, width: 32, height: 32 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
           <div>
             <div className="de" style={{ fontWeight: 900, fontSize: "1em", lineHeight: 1.2 }}>{exam.title}</div>
             <div className="de" style={{ fontSize: ".75em", color: "var(--muted)", fontWeight: "bold" }}>LESEN · {exam.sub.toUpperCase()}</div>
@@ -900,16 +733,12 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave }) {
            <div style={{ fontWeight: 900, fontSize: "0.9em", color: "var(--muted)", marginRight: 4 }}>
              <span className="de">{answered} / {exam.items.length}</span>
            </div>
-           <div style={{ ...germanBorder, padding: 2, borderRadius: "50%" }}>
-             <button onClick={() => setShowTranslation(!showTranslation)} style={{ ...iconStyle, color: showTranslation ? "#2563EB" : "var(--text)" }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
-             </button>
-           </div>
-           <div style={{ ...germanBorder, padding: 2, borderRadius: "50%" }}>
-             <button onClick={() => setDark(!dark)} style={{ ...iconStyle }}>
-              {dark ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
-             </button>
-           </div>
+           <button onClick={() => setShowTranslation(!showTranslation)} style={{ ...iconStyle, color: showTranslation ? "#2563EB" : "var(--text)" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
+           </button>
+           <button onClick={() => setDark(!dark)} style={{ ...iconStyle }}>
+            {dark ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+           </button>
         </div>
       </div>
 
@@ -1125,7 +954,7 @@ function App() {
     return (
       <div className="splash-screen">
         <div className="splash-logo"><LogoImage size={180} /></div>
-        <h1 className="de" style={{ color: "#FFF", fontSize: "2em", marginTop: 20, fontWeight: 900 }}>EchtPrüfung</h1>
+        <h1 className="de" style={{ color: "#0F1B33", fontSize: "2em", marginTop: 20, fontWeight: 900 }}>EchtPrüfung</h1>
       </div>
     );
   }
@@ -1178,13 +1007,13 @@ function App() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 8 }}>
-          <button className="btnI" aria-label="الوضع الليلي" onClick={() => setDark(!dark)} style={{ background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", color: "#fff" }}>
+          <button className="btnI" aria-label="الوضع الليلي" onClick={() => setDark(!dark)}>
             {dark ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
           </button>
-          <button className="btnI" aria-label="الإعدادات" onClick={() => setSettings(true)} style={{ background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", color: "#fff" }}>
+          <button className="btnI" aria-label="الإعدادات" onClick={() => setSettings(true)}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           </button>
-          <button className="btnI" aria-label="القائمة" onClick={() => setMenu(true)} style={{ background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", color: "#fff" }}>
+          <button className="btnI" aria-label="القائمة" onClick={() => setMenu(true)}>
              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 7h16M4 12h10M4 17h16"/></svg>
           </button>
         </div>
@@ -1196,25 +1025,25 @@ function App() {
             <div style={{
               position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px",
               display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
-              padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 8px 0 rgba(15,27,51,.10), 0 24px 40px rgba(0,0,0,0.18)"
+              padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)"
             }}>
               <div style={{
                 position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-                backgroundImage: "radial-gradient(circle at 20% 15%, rgba(221,0,0,.55), transparent 45%), radial-gradient(circle at 85% 90%, rgba(255,206,0,.45), transparent 45%), linear-gradient(160deg,#111 0%,#1a2646 100%)",
-                zIndex: 0
+                backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')",
+                backgroundSize: "cover", backgroundPosition: "center", zIndex: 0
               }} />
               <div style={{
                 position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
-                background: "linear-gradient(to bottom, rgba(15,27,51,0.2) 0%, rgba(15,27,51,0.85) 100%)", zIndex: 1
+                background: "linear-gradient(to bottom, rgba(15,27,51,0.4) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1
               }} />
               <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
                 <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
                   <LogoImage size={90} />
                 </div>
-                <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px", textAlign: "center" }}>EchtPrüfung</h2>
+                <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
                 <p style={{ margin: "0 0 16px", color: "#E2E8F0", fontSize: "1.1em", fontWeight: 700 }}>تطبيقك الأول للتحضير لامتحان</p>
-                <p className="de" style={{ margin: "0 0 24px", color: "#94A3B8", fontSize: "1em", fontWeight: 600, textAlign: "center" }}>Deine Nr. 1 für die Prüfungsvorbereitung</p>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "2em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "10px 28px", borderRadius: 20, boxShadow: "0 5px 0 rgba(0,0,0,.25), 0 14px 24px rgba(0,0,0,0.3)" }}>
+                <p className="de" style={{ margin: "0 0 24px", color: "#94A3B8", fontSize: "1em", fontWeight: 600 }}>Deine Nr. 1 für die Prüfungsvorbereitung</p>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "2em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "10px 28px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}>
                   <span style={{ color: "#0F1B33" }}>B1</span>
                   <span style={{ color: "#DD0000" }}>&</span>
                   <span style={{ color: "#F5B82E" }}>B2</span>
@@ -1223,8 +1052,8 @@ function App() {
             </div>
             <div className="card" style={{ padding: 24, textAlign: "center", borderRadius: 24 }}>
               <h3 style={{ margin: "0 0 16px", fontSize: "1.2em", fontWeight: 900, color: "var(--text)" }}>الدعم الفني</h3>
-              <p className="de" style={{ margin: "0 0 20px", color: "var(--muted)", fontSize: "0.95em", fontWeight: 600, textAlign: "center" }}>Support & Problemmeldung</p>
-              <button style={{ width: "100%", padding: "16px", borderRadius: "16px", background: "#25D366", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.05em", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", boxShadow: "0 5px 0 #128C7E, 0 12px 22px rgba(37, 211, 102, 0.4)", cursor: "pointer", transition: "transform 0.2s" }} onClick={() => wa("مرحباً، بغيت نبلغ على مشكل فالتطبيق / Ich möchte ein Problem melden.")}>
+              <p className="de" style={{ margin: "0 0 20px", color: "var(--muted)", fontSize: "0.95em", fontWeight: 600 }}>Support & Problemmeldung</p>
+              <button style={{ width: "100%", padding: "16px", borderRadius: "16px", background: "#25D366", color: "#fff", border: "none", fontWeight: 900, fontSize: "1.05em", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px", boxShadow: "0 8px 25px rgba(37, 211, 102, 0.4)", cursor: "pointer", transition: "transform 0.2s" }} onClick={() => wa("مرحباً، بغيت نبلغ على مشكل فالتطبيق / Ich möchte ein Problem melden.")}>
                 <svg width="26" height="26" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
                 <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", lineHeight: 1.2 }}>
                   <span>تواصل مع الدعم / إبلاغ عن مشكل</span>
@@ -1239,13 +1068,13 @@ function App() {
           <div>
             <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px" }}>Lesen</h1>
             <div style={{ display: "flex", justifyContent: "center", marginBottom: 12 }}>
-              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4, boxShadow: "var(--raise)" }}>
+              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4 }}>
                 <button className={`tab ${level === "B1" ? "on" : ""}`} onClick={() => setLevel("B1")} style={{ padding: "8px 28px", fontSize: "1.1em" }}>B1</button>
                 <button className={`tab ${level === "B2" ? "on" : ""}`} onClick={() => setLevel("B2")} style={{ padding: "8px 28px", fontSize: "1.1em" }}>B2</button>
               </div>
             </div>
             <div style={{ marginBottom: 16 }}>
-              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "14px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none", boxShadow: "inset 0 3px 6px rgba(0,0,0,.07)" }} />
+              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "14px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", margin: "8px 0" }}>
               <span className="chip" style={{ background: "var(--card)", color: "var(--text)", fontSize: ".9em" }}>{uniqueTitles.length} امتحان</span>
@@ -1369,7 +1198,7 @@ function App() {
                  </div>
               </div>
               <h2 style={{ margin: 0, fontSize: "1.4em", fontWeight: 900 }}>{user?.name || "زائر"}</h2>
-              <div className="de" style={{ margin: "6px 0 0", fontSize: "0.9em", color: "var(--muted)", fontWeight: "bold", textAlign: "center" }}>
+              <div className="de" style={{ margin: "6px 0 0", fontSize: "0.9em", color: "var(--muted)", fontWeight: "bold" }}>
                 {user?.isGuest ? "Gast-Modus" : "Profil"} • B1 / B2
               </div>
             </div>
