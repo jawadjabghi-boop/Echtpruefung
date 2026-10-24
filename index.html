@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,127 +10,118 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
 <style>
-  /* الألوان الأساسية: الأبيض والأسود والأحمر والأصفر (علم ألمانيا) */
   :root{
-    --ink:#111111;      /* الأسود */
-    --gold:#FFCE00;     /* الأصفر */
-    --red:#DD0000;      /* الأحمر */
-    --paper:#FFFFFF;    /* الأبيض */
-    --card:#F8FAFC;
-    --text:#111111;
-    --muted:#64748B;
-    --line:#E2E8F0;
-    --okc:#15803D;      /* أخضر للصحيح */
-    --okbg:#DCFCE7;
-    --badc:#DD0000;     /* أحمر للغلط */
-    --badbg:#FEE2E2;
-    --fs:1;
+    --ink:#111111; --gold:#FFCE00; --red:#DD0000; --blue:#2563EB; 
+    --paper:#FFFFFF; --card:#F8FAFC;
+    --text:#111111; --muted:#64748B; --line:#E2E8F0; --okc:#15803D; --okbg:#DCFCE7;
+    --badc:#DD0000; --badbg:#FEE2E2; --fs:1;
   }
-  
-  /* الوضع الليلي: أسود، أحمر، أصفر */
   .dark{
-    --paper:#0A0A0A;    /* أسود عميق */
-    --card:#1A1A1A;
-    --text:#F8FAFC;
-    --muted:#94A3B8;
-    --line:#333333;
-    --ink:#F8FAFC;
-    --gold:#FFCE00;
-    --okc:#86EFAC;
-    --okbg:#14532D;
-    --badc:#FCA5A5;
-    --badbg:#7F1D1D;
+    --paper:#0A0A0A; --card:#1A1A1A; --text:#F8FAFC; --muted:#94A3B8; --line:#333333;
+    --ink:#F8FAFC; --gold:#FFCE00; --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
   }
 
   html{ font-size:calc(18px * var(--fs)); }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body{ margin:0; background-color:var(--paper); color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s; }
+  
+  /* 🌟 الخلفية الاحترافية (Spray) */
+  body{ 
+    margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s;
+    background-color: var(--paper);
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.1) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(17, 17, 17, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+  }
+  .dark body {
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.2) 0%, transparent 40%),
+      radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.15) 0%, transparent 45%),
+      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+  }
+  
   button{ font-family:inherit; cursor:pointer; border:none; background:transparent; }
   .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
   
-  /* Layout & Cards */
-  .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px; margin-bottom:12px; box-shadow:0 4px 15px rgba(0,0,0,0.03); }
-  .header{ position:sticky; top:12px; z-index:30; margin:12px; display:flex; justify-content:space-between; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:12px 16px; box-shadow:0 4px 15px rgba(0,0,0,0.05); overflow:hidden; }
-  .header::after{ content:""; position:absolute; bottom:0; left:20px; right:20px; height:3px; border-radius:3px 3px 0 0; background:linear-gradient(90deg,#111111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); opacity:1; }
+  /* Glassmorphism Effect */
+  .card{ background:rgba(255,255,255,0.7); border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:12px; box-shadow:0 8px 32px rgba(0,0,0,0.05); backdrop-filter: blur(12px); transition: transform 0.2s; }
+  .dark .card { background:rgba(26,26,26,0.7); }
+  .card:active { transform: scale(0.98); }
+
+  .header{ position:sticky; top:12px; z-index:30; margin:12px; display:flex; justify-content:space-between; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:12px 16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); overflow:hidden; }
+  .header::after{ content:""; position:absolute; bottom:0; left:20px; right:20px; height:3px; border-radius:3px 3px 0 0; background:linear-gradient(90deg,#111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); opacity:1; }
   .brand{ display:flex; align-items:center; gap:12px; }
-  .logo{ width:46px; height:46px; border-radius:12px; background:var(--ink); display:flex; align-items:center; justify-content:center; }
+  .logo{ width:46px; height:46px; border-radius:14px; background:var(--ink); display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
   
-  /* Buttons */
+  /* 🌟 الأزرار الاحترافية */
   .btnI{ width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--text); display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-  .btnI:active{ background:var(--line); transform:scale(0.95); }
-  .btn{ border-radius:12px; padding:14px 16px; font-weight:800; background:var(--ink); color:var(--gold); width:100%; font-size:1.05em; transition:opacity 0.2s; }
-  .dark .btn { background:var(--gold); color:var(--ink); }
-  .btn.ghost{ background:var(--card); color:var(--text); border:1.5px solid var(--line); }
-  .btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .btnI:active{ background:var(--line); transform:scale(0.9); }
+  .btn{ border-radius:16px; padding:16px; font-weight:800; background:linear-gradient(135deg, var(--ink), #333); color:var(--gold); width:100%; font-size:1.05em; transition:all 0.2s; box-shadow: 0 8px 25px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.1); }
+  .btn:active { transform: translateY(2px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
+  .dark .btn { background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); }
+  .btn.ghost{ background:var(--card); color:var(--text); border:1.5px solid var(--line); box-shadow: none; }
   
-  /* Options (Lesen) */
-  .opt{ display:flex; gap:12px; align-items:flex-start; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:14px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; }
-  .opt.sel{ border-color:var(--gold); background:rgba(255,206,0,.1); }
+  /* 🌟 أزرار نمط الامتحان والتدريب */
+  .modeBtn { flex: 1; padding: 14px 8px; border-radius: 16px; border: 2px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 1em; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; cursor: pointer; }
+  .modeBtn.on { border-color: var(--red); background: var(--red); color: #FFF; box-shadow: 0 8px 20px rgba(221,0,0,0.3); }
+  .dark .modeBtn.on { background: var(--gold); border-color: var(--gold); color: var(--ink); box-shadow: 0 8px 20px rgba(255,206,0,0.3); }
+
+  /* 🌟 الأجوبة: أزرق (مختار)، أخضر (صحيح)، أحمر (غلط) */
+  .opt{ display:flex; gap:12px; align-items:flex-start; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:16px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
+  .opt.sel{ border-color:var(--blue); background:rgba(37, 99, 235, .1); color: var(--blue); }
   .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); }
   .opt.bad{ border-color:var(--badc); background:var(--badbg); color:var(--badc); }
   .opt.faded{ opacity:.4; }
-  
-  /* 🌟 إصلاح الجواب المستعمل: رمادي غير قابل للضغط */
   .opt.dis { opacity: 0.4; pointer-events: none; background: var(--line); color: var(--muted); cursor: not-allowed; }
   
   .letter{ width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; font-size:1.1em; border:1px solid var(--line); }
   
-  /* Feedback */
-  .fb{ border-radius:12px; padding:14px; margin-top:10px; font-size:.95em; line-height:1.8; }
+  .fb{ border-radius:14px; padding:14px; margin-top:10px; font-size:.95em; line-height:1.8; }
   .fb.good{ background:var(--okbg); color:var(--okc); }
   .fb.bad{ background:var(--badbg); color:var(--badc); }
   
-  /* Toast */
-  .toast{ position:fixed; top:100px; left:50%; transform:translateX(-50%); background:var(--ink); color:var(--gold); padding:10px 20px; border-radius:14px; font-weight:800; z-index:60; font-size:.95em; box-shadow:0 10px 25px rgba(0,0,0,0.2); animation:slideDown .3s; }
-  @keyframes slideDown{ from{top:-20px;opacity:0} to{top:100px;opacity:1} }
+  /* القائمة السفلية */
+  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:12px 4px 20px; z-index:40; gap: 4px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
+  .nav button{ color:var(--muted); font-size:.75em; font-weight:800; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; flex: 1; transition:all 0.2s; border-radius: 12px; padding: 6px 0; }
+  .nav button.on{ color:var(--red); background: rgba(221,0,0,0.08); }
+  .dark .nav button.on{ color:var(--gold); background: rgba(255,206,0,0.15); }
   
-  /* Bottom Nav */
-  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; }
-  .nav button{ color:var(--muted); font-size:.8em; font-weight:800; display:flex; flex-direction:column; align-items:center; gap:2px; min-width:60px; transition:all 0.2s; }
-  .nav button.on{ color:var(--red); }
-  .dark .nav button.on{ color:var(--gold); }
-  .nav .ic{ font-size:1.6em; padding:6px 12px; border-radius:12px; transition:background .2s; }
-  .nav button.on .ic{ background:rgba(221,0,0,.1); }
-  .dark .nav button.on .ic{ background:rgba(255,206,0,.15); }
+  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:50; display:flex; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(6px); }
+  .sheet{ background:var(--card); border:1px solid var(--line); border-radius:28px; padding:24px; width:100%; max-width:440px; max-height:85vh; overflow-y:auto; color:var(--text); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
   
-  /* Overlays */
-  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:50; display:flex; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(4px); }
-  .sheet{ background:var(--card); border:1px solid var(--line); border-radius:24px; padding:24px; width:100%; max-width:440px; max-height:85vh; overflow-y:auto; color:var(--text); }
-  
-  /* Sprach Word Bank */
-  .word-bank{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:14px; background:var(--paper); border-radius:14px; border:1px dashed var(--line); }
-  .word-btn{ padding:12px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--text); font-weight:800; font-size:1em; text-align:right; display:flex; gap:10px; align-items:center; }
+  .word-bank{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:14px; background:var(--paper); border-radius:16px; border:1px dashed var(--line); }
+  .word-btn{ padding:12px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--text); font-weight:800; font-size:1em; text-align:right; display:flex; gap:10px; align-items:center; }
   .word-btn.used{ opacity:.3; text-decoration:line-through; pointer-events:none; }
   
-  /* Splash & Auth */
   .splash-screen{ position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999; background:var(--paper); }
   .splash-logo{ width:180px; height:180px; animation:pulse 2s infinite; }
-  @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.05)} 100%{transform:scale(1)} }
-  .auth-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
-  .auth-card{ background:var(--card); padding:32px; border-radius:24px; box-shadow:0 10px 30px rgba(0,0,0,0.08); border:1px solid var(--line); width:100%; max-width:420px; }
-  .auth-input{ width:100%; padding:16px; margin-bottom:16px; border-radius:12px; border:1px solid var(--line); background:var(--paper); color:var(--text); font-family:inherit; outline:none; font-size:1.05em; }
-  .auth-input:focus{ border-color:var(--red); }
-  .auth-btn{ width:100%; padding:16px; border-radius:12px; border:none; background:var(--ink); color:var(--gold); font-weight:800; font-size:1.1em; cursor:pointer; margin-bottom:12px; }
-  .auth-btn.guest{ background:var(--gold); color:var(--ink); }
+  @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
   
-  /* Lang Grid (11 لغات) */
+  .auth-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
+  .auth-card{ background:rgba(255,255,255,0.8); backdrop-filter:blur(20px); padding:32px; border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,0.1); border:1px solid var(--line); width:100%; max-width:420px; }
+  .dark .auth-card { background:rgba(26,26,26,0.8); }
+  .auth-input{ width:100%; padding:16px; margin-bottom:16px; border-radius:14px; border:1px solid var(--line); background:var(--paper); color:var(--text); font-family:inherit; outline:none; font-size:1.05em; transition: border 0.2s; }
+  .auth-input:focus{ border-color:var(--blue); }
+  .auth-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:var(--ink); color:var(--gold); font-weight:800; font-size:1.1em; cursor:pointer; margin-bottom:12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+  .auth-btn.guest{ background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); box-shadow: 0 8px 20px rgba(255,206,0,0.3); }
+  
   .lang-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; max-height:400px; overflow-y:auto; padding-right:5px; }
   .lang-btn{ display:flex; align-items:center; gap:10px; padding:12px; border-radius:14px; background:var(--paper); border:2px solid var(--line); color:var(--text); font-weight:800; transition:all 0.2s; text-align:right; font-size:0.95em; }
-  .lang-btn.on{ background:rgba(221,0,0,0.05); border-color:var(--red); color:var(--red); }
-  .dark .lang-btn.on{ background:rgba(255,206,0,0.1); border-color:var(--gold); color:var(--gold); }
+  .lang-btn.on{ background:rgba(37, 99, 235, 0.08); border-color:var(--blue); color:var(--blue); }
   
-  /* Inline Gaps (Sprach) */
-  .inline-gap{ display:inline-flex; align-items:center; justify-content:center; min-width:90px; border-bottom:2px dashed var(--red); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900; vertical-align:middle; background:rgba(221,0,0,0.05); border-radius:6px 6px 0 0; }
-  .inline-gap.filled{ border-bottom-style:solid; background:rgba(221,0,0,0.15); color:var(--red); }
+  /* الفراغات Sprach */
+  .inline-gap{ display:inline-flex; align-items:center; justify-content:center; min-width:90px; border-bottom:2px dashed var(--blue); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900; vertical-align:middle; background:rgba(37, 99, 235,0.05); border-radius:6px 6px 0 0; }
+  .inline-gap.filled{ border-bottom-style:solid; background:rgba(37, 99, 235,0.15); color:var(--blue); }
   .sp1-correct{ background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--okc); }
   .sp1-wrong{ background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--badc); }
 
-  /* Hören (Listening) */
+  /* Hören */
   .rf-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
-  .rf-circle.sel { border-color: var(--gold); background: rgba(255,206,0,0.1); }
+  .rf-circle.sel { border-color: var(--blue); background: rgba(37, 99, 235, 0.1); }
   .rf-circle.good { border-color: var(--okc); background: var(--okbg); }
   .rf-circle.bad { border-color: var(--badc); background: var(--badbg); }
-  .rf-circle.sel::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--gold); }
+  .rf-circle.sel::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); }
   .rf-circle.good::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--okc); }
   .rf-circle.bad::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--badc); }
   
@@ -138,9 +130,7 @@
   .audio-icon-big { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:rgba(221,0,0,0.1); color:var(--red); }
   .dark .audio-icon-big { background:rgba(255,206,0,0.1); color:var(--gold); }
   
-  /* Translation box */
-  .t2-ar { background: var(--paper); padding: 16px; border-radius: 12px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--red); direction: rtl; text-align: right; }
-  .dark .t2-ar { border-right-color: var(--gold); }
+  .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); direction: rtl; text-align: right; }
 </style>
 </head>
 <body>
@@ -151,7 +141,6 @@ const { useState, useEffect, useRef } = React;
 const WA = "212600000000"; // ⚠️ بدل رقم الواتساب هنا
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
-// شعار التطبيق
 const LogoImage = ({ size = 50 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
@@ -168,7 +157,6 @@ const LogoImage = ({ size = 50 }) => (
   </svg>
 );
 
-// أيقونة Hören (فيديو أخضر + ودن)
 const HoerenIcon = ({ size = 24 }) => (
   <svg width={size * 1.8} height={size} viewBox="0 0 44 24" fill="none">
     <rect x="1" y="5" width="18" height="14" rx="2" fill="#22C55E"/>
@@ -178,45 +166,34 @@ const HoerenIcon = ({ size = 24 }) => (
   </svg>
 );
 
-// 11 لغة حقيقية حسب الاتفاق
 const LANGS = [
-  { c:"ma", n:"الدارجة المغربية", f:"🇲🇦" },
-  { c:"ar", n:"العربية الفصحى", f:"🇹🇳🇪🇬🇸🇾" },
-  { c:"hi", n:"हिन्दी", f:"🇮🇳" },
-  { c:"id", n:"Bahasa Indonesia", f:"🇮🇩" },
-  { c:"tl", n:"Filipino", f:"🇵🇭" },
-  { c:"fa", n:"فارسی / دری", f:"🇮🇷🇦🇫" },
-  { c:"sw", n:"Kiswahili", f:"🇰🇪" },
-  { c:"fr", n:"Français", f:"🇫🇷" },
-  { c:"en", n:"English", f:"🇬🇧" },
-  { c:"uz", n:"O'zbekcha", f:"🇺🇿" },
+  { c:"ma", n:"الدارجة", f:"🇲🇦" }, { c:"ar", n:"العربية", f:"📜" },
+  { c:"hi", n:"हिन्दी", f:"🇮🇳" }, { c:"id", n:"Indonesia", f:"🇮🇩" },
+  { c:"tl", n:"Filipino", f:"🇵🇭" }, { c:"fa", n:"فارسی", f:"🇮🇷" },
+  { c:"sw", n:"Kiswahili", f:"🇰🇪" }, { c:"fr", n:"Français", f:"🇫🇷" },
+  { c:"en", n:"English", f:"🇬🇧" }, { c:"uz", n:"O'zbek", f:"🇺🇿" },
   { c:"ne", n:"नेपाली", f:"🇳🇵" }
 ];
 
-const isRTL = (lang) => ["ma","ar","fa"].includes(lang);
-
-// دالة الترجمة العامة
 const tr = (obj, lang) => {
   if (!obj) return "";
   if (typeof obj === 'string') return obj;
   return obj[lang] || obj['ar'] || obj['en'] || obj['de'] || "";
 };
 
-// ترجمة واجهة التطبيق للـ 11 لغة
 const UI_TEXTS = {
-  ma: { welcome:"مرحبا بيك فـ EchtPrüfung", choose_lang:"ختار اللغة ديالك", confirm:"تأكيد ومتابعة", guest:"دخول كزائر", login:"تسجيل الدخول" },
-  ar: { welcome:"مرحباً بك في EchtPrüfung", choose_lang:"اختر لغتك", confirm:"تأكيد ومتابعة", guest:"دخول كزائر", login:"تسجيل الدخول" },
-  hi: { welcome:"EchtPrüfung में आपका स्वागत है", choose_lang:"अपनी भाषा चुनें", confirm:"पुष्टि करें", guest:"अतिथि के रूप में प्रवेश", login:"लॉगिन करें" },
-  id: { welcome:"Selamat datang di EchtPrüfung", choose_lang:"Pilih bahasa Anda", confirm:"Konfirmasi", guest:"Masuk sebagai tamu", login:"Masuk" },
-  tl: { welcome:"Maligayang pagdating sa EchtPrüfung", choose_lang:"Piliin ang iyong wika", confirm:"Kumpirmahin", guest:"Mag-login bilang bisita", login:"Mag-login" },
-  fa: { welcome:"به EchtPrüfung خوش آمدید", choose_lang:"زبان خود را انتخاب کنید", confirm:"تأیید", guest:"ورود به عنوان مهمان", login:"ورود" },
-  sw: { welcome:"Karibu EchtPrüfung", choose_lang:"Chagua lugha yako", confirm:"Thibitisha", guest:"Ingia kama mgeni", login:"Ingia" },
-  fr: { welcome:"Bienvenue sur EchtPrüfung", choose_lang:"Choisissez votre langue", confirm:"Confirmer", guest:"Entrer en tant qu'invité", login:"Se connecter" },
-  en: { welcome:"Welcome to EchtPrüfung", choose_lang:"Choose your language", confirm:"Confirm", guest:"Login as guest", login:"Login" },
-  uz: { welcome:"EchtPrüfung ga xush kelibsiz", choose_lang:"Tilingizni tanlang", confirm:"Tasdiqlash", guest:"Mehmon sifatida kirish", login:"Kirish" },
-  ne: { welcome:"EchtPrüfung मा स्वागत छ", choose_lang:"आफ्नो भाषा छान्नुहोस्", confirm:"पुष्टि गर्नुहोस्", guest:"अतिथिको रूपमा प्रवेश", login:"लगइन" }
+  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", support:"الدعم الفني", contact:"تواصل معنا" },
+  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", support:"الدعم الفني", contact:"تواصل معنا" },
+  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", support:"सहायता", contact:"संपर्क करें" },
+  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", support:"Dukungan", contact:"Hubungi kami" },
+  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbabasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Exam Mode", practice_mode:"Practice Mode", support:"Suporta", contact:"Makipag-ugnayan" },
+  fa: { welcome:"خوش آمدید", choose_lang:"زبان را انتخاب کنید", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", support:"پشتیبانی", contact:"تماس با ما" },
+  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", support:"Msaada", contact:"Wasiliana nasi" },
+  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", support:"Support", contact:"Contactez-nous" },
+  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", support:"Support", contact:"Contact Us" },
+  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", support:"Yordam", contact:"Bog'lanish" },
+  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", support:"सहयोग", contact:"सम्पर्क" }
 };
-
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
 const EXAMS = [
 // ================= ALEX =================
@@ -595,75 +572,6 @@ const EXAMS = [
     {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
-  ]
-},
-{
-  id:"vera-t2", title:"Vera", level:"B1", sub:"Teile 2", type:"mcq",
-  paragraphs: [
-    { de: "Viele Menschen in Deutschland engagieren sich ehrenamtlich. Sie helfen anderen, ohne dafür Geld zu bekommen.", ar: "العديد من الناس في ألمانيا يشاركون في العمل التطوعي. يساعدون الآخرين دون الحصول على مقابل مالي.", ma: "بزاف ديال الناس فألمانيا كيشاركو فخدمة تطوعية. كيعاونو ناس آخرين بلا ما ياخدو فلوس.", en: "Many people in Germany volunteer. They help others without getting paid for it.", fr: "De nombreuses personnes en Allemagne font du bénévolat. Ils aident les autres sans être payés." },
-    { de: "Besonders in sozialen Bereichen ist die Hilfe wichtig. Ohne Freiwillige könnten viele Angebote nicht stattfinden.", ar: "المساعدة مهمة بشكل خاص في المجالات الاجتماعية. بدون المتطوعين، لا يمكن أن تقام العديد من العروض.", ma: "المساعدة مهمة بزاف فالمجالات الاجتماعية. بلا المتطوعين، بزاف ديال الأنشطة ما يمكنش تدوز.", en: "Help is particularly important in social areas. Without volunteers, many offers could not take place.", fr: "L'aide est particulièrement importante dans les domaines sociaux. Sans bénévoles, de nombreuses offres ne pourraient pas avoir lieu." },
-    { de: "Manche Freiwillige arbeiten regelmäßig, andere nur bei besonderen Anlässen. Jeder kann selbst entscheiden, wie viel Zeit er investiert.", ar: "بعض المتطوعين يعملون بانتظام، والبعض الآخر فقط في المناسبات الخاصة. يمكن للجميع أن يقرروا بأنفسهم مقدار الوقت الذي يستثمرونه.", ma: "بعض المتطوعين كيخدمو بانتظام، وآخرين غير فالمناسبات الخاصة. كل واحد يقدر يقرر بوحدو شحال من وقت كيستثمر.", en: "Some volunteers work regularly, others only on special occasions. Everyone can decide for themselves how much time they invest.", fr: "Certains bénévoles travaillent régulièrement, d'autres seulement lors d'occasions spéciales. Chacun peut décider lui-même du temps qu'il investit." }
-  ],
-  items:[
-    { n:1, c:"A", q:"Was machen viele Menschen in Deutschland ehrenamtlich?", qar:"ماذا يفعل الكثير من الناس في ألمانيا كعمل تطوعي؟", qma:"شنو كيديرو بزاف ديال الناس فألمانيا كخدمة تطوعية؟", qen:"What do many people in Germany do voluntarily?", qfr:"Que font beaucoup de gens en Allemagne bénévolement ?",
-      opts:[
-        {k:"A", de:"Sie helfen anderen Menschen.", ar:"يساعدون الآخرين.", ma:"كيعاونو ناس آخرين.", en:"They help other people.", fr:"Ils aident d'autres personnes."},
-        {k:"B", de:"Sie arbeiten in Fabriken.", ar:"يعملون في المصانع.", ma:"كيخدمو فالمعامل.", en:"They work in factories.", fr:"Ils travaillent dans des usines."},
-        {k:"C", de:"Sie reisen um die Welt.", ar:"يسافرون حول العالم.", ma:"كيدورو العالم.", en:"They travel around the world.", fr:"Ils voyagent autour du monde."}
-      ]
-    },
-    { n:2, c:"B", q:"Warum ist die Hilfe von Freiwilligen wichtig?", qar:"لماذا تعتبر مساعدة المتطوعين مهمة؟", qma:"علاش مساعدة المتطوعين مهمة؟", qen:"Why is the help of volunteers important?", qfr:"Pourquoi l'aide des bénévoles est-elle importante ?",
-      opts:[
-        {k:"A", de:"Weil sie Geld sparen.", ar:"لأنهم يوفرون المال.", ma:"حيت كيوضرو الفلوس.", en:"Because they save money.", fr:"Parce qu'ils économisent de l'argent."},
-        {k:"B", de:"Weil ohne sie viele Angebote nicht stattfinden könnten.", ar:"لأنه بدونهم لا يمكن أن تقام العديد من العروض.", ma:"حيت بلا بيهم بزاف ديال الأنشطة ما تقدرش تدوز.", en:"Because without them many offers could not take place.", fr:"Parce que sans eux, de nombreuses offres ne pourraient pas avoir lieu."},
-        {k:"C", de:"Weil der Staat es verlangt.", ar:"لأن الدولة تطلب ذلك.", ma:"حيت الدولة كتطلب هادشي.", en:"Because the state demands it.", fr:"Parce que l'État l'exige."}
-      ]
-    },
-    { n:3, c:"C", q:"Wie oft arbeiten Freiwillige?", qar:"كم مرة يعمل المتطوعون؟", qma:"شحال من مرة كيخدمو المتطوعين؟", qen:"How often do volunteers work?", qfr:"À quelle fréquence les bénévoles travaillent-ils ?",
-      opts:[
-        {k:"A", de:"Alle arbeiten täglich.", ar:"الجميع يعملون يومياً.", ma:"الكل كيخدمو كل نهار.", en:"Everyone works daily.", fr:"Tout le monde travaille tous les jours."},
-        {k:"B", de:"Niemand arbeitet regelmäßig.", ar:"لا أحد يعمل بانتظام.", ma:"حتى واحد ما كيخدم بانتظام.", en:"No one works regularly.", fr:"Personne ne travaille régulièrement."},
-        {k:"C", de:"Es ist unterschiedlich, jeder entscheidet selbst.", ar:"الأمر يختلف، كل شخص يقرر بنفسه.", ma:"كيدوز على حساب الواحد، كل واحد كيقرر بوحدو.", en:"It varies, everyone decides for themselves.", fr:"Cela varie, chacun décide lui-même."}
-      ]
-    }
-  ]
-},
-{
-  id:"vera-t3", title:"Vera", level:"B1", sub:"Teile 3", type:"matching",
-  ads:[
-    {k:"A", t:"Gartenarbeit", de:"Hilfe im Garten gesucht für ältere Dame", ar:"مطلوب مساعدة في الحديقة لسيدة مسنة", ma:"مطلوب مساعدة فجنينة لوحدة عجوزة", en:"Garden help wanted for elderly lady", fr:"Aide de jardin recherchée pour une dame âgée"},
-    {k:"B", t:"Nachhilfe", de:"Mathe und Englisch für Schüler", ar:"دروس دعم في الرياضيات والإنجليزية", ma:"دروس دعم فالمات والانجليزية", en:"Math and English tutoring", fr:"Soutien scolaire en maths et anglais"},
-    {k:"C", t:"Tierheim", de:"Suchen Freiwillige für Hunde auszuführen", ar:"ملجأ حيوانات يبحث عن متطوعين لتمشية الكلاب", ma:"ملجأ ديال الحيوانات كيقلب على متطوعين باش يمشيو الكلاب", en:"Animal shelter looking for volunteers to walk dogs", fr:"Refuge cherchant des bénévoles pour promener les chiens"},
-    {k:"D", t:"Seniorenheim", de:"Vorlesen und Gesellschaft leisten", ar:"قراءة ورفقة لكبار السن", ma:"قراية ورفقة لكبار السن", en:"Reading and companionship", fr:"Lecture et compagnie"},
-    {k:"E", t:"Flohmarkt", de:"Helfer für den Aufbau am Samstag", ar:"مساعدون لتنظيم سوق البراغيث السبت", ma:"مساعدين باش ينظمو سوق البراغيث نهار السبت", en:"Helpers for flea market setup on Saturday", fr:"Aides pour le montage du marché aux puces samedi"},
-    {k:"F", t:"Kochkurs", de:"Gemeinsam kochen lernen", ar:"تعلم الطبخ معاً", ma:"نتعلمو الطياب بجوج", en:"Learn to cook together", fr:"Apprendre à cuisiner ensemble"}
-  ],
-  items:[
-    {n:1, c:"C", de:"Sie lieben Hunde und haben Zeit am Nachmittag.", ar:"تحب الكلاب ولديك وقت في فترة ما بعد الظهر.", ma:"كتحب الكلاب وعندك وقت فالعشية.", en:"You love dogs and have time in the afternoon.", fr:"Vous aimez les chiens et avez du temps l'après-midi."},
-    {n:2, c:"D", de:"Sie möchten älteren Menschen etwas vorlesen.", ar:"تريد أن تقرأ شيئاً لكبار السن.", ma:"بغيتي تقرا شي حاجة لكبار السن.", en:"You want to read something to older people.", fr:"Vous voulez lire quelque chose aux personnes âgées."},
-    {n:3, c:"B", de:"Ihr Sohn braucht Hilfe in Mathematik.", ar:"ابنك يحتاج إلى مساعدة في الرياضيات.", ma:"ولدك كيحتاج مساعدة فالمات.", en:"Your son needs help in math.", fr:"Votre fils a besoin d'aide en mathématiques."},
-    {n:4, c:"E", de:"Sie können am Samstagmorgen beim Tragen helfen.", ar:"يمكنك المساعدة في الحمل صباح يوم السبت.", ma:"تقدر تعاون فالحمل صباح السبت.", en:"You can help carrying things on Saturday morning.", fr:"Vous pouvez aider à porter des choses le samedi matin."},
-    {n:5, c:"A", de:"Sie arbeiten gern an der frischen Luft.", ar:"تحب العمل في الهواء الطلق.", ma:"كتحب تخدم فالريح.", en:"You like working outdoors.", fr:"Vous aimez travailler en plein air."}
-  ]
-},
-{
-  id:"vera-sp1", title:"Vera", level:"B1", sub:"Sprach 1", type:"sprach1",
-  text: `Hallo Julia,\n\nwie geht es dir? Ich hoffe, du hast die Prüfung gut .....(1)......\n\nBei mir ist alles okay. Ich schreibe dir, weil ich dir von meinem neuen Job erzählen möchte. Ich arbeite jetzt als Kellnerin in einem kleinen Restaurant. Die Arbeit ist manchmal anstrengend, aber ich .....(2)..... viel Spaß mit meinen Kollegen.\n\nDas Restaurant ist in der Innenstadt. Ich fahre jeden Tag mit .....(3)..... Fahrrad zur Arbeit, weil der Bus immer so voll ist. Zum Glück wohne ich nicht weit weg.\n\nAm Wochenende habe ich oft frei. Letztes Wochenende .....(4)..... wir im Park und haben ein Picknick gemacht. Das Wetter war super! .....(5)..... du nächstes Wochenende Zeit? Wir könnten uns treffen.\n\nIch muss jetzt los, meine Schicht beginnt in einer Stunde. Ich freue mich .....(6)..... deine Antwort!\n\nViele Grüße,\nSarah`,
-  items:[
-    {n:1, c:"bestanden", opts:["bestanden","bestehen","bestand"]},
-    {n:2, c:"habe", opts:["bin","habe","werde"]},
-    {n:3, c:"dem", opts:["den","dem","der"]},
-    {n:4, c:"waren", opts:["waren","sind","haben"]},
-    {n:5, c:"Hast", opts:["Hast","Bist","Wirst"]},
-    {n:6, c:"auf", opts:["auf","an","für"]}
-  ]
-},
-{
-  id:"vera-sp2", title:"Vera", level:"B1", sub:"Sprach 2", type:"sprach2",
-  wordBank:[{k:"a",w:"aber"},{k:"b",w:"als"},{k:"c",w:"dass"},{k:"d",w:"denn"},{k:"e",w:"eigentlich"},{k:"f",w:"für"},{k:"g",w:"haben"},{k:"h",w:"kann"},{k:"i",w:"muss"},{k:"j",w:"seit"},{k:"k",w:"um"},{k:"l",w:"und"},{k:"m",w:"weil"},{k:"n",w:"wenn"},{k:"o",w:"wie"}],
-  text: `Liebe Grüße aus dem Urlaub!\n\nHallo Thomas,\n\nich bin jetzt .....(1)..... einer Woche in Italien und es gefällt mir sehr gut hier. Das Wetter ist toll und das Essen ist lecker.\n\nGestern waren wir in Rom. Die Stadt ist unglaublich schön, .....(2)..... es war sehr voll und heiß. Wir haben uns viele alte Gebäude angeschaut und Fotos gemacht.\n\nMorgen wollen wir ans Meer fahren, .....(3)..... wir uns ein bisschen erholen können. Ich hoffe, .....(4)..... das Wetter so gut bleibt.\n\nIch .....(5)..... leider nur noch eine Woche bleiben, dann muss ich wieder zurück. Ich hoffe, wir sehen uns bald!\n\nViele Grüße,\nMaria`,
-  items:[
-    {n:1, c:"seit"},{n:2, c:"aber"},{n:3, c:"um"},{n:4, c:"dass"},{n:5, c:"kann"}
   ]
 }
 ];
@@ -1160,7 +1068,7 @@ const HOREN_EXAMS = [
   }
 ];
 // ==========================================
-// مكون عرض دروس Hören (سكرول واحد)
+// مكون عرض دروس Hören (العداد + التصحيح)
 // ==========================================
 function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
   const [ans, setAns] = useState({});
@@ -1174,7 +1082,10 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
 
   useEffect(() => {
-    return () => clearInterval(audioInterval.current);
+    return () => {
+      clearInterval(audioInterval.current);
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+    };
   }, []);
 
   const playHorenAudio = (segments) => {
@@ -1231,61 +1142,61 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
   };
 
   return (
-    <div className="card" style={{ padding: 16, marginBottom: 24, border: "1px solid var(--line)" }}>
+    <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
       <h3 className="de" style={{ fontSize: "1.3em", fontWeight: 900, margin: "0 0 16px", color: "var(--ink)" }}>
         {exam.title}
       </h3>
 
       {/* الأوديو والعداد */}
-      <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 12, borderRadius: 16, marginBottom: 16 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
         <button onClick={toggleAudio} style={{
-          width: 50, height: 50, borderRadius: "50%", flexShrink: 0,
+          width: 56, height: 56, borderRadius: "50%", flexShrink: 0,
           background: isPlaying ? "var(--red)" : "#22C55E", color: "#FFF",
           display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
+          boxShadow: "0 8px 20px rgba(34, 197, 94, 0.3)", transition: "all 0.2s"
         }}>
-          {isPlaying ? <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>}
+          {isPlaying ? <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg> : <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>}
         </button>
         <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", marginBottom: 4 }}>
-            <span style={{ color: isPlaying ? "var(--red)" : "var(--ink)" }}>{Math.floor(audioTime / 60)}:{(audioTime % 60).toString().padStart(2, '0')}</span>
-            <span>Audio</span>
+          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, color: "var(--muted)", fontSize: "0.9em", marginBottom: 6 }}>
+            <span style={{ color: isPlaying ? "var(--red)" : "var(--ink)", direction: 'ltr' }}>{Math.floor(audioTime / 60)}:{(audioTime % 60).toString().padStart(2, '0')}</span>
+            <span>Audio Player</span>
           </div>
-          <div style={{ height: 6, background: "var(--line)", borderRadius: 99, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: "var(--red)", transition: isPlaying ? "width 30s linear" : "none" }} />
+          <div style={{ height: 8, background: "var(--line)", borderRadius: 99, overflow: "hidden" }}>
+            <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: isPlaying ? "var(--red)" : "#22C55E", transition: isPlaying ? "width 60s linear" : "none" }} />
           </div>
         </div>
       </div>
 
       {/* جدول R / F */}
-      <div style={{ border: "1px solid var(--line)", borderRadius: 12, overflow: "hidden", marginBottom: 16 }}>
-        <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "8px 0" }}>
-          <div style={{ width: 50, textAlign: "center" }}>R</div>
-          <div style={{ width: 50, textAlign: "center" }}>F</div>
+      <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
+        <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
+          <div style={{ width: 60, textAlign: "center" }}>R</div>
+          <div style={{ width: 60, textAlign: "center" }}>F</div>
           <div style={{ flex: 1, paddingLeft: 10 }}>AUSSAGE</div>
         </div>
         {exam.items.map((it) => {
           const isRight = ans[it.n] === "R";
           const isFalsch = ans[it.n] === "F";
           let rClass = "rf-circle", fClass = "rf-circle";
-          if (isRight) rClass += " sel";
-          if (isFalsch) fClass += " sel";
+          if (isRight) rClass += " sel"; // أزرق
+          if (isFalsch) fClass += " sel"; // أزرق
           if (done) {
-            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad";
-            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad";
+            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad"; // أخضر أو أحمر
+            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad"; // أخضر أو أحمر
           }
           return (
-            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "10px 0", background: done ? (ans[it.n] === it.c ? "var(--okbg)" : "var(--badbg)") : "var(--card)" }}>
-              <div style={{ width: 50, display: "flex", justifyContent: "center" }}>
+            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "12px 0", background: done ? (ans[it.n] === it.c ? "var(--okbg)" : "var(--badbg)") : "var(--card)" }}>
+              <div style={{ width: 60, display: "flex", justifyContent: "center" }}>
                 <div className={rClass} onClick={() => pickHoren(it.n, "R")}></div>
               </div>
-              <div style={{ width: 50, display: "flex", justifyContent: "center" }}>
+              <div style={{ width: 60, display: "flex", justifyContent: "center" }}>
                 <div className={fClass} onClick={() => pickHoren(it.n, "F")}></div>
               </div>
-              <div style={{ flex: 1, fontSize: "0.95em", lineHeight: 1.5, paddingRight: 10 }}>
-                <span style={{ opacity: 0.5, marginLeft: 6, fontWeight: 900 }}>{it.n}</span>
+              <div style={{ flex: 1, fontSize: "0.95em", lineHeight: 1.6, paddingRight: 10 }}>
+                <span style={{ opacity: 0.5, marginLeft: 8, fontWeight: 900 }}>{it.n}</span>
                 <span className="de">{it.de}</span>
-                {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
               </div>
             </div>
           );
@@ -1294,15 +1205,15 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
 
       {/* أزرار التحكم */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 6, color: "var(--muted)", fontWeight: 800, background: "var(--paper)", padding: "8px 16px", borderRadius: 10 }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--blue)", fontWeight: 800, background: "rgba(37, 99, 235, 0.1)", padding: "10px 16px", borderRadius: 12 }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
           قصة للحفظ
         </button>
         <div style={{ display: "flex", gap: 10 }}>
           {!done ? (
-            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900 }}>Prüfen (تصحيح)</button>
+            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "12px 28px", borderRadius: 14, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)" }}>Prüfen (تصحيح)</button>
           ) : (
-            <div style={{ fontWeight: 900, color: score === 25 ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center" }}>{score} / 25</div>
+            <div style={{ fontWeight: 900, color: score === 25 ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / 25</div>
           )}
         </div>
       </div>
@@ -1312,7 +1223,7 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
 }
 
 // ==========================================
-// مكون الامتحانات (Lesen)
+// مكون الامتحانات (Lesen + Horen)
 // ==========================================
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const [ans, setAns] = useState({});
@@ -1323,7 +1234,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const [excluded, setExcluded] = useState({});
   const [showHeader, setShowHeader] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [mode, setMode] = useState("exam");
+  const [mode, setMode] = useState("exam"); // exam / practice
 
   const lastScrollY = React.useRef(0);
 
@@ -1344,7 +1255,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
 
-  // إصلاح مشكل الأجوبة المكررة (Grey)
+  // منع تكرار الأجوبة
   const usedElsewhere = (n, k) => {
     if ((exam.type !== "matching" && exam.type !== "headings") || k === "X") return false;
     return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
@@ -1381,12 +1292,12 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
     const sel = ans[it.n];
     const isDone = done !== null || (mode === "practice" && sel !== undefined);
     if (isDone) {
-      if (k === it.c) return "opt good";
-      if (sel === k) return "opt bad";
+      if (k === it.c) return "opt good"; // أخضر
+      if (sel === k) return "opt bad"; // أحمر
       return "opt faded";
     }
     if (mode === "exam") {
-      if (sel === k) return "opt sel";
+      if (sel === k) return "opt sel"; // أزرق
       return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
     }
     if (sel === undefined) return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
@@ -1399,44 +1310,39 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   return (
     <div style={{ paddingBottom: 100 }}>
       {/* شريط التقدم */}
-      <div style={{
-        position: "fixed", top: 0, left: 0, right: 0, height: 4, zIndex: 100,
-        backgroundImage: "linear-gradient(to right, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)",
-        backgroundSize: `${scrollProgress}% 100%`,
-        backgroundRepeat: "no-repeat"
-      }} />
+      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 4, zIndex: 100, backgroundImage: "linear-gradient(to right, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)", backgroundSize: `${scrollProgress}% 100%`, backgroundRepeat: "no-repeat" }} />
 
-      <div style={{
-        position: "sticky", top: 0, zIndex: 30, background: "var(--paper)",
-        display: "flex", justifyContent: "space-between", alignItems: "center",
-        padding: "12px 16px", transition: 'transform 0.3s ease-in-out',
-        transform: showHeader ? 'translateY(0)' : 'translateY(-100%)'
-      }}>
+      <div style={{ position: "sticky", top: 0, zIndex: 30, background: "var(--paper)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", transition: 'transform 0.3s ease-in-out', transform: showHeader ? 'translateY(0)' : 'translateY(-100%)', boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button onClick={onBack} className="btnI" style={{ width: 36, height: 36 }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          <button onClick={onBack} className="btnI" style={{ width: 40, height: 40 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           <div>
-            <div className="de" style={{ fontWeight: 900, fontSize: "1em", lineHeight: 1.2 }}>{exam.title}</div>
-            <div className="de" style={{ fontSize: ".75em", color: "var(--muted)", fontWeight: "bold" }}>LESEN · {exam.sub.toUpperCase()}</div>
+            <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", lineHeight: 1.2 }}>{exam.title}</div>
+            <div className="de" style={{ fontSize: ".75em", color: "var(--muted)", fontWeight: "bold" }}>{exam.type === "horen" ? "HÖREN" : "LESEN"} · {exam.sub.toUpperCase()}</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-           <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 36, height: 36, color: showTranslation ? "var(--red)" : "var(--text)" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
+           <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? "var(--blue)" : "var(--text)" }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
            </button>
-           <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 36, height: 36 }}>
-            {dark ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+           <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 40, height: 40 }}>
+            {dark ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
            </button>
         </div>
       </div>
 
       <div style={{ margin: "10px 12px" }}>
-        {exam.type !== "matching" && (
+        {/* أزرار نمط الامتحان والتدريب */}
+        {exam.type !== "matching" && exam.type !== "horen" && (
           <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }}>🎯 نمط الامتحان</button>
-            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }}>📚 نمط التدريب</button>
+            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }}>🎯 {t("exam_mode", userLang)}</button>
+            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }}>📚 {t("practice_mode", userLang)}</button>
           </div>
+        )}
+
+        {exam.type === "horen" && (
+          <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} setShowTranslation={setShowTranslation} />
         )}
 
         {exam.type === "mcq" && (
@@ -1475,35 +1381,37 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
         {exam.type === "matching" && exam.ads.map(ad => (
           <div key={ad.k} className="card" style={{ padding: 16 }}>
             <div style={{ borderBottom: "1px solid var(--line)", paddingBottom: 12, marginBottom: 12 }}>
-              <span className="de" style={{ color: "var(--red)", fontWeight: 900 }}>ANZEIGE {ad.k}</span>
-              <div className="de" style={{ fontWeight: 900, marginTop: 4 }}>{ad.t}</div>
-              <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)" }}>{ad.de}</div>
+              <span className="de" style={{ color: "var(--red)", fontWeight: 900, fontSize: "1.1em" }}>ANZEIGE {ad.k}</span>
+              <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
+              <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4 }}>{ad.de}</div>
             </div>
             {exam.items.map(it => {
               const isSel = ans[it.n] === ad.k;
               const isElse = ans[it.n] && ans[it.n] !== ad.k;
               const isExc = excluded[it.n]?.[ad.k];
-              let st = { padding: 12, borderRadius: 10, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s" };
-              if (isSel) { st.background = "rgba(221,0,0,0.1)"; st.borderColor = "var(--red)"; }
+              let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s" };
+              
+              if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; } // أزرق
               else if (isElse) { st.opacity = 0.3; st.pointerEvents = "none"; }
               else if (isExc) { st.opacity = 0.3; st.textDecoration = "line-through"; st.pointerEvents = "none"; }
+              
               if (done !== null) {
-                if (ad.k === it.c) { st.background = "var(--okbg)"; st.borderColor = "var(--okc)"; }
-                else if (isSel) { st.background = "var(--badbg)"; st.borderColor = "var(--badc)"; }
+                if (ad.k === it.c) { st.background = "var(--okbg)"; st.borderColor = "var(--okc)"; st.color = "var(--okc)"; } // أخضر
+                else if (isSel) { st.background = "var(--badbg)"; st.borderColor = "var(--badc)"; st.color = "var(--badc)"; } // أحمر
               }
               return (
-                <div key={it.n} style={{ display: "flex", gap: 10, alignItems: "flex-start", direction: "ltr" }}>
+                <div key={it.n} style={{ display: "flex", gap: 12, alignItems: "flex-start", direction: "ltr" }}>
                   <button onClick={() => {
                     if (done !== null || isSel || isElse) return;
                     setExcluded(prev => {
                       const n = {...prev}; if(!n[it.n]) n[it.n] = {};
                       n[it.n][ad.k] = !n[it.n][ad.k]; return n;
                     });
-                  }} style={{ width: 24, height: 24, borderRadius: 6, border: "1px solid var(--line)", marginTop: 12, color: isExc ? "var(--red)" : "transparent" }}>✕</button>
-                  <div style={{ fontWeight: 900, marginTop: 12, width: 20 }}>{it.n}</div>
+                  }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>✕</button>
+                  <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
                   <div onClick={() => { if(!isExc && !isElse && done === null) setAns({...ans, [it.n]: ad.k}); }} style={st}>
                     <span className="de">{it.de}</span>
-                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
                   </div>
                 </div>
               );
@@ -1516,22 +1424,29 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
           const isDone = done !== null || (mode === "practice" && sel !== undefined);
           return (
             <div key={it.n} className="card" style={{ padding: 16 }}>
-              <div style={{ display: "flex", gap: 10, marginBottom: 12 }}>
-                <div className="letter">{idx + 1}</div>
+              <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
+                <div className="letter" style={{ width: 36, height: 36, fontSize: "1.1em", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>{idx + 1}</div>
                 <div style={{ flex: 1 }}>
-                  {exam.type === "headings" && <div className="de" style={{ lineHeight: 1.6 }}>{it.de}</div>}
-                  {exam.type === "mcq" && <div className="de" style={{ fontWeight: 900 }}>{it.q}</div>}
-                  {showTranslation && <div style={{ marginTop: 6, fontSize: "0.9em", color: "var(--muted)" }}>{tr(it, userLang)}</div>}
+                  {exam.type === "headings" && <div className="de" style={{ lineHeight: 1.6, fontSize: "1.05em" }}>{it.de}</div>}
+                  {exam.type === "mcq" && (
+                    <div>
+                      <p className="de" style={{ fontWeight: 900, margin: 0, fontSize: "1.05em" }}>{it.q}</p>
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em" }}>{tr(it, userLang)}</div>}
+                    </div>
+                  )}
                 </div>
               </div>
               {(exam.type === "headings" ? exam.options : it.opts).map(o => (
-                <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isDone} style={{ padding: 12 }}>
-                  <div className="letter" style={{ width: 26, height: 26 }}>{o.k}</div>
-                  <div className="de" style={{ flex: 1, textAlign: "left" }}>{showTranslation ? tr(o, userLang) : o.de}</div>
+                <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isDone} style={{ padding: 14 }}>
+                  <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em" }}>{o.k}</div>
+                  <div className="de" style={{ flex: 1, textAlign: "left" }}>
+                    {o.de}
+                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(o, userLang)}</div>}
+                  </div>
                 </button>
               ))}
               {isDone && mode === "practice" && (
-                <div className={sel === it.c ? "fb good" : "fb bad"} style={{ marginTop: 10, padding: 12, fontSize: "0.95em" }}>
+                <div className={sel === it.c ? "fb good" : "fb bad"} style={{ marginTop: 12, padding: 14, fontSize: "0.95em", borderRadius: 12 }}>
                   <b>{sel === it.c ? "✓ صحيح" : (sel ? "✗ غلط" : "⚠️ لم تجب")}</b>
                   {sel !== it.c && <span style={{fontWeight:900}}> — الجواب: {it.c}</span>}
                 </div>
@@ -1541,20 +1456,20 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
         })}
       </div>
 
-      {/* النوافذ المنبثقة لـ Sprach 1 و Sprach 2 */}
+      {/* النوافذ المنبثقة */}
       {modalGap !== null && exam.type === "sprach1" && (
         <div className="overlay" onClick={() => setModalGap(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:15}}>
-              <h3 style={{margin:0, fontSize:"1.2em"}}>الفراغ ({modalGap})</h3>
+            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
+              <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>الفراغ ({modalGap})</h3>
               <button className="btnI" onClick={() => setModalGap(null)}>✕</button>
             </div>
-            <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {exam.items.find(x => x.n === modalGap).opts.map((opt, i) => (
-                <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? "var(--gold)" : "var(--line)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
-                  <span style={{ opacity: 0.5, fontWeight: 900, marginRight: 10 }}>{String.fromCharCode(65 + i)}</span>
+                <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? "var(--blue)" : "var(--line)", background: ans[modalGap] === opt ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[modalGap] === opt ? "var(--blue)" : "var(--text)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
+                  <span style={{ opacity: 0.5, fontWeight: 900, marginRight: 12 }}>{String.fromCharCode(65 + i)}</span>
                   <span className="de" style={{fontSize:"1.05em", flex: 1}}>{opt}</span>
-                  {ans[modalGap] === opt && <span style={{ color: "var(--gold)", fontSize:"1.1em" }}>✓</span>}
+                  {ans[modalGap] === opt && <span style={{ color: "var(--blue)", fontSize:"1.2em" }}>✓</span>}
                 </button>
               ))}
             </div>
@@ -1565,16 +1480,16 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
       {activeGap !== null && exam.type === "sprach2" && (
          <div className="overlay" onClick={() => setActiveGap(null)}>
            <div className="sheet" onClick={e => e.stopPropagation()}>
-             <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:15}}>
-               <h3 style={{margin:0, fontSize:"1.2em"}}>اختر الكلمة للفراغ ({activeGap})</h3>
+             <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
+               <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>اختر الكلمة للفراغ ({activeGap})</h3>
                <button className="btnI" onClick={() => setActiveGap(null)}>✕</button>
              </div>
              <div className="word-bank" style={{marginBottom:0, gridTemplateColumns: "1fr"}}>
                {exam.wordBank.map(w => {
                  const isUsed = Object.values(ans).includes(w.w) && ans[activeGap] !== w.w;
                  return (
-                   <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => pickSprach2(w.w)} style={{ padding: "10px", borderColor: ans[activeGap] === w.w ? "var(--gold)" : "var(--line)" }}>
-                     <span style={{ opacity: 0.6, marginRight: 8, fontWeight: 900, fontSize:"0.9em" }}>{w.k}</span> <span style={{fontSize:"1.05em"}}>{w.w}</span>
+                   <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => pickSprach2(w.w)} style={{ padding: "14px", borderColor: ans[activeGap] === w.w ? "var(--blue)" : "var(--line)", background: ans[activeGap] === w.w ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[activeGap] === w.w ? "var(--blue)" : "var(--text)" }}>
+                     <span style={{ opacity: 0.5, marginRight: 10, fontWeight: 900, fontSize:"0.9em" }}>{w.k}</span> <span style={{fontSize:"1.05em"}}>{w.w}</span>
                    </button>
                  )
                })}
@@ -1583,15 +1498,18 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
          </div>
       )}
 
-      <div style={{ position: "fixed", bottom: 16, left: 16, right: 16, display: "flex", justifyContent: "space-between", zIndex: 100 }}>
+      {/* أزرار لتحت */}
+      <div style={{ position: "fixed", bottom: 20, left: 16, right: 16, display: "flex", justifyContent: "space-between", zIndex: 100 }}>
         <button onClick={done !== null ? reset : finish} style={{
-          padding: "12px 24px", borderRadius: 20, fontWeight: 900, color: done !== null ? "var(--ink)" : "var(--gold)",
-          background: done !== null ? "var(--card)" : "var(--ink)", border: done !== null ? "1px solid var(--line)" : "none"
+          padding: "14px 28px", borderRadius: 24, fontWeight: 900, color: done !== null ? "var(--ink)" : "var(--gold)",
+          background: done !== null ? "var(--card)" : "var(--ink)", border: done !== null ? "1px solid var(--line)" : "none",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.15)", fontSize: "1em"
         }}>
           {done !== null ? "إعادة" : "تصحيح"}
         </button>
         <button onClick={() => done !== null ? onBack() : onNext()} style={{
-          padding: "12px 24px", borderRadius: 20, fontWeight: 900, color: "var(--ink)", background: "var(--paper)", border: "1px solid var(--line)"
+          padding: "14px 28px", borderRadius: 24, fontWeight: 900, color: "var(--ink)", background: "var(--paper)", border: "1px solid var(--line)",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.1)", fontSize: "1em"
         }}>
           {done !== null ? "رجوع" : "التالي"}
         </button>
@@ -1599,7 +1517,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
     </div>
   );
 }
-
 // ==========================================
 // التطبيق الرئيسي App
 // ==========================================
@@ -1616,8 +1533,9 @@ function App() {
   const [results, setResults] = useState(() => { try { return JSON.parse(localStorage.getItem("ep_results") || "{}"); } catch (e) { return {}; } });
   const [searchQuery, setSearchQuery] = useState("");
   const [userLang, setUserLang] = useState(null); 
-  const [showTranslationGlobal, setShowTranslationGlobal] = useState(false);
+  const [selectedExamTitle, setSelectedExamTitle] = useState(null);
 
+  // شاشة السبلاش
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
     const savedUser = localStorage.getItem("ep_user");
@@ -1638,38 +1556,40 @@ function App() {
 
   const handleAuth = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const newUser = { name };
-    setUser(newUser);
-    localStorage.setItem("ep_user", JSON.stringify(newUser));
+    const uniqueCode = e.target.code.value;
+    if (uniqueCode.trim()) {
+      const newUser = { name: uniqueCode.trim(), isGuest: false };
+      setUser(newUser);
+      localStorage.setItem("ep_user", JSON.stringify(newUser));
+    }
   };
 
   const handleGuest = () => {
-    const guest = { name: "شعيب", isGuest: true };
+    const guest = { name: "زائر", isGuest: true };
     setUser(guest);
     localStorage.setItem("ep_user", JSON.stringify(guest));
   };
 
-  const logout = () => {
-    localStorage.removeItem("ep_user");
-    setUser(null);
-  };
+  const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
 
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
   const go = (v) => { setView(v); setExam(null); setMenu(false); window.scrollTo(0, 0); };
 
   const levelExams = EXAMS.filter(e => e.level === level);
-  const uniqueTitles = Array.from(new Set(levelExams.map(e => e.title)))
-    .filter(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+  const uniqueTitles = Array.from(new Set(levelExams.map(e => e.title))).filter(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
 
+  // دالة الانتقال للامتحان التالي (نفس السلسلة)
   const handleNextExam = (currentExam) => {
-    const currentTitleIndex = uniqueTitles.indexOf(currentExam.title);
-    if (currentTitleIndex !== -1 && currentTitleIndex < uniqueTitles.length - 1) {
-      const nextTitle = uniqueTitles[currentTitleIndex + 1];
-      const nextParts = EXAMS.filter(e => e.title === nextTitle && e.level === level);
-      if (nextParts.length > 0) setExam(nextParts[0]);
+    const currentIndex = EXAMS.findIndex(e => e.id === currentExam.id);
+    if (currentIndex !== -1 && currentIndex < EXAMS.length - 1) {
+      const nextEx = EXAMS[currentIndex + 1];
+      if (nextEx.title === currentExam.title) {
+        setExam(nextEx);
+      } else {
+        setExam(null); // رجع للقائمة
+      }
     } else {
-      setExam(null); 
+      setExam(null);
     }
   };
 
@@ -1677,24 +1597,26 @@ function App() {
     return (
       <div className="splash-screen">
         <div className="splash-logo"><LogoImage size={180} /></div>
-        <h1 className="de" style={{ color: "#FFF", fontSize: "2em", marginTop: 20, fontWeight: 900 }}>EchtPrüfung</h1>
+        <h1 className="de" style={{ color: "var(--text)", fontSize: "2.5em", marginTop: 20, fontWeight: 900 }}>EchtPrüfung</h1>
       </div>
     );
   }
 
+  // 1. شاشة اختيار اللغة (إجبارية)
   if (!userLang) {
     return (
       <div className="auth-screen">
         <div className="auth-card">
-          <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <div style={{ textAlign: "center", marginBottom: 30 }}>
             <LogoImage size={80} />
-            <h2 style={{ marginTop: 16 }}>اختر لغتك / Choose Language</h2>
+            <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>اختر لغتك / Choose Language</h2>
+            <p style={{color: "var(--muted)", fontSize: "0.95em", marginTop: 8}}>اللغة التي تختارها ستبقى معك طوال التطبيق</p>
           </div>
           <div className="lang-grid">
             {LANGS.map(l => (
               <button key={l.c} onClick={() => handleLangSelect(l.c)} className="lang-btn">
-                <span style={{ fontSize: "1.4em" }}>{l.f}</span>
-                <span>{l.n}</span>
+                <span style={{ fontSize: "1.6em" }}>{l.f}</span>
+                <span style={{ fontSize: "0.95em" }}>{l.n}</span>
               </button>
             ))}
           </div>
@@ -1703,39 +1625,54 @@ function App() {
     );
   }
 
+  // 2. شاشة تسجيل الدخول
   if (!user) {
     return (
       <div className="auth-screen">
         <div className="auth-card">
           <div style={{ textAlign: "center", marginBottom: 30 }}>
             <LogoImage size={80} />
-            <h2 style={{ marginTop: 16, fontWeight: 900 }}>مرحباً بك</h2>
+            <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("welcome", userLang)}</h2>
           </div>
-          <button className="auth-btn guest" onClick={handleGuest}>دخول كزائر (بنقرة واحدة)</button>
-          <div style={{ textAlign: "center", margin: "20px 0", color: "var(--muted)" }}>أو</div>
+          
           <form onSubmit={handleAuth}>
-            <input className="auth-input" name="name" placeholder="الاسم الفريد" required />
-            <input className="auth-input" name="pass" type="password" placeholder="رقم سري" required />
+            <input className="auth-input" name="code" placeholder="الكود الفريد الخاص بك (Unique ID)" required />
             <button type="submit" className="auth-btn">تسجيل الدخول</button>
           </form>
-          <button onClick={() => wa("مرحباً، نسيت كلمة السر ديالي فـ EchtPrüfung.")} style={{ width: "100%", padding: "10px", background: "transparent", color: "var(--red)", border: "none", fontWeight: 800, cursor: "pointer", fontSize: "0.95em" }}>هل نسيت كلمة السر؟</button>
+          
+          <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>أو</div>
+          
+          <button className="auth-btn guest" onClick={handleGuest}>
+            👤 دخول سريع (نقرة واحدة كزائر)
+          </button>
         </div>
       </div>
     );
   }
 
+  // 3. عرض الامتحان
   if (exam) {
-    return <ExamView exam={exam} userLang={userLang} dark={dark} setDark={setDark} onBack={() => setExam(null)} onNext={() => handleNextExam(exam)} onSave={saveResult} />;
+    return <ExamView 
+      exam={exam} 
+      userLang={userLang} 
+      dark={dark} 
+      setDark={setDark} 
+      onBack={() => setExam(null)} 
+      onNext={() => handleNextExam(exam)} 
+      onSave={saveResult} 
+    />;
   }
 
+  // 4. واجهة التطبيق الرئيسية
   return (
-    <div style={{ paddingBottom: 80 }}>
+    <div style={{ paddingBottom: 100 }}>
+      {/* الهيدر */}
       <div className="header">
         <div className="brand">
           <div className="logo"><LogoImage size={46} /></div>
           <div>
-            <div style={{ fontWeight: 900 }}>EchtPrüfung</div>
-            <div className="de" style={{ fontSize: ".8em", color: "var(--muted)", fontWeight:"bold", display: "flex", alignItems: "center", gap: 4 }}>
+            <div style={{ fontWeight: 900, fontSize: "1.1em" }}>EchtPrüfung</div>
+            <div className="de" style={{ fontSize: ".8em", color: "var(--muted)", fontWeight:"bold", display: "flex", alignItems: "center", gap: 6 }}>
               <span>Deutsch B1</span> <span>•</span>
               <span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</span>
               <span>{LANGS.find(l => l.c === userLang)?.n}</span>
@@ -1756,48 +1693,79 @@ function App() {
       </div>
 
       <main style={{ margin: "0 12px", paddingTop: 10 }}>
+        {/* الرئيسية */}
         {view === "home" && (
-          <div className="card" style={{ textAlign: "center", padding: 40, borderRadius: 24 }}>
-            <LogoImage size={100} />
-            <h1 style={{ marginTop: 20 }}>مرحباً {user.name}</h1>
-            <p style={{ color: "var(--muted)" }}>اختر قسماً من القائمة السفلية للبدء</p>
+          <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+            <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
+            
+            <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
+              <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
+                <LogoImage size={90} />
+              </div>
+              <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
+              
+              <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}>
+                <p style={{ margin: 0, color: "#FFF", fontSize: "1.2em", fontWeight: 900 }}>تدرب على الامتحان الحقيقي واذهب للحصول عليه!</p>
+                <p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.9em", fontWeight: "bold", textAlign: "center" }}>Trainiere für die echte Prüfung und hol sie dir!</p>
+              </div>
+
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}>
+                <span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#F5B82E" }}>B2</span>
+              </div>
+            </div>
           </div>
         )}
 
+        {/* قسم القراءة (Lesen) */}
         {view === "lesen" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 12 }}>Lesen</h1>
+            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen</h1>
             <div style={{ marginBottom: 16 }}>
-              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "14px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
+            
             {uniqueTitles.map(title => (
-              <div key={title} className="card">
-                <h3 className="de">{title}</h3>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 12 }}>
-                  {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(sub => {
-                    const ex = EXAMS.find(e => e.title === title && e.level === level && e.sub === sub);
-                    return (
-                      <button key={sub} onClick={() => ex && setExam(ex)} disabled={!ex} className="btn" style={{ width: "auto", padding: "8px 16px", opacity: ex ? 1 : 0.3 }}>
-                        {sub}
-                      </button>
-                    );
-                  })}
+              <button key={title} className="card" onClick={() => setSelectedExamTitle(title)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div>
+                    <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
+                      <span className="chip" style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "4px 10px", borderRadius: 8 }}>{level}</span>
+                      <span>90 Min</span>
+                    </div>
+                  </div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         )}
 
+        {/* قسم الاستماع (Hören) */}
         {view === "horen" && (
           <div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <h1 className="de" style={{ margin: 0, color: "var(--red)" }}>Hören</h1>
-              <button onClick={() => setShowTranslationGlobal(!showTranslationGlobal)} className="btnI" style={{ color: showTranslationGlobal ? "var(--red)" : "var(--text)" }}>
-                🌐
-              </button>
+              <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören</h1>
+              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4 }}>
+                <button className={`tab ${level === "B1" ? "on" : ""}`} onClick={() => setLevel("B1")} style={{ padding: "8px 20px", fontSize: "1em", borderRadius: 12, background: level === "B1" ? "var(--red)" : "transparent", color: level === "B1" ? "#FFF" : "var(--muted)", fontWeight: "bold", border: "none" }}>B1</button>
+                <button className={`tab ${level === "B2" ? "on" : ""}`} onClick={() => setLevel("B2")} style={{ padding: "8px 20px", fontSize: "1em", borderRadius: 12, background: level === "B2" ? "var(--red)" : "transparent", color: level === "B2" ? "#FFF" : "var(--muted)", fontWeight: "bold", border: "none" }}>B2</button>
+              </div>
             </div>
-            {HOREN_EXAMS.map(ex => (
-              <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showTranslationGlobal} setShowTranslation={setShowTranslationGlobal} />
+            
+            {HOREN_EXAMS.filter(e => e.level === level).map(ex => (
+              <button key={ex.id} className="card" onClick={() => setExam(ex)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{ex.title}</div>
+                    <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
+                      <span className="chip" style={{ background: "rgba(255,206,0,0.15)", color: "var(--gold)", padding: "4px 10px", borderRadius: 8 }}>{level}</span>
+                      <span>{ex.sub}</span>
+                    </div>
+                  </div>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                </div>
+              </button>
             ))}
           </div>
         )}
@@ -1809,48 +1777,69 @@ function App() {
         )}
       </main>
 
+      {/* القائمة السفلية (أسماء كتتبدل باللغة) */}
       <nav className="nav">
-        {[
-          ["home", "الرئيسية", "⌂"],
-          ["lesen", "Lesen", "📖"],
-          ["horen", "Hören", <HoerenIcon key="h-ic" size={20} />],
-          ["schreiben", "Schreiben", "✎"],
-          ["sprechen", "Sprechen", "🎙"]
-        ].map(([k, l, ic]) => (
+        {["home", "lesen", "horen", "schreiben", "sprechen", "pruefung"].map((k) => (
           <button key={k} className={view === k ? "on" : ""} onClick={() => go(k)}>
-            <span className="ic">{ic}</span>
-            <span>{l}</span>
+            <span style={{ fontSize: "0.85em", fontWeight: 900 }}>{t(k, userLang)}</span>
           </button>
         ))}
       </nav>
 
+      {/* نافذة اختيار الأجزاء (Lesen) */}
+      {selectedExamTitle && (
+        <div className="overlay" onClick={() => setSelectedExamTitle(null)}>
+          <div className="sheet" onClick={e => e.stopPropagation()}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <h3 className="de" style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>{selectedExamTitle}</h3>
+              <button className="btnI" onClick={() => setSelectedExamTitle(null)}>✕</button>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(subName => {
+                const existingExam = EXAMS.find(e => e.title === selectedExamTitle && e.level === level && e.sub === subName);
+                return (
+                  <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={() => {
+                      if (existingExam) { setExam(existingExam); setSelectedExamTitle(null); }
+                  }}>
+                    <span className="de" style={{ fontWeight: 800 }}>{subName}</span>
+                    {existingExam && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* القائمة الجانبية (Menu) */}
       {menu && (
         <div className="overlay" onClick={() => setMenu(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: "hidden" }}>
             <div style={{ padding: "30px 20px", background: "var(--paper)", textAlign: "center", borderBottom: "1px solid var(--line)", position: "relative" }}>
               <button className="btnI" style={{ position: "absolute", top: 16, left: 16 }} onClick={() => setMenu(false)}>✕</button>
               
+              {/* السمية ديال المستخدم */}
               <div style={{ width: 80, height: 80, margin: "0 auto 12px", borderRadius: "50%", background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", padding: 3 }}>
-                <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: "var(--card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.3em", fontWeight: 900 }}>
-                  شعيب
+                <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: "var(--card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5em", fontWeight: 900, color: "var(--ink)" }}>
+                  {user.name.charAt(0).toUpperCase()}
                 </div>
               </div>
               <h2 style={{ margin: 0 }}>{user.name}</h2>
               
               <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-                <button onClick={() => wa("مرحباً")} style={{ flex: 1, padding: "10px", background: "#25D366", color: "#FFF", borderRadius: 10, fontWeight: 900, display: "flex", justifyContent: "center", alignItems: "center", gap: 6 }}>
+                <button onClick={() => wa("مرحباً")} style={{ flex: 1, padding: "10px", background: "#25D366", color: "#FFF", borderRadius: 12, fontWeight: 900, display: "flex", justifyContent: "center", alignItems: "center", gap: 6 }}>
                   واتساب
                 </button>
-                <button onClick={logout} style={{ flex: 1, padding: "10px", background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 10, fontWeight: 900 }}>
-                  تسجيل الخروج
+                <button onClick={logout} style={{ flex: 1, padding: "10px", background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 12, fontWeight: 900 }}>
+                  خروج
                 </button>
               </div>
             </div>
 
             <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 10 }}>
               {["lesen", "horen", "schreiben", "sprechen"].map(k => (
-                <button key={k} onClick={() => { setView(k); setMenu(false); }} className="btn ghost" style={{ display: "flex", justifyContent: "flex-start", gap: 10 }}>
-                  <span style={{ textTransform: "capitalize" }}>{k}</span>
+                <button key={k} onClick={() => { setView(k); setMenu(false); }} className="btn ghost" style={{ display: "flex", justifyContent: "flex-start", gap: 10, padding: 16 }}>
+                  <span style={{ textTransform: "capitalize", fontWeight: 900 }}>{t(k, userLang)}</span>
                 </button>
               ))}
             </div>
@@ -1858,14 +1847,27 @@ function App() {
         </div>
       )}
 
+      {/* الإعدادات */}
       {settings && (
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
               <strong style={{fontSize:"1.3em"}}>الإعدادات</strong>
               <button className="btnI" onClick={() => setSettings(false)}>✕</button>
             </div>
             
+            <div style={{ marginBottom: 20 }}>
+              <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>تغيير اللغة / Language</span>
+              <div className="lang-grid" style={{ maxHeight: 200 }}>
+                {LANGS.map(lang => (
+                  <button key={lang.c} onClick={() => { setUserLang(lang.c); localStorage.setItem("ep_lang", lang.c); }} className={`lang-btn ${userLang === lang.c ? "on" : ""}`} style={{ padding: "10px" }}>
+                    <span style={{ fontSize: "1.2em" }}>{lang.f}</span>
+                    <span style={{ fontSize: "0.85em" }}>{lang.n}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
               <span style={{fontWeight:900, fontSize:"1.1em"}}>حجم النص</span>
               <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
@@ -1874,7 +1876,7 @@ function App() {
                 <button className="btnI" onClick={() => setFs(Math.min(150, fs + 10))}>+</button>
               </div>
             </div>
-            <button className="btn ghost" onClick={() => setFs(100)}>إعادة الحجم الأصلي</button>
+            <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>إعادة الحجم الأصلي</button>
           </div>
         </div>
       )}
