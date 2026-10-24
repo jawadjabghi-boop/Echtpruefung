@@ -63,12 +63,12 @@
   .dark .btn { background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); }
   .btn.ghost{ background:var(--card); color:var(--text); border:1.5px solid var(--line); box-shadow: none; }
   
-  /* أزرار نمط الامتحان والتدريب (رقيقة ومستطيلة) */
+  /* أزرار نمط الامتحان والتدريب */
   .modeBtn { flex: 1; padding: 10px 8px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 0.9em; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; cursor: pointer; }
   .modeBtn.on { border-color: var(--red); background: var(--red); color: #FFF; box-shadow: 0 4px 15px rgba(221,0,0,0.25); }
   .dark .modeBtn.on { background: var(--gold); border-color: var(--gold); color: var(--ink); box-shadow: 0 4px 15px rgba(255,206,0,0.25); }
 
-  /* الأجوبة */
+  /* الأجوبة (أزرق، أخضر، أحمر) */
   .opt{ display:flex; gap:12px; align-items:flex-start; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:16px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
   .opt.sel{ border-color:var(--blue); background:rgba(37, 99, 235, .1); color: var(--blue); }
   .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); }
@@ -82,13 +82,13 @@
   .fb.good{ background:var(--okbg); color:var(--okc); }
   .fb.bad{ background:var(--badbg); color:var(--badc); }
   
-  /* القائمة السفلية (احترافية بأيقونات) */
+  /* القائمة السفلية */
   .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; gap: 4px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
   .nav button{ color:var(--muted); font-size:.7em; font-weight:800; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; flex: 1; transition:all 0.2s; border-radius: 12px; padding: 6px 0; }
   .nav button.on{ color:var(--red); background: rgba(221,0,0,0.08); }
   .dark .nav button.on{ color:var(--gold); background: rgba(255,206,0,0.15); }
-  .nav .ic svg { width: 22px; height: 22px; }
   
+  /* الشاشات المنبثقة */
   .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:50; display:flex; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(6px); }
   .sheet{ background:var(--card); border:1px solid var(--line); border-radius:28px; padding:24px; width:100%; max-width:440px; max-height:85vh; overflow-y:auto; color:var(--text); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
   
@@ -108,25 +108,21 @@
   .auth-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:var(--ink); color:var(--gold); font-weight:800; font-size:1.1em; cursor:pointer; margin-bottom:12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
   .auth-btn.guest{ background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); box-shadow: 0 8px 20px rgba(255,206,0,0.3); }
   
-  /* اختيار اللغة (احترافي ومندمج) */
   .lang-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; max-height:400px; overflow-y:auto; padding-right:5px; }
   .lang-btn{ display:flex; align-items:center; gap:8px; padding:12px; border-radius:14px; background:var(--paper); border:2px solid var(--line); color:var(--text); font-weight:800; transition:all 0.2s; text-align:right; font-size:0.85em; }
   .lang-btn.on{ background:rgba(37, 99, 235, 0.08); border-color:var(--blue); color:var(--blue); }
   
-  /* الفراغات Sprach */
   .inline-gap{ display:inline-flex; align-items:center; justify-content:center; min-width:90px; border-bottom:2px dashed var(--blue); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900; vertical-align:middle; background:rgba(37, 99, 235,0.05); border-radius:6px 6px 0 0; }
   .inline-gap.filled{ border-bottom-style:solid; background:rgba(37, 99, 235,0.15); color:var(--blue); }
   .sp1-correct{ background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--okc); }
   .sp1-wrong{ background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--badc); }
 
-  /* Hören */
+  /* دوائر الهورن */
   .rf-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
   .rf-circle.sel { border-color: var(--blue); background: rgba(37, 99, 235, 0.1); }
   .rf-circle.sel::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); }
-  
   .rf-circle.good { border-color: var(--okc) !important; background: var(--okbg) !important; }
   .rf-circle.good::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--okc) !important; }
-  
   .rf-circle.bad { border-color: var(--badc) !important; background: var(--badbg) !important; }
   .rf-circle.bad::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--badc) !important; }
   
@@ -136,6 +132,49 @@
   .dark .audio-icon-big { background:rgba(255,206,0,0.1); color:var(--gold); }
   
   .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); direction: rtl; text-align: right; }
+
+  /* 🌟 الشاشة الجديدة ديال الهورن (البوابة) */
+  .horen-gateway-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 24px;
+    padding: 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+  }
+  .horen-gateway-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 20px;
+    background: rgba(34, 197, 94, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #22C55E;
+    font-size: 2em;
+  }
+  .horen-start-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 16px;
+    background: rgba(34, 197, 94, 0.1);
+    color: #22C55E;
+    font-weight: 900;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.2s;
+    border: 1.5px solid rgba(34, 197, 94, 0.3);
+  }
+  .horen-start-btn:active { transform: scale(0.98); background: rgba(34, 197, 94, 0.2); }
+
 </style>
 </head>
 <body>
@@ -171,22 +210,25 @@ const LANGS = [
   { c:"ne", n:"नेपाली", f:"🇳🇵" }
 ];
 
+// دالة الترجمة (المصححة: الإنجليزية قبل العربية)
 const tr = (obj, lang) => {
   if (!obj) return "";
   if (typeof obj === 'string') return obj;
   return obj[lang] || obj['en'] || obj['ar'] || obj['de'] || "";
+};
+
 const UI_TEXTS = {
-  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني" },
-  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني" },
-  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता" },
-  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", banner_title:"Berlatih untuk ujian sebenarnya dan dapatkan!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"ID Unik Anda", login:"Masuk", guest:"Masuk sebagai tamu", support:"Dukungan Teknis" },
-  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbabasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Magsanay para sa tunay na pagsusulit at makuha ito!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Ang Iyong Natatanging ID", login:"Mag-login", guest:"Mag-login bilang bisita", support:"Teknikal na Suporta" },
-  fa: { welcome:"خوش آمدید", choose_lang:"زبان را انتخاب کنید", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", banner_title:"برای آزمون واقعی تمرین کنید و آن را دریافت کنید!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"شناسه منحصر به فرد شما", login:"ورود", guest:"ورود به عنوان مهمان", support:"پشتیبانی فنی" },
-  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", banner_title:"Fanya mazoezi kwa mtihani halisi na uupate!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Kitambulisho chako cha kipekee", login:"Ingia", guest:"Ingia kama mgeni", support:"Msaada wa Kiufundi" },
-  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique" },
-  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support" },
-  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", banner_title:"Haqiqiy imtihonga tayyorlaning va uni oling!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Sizning noyob IDingiz", login:"Kirish", guest:"Mehmon sifatida kirish", support:"Texnik yordam" },
-  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"वास्तविक परीक्षाको लागि अभ्यास गर्नुहोस् र यो प्राप्त गर्नुहोस्!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"तपाईंको अद्वितीय आईडी", login:"लगइन", guest:"अतिथिको रूपमा प्रवेश", support:"प्राविधिक सहयोग" }
+  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع" },
+  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع" },
+  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ" },
+  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons" },
+  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute" },
+  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", banner_title:"Berlatih untuk ujian sebenarnya dan dapatkan!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"ID Unik Anda", login:"Masuk", guest:"Masuk sebagai tamu", support:"Dukungan Teknis", start_now:"Mulai Sekarang", listen_lessons:"Pelajaran Mendengarkan" },
+  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbabasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Magsanay para sa tunay na pagsusulit at makuha ito!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Ang Iyong Natatanging ID", login:"Mag-login", guest:"Mag-login bilang bisita", support:"Teknikal na Suporta", start_now:"Simulan Ngayon", listen_lessons:"Mga Aralin sa Pakikinig" },
+  fa: { welcome:"خوش آمدید", choose_lang:"زبان را انتخاب کنید", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", banner_title:"برای آزمون واقعی تمرین کنید و آن را دریافت کنید!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"شناسه منحصر به فرد شما", login:"ورود", guest:"ورود به عنوان مهمان", support:"پشتیبانی فنی", start_now:"شروع کنید", listen_lessons:"دروس شنیداری" },
+  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", banner_title:"Fanya mazoezi kwa mtihani halisi na uupate!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Kitambulisho chako cha kipekee", login:"Ingia", guest:"Ingia kama mgeni", support:"Msaada wa Kiufundi", start_now:"Anza Sasa", listen_lessons:"Masomo ya Kusikiliza" },
+  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", banner_title:"Haqiqiy imtihonga tayyorlaning va uni oling!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Sizning noyob IDingiz", login:"Kirish", guest:"Mehmon sifatida kirish", support:"Texnik yordam", start_now:"Hozir boshlang", listen_lessons:"Tinglash darslari" },
+  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"वास्तविक परीक्षाको लागि अभ्यास गर्नुहोस् र यो प्राप्त गर्नुहोस्!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"तपाईंको अद्वितीय आईडी", login:"लगइन", guest:"अतिथिको रूपमा प्रवेश", support:"प्राविधिक सहयोग", start_now:"अब सुरु गर्नुहोस्", listen_lessons:"सुन्ने पाठहरू" }
 };
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
 const EXAMS = [
@@ -653,7 +695,7 @@ const HOREN_EXAMS = [
       { text: "Meine Eltern sind nett, aber ich verbringe meine Zeit lieber mit Freunden. Wir gehen ins Kino oder treffen uns im Park. Natürlich liebe ich meine Familie, aber ich brauche auch meine Freiheit.", pitch: 1.1, rate: 1.0 }
     ],
     items: [
-      { n:1, c:"F", de:"Die Sprecherin wünscht sich eineren Va story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
+      { n:1, c:"F", de:"Die Sprecherin wünscht sich einen Arbeitsplatz für ihren Vater.", ar:"المتحدثة تتمنى وظيفة لوالدها.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
       { n:2, c:"R", de:"Der Sprecher ist kein besonders guter Schüler.", ar:"المتحدث ليس تلميذاً جيداً جداً.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
       { n:3, c:"R", de:"Die Sprecherin möchte nicht immer gestört werden.", ar:"المتحدثة لا تريد أن يتم إزعاجها دائماً.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
       { n:4, c:"R", de:"Der Sprecher versteht sich nicht gut mit seiner Mutter.", ar:"المتحدث لا يتفاهم جيداً مع والدته.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
@@ -1062,9 +1104,61 @@ const HOREN_EXAMS = [
   }
 ];
 // ==========================================
+// دالة الترجمة الآلية (Google Translate API)
+// ==========================================
+const globalTransCache = {};
+
+function AutoTrans({ text, lang }) {
+  const [translated, setTranslated] = useState(text);
+  
+  useEffect(() => {
+    if (!text) return;
+    if (['ar', 'ma', 'en', 'fr', 'de'].includes(lang)) {
+      setTranslated(text);
+      return;
+    }
+    
+    const cacheKey = `${lang}_${text}`;
+    if (globalTransCache[cacheKey]) {
+      setTranslated(globalTransCache[cacheKey]);
+      return;
+    }
+
+    // استخدام Google Translate API المجاني
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=de&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data[0]) {
+          const result = data[0].map(item => item[0]).join('');
+          globalTransCache[cacheKey] = result;
+          setTranslated(result);
+        }
+      })
+      .catch(() => setTranslated(text)); // فشل الترجمة يرجع للنص الأصلي
+  }, [text, lang]);
+
+  return <span>{translated}</span>;
+}
+
+function SmartTrans({ obj, lang }) {
+  if (!obj) return "";
+  const textDe = obj.de || obj.en || (obj.q ? obj.q : "") || (typeof obj === 'string' ? obj : "");
+  
+  if (typeof obj === 'object' && obj[lang]) {
+    return <span>{obj[lang]}</span>;
+  }
+  
+  if (['ar', 'ma', 'en', 'fr'].includes(lang)) {
+     return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
+  }
+
+  return <AutoTrans text={textDe} lang={lang} />;
+}
+
+// ==========================================
 // مكون عرض دروس Hören (العداد + التصحيح)
 // ==========================================
-function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
+function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -1142,7 +1236,6 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
         {exam.title}
       </h3>
 
-      {/* الأوديو والعداد */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
         <button onClick={toggleAudio} style={{
           width: 56, height: 56, borderRadius: "50%", flexShrink: 0,
@@ -1163,7 +1256,6 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
         </div>
       </div>
 
-      {/* جدول R / F */}
       <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
         <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
           <div style={{ width: 60, textAlign: "center" }}>R</div>
@@ -1174,12 +1266,12 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
           const isRight = ans[it.n] === "R";
           const isFalsch = ans[it.n] === "F";
           let rClass = "rf-circle", fClass = "rf-circle";
-          if (isRight) rClass += " sel"; // أزرق
-          if (isFalsch) fClass += " sel"; // أزرق
+          if (isRight) rClass += " sel";
+          if (isFalsch) fClass += " sel";
           
           if (done) {
-            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad"; // أخضر أو أحمر
-            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad"; // أخضر أو أحمر
+            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad";
+            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad";
           }
           
           return (
@@ -1193,14 +1285,17 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
               <div style={{ flex: 1, fontSize: "0.95em", lineHeight: 1.6, paddingRight: 10 }}>
                 <span style={{ opacity: 0.5, marginLeft: 8, fontWeight: 900 }}>{it.n}</span>
                 <span className="de">{it.de}</span>
-                {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                {showTranslation && (
+                  <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>
+                    <SmartTrans obj={it} lang={userLang} />
+                  </div>
+                )}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* أزرار التحكم */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--blue)", fontWeight: 800, background: "rgba(37, 99, 235, 0.1)", padding: "10px 16px", borderRadius: 12 }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -1210,7 +1305,7 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
           {!done ? (
             <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)" }}>Prüfen (تصحيح)</button>
           ) : (
-            <div style={{ fontWeight: 900, color: score === 25 ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / 25</div>
+            <div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / {total}</div>
           )}
         </div>
       </div>
@@ -1220,7 +1315,31 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
 }
 
 // ==========================================
-// مكون الامتحانات (Lesen + Horen)
+// بوابة الهورن (الشاشة اللي كتدخلك للدروس)
+// ==========================================
+function HorenGateway({ onStart, userLang }) {
+  return (
+    <div style={{ paddingBottom: 100 }}>
+      <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px", textAlign: "center" }}>Hören</h1>
+      <div className="horen-gateway-card">
+        <div className="horen-gateway-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+        </div>
+        <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>دروس الاستماع</h2>
+        <p style={{ color: "var(--muted)", fontSize: "1em", margin: 0, lineHeight: 1.6 }}>
+          هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.
+        </p>
+        <button className="horen-start-btn" onClick={onStart}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
+          {t("start_now", userLang)}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// مكون الامتحانات (Lesen)
 // ==========================================
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const [ans, setAns] = useState({});
@@ -1318,7 +1437,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
           </div>
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-           {/* زر الترجمة كبر */}
            <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 48, height: 48, color: showTranslation ? "var(--blue)" : "var(--text)", borderColor: showTranslation ? "var(--blue)" : "var(--line)" }}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
            </button>
@@ -1329,7 +1447,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
       </div>
 
       <div style={{ margin: "10px 12px" }}>
-        {/* أزرار نمط الامتحان والتدريب (رقيقة ومستطيلة) */}
         {exam.type !== "matching" && exam.type !== "horen" && (
           <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
             <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }}>🎯 {t("exam_mode", userLang)}</button>
@@ -1338,7 +1455,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
         )}
 
         {exam.type === "horen" && (
-          <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} setShowTranslation={setShowTranslation} />
+          <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} />
         )}
 
         {exam.type === "mcq" && (
@@ -1346,7 +1463,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
             {exam.paragraphs.map((p, i) => (
               <div key={i} style={{ marginBottom: 16 }}>
                 <p className="de" style={{ lineHeight: 1.8, fontSize: "1.05em", margin: 0 }}>{p.de}</p>
-                {showTranslation && <div className="t2-ar">{tr(p, userLang)}</div>}
+                {showTranslation && <div className="t2-ar"><SmartTrans obj={p} lang={userLang} /></div>}
               </div>
             ))}
           </div>
@@ -1387,13 +1504,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
               const isExc = excluded[it.n]?.[ad.k];
               let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s" };
               
-              if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; } // أزرق
+              if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; }
               else if (isElse) { st.opacity = 0.3; st.pointerEvents = "none"; }
               else if (isExc) { st.opacity = 0.3; st.textDecoration = "line-through"; st.pointerEvents = "none"; }
               
               if (done !== null) {
-                if (ad.k === it.c) { st.background = "var(--okbg)"; st.borderColor = "var(--okc)"; st.color = "var(--okc)"; } // أخضر
-                else if (isSel) { st.background = "var(--badbg)"; st.borderColor = "var(--badc)"; st.color = "var(--badc)"; } // أحمر
+                if (ad.k === it.c) { st.background = "var(--okbg)"; st.borderColor = "var(--okc)"; st.color = "var(--okc)"; }
+                else if (isSel) { st.background = "var(--badbg)"; st.borderColor = "var(--badc)"; st.color = "var(--badc)"; }
               }
               return (
                 <div key={it.n} style={{ display: "flex", gap: 12, alignItems: "flex-start", direction: "ltr" }}>
@@ -1407,7 +1524,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                   <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
                   <div onClick={() => { if(!isExc && !isElse && done === null) setAns({...ans, [it.n]: ad.k}); }} style={st}>
                     <span className="de">{it.de}</span>
-                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}><SmartTrans obj={it} lang={userLang} /></div>}
                   </div>
                 </div>
               );
@@ -1426,14 +1543,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                   {exam.type === "headings" && (
                     <div style={{ lineHeight: 1.6, fontSize: "1.05em" }}>
                       <div className="de">{it.de}</div>
-                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}><SmartTrans obj={it} lang={userLang} /></div>}
                     </div>
                   )}
                   {exam.type === "mcq" && (
                     <div>
-                      {/* هنا فين كيترجم السؤال */}
                       <p className="de" style={{ fontWeight: 900, margin: 0, fontSize: "1.05em" }}>{it.q}</p>
-                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}><SmartTrans obj={{de: it.q}} lang={userLang} /></div>}
                     </div>
                   )}
                 </div>
@@ -1443,7 +1559,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                   <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em" }}>{o.k}</div>
                   <div className="de" style={{ flex: 1, textAlign: "left" }}>
                     {o.de}
-                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(o, userLang)}</div>}
+                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}><SmartTrans obj={o} lang={userLang} /></div>}
                   </div>
                 </button>
               ))}
@@ -1458,7 +1574,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
         })}
       </div>
 
-      {/* النوافذ المنبثقة */}
       {modalGap !== null && exam.type === "sprach1" && (
         <div className="overlay" onClick={() => setModalGap(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1500,7 +1615,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
          </div>
       )}
 
-      {/* أزرار التحت (عائمة، مستطيلة، صغيرة) */}
       <div style={{ position: "fixed", bottom: 16, left: 16, right: 16, display: "flex", justifyContent: "space-between", zIndex: 100, pointerEvents: "none" }}>
         <button onClick={done !== null ? reset : finish} style={{
           pointerEvents: "auto", padding: "10px 20px", borderRadius: 12, fontWeight: 900, fontSize: "0.85em", color: done !== null ? "var(--ink)" : "var(--gold)",
@@ -1519,6 +1633,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
     </div>
   );
 }
+
 // ==========================================
 // التطبيق الرئيسي App
 // ==========================================
@@ -1536,8 +1651,8 @@ function App() {
   const [searchQuery, setSearchQuery] = useState("");
   const [userLang, setUserLang] = useState(null); 
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
+  const [showHorenLessons, setShowHorenLessons] = useState(false);
 
-  // شاشة السبلاش
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
     const savedUser = localStorage.getItem("ep_user");
@@ -1551,11 +1666,7 @@ function App() {
   useEffect(() => { document.documentElement.style.setProperty("--fs", fs / 100); try { localStorage.setItem("ep_fs", fs); } catch (e) {} }, [fs]);
   useEffect(() => { try { localStorage.setItem("ep_results", JSON.stringify(results)); } catch (e) {} }, [results]);
 
-  const handleLangSelect = (c) => {
-    setUserLang(c);
-    localStorage.setItem("ep_lang", c);
-  };
-
+  const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
   const handleAuth = (e) => {
     e.preventDefault();
     const uniqueCode = e.target.code.value;
@@ -1565,22 +1676,25 @@ function App() {
       localStorage.setItem("ep_user", JSON.stringify(newUser));
     }
   };
-
   const handleGuest = () => {
     const guest = { name: "زائر", isGuest: true };
     setUser(guest);
     localStorage.setItem("ep_user", JSON.stringify(guest));
   };
-
   const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
 
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
-  const go = (v) => { setView(v); setExam(null); setMenu(false); window.scrollTo(0, 0); };
+  const go = (v) => { 
+    setView(v); 
+    setExam(null); 
+    setMenu(false); 
+    setShowHorenLessons(false);
+    window.scrollTo(0, 0); 
+  };
 
   const levelExams = EXAMS.filter(e => e.level === level);
   const uniqueTitles = Array.from(new Set(levelExams.map(e => e.title))).filter(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  // دالة الانتقال للامتحان التالي (نفس السلسلة)
   const handleNextExam = (currentExam) => {
     const currentIndex = EXAMS.findIndex(e => e.id === currentExam.id);
     if (currentIndex !== -1 && currentIndex < EXAMS.length - 1) {
@@ -1588,7 +1702,7 @@ function App() {
       if (nextEx.title === currentExam.title) {
         setExam(nextEx);
       } else {
-        setExam(null); // رجع للقائمة
+        setExam(null);
       }
     } else {
       setExam(null);
@@ -1604,7 +1718,6 @@ function App() {
     );
   }
 
-  // 1. شاشة اختيار اللغة (احترافية ومندمجة)
   if (!userLang) {
     return (
       <div className="auth-screen">
@@ -1627,7 +1740,6 @@ function App() {
     );
   }
 
-  // 2. شاشة تسجيل الدخول
   if (!user) {
     return (
       <div className="auth-screen">
@@ -1652,7 +1764,6 @@ function App() {
     );
   }
 
-  // 3. عرض الامتحان
   if (exam) {
     return <ExamView 
       exam={exam} 
@@ -1665,10 +1776,8 @@ function App() {
     />;
   }
 
-  // 4. واجهة التطبيق الرئيسية
   return (
     <div style={{ paddingBottom: 100 }}>
-      {/* الهيدر */}
       <div className="header">
         <div className="brand">
           <div className="logo"><LogoImage size={46} /></div>
@@ -1695,7 +1804,6 @@ function App() {
       </div>
 
       <main style={{ margin: "0 12px", paddingTop: 10 }}>
-        {/* الرئيسية */}
         {view === "home" && (
           <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
@@ -1719,7 +1827,6 @@ function App() {
           </div>
         )}
 
-        {/* قسم القراءة (Lesen) */}
         {view === "lesen" && (
           <div>
             <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen</h1>
@@ -1744,16 +1851,23 @@ function App() {
           </div>
         )}
 
-        {/* قسم الاستماع (Hören) - سكرول واحد لجميع الدروس */}
         {view === "horen" && (
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören</h1>
-            </div>
-            
-            {HOREN_EXAMS.map(ex => (
-              <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={false} setShowTranslation={() => {}} />
-            ))}
+            {!showHorenLessons ? (
+              <HorenGateway onStart={() => setShowHorenLessons(true)} userLang={userLang} />
+            ) : (
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                  <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören</h1>
+                  <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>
+                    رجوع
+                  </button>
+                </div>
+                {HOREN_EXAMS.map(ex => (
+                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={false} />
+                ))}
+              </div>
+            )}
           </div>
         )}
 
@@ -1764,7 +1878,6 @@ function App() {
         )}
       </main>
 
-      {/* القائمة السفلية (احترافية بأيقونات) */}
       <nav className="nav">
         {[
           { id: "home", label: t("home", userLang), icon: "⌂" },
@@ -1781,7 +1894,6 @@ function App() {
         ))}
       </nav>
 
-      {/* نافذة اختيار الأجزاء (Lesen) */}
       {selectedExamTitle && (
         <div className="overlay" onClick={() => setSelectedExamTitle(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1806,7 +1918,6 @@ function App() {
         </div>
       )}
 
-      {/* القائمة الجانبية (Menu) */}
       {menu && (
         <div className="overlay" onClick={() => setMenu(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: "hidden" }}>
@@ -1841,11 +1952,11 @@ function App() {
         </div>
       )}
 
-      {/* الإعدادات */}
       {settings && (
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: ", marginBottom: 20            <strong style={{fontSize:"1.3em"}}>الإعدادات</strong>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+              <strong style={{fontSize:"1.3em"}}>الإعدادات</strong>
               <button className="btnI" onClick={() => setSettings(false)}>✕</button>
             </div>
             
@@ -1876,6 +1987,7 @@ function App() {
     </div>
   );
 }
+
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
 </body>
