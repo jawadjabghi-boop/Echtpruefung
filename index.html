@@ -26,7 +26,6 @@
   html{ font-size:calc(18px * var(--fs)); }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   
-  /* الخلفية الاحترافية (Spray) */
   body{ 
     margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s;
     background-color: var(--paper);
@@ -46,7 +45,6 @@
   button{ font-family:inherit; cursor:pointer; border:none; background:transparent; }
   .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
   
-  /* Glassmorphism Effect */
   .card{ background:rgba(255,255,255,0.7); border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:12px; box-shadow:0 8px 32px rgba(0,0,0,0.04); backdrop-filter: blur(12px); transition: transform 0.2s; }
   .dark .card { background:rgba(26,26,26,0.7); }
   .card:active { transform: scale(0.98); }
@@ -63,12 +61,10 @@
   .dark .btn { background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); }
   .btn.ghost{ background:var(--card); color:var(--text); border:1.5px solid var(--line); box-shadow: none; }
   
-  /* أزرار نمط الامتحان والتدريب */
   .modeBtn { flex: 1; padding: 10px 8px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 0.9em; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; cursor: pointer; }
   .modeBtn.on { border-color: var(--red); background: var(--red); color: #FFF; box-shadow: 0 4px 15px rgba(221,0,0,0.25); }
   .dark .modeBtn.on { background: var(--gold); border-color: var(--gold); color: var(--ink); box-shadow: 0 4px 15px rgba(255,206,0,0.25); }
 
-  /* الأجوبة (أزرق، أخضر، أحمر) */
   .opt{ display:flex; gap:12px; align-items:flex-start; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:16px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
   .opt.sel{ border-color:var(--blue); background:rgba(37, 99, 235, .1); color: var(--blue); }
   .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); }
@@ -82,13 +78,11 @@
   .fb.good{ background:var(--okbg); color:var(--okc); }
   .fb.bad{ background:var(--badbg); color:var(--badc); }
   
-  /* القائمة السفلية */
   .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; gap: 4px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
   .nav button{ color:var(--muted); font-size:.7em; font-weight:800; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; flex: 1; transition:all 0.2s; border-radius: 12px; padding: 6px 0; }
   .nav button.on{ color:var(--red); background: rgba(221,0,0,0.08); }
   .dark .nav button.on{ color:var(--gold); background: rgba(255,206,0,0.15); }
   
-  /* الشاشات المنبثقة */
   .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:50; display:flex; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(6px); }
   .sheet{ background:var(--card); border:1px solid var(--line); border-radius:28px; padding:24px; width:100%; max-width:440px; max-height:85vh; overflow-y:auto; color:var(--text); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
   
@@ -117,7 +111,6 @@
   .sp1-correct{ background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--okc); }
   .sp1-wrong{ background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--badc); }
 
-  /* دوائر الهورن */
   .rf-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
   .rf-circle.sel { border-color: var(--blue); background: rgba(37, 99, 235, 0.1); }
   .rf-circle.sel::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); }
@@ -133,7 +126,6 @@
   
   .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); direction: rtl; text-align: right; }
 
-  /* 🌟 الشاشة الجديدة ديال الهورن (البوابة) */
   .horen-gateway-card {
     background: var(--card);
     border: 1px solid var(--line);
@@ -182,7 +174,7 @@
 
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
-const WA = "212600000000"; // ⚠️ بدل رقم الواتساب هنا
+const WA = "212600000000"; 
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
 const LogoImage = ({ size = 50 }) => (
@@ -210,7 +202,6 @@ const LANGS = [
   { c:"ne", n:"नेपाली", f:"🇳🇵" }
 ];
 
-// دالة الترجمة (المصححة: الإنجليزية قبل العربية)
 const tr = (obj, lang) => {
   if (!obj) return "";
   if (typeof obj === 'string') return obj;
@@ -218,18 +209,19 @@ const tr = (obj, lang) => {
 };
 
 const UI_TEXTS = {
-  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع" },
-  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع" },
-  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ" },
-  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons" },
-  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute" },
-  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", banner_title:"Berlatih untuk ujian sebenarnya dan dapatkan!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"ID Unik Anda", login:"Masuk", guest:"Masuk sebagai tamu", support:"Dukungan Teknis", start_now:"Mulai Sekarang", listen_lessons:"Pelajaran Mendengarkan" },
-  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbabasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Magsanay para sa tunay na pagsusulit at makuha ito!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Ang Iyong Natatanging ID", login:"Mag-login", guest:"Mag-login bilang bisita", support:"Teknikal na Suporta", start_now:"Simulan Ngayon", listen_lessons:"Mga Aralin sa Pakikinig" },
-  fa: { welcome:"خوش آمدید", choose_lang:"زبان را انتخاب کنید", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", banner_title:"برای آزمون واقعی تمرین کنید و آن را دریافت کنید!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"شناسه منحصر به فرد شما", login:"ورود", guest:"ورود به عنوان مهمان", support:"پشتیبانی فنی", start_now:"شروع کنید", listen_lessons:"دروس شنیداری" },
-  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", banner_title:"Fanya mazoezi kwa mtihani halisi na uupate!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Kitambulisho chako cha kipekee", login:"Ingia", guest:"Ingia kama mgeni", support:"Msaada wa Kiufundi", start_now:"Anza Sasa", listen_lessons:"Masomo ya Kusikiliza" },
-  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", banner_title:"Haqiqiy imtihonga tayyorlaning va uni oling!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Sizning noyob IDingiz", login:"Kirish", guest:"Mehmon sifatida kirish", support:"Texnik yordam", start_now:"Hozir boshlang", listen_lessons:"Tinglash darslari" },
-  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"वास्तविक परीक्षाको लागि अभ्यास गर्नुहोस् र यो प्राप्त गर्नुहोस्!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"तपाईंको अद्वितीय आईडी", login:"लगइन", guest:"अतिथिको रूपमा प्रवेश", support:"प्राविधिक सहयोग", start_now:"अब सुरु गर्नुहोस्", listen_lessons:"सुन्ने पाठहरू" }
+  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب" },
+  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب" },
+  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ", search_placeholder:"विषय खोजें...", listen_title:"सुनने के पाठ", listen_desc:"यहां आपको सभी सुनने के पाठ मिलेंगे। सुनना शुरू करने और सवालों के जवाब देने के लिए बटन दबाएं।", gap_num:"रिक्त स्थान", choose_word_gap:"रिक्त स्थान के लिए शब्द चुनें", story_memo:"याद रखने के लिए कहानी", check_btn:"जांचें", next_btn:"अगला", back_btn:"वापस", reset_btn:"रीसेट", coming_soon:"जल्द आ रहा है...", settings:"सेटिंग्स", change_lang:"भाषा बदलें", text_size:"पाठ का आकार", reset_size:"मूल आकार पर लौटें", logout:"लॉग आउट", whatsapp:"व्हाट्सएप", lang_note:"आपके द्वारा चुनी गई भाषा पूरे ऐप में रहेगी", or:"या", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ उत्तर नहीं दिया", the_answer:"उत्तर" },
+  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons", search_placeholder:"Search for a topic...", listen_title:"Listening Lessons", listen_desc:"Here you will find all listening lessons. Click the button to start listening and solving questions.", gap_num:"Gap", choose_word_gap:"Choose word for gap", story_memo:"Story to memorize", check_btn:"Check", next_btn:"Next", back_btn:"Back", reset_btn:"Reset", coming_soon:"Coming soon...", settings:"Settings", change_lang:"Change Language", text_size:"Text Size", reset_size:"Reset to original size", logout:"Logout", whatsapp:"WhatsApp", lang_note:"The language you choose will remain with you throughout the app", or:"or", correct:"✓ Correct", wrong:"✗ Wrong", no_answer:"⚠️ No answer", the_answer:"Answer" },
+  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute", search_placeholder:"Rechercher un sujet...", listen_title:"Leçons d'écoute", listen_desc:"Ici vous trouverez toutes les leçons d'écoute. Cliquez sur le bouton pour commencer à écouter et à répondre aux questions.", gap_num:"Espace", choose_word_gap:"Choisir le mot pour l'espace", story_memo:"Histoire à mémoriser", check_btn:"Vérifier", next_btn:"Suivant", back_btn:"Retour", reset_btn:"Réinitialiser", coming_soon:"Bientôt...", settings:"Paramètres", change_lang:"Changer de langue", text_size:"Taille du texte", reset_size:"Rétablir la taille d'origine", logout:"Déconnexion", whatsapp:"WhatsApp", lang_note:"La langue que vous choisissez restera avec vous tout au long de l'application", or:"ou", correct:"✓ Correct", wrong:"✗ Faux", no_answer:"⚠️ Sans réponse", the_answer:"Réponse" },
+  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", banner_title:"Berlatih untuk ujian sebenarnya dan dapatkan!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"ID Unik Anda", login:"Masuk", guest:"Masuk sebagai tamu", support:"Dukungan Teknis", start_now:"Mulai Sekarang", listen_lessons:"Pelajaran Mendengarkan", search_placeholder:"Cari topik...", listen_title:"Pelajaran Mendengarkan", listen_desc:"Di sini Anda akan menemukan semua pelajaran mendengarkan. Klik tombol untuk mulai mendengarkan dan menjawab pertanyaan.", gap_num:"Celah", choose_word_gap:"Pilih kata untuk celah", story_memo:"Cerita untuk dihafal", check_btn:"Periksa", next_btn:"Berikutnya", back_btn:"Kembali", reset_btn:"Atur ulang", coming_soon:"Segera hadir...", settings:"Pengaturan", change_lang:"Ubah Bahasa", text_size:"Ukuran Teks", reset_size:"Kembalikan ke ukuran asli", logout:"Keluar", whatsapp:"WhatsApp", lang_note:"Bahasa yang Anda pilih akan tetap bersama Anda di seluruh aplikasi", or:"atau", correct:"✓ Benar", wrong:"✗ Salah", no_answer:"⚠️ Tidak ada jawaban", the_answer:"Jawaban" },
+  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbabasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Magsanay para sa tunay na pagsusulit at makuha ito!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Ang Iyong Natatanging ID", login:"Mag-login", guest:"Mag-login bilang bisita", support:"Teknikal na Suporta", start_now:"Simulan Ngayon", listen_lessons:"Mga Aralin sa Pakikinig", search_placeholder:"Maghanap ng paksa...", listen_title:"Mga Aralin sa Pakikinig", listen_desc:"Dito mo makikita ang lahat ng mga aralin sa pakikinig. I-click ang button upang simulan ang pakikinig at pagsagot sa mga tanong.", gap_num:"Puwang", choose_word_gap:"Pumili ng salita para sa puwang", story_memo:"Kuwento upang isaulo", check_btn:"Suriin", next_btn:"Susunod", back_btn:"Bumalik", reset_btn:"I-reset", coming_soon:"Malapit na...", settings:"Mga Setting", change_lang:"Palitan ang Wika", text_size:"Laki ng Teksto", reset_size:"I-reset sa orihinal na laki", logout:"Mag-logout", whatsapp:"WhatsApp", lang_note:"Ang wikang iyong pipiliin ay mananatili sa iyo sa buong app", or:"o", correct:"✓ Tama", wrong:"✗ Mali", no_answer:"⚠️ Walang sagot", the_answer:"Sagot" },
+  fa: { welcome:"خوش آمدید", choose_lang:"زبان را انتخاب کنید", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", banner_title:"برای آزمون واقعی تمرین کنید و آن را دریافت کنید!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"شناسه منحصر به فرد شما", login:"ورود", guest:"ورود به عنوان مهمان", support:"پشتیبانی فنی", start_now:"شروع کنید", listen_lessons:"دروس شنیداری", search_placeholder:"جستجوی موضوع...", listen_title:"دروس شنیداری", listen_desc:"در اینجا تمام دروس شنیداری را پیدا خواهید کرد. برای شروع گوش دادن و پاسخ دادن به سوالات، دکمه را فشار دهید.", gap_num:"جای خالی", choose_word_gap:"کلمه را برای جای خالی انتخاب کنید", story_memo:"داستان برای حفظ کردن", check_btn:"بررسی", next_btn:"بعدی", back_btn:"بازگشت", reset_btn:"بازنشانی", coming_soon:"به زودی...", settings:"تنظیمات", change_lang:"تغییر زبان", text_size:"اندازه متن", reset_size:"بازنشانی به اندازه اصلی", logout:"خروج", whatsapp:"واتساپ", lang_note:"زبانی که انتخاب می کنید در طول برنامه با شما خواهد بود", or:"یا", correct:"✓ درست", wrong:"✗ اشتباه", no_answer:"⚠️ بدون پاسخ", the_answer:"پاسخ" },
+  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", banner_title:"Fanya mazoezi kwa mtihani halisi na uupate!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Kitambulisho chako cha kipekee", login:"Ingia", guest:"Ingia kama mgeni", support:"Msaada wa Kiufundi", start_now:"Anza Sasa", listen_lessons:"Masomo ya Kusikiliza", search_placeholder:"Tafuta mada...", listen_title:"Masomo ya Kusikiliza", listen_desc:"Hapa utapata masomo yote ya kusikiliza. Bonyeza kitufe ili kuanza kusikiliza na kujibu maswali.", gap_num:"Pengo", choose_word_gap:"Chagua neno kwa pengo", story_memo:"Hadithi ya kukariri", check_btn:"Angalia", next_btn:"Inayofuata", back_btn:"Rudi", reset_btn:"Weka upya", coming_soon:"Inakuja hivi karibuni...", settings:"Mipangilio", change_lang:"Badilisha Lugha", text_size:"Ukubwa wa Maandishi", reset_size:"Rejesha kwa ukubwa wa awali", logout:"Toka", whatsapp:"WhatsApp", lang_note:"Lugha unayochagua itabaki nawe katika programu yote", or:"au", correct:"✓ Sahihi", wrong:"✗ Mbaya", no_answer:"⚠️ Hakuna jibu", the_answer:"Jibu" },
+  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", banner_title:"Haqiqiy imtihonga tayyorlaning va uni oling!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Sizning noyob IDingiz", login:"Kirish", guest:"Mehmon sifatida kirish", support:"Texnik yordam", start_now:"Hozir boshlang", listen_lessons:"Tinglash darslari", search_placeholder:"Mavzu qidirish...", listen_title:"Tinglash darslari", listen_desc:"Bu yerda barcha tinglash darslarini topasiz. Tinglashni boshlash va savollarga javob berish uchun tugmani bosing.", gap_num:"Bo'sh joy", choose_word_gap:"Bo'sh joy uchun so'zni tanlang", story_memo:"Yodlash uchun hikoya", check_btn:"Tekshirish", next_btn:"Keyingi", back_btn:"Orqaga", reset_btn:"Qayta boshlash", coming_soon:"Tez orada...", settings:"Sozlamalar", change_lang:"Tilni o'zgartirish", text_size:"Matn hajmi", reset_size:"Asl hajmga qaytarish", logout:"Chiqish", whatsapp:"WhatsApp", lang_note:"Siz tanlagan til butun ilova davomida saqlanadi", or:"yoki", correct:"✓ To'g'ri", wrong:"✗ Noto'g'ri", no_answer:"⚠️ Javob berilmadi", the_answer:"Javob" },
+  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"वास्तविक परीक्षाको लागि अभ्यास गर्नुहोस् र यो प्राप्त गर्नुहोस्!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"तपाईंको अद्वितीय आईडी", login:"लगइन", guest:"अतिथिको रूपमा प्रवेश", support:"प्राविधिक सहयोग", start_now:"अब सुरु गर्नुहोस्", listen_lessons:"सुन्ने पाठहरू", search_placeholder:"विषय खोज्नुहोस्...", listen_title:"सुन्ने पाठहरू", listen_desc:"यहाँ तपाईंले सबै सुन्ने पाठहरू पाउनुहुनेछ। सुन्न सुरु गर्न र प्रश्नहरूको जवाफ दिन बटन थिच्नुहोस्।", gap_num:"खाली ठाउँ", choose_word_gap:"खाली ठाउँको लागि शब्द छान्नुहोस्", story_memo:"सम्झनको लागि कथा", check_btn:"जाँच गर्नुहोस्", next_btn:"अर्को", back_btn:"फर्कनुहोस्", reset_btn:"रिसेट", coming_soon:"चाँडै आउँदैछ...", settings:"सेटिङ्हरू", change_lang:"भाषा परिवर्तन गर्नुहोस्", text_size:"पाठको आकार", reset_size:"मूल आकारमा फर्कनुहोस्", logout:"लगआउट", whatsapp:"WhatsApp", lang_note:"तपाईंले छान्नुभएको भाषा सम्पूर्ण एपमा रहनेछ", or:"वा", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ जवाफ दिइएन", the_answer:"जवाफ" }
 };
+
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
 const EXAMS = [
 // ================= ALEX =================
@@ -611,7 +603,6 @@ const EXAMS = [
   ]
 }
 ];
-
 const HOREN_EXAMS = [
   {
     id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen",
@@ -622,7 +613,7 @@ const HOREN_EXAMS = [
       { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
       { text: "Ehrlich gesagt ist mir das Zwischenmenschliche beim Einkaufen nicht so wichtig. Ich bevorzuge es, meine Sachen schnell und ohne lange Gespräche zu besorgen.", pitch: 1.2, rate: 1.0 },
       { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Wenn ich dann im Internet etwas bestellen möchte, werde ich ständig unterbrochen. Ich finde einfach keine ruhige Minute, um in Ruhe Preise zu vergleichen.", pitch: 1.2, rate: 1.0 },
+      { text: "Wenn ich dann im Internet et werde ich ständig unterbrochen. Ich finde einfach keine ruhige Minute, um in Ruhe Preise zu vergleichen.", pitch: 1.2, rate: 1.0 },
       { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
       { text: "Ich kaufe regelmäßig im Internet ein. Für mich ist das sehr praktisch, vor allem wenn ich spezielle Produkte suche. Ich hatte bisher keine schlechten Erfahrungen.", pitch: 0.8, rate: 1.0 },
       { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
@@ -1299,11 +1290,11 @@ function HorenCard({ exam, userLang, showTranslation }) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--blue)", fontWeight: 800, background: "rgba(37, 99, 235, 0.1)", padding: "10px 16px", borderRadius: 12 }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          قصة للحفظ
+          {t("story_memo", userLang)}
         </button>
         <div style={{ display: "flex", gap: 10 }}>
           {!done ? (
-            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)" }}>Prüfen (تصحيح)</button>
+            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)" }}>{t("check_btn", userLang)}</button>
           ) : (
             <div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / {total}</div>
           )}
@@ -1325,9 +1316,9 @@ function HorenGateway({ onStart, userLang }) {
         <div className="horen-gateway-icon">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
         </div>
-        <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>دروس الاستماع</h2>
+        <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>{t("listen_title", userLang)}</h2>
         <p style={{ color: "var(--muted)", fontSize: "1em", margin: 0, lineHeight: 1.6 }}>
-          هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.
+          {t("listen_desc", userLang)}
         </p>
         <button className="horen-start-btn" onClick={onStart}>
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
@@ -1565,8 +1556,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
               ))}
               {isDone && mode === "practice" && (
                 <div className={sel === it.c ? "fb good" : "fb bad"} style={{ marginTop: 12, padding: 14, fontSize: "0.95em", borderRadius: 12 }}>
-                  <b>{sel === it.c ? "✓ صحيح" : (sel ? "✗ غلط" : "⚠️ لم تجب")}</b>
-                  {sel !== it.c && <span style={{fontWeight:900}}> — الجواب: {it.c}</span>}
+                  <b>{sel === it.c ? t("correct", userLang) : (sel ? t("wrong", userLang) : t("no_answer", userLang))}</b>
+                  {sel !== it.c && <span style={{fontWeight:900}}> — {t("the_answer", userLang)}: {it.c}</span>}
                 </div>
               )}
             </div>
@@ -1578,7 +1569,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
         <div className="overlay" onClick={() => setModalGap(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
             <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
-              <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>الفراغ ({modalGap})</h3>
+              <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("gap_num", userLang)} ({modalGap})</h3>
               <button className="btnI" onClick={() => setModalGap(null)}>✕</button>
             </div>
             <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -1598,7 +1589,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
          <div className="overlay" onClick={() => setActiveGap(null)}>
            <div className="sheet" onClick={e => e.stopPropagation()}>
              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
-               <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>اختر الكلمة للفراغ ({activeGap})</h3>
+               <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("choose_word_gap", userLang)} ({activeGap})</h3>
                <button className="btnI" onClick={() => setActiveGap(null)}>✕</button>
              </div>
              <div className="word-bank" style={{marginBottom:0, gridTemplateColumns: "1fr"}}>
@@ -1621,13 +1612,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
           background: done !== null ? "var(--card)" : "var(--ink)", border: done !== null ? "1px solid var(--line)" : "none",
           boxShadow: "0 4px 15px rgba(0,0,0,0.15)", backdropFilter: "blur(5px)", width: "auto"
         }}>
-          {done !== null ? "إعادة" : "تصحيح"}
+          {done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}
         </button>
         <button onClick={() => done !== null ? onBack() : onNext()} style={{
           pointerEvents: "auto", padding: "10px 20px", borderRadius: 12, fontWeight: 900, fontSize: "0.85em", color: "var(--ink)", background: "var(--card)", border: "1px solid var(--line)",
           boxShadow: "0 4px 15px rgba(0,0,0,0.1)", backdropFilter: "blur(5px)", width: "auto"
         }}>
-          {done !== null ? "رجوع" : "التالي"}
+          {done !== null ? t("back_btn", userLang) : t("next_btn", userLang)}
         </button>
       </div>
     </div>
@@ -1725,7 +1716,7 @@ function App() {
           <div style={{ textAlign: "center", marginBottom: 30 }}>
             <LogoImage size={80} />
             <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("choose_lang", "ar")}</h2>
-            <p style={{color: "var(--muted)", fontSize: "0.95em", marginTop: 8}}>اللغة التي تختارها ستبقى معك طوال التطبيق</p>
+            <p style={{color: "var(--muted)", fontSize: "0.95em", marginTop: 8}}>{t("lang_note", "ar")}</p>
           </div>
           <div className="lang-grid">
             {LANGS.map(l => (
@@ -1754,10 +1745,10 @@ function App() {
             <button type="submit" className="auth-btn">{t("login", userLang)}</button>
           </form>
           
-          <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>أو</div>
+          <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>{t("or", userLang)}</div>
           
           <button className="auth-btn guest" onClick={handleGuest}>
-            👤 {t("guest", userLang)} (نقرة واحدة)
+            👤 {t("guest", userLang)}
           </button>
         </div>
       </div>
@@ -1785,7 +1776,7 @@ function App() {
             <div style={{ fontWeight: 900, fontSize: "1.1em" }}>EchtPrüfung</div>
             <div className="de" style={{ fontSize: ".8em", color: "var(--muted)", fontWeight:"bold", display: "flex", alignItems: "center", gap: 6 }}>
               <span>Deutsch B1</span> <span>•</span>
-              <span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</span>
+              <span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</n>
               <span>{LANGS.find(l => l.c === userLang)?.n}</span>
             </div>
           </div>
@@ -1831,7 +1822,7 @@ function App() {
           <div>
             <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen</h1>
             <div style={{ marginBottom: 16 }}>
-              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+              <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
             
             {uniqueTitles.map(title => (
@@ -1860,7 +1851,7 @@ function App() {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                   <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören</h1>
                   <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>
-                    رجوع
+                    {t("back_btn", userLang)}
                   </button>
                 </div>
                 {HOREN_EXAMS.map(ex => (
@@ -1873,7 +1864,7 @@ function App() {
 
         {(view === "schreiben" || view === "sprechen" || view === "pruefung") && (
           <div className="card" style={{ textAlign: "center", padding: 40 }}>
-            <h2>قريباً...</h2>
+            <h2>{t("coming_soon", userLang)}</h2>
           </div>
         )}
       </main>
@@ -1885,7 +1876,7 @@ function App() {
           { id: "horen", label: t("horen", userLang), icon: "🎧" },
           { id: "schreiben", label: t("schreiben", userLang), icon: "✎" },
           { id: "sprechen", label: t("sprechen", userLang), icon: "🎙" },
-          { id: "pruefung", label: t("pruefung", userLang), icon: "🎓" }
+          { id: "pruefung", label: t("pruefung", userLang), icon: "🎓" } // <--- هنا تم تصحيح الخطأ
         ].map((item) => (
           <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)}>
             <span className="ic">{item.icon}</span>
@@ -1933,10 +1924,10 @@ function App() {
               
               <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
                 <button onClick={() => wa("مرحباً")} style={{ flex: 1, padding: "10px", background: "#25D366", color: "#FFF", borderRadius: 12, fontWeight: 900, display: "flex", justifyContent: "center", alignItems: "center", gap: 6 }}>
-                  واتساب
+                  {t("whatsapp", userLang)}
                 </button>
                 <button onClick={logout} style={{ flex: 1, padding: "10px", background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 12, fontWeight: 900 }}>
-                  خروج
+                  {t("logout", userLang)}
                 </button>
               </div>
             </div>
@@ -1956,12 +1947,12 @@ function App() {
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <strong style={{fontSize:"1.3em"}}>الإعدادات</strong>
+              <strong style={{fontSize:"1.3em"}}>{t("settings", userLang)}</strong>
               <button className="btnI" onClick={() => setSettings(false)}>✕</button>
             </div>
             
             <div style={{ marginBottom: 20 }}>
-              <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>تغيير اللغة / Language</span>
+              <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>{t("change_lang", userLang)}</span>
               <div className="lang-grid" style={{ maxHeight: 200 }}>
                 {LANGS.map(lang => (
                   <button key={lang.c} onClick={() => { setUserLang(lang.c); localStorage.setItem("ep_lang", lang.c); }} className={`lang-btn ${userLang === lang.c ? "on" : ""}`} style={{ padding: "10px" }}>
@@ -1973,14 +1964,14 @@ function App() {
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <span style={{fontWeight:900, fontSize:"1.1em"}}>حجم النص</span>
+              <span style={{fontWeight:900, fontSize:"1.1em"}}>{t("text_size", userLang)}</span>
               <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
                 <button className="btnI" onClick={() => setFs(Math.max(80, fs - 10))}>−</button>
                 <span style={{ minWidth: 48, textAlign: "center", fontWeight: 900, fontSize:"1.1em" }}>{fs}%</span>
                 <button className="btnI" onClick={() => setFs(Math.min(150, fs + 10))}>+</button>
               </div>
             </div>
-            <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>إعادة الحجم الأصلي</button>
+            <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>{t("reset_size", userLang)}</button>
           </div>
         </div>
       )}
