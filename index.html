@@ -613,7 +613,7 @@ const HOREN_EXAMS = [
       { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
       { text: "Ehrlich gesagt ist mir das Zwischenmenschliche beim Einkaufen nicht so wichtig. Ich bevorzuge es, meine Sachen schnell und ohne lange Gespräche zu besorgen.", pitch: 1.2, rate: 1.0 },
       { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Wenn ich dann im Internet et werde ich ständig unterbrochen. Ich finde einfach keine ruhige Minute, um in Ruhe Preise zu vergleichen.", pitch: 1.2, rate: 1.0 },
+      { text: "Wenn ich dann im Internet e, werde ich ständig unterbrochen. Ich finde einfach keine ruhige Minute, um in Ruhe Preise zu vergleichen.", pitch: 1.2, rate: 1.0 },
       { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
       { text: "Ich kaufe regelmäßig im Internet ein. Für mich ist das sehr praktisch, vor allem wenn ich spezielle Produkte suche. Ich hatte bisher keine schlechten Erfahrungen.", pitch: 0.8, rate: 1.0 },
       { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
@@ -826,7 +826,7 @@ const HOREN_EXAMS = [
   {
     id: "h12", title: "Arbeit zu fahren", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
-      { text: "Half esteem. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
+      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich finde Busfahren ehrlich gesagt nicht so gut, der Bus ist oft zu voll und unpünktlich. Deshalb nehme ich lieber mein Auto oder fahre mit dem Fahrrad.", pitch: 1.1, rate: 1.0 },
       { text: "Nummer 42. Zu Fuß zur Arbeit gehen? Nein, das mache ich fast nie. Es ist zu weit und ich brauche über eine Stunde. Ich nehme meistens das Auto oder fahre mit dem Motorrad.", pitch: 0.9, rate: 1.0 },
       { text: "Nummer 43. Meine Frau nimmt jeden Morgen das Auto zur Arbeit. Ich finde das völlig in Ordnung. Wir haben nur ein Auto und sie hat einen längeren Weg. Ich fahre mit dem Fahrrad.", pitch: 1.2, rate: 1.0 },
@@ -844,7 +844,7 @@ const HOREN_EXAMS = [
   {
     id: "h13", title: "Handys", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
-      { text: "Have a stain. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
+      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Also, ich finde Handys oft störend. Neulich war ich im Café und jemand telefonierte laut neben mir. Ich finde, man sollte mehr Rücksicht nehmen.", pitch: 1.1, rate: 1.0 },
       { text: "Nummer 42. Ich telefoniere eigentlich nie mit Freunden. Wir schreiben uns ab und zu Nachrichten. Aber telefonieren mag ich nicht. Das ist mir oft zu laut und zu privat.", pitch: 0.85, rate: 1.0 },
       { text: "Nummer 43. Meine Partnerin rufe ich selten mit dem Handy an. Meistens sehen wir uns sowieso zu Hause. Telefonieren finde ich anstrengend, besonders unterwegs.", pitch: 1.2, rate: 1.0 },
@@ -1115,7 +1115,6 @@ function AutoTrans({ text, lang }) {
       return;
     }
 
-    // استخدام Google Translate API المجاني
     fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=de&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`)
       .then(res => res.json())
       .then(data => {
@@ -1125,7 +1124,7 @@ function AutoTrans({ text, lang }) {
           setTranslated(result);
         }
       })
-      .catch(() => setTranslated(text)); // فشل الترجمة يرجع للنص الأصلي
+      .catch(() => setTranslated(text));
   }, [text, lang]);
 
   return <span>{translated}</span>;
@@ -1147,7 +1146,7 @@ function SmartTrans({ obj, lang }) {
 }
 
 // ==========================================
-// مكون عرض دروس Hören (العداد + التصحيح)
+// مكون عرض دروس Hören
 // ==========================================
 function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
@@ -1306,7 +1305,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
 }
 
 // ==========================================
-// بوابة الهورن (الشاشة اللي كتدخلك للدروس)
+// بوابة الهورن
 // ==========================================
 function HorenGateway({ onStart, userLang }) {
   return (
@@ -1398,12 +1397,12 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
     const sel = ans[it.n];
     const isDone = done !== null || (mode === "practice" && sel !== undefined);
     if (isDone) {
-      if (k === it.c) return "opt good"; // أخضر
-      if (sel === k) return "opt bad"; // أحمر
+      if (k === it.c) return "opt good";
+      if (sel === k) return "opt bad";
       return "opt faded";
     }
     if (mode === "exam") {
-      if (sel === k) return "opt sel"; // أزرق
+      if (sel === k) return "opt sel";
       return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
     }
     if (sel === undefined) return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
@@ -1776,7 +1775,7 @@ function App() {
             <div style={{ fontWeight: 900, fontSize: "1.1em" }}>EchtPrüfung</div>
             <div className="de" style={{ fontSize: ".8em", color: "var(--muted)", fontWeight:"bold", display: "flex", alignItems: "center", gap: 6 }}>
               <span>Deutsch B1</span> <span>•</span>
-              <span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</n>
+              <span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</span>
               <span>{LANGS.find(l => l.c === userLang)?.n}</span>
             </div>
           </div>
@@ -1876,7 +1875,7 @@ function App() {
           { id: "horen", label: t("horen", userLang), icon: "🎧" },
           { id: "schreiben", label: t("schreiben", userLang), icon: "✎" },
           { id: "sprechen", label: t("sprechen", userLang), icon: "🎙" },
-          { id: "pruefung", label: t("pruefung", userLang), icon: "🎓" } // <--- هنا تم تصحيح الخطأ
+          { id: "pruefung", label: t("pruefung", userLang), icon: "🎓" } 
         ].map((item) => (
           <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)}>
             <span className="ic">{item.icon}</span>
