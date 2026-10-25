@@ -224,6 +224,8 @@ const UI_TEXTS = {
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
 const EXAMS = [
+
+const EXAMS = [
 // ================= ALEX =================
 {
   id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings",
@@ -288,18 +290,18 @@ const EXAMS = [
 {
   id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching",
   ads:[
-    {k:"A", t:"Café Simon", de:"Hausgemachte Pralinen, Kuchen, Torten und Eis", ar:"شوكولاتة، كعك، تورتات وآيس كريم منزلية الصنع", ma:"شوكولا، كيك، تورتة وآيس كريم ديال الدار", en:"Homemade pralines, cakes, tarts and ice cream", fr:"Pralines, gâteaux, tartes et glaces faits maison"},
-    {k:"B", t:"Tourismusschulen", de:"Höhere Lehranstalt, Hotelhandelsschule, Tourismusfachschule", ar:"مؤسسات تعليمية عليا، مدرسة تجارة الفنادق، مدرسة السياحة", ma:"مدارس عليا، مدرسة ديال الفندقة والسياحة", en:"Higher education, hotel trade school, tourism school", fr:"Enseignement supérieur, école de commerce hôtelier, école de tourisme"},
-    {k:"C", t:"Liederbühne Robinson", de:"Kleinkunst, Vegetarische Spezialitäten", ar:"فنون صغيرة، أطباق نباتية خاصة", ma:"فنون، ماكلة نباتية", en:"Small arts, vegetarian specialties", fr:"Petit art, spécialités végétariennes"},
-    {k:"D", t:"Interkulturelle Arbeit", de:"Berufsbegleitende Fortbildung für Fachkräfte", ar:"تدريب مهني للمتخصصين أثناء العمل", ma:"تكوين مهني للأطر خلال الخدمة", en:"In-service training for professionals", fr:"Formation continue pour professionnels"},
-    {k:"E", t:"Restaurantcafé Chesa W. Pressl", de:"Schweizer und bayerische Küche, Fischspezialitäten", ar:"مطبخ سويسري وبافاري، أسماك متخصصة", ma:"ماكلة سويسرية وبافارية، سمك", en:"Swiss and Bavarian cuisine, fish specialties", fr:"Cuisine suisse et bavaroise, spécialités de poisson"},
-    {k:"F", t:"BIZ (Berufsinformationszentrum)", de:"Informationen zu Ausbildung und Studium", ar:"معلومات حول التكوين والدراسة", ma:"معلومات على التكوين والدراسة", en:"Information on training and studies", fr:"Informations sur la formation et les études"},
-    {k:"G", t:"Abendkurs für Einsteiger", de:"Computer Grundwissen", ar:"أساسيات الكمبيوتر", ma:"أساسيات ديال الكمبيوتر", en:"Computer basics", fr:"Bases de l'informatique"},
-    {k:"H", t:"MortizCafé", de:"Kaffee so viel du willst", ar:"قهوة بقدر ما تريد", ma:"قهوة باللي بغيتي", en:"Coffee as much as you want", fr:"Café autant que tu veux"},
-    {k:"I", t:"Bachls Kerzenstub'n", de:"TANZEN + ESSEN, Live-Musik mit TANZ", ar:"رقص وأكل، موسيقى حية مع رقص", ma:"رقص وماكلة، موسيقى حية مع الرقص", en:"DANCE + FOOD, Live music with DANCE", fr:"DANSE + NOURRITURE, Musique live avec DANSE"},
-    {k:"J", t:"Internationales Studium", de:"Fremdsprachen + Betriebswirtschaft, B.A. in European Administration", ar:"لغات أجنبية + إدارة أعمال، بكالوريوس في الإدارة الأوروبية", ma:"لغات أجنبية + إدارة، إجازة فالإدارة الأوروبية", en:"Foreign languages + Business administration, B.A. in European Administration", fr:"Langues étrangères + Gestion d'entreprise, B.A. en Administration Européenne"},
-    {k:"K", t:"USA-Aufenthalt für Schüler", de:"Ein Schuljahr an einer High School", ar:"سنة دراسية في مدرسة ثانوية", ma:"عام دراسي فمدرسة ثانوية بأمريكا", en:"One school year at a High School", fr:"Une année scolaire dans un lycée"},
-    {k:"L", t:"Samstagswerkstatt", de:"Aufbau des Autos, Reparatur und Pflege", ar:"بنية السيارة، الإصلاح والصيانة", ma:"بنية الطوموبيل، التصليح والصيانة", en:"Car structure, repair and maintenance", fr:"Structure de la voiture, réparation et entretien"}
+    {k:"A", t:"Café Simon", de:"3 × in Passau Ihr Konditor\n1 = Rindermarkt 10\n2 = Ludwigsplatz 6\n3 = Donau-Passage\n• Hausgemachte Pralinen\n• Kuchen, Torten und Eis\n• Kleiner Mittagstisch", ar:"شوكولاتة، كعك، تورتات وآيس كريم منزلية الصنع", ma:"شوكولا، كيك، تورتة وآيس كريم ديال الدار", en:"Homemade pralines, cakes, tarts and ice cream", fr:"Pralines, gâteaux, tartes et glaces faits maison"},
+    {k:"B", t:"Tourismusschulen", de:"4190 Bad Leonfelden\nHagauer Str. 17, Tel. 07213/6955\nHöhere Lehranstalt: 5 Jahre, Matura\nFV-Kolleg: 3 Semester – endet mit Matura\nHotelhandelsschule: 3 Jahre\nTourismufachschule: 3 Jahre", ar:"مؤسسات تعليمية عليا، مدرسة تجارة الفنادق، مدرسة السياحة", ma:"مدارس عليا، مدرسة ديال الفندقة والسياحة", en:"Higher education, hotel trade school, tourism school", fr:"Enseignement supérieur, école de commerce hôtelier, école de tourisme"},
+    {k:"C", t:"Liederbühne Robinson", de:"KLEINKUNST VOM FEINSTEN\n• Urgemütliche Gaststube\n• Idyllischer Biergarten\n• Preiswerte Schmankerl\n• Vegetarische Spezialitäten\nSeewog 2 • 93486 Runding-Vierau\nTel. 09971-4651\nan der B20 Cham–Furth i. W.\ngeöffnet von Mi bis Sa von 17:00–1:00 Uhr\nSonn- und Feiertage ab 11:00 Uhr", ar:"فنون صغيرة، أطباق نباتية خاصة", ma:"فنون، ماكلة نباتية", en:"Small arts, vegetarian specialties", fr:"Petit art, spécialités végétariennes"},
+    {k:"D", t:"Interkulturelle Arbeit", de:"Berufsbegleitende Fortbildung für Fachkräfte in pädagogischen, sozialen und Gesundheitsberufen.\nJan./Feb.\nParitätisches Bildungswerk.\nTel.: 0421 / 174720", ar:"تدريب مهني للمتخصصين أثناء العمل", ma:"تكوين مهني للأطر خلال الخدمة", en:"In-service training for professionals", fr:"Formation continue pour professionnels"},
+    {k:"E", t:"Restaurantcafé Chesa W. Pressl", de:"Schweizer und bayerische Küche,\nFischspezialitäten aus heimischen Gewässern\nRömerplatz 3 (Hängebrücke)\n94032 Passau\nTel. 0851 / 33331", ar:"مطبخ سويسري وبافاري، أسماك متخصصة", ma:"ماكلة سويسرية وبافارية، سمك", en:"Swiss and Bavarian cuisine, fish specialties", fr:"Cuisine suisse et bavaroise, spécialités de poisson"},
+    {k:"F", t:"BIZ (Berufsinformationszentrum)", de:"Sie stehen vor beruflichen Entscheidungen\nDann informieren Sie sich im\nB I Z\nBerufsinformationszentrum\nÖffnungszeiten:\nMo, Di, Mi: 8.00 bis 12.00 Uhr\n14.00 bis 15.30 Uhr\nDo: 8.00 bis 12.00 Uhr • 14.00 bis 18.00 Uhr\nFr: 8.00 bis 12.00 Uhr\nSie finden dort ein breitgefächertes Angebot an Medien zu den Themen:\nAUSBILDUNG • STUDIUM\nArbeitsamt Passau, Innstraße 30, Tel. 0851/590-390", ar:"معلومات حول التكوين والدراسة", ma:"معلومات على التكوين والدراسة", en:"Information on training and studies", fr:"Informations sur la formation et les études"},
+    {k:"G", t:"Abendkurs für Einsteiger", de:"Keine Angst vor neuen Technologien\nDieser Kurs richtet sich an alle diejenigen, die sich bisher mit dem Computer noch gar nicht befasst haben. Neben theoretischen Grundwissen wird ein praktischer Einstieg in die Betriebssysteme Windows und Linux vermittelt.\nVHS Favoriten · Tel.: 01-785342", ar:"أساسيات الكمبيوتر", ma:"أساسيات ديال الكمبيوتر", en:"Computer basics", fr:"Bases de l'informatique"},
+    {k:"H", t:"MortizCafé", de:"Unterer Sand 2 Passau\nAquarium\n• täglich bis 18 Uhr\n• Kaffee so viel du willst\n   eine Tasse Frische\n   eine Tasse Milch\n   eine Tasse Zucker\n• täglich von 18 Uhr bis 21 Uhr\n   Beck’s\n   Jever\n   Bitburger\n   Badeger\n   Budweiser", ar:"قهوة بقدر ما تريد", ma:"قهوة باللي بغيتي", en:"Coffee as much as you want", fr:"Café autant que tu veux"},
+    {k:"I", t:"Rathausekeller", de:"Originelles Weinkolal mit österreichischen, italienischen und französischen Qualitätsweinen sowie großer Auswahl an kaltem und warmem Buffet.\nMontag und Dienstag – Ruhetage\nA 4785 Halbach/Freinberg\nTel.: 0043/7713/6104", ar:"مطعم ونبيذ", ma:"مطعم ونبيذ", en:"Restaurant and wine", fr:"Restaurant et vin"},
+    {k:"J", t:"Internationales Studium", de:"Fremdsprachen +\nBetriebswirtschaft.\nStaatlicher Uni-Abschluss\nB.A. in European\nAdministration. 2 Jahre in\nKöln + 1 Jahr in England\noder Frankreich.\nInfos anfordern:\nEuro Akademie\nElsa-Brandström-Str. 8\n50668 Köln\n(0221) 736074", ar:"لغات أجنبية + إدارة أعمال، بكالوريوس في الإدارة الأوروبية", ma:"لغات أجنبية + إدارة، إجازة فالإدارة الأوروبية", en:"Foreign languages + Business administration, B.A. in European Administration", fr:"Langues étrangères + Gestion d'entreprise, B.A. en Administration Européenne"},
+    {k:"K", t:"USA-Aufenthalt für Schüler", de:"Ein Schuljahr an einer High School, sehr gute Gastfamilien, beste Betreuung, Prospekte und ausführliches Video kostenlos von:\nfee-Sprachreisen\nLeibnizstr. 3\n70193 Stuttgart\nTel. 0711 / 638048\nFax 6365378", ar:"سنة دراسية في مدرسة ثانوية", ma:"عام دراسي فمدرسة ثانوية بأمريكا", en:"One school year at a High School", fr:"Une année scolaire dans un lycée"},
+    {k:"L", t:"Bachls Kerzenstub’n", de:"TANZEN + ESSEN Live-Musik mit TANZ\nGenießen Sie unsere herzhaft deftigen Fleischspezialitäten!\n93136 Keilberg Tel.: 0851/9111-0\nGeöffnet: Di–Sa ab 17.00 Uhr, Übernachtung für Reisende", ar:"رقص وأكل، موسيقى حية مع رقص", ma:"رقص وماكلة، موسيقى حية مع الرقص", en:"DANCE + FOOD, Live music with DANCE", fr:"DANSE + NOURRITURE, Musique live avec DANSE"}
   ],
   items:[
     {n:1, c:"H", de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.", ar:"تحب قضاء ساعات طويلة في المقهى، ولكنك لا ترغب في إنفاق الكثير من المال.", ma:"كتحب تدوز ساعات فالمقهى، ولكن ما بغيتيش تصرف فلوس بزاف.", en:"You like spending many hours in a cafe but don't want to spend much money.", fr:"Vous aimez passer de nombreuses heures dans un café mais ne voulez pas dépenser beaucoup d'argent."},
@@ -596,13 +598,14 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen.", ar:"صحيفتك تتبعك في العطلة.", ma:"الجريدة ديالك كتتبعك فالعطلة.", en:"Your newspaper follows you on vacation.", fr:"Votre journal vous suit en vacances."},
-    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betriebe übernehmen den Gepäcktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
+    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäcn Gepäcktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
     {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
   ]
 }
 ];
+
 const HOREN_EXAMS = [
   {
     id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen",
@@ -1094,6 +1097,7 @@ const HOREN_EXAMS = [
     ]
   }
 ];
+
 // ==========================================
 // دالة الترجمة الآلية (Google Translate API)
 // ==========================================
@@ -1146,7 +1150,7 @@ function SmartTrans({ obj, lang }) {
 }
 
 // ==========================================
-// مكون عرض دروس Hören
+// مكون عرض دروس Hören (مصلح الألوان الفورية)
 // ==========================================
 function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
@@ -1256,12 +1260,21 @@ function HorenCard({ exam, userLang, showTranslation }) {
           const isRight = ans[it.n] === "R";
           const isFalsch = ans[it.n] === "F";
           let rClass = "rf-circle", fClass = "rf-circle";
-          if (isRight) rClass += " sel";
-          if (isFalsch) fClass += " sel";
           
+          // التلوين الفوري: أخضر إلا صحيح، أحمر إلا غلط
+          if (isRight) {
+            if (it.c === "R") rClass += " good"; 
+            else rClass += " bad"; 
+          }
+          if (isFalsch) {
+            if (it.c === "F") fClass += " good"; 
+            else fClass += " bad"; 
+          }
+          
+          // ملي كيدير تصحيح، كيبين ليه فين كاين الجواب الصحيح إلا كان ما جاوبش عليه
           if (done) {
-            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad";
-            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad";
+            if (it.c === "R" && !isRight) rClass += " good";
+            if (it.c === "F" && !isFalsch) fClass += " good";
           }
           
           return (
