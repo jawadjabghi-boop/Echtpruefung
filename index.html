@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -595,7 +596,7 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen.", ar:"صحيفتك تتبعك في العطلة.", ma:"الجريدة ديالك كتتبعك فالعطلة.", en:"Your newspaper follows you on vacation.", fr:"Votre journal vous suit en vacances."},
-    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betripäcktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
+    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betriebe übernehmen den Gepäcktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
     {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
@@ -1219,9 +1220,9 @@ function HorenCard({ exam, userLang, showTranslation }) {
     setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c }));
   };
 
-  // ترجمة رؤوس الأعمدة R و F حسب اللغة
-  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : "R";
-  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : "F";
+  // ترجمة رؤوس الأعمدة R و F
+  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : "Richtig";
+  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : "Falsch";
 
   return (
     <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
@@ -1251,16 +1252,25 @@ function HorenCard({ exam, userLang, showTranslation }) {
 
       <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
         <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
-          <div style={{ width: 60, textAlign: "center" }}>{labelR}</div>
-          <div style={{ width: 60, textAlign: "center" }}>{labelF}</div>
-          <div style={{ flex: 1, paddingLeft: 10 }}>AUSSAGE</div>
+          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <span style={{ fontSize: '1.2em' }}>R</span>
+            <span style={{ fontSize: '0.75em', fontWeight: 'normal', marginTop: 2 }}>{labelR}</span>
+          </div>
+          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <span style={{ fontSize: '1.2em' }}>F</span>
+            <span style={{ fontSize: '0.75em', fontWeight: 'normal', marginTop: 2 }}>{labelF}</span>
+          </div>
+          <div style={{ flex: 1, paddingLeft: 10, display: 'flex', alignItems: 'center' }}>AUSSAGE</div>
         </div>
         {exam.items.map((it) => {
           const isRight = ans[it.n] === "R";
           const isFalsch = ans[it.n] === "F";
+          const isAnswered = isRight || isFalsch;
+          const isCorrect = ans[it.n] === it.c;
+          
           let rClass = "rf-circle", fClass = "rf-circle";
           
-          // التلوين الفوري
+          // التلوين الفوري للدائرة
           if (isRight) {
             if (it.c === "R") rClass += " good"; 
             else rClass += " bad"; 
@@ -1275,9 +1285,17 @@ function HorenCard({ exam, userLang, showTranslation }) {
             if (it.c === "R" && !isRight) rClass += " good";
             if (it.c === "F" && !isFalsch) fClass += " good";
           }
+
+          // لون خلفية الصف بالكامل
+          let rowBg = "var(--card)";
+          if (isAnswered) {
+            rowBg = isCorrect ? "rgba(34, 197, 94, 0.1)" : "rgba(221, 0, 0, 0.1)"; // خلفية خفيفة
+          } else if (done) {
+            rowBg = isCorrect ? "var(--okbg)" : "var(--badbg)";
+          }
           
           return (
-            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "12px 0", background: done ? (ans[it.n] === it.c ? "var(--okbg)" : "var(--badbg)") : "var(--card)" }}>
+            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "12px 0", background: rowBg }}>
               <div style={{ width: 60, display: "flex", justifyContent: "center" }}>
                 <div className={rClass} onClick={() => pickHoren(it.n, "R")}></div>
               </div>
@@ -1384,7 +1402,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
     return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
   };
 
-  // تم تعديل دالة pick لتسمح بإلغاء التحديد للجميع (Matching و MCQ و Headings)
   const pick = (it, k) => {
     if (done !== null) return;
     if (usedElsewhere(it.n, k)) return;
@@ -1530,7 +1547,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                     });
                   }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>✕</button>
                   <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
-                  {/* استخدمنا pick هنا لتوحيد المنطق وإلغاء التحديد */}
                   <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
                     <span className="de">{it.de}</span>
                     {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}><SmartTrans obj={it} lang={userLang} /></div>}
