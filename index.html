@@ -596,7 +596,7 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen.", ar:"صحيفتك تتبعك في العطلة.", ma:"الجريدة ديالك كتتبعك فالعطلة.", en:"Your newspaper follows you on vacation.", fr:"Votre journal vous suit en vacances."},
-    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betriebe übernehmen den Gepäcktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
+    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die BetGepäcktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
     {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
@@ -1146,7 +1146,7 @@ function SmartTrans({ obj, lang }) {
 }
 
 // ==========================================
-// مكون عرض دروس Hören (مصلح الألوان الفورية وترجمة R/F)
+// مكون عرض دروس Hören (بدون تحديد أزرق، ألوان فورية للصف والدائرة)
 // ==========================================
 function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
@@ -1220,9 +1220,8 @@ function HorenCard({ exam, userLang, showTranslation }) {
     setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c }));
   };
 
-  // ترجمة رؤوس الأعمدة R و F
-  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : "Richtig";
-  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : "Falsch";
+  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : "";
+  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : "";
 
   return (
     <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
@@ -1253,12 +1252,12 @@ function HorenCard({ exam, userLang, showTranslation }) {
       <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
         <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
           <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '1.2em' }}>R</span>
-            <span style={{ fontSize: '0.75em', fontWeight: 'normal', marginTop: 2 }}>{labelR}</span>
+            <span style={{ fontSize: '1.3em' }}>R</span>
+            {labelR && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelR}</span>}
           </div>
           <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '1.2em' }}>F</span>
-            <span style={{ fontSize: '0.75em', fontWeight: 'normal', marginTop: 2 }}>{labelF}</span>
+            <span style={{ fontSize: '1.3em' }}>F</span>
+            {labelF && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelF}</span>}
           </div>
           <div style={{ flex: 1, paddingLeft: 10, display: 'flex', alignItems: 'center' }}>AUSSAGE</div>
         </div>
@@ -1270,7 +1269,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
           
           let rClass = "rf-circle", fClass = "rf-circle";
           
-          // التلوين الفوري للدائرة
+          // التلوين الفوري للدائرة (حمراء أو خضراء مباشرة)
           if (isRight) {
             if (it.c === "R") rClass += " good"; 
             else rClass += " bad"; 
@@ -1280,18 +1279,13 @@ function HorenCard({ exam, userLang, showTranslation }) {
             else fClass += " bad"; 
           }
           
-          // التصحيح
-          if (done) {
-            if (it.c === "R" && !isRight) rClass += " good";
-            if (it.c === "F" && !isFalsch) fClass += " good";
-          }
-
           // لون خلفية الصف بالكامل
           let rowBg = "var(--card)";
           if (isAnswered) {
-            rowBg = isCorrect ? "rgba(34, 197, 94, 0.1)" : "rgba(221, 0, 0, 0.1)"; // خلفية خفيفة
-          } else if (done) {
-            rowBg = isCorrect ? "var(--okbg)" : "var(--badbg)";
+            rowBg = isCorrect ? "rgba(34, 197, 94, 0.15)" : "rgba(221, 0, 0, 0.15)"; 
+          }
+          if (done) {
+             rowBg = isCorrect ? "var(--okbg)" : "var(--badbg)";
           }
           
           return (
@@ -1677,6 +1671,7 @@ function App() {
   const [userLang, setUserLang] = useState(null); 
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
   const [showHorenLessons, setShowHorenLessons] = useState(false);
+  const [showHorenTrans, setShowHorenTrans] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -1884,12 +1879,17 @@ function App() {
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
                   <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören</h1>
-                  <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>
-                    {t("back_btn", userLang)}
-                  </button>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button onClick={() => setShowHorenTrans(!showHorenTrans)} className="btnI" style={{ width: 44, height: 44, color: showHorenTrans ? "var(--blue)" : "var(--text)", borderColor: showHorenTrans ? "var(--blue)" : "var(--line)" }}>
+                      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
+                    </button>
+                    <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>
+                      {t("back_btn", userLang)}
+                    </button>
+                  </div>
                 </div>
                 {HOREN_EXAMS.map(ex => (
-                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={false} />
+                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
                 ))}
               </div>
             )}
