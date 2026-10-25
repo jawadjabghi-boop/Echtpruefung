@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -20,11 +21,8 @@
     --paper:#0A0A0A; --card:#1A1A1A; --text:#F8FAFC; --muted:#94A3B8; --line:#333333;
     --ink:#F8FAFC; --gold:#FFCE00; --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
     --blue: #60A5FA;
-  }
-
-  html{ font-size:calc(18px * var(--fs)); }
+  } html{ font-size:calc(18px * var(--fs)); }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  
   body{ 
     margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s;
     background-color: var(--paper);
@@ -222,34 +220,6 @@ const UI_TEXTS = {
 };
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
-// 👇👇 هنا كتزيد الدروس الجديدة ديال Schreiben 👇👇
-const SCHREIBEN_DATA = [
-  {
-    id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
-    text: `Liebe(r).......\n\nIch habe eine tolle Überraschung. stelle dir vor, was mir mein Onkel angeboten hat. Er rief mich am Samstag an. Er hat ein großes Ferienhaus im Schwarzwald. Das Haus kann ich für die Ferien kostenlos haben. Ich kann auch Freunde mitbringen! Wäre das nichts für uns? Wir könnten uns alle dort treffen. Du, deine Eltern und Freunde, und ich mit meiner Familie und meinen Freunden. Ich würde mich wahnsinnig freuen, wenn das klappen würde. Bitte schreibe mir so schnell du kannst, damit wir alles planen können. Urlaub im Schwarzwald - das wird traumhaft schön!\n\nHerzliche Grüße\nPetra`,
-    transText: {
-      ar: `عزيزي/عزيزتي...\n\nعندي ليك مفاجأة زوينة. تخيل شنو عرض عليا عمي. عيط ليا نهار السبت. عندو دار كبيرة ديال العطلة في الغابة السوداء (Schwarzwald). نقدر ناخد الدار فهاد العطلة. ونقدر نجيب معايا حتى صحابي! واش هادشي ماشي فكرة زوينة لينا؟ نقدر ونتجمعو تما كاملين. أنت، والديك وصحابك، وأنا مع عائلتي وصحابي. غادي نفرح بزاف يلا صدقات هاد القضية. عفاك جاوبني في أقرب وقت باش نقدر وخططو لكشي. عطلة في الغابة السوداء - غتكون رائعة!\n\nتحياتي القلبية\nبيترا`,
-      ma: `عزيزي/عزيزتي...\n\nعندي ليك مفاجأة زوينة. تخيل شنو عرض عليا عمي. عيط ليا نهار السبت. عندو دار كبيرة ديال العطلة في الغابة السوداء (Schwarzwald). نقدر ناخد الدار فهاد العطلة. ونقدر نجيب معايا حتى صحابي! واش هادشي ماشي فكرة زوينة لينا؟ نقدر ونتجمعو تما كاملين. أنت، والديك وصحابك، وأنا مع عائلتي وصحابي. غادي نفرح بزاف يلا صدقات هاد القضية. عفاك جاوبني في أقرب وقت باش نقدر وخططو لكشي. عطلة في الغابة السوداء - غتكون رائعة!\n\nتحياتي القلبية\nبيترا`,
-      en: `Dear...\n\nI have a great surprise. Imagine what my uncle offered me. He called me on Saturday. He has a big holiday house in the Black Forest. I can have the house for the holidays for free. I can also bring friends! Wouldn't that be something for us? We could all meet there. You, your parents and friends, and me with my family and my friends. I would be incredibly happy if that would work out. Please write to me as soon as you can so that we can plan everything. Vacation in the Black Forest - that will be incredibly beautiful!\n\nBest regards\nPetra`,
-      fr: `Cher/Chère...\n\nJ'ai une super surprise. Imagine ce que mon oncle m'a proposé. Il m'a appelé samedi. Il a une grande maison de vacances dans la Forêt-Noire. Je peux avoir la maison pour les vacances gratuitement. Je peux aussi amener des amis ! Ne serait-ce pas quelque chose pour nous ? Nous pourrions tous nous y retrouver. Toi, tes parents et amis, et moi avec ma famille et mes amis. Je serais incroyablement heureux si cela pouvait fonctionner. S'il te plaît, écris-moi dès que tu peux pour que nous puissions tout planifier. Des vacances dans la Forêt-Noire - ce sera incroyablement beau !\n\nCordialement\nPetra`
-    },
-    task: "Antworten Sie auf den Brief. Schreiben Sie etwas zu den folgenden Punkten:",
-    transTask: "جاوب على الرسالة. كتب على هاد النقط:",
-    points: [
-      "Warum Sie gern nach Deutschland kommen möchten?",
-      "Wie Sie anreisen wollen?",
-      "Was Sie gemeinsam machen könnten?",
-      "Wen Sie mitbringen möchten?"
-    ],
-    transPoints: [
-      "(1) علاش باغي تجي لألمانيا.",
-      "(2) كيفاش غادي تسافر.",
-      "(3) شنو تقدرو ديرو مجموعين.",
-      "(4) شكون باغي تجيب معاك."
-     ]
-  }
-];
-
 const EXAMS = [
 // ================= ALEX =================
 {
@@ -363,6 +333,7 @@ const EXAMS = [
   text: `Sehr geehrte Damen und Herren,\n\nnachdem ich Ihr Inserat gelesen habe, möchte ich .....(1)..... gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und .....(2)..... einladen. .....(3)..... wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen .....(4)..... Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und .....(5)..... Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, .....(6)..... genügend Parkplätze vorhanden sind.\n\nEs wäre .....(7)..... freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken .....(8)...... Bitte senden Sie mir einen Prospekt Ihres Hotels .....(9)..... genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai .....(10)..... ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\n\nMit freundlichen Grüßen\nBarbara Heuberger`,
   items:[{n:1, c:"mich"},{n:2, c:"Bekannte"},{n:3, c:"dafür"},{n:4, c:"an"},{n:5, c:"welche"},{n:6, c:"dass"},{n:7, c:"sehr"},{n:8, c:"kann"},{n:9, c:"mit"},{n:10, c:"bereits"}]
 },
+
 // ================= RITA =================
 {
   id:"rita-t1", title:"Rita", level:"B1", sub:"Teile 1", type:"headings",
@@ -601,10 +572,11 @@ const EXAMS = [
 {
   id:"caroline-sp2", title:"Caroline", level:"B1", sub:"Sprach 2", type:"sprach2",
   wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
-  text: `QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen könnee mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……`,
+  text: `QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……`,
   items:[{n:1, c:"einmal"},{n:2, c:"nur"},{n:3, c:"können"},{n:4, c:"wenn"},{n:5, c:"statt"},{n:6, c:"ganz"},{n:7, c:"bei"},{n:8, c:"garantieren"},{n:9, c:"Über"},{n:10, c:"machen"}]
 },
-// ================= VERA =================
+
+// ================= VERA (غير Teil 1) =================
 {
   id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -621,7 +593,7 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen.", ar:"صحيفتك تتبعك في العطلة.", ma:"الجريدة ديالك كتتبعك فالعطلة.", en:"Your newspaper follows you on vacation.", fr:"Votre journal vous suit en vacances."},
-    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betten werden von eiدون أمتعة في منتجع شتاتكيلف. يتم نقل الأمتعة بواسطة شركة نقل.", ma:"المشي بلا حوايج فمنتجع شتاتكيلف. الحوايج كتنقلها شركة نقل.", en:"Hiking without luggage in the Luftkurort Stadtkylf. Luggage is transported by a moving company.", fr:"Randonnée sans bagages dans la station climatique de Stadtkylf. Les bagages sont transportés par une société de déménagement."},
+    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Bet ma:"ا"Hiking without luggage.", fr:"Randonnée sans bagages."},
     {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
@@ -1655,7 +1627,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
          </div>
       )}
 
-      <div style={{ position: "fixed", bottom: 16, left: 16, right: 16, display: "flex", justifyContent: "space-between", zIndex: 1, pointerEvents: "none" }
+      <div style={{ position: "fixed", bottom: 16, left: 16, right: 16, display: "flex", justifyContent: "space-between", zIndex: 100, pointerEvents: "none" }}>
         <button onClick={done !== null ? reset : finish} style={{
           pointerEvents: "auto", padding: "10px 20px", borderRadius: 12, fontWeight: 900, fontSize: "0.85em", color: done !== null ? "var(--ink)" : "var(--gold)",
           background: done !== null ? "var(--card)" : "var(--ink)", border: done !== null ? "1px solid var(--line)" : "none",
@@ -1677,243 +1649,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
 // ==========================================
 // التطبيق الرئيسي App
 // ==========================================
-function SchreibenView({ userLang, dark, setDark }) {
-  const [selected, setSelected] = useState(null);
-  const [showTrans, setShowTrans] = useState(false);
-  const [userText, setUserText] = useState("");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analyzeStep, setAnalyzeStep] = useState(0);
-  const [result, setResult] = useState(null);
-
-  const wordCount = userText.trim() === "" ? 0 : userText.trim().split(/\s+/).length;
-  const insertChar = (char) => setUserText(prev => prev + char);
-
-  const checkWithAI = () => {
-    if (!userText.trim()) return;
-    setIsAnalyzing(true);
-    setAnalyzeStep(1);
-    setResult(null);
-
-    let currentStep = 1;
-    const interval = setInterval(() => {
-      currentStep++;
-      setAnalyzeStep(currentStep);
-      if (currentStep > 4) {
-        clearInterval(interval);
-        finishAnalysis();
-      }
-    }, 800); 
-  };
-
-  const finishAnalysis = () => {
-    const cleanText = userText.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, ''); 
-    const isGibberish = cleanText.trim().length < 5 || userText.includes("üöü") || userText.includes("ßBÄÄ");
-
-    if (isGibberish) {
-      setResult({
-        score: 0, maxScore: 45, contentScore: "0/5",
-        generalEval: "سلام كَشْ بو، فحتوى الرسالة خالي من المعلومات وهاداشي فْشَاؤُش فّع المهمة. خصك تكتب رد على الرسالة.",
-        contentFeedback: "ما ذكرت حتى نقطة من النقط المطلوبة فالمهمة. ما كاينش محتوى.",
-        errors: []
-      });
-    } else {
-      setResult({
-        score: 35, maxScore: 45, contentScore: "4/5",
-        generalEval: "مجهود جيد! لقد أجبت على معظم النقاط المطلوبة، ولكن هناك بعض الأخطاء اللغوية البسيطة.",
-        contentFeedback: "لقد ذكرت أغلب النقاط المطلوبة في المهمة.",
-        errors: [{ error: "Ich habe gehen", fix: "Ich bin gegangen", type: "قواعد (Grammatik)" }]
-      });
-    }
-    setIsAnalyzing(false);
-  };
-
-  if (!selected) {
-    return (
-      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h1 className="de" style={{ margin: 0, fontSize: "2.5em", fontWeight: 900, color: "var(--ink)" }}>Schreiben</h1>
-        </div>
-        <div style={{ display: "flex", background: "var(--line)", borderRadius: 99, padding: 4, marginBottom: 20, width: "fit-content", margin: "0 auto 20px" }}>
-          <div style={{ background: "#22C55E", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
-          <div style={{ color: "var(--muted)", padding: "10px 30px", fontWeight: 900 }}>B2</div>
-        </div>
-        <div style={{ position: "relative", marginBottom: 20 }}>
-          <input type="text" placeholder="...بحث عن موضوع" style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
-        </div>
-        {SCHREIBEN_DATA.map(item => (
-          <div key={item.id} onClick={() => { setSelected(item); setUserText(""); setResult(null); setShowTrans(false); }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
-            <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{item.title}</div>
-            <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{item.level}</div>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  if (result) {
-    return (
-      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-          <button onClick={() => setResult(null)} className="btnI" style={{ width: 40, height: 40 }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-          <h2 style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>رجوع إلى المحرر</h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
-          <div style={{ width: 120, height: 120, borderRadius: "50%", border: "8px solid var(--line)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderTopColor: result.score === 0 ? "var(--red)" : "#22C55E" }}>
-            <span style={{ fontSize: "2.5em", fontWeight: 900 }}>{result.score}</span>
-            <span style={{ color: "var(--muted)", fontSize: "0.8em" }}>/ {result.maxScore} نقطة</span>
-          </div>
-          <div style={{ background: result.score < 20 ? "var(--red)" : "#22C55E", color: "#FFF", padding: "4px 16px", borderRadius: 20, fontWeight: 900, marginTop: 12, fontSize: "0.9em" }}>
-            {result.score < 20 ? "يحتاج لتدريب" : "ممتاز"}
-          </div>
-        </div>
-        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, fontSize: "1.4em", fontWeight: 900, color: "var(--ink)" }}>⚠️ التقييم العام</div>
-          <p style={{ fontSize: "1.05em", lineHeight: 1.8, color: "var(--text)", marginBottom: 16 }}>{result.generalEval}</p>
-          <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 16, padding: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <span style={{ fontSize: "1.5em", fontWeight: 900, color: "var(--ink)" }}>{result.contentScore}</span>
-              <span style={{ fontWeight: 900, color: "var(--muted)" }}>Content</span>
-            </div>
-            <p style={{ margin: 0, color: "var(--muted)", fontSize: "0.9em" }}>{result.contentFeedback}</p>
-          </div>
-        </div>
-        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900 }}>
-              <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> النص الخاص بك
-            </div>
-          </div>
-          <div className="de" style={{ background: "var(--paper)", border: "1px solid var(--line)", padding: 16, borderRadius: 12, whiteSpace: "pre-wrap" }}>{userText}</div>
-        </div>
-        <div className="card" style={{ padding: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>
-            <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> التحليل التفصيلي للأخطاء
-          </div>
-          {result.errors.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "40px 20px", border: "2px dashed var(--line)", borderRadius: 16 }}>
-              <div style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(221,0,0,0.1)", display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 16px", color: "var(--red)", fontSize: "1.5em", fontWeight: 900 }}>!</div>
-              <h3 style={{ margin: "0 0 8px", color: "var(--red)", fontSize: "1.3em" }}>لا توجد أخطاء للعرض</h3>
-              <p style={{ margin: 0, color: "var(--muted)" }}>لم يتم العثور على أخطاء في هذه المحاولة.</p>
-            </div>
-          ) : (
-            <div>
-              {result.errors.map((err, i) => (
-                <div key={i} style={{ background: "var(--paper)", padding: 12, borderRadius: 12, marginBottom: 8, borderRight: "4px solid var(--red)" }}>
-                  <div style={{ color: "var(--red)", fontWeight: 900, textDecoration: "line-through" }}>{err.error}</div>
-                  <div style={{ color: "#22C55E", fontWeight: 900 }}>الاقتراح: {err.fix}</div>
-                  <div style={{ color: "var(--muted)", fontSize: "0.8em", marginTop: 4 }}>{err.type}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ padding: "20px 12px", paddingBottom: 120 }}>
-      {isAnalyzing && (
-        <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 999, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20 }}>
-          <div style={{ position: "relative", marginBottom: 30 }}>
-             <div style={{ width: 120, height: 120, borderRadius: "50%", border: "4px solid rgba(34, 197, 94, 0.2)", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
-             </div>
-             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: "#22C55E", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
-          </div>
-          <h2 style={{ fontSize: "1.8em", fontWeight: 900, marginBottom: 10 }}>جاري التصحيح الذكي</h2>
-          <p style={{ color: "var(--muted)", marginBottom: 40 }}>نقوم بمراجعة نصك باستخدام تقنيات AI المطورة</p>
-          <div style={{ width: "100%", maxWidth: 300 }}>
-            {["تحضير المصحح الذكي...", "تحليل بنية الجمل...", "مراجعة القواعد والمفردات...", "توليد التقرير النهائي..."].map((step, idx) => (
-              <div key={idx} style={{ color: analyzeStep === idx + 1 ? "#22C55E" : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
-                {analyzeStep === idx + 1 && "✨ "} {step}
-              </div>
-            ))}
-          </div>
-          <div style={{ width: "80%", height: 8, background: "var(--line)", borderRadius: 99, marginTop: 40, overflow: "hidden" }}>
-             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: "#22C55E", transition: "width 0.3s" }}></div>
-          </div>
-        </div>
-      )}
-
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-        <button onClick={() => setSelected(null)} className="btnI" style={{ width: 40, height: 40 }}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-        <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{selected.title}</h2>
-      </div>
-
-      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
-          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>SITUATION</span>
-          <span style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>B1</span>
-        </div>
-        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> ترجمة النص
-          </div>
-          <button onClick={() => setShowTrans(!showTrans)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
-            {showTrans ? "إخفاء" : "إظهار"}
-          </button>
-        </div>
-        {showTrans && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: "rtl", textAlign: "right", lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
-            {selected.transText[userLang] || selected.transText.en || selected.transText.ar}
-          </div>
-        )}
-      </div>
-
-      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
-          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>AUFGABE</span>
-          <span style={{ marginLeft: "auto", background: "var(--line)", color: "var(--muted)", padding: "4px 12px", borderRadius: 8, fontSize: "0.8em", fontWeight: 900 }}>150–180 Wörter</span>
-        </div>
-        <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task}</div>
-        {selected.points.map((pt, idx) => (
-          <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
-            <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#22C55E", color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
-            <div className="de" style={{ background: "var(--paper)", padding: "12px 16px", borderRadius: 12, flex: 1, border: "1px solid var(--line)" }}>{pt}</div>
-          </div>
-        ))}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> ترجمة المهمة
-          </div>
-          <button onClick={() => setShowTrans(!showTrans)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
-            {showTrans ? "إخفاء" : "إظهار"}
-          </button>
-        </div>
-        {showTrans && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: "rtl", textAlign: "right", lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
-            <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask}</div>
-            {selected.transPoints.map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
-          </div>
-        )}
-      </div>
-
-      <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-        <div style={{ padding: 16, borderBottom: "1px solid var(--line)", display: "flex", gap: 8, flexWrap: "wrap" }}>
-          {['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'].map(c => (
-            <button key={c} onClick={() => insertChar(c)} style={{ width: 40, height: 40, borderRadius: 12, border: "1px solid var(--line)", background: "var(--paper)", fontWeight: 900, fontSize: "1.1em", color: "var(--text)" }}>{c}</button>
-          ))}
-          <div style={{ marginLeft: "auto", background: "var(--line)", padding: "8px 16px", borderRadius: 12, fontSize: "0.9em", fontWeight: 900 }}>
-            <span style={{ color: wordCount >= 150 && wordCount <= 180 ? "#22C55E" : "var(--muted)" }}>{wordCount}</span> / 150-180
-          </div>
-        </div>
-        <textarea value={userText} onChange={(e) => setUserText(e.target.value)} placeholder="...ابدأ في كتابة إجابتك هنا" className="de" style={{ width: "100%", minHeight: 250, padding: 20, border: "none", background: "var(--card)", color: "var(--text)", fontSize: "1.05em", lineHeight: 1.6, resize: "vertical", outline: "none" }}></textarea>
-      </div>
-
-      <div style={{ position: "fixed", bottom: 80, left: 16, right: 16, zIndex: 40 }}>
-        <button onClick={checkWithAI} style={{ width: "100%", background: "linear-gradient(90deg, #22C55E, #16A34A)", color: "#FFF", padding: "16px", borderRadius: 16, fontWeight: 900, fontSize: "1.1em", display: "flex", justifyContent: "center", alignItems: "center", gap: 10, boxShadow: "0 8px 25px rgba(34, 197, 94, 0.4)" }}>✨ تصحيح AI</button>
-      </div>
-    </div>
-  );
-}
 function App() {
   const [user, setUser] = useState(null);
   const [isReady, setIsReady] = useState(false);
@@ -1957,16 +1692,17 @@ function App() {
   const handleGuest = () => {
     const guest = { name: "زائر", isGuest: true };
     setUser(guest);
-       localStorage.setItem("ep_user", JSON.stringify(guest));
-};
-const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
+    localStorage.setItem("ep_user", JSON.stringify(guest));
+  };
+  const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
+
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
   const go = (v) => { 
     setView(v); 
     setExam(null); 
     setMenu(false); 
     setShowHorenLessons(false);
-    window.scrollTo(0, 0); 
+   indow.scrollTo(0, 0); 
   };
 
   const levelExams = EXAMS.filter(e => e.level === level);
@@ -2153,15 +1889,7 @@ const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
           </div>
         )}
 
-        {view === "schreiben" && (
-  <SchreibenView userLang={userLang} dark={dark} setDark={setDark} />
-)}
-
-{(view === "sprechen" || view === "pruefung") && (
-  <div className="card" style={{ textAlign: "center", padding: 40 }}>
-    <h2>{t("coming_soon", userLang)}</h2>
-  </div>
-)}
+        {(view === "schreiben" || view === "sprechen" || view === "pruefung") && (
           <div className="card" style={{ textAlign: "center", padding: 40 }}>
             <h2>{t("coming_soon", userLang)}</h2>
           </div>
