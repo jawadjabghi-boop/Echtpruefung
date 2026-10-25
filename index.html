@@ -224,6 +224,7 @@ const UI_TEXTS = {
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
 const EXAMS = [
+
 // ================= ALEX =================
 {
   id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings",
@@ -596,7 +597,7 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen.", ar:"صحيفتك تتبعك في العطلة.", ma:"الجريدة ديالك كتتبعك فالعطلة.", en:"Your newspaper follows you on vacation.", fr:"Votre journal vous suit en vacances."},
-    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
+    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Bet:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
     {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
@@ -1147,7 +1148,7 @@ function SmartTrans({ obj, lang }) {
 }
 
 // ==========================================
-// مكون عرض دروس Hören (مصلح الألوان الفورية)
+// مكون عرض دروس Hören (مصلح الألوان الفورية وترجمة R/F)
 // ==========================================
 function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
@@ -1221,6 +1222,10 @@ function HorenCard({ exam, userLang, showTranslation }) {
     setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c }));
   };
 
+  // ترجمة رؤوس الأعمدة R و F حسب اللغة
+  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : "R";
+  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : "F";
+
   return (
     <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
       <h3 className="de" style={{ fontSize: "1.3em", fontWeight: 900, margin: "0 0 16px", color: "var(--ink)" }}>
@@ -1249,8 +1254,8 @@ function HorenCard({ exam, userLang, showTranslation }) {
 
       <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
         <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
-          <div style={{ width: 60, textAlign: "center" }}>R</div>
-          <div style={{ width: 60, textAlign: "center" }}>F</div>
+          <div style={{ width: 60, textAlign: "center" }}>{labelR}</div>
+          <div style={{ width: 60, textAlign: "center" }}>{labelF}</div>
           <div style={{ flex: 1, paddingLeft: 10 }}>AUSSAGE</div>
         </div>
         {exam.items.map((it) => {
@@ -1258,7 +1263,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
           const isFalsch = ans[it.n] === "F";
           let rClass = "rf-circle", fClass = "rf-circle";
           
-          // التلوين الفوري: أخضر إلا صحيح، أحمر إلا غلط
+          // التلوين الفوري
           if (isRight) {
             if (it.c === "R") rClass += " good"; 
             else rClass += " bad"; 
@@ -1268,7 +1273,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
             else fClass += " bad"; 
           }
           
-          // ملي كيدير تصحيح، كيبين ليه فين كاين الجواب الصحيح إلا كان ما جاوبش عليه
+          // التصحيح
           if (done) {
             if (it.c === "R" && !isRight) rClass += " good";
             if (it.c === "F" && !isFalsch) fClass += " good";
@@ -1382,18 +1387,18 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
     return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
   };
 
+  // تم تعديل دالة pick لتسمح بإلغاء التحديد للجميع (Matching و MCQ و Headings)
   const pick = (it, k) => {
     if (done !== null) return;
     if (usedElsewhere(it.n, k)) return;
-    if (mode === "practice" && ans[it.n] !== undefined && exam.type !== "matching") return;
 
     if (ans[it.n] === k) {
       const newAns = { ...ans };
       delete newAns[it.n];
       setAns(newAns);
-      return;
+    } else {
+      setAns({ ...ans, [it.n]: k });
     }
-    setAns({ ...ans, [it.n]: k });
     if (modalGap) setModalGap(null);
   };
 
@@ -1508,7 +1513,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
               const isSel = ans[it.n] === ad.k;
               const isElse = ans[it.n] && ans[it.n] !== ad.k;
               const isExc = excluded[it.n]?.[ad.k];
-              let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s" };
+              let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s", cursor: (done !== null || isExc || isElse) ? "default" : "pointer" };
               
               if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; }
               else if (isElse) { st.opacity = 0.3; st.pointerEvents = "none"; }
@@ -1528,17 +1533,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                     });
                   }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>✕</button>
                   <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
-                  {/* التعديل ديال إلغاء التحديد هنا */}
-                  <div onClick={() => {
-                    if (done !== null || isExc || isElse) return;
-                    if (ans[it.n] === ad.k) {
-                      const newAns = { ...ans };
-                      delete newAns[it.n];
-                      setAns(newAns);
-                    } else {
-                      setAns({ ...ans, [it.n]: ad.k });
-                    }
-                  }} style={st}>
+                  {/* استخدمنا pick هنا لتوحيد المنطق */}
+                  <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
                     <span className="de">{it.de}</span>
                     {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}><SmartTrans obj={it} lang={userLang} /></div>}
                   </div>
