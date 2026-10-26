@@ -1,4 +1,4 @@
-2028
+2029
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -573,7 +573,7 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"E", de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.", ar:"ترغب في الذهاب إلى حفل بيانو في نهاية الأسبوع.", ma:"بغيتي تمشي لحفل بيانو فآخر السيمانة.", en:"You want to go to a piano concert on the weekend.", fr:"Vous voulez aller à un concert de piano le week-end."},
-    {n:2, c:"F", de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.", ar:"أنت في فوسن وتريد الذهاب إلى المتحف يوم الاثنين.", ma:"نتا ففوسن وبغيتي تمشي للمتحف نهار الاثنين.", en:"You are in Füssen anuseum on Monday.", fr:"Vous êtes à Füssen et voulez aller au musée lundi."},
+    {n:2, c:"F", de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.", ar:"أنت في فوسن وتريد الذهاب إلى المتحف يوم الاثنين.", ma:"نتا ففوسن وبغيتي تمشي للمتحف نهار الاثنين.", en:"You are in Füss", fr:"Vous êtes à Füssen et voulez aller au musée lundi."},
     {n:3, c:"B", de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.", ar:"أنت في جنوب ألمانيا في إجازة وترغب في تذوق إحدى الأطباق البافارية.", ma:"نتا فجنوب ألمانيا فالعطلة وبغيتي تاكل ماكلة بافارية.", en:"You are on vacation in southern Germany and want to eat a Bavarian specialty.", fr:"Vous êtes en vacances dans le sud de l'Allemagne et souhaitez manger une spécialité bavaroise."},
     {n:4, c:"K", de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.", ar:"لقد قمت بترتيب لقاء مع معارفك لتناول وجبة سمك.", ma:"دوزتي موعد مع صحابك باش تاكلو الحوت.", en:"You have arranged to meet acquaintances for a fish dinner.", fr:"Vous avez organisé un dîner de poisson avec des connaissances."},
     {n:5, c:"C", de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.", ar:"أنت في بافاريا وترغب في شراء منتجات الجبن المتخصصة.", ma:"نتا فبافاريا وبغيتي تشري الجبن.", en:"You are in Bavaria and want to buy cheese specialties.", fr:"Vous êtes en Bavière et voulez acheter des spécialités fromagères."},
@@ -1539,7 +1539,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
           <div key={ad.k} className="card" style={{ padding: 16 }}>
             <div style={{ borderBottom: "1px solid var(--line)", paddingBottom: 12, marginBottom: 12 }}>
               <span className="de" style={{ color: "var(--red)", fontWeight: 900, fontSize: "1.1em" }}>ANZEIGE {ad.k}</span>
-            <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
+            <div claName="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
               <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4 }}>{ad.de}</div>
               {showTranslation && <div style={{ marginTop: 4, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={ad} lang={userLang} /></div>}
             </div>
