@@ -1,4 +1,4 @@
-2027
+2028
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -49,7 +49,6 @@
   .dark .card { background:rgba(26,26,26,0.7); }
   .card:active { transform: scale(0.98); }
 
-  /* تم تصغير الهيدر وجعله ثابت لا يختفي */
   .header{ position:sticky; top:0; z-index:30; margin:0; display:flex; justify-content:space-between; align-items:center; background:var(--paper); border-bottom:1px solid var(--line); padding:8px 12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
   .header::after{ content:""; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); }
   .brand{ display:flex; align-items:center; gap:8px; }
@@ -81,7 +80,7 @@
   .fb.good{ background:var(--okbg); color:var(--okc); }
   .fb.bad{ background:var(--badbg); color:var(--badc); }
   
-  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; gap: 4px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
+  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; gap: 4px; box-shadow:0 -4px 20px rgba(0,0,0,0.05); }
   .nav button{ color:var(--muted); font-size:.7em; font-weight:800; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; flex: 1; transition:all 0.2s; border-radius: 12px; padding: 6px 0; }
   .nav button.on{ color:var(--red); background: rgba(221,0,0,0.08); }
   .dark .nav button.on{ color:var(--gold); background: rgba(255,206,0,0.15); }
@@ -129,48 +128,40 @@
   
   .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); direction: rtl; text-align: right; }
 
-  .horen-gateway-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 24px;
-    padding: 24px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-    margin-top: 20px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
-  }
-  .horen-gateway-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
-    background: rgba(34, 197, 94, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #22C55E;
-    font-size: 2em;
-  }
-  .horen-start-btn {
-    width: 100%;
-    padding: 16px;
-    border-radius: 16px;
-    background: rgba(34, 197, 94, 0.1);
-    color: #22C55E;
-    font-weight: 900;
-    font-size: 1.1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.2s;
-    border: 1.5px solid rgba(34, 197, 94, 0.3);
-  }
+  .horen-gateway-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); }
+  .horen-gateway-icon { width: 70px; height: 70px; border-radius: 20px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; color: #22C55E; font-size: 2em; }
+  .horen-start-btn { width: 100%; padding: 16px; border-radius: 16px; background: rgba(34, 197, 94, 0.1); color: #22C55E; font-weight: 900; font-size: 1.1em; display: flex; justify-content: center; align-items: center; gap: 10px; transition: all 0.2s; border: 1.5px solid rgba(34, 197, 94, 0.3); }
   .horen-start-btn:active { transform: scale(0.98); background: rgba(34, 197, 94, 0.2); }
 
   @keyframes spin { 100% { transform: rotate(360deg); } }
+
+  /* ================= إضافات B1/B2 الجديدة (CSS) ================= */
+  .menu-btn { position: absolute; top: 15px; right: 15px; z-index: 1000; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .dark .menu-btn { background: #1a1a1a; color: #fff; border-color: #333; }
+  .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: #fff; box-shadow: -2px 0 15px rgba(0,0,0,0.1); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1002; display: flex; flex-direction: column; }
+  .dark .side-menu { background: #1a1a1a; }
+  .side-menu.active { right: 0; }
+  .side-menu-header { background: linear-gradient(135deg, #1e293b, #334155); padding: 30px 20px; text-align: center; color: white; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+  .logo-circle { width: 60px; height: 60px; background: linear-gradient(135deg, #DD0000, #FFCE00); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; color: white; margin: 0 auto 10px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  .menu-item { display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: #334155; text-decoration: none; font-weight: bold; transition: 0.2s; font-size: 1.1em; }
+  .dark .menu-item { color: #fff; }
+  .menu-item:hover, .menu-item.active { background: #f1f5f9; color: #2962ff; border-right: 4px solid #2962ff; }
+  .dark .menu-item:hover, .dark .menu-item.active { background: #333; color: var(--gold); border-right-color: var(--gold); }
+  .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
+  .menu-overlay.active { display: block; }
+
+  /* ================= الشريط السفلي الرقيق الجديد (CSS) ================= */
+  .bottom-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: space-between; gap: 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 40px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 1px solid #f1f5f9; z-index: 1000; width: 92%; max-width: 450px; }
+  .dark .bottom-bar { background: rgba(26, 26, 26, 0.95); border-color: #333; }
+  .btn-prev-bar { background: #f1f5f9; border: none; border-radius: 20px; padding: 12px 20px; color: #334155; font-weight: 900; cursor: pointer; font-size: 0.9em; }
+  .dark .btn-prev-bar { background: #333; color: #FFF; }
+  .btn-correct-bar { background: linear-gradient(135deg, #00c853, #00e676); color: white; border: none; border-radius: 20px; padding: 12px 25px; font-weight: 900; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3); cursor: pointer; flex-grow: 1; justify-content: center; font-size: 0.95em; }
+  .btn-next-bar { background: linear-gradient(135deg, #2962ff, #1565c0); border: none; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); cursor: pointer; flex-shrink: 0; transform: rotate(180deg); }
+  
+  /* ================= المؤقت الجديد (CSS) ================= */
+  .timer-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 16px; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-variant-numeric: tabular-nums; font-size: 16px; }
+  .dark .timer-badge { background: rgba(26, 26, 26, 0.95); border-color: #333; color: #FFF; }
+  .timer-badge.warning { background: #fee2e2; color: #dc2626; border-color: #fecaca; animation: pulse 1s infinite; }
 </style>
 </head>
 <body>
@@ -206,22 +197,15 @@ const LANGS = [
   { c:"ne", n:"नेपाली", f:"🇳🇵" }
 ];
 
-const tr = (obj, lang) => {
-  if (!obj) return "";
-  if (typeof obj === 'string') return obj;
-  return obj[lang] || obj['en'] || obj['ar'] || obj['de'] || "";
-};
-
 const UI_TEXTS = {
-  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب" },
-  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب" },
-  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ", search_placeholder:"विषय खोजें...", listen_title:"सुनने के पाठ", listen_desc:"यहां आपको सभी सुनने के पाठ मिलेंगे। सुनना शुरू करने और सवालों के जवाब देने के लिए बटन दबाएं।", gap_num:"रिक्त स्थान", choose_word_gap:"रिक्त स्थान के लिए शब्द चुनें", story_memo:"याद रखने के लिए कहानी", check_btn:"जांचें", next_btn:"अगला", back_btn:"वापस", reset_btn:"रीसेट", coming_soon:"जल्द आ रहा है...", settings:"सेटिंग्स", change_lang:"भाषा बदलें", text_size:"पाठ का आकार", reset_size:"मूल आकार पर लौटें", logout:"लॉग आउट", whatsapp:"व्हाट्सएप", lang_note:"आपके द्वारा चुनी गई भाषा पूरे ऐप में रहेगी", or:"या", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ उत्तर नहीं दिया", the_answer:"उत्तर" },
-  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons", search_placeholder:"Search for a topic...", listen_title:"Listening Lessons", listen_desc:"Here you will find all listening lessons. Click the button to start listening and solving questions.", gap_num:"Gap", choose_word_gap:"Choose word for gap", story_memo:"Story to memorize", check_btn:"Check", next_btn:"Next", back_btn:"Back", reset_btn:"Reset", coming_soon:"Coming soon...", settings:"Settings", change_lang:"Change Language", text_size:"Text Size", reset_size:"Reset to original size", logout:"Logout", whatsapp:"WhatsApp", lang_note:"The language you choose will remain with you throughout the app", or:"or", correct:"✓ Correct", wrong:"✗ Wrong", no_answer:"⚠️ No answer", the_answer:"Answer" },
-  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute", search_placeholder:"Rechercher un sujet...", listen_title:"Leçons d'écoute", listen_desc:"Ici vous trouverez toutes les leçons d'écoute. Cliquez sur le bouton pour commencer à écouter et à répondre aux questions.", gap_num:"Espace", choose_word_gap:"Choisir le mot pour l'espace", story_memo:"Histoire à mémoriser", check_btn:"Vérifier", next_btn:"Suivant", back_btn:"Retour", reset_btn:"Réinitialiser", coming_soon:"Bientôt...", settings:"Paramètres", change_lang:"Changer de langue", text_size:"Taille du texte", reset_size:"Rétablir la taille d'origine", logout:"Déconnexion", whatsapp:"WhatsApp", lang_note:"La langue que vous choisissez restera avec vous tout au long de l'application", or:"ou", correct:"✓ Correct", wrong:"✗ Faux", no_answer:"⚠️ Sans réponse", the_answer:"Réponse" }
+  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI" },
+  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI" },
+  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ", search_placeholder:"विषय खोजें...", listen_title:"सुनने के पाठ", listen_desc:"यहां आपको सभी सुनने के पाठ मिलेंगे। सुनना शुरू करने और सवालों के जवाब देने के लिए बटन दबाएं।", gap_num:"रिक्त स्थान", choose_word_gap:"रिक्त स्थान के लिए शब्द चुनें", story_memo:"याद रखने के लिए कहानी", check_btn:"जांचें", next_btn:"अगला", back_btn:"वापस", reset_btn:"रीसेट", coming_soon:"जल्द आ रहा है...", settings:"सेटिंग्स", change_lang:"भाषा बदलें", text_size:"पाठ का आकार", reset_size:"मूल आकार पर लौटें", logout:"लॉग आउट", whatsapp:"व्हाट्सएप", lang_note:"आपके द्वारा चुनी गई भाषा पूरे ऐप में रहेगी", or:"या", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ उत्तर नहीं दिया", the_answer:"उत्तर", b1_level:"स्तर B1", b2_level:"स्तर B2", side_menu:"साइड मेनू", ai_correct:"✨ AI जाँच" },
+  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons", search_placeholder:"Search for a topic...", listen_title:"Listening Lessons", listen_desc:"Here you will find all listening lessons. Click the button to start listening and solving questions.", gap_num:"Gap", choose_word_gap:"Choose word for gap", story_memo:"Story to memorize", check_btn:"Check", next_btn:"Next", back_btn:"Back", reset_btn:"Reset", coming_soon:"Coming soon...", settings:"Settings", change_lang:"Change Language", text_size:"Text Size", reset_size:"Reset to original size", logout:"Logout", whatsapp:"WhatsApp", lang_note:"The language you choose will remain with you throughout the app", or:"or", correct:"✓ Correct", wrong:"✗ Wrong", no_answer:"⚠️ No answer", the_answer:"Answer", b1_level:"Level B1", b2_level:"Level B2", side_menu:"Side Menu", ai_correct:"✨ AI Check" },
+  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute", search_placeholder:"Rechercher un sujet...", listen_title:"Leçons d'écoute", listen_desc:"Ici vous trouverez toutes les leçons d'écoute. Cliquez sur le bouton pour commencer à écouter et à répondre aux questions.", gap_num:"Espace", choose_word_gap:"Choisir le mot pour l'espace", story_memo:"Histoire à mémoriser", check_btn:"Vérifier", next_btn:"Suivant", back_btn:"Retour", reset_btn:"Réinitialiser", coming_soon:"Bientôt...", settings:"Paramètres", change_lang:"Changer de langue", text_size:"Taille du texte", reset_size:"Rétablir la taille d'origine", logout:"Déconnexion", whatsapp:"WhatsApp", lang_note:"La langue que vous choisissez restera avec vous tout au long de l'application", or:"ou", correct:"✓ Correct", wrong:"✗ Faux", no_answer:"⚠️ Sans réponse", the_answer:"Réponse", b1_level:"Niveau B1", b2_level:"Niveau B2", side_menu:"Menu Latéral", ai_correct:"✨ Correction IA" }
 };
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
-
 const SCHREIBEN_DATA = [
   {
     id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
@@ -340,7 +324,7 @@ const EXAMS = [
     {n:7, c:"I", de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren.", ar:"صديقك من الولايات المتحدة يزورك. هو خبير في النبيذ ويرغب في تذوق النبيذ الأوروبي.", ma:"صاحبك من أمريكا جاي يزورك. هو خبير فنبيذ وبغى يدوق النبيذ الأوروبي.", en:"Your friend from the USA is visiting. He is a wine connoisseur and wants to try European wines.", fr:"Votre ami des États-Unis est en visite. Il est connaisseur en vin et souhaite goûter des vins européens."},
     {n:8, c:"X", de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen.", ar:"في وقت فراغك، ترغب في التعرف على بلدان أخرى وثقافات وتقاليد مختلفة.", ma:"فوقت الفراغ ديالك، بغيتي تعرف بلدان وثقافات وتقاليد أخرى.", en:"In your free time, you want to deal with other countries, foreign cultures and traditions.", fr:"Pendant votre temps libre, vous souhaitez vous intéresser à d'autres pays, cultures et traditions étrangères."},
     {n:9, c:"F", de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung.", ar:"ابنة أصدقائك أنهت للتو الثانوية العامة وهي غير متأكدة مما تريد فعله لاحقًا. تحتاج إلى معلومات واستشارة.", ma:"بنت صحابك دازت الباك دابا وما عارفاش شنو بغات دير من بعد. كتحتاج معلومات ونصيحة.", en:"Your friend's daughter has just graduated from high school and is unsure what she wants to do later. She needs information and advice.", fr:"La fille de vos amis vient d'obtenir son baccalauréat et ne sait pas ce qu'elle veut faire plus tard. Elle a besoin d'informations et de conseils."},
-    {n:10, c:"C", de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.", ar:"ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاؤك لا يتناولون اللحوم أو الأسماك.", ma:"بغيتي تاكل مع صحابك فشي بلاصة فيها برنامج ترفيهي. ولكن صحابك ما كياكلوش اللحم ولا الحوت.", en:"You want to eat with friends in a restaurant with an entertainment program. But your friends eat neither meat nor fish.", fr:"Vous souhaitez manger avec des amis dans un restaurant avec un programme de divertissement. Mais vos amis ne mangent ni viande ni poisson."}
+    {n:10, c:"C", de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.", ar:"ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاءك لا يتناولون اللحوم أو الأسماك.", ma:"بغيتي تاكل مع صحابك فشي بلاصة فيها برنامج ترفيهي. ولكن صحابك ما كياكلوش اللحم ولا الحوت.", en:"You want to eat with friends in a restaurant with an entertainment program. But your friends eat neither meat nor fish.", fr:"Vous souhaitez manger avec des amis dans un restaurant avec un programme de divertissement. Mais vos amis ne mangent ni viande ni poisson."}
   ]
 },
 {
@@ -589,7 +573,7 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"E", de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.", ar:"ترغب في الذهاب إلى حفل بيانو في نهاية الأسبوع.", ma:"بغيتي تمشي لحفل بيانو فآخر السيمانة.", en:"You want to go to a piano concert on the weekend.", fr:"Vous voulez aller à un concert de piano le week-end."},
-    {n:2, c:"F", de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.", ar:"أنت في فوسن وتريد الذهاب إلى المتحف يوم الاثنين.", ma:"نتا ففوسن وبغيتي تمشي للمتحف نهار الاثنين.", en:"You are in Füssen and want to go to the museum on Monday.", fr:"Vous êtes à Füssen et voulez aller au musée lundi."},
+    {n:2, c:"F", de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.", ar:"أنت في فوسن وتريد الذهاب إلى المتحف يوم الاثنين.", ma:"نتا ففوسن وبغيتي تمشي للمتحف نهار الاثنين.", en:"You are in Füssen anuseum on Monday.", fr:"Vous êtes à Füssen et voulez aller au musée lundi."},
     {n:3, c:"B", de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.", ar:"أنت في جنوب ألمانيا في إجازة وترغب في تذوق إحدى الأطباق البافارية.", ma:"نتا فجنوب ألمانيا فالعطلة وبغيتي تاكل ماكلة بافارية.", en:"You are on vacation in southern Germany and want to eat a Bavarian specialty.", fr:"Vous êtes en vacances dans le sud de l'Allemagne et souhaitez manger une spécialité bavaroise."},
     {n:4, c:"K", de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.", ar:"لقد قمت بترتيب لقاء مع معارفك لتناول وجبة سمك.", ma:"دوزتي موعد مع صحابك باش تاكلو الحوت.", en:"You have arranged to meet acquaintances for a fish dinner.", fr:"Vous avez organisé un dîner de poisson avec des connaissances."},
     {n:5, c:"C", de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.", ar:"أنت في بافاريا وترغب في شراء منتجات الجبن المتخصصة.", ma:"نتا فبافاريا وبغيتي تشري الجبن.", en:"You are in Bavaria and want to buy cheese specialties.", fr:"Vous êtes en Bavière et voulez acheter des spécialités fromagères."},
@@ -602,7 +586,7 @@ const EXAMS = [
 },
 {
   id:"caroline-sp1", title:"Caroline", level:"B1", sub:"Sprach 1", type:"sprach1",
-  text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
+  text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalteIn Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
   transText: {
     ar: `عزيزتي كاثرين،\nمنذ أن أخبرتك آخر مرة عن إقامتي لتعلم اللغة في سويسرا، حدث الكثير. أنا أعرف هذا البلد جيداً الآن. سويسرا حقاً ليست كبيرة. ولكن في كل منطقة يتم التحدث بلهجة مختلفة أو حتى بلغة مختلفة. هذا أمر لا يصدق تقريباً بالنسبة لي! في أستراليا، يمكنك القيادة بالسيارة لمدة 24 ساعة على التوالي، وعندما تصل إلى هناك، لا يزال الناس يتحدثون نفس اللغة. في البداية، أربكني هذا المزيج اللغوي كثيراً، ولكن الآن أفهم تقريباً كل شيء عندما يتحدث إلي شخص ما باللهجة السويسرية الألمانية. لكن لا يمكنني الرد إلا بالألمانية الفصحى. هناك بعض الاختلافات بين المدرسة هنا ونظامنا المدرسي في أستراليا: في سويسرا يتحدث المعلمون كثيراً ويجب على الطلاب الاحتفاظ بالكثير في رؤوسهم أو كتابته. في أستراليا، نعمل غالباً في إطار مشاريع ونقوم بجميع المهام على الكمبيوتر.\nمع أطيب التحيات\nجاك`,
     ma: `عزيزتي كاثرين،\nمن بعد ما خبرتك آخر مرة على الإقامة ديالي باش نتعلم اللغة فسويسرا، وقع بزاف ديال الحوايج. دابا كنعرف هاد البلاد مزيان. سويسرا بصح ماشي كبيرة. ولكن فكل منطقة كيهضرو بلهجة مختلفة ولا حتى بلغة مختلفة. هادشي بالنسبة ليا شبه مستحيل! فأستراليا، كتقدر تسوق الطوموبيل لمدة 24 ساعة على التوالي، وملي توصل، كتلاقى الناس تما مازال كيهضرو نفس اللغة. في البداية، هاد الخلط اللغوي ربلني بزاف، ولكن دابا كنفهم تقريباً كلشي ملي شي واحد كيهضر معايا بالألمانية السويسرية. ولكن ما كنقدرش نجاوب غير بالألمانية الفصحى. كاينين شي فروقات بين المدرسة هنا والنظام المدرسي ديالنا فأستراليا: فسويسرا الأساتذة كيهضرو بزاف والتلاميذ خاصهم يحفظو بزاف ديال الحوايج ولا يكتبوهم. فأستراليا، كنخدمو غالباً فإطار مشاريع وكنديرو تقريباً كاع المهام على الكمبيوتر.\nمع أطيب التحيات\nجاك`
@@ -1194,7 +1178,6 @@ function SmartTrans({ obj, lang }) {
 
   return <AutoTrans text={textDe} lang={lang} />;
 }
-
 function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
@@ -1267,8 +1250,8 @@ function HorenCard({ exam, userLang, showTranslation }) {
     setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c }));
   };
 
-  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : "";
-  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : "";
+  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : userLang === 'hi' ? "सही" : "";
+  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : userLang === 'hi' ? "गलत" : "";
 
   return (
     <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
@@ -1340,7 +1323,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
                 <span style={{ opacity: 0.5, marginLeft: 8, fontWeight: 900 }}>{it.n}</span>
                 <span className="de">{it.de}</span>
                 {showTranslation && (
-                  <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>
+                  <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : "rtl", textAlign: userLang === 'hi' ? 'left' : "right" }}>
                     <SmartTrans obj={it} lang={userLang} />
                   </div>
                 )}
@@ -1395,7 +1378,7 @@ function HorenGateway({ onStart, userLang }) {
   );
 }
 
-function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
+function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
   const [modalGap, setModalGap] = useState(null);
@@ -1469,6 +1452,12 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const finish = () => { setDone(score); onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
 
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
   return (
     <div style={{ paddingBottom: 120 }}>
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 4, zIndex: 100, backgroundImage: "linear-gradient(to right, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)", backgroundSize: `${scrollProgress}% 100%`, backgroundRepeat: "no-repeat" }} />
@@ -1484,6 +1473,9 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
           </div>
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+           <div className="timer-badge" style={{ padding: '4px 10px', fontSize: '14px' }}>
+             ⏱️ {formatTime(timeLeft)}
+           </div>
            <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? "var(--blue)" : "var(--text)", borderColor: showTranslation ? "var(--blue)" : "var(--line)" }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
            </button>
@@ -1547,9 +1539,9 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
           <div key={ad.k} className="card" style={{ padding: 16 }}>
             <div style={{ borderBottom: "1px solid var(--line)", paddingBottom: 12, marginBottom: 12 }}>
               <span className="de" style={{ color: "var(--red)", fontWeight: 900, fontSize: "1.1em" }}>ANZEIGE {ad.k}</span>
-              <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
+            <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
               <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4 }}>{ad.de}</div>
-              {showTranslation && <div style={{ marginTop: 4, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}><SmartTrans obj={ad} lang={userLang} /></div>}
+              {showTranslation && <div style={{ marginTop: 4, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={ad} lang={userLang} /></div>}
             </div>
             {exam.items.map(it => {
               const isSel = ans[it.n] === ad.k;
@@ -1577,7 +1569,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                   <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
                   <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
                     <span className="de">{it.de}</span>
-                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}><SmartTrans obj={it} lang={userLang} /></div>}
+                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={it} lang={userLang} /></div>}
                   </div>
                 </div>
               );
@@ -1596,13 +1588,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                   {exam.type === "headings" && (
                     <div style={{ lineHeight: 1.6, fontSize: "1.05em" }}>
                       <div className="de">{it.de}</div>
-                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}><SmartTrans obj={it} lang={userLang} /></div>}
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={it} lang={userLang} /></div>}
                     </div>
                   )}
                   {exam.type === "mcq" && (
                     <div>
                       <p className="de" style={{ fontWeight: 900, margin: 0, fontSize: "1.05em" }}>{it.q}</p>
-                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: "rtl", textAlign: "right" }}><SmartTrans obj={{de: it.q}} lang={userLang} /></div>}
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={{de: it.q}} lang={userLang} /></div>}
                     </div>
                   )}
                 </div>
@@ -1612,7 +1604,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                   <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em" }}>{o.k}</div>
                   <div className="de" style={{ flex: 1, textAlign: "left" }}>
                     {o.de}
-                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}><SmartTrans obj={o} lang={userLang} /></div>}
+                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={o} lang={userLang} /></div>}
                   </div>
                 </button>
               ))}
@@ -1668,19 +1660,15 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
          </div>
       )}
 
-      <div style={{ position: "fixed", bottom: 16, left: 16, right: 16, display: "flex", justifyContent: "space-between", zIndex: 100, pointerEvents: "none" }}>
-        <button onClick={done !== null ? reset : finish} style={{
-          pointerEvents: "auto", padding: "10px 20px", borderRadius: 12, fontWeight: 900, fontSize: "0.85em", color: done !== null ? "var(--ink)" : "var(--gold)",
-          background: done !== null ? "var(--card)" : "var(--ink)", border: done !== null ? "1px solid var(--line)" : "none",
-          boxShadow: "0 4px 15px rgba(0,0,0,0.15)", backdropFilter: "blur(5px)", width: "auto"
-        }}>
+      <div className="bottom-bar">
+        <button onClick={done !== null ? reset : finish} className="btn-prev-bar">
           {done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}
         </button>
-        <button onClick={() => done !== null ? onBack() : onNext()} style={{
-          pointerEvents: "auto", padding: "10px 20px", borderRadius: 12, fontWeight: 900, fontSize: "0.85em", color: "var(--ink)", background: "var(--card)", border: "1px solid var(--line)",
-          boxShadow: "0 4px 15px rgba(0,0,0,0.1)", backdropFilter: "blur(5px)", width: "auto"
-        }}>
+        <button onClick={() => done !== null ? onBack() : onNext()} className="btn-correct-bar">
           {done !== null ? t("back_btn", userLang) : t("next_btn", userLang)}
+        </button>
+        <button className="btn-next-bar" onClick={done !== null ? onBack : onNext}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
       </div>
     </div>
@@ -1768,7 +1756,7 @@ function SchreibenView({ userLang, dark, setDark }) {
           <div style={{ color: "var(--muted)", padding: "10px 30px", fontWeight: 900 }}>B2</div>
         </div>
         <div style={{ position: "relative", marginBottom: 20 }}>
-          <input type="text" placeholder="...بحث عن موضوع" style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+          <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
         </div>
         {SCHREIBEN_DATA.map(item => (
           <div key={item.id} onClick={() => { setSelected(item); setUserText(""); setResult(null); setShowTrans(false); setTimeLeft(29 * 60); }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
@@ -1876,9 +1864,8 @@ function SchreibenView({ userLang, dark, setDark }) {
           <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{selected.title}</h2>
         </div>
         
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--paper)', padding: '6px 12px', borderRadius: 20, border: '1px solid var(--line)', fontWeight: 900, color: 'var(--muted)', direction: 'ltr' }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          {formatTime(timeLeft)}
+        <div className="timer-badge" style={{ padding: '6px 12px', fontSize: '15px' }}>
+          ⏱️ {formatTime(timeLeft)}
         </div>
       </div>
 
@@ -1891,14 +1878,14 @@ function SchreibenView({ userLang, dark, setDark }) {
         <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> ترجمة النص
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> {t("change_lang", userLang).split(' / ')[0]}
           </div>
           <button onClick={() => setShowTrans(!showTrans)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
             {showTrans ? "إخفاء" : "إظهار"}
           </button>
         </div>
         {showTrans && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: "rtl", textAlign: "right", lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
+          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
             {selected.transText[userLang] || <AutoTrans text={selected.text} lang={userLang} force={true} />}
           </div>
         )}
@@ -1919,14 +1906,14 @@ function SchreibenView({ userLang, dark, setDark }) {
         ))}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> ترجمة المهمة
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> {t("change_lang", userLang).split(' / ')[0]} المهمة
           </div>
           <button onClick={() => setShowTrans(!showTrans)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
             {showTrans ? "إخفاء" : "إظهار"}
           </button>
         </div>
         {showTrans && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: "rtl", textAlign: "right", lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
+          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
             <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask}</div>
             {selected.transPoints.map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
           </div>
@@ -1947,7 +1934,7 @@ function SchreibenView({ userLang, dark, setDark }) {
 
       <div style={{ position: "fixed", bottom: 80, left: 0, right: 0, zIndex: 40, display: "flex", justifyContent: "center" }}>
         <button onClick={checkWithAI} style={{ background: "linear-gradient(90deg, #22C55E, #16A34A)", color: "#FFF", padding: "10px 30px", borderRadius: 12, fontWeight: 900, fontSize: "1em", display: "flex", justifyContent: "center", alignItems: "center", gap: 8, boxShadow: "0 4px 15px rgba(34, 197, 94, 0.3)", width: "auto" }}>
-          ✨ تصحيح AI
+          ✨ {t("ai_correct", userLang)}
         </button>
       </div>
     </div>
@@ -1970,6 +1957,8 @@ function App() {
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
   const [showHorenLessons, setShowHorenLessons] = useState(false);
   const [showHorenTrans, setShowHorenTrans] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30 * 60);
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -1983,6 +1972,15 @@ function App() {
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
   useEffect(() => { document.documentElement.style.setProperty("--fs", fs / 100); try { localStorage.setItem("ep_fs", fs); } catch (e) {} }, [fs]);
   useEffect(() => { try { localStorage.setItem("ep_results", JSON.stringify(results)); } catch (e) {} }, [results]);
+  
+  // Timer logic
+  useEffect(() => {
+    let interval = null;
+    if (exam && timeLeft > 0) {
+      interval = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [exam, timeLeft]);
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
   const handleAuth = (e) => {
@@ -2088,21 +2086,42 @@ function App() {
       userLang={userLang} 
       dark={dark} 
       setDark={setDark} 
-      onBack={() => setExam(null)} 
+      onBack={() => {setExam(null); setTimeLeft(30*60);}} 
       onNext={() => handleNextExam(exam)} 
-      onSave={saveResult} 
+      onSave={saveResult}
+      timeLeft={timeLeft}
+      setTimeLeft={setTimeLeft}
     />;
   }
 
   return (
     <div style={{ paddingBottom: 100 }}>
+      {/* القائمة الجانبية */}
+      <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
+      <nav className={`side-menu ${isSideMenuOpen ? 'active' : ''}`}>
+        <div className="side-menu-header">
+            <div className="logo-circle">De</div>
+            <h2>EchtPrüfung</h2>
+            <p style={{fontSize: '0.8em', opacity: 0.8}}>{user.name}</p>
+        </div>
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B1'); go('lesen'); setIsSideMenuOpen(false);}} className={`menu-item ${level === 'B1' ? 'active' : ''}`}>
+            📚 {t("b1_level", userLang)}
+        </a>
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B2'); go('lesen'); setIsSideMenuOpen(false);}} className={`menu-item ${level === 'B2' ? 'active' : ''}`}>
+            📚 {t("b2_level", userLang)}
+        </a>
+      </nav>
+
       <div className="header">
         <div className="brand">
+          <button className="btnI" onClick={() => setIsSideMenuOpen(true)} style={{ marginRight: 8 }}>
+            ☰
+          </button>
           <div className="logo"><LogoImage size={36} /></div>
           <div>
             <div className="header-title">EchtPrüfung</div>
             <div className="header-subtitle de">
-              <span>Deutsch B1</span> <span>•</span>
+              <span>Deutsch {level}</span> <span>•</span>
               <span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</span>
               <span>{LANGS.find(l => l.c === userLang)?.n}</span>
             </div>
@@ -2114,9 +2133,6 @@ function App() {
           </button>
           <button className="btnI" onClick={() => setSettings(true)}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          </button>
-          <button className="btnI" onClick={() => setMenu(true)}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 7h16M4 12h10M4 17h16"/></svg>
           </button>
         </div>
       </div>
@@ -2147,12 +2163,16 @@ function App() {
 
         {view === "lesen" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen</h1>
+            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
             <div style={{ marginBottom: 16 }}>
               <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
             
-            {uniqueTitles.map(title => (
+            {level === "B2" ? (
+               <div className="card" style={{ textAlign: "center", padding: 40 }}>
+                 <h2>{t("coming_soon", userLang)}</h2>
+               </div>
+            ) : uniqueTitles.map(title => (
               <button key={title} className="card" onClick={() => setSelectedExamTitle(title)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div>
@@ -2176,7 +2196,7 @@ function App() {
             ) : (
               <div>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                  <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören</h1>
+                  <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören {level}</h1>
                   <div style={{ display: 'flex', gap: 8 }}>
                     <button onClick={() => setShowHorenTrans(!showHorenTrans)} className="btnI" style={{ width: 40, height: 40, color: showHorenTrans ? "var(--blue)" : "var(--text)", borderColor: showHorenTrans ? "var(--blue)" : "var(--line)" }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
@@ -2186,7 +2206,11 @@ function App() {
                     </button>
                   </div>
                 </div>
-                {HOREN_EXAMS.map(ex => (
+                {level === "B2" ? (
+                   <div className="card" style={{ textAlign: "center", padding: 40 }}>
+                     <h2>{t("coming_soon", userLang)}</h2>
+                   </div>
+                ) : HOREN_EXAMS.map(ex => (
                   <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
                 ))}
               </div>
@@ -2233,47 +2257,13 @@ function App() {
                 const existingExam = EXAMS.find(e => e.title === selectedExamTitle && e.level === level && e.sub === subName);
                 return (
                   <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={() => {
-                      if (existingExam) { setExam(existingExam); setSelectedExamTitle(null); }
+                      if (existingExam) { setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(30*60); }
                   }}>
                     <span className="de" style={{ fontWeight: 800 }}>{subName}</span>
                     {existingExam && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>}
                   </button>
                 );
               })}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {menu && (
-        <div className="overlay" onClick={() => setMenu(false)}>
-          <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: "hidden" }}>
-            <div style={{ padding: "30px 20px", background: "var(--paper)", textAlign: "center", borderBottom: "1px solid var(--line)", position: "relative" }}>
-              <button className="btnI" style={{ position: "absolute", top: 16, left: 16 }} onClick={() => setMenu(false)}>✕</button>
-              
-              <div style={{ width: 80, height: 80, margin: "0 auto 12px", borderRadius: "50%", background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", padding: 3 }}>
-                <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: "var(--card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5em", fontWeight: 900, color: "var(--ink)" }}>
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-              </div>
-              <h2 style={{ margin: 0 }}>{user.name}</h2>
-              
-              <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-                <button onClick={() => wa("مرحباً")} style={{ flex: 1, padding: "10px", background: "#25D366", color: "#FFF", borderRadius: 12, fontWeight: 900, display: "flex", justifyContent: "center", alignItems: "center", gap: 6 }}>
-                  {t("whatsapp", userLang)}
-                </button>
-                <button onClick={logout} style={{ flex: 1, padding: "10px", background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 12, fontWeight: 900 }}>
-                  {t("logout", userLang)}
-                </button>
-              </div>
-            </div>
-
-            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-              {["lesen", "horen", "schreiben", "sprechen"].map(k => (
-                <button key={k} onClick={() => { setView(k); setMenu(false); }} className="btn ghost" style={{ display: "flex", justifyContent: "flex-start", gap: 10, padding: 16 }}>
-                  <span style={{ textTransform: "capitalize", fontWeight: 900 }}>{t(k, userLang)}</span>
-                </button>
-              ))}
             </div>
           </div>
         </div>
