@@ -1,4 +1,4 @@
-20100
+fxxpkis 
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="html-root">
 <head>
@@ -9,6 +9,7 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
     --ink:#111111; --gold:#FFCE00; --red:#DD0000; --blue:#2563EB; 
@@ -129,7 +130,6 @@
 
   @keyframes spin { 100% { transform: rotate(360deg); } }
 
-  /* ================= إضافات B1/B2 ================= */
   .menu-btn { position: absolute; top: 15px; right: 15px; z-index: 1000; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
   .dark .menu-btn { background: #1a1a1a; color: #fff; border-color: #333; }
   .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: #fff; box-shadow: -2px 0 15px rgba(0,0,0,0.1); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1002; display: flex; flex-direction: column; }
@@ -144,7 +144,6 @@
   .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
   .menu-overlay.active { display: block; }
 
-  /* ================= الشريط السفلي الرقيق ================= */
   .bottom-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: space-between; gap: 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 40px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 1px solid #f1f5f9; z-index: 1000; width: 92%; max-width: 450px; }
   .dark .bottom-bar { background: rgba(26, 26, 26, 0.95); border-color: #333; }
   .btn-prev-bar { background: #f1f5f9; border: none; border-radius: 20px; padding: 12px 20px; color: #334155; font-weight: 900; cursor: pointer; font-size: 0.9em; }
@@ -152,12 +151,10 @@
   .btn-correct-bar { background: linear-gradient(135deg, #00c853, #00e676); color: white; border: none; border-radius: 20px; padding: 12px 25px; font-weight: 900; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3); cursor: pointer; flex-grow: 1; justify-content: center; font-size: 0.95em; }
   .btn-next-bar { background: linear-gradient(135deg, #2962ff, #1565c0); border: none; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); cursor: pointer; flex-shrink: 0; transform: rotate(180deg); }
   
-  /* ================= المؤقت ================= */
   .timer-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 16px; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-variant-numeric: tabular-nums; font-size: 16px; }
   .dark .timer-badge { background: rgba(26, 26, 26, 0.95); border-color: #333; color: #FFF; }
   .timer-badge.warning { background: #fee2e2; color: #dc2626; border-color: #fecaca; animation: pulse 1s infinite; }
 
-  /* تصميم Schreiben */
   .keyboard-area { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
   .key-btn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); font-weight: 900; font-size: 1.1em; color: var(--text); display: flex; justify-content: center; align-items: center; }
   .word-counter { background: var(--line); padding: 8px 16px; border-radius: 12px; font-size: 0.9em; font-weight: 900; }
@@ -170,6 +167,10 @@
 const { useState, useEffect, useRef } = React;
 const WA = "212600000000"; 
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
+
+const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
+const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
+const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
 const LogoImage = ({ size = 50 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -205,6 +206,7 @@ const UI_TEXTS = {
 };
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
+
 const SCHREIBEN_DATA = [
   {
     id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
@@ -266,7 +268,7 @@ const SCHREIBEN_DATA = [
       ma: ["(1) أشمن عرض ما كنتوش راضيين عليه؟", "(2) شرحوا علاش العرض ما عجبكمش.", "(3) اقتراحات للتحسين: شنو تقدر TIKKI TAKKA دير حسن فحالكم؟"],
       en: ["(1) Which offer were you not satisfied with?", "(2) Explain why the offer did not inspire enthusiasm.", "(3) Suggestions for improvement: What could TIKKI TAKKA do better in your opinion?"],
       fr: ["(1) De quelle offre n'étiez-vous pas satisfait ?", "(2) Expliquez pourquoi l'offre n'a pas suscité l'enthousiasme.", "(3) Suggestions d'amélioration : Que pourrait faire TIKKI TAKKA de mieux selon vous ?"],
-      hi: ["(1) आप किस ऑफर से संतुष्ट नहीं थे?", "(2) समझाएं कि ऑफर ने उत्साह क्यों नहीं दिया।", "(3) सुधार के लिए सुझाव: आपकी राय में TIKKI TAKKA क्या बेहतर कर सकता था?"]
+      hi: ["(1) आप किस ऑफर से संतुष्ट नहीं थे?", (2) समझाएं कि ऑफर ने उत्साह क्यों नहीं दिया।", "(3) सुधार के लिए सुझाव: आपकी राय में TIKKI TAKKA क्या बेहतर कर सकता था?"]
     }
   }
 ];
@@ -391,7 +393,6 @@ const EXAMS = [
   },
   items:[{n:1, c:"mich"},{n:2, c:"Bekannte"},{n:3, c:"dafür"},{n:4, c:"an"},{n:5, c:"welche"},{n:6, c:"dass"},{n:7, c:"sehr"},{n:8, c:"kann"},{n:9, c:"mit"},{n:10, c:"bereits"}]
 },
-// ================= RITA =================
 {
   id:"rita-t1", title:"Rita", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -518,8 +519,6 @@ const EXAMS = [
   },
   items:[{n:1, c:"muss"},{n:2, c:"nach"},{n:3, c:"die"},{n:4, c:"wäre"},{n:5, c:"geeignet"},{n:6, c:"wo"},{n:7, c:"gerne"},{n:8, c:"der"},{n:9, c:"wenn"},{n:10, c:"schon"}]
 },
-
-// ================= CAROLINE =================
 {
   id:"caroline-t1", title:"Caroline", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -548,7 +547,7 @@ const EXAMS = [
     { de: "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite. Sie sind die Problemlöser im Kindergarten.", ar: "آن وميلاني (كلاهما 6 سنوات) تساعدان المربيات باقتراحات مفيدة.", ma: "آن وميلاني (بجوج عندهم 6 سنين) كيعاونو المربيات بالاقتراحات.", en: "Anne and Melanie (both 6) help educators with suggestions. They are the problem solvers in kindergarten.", fr: "Anne et Melanie (toutes deux 6 ans) aident les éducatrices avec des suggestions." },
     { de: "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia-Computern installiert.", ar: "في إطار هذا المشروع، سيتم تركيب محطتين متنقلتين في رياض الأطفال البلدية.", ma: "فهاد المشروع، غادي يحطو جوج محطات متنقلين فرض الأطفال.", en: "As part of this project, two mobile stations will be installed in municipal kindergartens.", fr: "Dans le cadre de ce projet, deux stations mobiles seront installées dans les jardins d'enfants municipaux." },
     { de: "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus.", ar: "لكن قبل أن تصل أجهزة الكمبيوتر إلى رياض الأطفال، كان لا بد من توعية الآباء.", ma: "ولكن قبل ما توصل الكمبيوترات لرض الأطفال، كان خاص توعية الوالدين.", en: "However, before the computers arrived in the kindergartens, the parents had to be educated.", fr: "Cependant, avant l'arrivée des ordinateurs dans les jardins d'enfants, il fallait informer les parents." },
-    { de: "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend überflüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm.", ar: "لقد هدأت هذه المخاوف في غضون ذلك، وتظهر التجربة الميدانية أنها زائدة عن الحاجة إلى حد كبير. يحرص المربيات أيضاً على ألا يجلس الأطفال أمام الكمبيوتر لأكثر من 15 إلى 20 دقيقة، ويجلبون برامج إبداعية إلى الشاشة قبل كل شيء.", ma: "هاد المخاوف هدات دابا، والتجربة كتبين بلي هادشي زايد. المربيات كيحرصو بلي الدراري ما يقعدوش كثر من 15 ولا 20 دقيقة قدام الكمبيوتر، وكتجيبو ليهم برامج إبداعية.", en: "These fears have now subsided and experience on site shows that they are largely superfluous. The educators also make sure that the children never sit in front of the computers for longer than 15 to 20 minutes, and above all bring creative software to the screen.", fr: "Ces craintes se sont depuis lors apaisées et l'expérience sur le terrain montre qu'elles sont largement superflues. Les éducatrices veillent également à ce que les enfants ne restent jamais plus de 15 à 20 minutes devant les ordinateurs, et mettent surtout des logiciels créatifs à l'écran." },
+    { de: "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend überflüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm.", ar: "لقد هدأت هذه المخاوف في غضون ذلك، وتظهر التجربة الميدانية أنها زائدة عن الحاجة إلى حد كبير. يحرص المربيات أيضاً على ألا يجلس الأطفال أمام الكمبيوتر لأكثر من 15 إلى 20 دقيقة، ويجل mدابا، والتجربة كتبين بلي هادشي زايد. المربيات كيحرصو بلي الدراري ما يقعدوش كثر من 15 ولا 20 دقيقة قدام الكمبيوتر، وكتجيبو ليهم برامج إبداعية.", en: "These fears have now subsided and experience on site shows that they are largely superfluous. The educators also make sure that the children never sit in front of the computers for longer than 15 to 20 minutes, and above all bring creative software to the screen.", fr: "Ces craintes se sont depuis lors apaisées et l'expérience sur le terrain montre qu'elles sont largement superflues. Les éducatrices veillent également à ce que les enfants ne restent jamais plus de 15 à 20 minutes devant les ordinateurs, et mettent surtout des logiciels créatifs à l'écran." },
     { de: "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte.", ar: "على أي حال، فإن النعاس الوحيد أمام الكمبيوتر هو بالأحرى من شؤون البالغين - فالأطفال يلعبون دائماً في مجموعات من شخصين أو ثلاثة على الجهاز. لاحظت إيفا شيلينغ أن الأطفال يتعاملون مع بعضهم البعض بسلام شديد على الكمبيوتر، ويساعدون بعضهم البعض، ولا يوجد سوى القليل من الصراعات.", ma: "القعدة بوحدك قدام الكمبيوتر هي حاجة ديال الكبار - الدراري ديما كيلعبو بجوج ولا بثلاثة. إيفا شيلينغ لاحظات بلي الدراري كيتعاملو مزيان مع بعضياتهم قدام الكمبيوتر، كيعاونو بعضياتهم، وما كاينش المشاكل.", en: "Lonely brooding in front of the computer is probably more a matter for adults anyway - the children always play in twos or threes on the machine. Eva Schilling has observed that the children treat each other very peacefully on the computer, they help each other, there are few conflicts.", fr: "La rêverie solitaire devant l'ordinateur est de toute façon plutôt l'affaire des adultes - les enfants jouent toujours à deux ou à trois sur la machine. Eva Schilling a observé que les enfants se traitent très paisiblement sur l'ordinateur, ils s'entraident, il y a peu de conflits." }
   ],
   items:[
@@ -648,7 +647,6 @@ const EXAMS = [
   },
   items:[{n:1, c:"einmal"},{n:2, c:"nur"},{n:3, c:"können"},{n:4, c:"wenn"},{n:5, c:"statt"},{n:6, c:"ganz"},{n:7, c:"bei"},{n:8, c:"garantieren"},{n:9, c:"Über"},{n:10, c:"machen"}]
 },
-// ================= VERA =================
 {
   id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -670,9 +668,16 @@ const EXAMS = [
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
   ]
+},
+{
+  id:"vera-t2", title:"Vera", level:"B1", sub:"Teile 2", isPremium: true, type:"mcq",
+  paragraphs: [], items: [] 
+},
+{
+  id:"vera-t3", title:"Vera", level:"B1", sub:"Teile 3", isPremium: true, type:"mcq",
+  paragraphs: [], items: [] 
 }
 ];
-
 const HOREN_EXAMS = [
   {
     id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen",
@@ -1212,6 +1217,7 @@ function SmartTrans({ obj, lang }) {
 
   return <AutoTrans text={textDe} lang={lang} />;
 }
+
 function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
@@ -1983,6 +1989,10 @@ function SchreibenView({ userLang, dark, setDark }) {
 
 function App() {
   const [user, setUser] = useState(null);
+  const [isPaid, setIsPaid] = useState(false);
+  const [trialActive, setTrialActive] = useState(false);
+  const [trialEndsAt, setTrialEndsAt] = useState(null);
+  const [trialCountdown, setTrialCountdown] = useState("");
   const [isReady, setIsReady] = useState(false);
   const [view, setView] = useState("home");
   const [level, setLevel] = useState("B1");
@@ -2004,12 +2014,74 @@ function App() {
     const timer = setTimeout(() => setIsReady(true), 1500);
     const savedUser = localStorage.getItem("ep_user");
     const savedLang = localStorage.getItem("ep_lang");
-    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedUser) {
+      const parsed = JSON.parse(savedUser);
+      if (parsed.isGuest || parsed.id) {
+        setUser(parsed);
+      } else {
+        localStorage.removeItem("ep_user");
+      }
+    }
     if (savedLang) setUserLang(savedLang);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
+  
+  useEffect(() => {
+    if (user && !user.isGuest && user.id) {
+      const deviceId = localStorage.getItem("ep_device_id");
+      sb.from('profiles').select('is_paid, active_device_id, trial_started_at').eq('id', user.id).single()
+        .then(({ data, error }) => {
+          if (error) { console.error("profiles fetch:", error); return; }
+          if (data) {
+            if (data.active_device_id && data.active_device_id !== deviceId) {
+              alert("⚠️ تم تسجيل الدخول من هاتف آخر.");
+              localStorage.removeItem("ep_user");
+              setUser(null);
+              setIsPaid(false);
+              setTrialActive(false);
+              return;
+            }
+            setIsPaid(!!data.is_paid);
+            if (data.trial_started_at && !data.is_paid) {
+              const start = new Date(data.trial_started_at).getTime();
+              const end = start + 24 * 60 * 60 * 1000;
+              if (Date.now() < end) {
+                setTrialActive(true);
+                setTrialEndsAt(end);
+              } else {
+                setTrialActive(false);
+                setTrialEndsAt(null);
+              }
+            }
+          }
+        });
+    } else {
+      setIsPaid(false);
+      setTrialActive(false);
+      setTrialEndsAt(null);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!trialActive || !trialEndsAt) { setTrialCountdown(""); return; }
+    const update = () => {
+      const diff = trialEndsAt - Date.now();
+      if (diff <= 0) {
+        setTrialActive(false);
+        setTrialCountdown("");
+        return;
+      }
+      const h = Math.floor(diff / (60 * 60 * 1000));
+      const m = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+      setTrialCountdown(`${h}س ${m}د`);
+    };
+    update();
+    const interval = setInterval(update, 30000);
+    return () => clearInterval(interval);
+  }, [trialActive, trialEndsAt]);
+
   useEffect(() => { document.documentElement.style.setProperty("--fs", fs / 100); try { localStorage.setItem("ep_fs", fs); } catch (e) {} }, [fs]);
   useEffect(() => { try { localStorage.setItem("ep_results", JSON.stringify(results)); } catch (e) {} }, [results]);
   
@@ -2022,21 +2094,55 @@ function App() {
   }, [exam, timeLeft]);
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
-  const handleAuth = (e) => {
+  
+  const handleAuth = async (e) => {
     e.preventDefault();
-    const uniqueCode = e.target.code.value;
-    if (uniqueCode.trim()) {
-      const newUser = { name: uniqueCode.trim(), isGuest: false };
-      setUser(newUser);
-      localStorage.setItem("ep_user", JSON.stringify(newUser));
+    const uniqueCode = e.target.code.value.trim();
+    if (!uniqueCode) return;
+    
+    let deviceId = localStorage.getItem("ep_device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("ep_device_id", deviceId);
+    }
+
+    const email = uniqueCode + "@echt.com";
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: uniqueCode });
+
+    if (error) {
+      const { data: newData, error: newError } = await sb.auth.signUp({ email, password: uniqueCode });
+      if (newError) return alert("مشكل: " + newError.message);
+      if (!newData?.user) return alert("ما قدرناش نصاوبو الحساب. تحقق من إعدادات Supabase (Confirm email خاصو يكون مطفي).");
+      
+      await sb.from('profiles').insert([{ id: newData.user.id, email: uniqueCode, is_paid: false, active_device_id: deviceId }]);
+      const userObj = { ...newData.user, name: uniqueCode, isGuest: false };
+      setUser(userObj);
+      localStorage.setItem("ep_user", JSON.stringify(userObj));
+    } else {
+      await sb.from('profiles').update({ active_device_id: deviceId }).eq('id', data.user.id);
+      const userObj = { ...data.user, name: uniqueCode, isGuest: false };
+      setUser(userObj);
+      localStorage.setItem("ep_user", JSON.stringify(userObj));
     }
   };
+  
   const handleGuest = () => {
     const guest = { name: "زائر", isGuest: true };
     setUser(guest);
+    setIsPaid(false);
+    setTrialActive(false);
+    setTrialEndsAt(null);
     localStorage.setItem("ep_user", JSON.stringify(guest));
   };
-  const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
+  
+  const logout = () => { 
+    localStorage.removeItem("ep_user"); 
+    setIsPaid(false); 
+    setTrialActive(false); 
+    setTrialEndsAt(null); 
+    setUser(null); 
+    sb.auth.signOut(); 
+  };
 
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
   const go = (v) => { 
@@ -2135,7 +2241,6 @@ function App() {
 
   return (
     <div style={{ paddingBottom: 100 }}>
-      {/* القائمة الجانبية */}
       <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
       <nav className={`side-menu ${isSideMenuOpen ? 'active' : ''}`}>
         <div className="side-menu-header">
@@ -2203,6 +2308,17 @@ function App() {
         {view === "lesen" && (
           <div>
             <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
+            
+            {trialActive && !isPaid && (
+              <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))", border: "1.5px solid #22C55E", borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ fontSize: "2em" }}>🎁</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 900, color: "#22C55E", fontSize: "1em" }}>تجربة مجانية نشطة</div>
+                  <div style={{ color: "var(--muted)", fontSize: "0.85em" }}>باقي {trialCountdown} — جميع الدروس المدفوعة محلولة</div>
+                </div>
+              </div>
+            )}
+
             <div style={{ marginBottom: 16 }}>
               <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
@@ -2294,11 +2410,36 @@ function App() {
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(subName => {
                 const existingExam = EXAMS.find(e => e.title === selectedExamTitle && e.level === level && e.sub === subName);
+                const isPremium = existingExam?.isPremium === true;
+                const hasAccess = isPaid || trialActive;
+                const showTrialHint = isPremium && trialActive && !isPaid;
+
+                if (isPremium && !hasAccess) {
+                  return (
+                    <button key={subName} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px", borderRadius: 14 }} onClick={() => wa("سلام، بغيت نخلص باش نحل درس " + selectedExamTitle + " " + subName)}>
+                      <span className="de" style={{ fontWeight: 800 }}>🔒 {subName} (مقفول)</span>
+                      <span style={{ fontSize: "0.8em", fontWeight: "bold", color: "var(--red)" }}>خلص باش تحلو</span>
+                    </button>
+                  );
+                }
+
                 return (
-                  <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={() => {
-                      if (existingExam) { setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(30*60); }
+                  <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={async () => {
+                    if (isPremium && hasAccess) {
+                      const { data, error } = await sb.from('premium_lessons').select('data').eq('id', existingExam.id).single();
+                      if (error || !data) {
+                        alert("الدرس مازال ماحطيتوهش فسوبابيز: " + existingExam.id);
+                      } else {
+                        setExam(data.data); setSelectedExamTitle(null); setTimeLeft(30*60);
+                      }
+                    } else if (existingExam) {
+                      setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(30*60);
+                    }
                   }}>
-                    <span className="de" style={{ fontWeight: 800 }}>{subName}</span>
+                    <span className="de" style={{ fontWeight: 800, display: "flex", alignItems: "center", gap: 8 }}>
+                      {subName}
+                      {showTrialHint && <span style={{ fontSize: "0.7em", color: "#22C55E", padding: "2px 8px", background: "rgba(34,197,94,0.15)", borderRadius: 6, fontWeight: 900 }}>🎁 تجربة</span>}
+                    </span>
                     {existingExam && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>}
                   </button>
                 );
@@ -2337,6 +2478,12 @@ function App() {
               </div>
             </div>
             <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>{t("reset_size", userLang)}</button>
+            
+            <div style={{ marginTop: 20, textAlign: "center" }}>
+              <button onClick={logout} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)" }}>
+                {t("logout", userLang)}
+              </button>
+            </div>
           </div>
         </div>
       )}
