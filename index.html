@@ -1,4 +1,4 @@
-290 225
+2027
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="html-root">
 <head>
@@ -31,9 +31,7 @@
     background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.08) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.08) 0%, transparent 45%);
     background-attachment: fixed;
   }
-  .dark body {
-    background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.1) 0%, transparent 45%);
-  }
+  .dark body { background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.1) 0%, transparent 45%); }
   button{ font-family:inherit; cursor:pointer; border:none; background:transparent; }
   .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
   .card{ background:rgba(255,255,255,0.7); border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:12px; box-shadow:0 8px 32px rgba(0,0,0,0.04); backdrop-filter: blur(12px); transition: transform 0.2s; }
@@ -97,18 +95,12 @@
   .rf-circle.good::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--okc) !important; }
   .rf-circle.bad { border-color: var(--badc) !important; background: var(--badbg) !important; }
   .rf-circle.bad::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--badc) !important; }
-  .audio-header { display:flex; align-items:center; gap:10px; font-weight:900; color:var(--red); margin-bottom:12px; }
-  .dark .audio-header { color:var(--gold); }
-  .audio-icon-big { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:rgba(221,0,0,0.1); color:var(--red); }
-  .dark .audio-icon-big { background:rgba(255,206,0,0.1); color:var(--gold); }
   .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); }
   .horen-gateway-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); }
   .horen-gateway-icon { width: 70px; height: 70px; border-radius: 20px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; color: #22C55E; font-size: 2em; }
   .horen-start-btn { width: 100%; padding: 16px; border-radius: 16px; background: rgba(34, 197, 94, 0.1); color: #22C55E; font-weight: 900; font-size: 1.1em; display: flex; justify-content: center; align-items: center; gap: 10px; transition: all 0.2s; border: 1.5px solid rgba(34, 197, 94, 0.3); }
   .horen-start-btn:active { transform: scale(0.98); background: rgba(34, 197, 94, 0.2); }
   @keyframes spin { 100% { transform: rotate(360deg); } }
-  .menu-btn { position: absolute; top: 15px; right: 15px; z-index: 1000; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-  .dark .menu-btn { background: #1a1a1a; color: #fff; border-color: #333; }
   .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: #fff; box-shadow: -2px 0 15px rgba(0,0,0,0.1); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1002; display: flex; flex-direction: column; }
   .dark .side-menu { background: #1a1a1a; }
   .side-menu.active { right: 0; }
@@ -128,7 +120,6 @@
   .btn-next-bar { background: linear-gradient(135deg, #2962ff, #1565c0); border: none; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); cursor: pointer; flex-shrink: 0; transform: rotate(180deg); }
   .timer-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 16px; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-variant-numeric: tabular-nums; font-size: 16px; }
   .dark .timer-badge { background: rgba(26, 26, 26, 0.95); border-color: #333; color: #FFF; }
-  .timer-badge.warning { background: #fee2e2; color: #dc2626; border-color: #fecaca; animation: pulse 1s infinite; }
   .keyboard-area { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
   .key-btn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); font-weight: 900; font-size: 1.1em; color: var(--text); display: flex; justify-content: center; align-items: center; }
   .word-counter { background: var(--line); padding: 8px 16px; border-radius: 12px; font-size: 0.9em; font-weight: 900; }
@@ -170,6 +161,7 @@ const LANGS = [
   { c:"en", n:"English", f:"🇬🇧" }, { c:"uz", n:"O'zbek", f:"🇺🇿" },
   { c:"ne", n:"नेपाली", f:"🇳🇵" }
 ];
+
 const UI_TEXTS = {
   ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"سلام، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمين", name:"الاسم", code:"الكود", status:"الحالة", paid:"مخلص", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً", unique_name_placeholder:"الاسم الفريد (Unique Name)", unique_code_placeholder:"الكود الفريد (Unique Code)", login_or_register:"دخول / إنشاء حساب", account_blocked:"تم حظر حسابك", contact_support:"تواصل مع الدعم الفني", please_wait:"جاري التحميل...", results:"النتائج", score:"النقطة", date:"التاريخ", search_users:"بحث عن مستخدم...", delete_notif:"حذف", confirm_delete_notif:"واش بصح باغي تحذف هاد الإشعار؟", sent_success:"تم الإرسال بنجاح!", fill_all_fields:"عمر جميع الحقول", sending:"جاري الإرسال...", previous_notifs:"الإشعارات السابقة", new_notif:"إرسال إشعار جديد", active:"نشط", inactive:"موقوف" },
   ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا تجد جميع دروس الاستماع. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ خطأ", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"مرحباً، أريد ترقية حسابي إلى Pro لفتح جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمون", name:"الاسم", code:"الكود", status:"الحالة", paid:"مدفوع", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً", unique_name_placeholder:"الاسم الفريد", unique_code_placeholder:"الكود الفريد", login_or_register:"دخول / إنشاء حساب", account_blocked:"تم حظر حسابك", contact_support:"تواصل مع الدعم الفني", please_wait:"جاري التحميل...", results:"النتائج", score:"النقطة", date:"التاريخ", search_users:"بحث عن مستخدم...", delete_notif:"حذف", confirm_delete_notif:"هل تريد حقاً حذف هذا الإشعار؟", sent_success:"تم الإرسال بنجاح!", fill_all_fields:"يرجى ملء جميع الحقول", sending:"جاري الإرسال...", previous_notifs:"الإشعارات السابقة", new_notif:"إرسال إشعار جديد", active:"نشط", inactive:"موقوف" },
@@ -185,6 +177,7 @@ const UI_TEXTS = {
 };
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
+
 const SCHREIBEN_DATA = [
   {
     id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
@@ -410,12 +403,12 @@ const EXAMS = [
     },
     { n:2, c:"C", q:"Sein Projekt konnte Palmer realisieren,", qar:"تمكن بالمر من تحقيق مشروعه", qma:"بالمر قدر يحقق المشروع ديالو", qen:"Palmer was able to realize his project", qfr:"Palmer a pu réaliser son projet",
       opts:[
-        {k:"A", de:"weil er einen Preis von eiز بجائزة من جامعة", ma:"حيت ربح جايزة من جامعة", en:"because he won a prize from a university", fr:"parce qu'il a gagné un prix d'une université"},
+        {k:"A", de:"weil er einen Preis von einer Universität gewonnen hat", ar:"لأنه فاز بجائزة من جامعة", ma:"حيت ربح جايزة من جامعة", en:"because he won a prize from a university", fr:"parce qu'il a gagné un prix d'une université"},
         {k:"B", de:"weil er finanzielle Unterstützung von vier Universitäten erhalten hat.", ar:"لأنه تلقى دعماً مالياً من أربع جامعات", ma:"حيت خد دعم مالي من 4 جامعات", en:"because he received financial support from four universities.", fr:"parce qu'il a reçu un soutien financier de quatre universités."},
         {k:"C", de:"weil ihn Firmen und Universitäten unterstützt haben", ar:"لأن الشركات والجامعات دعمته", ma:"حيت الشركات والجامعات دعموه", en:"because companies and universities supported him", fr:"parce que des entreprises et des universités l'ont soutenu"}
       ]
     },
-    { n:3, c:"A", q:"Palmers Auto", qar:"سيارة بالمر", qma:"طوموبيل بالمر", qen:"Palmer's car", qfr:"La voiture de Palmer",
+    { n:3, c:"A", q:"Palmers Auto", qar:"سيارة بالمر", qma:"طوموبيل بالr", qfr:"La voiture de Palmer",
       opts:[
         {k:"A", de:"fährt mit alternativer Energie", ar:"تسير بالطاقة البديلة", ma:"كتمشي بالطاقة البديلة", en:"runs on alternative energy", fr:"roule à l'énergie alternative"},
         {k:"B", de:"geht auf eine dreijährige Weltreise", ar:"تذهب في رحلة حول العالم لمدة ثلاث سنوات", ma:"غادي تدور العالم لمدة 3 سنين", en:"goes on a three-year world trip", fr:"part pour un tour du monde de trois ans"},
@@ -1395,745 +1388,7 @@ function HorenGateway({ onStart, userLang }) {
     </div>
   );
 }
-const HOREN_EXAMS = [
-  {
-    id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Verstehen. Teil 1. Sie hören nun 5 kurze Texte. Dazu sollen Sie 5 Aufgaben lösen.", pitch: 1.0, rate: 0.95 },
-      { text: "In der heutigen Sendung geht es um persönliche Erfahrungen mit dem Einkaufen im Internet. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich erledige meine Einkäufe fast ausschließlich online. Das spart mir viel Zeit, besonders nach einem langen Arbeitstag. In ein Geschäft gehe ich nur, wenn es wirklich notwendig ist.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
-      { text: "Ehrlich gesagt ist mir das Zwischenmenschliche beim Einkaufen nicht so wichtig. Ich bevorzuge es, meine Sachen schnell und ohne lange Gespräche zu besorgen.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Wenn ich dann im Internet etwas bestellen möchte, werde ich ständig unterbrochen. Ich finde einfach keine ruhige Minute, um in Ruhe Preise zu vergleichen.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich kaufe regelmäßig im Internet ein. Für mich ist das sehr praktisch, vor allem wenn ich spezielle Produkte suche. Ich hatte bisher keine schlechten Erfahrungen.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich bestelle meine Medikamente immer über eine Online-Apotheke. Das ist einfacher und meist auch günstiger. Früher bin ich dafür in die Stadt gefahren, aber jetzt finde ich den Lieferservice viel komfortabler.", pitch: 0.85, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Herr Pawliczek erledigt alle seine Einkäufe im Internet.", ar:"السيد بافليتشيك كيقضي جميع مشترياتو فالإنترنت.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
-      { n:2, c:"F", de:"Frau Zimmermann legt beim Einkaufen großen Wert auf persönlichen Kontakt.", ar:"السيدة تسيمرمان كتعطي قيمة كبيرة للتواصل الشخصي.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
-      { n:3, c:"R", de:"Frau Schmidt findet zu Hause nicht genug Ruhe, um im Internet einzukaufen.", ar:"السيدة شميدت ما كتلقاش الهدوء الكافي فالدار باش تشري من الإنترنت.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
-      { n:4, c:"F", de:"Frau Ruttnigg ist vom Einkaufen im Internet nicht überzeugt.", ar:"السيدة روتنيغ ماشي مقتنعة بالتسوق عبر الإنترنت.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." },
-      { n:5, c:"F", de:"Herr Krause kauft seine Medikamente am liebsten in der nächsten Stadt.", ar:"السيد كراوزه كيفضل يشري دواوه من المدينة القريبة.", story:"فاطمة شرات شوية حوايج من التسوق عبر الإنترنت، ومن بعد وصلها الكولي، ولكن السيدة شميدت لقاتهم فالدار وحطاتهم ليها حتى رجعات." }
-    ]
-  },
-  {
-    id: "h2", title: "Bus zur Arbeit (Andreas 1 und 2)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Guten Tag und herzlich willkommen bei Radio Aktuell. Heute hören Sie kurze Beiträge zum Thema Arbeitsweg. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich fahre jeden Tag mit dem Auto zur Arbeit. Morgens ist das für mich am bequemsten. Der Bus wäre vielleicht günstiger, aber ich möchte flexibel sein und nicht an Fahrpläne gebunden.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich arbeite in der Innenstadt und laufe morgens ein kleines Stück zu Fuß. Danach nehme ich die Straßenbahn. Ich finde diese Kombination aus Bewegung und öffentlichem Verkehrsmittel sehr angenehm.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Früher bin ich oft mit dem Auto zur Arbeit gefahren, aber seit einem Jahr mache ich das nicht mehr. Ich habe festgestellt, dass ich das Auto eigentlich gar nicht mehr brauche.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich fahre immer auf dieselbe Weise zur Arbeit. Mit dem Bus. Ich benutze nie andere Verkehrsmittel. Der Bus ist für mich zuverlässig und bequem.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
-      { text: "Zur Arbeit fahre ich manchmal mit dem Fahrrad, manchmal mit dem Bus. Der Firmenbus ist nur eine von vielen Möglichkeiten. Ich finde es gut, verschiedene Optionen zu haben.", pitch: 1.1, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"F", de:"Die Sprecherin könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدثة يمكنها تخيل الذهاب بالحافلة.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
-      { n:2, c:"R", de:"Die Sprecherin findet es gut, dass sie zur Arbeit ein Stück zu Fuß gehen kann.", ar:"المتحدثة تحب أنها تمشي شوية على رجليها.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
-      { n:3, c:"F", de:"Der Sprecher fährt nie mit dem Auto zur Arbeit.", ar:"المتحدث لا يقود السيارة أبداً.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
-      { n:4, c:"R", de:"Der Sprecher benutzt für den Weg zur Arbeit zurzeit verschiedene Verkehrsmittel.", ar:"المتحدث يستخدم وسائل نقل مختلفة.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." },
-      { n:5, c:"F", de:"Für die Sprecherin ist der Firmenbus die einzige Möglichkeit zur Arbeit zu kommen.", ar:"حافلة الشركة هي الخيار الوحيد.", story:"أحمد كيمشي شوية على رجليه كل نهار، حيث هو عمره ما كيمشي بالطوموبيل وكيفضل الحركة." }
-    ]
-  },
-  {
-    id: "h3", title: "Bus zur Arbeit (Vera)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich fahre nie mit dem Auto zur Arbeit. Das ist mir zu teuer und ich möchte auch etwas für meine Gesundheit tun.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
-      { text: "Normalerweise nehme ich die Straßenbahn oder gehe ein Stück zu Fuß. Ich könnte mir auch vorstellen, in Zukunft mit dem Bus zu fahren, wenn die Verbindung besser ist.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Aber den ganzen Weg laufe ich nicht, das wäre zu weit.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich benutze also verschiedene Verkehrsmittel, je nachdem wie das Wetter ist oder wie viel Zeit ich habe.", pitch: 1.05, rate: 1.0 },
-      { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
-      { text: "Der Firmenbus ist auf jeden Fall nicht die einzige Möglichkeit für mich, zur Arbeit zu kommen.", pitch: 1.0, rate: 0.95 }
-    ],
-    items: [
-      { n:1, c:"F", de:"Die Sprecherin könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدثة يمكنها تخيل الذهاب بالحافلة.", story:"يوسف عمره ما كيمشي بالطوموبيل للخدمة، كيختار الطرام ولا كيمشي على رجليه باش يوفر الفلوس ويدير شوية الرياضة." },
-      { n:2, c:"F", de:"Die Sprecherin geht den ganzen Weg zur Arbeit zu Fuß.", ar:"المتحدثة تمشي الطريق كله إلى العمل.", story:"يوسف عمره ما كيمشي بالطوموبيل للخدمة، كيختار الطرام ولا كيمشي على رجليه باش يوفر الفلوس ويدير شوية الرياضة." },
-      { n:3, c:"R", de:"Der Sprecher fährt nie mit dem Auto zur Arbeit.", ar:"المتحدث لا يقود السيارة أبداً.", story:"يوسف عمره ما كيمشي بالطوموبيل للخدمة، كيختار الطرام ولا كيمشي على رجليه باش يوفر الفلوس ويدير شوية الرياضة." },
-      { n:4, c:"R", de:"Der Sprecher benutzt für den Weg zur Arbeit zurzeit verschiedene Verkehrsmittel.", ar:"المتحدث يستخدم وسائل نقل مختلفة.", story:"يوسف عمره ما كيمشي بالطوموبيل للخدمة، كيختار الطرام ولا كيمشي على رجليه باش يوفر الفلوس ويدير شوية الرياضة." },
-      { n:5, c:"F", de:"Für die Sprecherin ist der Firmenbus die einzige Möglichkeit zur Arbeit zu kommen.", ar:"حافلة الشركة هي الخيار الوحيد.", story:"يوسف عمره ما كيمشي بالطوموبيل للخدمة، كيختار الطرام ولا كيمشي على رجليه باش يوفر الفلوس ويدير شوية الرياضة." }
-    ]
-  },
-  {
-    id: "h4", title: "Arbeitsplatz für Vater", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Mit Beiträgen von Deutschlehrer Orhan Yiğit. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Mein Vater hat eine Arbeit. Er ist nicht immer glücklich, aber er mag seinen Job. Ich finde, er braucht keinen neuen Arbeitsplatz. Wichtiger ist, dass er genug Freizeit hat. Wir könnten dann mehr Zeit zusammen verbringen.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich bin kein sehr guter Schüler. Manche Fächer sind schwer für mich. Ich versuche besser zu werden, aber das klappt nicht immer. Meine Eltern sagen, ich soll mehr lernen. Trotzdem weiß ich, dass gute Noten wichtig sind.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich bin gern allein. Manchmal lese ich oder höre Musik. Dann will ich nicht gestört werden. Aber meine Familie klopft oft an meine Tür. Ich finde das nervig.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
-      { text: "Meine Mutter und ich streiten oft. Sie sagt, ich mache zu wenig im Haushalt. Manchmal verstehe ich sie nicht. Ich finde, sie ist zu streng. Aber vielleicht will sie nur das Beste für mich.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
-      { text: "Meine Eltern sind nett, aber ich verbringe meine Zeit lieber mit Freunden. Wir gehen ins Kino oder treffen uns im Park. Natürlich liebe ich meine Familie, aber ich brauche auch meine Freiheit.", pitch: 1.1, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"F", de:"Die Sprecherin wünscht sich einen Arbeitsplatz für ihren Vater.", ar:"المتحدثة تتمنى وظيفة لوالدها.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
-      { n:2, c:"R", de:"Der Sprecher ist kein besonders guter Schüler.", ar:"المتحدث ليس تلميذاً جيداً جداً.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
-      { n:3, c:"R", de:"Die Sprecherin möchte nicht immer gestört werden.", ar:"المتحدثة لا تريد أن يتم إزعاجها دائماً.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
-      { n:4, c:"R", de:"Der Sprecher versteht sich nicht gut mit seiner Mutter.", ar:"المتحدث لا يتفاهم جيداً مع والدته.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." },
-      { n:5, c:"F", de:"Die Sprecherin ist am liebsten mit ihren Eltern zusammen.", ar:"المتحدثة تفضل أن تكون مع والديها.", story:"سفيان تلميذ مزيان، وماشي ديما كيقلق القسم، ولكن للأسف العلاقة ديالو ماشي مزيانة مع مو، وهاد الشي كيأثر عليه مرات." }
-    ]
-  },
-  {
-    id: "h5", title: "Einzelkind", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich bin Karim. Ich habe einen Bruder und eine Schwester. Als Kind musste ich sehr früh lernen, Rücksicht auf die anderen zu nehmen.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
-      { text: "Das war manchmal anstrengend, aber heute habe ich ein sehr gutes Verhältnis zu meinem Bruder. Wir helfen uns immer.", pitch: 1.0, rate: 0.95 },
-      { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Meine Schwester und mein Bruder verstehen sich auch sehr gut. Wir sind immer für einander da.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich wäre nie gerne ein Einzelkind gewesen.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
-      { text: "Auch wenn es oft stressig war, möchte ich meine Geschwister nicht missen.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"F", de:"Die Sprecherin wäre lieber ein Einzelkind.", ar:"المتحدثة تفضل أن تكون طفلة وحيدة.", story:"كريم عندو علاقة زوينة مع خوه، ومن صغرو كان خاصو يقرا بكري، وحتى ختو علاقتها ممتازة مع خوها، وديما كيشجعو بعضياتهم." },
-      { n:2, c:"R", de:"Der Sprecher hat heute ein gutes Verhältnis zu seinem Bruder.", ar:"المتحدث لديه علاقة جيدة بأخيه اليوم.", story:"كريم عندو علاقة زوينة مع خوه، ومن صغرو كان خاصو يقرا بكري، وحتى ختو علاقتها ممتازة مع خوها، وديما كيشجعو بعضياتهم." },
-      { n:3, c:"F", de:"Die Sprecherin würde heute gern noch eine Schwester haben.", ar:"المتحدثة تود أن تحصل على أخت أخرى اليوم.", story:"كريم عندو علاقة زوينة مع خوه، ومن صغرو كان خاصو يقرا بكري، وحتى ختو علاقتها ممتازة مع خوها، وديما كيشجعو بعضياتهم." },
-      { n:4, c:"R", de:"Die Sprecherin hat schon früh lernen müssen, dass man im Zusammenleben viel Rücksicht nehmen muss.", ar:"كان على المتحدثة أن تتعلم مبكراً أنه يجب مراعاة الآخرين.", story:"كريم عندو علاقة زوينة مع خوه، ومن صغرو كان خاصو يقرا بكري، وحتى ختو علاقتها ممتازة مع خوها، وديما كيشجعو بعضياتهم." },
-      { n:5, c:"R", de:"Die Sprecherin versteht sich sehr gut mit ihrem Bruder.", ar:"المتحدثة تتفاهم جيداً مع أخيها.", story:"كريم عندو علاقة زوينة مع خوه، ومن صغرو كان خاصو يقرا بكري، وحتى ختو علاقتها ممتازة مع خوها، وديما كيشجعو بعضياتهم." }
-    ]
-  },
-  {
-    id: "h6", title: "Urlaub", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen Teil 1. Sie hören nun 5 kurze Texte. Mit Beiträgen von Deutschlehrer Orhan Yiğit. Das heutige Thema ist Urlaubserinnerungen.", pitch: 1.0, rate: 0.95 },
-      { text: "Nummer 41. Als Kind wollte ich unbedingt Urlaub wie meine Freunde machen, Sonne, Strand und Meer. Doch meine Eltern fuhren lieber in die Berge. Während andere im Wasser spielten, mussten wir wandern gehen. Ich fand das oft langweilig.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 42. Einmal waren wir im Schwarzwald zum Wandern. Ich war damals noch klein und fand das wirklich anstrengend. Es hat oft geregnet und die Wege waren rutschig. Die Natur war zwar schön, aber dieser Urlaub hat mir keinen Spaß gemacht.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 43. Wir sind früher oft in den Ferien an einen See gefahren. Dort haben wir gezeltet oder in kleinen Pensionen übernachtet. Ich habe viele Kinder kennengelernt und es war immer spannend. Bei meinen Verwandten waren wir nie, meine Eltern wollten lieber neue Orte sehen.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 44. Mit meiner Familie haben wir meistens Städtereisen gemacht. Wir sind mit dem Auto gefahren und haben Museen besucht. Fahrradtouren waren nicht unser Ding. Ich kann mich nur an einen Ausflug mit dem Rad erinnern, aber das war nicht regelmäßig.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 45. Ich durfte bei der Urlaubsplanung immer mitreden. Meine Eltern fragten mich, was ich machen möchte, und wir haben gemeinsam entschieden. Manchmal haben wir Vorschläge gesammelt und uns dann geeinigt. Das war schön, denn ich fühlte mich ernst genommen.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Sprecher hätte gern Urlaub wie die anderen Kinder gemacht.", ar:"كان يتمنى قضاء عطلة مثل الأطفال الآخرين.", story:"مريم كتحب تسافر فالعيطلة، ولكن عطلة المشي فالجبال ما كتعجبهاش بزاف، وكتفضل تدوز العطلة مع الوالدين." },
-      { n:2, c:"R", de:"Dem Sprecher hat der Wanderurlaub nicht so gut gefallen.", ar:"لم تعجبه عطلة المشي كثيراً.", story:"مريم كتحب تسافر فالعيطلة، ولكن عطلة المشي فالجبال ما كتعجبهاش بزاف، وكتفضل تدوز العطلة مع الوالدين." },
-      { n:3, c:"F", de:"Die Sprecherin hat die Ferien bei Verwandten verbracht.", ar:"قضت المتحدثة العطلة عند الأقارب.", story:"مريم كتحب تسافر فالعيطلة، ولكن عطلة المشي فالجبال ما كتعجبهاش بزاف، وكتفضل تدوز العطلة مع الوالدين." },
-      { n:4, c:"F", de:"Die Sprecherin hat mit ihren Eltern regelmäßig Fahrradausflüge gemacht.", ar:"قامت المتحدثة برحلات دراجات منتظمة مع والديها.", story:"مريم كتحب تسافر فالعيطلة، ولكن عطلة المشي فالجبال ما كتعجبهاش بزاف، وكتفضل تدوز العطلة مع الوالدين." },
-      { n:5, c:"R", de:"Der Sprecher hat den Urlaub mit den Eltern gemeinsam geplant.", ar:"خطط المتحدث للعطلة مع والديه معاً.", story:"مريم كتحب تسافر فالعيطلة، ولكن عطلة المشي فالجبال ما كتعجبهاش بزاف، وكتفضل تدوز العطلة مع الوالدين." }
-    ]
-  },
-  {
-    id: "h7", title: "Kinder in der Schule", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen Teil 1. Sie hören nun 5 kurze Texte. Mit Beiträgen von Deutschlehrer Orhan Yiğit. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Also, ich finde es sehr wichtig, dass meine Kinder gute Noten bekommen. Die Schule ist der Schlüssel für ihre Zukunft. Ich achte darauf, dass sie lernen und ihre Hausaufgaben machen.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Für mich ist es selbstverständlich, dass Eltern immer für ihre Kinder da sind. Ich höre zu und unterstütze sie, wann immer sie mich brauchen.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 43. Ich denke, ich spreche schon sehr oft mit meiner Tochter. Wir erzählen uns alles. Ich sehe keinen Grund, warum ich noch mehr sprechen sollte.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Mir ist es sehr wichtig, dass meine Kinder gesund leben. Sie sollen Obst und Gemüse essen, viel Wasser trinken und sich jeden Tag bewegen.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich möchte, dass mein Kind seine eigenen Ideen verwirklichen kann. Wichtig ist, dass es glücklich ist und das macht, was ihm wirklich Spaß macht.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"F", de:"Für die Sprechenden ist es unwichtig, ob ihre Kinder in der Schule gut sind.", ar:"بالنسبة للمتحدثين، من غير المهم ما إذا كان أطفالهم جيدين في المدرسة.", story:"أي أب وأم خاصهم ديما يكونو مع ولادهم ويساندوهم، وكيتمنّاو ولادهم يعيشو بصحة مزيانة، ويخليو كل طفل يحقق الأفكار والأحلام ديالو." },
-      { n:2, c:"R", de:"Der Sprecher findet es wichtig, dass Eltern immer für ihre Kinder da sind.", ar:"يرى المتحدث أنه من المهم أن يكون الآباء موجودين دائماً من أجل أطفالهم.", story:"أي أب وأم خاصهم ديما يكونو مع ولادهم ويساندوهم، وكيتمنّاو ولادهم يعيشو بصحة مزيانة، ويخليو كل طفل يحقق الأفكار والأحلام ديالو." },
-      { n:3, c:"F", de:"Die Sprecherin glaubt, dass sie mehr mit ihrer Tochter sprechen müsste.", ar:"تعتقد المتحدثة أنه يجب عليها التحدث أكثر مع ابنتها.", story:"أي أب وأم خاصهم ديما يكونو مع ولادهم ويساندوهم، وكيتمنّاو ولادهم يعيشو بصحة مزيانة، ويخليو كل طفل يحقق الأفكار والأحلام ديالو." },
-      { n:4, c:"R", de:"Es ist dem Sprecher wichtig, dass seine Kinder gesund leben.", ar:"من المهم للمتحدث أن يعيش أطفاله بصحة جيدة.", story:"أي أب وأم خاصهم ديما يكونو مع ولادهم ويساندوهم، وكيتمنّاو ولادهم يعيشو بصحة مزيانة، ويخليو كل طفل يحقق الأفكار والأحلام ديالو." },
-      { n:5, c:"R", de:"Der Sprecher möchte, dass sein Kind die eigenen Ideen realisieren kann.", ar:"يريد المتحدث أن يتمكن طفله من تحقيق أفكاره الخاصة.", story:"أي أب وأم خاصهم ديما يكونو مع ولادهم ويساندوهم، وكيتمنّاو ولادهم يعيشو بصحة مزيانة، ويخليو كل طفل يحقق الأفكار والأحلام ديالو." }
-    ]
-  },
-  {
-    id: "h8", title: "Radwege", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich fahre jeden Tag mit dem Fahrrad zur Arbeit. Die Radwege in der Stadt machen das einfacher und sicherer.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich fahre nur am Wochenende Fahrrad. Die Radwege, die es schon gibt, reichen mir völlig aus. Ich finde, es ist nicht nötig, noch mehr zu bauen.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 43. Ich finde Radwege sehr wichtig. Sie machen das Fahren viel sicherer, besonders für Kinder. Ich wünsche mir sogar, dass es noch mehr Radwege in der Stadt gibt.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 44. Wenn Fahrradfahrer auf der Straße fahren, wird der Verkehr oft langsamer. Es ist gefährlich für alle. Deshalb finde ich es besser, wenn Fahrräder einen eigenen Weg haben.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich fühle mich auf Radwegen viel sicherer. Auf der Straße habe ich oft Angst, besonders wenn Autos schnell fahren. Deshalb finde ich, Radwege machen das Radfahren deutlich sicherer.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Für den Sprecher haben Radwege Vorteile.", ar:"بالنسبة للمتحدث، مسارات الدراجات لها مزايا.", story:"إنشاء مسارات خاصة بالدراجات عندو بزاف ديال الفوائد، حيث كيخلي ركوب الدراجة أكثر أماناً، ولكن كاينين ناس كيشوفو أن هاد المسارات كتعرقل حركة المرور." },
-      { n:2, c:"F", de:"Die Sprecherin möchte mehr Radwege.", ar:"تريد المتحدثة المزيد من مسارات الدراجات.", story:"إنشاء مسارات خاصة بالدراجات عندو بزاف ديال الفوائد، حيث كيخلي ركوب الدراجة أكثر أماناً، ولكن كاينين ناس كيشوفو أن هاد المسارات كتعرقل حركة المرور." },
-      { n:3, c:"F", de:"Die Sprecherin meint, dass Radwege unnötig sind.", ar:"ترى المتحدثة أن مسارات الدراجات غير ضرورية.", story:"إنشاء مسارات خاصة بالدراجات عندو بزاف ديال الفوائد، حيث كيخلي ركوب الدراجة أكثر أماناً، ولكن كاينين ناس كيشوفو أن هاد المسارات كتعرقل حركة المرور." },
-      { n:4, c:"R", de:"Der Sprecher denkt, dass Radfahrer auf der Straße den Verkehr behindern.", ar:"يعتقد المتحدث أن راكبي الدراجات على الطريق يعيقون حركة المرور.", story:"إنشاء مسارات خاصة بالدراجات عندو بزاف ديال الفوائد، حيث كيخلي ركوب الدراجة أكثر أماناً، ولكن كاينين ناس كيشوفو أن هاد المسارات كتعرقل حركة المرور." },
-      { n:5, c:"R", de:"Für den Sprecher machen Radwege das Radfahren sicherer.", ar:"بالنسبة للمتحدث، مسارات الدراجات تجعل ركوب الدراجات أكثر أماناً.", story:"إنشاء مسارات خاصة بالدراجات عندو بزاف ديال الفوائد، حيث كيخلي ركوب الدراجة أكثر أماناً، ولكن كاينين ناس كيشوفو أن هاد المسارات كتعرقل حركة المرور." }
-    ]
-  },
-  {
-    id: "h9", title: "Fremdsprache", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich bin dagegen, dass Kinder so früh eine Fremdsprache lernen. Sie sollten erst mal ihre Muttersprache richtig beherrschen.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich bin überzeugt, dass frühes Fremdsprachenlernen für viele Kinder eher Nachteile bringt. Es überfordert sie oft.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 43. Ich finde es schade, dass ich im Kindergarten keine Fremdsprache lernen konnte. Heute fällt es mir schwer.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 44. Meiner Meinung nach sollten Fremdsprachen erst ab der Schulzeit eingeführt werden. Das ist früh genug.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich spreche mich klar dagegen aus, Kindern schon früh eine Fremdsprache beizubringen.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Die Sprecherin ist dagegen, dass Kinder so früh eine Fremdsprache lernen.", ar:"المتحدثة ضد أن يتعلم الأطفال لغة أجنبية في وقت مبكر جداً.", story:"بعض الآباء كيشوفو أن الأطفال خاصهم يتعلمو لغة أجنبية من بكري، والأفضل يبداو بها فالمدرسة، ولكن كاين اللي كيشوف أن تعلم لغة أجنبية عندو عيوب بالنسبة لعدد كبير من الأطفال." },
-      { n:2, c:"R", de:"Die Sprecherin meint, dass das frühe Lernen einer Fremdsprache für viele Kinder Nachteile hat.", ar:"ترى المتحدثة أن التعلم المبكر للغة الأجنبية له عيوب بالنسبة للعديد من الأطفال.", story:"بعض الآباء كيشوفو أن الأطفال خاصهم يتعلمو لغة أجنبية من بكري، والأفضل يبداو بها فالمدرسة، ولكن كاين اللي كيشوف أن تعلم لغة أجنبية عندو عيوب بالنسبة لعدد كبير من الأطفال." },
-      { n:3, c:"R", de:"Der Sprecher findet es schade, dass er im Kindergarten keine Fremdsprache lernen konnte.", ar:"يأسف المتحدث لأنه لم يتمكن من تعلم لغة أجنبية في رياض الأطفال.", story:"بعض الآباء كيشوفو أن الأطفال خاصهم يتعلمو لغة أجنبية من بكري، والأفضل يبداو بها فالمدرسة، ولكن كاين اللي كيشوف أن تعلم لغة أجنبية عندو عيوب بالنسبة لعدد كبير من الأطفال." },
-      { n:4, c:"R", de:"Die Sprecherin meint, dass das Fremdsprachenlernen erst in der Schule beginnen sollte.", ar:"ترى المتحدثة أن تعلم اللغات الأجنبية يجب أن يبدأ فقط في المدرسة.", story:"بعض الآباء كيشوفو أن الأطفال خاصهم يتعلمو لغة أجنبية من بكري، والأفضل يبداو بها فالمدرسة، ولكن كاين اللي كيشوف أن تعلم لغة أجنبية عندو عيوب بالنسبة لعدد كبير من الأطفال." },
-      { n:5, c:"R", de:"Der Sprecher ist dagegen, dass Kinder schon früh Fremdsprache lernen.", ar:"المتحدث ضد أن يتعلم الأطفال لغة أجنبية في وقت مبكر.", story:"بعض الآباء كيشوفو أن الأطفال خاصهم يتعلمو لغة أجنبية من بكري، والأفضل يبداو بها فالمدرسة، ولكن كاين اللي كيشوف أن تعلم لغة أجنبية عندو عيوب بالنسبة لعدد كبير من الأطفال." }
-    ]
-  },
-  {
-    id: "h10", title: "Sport als für Kultur", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Verstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Sport spielt eine viel größere Rolle in meinem Leben als Kultur. Ich treibe regelmäßig Sport, weil es mir hilft, fit zu bleiben und Stress abzubauen.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 42. Sobald sich die Gelegenheit ergibt, besuche ich eine Theateraufführung. Ich genieße es, verschiedene Inszenierungen zu erleben.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Ehrlich gesagt kann ich mit moderner Musik wenig anfangen. Viele Lieder klingen für mich gleich und haben keine wirkliche Tiefe. Ich bevorzuge klassische Musik oder Jazz.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 44. Kunstausstellungen besuche ich nur selten. Natürlich ist Kunst wichtig, aber ich habe nie wirklich großes Interesse daran entwickelt.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 45. Ich bedauere es sehr, dass ich nicht mehr Zeit für kulturelle Erlebnisse habe. Ich liebe es, mich mit Kunst, Musik und Literatur zu beschäftigen, aber mein Alltag lässt mir kaum Raum dafür.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Sprecher interessiert sich für Sport als für Kultur.", ar:"المتحدث مهتم بالرياضة أكثر من الثقافة.", story:"سارة مهتمة بالرياضة أكثر من الثقافة، ولكن كتقدر تمشي للمسرح بزاف ديال المرات، وكتحاول تخصص وقت أكثر للثقافة." },
-      { n:2, c:"R", de:"Die Sprecherin geht so oft sie kann ins Theater.", ar:"المتحدثة تذهب إلى المسرح قدر ما تستطيع.", story:"سارة مهتمة بالرياضة أكثر من الثقافة، ولكن كتقدر تمشي للمسرح بزاف ديال المرات، وكتحاول تخصص وقت أكثر للثقافة." },
-      { n:3, c:"F", de:"Der Sprecher hört besonders gern moderne Musik.", ar:"المتحدث يحب الاستماع إلى الموسيقى الحديثة بشكل خاص.", story:"سارة مهتمة بالرياضة أكثر من الثقافة، ولكن كتقدر تمشي للمسرح بزاف ديال المرات، وكتحاول تخصص وقت أكثر للثقافة." },
-      { n:4, c:"F", de:"Die Sprecherin geht oft in Kunstausstellungen.", ar:"المتحدثة تذهب كثيراً إلى معارض الفن.", story:"سارة مهتمة بالرياضة أكثر من الثقافة، ولكن كتقدر تمشي للمسرح بزاف ديال المرات، وكتحاول تخصص وقت أكثر للثقافة." },
-      { n:5, c:"R", de:"Die Sprecherin hätte gerne mehr Zeit für die Kultur.", ar:"المتحدثة تود لو كان لديها المزيد من الوقت للثقافة.", story:"سارة مهتمة بالرياضة أكثر من الثقافة، ولكن كتقدر تمشي للمسرح بزاف ديال المرات، وكتحاول تخصص وقت أكثر للثقافة." }
-    ]
-  },
-  {
-    id: "h11", title: "Computer", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen, Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich habe zu Hause einen Computer. Eigentlich benutze ich ihn oft, besonders um E-Mails zu schreiben oder Filme zu schauen.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 42. Ich benutze meinen Computer nicht nur am Arbeitsplatz. Auch zu Hause mache ich viele Dinge am Computer, zum Beispiel Fotos bearbeiten oder Musik hören.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 43. Computer mag ich überhaupt nicht. Ich finde, sie machen das Leben komplizierter. Ich schreibe lieber Briefe mit der Hand und telefoniere direkt mit Freunden.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Ich habe kein großes Vertrauen zu Computern. Oft funktionieren sie nicht richtig und dann weiß ich nicht, was ich machen soll.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 45. Im täglichen Leben brauche ich keinen Computer. Ich gehe lieber in die Bibliothek, um Informationen zu finden und schreibe Notizen mit der Hand.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Sprecher hat zu Hause keinen Computer.", ar:"المتحدث ليس لديه كمبيوتر في المنزل.", story:"محمد كيرفض يستعمل الكمبيوتر، حيث ما عندوش ثقة كبيرة فالكمبيوترات وكيخاف يعتمد عليهم بزاف." },
-      { n:2, c:"F", de:"Der Sprecher benutzt den Computer nur am Arbeitsplatz.", ar:"المتحدث يستخدم الكمبيوتر فقط في العمل.", story:"محمد كيرفض يستعمل الكمبيوتر، حيث ما عندوش ثقة كبيرة فالكمبيوترات وكيخاف يعتمد عليهم بزاف." },
-      { n:3, c:"R", de:"Die Sprecherin lehnt Computer ab.", ar:"المتحدثة ترفض أجهزة الكمبيوتر.", story:"محمد كيرفض يستعمل الكمبيوتر، حيث ما عندوش ثقة كبيرة فالكمبيوترات وكيخاف يعتمد عليهم بزاف." },
-      { n:4, c:"R", de:"Die Sprecherin hat kein großes Vertrauen zu Computern.", ar:"المتحدثة ليس لديها ثقة كبيرة بأجهزة الكمبيوتر.", story:"محمد كيرفض يستعمل الكمبيوتر، حيث ما عندوش ثقة كبيرة فالكمبيوترات وكيخاف يعتمد عليهم بزاف." },
-      { n:5, c:"F", de:"Die Sprecherin braucht den Computer im täglichen Leben.", ar:"المتحدثة تحتاج الكمبيوتر في الحياة اليومية.", story:"محمد كيرفض يستعمل الكمبيوتر، حيث ما عندوش ثقة كبيرة فالكمبيوترات وكيخاف يعتمد عليهم بزاف." }
-    ]
-  },
-  {
-    id: "h12", title: "Arbeit zu fahren", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich finde Busfahren ehrlich gesagt nicht so gut, der Bus ist oft zu voll und unpünktlich. Deshalb nehme ich lieber mein Auto oder fahre mit dem Fahrrad.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Zu Fuß zur Arbeit gehen? Nein, das mache ich fast nie. Es ist zu weit und ich brauche über eine Stunde. Ich nehme meistens das Auto oder fahre mit dem Motorrad.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Meine Frau nimmt jeden Morgen das Auto zur Arbeit. Ich finde das völlig in Ordnung. Wir haben nur ein Auto und sie hat einen längeren Weg. Ich fahre mit dem Fahrrad.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Ich fahre jeden Tag mit meinem Motorrad zur Arbeit. Es ist praktisch, weil ich keinen Parkplatz suchen muss und schneller durch den Verkehr komme.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 45. Mit dem Fahrrad zur Arbeit fahre ich eigentlich nie. Ich habe gar kein Fahrrad mehr. Ich habe mir vor 2 Jahren ein Motorrad gekauft und das benutze ich jetzt jeden Tag.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"F", de:"Der Sprecher könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدث يمكنه تخيل الذهاب بالحافلة.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
-      { n:2, c:"F", de:"Die Sprecherin geht gern zu Fuß.", ar:"المتحدثة تحب المشي على الأقدام.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
-      { n:3, c:"R", de:"Der Sprecher findet es in Ordnung, dass seine Frau immer das Auto hat.", ar:"المتحدث يجد أنه لا بأس أن تكون السيارة دائماً مع زوجته.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
-      { n:4, c:"F", de:"Die Sprecherin fährt jeden Tag mit ihrem Motorrad zur Arbeit.", ar:"المتحدثة تذهب إلى العمل بالدراجة النارية كل يوم.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
-      { n:5, c:"F", de:"Die Sprecherin fährt immer mit dem Fahrrad zur Arbeit.", ar:"المتحدثة تذهب إلى العمل بالدراجة دائماً.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." }
-    ]
-  },
-  {
-    id: "h13", title: "Handys", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Also, ich finde Handys oft störend. Neulich war ich im Café und jemand telefonierte laut neben mir. Ich finde, man sollte mehr Rücksicht nehmen.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich telefoniere eigentlich nie mit Freunden. Wir schreiben uns ab und zu Nachrichten. Aber telefonieren mag ich nicht. Das ist mir oft zu laut und zu privat.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 43. Meine Partnerin rufe ich selten mit dem Handy an. Meistens sehen wir uns sowieso zu Hause. Telefonieren finde ich anstrengend, besonders unterwegs.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Ich finde Handys für Kinder problematisch. Viele schauen den ganzen Tag auf den Bildschirm. Sie spielen nicht mehr draußen oder mit Freunden.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 45. Ich habe schon ein gutes Smartphone. Es funktioniert einwandfrei, und ich brauche kein weiteres. Ein neues Handy interessiert mich nicht.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Die Sprecherin fühlt sich durch Handys gestört.", ar:"المتحدثة تشعر بالإزعاج من الهواتف المحمولة.", story:"بزاف ديال الناس كيشوفو أن الهواتف كتسبب الإزعاج، وخصوصاً بالنسبة للأطفال، حيث الهواتف ماشي مزيانة للأطفال وكتقدر تأثر عليهم." },
-      { n:2, c:"F", de:"Der Sprecher benützt das Handy für Gespräche mit Freunden.", ar:"المتحدث يستخدم الهاتف للمحادثات مع الأصدقاء.", story:"بزاف ديال الناس كيشوفو أن الهواتف كتسبب الإزعاج، وخصوصاً بالنسبة للأطفال، حيث الهواتف ماشي مزيانة للأطفال وكتقدر تأثر عليهم." },
-      { n:3, c:"F", de:"Der Sprecher ruft gerne seine Partnerin mit dem Handy an.", ar:"المتحدث يحب الاتصال بشريكته عبر الهاتف.", story:"بزاف ديال الناس كيشوفو أن الهواتف كتسبب الإزعاج، وخصوصاً بالنسبة للأطفال، حيث الهواتف ماشي مزيانة للأطفال وكتقدر تأثر عليهم." },
-      { n:4, c:"R", de:"Die Sprecherin findet Handys für Kinder nicht gut.", ar:"المتحدثة ترى أن الهواتف ليست جيدة للأطفال.", story:"بزاف ديال الناس كيشوفو أن الهواتف كتسبب الإزعاج، وخصوصاً بالنسبة للأطفال، حيث الهواتف ماشي مزيانة للأطفال وكتقدر تأثر عليهم." },
-      { n:5, c:"F", de:"Der Sprecher hätte auch gern ein Handy.", ar:"المتحدث يود أيضاً الحصول على هاتف.", story:"بزاف ديال الناس كيشوفو أن الهواتف كتسبب الإزعاج، وخصوصاً بالنسبة للأطفال، حيث الهواتف ماشي مزيانة للأطفال وكتقدر تأثر عليهم." }
-    ]
-  },
-  {
-    id: "h14", title: "Filme", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich sehe mir am liebsten lustige Filme an. Nach einem langen Tag möchte ich einfach lachen und mich entspannen.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich schaue am liebsten politische Sendungen. Es ist wichtig, informiert zu sein und zu verstehen, was in der Welt passiert.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Ich mag Familienfilme. Sie sind warmherzig und man kann sie mit Kindern zusammen anschauen. Das ist schön.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Das Kind sieht sich am liebsten spannende Krimis an. Es liebt die Spannung und das Rätselraten.", pitch: 0.8, rate: 1.0 },
-      { text: "Nummer 45. Ich sehe mir am liebsten Liebes- und Familienfilme an. Sie berühren das Herz und geben ein gutes Gefühl.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Mann sieht sich am liebsten lustige Filme an.", ar:"الرجل يفضل مشاهدة الأفلام المضحكة.", story:"فالعائلة كل واحد عندو الذوق ديالو فالأفلام: الأب كيفضل الأفلام المضحكة، الطفل كيفضل أفلام الجريمة المشوقة، أما الأخت كتفضل أفلام الحب والعائلة." },
-      { n:2, c:"R", de:"Die Frau sieht sich am liebsten politische Sendungen an.", ar:"المرأة تفضل مشاهدة البرامج السياسية.", story:"فالعائلة كل واحد عندو الذوق ديالو فالأفلام: الأب كيفضل الأفلام المضحكة، الطفل كيفضل أفلام الجريمة المشوقة، أما الأخت كتفضل أفلام الحب والعائلة." },
-      { n:3, c:"R", de:"Der Mann sieht gern Familienfilme.", ar:"الرجل يحب مشاهدة الأفلام العائلية.", story:"فالعائلة كل واحد عندو الذوق ديالو فالأفلام: الأب كيفضل الأفلام المضحكة، الطفل كيفضل أفلام الجريمة المشوقة، أما الأخت كتفضل أفلام الحب والعائلة." },
-      { n:4, c:"R", de:"Das Kind sieht sich am liebsten spannende Krimis an.", ar:"الطفل يفضل مشاهدة أفلام الجريمة المشوقة.", story:"فالعائلة كل واحد عندو الذوق ديالو فالأفلام: الأب كيفضل الأفلام المضحكة، الطفل كيفضل أفلام الجريمة المشوقة، أما الأخت كتفضل أفلام الحب والعائلة." },
-      { n:5, c:"R", de:"Die Sprecherin sieht sich am liebsten Liebes- und Familienfilme an.", ar:"المتحدثة تفضل مشاهدة أفلام الحب والعائلة.", story:"فالعائلة كل واحد عندو الذوق ديالو فالأفلام: الأب كيفضل الأفلام المضحكة، الطفل كيفضل أفلام الجريمة المشوقة، أما الأخت كتفضل أفلام الحب والعائلة." }
-    ]
-  },
-  {
-    id: "h15", title: "Urlaub oft auf dem Land", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Die Familie von Yusuf macht oft Urlaub auf dem Land. Aber dieses Mal fahren sie in die Stadt, nach Wien.", pitch: 1.0, rate: 1.0 },
-      { text: "Nummer 42. Der Sprecher findet Stadturlaub in Wien interessanter als die Berge. Er mag die Kultur und die Museen.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Die Sprecherin meint, dass sich ihre ganze Familie im Urlaub gut erholt. Alle sind zufrieden.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 44. Die Sprecherin findet den Urlaub in Österreich langweilig. Sie möchte lieber etwas Aufregendes erleben.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 45. Die Sprecherin denkt, dass Österreich vor allem für ältere Menschen interessant ist. Für junge Leute gibt es nicht so viel.", pitch: 0.85, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Die Sprecherin verbringt ihren Urlaub oft auf dem Land.", ar:"المتحدثة تقضي عطلتها غالباً في الريف.", story:"العائلة ديال يوسف كيديرو العطلة غالباً فالقرية أو البادية، ولكن هاد المرة مشاو يديرو عطلة فالمدينة فـ فيينا، والأجمل أن العائلة كاملة كانت فالعطلة." },
-      { n:2, c:"R", de:"Der Sprecher findet Stadturlaub in Wien interessanter als die Berge.", ar:"المتحدث يجد عطلة المدينة في فيينا أكثر إثارة من الجبال.", story:"العائلة ديال يوسف كيديرو العطلة غالباً فالقرية أو البادية، ولكن هاد المرة مشاو يديرو عطلة فالمدينة فـ فيينا، والأجمل أن العائلة كاملة كانت فالعطلة." },
-      { n:3, c:"R", de:"Die Sprecherin meint, dass sich ihre ganze Familie im Urlaub gut erholt.", ar:"المتحدثة ترى أن عائلتها بأكملها ترتاح جيداً في العطلة.", story:"العائلة ديال يوسف كيديرو العطلة غالباً فالقرية أو البادية، ولكن هاد المرة مشاو يديرو عطلة فالمدينة فـ فيينا، والأجمل أن العائلة كاملة كانت فالعطلة." },
-      { n:4, c:"F", de:"Die Sprecherin findet den Urlaub in Österreich langweilig.", ar:"المتحدثة تجد العطلة في النمسا مملة.", story:"العائلة ديال يوسف كيديرو العطلة غالباً فالقرية أو البادية، ولكن هاد المرة مشاو يديرو عطلة فالمدينة فـ فيينا، والأجمل أن العائلة كاملة كانت فالعطلة." },
-      { n:5, c:"F", de:"Die Sprecherin denkt, dass Österreich vor allem für ältere Menschen interessant ist.", ar:"المتحدثة تعتقد أن النمسا مثيرة للاهتمام خاصة لكبار السن.", story:"العائلة ديال يوسف كيديرو العطلة غالباً فالقرية أو البادية، ولكن هاد المرة مشاو يديرو عطلة فالمدينة فـ فيينا، والأجمل أن العائلة كاملة كانت فالعطلة." }
-    ]
-  },
-  {
-    id: "h16", title: "Fleisch", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich esse nicht mehr so viel Fleisch wie früher. Ich achte mehr auf meine Gesundheit und die Umwelt.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich bin überzeugt, dass die Lebensmittel in den Supermärkten kontrolliert werden. Das gibt mir Sicherheit.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Ich habe Angst vor Krankheiten, weil die Lebensmittel so schlecht sind. Man weiß ja nie, was drin ist.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Mir gefällt die Atmosphäre auf dem Wochenmarkt. Es ist schön, dort einzukaufen und die Leute zu treffen.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich finde, dass die meisten Menschen zu viel Geld für unwichtige Dinge ausgeben. Man sollte bewusster einkaufen.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Sprecher isst nicht mehr so viel Fleisch wie früher.", ar:"المتحدث لم يعد يأكل الكثير من اللحوم كما في السابق.", story:"سارة ولات ما كتاكلش اللحم بزاف، وكتفضل تشري المواد الغذائية من السوبرماركت حيث المواد الغذائية فالسوبرماركيت مراقَبة. ولكن كتحب حتى الأجواء ديال السوق الأسبوعي، وكتحاول ما تصرفش الفلوس على الحوايج اللي ماشي مهمة." },
-      { n:2, c:"R", de:"Die Sprecherin ist überzeugt, dass die Lebensmittel in den Supermärkten kontrolliert werden.", ar:"المتحدثة مقتنعة بأن المواد الغذائية في السوبرماركت تخضع للرقابة.", story:"سارة ولات ما كتاكلش اللحم بزاف، وكتفضل تشري المواد الغذائية من السوبرماركت حيث المواد الغذائية فالسوبرماركيت مراقَبة. ولكن كتحب حتى الأجواء ديال السوق الأسبوعي، وكتحاول ما تصرفش الفلوس على الحوايج اللي ماشي مهمة." },
-      { n:3, c:"F", de:"Die Sprecherin hat Angst vor Krankheiten, weil die Lebensmittel so schlecht sind.", ar:"المتحدثة تخاف من الأمراض لأن المواد الغذائية سيئة.", story:"سارة ولات ما كتاكلش اللحم بزاف، وكتفضل تشري المواد الغذائية من السوبرماركت حيث المواد الغذائية فالسوبرماركيت مراقَبة. ولكن كتحب حتى الأجواء ديال السوق الأسبوعي، وكتحاول ما تصرفش الفلوس على الحوايج اللي ماشي مهمة." },
-      { n:4, c:"R", de:"Dem Sprecher gefällt die Atmosphäre auf dem Wochenmarkt.", ar:"المتحدث يحب أجواء السوق الأسبوعي.", story:"سارة ولات ما كتاكلش اللحم بزاف، وكتفضل تشري المواد الغذائية من السوبرماركت حيث المواد الغذائية فالسوبرماركيت مراقَبة. ولكن كتحب حتى الأجواء ديال السوق الأسبوعي، وكتحاول ما تصرفش الفلوس على الحوايج اللي ماشي مهمة." },
-      { n:5, c:"R", de:"Der Sprecher findet, dass die meisten Menschen zu viel Geld für unwichtige Dinge ausgeben.", ar:"المتحدث يرى أن معظم الناس ينفقون الكثير من المال على أشياء غير مهمة.", story:"سارة ولات ما كتاكلش اللحم بزاف، وكتفضل تشري المواد الغذائية من السوبرماركت حيث المواد الغذائية فالسوبرماركيت مراقَبة. ولكن كتحب حتى الأجواء ديال السوق الأسبوعي، وكتحاول ما تصرفش الفلوس على الحوايج اللي ماشي مهمة." }
-    ]
-  },
-  {
-    id: "h17", title: "Meinung", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Willkommen zu unserem heutigen Radiobeitrag. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich arbeite sehr gern im Büro. Nur zu Hause zu bleiben und mich den ganzen Tag um mein Kind zu kümmern, wäre auf Dauer nichts für mich.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich bin alleinerziehend und muss arbeiten, weil sonst das Geld einfach nicht reicht. Es ist manchmal stressig, aber ich habe keine andere Wahl.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 43. Ich finde es nicht gut, wenn beide Eltern arbeiten müssen. Die Kinder brauchen doch jemanden, der immer da ist.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Meiner Meinung nach sollten kleine Kinder möglichst von ihrer Mutter betreut werden. Ich war die ersten 3 Jahre zu Hause und habe mich um meine Tochter gekümmert.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 45. Seitdem mein Kind in der Kita ist, läuft alles perfekt. Ich kann pünktlich zur Arbeit und habe selten Probleme.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"F", de:"Der Sprecher würde lieber zu Hause bleiben und sich um sein Kind kümmern.", ar:"المتحدث يفضل البقاء في المنزل ورعاية طفله.", story:"فهاد العائلة إلا ما خدموش بجوج الوالدين، الفلوس ما غاديش تكفي، وداكشي علاش الوالدين بجوج خاصهم يخدمو، ولكن فالنفس الوقت كيبغيو الأطفال تهتم بيهم الأم ديالهم بنفسها." },
-      { n:2, c:"R", de:"Die Sprecherin muss arbeiten, weil sonst das Geld nicht reicht.", ar:"المتحدثة يجب أن تعمل وإلا لن يكفي المال.", story:"فهاد العائلة إلا ما خدموش بجوج الوالدين، الفلوس ما غاديش تكفي، وداكشي علاش الوالدين بجوج خاصهم يخدمو، ولكن فالنفس الوقت كيبغيو الأطفال تهتم بيهم الأم ديالهم بنفسها." },
-      { n:3, c:"R", de:"Der Sprecher findet es nicht gut, wenn beide Eltern arbeiten müssen.", ar:"المتحدث لا يجد أنه من الجيد أن يعمل كلا الوالدين.", story:"فهاد العائلة إلا ما خدموش بجوج الوالدين، الفلوس ما غاديش تكفي، وداكشي علاش الوالدين بجوج خاصهم يخدمو، ولكن فالنفس الوقت كيبغيو الأطفال تهتم بيهم الأم ديالهم بنفسها." },
-      { n:4, c:"R", de:"Die Sprecherin ist der Meinung, dass Kinder von der eigenen Mutter betreut werden sollten.", ar:"المتحدثة ترى أن الأطفال يجب أن ترعاهم أمهم.", story:"فهاد العائلة إلا ما خدموش بجوج الوالدين، الفلوس ما غاديش تكفي، وداكشي علاش الوالدين بجوج خاصهم يخدمو، ولكن فالنفس الوقت كيبغيو الأطفال تهتم بيهم الأم ديالهم بنفسها." },
-      { n:5, c:"F", de:"Der Sprecher hat trotz Kindertagesstätte manchmal Probleme bei der Arbeit.", ar:"المتحدث رغم وجود الحضانة يواجه أحياناً مشاكل في العمل.", story:"فهاد العائلة إلا ما خدموش بجوج الوالدين، الفلوس ما غاديش تكفي، وداكشي علاش الوالدين بجوج خاصهم يخدمو، ولكن فالنفس الوقت كيبغيو الأطفال تهتم بيهم الأم ديالهم بنفسها." }
-    ]
-  },
-  {
-    id: "h18", title: "München", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Der Zug um 18:16 Uhr fährt direkt nach München. Sie müssen nicht umsteigen.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Sie müssen Frau Meissner noch die Pläne für Ihr Wohnzimmer schicken. Vergessen Sie das nicht!", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Die Schnellbahn S7 hat den ganzen Tag über Verspätung. Das ist heute leider so.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Das Wetter in Füssen-Reutte ist zum Schifahren besser als in Garmisch. Dort liegt mehr Schnee.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Den Kunden werden heute die Computer der Firma Hypersoft besonders günstig angeboten. Das ist ein tolles Angebot.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Zug um 18:16 Uhr fährt direkt nach München.", ar:"القطار الساعة 18:16 يتجه مباشرة إلى ميونخ.", story:"قبل ما يمشي لـ Füssen-Reutte، كيشوف الطقس تما، ومن بعد كيلقى عرض رخيص بزاف عند شركة Hypersoft." },
-      { n:2, c:"R", de:"Sie müssen Frau Meissner noch die Pläne für Ihr Wohnzimmer schicken.", ar:"يجب عليك إرسال مخططات غرفة المعيشة إلى السيدة مايسنر.", story:"قبل ما يمشي لـ Füssen-Reutte، كيشوف الطقس تما، ومن بعد كيلقى عرض رخيص بزاف عند شركة Hypersoft." },
-      { n:3, c:"R", de:"Die Schnellbahn S7 hat den ganzen Tag über Verspätung.", ar:"القطار السريع S7 متأخر طوال اليوم.", story:"قبل ما يمشي لـ Füssen-Reutte، كيشوف الطقس تما، ومن بعد كيلقى عرض رخيص بزاف عند شركة Hypersoft." },
-      { n:4, c:"R", de:"Das Wetter in Füssen-Reutte ist zum Schifahren besser als in Garmisch.", ar:"الطقس في فوسن-رويتي أفضل للتزلج من غارميش.", story:"قبل ما يمشي لـ Füssen-Reutte، كيشوف الطقس تما، ومن بعد كيلقى عرض رخيص بزاف عند شركة Hypersoft." },
-      { n:5, c:"R", de:"Den Kunden werden heute die Computer der Firma Hypersoft besonders günstig angeboten.", ar:"يُعرض على العملاء اليوم أجهزة كمبيوتر شركة هايبيرسوفت بأسعار خاصة.", story:"قبل ما يمشي لـ Füssen-Reutte، كيشوف الطقس تما، ومن بعد كيلقى عرض رخيص بزاف عند شركة Hypersoft." }
-    ]
-  },
-  {
-    id: "h19", title: "Haushalt", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich muss im Haushalt fast alles alleine machen. Das ist manchmal ganz schön anstrengend.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich wasche das Geschirr und die Wäsche. Das ist meine Aufgabe zu Hause.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Ich bin berufstätig und habe keine Zeit für die Hausarbeit. Ich brauche Hilfe.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Ich teile mir mit meiner Partnerin die Arbeit je nach Situation auf. Das funktioniert gut.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich bin froh, dass mein Mann so viele Hausarbeiten übernimmt. Das ist nicht selbstverständlich.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Die Sprecherin muss im Haushalt fast alles alleine machen.", ar:"المتحدثة يجب أن تقوم بكل شيء تقريباً في المنزل وحدها.", story:"أحمد كيدير تقريباً كلشي بوحدو فالدار، ولكن دابا قرر يقسم الأشغال مع الشريكة ديالو باش ما يبقاش عليه كلشي." },
-      { n:2, c:"R", de:"Der Sprecher wäscht das Geschirr und die Wäsche.", ar:"المتحدث يغسل الأطباق والملابس.", story:"أحمد كيدير تقريباً كلشي بوحدو فالدار، ولكن دابا قرر يقسم الأشغال مع الشريكة ديالو باش ما يبقاش عليه كلشي." },
-      { n:3, c:"R", de:"Die Sprecherin ist berufstätig und hat keine Zeit für die Hausarbeit.", ar:"المتحدثة عاملة وليس لديها وقت لأعمال المنزل.", story:"أحمد كيدير تقريباً كلشي بوحدو فالدار، ولكن دابا قرر يقسم الأشغال مع الشريكة ديالو باش ما يبقاش عليه كلشي." },
-      { n:4, c:"R", de:"Der Sprecher teilt sich mit seiner Partnerin die Arbeit je nach Situation auf.", ar:"المتحدث يتقاسم العمل مع شريكته حسب الحالة.", story:"أحمد كيدير تقريباً كلشي بوحدو فالدار، ولكن دابا قرر يقسم الأشغال مع الشريكة ديالو باش ما يبقاش عليه كلشي." },
-      { n:5, c:"R", de:"Die Sprecherin ist froh, dass ihr Mann so viele Hausarbeiten übernimmt.", ar:"المتحدثة سعيدة لأن زوجها يتولى الكثير من أعمال المنزل.", story:"أحمد كيدير تقريباً كلشي بوحدو فالدار، ولكن دابا قرر يقسم الأشغال مع الشريكة ديالو باش ما يبقاش عليه كلشي." }
-    ]
-  },
-  {
-    id: "h20", title: "City-Kino", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Die nächste Bahn nach Füssen fährt um 10.55 Uhr ab. Sie haben noch etwas Zeit.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Der Parkplatz ist in der Fortunastraße. Dort können Sie Ihr Auto abstellen.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Im City-Kino werden alte Filme gezeigt. Das ist ein nostalgischer Abend.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Das Zugteam bringt Ihnen Südtiroler Käsespezialitäten an Ihren Platz. Guten Appetit!", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Die Frau hat um 15 Uhr einen Arzttermin. Sie muss pünktlich sein.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Die nächste Bahn nach Füssen fährt um 10.55 Uhr ab.", ar:"القطار التالي إلى فوسن ينطلق الساعة 10:55.", story:"أحمد لقى الباركينغ كاين فـ Fortunastraße، ومن بعد مشى للطبيب حيث كان عندو موعد مع الطبيب مع 3 ديال العشية." },
-      { n:2, c:"R", de:"Der Parkplatz ist in der Fortunastraße.", ar:"موقف السيارات في شارع فورتونا.", story:"أحمد لقى الباركينغ كاين فـ Fortunastraße، ومن بعد مشى للطبيب حيث كان عندو موعد مع الطبيب مع 3 ديال العشية." },
-      { n:3, c:"R", de:"Im City-Kino werden alte Filme gezeigt.", ar:"في سينما سيتي تُعرض أفلام قديمة.", story:"أحمد لقى الباركينغ كاين فـ Fortunastraße، ومن بعد مشى للطبيب حيث كان عندو موعد مع الطبيب مع 3 ديال العشية." },
-      { n:4, c:"R", de:"Das Zugteam bringt Ihnen Südtiroler Käsespezialitäten an Ihren Platz.", ar:"فريق القطار يجلب لك تخصصات جبن جنوب تيرول إلى مقعدك.", story:"أحمد لقى الباركينغ كاين فـ Fortunastraße، ومن بعد مشى للطبيب حيث كان عندو موعد مع الطبيب مع 3 ديال العشية." },
-      { n:5, c:"R", de:"Die Frau hat um 15 Uhr einen Arzttermin.", ar:"المرأة لديها موعد مع الطبيب الساعة 15:00.", story:"أحمد لقى الباركينغ كاين فـ Fortunastraße، ومن بعد مشى للطبيب حيث كان عندو موعد مع الطبيب مع 3 ديال العشية." }
-    ]
-  },
-  {
-    id: "h21", title: "Einkäufe im Internet (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Verstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich erledige alle meine Einkäufe im Internet. Das ist so bequem und ich muss nicht in die Stadt fahren.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich lege beim Einkaufen großen Wert auf persönlichen Kontakt. Ich gehe lieber in ein Geschäft und spreche mit den Verkäufern.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Ich finde zu Hause nicht genug Ruhe, um im Internet einzukaufen. Ständig werde ich unterbrochen.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Ich bin vom Einkaufen im Internet nicht überzeugt. Ich habe Angst vor Betrug und schlechter Qualität.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich kaufe meine Medikamente am liebsten in der nächsten Stadt. Da kann ich mich beraten lassen.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Sprecher erledigt alle seine Einkäufe im Internet.", ar:"المتحدث يقضي جميع مشترياته عبر الإنترنت.", story:"كريم كيقضي كاع التقديات ديالو فالإنترنت، ولكن ختو ما كتلقاش فالدار الهدوء الكافي باش تشري من الإنترنت." },
-      { n:2, c:"R", de:"Die Sprecherin legt beim Einkaufen großen Wert auf persönlichen Kontakt.", ar:"المتحدثة تعطي قيمة كبيرة للتواصل الشخصي عند التسوق.", story:"كريم كيقضي كاع التقديات ديالو فالإنترنت، ولكن ختو ما كتلقاش فالدار الهدوء الكافي باش تشري من الإنترنت." },
-      { n:3, c:"R", de:"Die Sprecherin findet zu Hause nicht genug Ruhe, um im Internet einzukaufen.", ar:"المتحدثة لا تجد الهدوء الكافي في المنزل للتسوق عبر الإنترنت.", story:"كريم كيقضي كاع التقديات ديالو فالإنترنت، ولكن ختو ما كتلقاش فالدار الهدوء الكافي باش تشري من الإنترنت." },
-      { n:4, c:"R", de:"Die Sprecherin ist vom Einkaufen im Internet nicht überzeugt.", ar:"المتحدثة غير مقتنعة بالتسوق عبر الإنترنت.", story:"كريم كيقضي كاع التقديات ديالو فالإنترنت، ولكن ختو ما كتلقاش فالدار الهدوء الكافي باش تشري من الإنترنت." },
-      { n:5, c:"R", de:"Der Sprecher kauft seine Medikamente am liebsten in der nächsten Stadt.", ar:"المتحدث يفضل شراء أدويته من المدينة القريبة.", story:"كريم كيقضي كاع التقديات ديالو فالإنترنت، ولكن ختو ما كتلقاش فالدار الهدوء الكافي باش تشري من الإنترنت." }
-    ]
-  },
-  {
-    id: "h22", title: "Radwege (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich sehe in Radwegen klare Vorteile. Sie machen das Radfahren sicherer und fördern die Gesundheit.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich wünsche mir mehr Radwege in meiner Stadt. Das würde den Verkehr entlasten.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Ich halte Radwege für überflüssig. Fahrradfahrer können auch auf der Straße fahren.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Ich bin der Meinung, dass Radfahrer auf der Straße den Verkehr behindern. Sie sind oft langsam.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich finde, dass Radwege das Radfahren sicherer machen. Besonders für Kinder ist das wichtig.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Sprecher sieht in Radwegen klare Vorteile", ar:"المتحدث يرى في مسارات الدراجات مزايا واضحة.", story:"حميد كيشوف بلي طرقان البيسكليت فيهم فوايد واضحة، حيت مالين البيسكليتات فالشارع كيعرقلو السير، وهاد الطرقان كيخليو الركوب ديال البيسكليت آمن كثر." },
-      { n:2, c:"R", de:"Die Sprecherin wünscht sich mehr Radwege in ihrer Stadt.", ar:"المتحدثة تتمنى المزيد من مسارات الدراجات في مدينتها.", story:"حميد كيشوف بلي طرقان البيسكليت فيهم فوايد واضحة، حيت مالين البيسكليتات فالشارع كيعرقلو السير، وهاد الطرقان كيخليو الركوب ديال البيسكليت آمن كثر." },
-      { n:3, c:"F", de:"Die Sprecherin hält Radwege für überflüssig.", ar:"المتحدثة تعتبر مسارات الدراجات غير ضرورية.", story:"حميد كيشوف بلي طرقان البيسكليت فيهم فوايد واضحة، حيت مالين البيسكليتات فالشارع كيعرقلو السير، وهاد الطرقان كيخليو الركوب ديال البيسكليت آمن كثر." },
-      { n:4, c:"R", de:"Der Sprecher ist der Meinung, dass Radfahrer auf der Straße den Verkehr behindern.", ar:"المتحدث يرى أن راكبي الدراجات على الطريق يعيقون حركة المرور.", story:"حميد كيشوف بلي طرقان البيسكليت فيهم فوايد واضحة، حيت مالين البيسكليتات فالشارع كيعرقلو السير، وهاد الطرقان كيخليو الركوب ديال البيسكليت آمن كثر." },
-      { n:5, c:"R", de:"Der Sprecher findet, dass Radwege das Radfahren sicherer machen.", ar:"المتحدث يرى أن مسارات الدراجات تجعل ركوب الدراجات أكثر أماناً.", story:"حميد كيشوف بلي طرقان البيسكليت فيهم فوايد واضحة، حيت مالين البيسكليتات فالشارع كيعرقلو السير، وهاد الطرقان كيخليو الركوب ديال البيسكليت آمن كثر." }
-    ]
-  },
-  {
-    id: "h23", title: "Kinder in der Schule (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Für die Sprecherin steht der schulische Erfolg ihrer Kinder nicht an erster Stelle. Wichtiger ist, dass sie sich gut entwickeln.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Die Sprecherin ist immer für ihre Kinder da. Sie unterstützt sie, egal was passiert.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Die Sprecherin glaubt nicht, dass sie mehr mit ihrer Tochter sprechen müsste. Sie verstehen sich gut.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Der Sprecher achtet sehr auf die Ernährung seiner Kinder. Sie sollen gesund aufwachsen.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Der Sprecher möchte, dass sein Kind die eigenen Ideen realisieren kann. Das ist ihm wichtig.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Für die Sprecherin steht der schulische Erfolg ihrer Kinder nicht an erster Stelle.", ar:"بالنسبة للمتحدثة، النجاح المدرسي لأطفالها ليس في المقام الأول.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:2, c:"R", de:"Die Sprecherin ist immer für ihre Kinder da.", ar:"المتحدثة دائماً موجودة من أجل أطفالها.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:3, c:"F", de:"Die Sprecherin glaubt, dass sie mehr mit ihrer Tochter sprechen müsste.", ar:"المتحدثة تعتقد أنه يجب عليها التحدث أكثر مع ابنتها.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:4, c:"R", de:"Der Sprecher achtet sehr auf die Ernährung seiner Kinder.", ar:"المتحدث يهتم كثيراً بتغذية أطفاله.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:5, c:"R", de:"Der Sprecher möchte, dass sein Kind die eigenen Ideen realisieren kann.", ar:"المتحدث يريد أن يتمكن طفله من تحقيق أفكاره الخاصة.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." }
-    ]
-  },
-  {
-    id: "h24", title: "Urlaub (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Ich bin als Kind mit meiner Familie nie in Urlaub gefahren. Wir hatten einfach kein Geld dafür.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Ich hatte als Kind andere Urlaubswünsche als meine Eltern. Ich wollte unbedingt ans Meer.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Die Sprecherin fand die Fahrt in die Ferien immer aufregend. Es war ein Abenteuer.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Die Sprecherin hat immer mit ihren Eltern Urlaub gemacht. Das war schön.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Ich habe den Urlaub mit den Eltern gemeinsam geplant. Wir haben zusammen entschieden.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Der Sprecher ist als Kind mit seiner Familie nie in Urlaub gefahren.", ar:"المتحدث لم يسافر مع عائلته في عطلة عندما كان طفلاً.", story:"كريم عمره ما سافر فالعطلة مع العائلة، والولد عندو رغبات أخرى بالنسبة للعطلة، ولكن الوالدين باغين يقضيو العطلة مع أولادهم باش يفرحو كاملين." },
-      { n:2, c:"R", de:"Der Sprecher hatte als Kind andere Urlaubswünsche als seine Eltern.", ar:"كان لدى المتحدث رغبات عطلة مختلفة عن والديه عندما كان طفلاً.", story:"كريم عمره ما سافر فالعطلة مع العائلة، والولد عندو رغبات أخرى بالنسبة للعطلة، ولكن الوالدين باغين يقضيو العطلة مع أولادهم باش يفرحو كاملين." },
-      { n:3, c:"F", de:"Die Sprecherin fand die Fahrt in die Ferien immer aufregend.", ar:"كانت المتحدثة تجد الرحلة إلى العطلة مثيرة دائماً.", story:"كريم عمره ما سافر فالعطلة مع العائلة، والولد عندو رغبات أخرى بالنسبة للعطلة، ولكن الوالدين باغين يقضيو العطلة مع أولادهم باش يفرحو كاملين." },
-      { n:4, c:"F", de:"Die Sprecherin hat immer mit ihren Eltern Urlaub gemacht.", ar:"كانت المتحدثة تذهب دائماً في عطلة مع والديها.", story:"كريم عمره ما سافر فالعطلة مع العائلة، والولد عندو رغبات أخرى بالنسبة للعطلة، ولكن الوالدين باغين يقضيو العطلة مع أولادهم باش يفرحو كاملين." },
-      { n:5, c:"R", de:"Der Sprecher hat den Urlaub mit den Eltern gemeinsam geplant.", ar:"خطط المتحدث للعطلة مع والديه معاً.", story:"كريم عمره ما سافر فالعطلة مع العائلة، والولد عندو رغبات أخرى بالنسبة للعطلة، ولكن الوالدين باغين يقضيو العطلة مع أولادهم باش يفرحو كاملين." }
-    ]
-  },
-  {
-    id: "h25", title: "Einzelkind (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Die Sprecherin muss sich oft um ihre Geschwister kümmern. Das ist manchmal anstrengend.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Der Sprecher hat heute ein gutes Verhältnis zu seinem Bruder. Sie helfen sich gegenseitig.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Die Sprecherin wünscht sich, dass ihre Eltern mehr mit ihr unternehmen. Sie fühlt sich manchmal vernachlässigt.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Die Sprecherin wäre gerne Einzelkind. Dann hätte sie mehr Aufmerksamkeit.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Die Sprecherin verbringt nicht gerne Zeit mit ihrem Bruder. Sie findet ihn oft nervig.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Die Sprecherin muss sich oft um ihre Geschwister kümmern.", ar:"المتحدثة يجب أن تعتني بأشقائها كثيراً.", story:"عمر عندو علاقة زوينة مع خوه، ولكن ختو ما كتحبش تدوز الوقت مع خوها، وكتتمنى أن الوالدين يدوزو معاها وقت أكثر باش متحسش بالإهمال." },
-      { n:2, c:"R", de:"Der Sprecher hat heute ein gutes Verhältnis zu seinem Bruder.", ar:"المتحدث لديه علاقة جيدة بأخيه اليوم.", story:"عمر عندو علاقة زوينة مع خوه، ولكن ختو ما كتحبش تدوز الوقت مع خوها، وكتتمنى أن الوالدين يدوزو معاها وقت أكثر باش متحسش بالإهمال." },
-      { n:3, c:"R", de:"Die Sprecherin wünscht sich, dass ihre Eltern mehr mit ihr unternehmen.", ar:"تتمنى المتحدثة أن يقوم والداها بالمزيد من الأنشطة معها.", story:"عمر عندو علاقة زوينة مع خوه، ولكن ختو ما كتحبش تدوز الوقت مع خوها، وكتتمنى أن الوالدين يدوزو معاها وقت أكثر باش متحسش بالإهمال." },
-      { n:4, c:"F", de:"Die Sprecherin wäre gerne Einzelkind.", ar:"المتحدثة تود أن تكون طفلة وحيدة.", story:"عمر عندو علاقة زوينة مع خوه، ولكن ختو ما كتحبش تدوز الوقت مع خوها، وكتتمنى أن الوالدين يدوزو معاها وقت أكثر باش متحسش بالإهمال." },
-      { n:5, c:"R", de:"Die Sprecherin verbringt nicht gerne Zeit mit ihrem Bruder.", ar:"المتحدثة لا تحب قضاء الوقت مع أخيها.", story:"عمر عندو علاقة زوينة مع خوه، ولكن ختو ما كتحبش تدوز الوقت مع خوها، وكتتمنى أن الوالدين يدوزو معاها وقت أكثر باش متحسش بالإهمال." }
-    ]
-  },
-  {
-    id: "h26", title: "Kinder in der Schule (Kinder / Stelle) (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
-    audio: [
-      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
-      { text: "Für die Sprecherin steht der schulische Erfolg ihrer Kinder nicht an erster Stelle. Wichtiger ist, dass sie sich gut entwickeln.", pitch: 1.1, rate: 1.0 },
-      { text: "Nummer 42. Die Sprecherin ist immer für ihre Kinder da. Sie unterstützt sie, egal was passiert.", pitch: 0.9, rate: 1.0 },
-      { text: "Nummer 43. Die Sprecherin glaubt nicht, dass sie mehr mit ihrer Tochter sprechen müsste. Sie verstehen sich gut.", pitch: 1.2, rate: 1.0 },
-      { text: "Nummer 44. Der Sprecher achtet sehr auf die Ernährung seiner Kinder. Sie sollen gesund aufwachsen.", pitch: 0.85, rate: 1.0 },
-      { text: "Nummer 45. Der Sprecher möchte, dass sein Kind die eigenen Ideen realisieren kann. Das ist ihm wichtig.", pitch: 1.05, rate: 1.0 }
-    ],
-    items: [
-      { n:1, c:"R", de:"Für die Sprecherin steht der schulische Erfolg ihrer Kinder nicht an erster Stelle.", ar:"بالنسبة للمتحدثة، النجاح المدرسي لأطفالها ليس في المقام الأول.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:2, c:"R", de:"Die Sprecherin ist immer für ihre Kinder da.", ar:"المتحدثة دائماً موجودة من أجل أطفالها.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:3, c:"F", de:"Die Sprecherin glaubt, dass sie mehr mit ihrer Tochter sprechen müsste.", ar:"المتحدثة تعتقد أنه يجب عليها التحدث أكثر مع ابنتها.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:4, c:"R", de:"Der Sprecher achtet sehr auf die Ernährung seiner Kinder.", ar:"المتحدث يهتم كثيراً بتغذية أطفاله.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." },
-      { n:5, c:"R", de:"Der Sprecher möchte, dass sein Kind die eigenen Ideen realisieren kann.", ar:"المتحدث يريد أن يتمكن طفله من تحقيق أفكاره الخاصة.", story:"الأب ديما كيكون حاضر مع ولادو، وكيهتم بالتغذية ديالهم باش يبقاو بصحة مزيانة، وفنفس الوقت كيشجع كل طفل يحقق الأفكار ديالو." }
-    ]
-  }
-];
 
-const globalTransCache = {};
-
-function AutoTrans({ text, lang, force = false }) {
-  const [translated, setTranslated] = useState(text);
-  
-  useEffect(() => {
-    if (!text) return;
-    if (!force && ['ar', 'ma', 'en', 'fr', 'de'].includes(lang)) {
-      setTranslated(text);
-      return;
-    }
-    
-    const cacheKey = `${lang}_${text}`;
-    if (globalTransCache[cacheKey]) {
-      setTranslated(globalTransCache[cacheKey]);
-      return;
-    }
-
-    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data && data[0]) {
-          const result = data[0].map(item => item[0]).join('');
-          globalTransCache[cacheKey] = result;
-          setTranslated(result);
-        }
-      })
-      .catch(() => setTranslated(text));
-  }, [text, lang, force]);
-
-  return <span>{translated}</span>;
-}
-
-function SmartTrans({ obj, lang }) {
-  if (!obj) return "";
-  const textDe = obj.de || obj.en || (obj.q ? obj.q : "") || (typeof obj === 'string' ? obj : "");
-  
-  if (typeof obj === 'object' && obj[lang]) {
-    return <span>{obj[lang]}</span>;
-  }
-  
-  if (['ar', 'ma', 'en', 'fr'].includes(lang)) {
-     return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
-  }
-
-  return <AutoTrans text={textDe} lang={lang} />;
-}
-
-function HorenCard({ exam, userLang, showTranslation }) {
-  const [ans, setAns] = useState({});
-  const [done, setDone] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [showStory, setShowStory] = useState(false);
-  const [audioTime, setAudioTime] = useState(0);
-  const audioInterval = useRef(null);
-
-  const pts = 5;
-  const total = exam.items.length * pts;
-  const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
-
-  useEffect(() => {
-    return () => {
-      clearInterval(audioInterval.current);
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
-    };
-  }, []);
-
-  const playHorenAudio = (segments) => {
-    if (!window.speechSynthesis) {
-      alert("المتصفح ديالك ماكيدعمش النطق الصوتي.");
-      setIsPlaying(false);
-      return;
-    }
-    window.speechSynthesis.cancel();
-    let currentIndex = 0;
-
-    const playNext = () => {
-      if (currentIndex >= segments.length) {
-        setIsPlaying(false);
-        clearInterval(audioInterval.current);
-        return;
-      }
-      const segment = segments[currentIndex];
-      const utterance = new SpeechSynthesisUtterance(segment.text);
-      utterance.lang = 'de-DE';
-      utterance.pitch = segment.pitch || 1;
-      utterance.rate = segment.rate || 1;
-      utterance.onend = () => {
-        currentIndex++;
-        setTimeout(playNext, 500);
-      };
-      utterance.onerror = () => {
-        setIsPlaying(false);
-        clearInterval(audioInterval.current);
-      };
-      window.speechSynthesis.speak(utterance);
-    };
-    playNext();
-  };
-
-  const toggleAudio = () => {
-    if (isPlaying) {
-      window.speechSynthesis.cancel();
-      clearInterval(audioInterval.current);
-      setIsPlaying(false);
-      return;
-    }
-    setIsPlaying(true);
-    setAudioTime(0);
-    audioInterval.current = setInterval(() => {
-      setAudioTime(prev => prev + 1);
-    }, 1000);
-    playHorenAudio(exam.audio);
-  };
-
-  const pickHoren = (n, c) => {
-    if (done) return;
-    setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c }));
-  };
-
-  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : userLang === 'hi' ? "सही" : "";
-  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : userLang === 'hi' ? "गलत" : "";
-
-  return (
-    <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
-      <h3 className="de" style={{ fontSize: "1.3em", fontWeight: 900, margin: "0 0 16px", color: "var(--ink)" }}>
-        {exam.title}
-      </h3>
-
-      <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
-        <button onClick={toggleAudio} style={{
-          width: 56, height: 56, borderRadius: "50%", flexShrink: 0,
-          background: isPlaying ? "var(--red)" : "#22C55E", color: "#FFF",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: "0 8px 20px rgba(34, 197, 94, 0.3)", transition: "all 0.2s"
-        }}>
-          {isPlaying ? <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg> : <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>}
-        </button>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, color: "var(--muted)", fontSize: "0.9em", marginBottom: 6 }}>
-            <span style={{ color: isPlaying ? "var(--red)" : "var(--ink)", direction: 'ltr' }}>{Math.floor(audioTime / 60)}:{(audioTime % 60).toString().padStart(2, '0')}</span>
-            <span>Audio Player</span>
-          </div>
-          <div style={{ height: 8, background: "var(--line)", borderRadius: 99, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: isPlaying ? "var(--red)" : "#22C55E", transition: isPlaying ? "width 60s linear" : "none" }} />
-          </div>
-        </div>
-      </div>
-
-      <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
-        <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
-          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '1.3em' }}>R</span>
-            {labelR && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelR}</span>}
-          </div>
-          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '1.3em' }}>F</span>
-            {labelF && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelF}</span>}
-          </div>
-          <div style={{ flex: 1, paddingLeft: 10, display: 'flex', alignItems: 'center' }}>AUSSAGE</div>
-        </div>
-        {exam.items.map((it) => {
-          const isRight = ans[it.n] === "R";
-          const isFalsch = ans[it.n] === "F";
-          const isCorrect = ans[it.n] === it.c;
-          
-          let rClass = "rf-circle", fClass = "rf-circle";
-          
-          if (done) {
-            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad"; else rClass += " faded";
-            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad"; else fClass += " faded";
-          } else {
-            if (isRight) rClass += " sel";
-            if (isFalsch) fClass += " sel";
-          }
-          
-          let rowBg = "var(--card)";
-          if (done) {
-            rowBg = isCorrect ? "var(--okbg)" : "var(--badbg)";
-          }
-          
-          return (
-            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "12px 0", background: rowBg }}>
-              <div style={{ width: 60, display: "flex", justifyContent: "center" }}>
-                <div className={rClass} onClick={() => pickHoren(it.n, "R")}></div>
-              </div>
-              <div style={{ width: 60, display: "flex", justifyContent: "center" }}>
-                <div className={fClass} onClick={() => pickHoren(it.n, "F")}></div>
-              </div>
-              <div style={{ flex: 1, fontSize: "0.95em", lineHeight: 1.6, paddingRight: 10 }}>
-                <span style={{ opacity: 0.5, marginLeft: 8, fontWeight: 900 }}>{it.n}</span>
-                <span className="de">{it.de}</span>
-                {showTranslation && (
-                  <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : "rtl", textAlign: userLang === 'hi' ? 'left' : "right" }}>
-                    <SmartTrans obj={it} lang={userLang} />
-                  </div>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--blue)", fontWeight: 800, background: "rgba(37, 99, 235, 0.1)", padding: "10px 16px", borderRadius: 12 }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          {t("story_memo", userLang)}
-        </button>
-        <div style={{ display: "flex", gap: 10 }}>
-          {!done ? (
-            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)" }}>{t("check_btn", userLang)}</button>
-          ) : (
-            <div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / {total}</div>
-          )}
-        </div>
-      </div>
-      {showStory && (
-        <div className="t2-ar" style={{ marginTop: 16 }}>
-          {userLang === 'ar' || userLang === 'ma' ? exam.items[0].story : (
-            <AutoTrans text={exam.items[0].story} lang={userLang} force={true} />
-          )}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function HorenGateway({ onStart, userLang }) {
-  return (
-    <div style={{ paddingBottom: 100 }}>
-      <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px", textAlign: "center" }}>Hören</h1>
-      <div className="horen-gateway-card">
-        <div className="horen-gateway-icon">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
-        </div>
-        <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>{t("listen_title", userLang)}</h2>
-        <p style={{ color: "var(--muted)", fontSize: "1em", margin: 0, lineHeight: 1.6 }}>
-          {t("listen_desc", userLang)}
-        </p>
-        <button className="horen-start-btn" onClick={onStart}>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
-          {t("start_now", userLang)}
-        </button>
-      </div>
-    </div>
-  );
-}
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
@@ -2689,7 +1944,6 @@ function SchreibenView({ userLang, dark, setDark }) {
   );
 }
 
-// ✅ NOTIFICATIONS BELL (جديد)
 function NotificationsBell({ userLang }) {
   const [notifs, setNotifs] = useState([]);
   const [open, setOpen] = useState(false);
@@ -2776,7 +2030,6 @@ function NotificationsBell({ userLang }) {
   );
 }
 
-// ✅ ADMIN PANEL (محسّن)
 function AdminPanel({ userLang, onClose }) {
   const [users, setUsers] = useState([]);
   const [notifs, setNotifs] = useState([]);
@@ -3070,7 +2323,6 @@ function App() {
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
   
-  // ✅ handleAuth FIXED with upsert
   const handleAuth = async (e) => {
     e.preventDefault();
     const uniqueName = e.target.unique_name.value.trim();
