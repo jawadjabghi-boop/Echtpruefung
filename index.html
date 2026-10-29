@@ -1,4 +1,4 @@
-12027
+01
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="html-root">
 <head>
@@ -112,8 +112,8 @@
   .dark .menu-item:hover, .dark .menu-item.active { background: #333; color: var(--gold); border-right-color: var(--gold); }
   .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
   .menu-overlay.active { display: block; }
-  
-  /* Updated Floating Buttons */
+
+  /* ✅ Floating Bar — Updated Blue Buttons */
   .bottom-bar { 
     position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
     display: flex; align-items: center; justify-content: space-between; gap: 10px; 
@@ -150,7 +150,7 @@
 
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
-const WA = "212600000000"; 
+const WA = "212600000000";
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
 const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
@@ -197,7 +197,14 @@ const UI_TEXTS = {
 };
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
+// ============================================================
+// الجزء 2: SCHREIBEN_DATA (36 درس) + EXAMS (Lesen)
+// ============================================================
+
 const SCHREIBEN_DATA = [
+  // ============================================================
+  // الدرس 1: Urlaub Im Schwarzwald — كامل، مجاني
+  // ============================================================
   {
     id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
     text: `Liebe(r).......\n\nIch habe eine tolle Überraschung. stelle dir vor, was mir mein Onkel angeboten hat. Er rief mich am Samstag an. Er hat ein großes Ferienhaus im Schwarzwald. Das Haus kann ich für die Ferien kostenlos haben. Ich kann auch Freunde mitbringen! Wäre das nichts für uns? Wir könnten uns alle dort treffen. Du, deine Eltern und Freunde, und ich mit meiner Familie und meinen Freunden. Ich würde mich wahnsinnig freuen, wenn das klappen würde. Bitte schreibe mir so schnell du kannst, damit wir alles planen können. Urlaub im Schwarzwald - das wird traumhaft schön!\n\nHerzliche Grüße\nPetra`,
@@ -219,6 +226,10 @@ const SCHREIBEN_DATA = [
       hi: ["(1) आप जर्मनी क्यों आना चाहेंगे।", "(2) आप कैसे यात्रा करना चाहते हैं।", "(3) आप एक साथ क्या कर सकते हैं।", "(4) आप किसे लाना चाहते हैं।"]
     }
   },
+
+  // ============================================================
+  // الدرس 2: Eva — كامل، مجاني
+  // ============================================================
   {
     id: "sch2", title: "Eva - Traumberuf Und Neuigkeiten", level: "B1",
     text: `Liebe(r).......\n\nwie geht es denn so mit dem Deutsch lernen? Kommst du gut voran, und was machst du im Moment so? Stell dir vor, ich habe die neue Stelle bei der Zeitschrift VIA bekommen! ich arbeite jetzt als Journalistin, und das war ja immer mein Traumberuf!\n\nVIA wird vor allem von jüngeren Leuten gelesen. Deshalb schreiben wir viel über Berufe und Ausbildungen und auch über Freizeit und Sport. Für die nächsten Hefte von VIA planen wir jetzt eine neue Serie über Berufs wünsche. Was ist eigentlich dein Traumberuf? Wenn du möchtest, schicke ich dir gerne einmal ein Gratisheft von VIA, damit du siehst, was ich so mache.\n\nIch freue mich schon auf deine Antwort.\n\nHerzliche Grüße\nEva`,
@@ -240,6 +251,10 @@ const SCHREIBEN_DATA = [
       hi: ["(1) जर्मन सीखने में प्रगति।", "(2) ईवा की नई नौकरी पर प्रतिक्रिया दें।", "(3) आपके यहाँ क्या नया है।", "(4) आपका सपनों का काम।"]
     }
   },
+
+  // ============================================================
+  // الدرس 3: TIKKI TAKKA — كامل، مجاني
+  // ============================================================
   {
     id: "sch3", title: "TIKKI TAKKA - Beschwerde", level: "B2",
     text: `Das Party-Abenteuer für Kinder!\nErleben Sie spannende Kinder-Partys mit TIKKI TAKKA!\n\n• Abenteuerliche Spiele und lustige Party-Animation\n• Spaßige Schatzsuchen & spannende Entdeckungsreisen\n• Zauberer, Clowns & Kinderschminken\n• Tolle Party-Pakete für unvergessliche Erlebnisse\nTOLLE AKTIONSPREISE!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nSie haben bei der Firma Abenteuer TIKKI TAKKA eine Schatzsuche für den Geburtstag Ihres Kindes gebucht. Trotz günstiger Preise war die Geburtstagsfeier nicht so schön wie erwartet und Sie sind nicht damit zufrieden. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.`,
@@ -261,41 +276,434 @@ const SCHREIBEN_DATA = [
       hi: ["(1) आप किस ऑफर से संतुष्ट नहीं थे?", "(2) समझाएं कि ऑफर ने उत्साह क्यों नहीं दिया।", "(3) सुधार के लिए सुझाव: आपकी राय में TIKKI TAKKA क्या बेहतर कर सकता था?"]
     }
   },
-  // ========== دروس الكتابة الجديدة (Premium Empty Templates) ==========
-  { id: "sch4", title: "Sophie - Würzburg Und Freizeit", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch5", title: "Nadja - Garten Am Stadtrand", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch6", title: "Nicole - Probleme Mit Dem Bruder", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch7", title: "Andreas - Neuer Kollege Und Büroalltag", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch8", title: "Annika - Gemeinsamer Sommerurlaub", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch9", title: "Iris - Abschlussparty Organisieren", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch10", title: "Caroline - Gastschülerin Aus Marokko", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch11", title: "Vera - Arbeitsweg Und Neue Stelle", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch12", title: "Jennifer - Einladung Zur Hochzeit", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch13", title: "Andreas - Neue Wohnung Und Computer", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch14", title: "Thomas - Überraschungsausflug", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch15", title: "Tamara - Treffen Und Neuer Job", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch16", title: "Jan - Urlaub In Rom", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch17", title: "Viktor - Urlaub In Malta", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch18", title: "Anna - Katze Und Blumen", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch19", title: "Nora - Neue Wohnung Und Leute Kennenlernen", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch20", title: "Claudia - Zoobesuch Und Geburtstag", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch21", title: "Karla - Umzug Und Neue Arbeit", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch22", title: "Mara - Reise Und Neuer Freund", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch23", title: "Annika - Gemeinsamer Urlaub (Teil 2)", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch24", title: "Sonja - Musikfestival", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch25", title: "Rita - Hochzeit Und Neuigkeiten", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch26", title: "Anne - Laras Geburtstag", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch27", title: "Paul - Ausflug In Die Berge", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch28", title: "Jakob - Nachbarn Und Wohnung", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch29", title: "Emilia", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch30", title: "Tobias", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch31", title: "Naco", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch32", title: "Alicia", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch33", title: "Cora Und Alex", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch34", title: "Miroslav", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch35", title: "Corinna", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch36", title: "Moritz", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} }
+
+  // ============================================================
+  // الدروس 4-36: Premium Skeletons (33 درس)
+  // ============================================================
+  ...([
+    "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand", "Nicole - Probleme Mit Dem Bruder",
+    "Andreas - Neuer Kollege Und Büroalltag", "Annika - Gemeinsamer Sommerurlaub",
+    "Iris - Abschlussparty Organisieren", "Caroline - Gastschülerin Aus Marokko",
+    "Vera - Arbeitsweg Und Neue Stelle", "Jennifer - Einladung Zur Hochzeit",
+    "Andreas - Neue Wohnung Und Computer", "Thomas - Überraschungsausflug",
+    "Tamara - Treffen Und Neuer Job", "Jan - Urlaub In Rom", "Viktor - Urlaub In Malta",
+    "Anna - Katze Und Blumen", "Nora - Neue Wohnung Und Leute Kennenlernen",
+    "Claudia - Zoobesuch Und Geburtstag", "Karla - Umzug Und Neue Arbeit",
+    "Mara - Reise Und Neuer Freund", "Annika - Gemeinsamer Urlaub (Teil 2)",
+    "Sonja - Musikfestival", "Rita - Hochzeit Und Neuigkeiten", "Anne - Laras Geburtstag",
+    "Paul - Ausflug In Die Berge", "Jakob - Nachbarn Und Wohnung", "Emilia", "Tobias",
+    "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
+  ].map((title, i) => ({
+    id: `sch${i + 4}`,
+    title,
+    level: "B1",
+    isPremium: true,
+    text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {}
+  }))
 ];
+
+// ============================================================
+// EXAMS — دروس القراءة (Lesen)
+// ============================================================
+
+const EXAMS = [
+  // ============================================================
+  // ALEX — 5 أجزاء كاملة
+  // ============================================================
+  {
+    id: "alex-t1", title: "Alex", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
+    options: [
+      { k: "a", de: "Ein Wochenendausflug mit dem Fahrrad", ar: "رحلة نهاية أسبوع بالدراجة", ma: "خرجة نهاية السيمانة بالبيكالا", en: "A weekend trip by bike", fr: "Une excursion à vélo le week-end" },
+      { k: "b", de: "Neue Arbeitsstelle in einer anderen Stadt", ar: "وظيفة جديدة في مدينة أخرى", ma: "خدمة جديدة ف مدينة أخرى", en: "New job in another city", fr: "Nouvel emploi dans une autre ville" },
+      { k: "c", de: "Ein Umzug in die eigene Wohnung", ar: "الانتقال إلى شقة خاصة", ma: "الانتقال لدار بوحدها", en: "Moving into your own apartment", fr: "Déménagement dans son propre appartement" },
+      { k: "d", de: "Ein Sprachkurs für Anfänger", ar: "دورة لغة للمبتدئين", ma: "دورة اللغة للمبتدئين", en: "A language course for beginners", fr: "Un cours de langue pour débutants" },
+      { k: "e", de: "Ein Wochenende mit der Familie verbringen", ar: "قضاء نهاية الأسبوع مع العائلة", ma: "تعدي نهاية السيمانة مع العائلة", en: "Spending a weekend with family", fr: "Passer un week-end en famille" }
+    ],
+    items: [
+      { n: 1, c: "b", de: "Alex ist letzte Woche in eine neue Stadt gezogen, weil er dort einen Job als Informatiker gefunden hat.", ar: "انتقل أليكس الأسبوع الماضي إلى مدينة جديدة لأنه وجد وظيفة كمبرمج هناك.", ma: "أليكس انتقل السيمانة اللي فاتت ل مدينة جديدة حيت لقى خدمة كمبرمج تما.", en: "Alex moved to a new city last week because he found a job as a computer scientist there.", fr: "Alex a déménagé dans une nouvelle ville la semaine dernière parce qu'il y a trouvé un emploi d'informaticien." },
+      { n: 2, c: "c", de: "Nach langem Suchen hat Alex endlich eine eigene Wohnung gefunden. Sie liegt im dritten Stock und hat einen großen Balkon.", ar: "بعد بحث طويل، وجد أليكس أخيراً شقة خاصة به. تقع في الطابق الثالث ولها شرفة كبيرة.", ma: "من بعد قلب طويل، لقى أليكس أخيراً دار بوحدو. كاينة ف الطابق الثالث وفيها بالكون كبير.", en: "After a long search, Alex has finally found his own apartment. It's on the third floor and has a large balcony.", fr: "Après de longues recherches, Alex a enfin trouvé son propre appartement. Il est au troisième étage et dispose d'un grand balcon." },
+      { n: 3, c: "a", de: "Am Wochenende möchte Alex mit seinen neuen Kollegen eine Radtour machen. Sie fahren an einem See und durch einen Park.", ar: "في نهاية الأسبوع، يريد أليكس القيام بجولة بالدراجة مع زملائه الجدد. سيمرون ببحيرة وعبر حديقة.", ma: "ف نهاية السيمانة، أليكس باغي يدير جولة بالبيكالا مع الزملاء الجدد ديالو. غادي يدوزو على بحيرة وعلى حديقة.", en: "At the weekend, Alex wants to go on a bike tour with his new colleagues. They will ride past a lake and through a park.", fr: "Le week-end, Alex aimerait faire une sortie à vélo avec ses nouveaux collègues. Ils passeront devant un lac et à travers un parc." },
+      { n: 4, c: "d", de: "Alex möchte eine neue Sprache lernen und sucht einen Kurs, der am Abend stattfindet und nicht zu teuer ist.", ar: "يريد أليكس تعلم لغة جديدة ويبحث عن دورة تُعقد في المساء وليست غالية جداً.", ma: "أليكس باغي يتعلم لغة جديدة وكيقلب على دورة كتكون ف العشية وماشي غالية بزاف.", en: "Alex wants to learn a new language and is looking for a course that takes place in the evening and isn't too expensive.", fr: "Alex souhaite apprendre une nouvelle langue et cherche un cours qui a lieu le soir et qui n'est pas trop cher." },
+      { n: 5, c: "e", de: "Am nächsten Wochenende kommen Alex' Eltern zu Besuch. Er plant ein gemeinsames Essen und einen Ausflug in die Berge.", ar: "في نهاية الأسبوع القادم سيأتي والدا أليكس للزيارة. يخطط لتناول طعام معاً ورحلة إلى الجبال.", ma: "ف نهاية السيمانة الجاية غادي يجيو الوالدين ديال أليكس للزيارة. كيخطط لماكلة مشتركة وخرجة للجبال.", en: "Next weekend, Alex's parents are coming to visit. He is planning a meal together and a trip to the mountains.", fr: "Le week-end prochain, les parents d'Alex viennent en visite. Il prévoit un repas ensemble et une excursion en montagne." }
+    ]
+  },
+  {
+    id: "alex-t2", title: "Alex", level: "B1", sub: "Teile 2", type: "mcq", isPremium: false,
+    paragraphs: [
+      { de: "Alex ist 28 Jahre alt und arbeitet seit zwei Wochen in einem großen Softwareunternehmen in München. Früher hat er in Hamburg gewohnt, aber der neue Job hat ihn zum Umzug bewegt. Am Anfang war es nicht einfach, weil er niemanden kannte und sich oft allein fühlte.", ar: "أليكس يبلغ 28 عاماً ويعمل منذ أسبوعين في شركة برمجيات كبيرة في ميونخ. سابقاً كان يعيش في هامبورغ، لكن الوظيفة الجديدة دفعته للانتقال. في البداية لم يكن الأمر سهلاً لأنه لم يكن يعرف أحداً وغالباً ما كان يشعر بالوحدة.", ma: "أليكس عندو 28 عام وكيخدم من جوج سيمانات ف شركة كبيرة ديال البرمجيات ف ميونخ. قبل كان ساكن ف هامبورغ، ولكن الخدمة الجديدة خلاتو ينتقل. ف البداية ماشي ساهل حيت ما كان يعرف حتى واحد وبزاف ديال المرات كان كيحس بوحدو.", en: "Alex is 28 years old and has been working at a large software company in Munich for two weeks. He used to live in Hamburg, but the new job prompted him to move. At first it wasn't easy because he didn't know anyone and often felt lonely.", fr: "Alex a 28 ans et travaille depuis deux semaines dans une grande entreprise de logiciels à Munich. Il vivait auparavant à Hambourg, mais son nouvel emploi l'a poussé à déménager. Au début, ce n'était pas facile car il ne connaissait personne et se sentait souvent seul." },
+      { de: "Inzwischen hat Alex aber schon einige Kollegen kennengelernt. Besonders gut versteht er sich mit Lisa, die ihm beim Einleben hilft. Sie hat ihm auch Tipps für die Wohnungssuche gegeben. Ohne ihre Hilfe hätte er wahrscheinlich noch länger in einem Hotel wohnen müssen.", ar: "لكن في هذه الأثناء تعرّف أليكس بالفعل على بعض الزملاء. يتفاهم بشكل خاص مع ليزا التي تساعده على التكيف. كما أعطته نصائح للبحث عن شقة. لولا مساعدتها لكان على الأرجح سيضطر للسكن في فندق لفترة أطول.", ma: "ولكن ف هاد الوقت أليكس تعرف على شي زملاء. كيفهم بزاف مع ليزا اللي كتعاونو يتأقلم. حتى هي عطاتو نصائح على البحث على دار. لولا المساعدة ديالها كان على الأرجح غادي يبقى ساكن ف فندق مدة أطول.", en: "In the meantime, Alex has already met some colleagues. He gets along particularly well with Lisa, who helps him settle in. She also gave him tips on finding an apartment. Without her help, he probably would have had to stay in a hotel longer.", fr: "Entre-temps, Alex a déjà rencontré quelques collègues. Il s'entend particulièrement bien avec Lisa, qui l'aide à s'intégrer. Elle lui a aussi donné des conseils pour trouver un appartement. Sans son aide, il aurait probablement dû rester plus longtemps à l'hôtel." },
+      { de: "Neben der Arbeit möchte Alex auch neue Freunde finden. Er hat sich deshalb in einem Sportverein angemeldet. Zweimal pro Woche spielt er jetzt Fußball. Das tut ihm gut, denn nach der Arbeit braucht er Bewegung.", ar: "إلى جانب العمل، يريد أليكس أيضاً تكوين صداقات جديدة. لذلك سجّل في نادٍ رياضي. الآن يلعب كرة القدم مرتين في الأسبوع. هذا مفيد له لأنه يحتاج للحركة بعد العمل.", ma: "بجانب الخدمة، أليكس باغي حتى يلقى صحاب جداد. داكشي علاش سجل ف نادي رياضي. دابا كيلعب الكورة جوج مرات ف السيمانة. هادشي مزيان ليه، حيت من بعد الخدمة كيحتاج الحركة.", en: "Besides work, Alex also wants to make new friends. That's why he signed up at a sports club. He now plays football twice a week. It does him good because he needs exercise after work.", fr: "En plus du travail, Alex souhaite aussi se faire de nouveaux amis. C'est pourquoi il s'est inscrit dans un club de sport. Il joue maintenant au football deux fois par semaine. Cela lui fait du bien car il a besoin de bouger après le travail." }
+    ],
+    items: [
+      { n: 1, c: "A", q: "Warum ist Alex nach München gezogen?", qar: "لماذا انتقل أليكس إلى ميونخ؟", qma: "علاش أليكس انتقل ل ميونخ؟", qen: "Why did Alex move to Munich?", qfr: "Pourquoi Alex a-t-il déménagé à Munich ?",
+        opts: [
+          { k: "A", de: "wegen seiner neuen Arbeitsstelle", ar: "بسبب وظيفته الجديدة", ma: "بسبب الخدمة الجديدة ديالو", en: "because of his new job", fr: "à cause de son nouvel emploi" },
+          { k: "B", de: "um seine Familie zu besuchen", ar: "لزيارة عائلته", ma: "باش يزور العائلة ديالو", en: "to visit his family", fr: "pour rendre visite à sa famille" },
+          { k: "C", de: "um Deutsch zu lernen", ar: "لتعلم الألمانية", ma: "باش يتعلم الألمانية", en: "to learn German", fr: "pour apprendre l'allemand" }
+        ]
+      },
+      { n: 2, c: "B", q: "Wie hat Alex seine neue Wohnung gefunden?", qar: "كيف وجد أليكس شقته الجديدة؟", qma: "كيفاش لقى أليكس الدار الجديدة ديالو؟", qen: "How did Alex find his new apartment?", qfr: "Comment Alex a-t-il trouvé son nouvel appartement ?",
+        opts: [
+          { k: "A", de: "durch eine Zeitungsanzeige", ar: "من خلال إعلان في الجريدة", ma: "من خلال إعلان ف الجرنان", en: "through a newspaper ad", fr: "grâce à une annonce dans le journal" },
+          { k: "B", de: "mit Hilfe einer Kollegin", ar: "بمساعدة زميلة", ma: "بمساعدة زميلة", en: "with the help of a colleague", fr: "avec l'aide d'une collègue" },
+          { k: "C", de: "über eine Immobilienfirma", ar: "عبر شركة عقارية", ma: "عبر شركة عقارية", en: "through a real estate company", fr: "par l'intermédiaire d'une agence immobilière" }
+        ]
+      },
+      { n: 3, c: "A", q: "Was macht Alex in seiner Freizeit?", qar: "ماذا يفعل أليكس في وقت فراغه؟", qma: "شنو كيدير أليكس ف وقت الفراغ ديالو؟", qen: "What does Alex do in his free time?", qfr: "Que fait Alex pendant son temps libre ?",
+        opts: [
+          { k: "A", de: "Er spielt Fußball im Verein", ar: "يلعب كرة القدم في النادي", ma: "كيلعب الكورة ف النادي", en: "He plays football at a club", fr: "Il joue au football dans un club" },
+          { k: "B", de: "Er geht jeden Tag schwimmen", ar: "يذهب للسباحة كل يوم", ma: "كيمشي يعوم كل يوم", en: "He goes swimming every day", fr: "Il va nager tous les jours" },
+          { k: "C", de: "Er liest viele Bücher", ar: "يقرأ الكثير من الكتب", ma: "كيقرا بزاف ديال الكتب", en: "He reads a lot of books", fr: "Il lit beaucoup de livres" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "alex-t3", title: "Alex", level: "B1", sub: "Teile 3", type: "matching", isPremium: false,
+    ads: [
+      { k: "A", t: "Sportverein", de: "TSV München e.V. – Fußball, Tennis, Schwimmen. Neumitglieder willkommen! Jeden Dienstag und Donnerstag ab 18 Uhr.", ar: "نادي رياضي – كرة قدم، تنس، سباحة. الأعضاء الجدد مرحب بهم! كل ثلاثاء وخميس من الساعة 18.", ma: "نادي رياضي – كورة، تنس، عوم. الأعضاء الجدد مرحب بيهم! كل ثلاثاء وخميس من 18.", en: "Sports club – football, tennis, swimming. New members welcome! Every Tuesday and Thursday from 6 pm.", fr: "Club de sport – football, tennis, natation. Nouveaux membres bienvenus ! Chaque mardi et jeudi à partir de 18h." },
+      { k: "B", t: "Sprachschule Lingua", de: "Deutsch als Fremdsprache – Abendkurse für Anfänger und Fortgeschrittene. Kleine Gruppen, faire Preise.", ar: "مدرسة لغات – الألمانية كلغة أجنبية – دورات مسائية للمبتدئين والمتقدمين. مجموعات صغيرة، أسعار معقولة.", ma: "مدرسة اللغات – الألمانية كلغة أجنبية – دورات ف العشية للمبتدئين والمتقدمين. مجموعات صغيرة، أثمنة معقولة.", en: "Language school – German as a foreign language – evening courses for beginners and advanced. Small groups, fair prices.", fr: "École de langues – Allemand langue étrangère – cours du soir pour débutants et avancés. Petits groupes, prix raisonnables." },
+      { k: "C", t: "Wohnungsvermittlung Schneider", de: "Suchen Sie eine Wohnung? Wir haben viele Angebote in München und Umgebung. Kostenlose Erstberatung!", ar: "هل تبحث عن شقة؟ لدينا العديد من العروض في ميونخ والمناطق المجاورة. استشارة أولى مجانية!", ma: "كتقلب على دار؟ عندنا بزاف ديال العروض ف ميونخ والنواحي. استشارة أولى فابور!", en: "Looking for an apartment? We have many offers in Munich and surroundings. Free initial consultation!", fr: "Vous cherchez un appartement ? Nous avons de nombreuses offres à Munich et dans les environs. Première consultation gratuite !" },
+      { k: "D", t: "Restaurant Bella Italia", de: "Authentische italienische Küche. Familientreffen und Feiern jeder Art. Reservierung empfohlen.", ar: "مطبخ إيطالي أصيل. لقاءات عائلية واحتفالات من كل نوع. يوصى بالحجز.", ma: "مطبخ إيطالي أصيل. لقاءات عائلية وحفلات من كل نوع. كنوصيو بالحجز.", en: "Authentic Italian cuisine. Family gatherings and celebrations of all kinds. Reservation recommended.", fr: "Cuisine italienne authentique. Réunions de famille et fêtes en tout genre. Réservation recommandée." },
+      { k: "E", t: "Fahrradverleih Müller", de: "Tagesausflüge mit dem Rad? Wir verleihen Fahrräder für die ganze Familie. Auch E-Bikes vorhanden.", ar: "رحلات يومية بالدراجة؟ نؤجر دراجات للعائلة بأكملها. تتوفر أيضاً دراجات كهربائية.", ma: "خرجات يومية بالبيكالا؟ كنكريو بيكالات للعائلة كاملة. حتى البيكالات الكهربائية متوفرين.", en: "Day trips by bike? We rent bicycles for the whole family. E-bikes also available.", fr: "Excursions d'une journée à vélo ? Nous louons des vélos pour toute la famille. Vélos électriques également disponibles." },
+      { k: "F", t: "Hotel Sonnenhof", de: "Ruhig gelegenes Hotel am Stadtrand. Ideal für Geschäftsreisen. Wöchentliche und monatliche Tarife.", ar: "فندق هادئ على أطراف المدينة. مثالي لرحلات العمل. أسعار أسبوعية وشهرية.", ma: "فندق هادي ف حدود المدينة. مثالي لسفرات الخدمة. أثمنة أسبوعية وشهرية.", en: "Quietly located hotel on the outskirts. Ideal for business trips. Weekly and monthly rates.", fr: "Hôtel calme en périphérie. Idéal pour les voyages d'affaires. Tarifs hebdomadaires et mensuels." },
+      { k: "G", t: "Kino am Ring", de: "Aktuelle Filme in Originalsprache. Mittwochs Kinotag mit 50% Rabatt auf alle Tickets.", ar: "أفلام حديثة باللغة الأصلية. الأربعاء يوم السينما مع خصم 50% على جميع التذاكر.", ma: "أفلام جديدة باللغة الأصلية. الأربعاء نهار السينما مع تخفيض 50% على جميع التذاكر.", en: "Current films in the original language. Wednesday is cinema day with 50% off all tickets.", fr: "Films actuels en version originale. Le mercredi, journée cinéma avec 50 % de réduction sur tous les billets." },
+      { k: "H", t: "Bäckerei Krüger", de: "Frisches Brot und Kuchen jeden Tag. Auch für größere Bestellungen und Feiern geeignet.", ar: "خبز وكعك طازج كل يوم. مناسب أيضاً للطلبات الكبيرة والاحتفالات.", ma: "خبز وكيك طري كل يوم. مناسب حتى للطلبات الكبيرة والحفلات.", en: "Fresh bread and cake every day. Also suitable for larger orders and celebrations.", fr: "Pain et gâteaux frais chaque jour. Convient également aux commandes plus importantes et aux fêtes." }
+    ],
+    items: [
+      { n: 1, c: "B", de: "Alex möchte einen Deutschkurs am Abend machen.", ar: "يريد أليكس حضور دورة ألمانية في المساء.", ma: "أليكس باغي يدير دورة الألمانية ف العشية.", en: "Alex wants to take a German course in the evening.", fr: "Alex souhaite suivre un cours d'allemand le soir." },
+      { n: 2, c: "E", de: "Am Wochenende möchte Alex mit Kollegen eine Radtour machen.", ar: "في نهاية الأسبوع يريد أليكس القيام بجولة بالدراجة مع الزملاء.", ma: "ف نهاية السيمانة أليكس باغي يدير جولة بالبيكالا مع الزملاء.", en: "At the weekend, Alex wants to go on a bike tour with colleagues.", fr: "Le week-end, Alex veut faire une sortie à vélo avec ses collègues." },
+      { n: 3, c: "A", de: "Alex sucht eine Möglichkeit, Sport zu treiben und neue Leute kennenzulernen.", ar: "يبحث أليكس عن فرصة لممارسة الرياضة والتعرف على أشخاص جدد.", ma: "أليكس كيقلب على فرصة يدير رياضة ويتعرف على ناس جداد.", en: "Alex is looking for an opportunity to do sports and meet new people.", fr: "Alex cherche une occasion de faire du sport et de rencontrer de nouvelles personnes." },
+      { n: 4, c: "D", de: "Alex' Eltern kommen zu Besuch und er möchte mit ihnen Essen gehen.", ar: "والدا أليكس قادمان للزيارة ويريد تناول الطعام معهما.", ma: "الوالدين ديال أليكس جايين للزيارة وباغي يكل معاهم.", en: "Alex's parents are coming to visit and he wants to eat out with them.", fr: "Les parents d'Alex viennent en visite et il veut manger au restaurant avec eux." },
+      { n: 5, c: "F", de: "Bevor Alex seine Wohnung hatte, brauchte er eine Unterkunft für einige Wochen.", ar: "قبل أن يحصل أليكس على شقته، كان يحتاج إلى مكان للإقامة لعدة أسابيع.", ma: "قبل ما ياخد أليكس الدار ديالو، كان محتاج بلاصة يسكن فيها شي سيمانات.", en: "Before Alex had his apartment, he needed accommodation for a few weeks.", fr: "Avant d'avoir son appartement, Alex avait besoin d'un logement pour quelques semaines." }
+    ]
+  },
+  {
+    id: "alex-sp1", title: "Alex", level: "B1", sub: "Sprach 1", type: "sprach1", isPremium: false,
+    text: "Alex ist vor zwei Wochen nach München gezogen. Am Anfang hatte er große Probleme, weil er noch keine Wohnung hatte. Er musste .....(1)..... Woche in einem Hotel wohnen. Zum Glück hat ihm eine Kollegin geholfen. Sie hat ihm .....(2)..... verschiedene Wohnungen informiert. Jetzt wohnt Alex in einer kleinen, aber schönen Wohnung .....(3)..... Stadtzentrum. Er freut sich .....(4)..... seine neue Umgebung. Am Wochenende möchte er .....(5)..... seinen Kollegen Fußball spielen.",
+    transText: {
+      ar: "انتقل أليكس إلى ميونخ قبل أسبوعين. في البداية واجه مشاكل كبيرة لأنه لم يكن لديه شقة بعد. اضطر للسكن في فندق لمدة أسبوع. لحسن الحظ ساعدته زميلة. أخبرته عن شقق مختلفة. الآن يعيش أليكس في شقة صغيرة لكن جميلة قرب وسط المدينة. إنه سعيد بمحيطه الجديد. في نهاية الأسبوع يريد لعب كرة القدم مع زملائه.",
+      ma: "أليكس انتقل ل ميونخ قبل جوج سيمانات. ف البداية لقى مشاكل كبار حيت مازال ما عندوش دار. اضطر يسكن ف فندق مدة سيمانة. لحسن الحظ عاونتو زميلة. خبراتو على دور مختلفين. دابا أليكس ساكن ف دار صغيرة ولكن زوينة قريب من وسط المدينة. هو فرحان بالمحيط الجديد ديالو. ف نهاية السيمانة باغي يلعب الكورة مع الزملاء ديالو.",
+      en: "Alex moved to Munich two weeks ago. At first he had big problems because he didn't have an apartment yet. He had to stay in a hotel for a week. Fortunately, a colleague helped him. She informed him about various apartments. Now Alex lives in a small but nice apartment near the city center. He is happy about his new surroundings. At the weekend he wants to play football with his colleagues.",
+      fr: "Alex a déménagé à Munich il y a deux semaines. Au début, il a eu de gros problèmes parce qu'il n'avait pas encore d'appartement. Il a dû séjourner dans un hôtel pendant une semaine. Heureusement, une collègue l'a aidé. Elle l'a informé de différents appartements. Maintenant, Alex vit dans un petit appartement mais agréable près du centre-ville. Il est content de son nouvel environnement. Le week-end, il veut jouer au football avec ses collègues."
+    },
+    items: [
+      { n: 1, c: "eine", opts: ["eine", "einen", "einem"], exp: "Woche هي مؤنث (die Woche)، في حالة Akkusativ بعد 'musste ... wohnen' → eine Woche." },
+      { n: 2, c: "über", opts: ["über", "auf", "an"], exp: "الفعل 'informieren über' يأخذ حرف الجر 'über' + Akkusativ." },
+      { n: 3, c: "am", opts: ["am", "im", "ans"], exp: "عند الإشارة إلى موقع قريب من مكان: 'am Stadtzentrum' (an + dem)." },
+      { n: 4, c: "über", opts: ["über", "auf", "von"], exp: "'sich freuen über' + Akkusativ، الفعل Reflexiv مع حرف جر ثابت." },
+      { n: 5, c: "mit", opts: ["mit", "bei", "zu"], exp: "'mit' + Dativ، للدلالة على المشاركة (مع زملائه)." }
+    ]
+  },
+  {
+    id: "alex-sp2", title: "Alex", level: "B1", sub: "Sprach 2", type: "sprach2", isPremium: false,
+    text: "Am Samstag hat Alex .....(1)..... erste Fußballspiel mit dem neuen Verein. Er ist ein bisschen nervös, weil er die anderen Spieler noch nicht gut .....(2)...... Aber er hat .....(3)..... den letzten Wochen viel trainiert. Sein Trainer hat ihm gesagt, dass er sehr talentiert .....(4)...... Nach dem Spiel möchte Alex .....(5)..... seinen neuen Freunden etwas trinken gehen.",
+    transText: {
+      ar: "يوم السبت، أليكس لديه أول مباراة كرة قدم مع النادي الجديد. إنه متوتر قليلاً لأنه لا يعرف اللاعبين الآخرين جيداً بعد. لكنه تدرب كثيراً في الأسابيع الماضية. قال له مدربه إنه موهوب جداً. بعد المباراة، يريد أليكس الذهاب للشرب مع أصدقائه الجدد.",
+      ma: "نهار السبت، أليكس عندو أول ماتش كورة مع النادي الجديد. هو متوتر شوية حيت مازال ما كيعرفش اللاعبين الآخرين مزيان. ولكن تدرب بزاف ف السيمانات اللي فاتو. المدرب ديالو قال ليه أنه موهوب بزاف. من بعد الماتش، أليكس باغي يمشي يشرب مع صحابو الجدد.",
+      en: "On Saturday, Alex has his first football match with the new club. He is a little nervous because he doesn't know the other players well yet. But he has trained a lot in the last few weeks. His coach told him that he is very talented. After the match, Alex wants to go drinking with his new friends.",
+      fr: "Samedi, Alex a son premier match de football avec le nouveau club. Il est un peu nerveux parce qu'il ne connaît pas encore bien les autres joueurs. Mais il s'est beaucoup entraîné ces dernières semaines. Son entraîneur lui a dit qu'il était très talentueux. Après le match, Alex veut aller boire un verre avec ses nouveaux amis."
+    },
+    wordBank: [
+      { k: "a", w: "sein" }, { k: "b", w: "kennt" }, { k: "c", w: "in" }, { k: "d", w: "ist" },
+      { k: "e", w: "mit" }, { k: "f", w: "hat" }, { k: "g", w: "war" }, { k: "h", w: "auf" }
+    ],
+    items: [
+      { n: 1, c: "sein" }, { n: 2, c: "kennt" }, { n: 3, c: "in" }, { n: 4, c: "ist" }, { n: 5, c: "mit" }
+    ]
+  },
+
+  // ============================================================
+  // RITA — 5 أجزاء كاملة
+  // ============================================================
+  {
+    id: "rita-t1", title: "Rita", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
+    options: [
+      { k: "a", de: "Ein Kurs für digitale Fotografie", ar: "دورة في التصوير الرقمي", ma: "دورة ف التصوير الرقمي", en: "A course in digital photography", fr: "Un cours de photographie numérique" },
+      { k: "b", de: "Ein neues Hobby für die Freizeit", ar: "هواية جديدة لوقت الفراغ", ma: "هواية جديدة لوقت الفراغ", en: "A new hobby for free time", fr: "Un nouveau passe-temps pour le temps libre" },
+      { k: "c", de: "Hilfe bei der Jobsuche", ar: "مساعدة في البحث عن عمل", ma: "مساعدة ف البحث على خدمة", en: "Help with job search", fr: "Aide à la recherche d'emploi" },
+      { k: "d", de: "Ein Umzug in eine andere Stadt", ar: "الانتقال إلى مدينة أخرى", ma: "الانتقال ل مدينة أخرى", en: "A move to another city", fr: "Un déménagement dans une autre ville" },
+      { k: "e", de: "Ein Sprachkurs im Ausland", ar: "دورة لغة في الخارج", ma: "دورة اللغة فالخارج", en: "A language course abroad", fr: "Un cours de langue à l'étranger" }
+    ],
+    items: [
+      { n: 1, c: "b", de: "Rita hat letztes Jahr mit dem Malen angefangen. Sie malt jeden Abend nach der Arbeit und findet es sehr entspannend.", ar: "بدأت ريتا بالرسم العام الماضي. ترسم كل مساء بعد العمل وتجد ذلك مريحاً جداً.", ma: "ريتا بدات بالرسم العام اللي فات. كترسم كل عشية من بعد الخدمة وكتلقاها مرتاحة بزاف.", en: "Rita started painting last year. She paints every evening after work and finds it very relaxing.", fr: "Rita a commencé à peindre l'année dernière. Elle peint chaque soir après le travail et trouve cela très relaxant." },
+      { n: 2, c: "a", de: "Rita interessiert sich für Fotografie und möchte lernen, wie man mit einer Kamera richtig gute Bilder macht.", ar: "ريتا مهتمة بالتصوير وتريد تعلم كيفية التقاط صور جيدة حقاً بالكاميرا.", ma: "ريتا مهتمة بالتصوير وباغية تتعلم كيفاش تاخد تصاور مزيانين بالكاميرا.", en: "Rita is interested in photography and wants to learn how to take really good pictures with a camera.", fr: "Rita s'intéresse à la photographie et veut apprendre à prendre de très bonnes photos avec un appareil." },
+      { n: 3, c: "d", de: "Rita wird nächsten Monat nach Berlin ziehen, weil ihr Freund dort eine Stelle bekommen hat.", ar: "ستنتقل ريتا إلى برلين الشهر القادم لأن صديقها حصل على وظيفة هناك.", ma: "ريتا غادي تنتقل ل برلين الشهر الجاي حيت صاحبها لقى خدمة تما.", en: "Rita will move to Berlin next month because her boyfriend got a job there.", fr: "Rita va déménager à Berlin le mois prochain parce que son copain y a trouvé un emploi." },
+      { n: 4, c: "c", de: "Rita sucht schon seit Monaten einen Job. Sie braucht Hilfe beim Schreiben von Bewerbungen.", ar: "ريتا تبحث منذ شهور عن عمل. تحتاج مساعدة في كتابة طلبات التوظيف.", ma: "ريتا كتقلب من شهور على خدمة. كتحتاج مساعدة ف كتابة طلبات الخدمة.", en: "Rita has been looking for a job for months. She needs help writing applications.", fr: "Rita cherche un emploi depuis des mois. Elle a besoin d'aide pour rédiger des candidatures." },
+      { n: 5, c: "e", de: "Rita möchte ihren Sommer in Spanien verbringen und dort intensiv Spanisch lernen.", ar: "تريد ريتا قضاء صيفها في إسبانيا وتعلم الإسبانية بشكل مكثف هناك.", ma: "ريتا باغية تعدي الصيف ديالها ف إسبانيا وتتعلم الإسبانية مكثف تما.", en: "Rita wants to spend her summer in Spain and learn Spanish intensively there.", fr: "Rita veut passer son été en Espagne et y apprendre l'espagnol de manière intensive." }
+    ]
+  },
+  {
+    id: "rita-t2", title: "Rita", level: "B1", sub: "Teile 2", type: "mcq", isPremium: false,
+    paragraphs: [
+      { de: "Rita ist 34 Jahre alt und arbeitet als Verkäuferin in einem kleinen Geschäft in Köln. Sie wohnt allein in einer Zweizimmerwohnung, die ihr sehr gefällt. Obwohl sie ihre Arbeit mag, träumt sie schon lange von einer Karriere im Marketing.", ar: "ريتا تبلغ 34 عاماً وتعمل بائعة في متجر صغير في كولونيا. تعيش وحدها في شقة بغرفتين تحبها كثيراً. على الرغم من أنها تحب عملها، إلا أنها تحلم منذ فترة طويلة بمهنة في التسويق.", ma: "ريتا عندها 34 عام وكتخدم كبائعة ف حانوت صغير ف كولونيا. كتعيش بوحدها ف دار بجوج بيوت كتحبها بزاف. بالرغم من أنها كتحب الخدمة ديالها، ولكن كتحلم من مدة بمهنة ف التسويق.", en: "Rita is 34 years old and works as a saleswoman in a small shop in Cologne. She lives alone in a two-room apartment that she likes very much. Although she likes her job, she has long dreamed of a career in marketing.", fr: "Rita a 34 ans et travaille comme vendeuse dans un petit magasin à Cologne. Elle vit seule dans un deux-pièces qu'elle aime beaucoup. Bien qu'elle aime son travail, elle rêve depuis longtemps d'une carrière dans le marketing." },
+      { de: "Letzte Woche hat Rita ein Praktikum in einer Marketingagentur begonnen. Sie arbeitet dort zwei Tage pro Woche und bekommt kein Geld dafür, aber die Erfahrung ist wertvoll.", ar: "بدأت ريتا الأسبوع الماضي تدريباً في وكالة تسويق. تعمل هناك يومين في الأسبوع ولا تتقاضى أجراً، لكن الخبرة قيّمة.", ma: "ريتا بدات السيمانة اللي فاتت تدريب ف وكالة تسويق. كتخدم تما جوج أيام ف السيمانة وماكتقبضش فلوس، ولكن التجربة غالية.", en: "Last week Rita started an internship at a marketing agency. She works there two days a week and doesn't get paid, but the experience is valuable.", fr: "La semaine dernière, Rita a commencé un stage dans une agence de marketing. Elle y travaille deux jours par semaine et n'est pas rémunérée, mais l'expérience est précieuse." },
+      { de: "Trotz der zusätzlichen Engagements bleibt Rita optimistisch. Ihr größter Wunsch ist es, irgendwann eine eigene kleine Werbeagentur zu leiten.", ar: "على الرغم من الالتزامات الإضافية، تبقى ريتا متفائلة. أكبر أمنيتها هي أن تدير في يوم ما وكالة إعلانات صغيرة خاصة بها.", ma: "بالرغم من الالتزامات الإضافية، ريتا كتبقى متفائلة. أكبر أمنية ديالها هي أنها تدير شي نهار وكالة إعلانات صغيرة ديالها.", en: "Despite the additional commitments, Rita remains optimistic. Her greatest wish is to one day run her own small advertising agency.", fr: "Malgré ses engagements supplémentaires, Rita reste optimiste. Son plus grand souhait est de diriger un jour sa propre petite agence de publicité." }
+    ],
+    items: [
+      { n: 1, c: "A", q: "Was ist Ritas aktueller Beruf?", qar: "ما هي مهنة ريتا الحالية؟", qma: "شنو هي الخدمة الحالية ديال ريتا؟", qen: "What is Rita's current job?", qfr: "Quel est le métier actuel de Rita ?",
+        opts: [
+          { k: "A", de: "Verkäuferin", ar: "بائعة", ma: "بائعة", en: "saleswoman", fr: "vendeuse" },
+          { k: "B", de: "Marketing-Managerin", ar: "مديرة تسويق", ma: "مديرة التسويق", en: "marketing manager", fr: "responsable marketing" },
+          { k: "C", de: "Lehrerin", ar: "مدرسة", ma: "أستاذة", en: "teacher", fr: "enseignante" }
+        ]
+      },
+      { n: 2, c: "B", q: "Warum macht Rita ein Praktikum?", qar: "لماذا تقوم ريتا بتدريب؟", qma: "علاش ريتا كتدير تدريب؟", qen: "Why is Rita doing an internship?", qfr: "Pourquoi Rita fait-elle un stage ?",
+        opts: [
+          { k: "A", de: "um Geld zu verdienen", ar: "لكسب المال", ma: "باش تربح الفلوس", en: "to earn money", fr: "pour gagner de l'argent" },
+          { k: "B", de: "um Erfahrung zu sammeln", ar: "لجمع الخبرة", ma: "باش تجمع التجربة", en: "to gain experience", fr: "pour acquérir de l'expérience" },
+          { k: "C", de: "weil sie arbeitslos ist", ar: "لأنها عاطلة عن العمل", ma: "حيت هي عاطلة", en: "because she is unemployed", fr: "parce qu'elle est au chômage" }
+        ]
+      },
+      { n: 3, c: "C", q: "Was ist Ritas größter Wunsch?", qar: "ما هي أكبر أمنية لريتا؟", qma: "شنو هي أكبر أمنية ديال ريتا؟", qen: "What is Rita's greatest wish?", qfr: "Quel est le plus grand souhait de Rita ?",
+        opts: [
+          { k: "A", de: "in Spanien zu leben", ar: "العيش في إسبانيا", ma: "تعيش ف إسبانيا", en: "to live in Spain", fr: "vivre en Espagne" },
+          { k: "B", de: "in Rente zu gehen", ar: "التقاعد", ma: "تمشي ف التقاعد", en: "to retire", fr: "prendre sa retraite" },
+          { k: "C", de: "eine eigene Werbeagentur zu leiten", ar: "إدارة وكالة إعلانات خاصة", ma: "تدير وكالة إعلانات ديالها", en: "to run her own advertising agency", fr: "diriger sa propre agence de publicité" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "rita-t3", title: "Rita", level: "B1", sub: "Teile 3", type: "matching", isPremium: false,
+    ads: [
+      { k: "A", t: "Foto-Kurse Köln", de: "Lernen Sie fotografieren! Kurse für Anfänger und Fortgeschrittene. Wochenendkurse und Abendkurse.", ar: "تعلم التصوير! دورات للمبتدئين والمتقدمين. دورات نهاية الأسبوع ودورات مسائية.", ma: "تعلم التصوير! دورات للمبتدئين والمتقدمين. دورات نهاية السيمانة ودورات ف العشية.", en: "Learn photography! Courses for beginners and advanced. Weekend and evening courses.", fr: "Apprenez la photographie ! Cours pour débutants et avancés. Cours du week-end et du soir." },
+      { k: "B", t: "Jobcenter Köln", de: "Kostenlose Beratung für Arbeitssuchende. Hilfe beim Lebenslauf und bei Bewerbungen. Termine nach Vereinbarung.", ar: "استشارة مجانية للباحثين عن عمل. مساعدة في السيرة الذاتية والطلبات. مواعيد بالاتفاق.", ma: "استشارة فابور للباحثين على الخدمة. مساعدة ف CV والطلبات. مواعيد بالاتفاق.", en: "Free advice for job seekers. Help with CV and applications. Appointments by arrangement.", fr: "Conseil gratuit pour les demandeurs d'emploi. Aide pour le CV et les candidatures. Rendez-vous sur arrangement." },
+      { k: "C", t: "Umzugshelfer Plus", de: "Professionelle Umzugshilfe in ganz Deutschland. Faire Preise, erfahrenes Team. Kostenloses Angebot.", ar: "مساعدة احترافية في الانتقال في جميع أنحاء ألمانيا. أسعار عادلة، فريق ذو خبرة. عرض مجاني.", ma: "مساعدة احترافية ف الانتقال ف ألمانيا كاملة. أثمنة عادلة، فريق عندو خبرة. عرض فابور.", en: "Professional moving help throughout Germany. Fair prices, experienced team. Free quote.", fr: "Aide au déménagement professionnelle dans toute l'Allemagne. Prix équitables, équipe expérimentée. Devis gratuit." },
+      { k: "D", t: "Sprachinstitut Madrid", de: "Spanisch lernen in Madrid! Intensivkurse im Sommer, Unterkunft in Gastfamilien möglich.", ar: "تعلم الإسبانية في مدريد! دورات مكثفة في الصيف، إقامة مع عائلات مضيفة ممكنة.", ma: "تعلم الإسبانية ف مدريد! دورات مكثفة ف الصيف، إقامة مع عائلات مضيفة ممكنة.", en: "Learn Spanish in Madrid! Intensive summer courses, accommodation with host families possible.", fr: "Apprenez l'espagnol à Madrid ! Cours intensifs d'été, hébergement en famille d'accueil possible." },
+      { k: "E", t: "Malkurse Kunterbunt", de: "Malen für Erwachsene jeden Mittwoch. Material inklusive. Neue Kurse beginnen im Mai.", ar: "الرسم للبالغين كل أربعاء. المواد مشمولة. تبدأ دورات جديدة في مايو.", ma: "الرسم للكبار كل أربعاء. المواد مشمولة. دورات جديدة كتبدا ف ماي.", en: "Painting for adults every Wednesday. Materials included. New courses start in May.", fr: "Peinture pour adultes chaque mercredi. Matériel inclus. Nouveaux cours en mai." },
+      { k: "F", t: "Marketing Jobs Berlin", de: "Suchen Sie einen Job im Marketing? Viele offene Stellen in Berlin. Jetzt bewerben!", ar: "هل تبحث عن وظيفة في التسويق؟ العديد من الوظائف الشاغرة في برلين. تقدم الآن!", ma: "كتقلب على خدمة ف التسويق؟ بزاف ديال الوظائف الشاغرة ف برلين. تقدم دابا!", en: "Looking for a job in marketing? Many open positions in Berlin. Apply now!", fr: "Vous cherchez un emploi dans le marketing ? De nombreux postes ouverts à Berlin. Postulez maintenant !" },
+      { k: "G", t: "Wohnungstausch Köln-Berlin", de: "Wir vermitteln Wohnungstausch zwischen Köln und Berlin. Perfekt für Berufspendler.", ar: "نقوم بوساطة تبادل الشقق بين كولونيا وبرلين. مثالي للمتنقلين لأغراض العمل.", ma: "كنوسطو تبادل الدور بين كولونيا وبرلين. مثالي للناس اللي كيتنقلو على حساب الخدمة.", en: "We arrange apartment exchanges between Cologne and Berlin. Perfect for commuters.", fr: "Nous organisons des échanges d'appartements entre Cologne et Berlin. Parfait pour les navetteurs." },
+      { k: "H", t: "Buchhandlung Leselust", de: "Große Auswahl an Kunst- und Fotobüchern. Signierstunden mit Autoren jeden Monat.", ar: "مجموعة كبيرة من كتب الفن والتصوير. جلسات توقيع مع مؤلفين كل شهر.", ma: "مجموعة كبيرة ديال كتب الفن والتصوير. جلسات توقيع مع مؤلفين كل شهر.", en: "Large selection of art and photography books. Book signings with authors every month.", fr: "Grand choix de livres d'art et de photographie. Séances de dédicaces avec des auteurs chaque mois." }
+    ],
+    items: [
+      { n: 1, c: "A", de: "Rita möchte lernen, bessere Fotos zu machen.", ar: "تريد ريتا تعلم التقاط صور أفضل.", ma: "ريتا باغية تتعلم تاخد تصاور أحسن.", en: "Rita wants to learn to take better photos.", fr: "Rita veut apprendre à prendre de meilleures photos." },
+      { n: 2, c: "D", de: "Rita plant einen Sprachaufenthalt in Spanien im Sommer.", ar: "تخطط ريتا لإقامة لغوية في إسبانيا في الصيف.", ma: "ريتا كتخطط لإقامة لغوية ف إسبانيا ف الصيف.", en: "Rita is planning a language stay in Spain in summer.", fr: "Rita prévoit un séjour linguistique en Espagne cet été." },
+      { n: 3, c: "B", de: "Rita braucht Unterstützung bei ihrer Bewerbung.", ar: "تحتاج ريتا دعماً في طلب التوظيف.", ma: "ريتا كتحتاج دعم ف طلب الخدمة ديالها.", en: "Rita needs support with her application.", fr: "Rita a besoin d'aide pour sa candidature." },
+      { n: 4, c: "C", de: "Rita zieht nach Berlin und braucht Hilfe beim Transport.", ar: "ستنتقل ريتا إلى برلين وتحتاج مساعدة في النقل.", ma: "ريتا غادي تنتقل ل برلين وكتحتاج مساعدة ف النقل.", en: "Rita is moving to Berlin and needs help with transport.", fr: "Rita déménage à Berlin et a besoin d'aide pour le transport." },
+      { n: 5, c: "E", de: "Rita möchte in ihrer Freizeit kreativ sein und etwas Neues ausprobieren.", ar: "تريد ريتا أن تكون مبدعة في وقت فراغها وتجرب شيئاً جديداً.", ma: "ريتا باغية تكون مبدعة ف وقت الفراغ ديالها وتجرب شي حاجة جديدة.", en: "Rita wants to be creative in her free time and try something new.", fr: "Rita veut être créative pendant son temps libre et essayer quelque chose de nouveau." }
+    ]
+  },
+  {
+    id: "rita-sp1", title: "Rita", level: "B1", sub: "Sprach 1", type: "sprach1", isPremium: false,
+    text: "Rita wohnt .....(1)..... vielen Jahren in Köln. Sie arbeitet als Verkäuferin, aber sie möchte .....(2)..... eine Karriere im Marketing beginnen. Deshalb macht sie .....(3)..... Praktikum in einer Agentur. Sie arbeitet dort zwei Tage pro Woche und lernt jeden Tag etwas Neues. Ihr größter Traum ist es, .....(4)..... eigene Werbeagentur zu leiten. Sie ist sehr motiviert und freut sich .....(5)..... ihre berufliche Zukunft.",
+    transText: {
+      ar: "تعيش ريتا منذ سنوات عديدة في كولونيا. تعمل بائعة، لكنها تريد بدء مهنة في التسويق. لذلك تقوم بتدريب في وكالة. تعمل هناك يومين في الأسبوع وتتعلم شيئاً جديداً كل يوم. حلمها الأكبر هو إدارة وكالة إعلانات خاصة بها. إنها متحمسة جداً ومتفائلة بمستقبلها المهني.",
+      ma: "ريتا كتعيش من بزاف ديال السنين ف كولونيا. كتخدم بائعة، ولكن باغية تبدا مهنة ف التسويق. داكشي علاش كتدير تدريب ف وكالة. كتخدم تما جوج أيام ف السيمانة وكتتعلم شي حاجة جديدة كل يوم. أكبر حلم ديالها هو أنها تدير وكالة إعلانات ديالها. هي متحمسة بزاف وفرحانة بالمستقبل المهني ديالها.",
+      en: "Rita has lived in Cologne for many years. She works as a saleswoman, but she wants to start a career in marketing. That's why she is doing an internship at an agency. She works there two days a week and learns something new every day. Her greatest dream is to run her own advertising agency. She is very motivated and happy about her professional future.",
+      fr: "Rita vit à Cologne depuis de nombreuses années. Elle travaille comme vendeuse, mais elle souhaite commencer une carrière dans le marketing. C'est pourquoi elle fait un stage dans une agence. Elle y travaille deux jours par semaine et apprend quelque chose de nouveau chaque jour. Son plus grand rêve est de diriger sa propre agence de publicité. Elle est très motivée et se réjouit de son avenir professionnel."
+    },
+    items: [
+      { n: 1, c: "seit", opts: ["seit", "vor", "für"], exp: "'seit' + Dativ للتعبير عن مدة مستمرة حتى الآن (تعيش منذ سنوات)." },
+      { n: 2, c: "mit", opts: ["mit", "auf", "an"], exp: "'beginnen mit' + Dativ، فعل ثابت مع حرف الجر 'mit'." },
+      { n: 3, c: "ein", opts: ["ein", "einen", "einem"], exp: "'Praktikum' محايد (das Praktikum)، في Akkusativ → ein Praktikum." },
+      { n: 4, c: "eine", opts: ["eine", "einen", "einer"], exp: "'Werbeagentur' مؤنث (die)، في Akkusativ → eine Werbeagentur." },
+      { n: 5, c: "auf", opts: ["auf", "über", "an"], exp: "'sich freuen auf' + Akkusativ للمستقبل (تتطلع للمستقبل المهني)." }
+    ]
+  },
+  {
+    id: "rita-sp2", title: "Rita", level: "B1", sub: "Sprach 2", type: "sprach2", isPremium: false,
+    text: "Rita hat .....(1)..... einem Jahr mit dem Malen angefangen. Am Anfang war sie nicht sehr gut, aber jetzt malt sie .....(2)..... Wochenende. Sie hat .....(3)..... ihrer Freundin einen Malkurs geschenkt bekommen. Der Kurs findet .....(4)..... Mittwochabend statt. Rita freut sich sehr .....(5)..... den Kurs.",
+    transText: {
+      ar: "بدأت ريتا بالرسم منذ عام. في البداية لم تكن جيدة جداً، لكنها الآن ترسم في عطلة نهاية الأسبوع. تلقت دورة رسم كهدية من صديقتها. تُعقد الدورة مساء كل أربعاء. ريتا سعيدة جداً بالدورة.",
+      ma: "ريتا بدات بالرسم من عام. ف البداية ما كانتش مزيانة بزاف، ولكن دابا كترسم ف نهاية السيمانة. تلقت دورة الرسم كهدية من صحابتها. الدورة كتدار كل أربعاء ف العشية. ريتا فرحانة بزاف بالدورة.",
+      en: "Rita started painting a year ago. At first she wasn't very good, but now she paints at the weekend. She received a painting course as a gift from her friend. The course takes place every Wednesday evening. Rita is very happy about the course.",
+      fr: "Rita a commencé à peindre il y a un an. Au début, elle n'était pas très douée, mais maintenant elle peint le week-end. Elle a reçu un cours de peinture en cadeau de son amie. Le cours a lieu tous les mercredis soir. Rita est très contente du cours."
+    },
+    wordBank: [
+      { k: "a", w: "vor" }, { k: "b", w: "am" }, { k: "c", w: "von" }, { k: "d", w: "jeden" },
+      { k: "e", w: "auf" }, { k: "f", w: "seit" }, { k: "g", w: "im" }, { k: "h", w: "für" }
+    ],
+    items: [
+      { n: 1, c: "vor" }, { n: 2, c: "am" }, { n: 3, c: "von" }, { n: 4, c: "jeden" }, { n: 5, c: "auf" }
+    ]
+  },
+
+  // ============================================================
+  // CAROLINE — 5 أجزاء كاملة
+  // ============================================================
+  {
+    id: "caroline-t1", title: "Caroline", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
+    options: [
+      { k: "a", de: "Ein Familientreffen am Wochenende", ar: "لقاء عائلي في نهاية الأسبوع", ma: "لقاء عائلي ف نهاية السيمانة", en: "A family reunion at the weekend", fr: "Une réunion de famille le week-end" },
+      { k: "b", de: "Neue Möbel für die Wohnung", ar: "أثاث جديد للشقة", ma: "أثاث جديد للدار", en: "New furniture for the apartment", fr: "Nouveaux meubles pour l'appartement" },
+      { k: "c", de: "Ein Kochkurs für Anfänger", ar: "دورة طبخ للمبتدئين", ma: "دورة الطبخ للمبتدئين", en: "A cooking course for beginners", fr: "Un cours de cuisine pour débutants" },
+      { k: "d", de: "Ein Besuch im Museum", ar: "زيارة متحف", ma: "زيارة متحف", en: "A visit to the museum", fr: "Une visite au musée" },
+      { k: "e", de: "Ein Urlaub am Meer", ar: "عطلة على البحر", ma: "عطلة ف البحر", en: "A holiday by the sea", fr: "Des vacances à la mer" }
+    ],
+    items: [
+      { n: 1, c: "a", de: "Caroline freut sich auf Sonntag, weil ihre Schwester mit der ganzen Familie zu Besuch kommt.", ar: "تتطلع كارولين ليوم الأحد لأن أختها ستأتي للزيارة مع العائلة بأكملها.", ma: "كارولين كتطلع لنهار الأحد حيت أختها غادي تجي للزيارة مع العائلة كاملة.", en: "Caroline is looking forward to Sunday because her sister is coming to visit with the whole family.", fr: "Caroline attend dimanche avec impatience car sa sœur vient en visite avec toute la famille." },
+      { n: 2, c: "c", de: "Caroline möchte lernen, wie man einfache Gerichte selbst kocht. Sie sucht einen Kurs am Abend.", ar: "تريد كارولين تعلم كيفية طهي أطباق بسيطة بنفسها. تبحث عن دورة في المساء.", ma: "كارولين باغية تتعلم كيفاش تطيب أطباق بسيطة براسها. كتقلب على دورة ف العشية.", en: "Caroline wants to learn how to cook simple dishes herself. She is looking for an evening course.", fr: "Caroline veut apprendre à cuisiner elle-même des plats simples. Elle cherche un cours du soir." },
+      { n: 3, c: "b", de: "Caroline hat eine neue Wohnung und braucht noch einen Schrank, einen Tisch und Stühle.", ar: "لدى كارولين شقة جديدة وتحتاج بعد إلى خزانة وطاولة وكراسي.", ma: "كارولين عندها دار جديدة ومازال محتاجة خزانة وطاولة وكراسي.", en: "Caroline has a new apartment and still needs a wardrobe, a table and chairs.", fr: "Caroline a un nouvel appartement et a encore besoin d'une armoire, d'une table et de chaises." },
+      { n: 4, c: "e", de: "Im Juli möchte Caroline mit ihrem Mann für zwei Wochen ans Mittelmeer fahren.", ar: "في يوليو تريد كارولين السفر مع زوجها لمدة أسبوعين إلى البحر الأبيض المتوسط.", ma: "ف يوليوز كارولين باغية تسافر مع راجلها لمدة جوج سيمانات للبحر الأبيض المتوسط.", en: "In July, Caroline wants to go to the Mediterranean with her husband for two weeks.", fr: "En juillet, Caroline veut partir deux semaines en Méditerranée avec son mari." },
+      { n: 5, c: "d", de: "Am Samstag möchte Caroline mit ihren Kindern die neue Ausstellung über alte Ägypter sehen.", ar: "يوم السبت تريد كارولين رؤية المعرض الجديد عن قدماء المصريين مع أطفالها.", ma: "نهار السبت كارولين باغية تشوف معرض الجديد على المصريين القدماء مع ولادها.", en: "On Saturday, Caroline wants to see the new exhibition about ancient Egyptians with her children.", fr: "Samedi, Caroline veut voir avec ses enfants la nouvelle exposition sur les anciens Égyptiens." }
+    ]
+  },
+  {
+    id: "caroline-t2", title: "Caroline", level: "B1", sub: "Teile 2", type: "mcq", isPremium: false,
+    paragraphs: [
+      { de: "Caroline ist 42 Jahre alt und arbeitet als Lehrerin an einer Grundschule in Stuttgart. Sie ist verheiratet und hat zwei Kinder, einen Sohn und eine Tochter. Die Familie wohnt in einem kleinen Haus am Stadtrand mit einem großen Garten.", ar: "كارولين تبلغ 42 عاماً وتعمل معلمة في مدرسة ابتدائية في شتوتغارت. هي متزوجة ولديها طفلان، ابن وابنة. تعيش العائلة في منزل صغير على أطراف المدينة مع حديقة كبيرة.", ma: "كارولين عندها 42 عام وكتخدم أستاذة ف مدرسة ابتدائية ف شتوتغارت. هي متزوجة وعندها جوج ولاد، ولد وبنت. العائلة كتعيش ف دار صغيرة ف حدود المدينة مع جنان كبير.", en: "Caroline is 42 years old and works as a teacher at a primary school in Stuttgart. She is married and has two children, a son and a daughter. The family lives in a small house on the outskirts of the city with a large garden.", fr: "Caroline a 42 ans et travaille comme enseignante dans une école primaire à Stuttgart. Elle est mariée et a deux enfants, un fils et une fille. La famille vit dans une petite maison en périphérie de la ville avec un grand jardin." },
+      { de: "In ihrer Freizeit kocht Caroline sehr gerne. Sie hat von ihrer Großmutter viele traditionelle Rezepte gelernt. Besonders stolz ist sie auf ihren Apfelkuchen, den sie bei jedem Familienfest backt.", ar: "في وقت فراغها، تحب كارولين الطبخ كثيراً. تعلمت من جدتها العديد من الوصفات التقليدية. تشعر بفخر خاص بفطيرة التفاح التي تخبزها في كل احتفال عائلي.", ma: "ف وقت الفراغ ديالها، كارولين كتحب تطيب بزاف. تعلمت من جدتها بزاف ديال الوصفات التقليدية. كتحس بفخر خاص ب تارت التفاح اللي كتطيب ف كل حفلة عائلية.", en: "In her free time, Caroline loves to cook. She learned many traditional recipes from her grandmother. She is particularly proud of her apple pie, which she bakes at every family celebration.", fr: "Pendant son temps libre, Caroline adore cuisiner. Elle a appris de nombreuses recettes traditionnelles de sa grand-mère. Elle est particulièrement fière de sa tarte aux pommes, qu'elle prépare à chaque fête de famille." },
+      { de: "Für die Zukunft hat Caroline große Pläne: Sie möchte ein kleines Kochbuch mit den Familienrezepten veröffentlichen. Außerdem träumt sie davon, einmal ein eigenes kleines Café zu eröffnen.", ar: "للمستقبل، لدى كارولين خطط كبيرة: تريد نشر كتاب طبخ صغير بوصفات العائلة. بالإضافة إلى ذلك، تحلم بافتتاح مقهى صغير خاص بها في يوم من الأيام.", ma: "للمستقبل، كارولين عندها خطط كبار: باغية تنشر كتاب طبخ صغير بوصفات العائلة. زيد على هادشي، كتحلم بافتتاح قهوة صغيرة ديالها شي نهار.", en: "For the future, Caroline has big plans: she wants to publish a small cookbook with the family recipes. In addition, she dreams of opening her own small café one day.", fr: "Pour l'avenir, Caroline a de grands projets : elle veut publier un petit livre de cuisine avec les recettes de famille. De plus, elle rêve d'ouvrir un jour son propre petit café." }
+    ],
+    items: [
+      { n: 1, c: "A", q: "Was ist Caroline von Beruf?", qar: "ما هي مهنة كارولين؟", qma: "شنو هي الخدمة ديال كارولين؟", qen: "What is Caroline's profession?", qfr: "Quelle est la profession de Caroline ?",
+        opts: [
+          { k: "A", de: "Lehrerin", ar: "معلمة", ma: "أستاذة", en: "teacher", fr: "enseignante" },
+          { k: "B", de: "Köchin", ar: "طباخة", ma: "طيابة", en: "cook", fr: "cuisinière" },
+          { k: "C", de: "Verkäuferin", ar: "بائعة", ma: "بائعة", en: "saleswoman", fr: "vendeuse" }
+        ]
+      },
+      { n: 2, c: "B", q: "Wo hat Caroline ihre Rezepte gelernt?", qar: "أين تعلمت كارولين وصفاتها؟", qma: "فين تعلمت كارولين الوصفات ديالها؟", qen: "Where did Caroline learn her recipes?", qfr: "Où Caroline a-t-elle appris ses recettes ?",
+        opts: [
+          { k: "A", de: "in einer Kochschule", ar: "في مدرسة طبخ", ma: "ف مدرسة الطبخ", en: "in a cooking school", fr: "dans une école de cuisine" },
+          { k: "B", de: "von ihrer Großmutter", ar: "من جدتها", ma: "من جدتها", en: "from her grandmother", fr: "de sa grand-mère" },
+          { k: "C", de: "aus dem Internet", ar: "من الإنترنت", ma: "من الأنترنيت", en: "from the internet", fr: "sur Internet" }
+        ]
+      },
+      { n: 3, c: "C", q: "Was möchte Caroline in der Zukunft machen?", qar: "ماذا تريد كارولين أن تفعل في المستقبل؟", qma: "شنو باغية دير كارولين ف المستقبل؟", qen: "What does Caroline want to do in the future?", qfr: "Que veut faire Caroline à l'avenir ?",
+        opts: [
+          { k: "A", de: "in Rente gehen", ar: "التقاعد", ma: "تمشي ف التقاعد", en: "retire", fr: "prendre sa retraite" },
+          { k: "B", de: "nach Berlin ziehen", ar: "الانتقال إلى برلين", ma: "تنتقل ل برلين", en: "move to Berlin", fr: "déménager à Berlin" },
+          { k: "C", de: "ein kleines Café eröffnen", ar: "افتتاح مقهى صغير", ma: "تفتح قهوة صغيرة", en: "open a small café", fr: "ouvrir un petit café" }
+        ]
+      }
+    ]
+  },
+  {
+    id: "caroline-t3", title: "Caroline", level: "B1", sub: "Teile 3", type: "matching", isPremium: false,
+    ads: [
+      { k: "A", t: "Kochschule Delikat", de: "Kochkurse für Erwachsene und Kinder. Jeden Samstag von 10-14 Uhr. Alle Materialien inklusive.", ar: "دورات طبخ للبالغين والأطفال. كل سبت من 10 إلى 14. جميع المواد مشمولة.", ma: "دورات الطبخ للكبار والدراري. كل سبت من 10 حتى 14. جميع المواد مشمولة.", en: "Cooking courses for adults and children. Every Saturday from 10 am to 2 pm. All materials included.", fr: "Cours de cuisine pour adultes et enfants. Chaque samedi de 10h à 14h. Tous les matériaux inclus." },
+      { k: "B", t: "Möbelhaus Nord", de: "Riesige Auswahl an Möbeln für jedes Zimmer. Kostenlose Lieferung ab 200 Euro Einkauf.", ar: "مجموعة كبيرة من الأثاث لكل غرفة. توصيل مجاني من 200 يورو شراء.", ma: "اختيار كبير ديال الأثاث لكل غرفة. توصيل فابور من 200 يورو شراء.", en: "Huge selection of furniture for every room. Free delivery from 200 euros purchase.", fr: "Vaste choix de meubles pour chaque pièce. Livraison gratuite à partir de 200 euros d'achat." },
+      { k: "C", t: "Museum Alte Kulturen", de: "Neue Sonderausstellung: 'Das alte Ägypten'. Familienkarten nur 15 Euro. Jeden Tag 9-18 Uhr.", ar: "معرض خاص جديد: 'مصر القديمة'. تذاكر عائلية بـ 15 يورو فقط. كل يوم 9-18.", ma: "معرض خاص جديد: 'مصر القديمة'. تذاكر عائلية غير 15 يورو. كل يوم 9-18.", en: "New special exhibition: 'Ancient Egypt'. Family tickets only 15 euros. Every day 9 am - 6 pm.", fr: "Nouvelle exposition spéciale : 'L'Égypte ancienne'. Billets famille seulement 15 euros. Tous les jours de 9h à 18h." },
+      { k: "D", t: "Reisebüro Sonnenschein", de: "Traumurlaub am Mittelmeer! All-inclusive-Angebote für Familien. Frühbucher-Rabatt 20%.", ar: "عطلة الأحلام على البحر الأبيض المتوسط! عروض شاملة للعائلات. خصم الحجز المبكر 20%.", ma: "عطلة الأحلام ف البحر الأبيض المتوسط! عروض شاملة للعائلات. تخفيض الحجز المبكر 20%.", en: "Dream holiday on the Mediterranean! All-inclusive offers for families. Early booking discount 20%.", fr: "Vacances de rêve en Méditerranée ! Offres tout compris pour les familles. Réduction réservation anticipée 20 %." },
+      { k: "E", t: "Familienzentrum Regenbogen", de: "Offene Treffen für Familien jeden Sonntag. Spiele, Kaffee und Kuchen. Kostenlos.", ar: "لقاءات مفتوحة للعائلات كل أحد. ألعاب وقهوة وكعك. مجاناً.", ma: "لقاءات مفتوحة للعائلات كل أحد. ألعاب وقهوة وكيك. فابور.", en: "Open meetings for families every Sunday. Games, coffee and cake. Free.", fr: "Rencontres ouvertes pour familles chaque dimanche. Jeux, café et gâteaux. Gratuit." },
+      { k: "F", t: "Buchhandlung Kapitel", de: "Kochbücher, Familienromane und mehr. Autorenlesungen jeden Freitag.", ar: "كتب الطبخ، روايات عائلية والمزيد. قراءات مؤلفين كل جمعة.", ma: "كتب الطبخ، روايات عائلية والمزيد. قراءات مؤلفين كل جمعة.", en: "Cookbooks, family novels and more. Author readings every Friday.", fr: "Livres de cuisine, romans familiaux et plus. Lectures d'auteurs chaque vendredi." },
+      { k: "G", t: "Gartencenter Grün", de: "Alles für Haus und Garten. Pflanzen, Blumen, Gartenmöbel. Fachberatung inklusive.", ar: "كل شيء للمنزل والحديقة. نباتات، زهور، أثاث حدائق. استشارة متخصصة مشمولة.", ma: "كلشي للدار والجنان. نباتات، زهور، أثاث الجنان. استشارة متخصصة مشمولة.", en: "Everything for home and garden. Plants, flowers, garden furniture. Expert advice included.", fr: "Tout pour la maison et le jardin. Plantes, fleurs, meubles de jardin. Conseil spécialisé inclus." },
+      { k: "H", t: "Restaurant Zur Post", de: "Traditionelle deutsche Küche. Familientische für 6-10 Personen. Jetzt reservieren!", ar: "مطبخ ألماني تقليدي. طاولات عائلية لـ 6-10 أشخاص. احجز الآن!", ma: "مطبخ ألماني تقليدي. طاولات عائلية ل 6-10 أشخاص. احجز دابا!", en: "Traditional German cuisine. Family tables for 6-10 people. Reserve now!", fr: "Cuisine allemande traditionnelle. Tables familiales pour 6 à 10 personnes. Réservez maintenant !" }
+    ],
+    items: [
+      { n: 1, c: "B", de: "Caroline hat eine neue Wohnung und braucht noch Möbel.", ar: "لدى كارولين شقة جديدة وتحتاج بعد إلى أثاث.", ma: "كارولين عندها دار جديدة ومازال محتاجة الأثاث.", en: "Caroline has a new apartment and still needs furniture.", fr: "Caroline a un nouvel appartement et a encore besoin de meubles." },
+      { n: 2, c: "A", de: "Caroline möchte lernen, wie man besser kocht.", ar: "تريد كارولين تعلم كيفية الطبخ بشكل أفضل.", ma: "كارولين باغية تتعلم كيفاش تطيب مزيان.", en: "Caroline wants to learn how to cook better.", fr: "Caroline veut apprendre à mieux cuisiner." },
+      { n: 3, c: "D", de: "Im Juli plant Caroline einen Urlaub am Meer mit ihrer Familie.", ar: "في يوليو تخطط كارولين لعطلة على البحر مع عائلتها.", ma: "ف يوليوز كارولين كتخطط لعطلة ف البحر مع العائلة ديالها.", en: "In July, Caroline is planning a holiday by the sea with her family.", fr: "En juillet, Caroline prévoit des vacances à la mer avec sa famille." },
+      { n: 4, c: "C", de: "Am Samstag will Caroline mit ihren Kindern etwas Kulturelles unternehmen.", ar: "يوم السبت تريد كارولين القيام بنشاط ثقافي مع أطفالها.", ma: "نهار السبت كارولين باغية دير شي حاجة ثقافية مع ولادها.", en: "On Saturday, Caroline wants to do something cultural with her children.", fr: "Samedi, Caroline veut faire quelque chose de culturel avec ses enfants." },
+      { n: 5, c: "E", de: "Caroline möchte andere Familien in ihrer Nachbarschaft kennenlernen.", ar: "تريد كارولين التعرف على عائلات أخرى في حيها.", ma: "كارولين باغية تتعرف على عائلات أخرى ف الحومة ديالها.", en: "Caroline wants to meet other families in her neighborhood.", fr: "Caroline veut rencontrer d'autres familles dans son quartier." }
+    ]
+  },
+  {
+    id: "caroline-sp1", title: "Caroline", level: "B1", sub: "Sprach 1", type: "sprach1", isPremium: false,
+    text: "Caroline arbeitet .....(1)..... Lehrerin an einer Grundschule. Sie wohnt .....(2)..... ihrer Familie in einem kleinen Haus. In ihrer Freizeit kocht sie sehr gerne. Sie hat viele Rezepte .....(3)..... ihrer Großmutter gelernt. Am Sonntag kommt ihre Schwester zu Besuch. Caroline freut sich .....(4)..... das Familientreffen. Sie möchte .....(5)..... ihren Kindern einen Apfelkuchen backen.",
+    transText: {
+      ar: "تعمل كارولين معلمة في مدرسة ابتدائية. تعيش مع عائلتها في منزل صغير. في وقت فراغها تحب الطبخ كثيراً. تعلمت العديد من الوصفات من جدتها. يوم الأحد ستأتي أختها للزيارة. كارولين تتطلع للقاء العائلي. تريد خبز فطيرة تفاح مع أطفالها.",
+      ma: "كارولين كتخدم أستاذة ف مدرسة ابتدائية. كتعيش مع العائلة ديالها ف دار صغيرة. ف وقت الفراغ ديالها كتحب تطيب بزاف. تعلمت بزاف ديال الوصفات من جدتها. نهار الأحد غادي تجي أختها للزيارة. كارولين كتطلع للقاء العائلي. باغية تطيب تارت التفاح مع ولادها.",
+      en: "Caroline works as a teacher at a primary school. She lives with her family in a small house. In her free time she loves to cook. She learned many recipes from her grandmother. On Sunday her sister is coming to visit. Caroline is looking forward to the family reunion. She wants to bake an apple pie with her children.",
+      fr: "Caroline travaille comme enseignante dans une école primaire. Elle vit avec sa famille dans une petite maison. Pendant son temps libre, elle adore cuisiner. Elle a appris de nombreuses recettes de sa grand-mère. Dimanche, sa sœur vient en visite. Caroline attend avec impatience la réunion de famille. Elle veut préparer une tarte aux pommes avec ses enfants."
+    },
+    items: [
+      { n: 1, c: "als", opts: ["als", "wie", "für"], exp: "'als' + اسم مهنة بدون أداة، للتعبير عن المهنة (arbeiten als Lehrerin)." },
+      { n: 2, c: "mit", opts: ["mit", "bei", "zu"], exp: "'mit' + Dativ للتعبير عن السكن مع شخص (wohnen mit ihrer Familie)." },
+      { n: 3, c: "von", opts: ["von", "bei", "aus"], exp: "'lernen von' + Dativ، تعلم شيئاً من شخص." },
+      { n: 4, c: "auf", opts: ["auf", "über", "an"], exp: "'sich freuen auf' + Akkusativ للمستقبل (تتطلع لحدث قادم)." },
+      { n: 5, c: "mit", opts: ["mit", "bei", "zu"], exp: "'mit' + Dativ للتعبير عن المشاركة (فعل شيء مع شخص)." }
+    ]
+  },
+  {
+    id: "caroline-sp2", title: "Caroline", level: "B1", sub: "Sprach 2", type: "sprach2", isPremium: false,
+    text: "Caroline hat viele Rezepte .....(1)..... ihrer Großmutter gelernt. Jedes Jahr .....(2)..... Weihnachten backt sie besondere Kekse. Ihre Kinder helfen ihr oft .....(3)..... der Küche. Sie hat .....(4)..... ein kleines Kochbuch mit Familienrezepten geschrieben. Es liegt .....(5)..... dem Küchentisch.",
+    transText: {
+      ar: "تعلمت كارولين العديد من الوصفات من جدتها. كل عام في عيد الميلاد تخبز بسكويت خاص. غالباً ما يساعدها أطفالها في المطبخ. لقد كتبت كتاب طبخ صغير بوصفات العائلة. إنه موضوع على طاولة المطبخ.",
+      ma: "كارولين تعلمت بزاف ديال الوصفات من جدتها. كل عام ف عيد الميلاد كتطيب بسكويت خاص. ولادها بزاف ديال المرات كيعاونوها ف الكوزينة. كتبت كتاب طبخ صغير بوصفات العائلة. راه موضوع على طبلة الكوزينة.",
+      en: "Caroline learned many recipes from her grandmother. Every year at Christmas she bakes special cookies. Her children often help her in the kitchen. She has written a small cookbook with family recipes. It lies on the kitchen table.",
+      fr: "Caroline a appris de nombreuses recettes de sa grand-mère. Chaque année à Noël, elle prépare des biscuits spéciaux. Ses enfants l'aident souvent dans la cuisine. Elle a écrit un petit livre de cuisine avec des recettes de famille. Il se trouve sur la table de la cuisine."
+    },
+    wordBank: [
+      { k: "a", w: "von" }, { k: "b", w: "zu" }, { k: "c", w: "in" }, { k: "d", w: "schon" },
+      { k: "e", w: "auf" }, { k: "f", w: "für" }, { k: "g", w: "an" }, { k: "h", w: "bei" }
+    ],
+    items: [
+      { n: 1, c: "von" }, { n: 2, c: "zu" }, { n: 3, c: "in" }, { n: 4, c: "schon" }, { n: 5, c: "auf" }
+    ]
+  },
+
+  // ============================================================
+  // VERA — T1 كامل، والباقي skeleton Premium
+  // ============================================================
+  {
+    id: "vera-t1", title: "Vera", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
+    options: [
+      { k: "a", de: "Ein Sprachkurs in Deutschland", ar: "دورة لغة في ألمانيا", ma: "دورة اللغة ف ألمانيا", en: "A language course in Germany", fr: "Un cours de langue en Allemagne" },
+      { k: "b", de: "Ein neuer Arbeitsplatz", ar: "مكان عمل جديد", ma: "بلاصة خدمة جديدة", en: "A new workplace", fr: "Un nouveau lieu de travail" },
+      { k: "c", de: "Ein gemeinsamer Ausflug mit Freunden", ar: "رحلة مشتركة مع الأصدقاء", ma: "خرجة مشتركة مع الصحاب", en: "A trip with friends", fr: "Une sortie entre amis" },
+      { k: "d", de: "Ein neues Hobby entdecken", ar: "اكتشاف هواية جديدة", ma: "اكتشاف هواية جديدة", en: "Discovering a new hobby", fr: "Découvrir un nouveau passe-temps" },
+      { k: "e", de: "Eine Wohnung in einer anderen Stadt", ar: "شقة في مدينة أخرى", ma: "دار ف مدينة أخرى", en: "An apartment in another city", fr: "Un appartement dans une autre ville" }
+    ],
+    items: [
+      { n: 1, c: "a", de: "Vera möchte ihr Deutsch verbessern und sucht einen Kurs, der zweimal pro Woche stattfindet.", ar: "تريد فيرا تحسين لغتها الألمانية وتبحث عن دورة تُعقد مرتين في الأسبوع.", ma: "فيرا باغية تحسن الألمانية ديالها وكتقلب على دورة كتدار جوج مرات ف السيمانة.", en: "Vera wants to improve her German and is looking for a course that takes place twice a week.", fr: "Vera veut améliorer son allemand et cherche un cours qui a lieu deux fois par semaine." },
+      { n: 2, c: "e", de: "Vera wird nächsten Monat nach Hamburg umziehen, weil sie dort studieren möchte.", ar: "ستنتقل فيرا إلى هامبورغ الشهر القادم لأنها تريد الدراسة هناك.", ma: "فيرا غادي تنتقل ل هامبورغ الشهر الجاي حيت باغية تقرا تما.", en: "Vera will move to Hamburg next month because she wants to study there.", fr: "Vera va déménager à Hambourg le mois prochain parce qu'elle veut y étudier." },
+      { n: 3, c: "b", de: "Vera hat eine Stelle als Kellnerin in einem Restaurant gefunden.", ar: "وجدت فيرا وظيفة نادلة في مطعم.", ma: "فيرا لقاو خدمة نادلة ف مطعم.", en: "Vera has found a job as a waitress in a restaurant.", fr: "Vera a trouvé un emploi de serveuse dans un restaurant." },
+      { n: 4, c: "c", de: "Am Wochenende will Vera mit ihren Freunden ins Schwimmbad fahren.", ar: "في نهاية الأسبوع تريد فيرا الذهاب إلى المسبح مع أصدقائها.", ma: "ف نهاية السيمانة فيرا باغية تمشي للمسبح مع صحابها.", en: "At the weekend, Vera wants to go to the swimming pool with her friends.", fr: "Le week-end, Vera veut aller à la piscine avec ses amis." },
+      { n: 5, c: "d", de: "Vera hat mit dem Klavierspielen angefangen und nimmt seit zwei Monaten Unterricht.", ar: "بدأت فيرا بالعزف على البيانو وتأخذ دروساً منذ شهرين.", ma: "فيرا بدات تعزف على البيانو وكتاخد دروس من جوج شهور.", en: "Vera has started playing the piano and has been taking lessons for two months.", fr: "Vera a commencé à jouer du piano et prend des cours depuis deux mois." }
+    ]
+  },
+  // Vera T2/T3/SP1/SP2 — Premium skeletons (تُحمّل من Supabase)
+  { id: "vera-t2", title: "Vera", level: "B1", sub: "Teile 2", type: "mcq", isPremium: true },
+  { id: "vera-t3", title: "Vera", level: "B1", sub: "Teile 3", type: "matching", isPremium: true },
+  { id: "vera-sp1", title: "Vera", level: "B1", sub: "Sprach 1", type: "sprach1", isPremium: true },
+  { id: "vera-sp2", title: "Vera", level: "B1", sub: "Sprach 2", type: "sprach2", isPremium: true },
+
+  // ============================================================
+  // 24 درس جديد × 5 أجزاء = 120 skeleton Premium (مولّدين برمجياً)
+  // ============================================================
+  ...(() => {
+    const LESSONS = [
+      { title: "Eva", slug: "eva" },
+      { title: "Paul", slug: "paul" },
+      { title: "Iris", slug: "iris" },
+      { title: "Jan", slug: "jan" },
+      { title: "Miroslav", slug: "miroslav" },
+      { title: "Andreas 1", slug: "andreas1" },
+      { title: "Annika 2", slug: "annika2" },
+      { title: "Sonja", slug: "sonja" },
+      { title: "Nadja / Claudia", slug: "nadjaclaudia" },
+      { title: "Karla", slug: "karla" },
+      { title: "Viktor", slug: "viktor" },
+      { title: "Moritz", slug: "moritz" },
+      { title: "Corina", slug: "corina" },
+      { title: "Petra", slug: "petra" },
+      { title: "Tamara / Jakob", slug: "tamarajakob" },
+      { title: "Nicole", slug: "nicole" },
+      { title: "Andreas 2", slug: "andreas2" },
+      { title: "Thomas / Anna", slug: "thomasanna" },
+      { title: "Sophie", slug: "sophie" },
+      { title: "Alicia", slug: "alicia" },
+      { title: "Annika 1", slug: "annika1" },
+      { title: "Jennifer", slug: "jennifer" },
+      { title: "Mara", slug: "mara" },
+      { title: "Miroslav 2", slug: "miroslav2" }
+    ];
+    const PARTS = [
+      { sub: "Teile 1", type: "headings", suf: "t1" },
+      { sub: "Teile 2", type: "mcq", suf: "t2" },
+      { sub: "Teile 3", type: "matching", suf: "t3" },
+      { sub: "Sprach 1", type: "sprach1", suf: "sp1" },
+      { sub: "Sprach 2", type: "sprach2", suf: "sp2" }
+    ];
+    return LESSONS.flatMap(l =>
+      PARTS.map(p => ({
+        id: `${l.slug}-${p.suf}`,
+        title: l.title,
+        level: "B1",
+        sub: p.sub,
+        type: p.type,
+        isPremium: true
+      }))
+    );
+  })()
+];
+// ============================================================
+// الجزء 3: HOREN_EXAMS (26 درس) + AutoTrans + SmartTrans + HorenCard + HorenGateway
+// ============================================================
+
 const HOREN_EXAMS = [
   {
     id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
@@ -527,7 +935,7 @@ const HOREN_EXAMS = [
       { text: "Nummer 45. Mit dem Fahrrad zur Arbeit fahre ich eigentlich nie. Ich habe gar kein Fahrrad mehr. Ich habe mir vor 2 Jahren ein Motorrad gekauft und das benutze ich jetzt jeden Tag.", pitch: 1.05, rate: 1.0 }
     ],
     items: [
-      { n:1, c:"F", de:"Der Sprecher könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدث يمكنه تخيل الذهاب بالحافلة.", story:"مراتو ديما عندها الطوموبر ديالها." },
+      { n:1, c:"F", de:"Der Sprecher könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدث يمكنه تخيل الذهاب بالحافلة.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
       { n:2, c:"F", de:"Die Sprecherin geht gern zu Fuß.", ar:"المتحدثة تحب المشي على الأقدام.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
       { n:3, c:"R", de:"Der Sprecher findet es in Ordnung, dass seine Frau immer das Auto hat.", ar:"المتحدث يجد أنه لا بأس أن تكون السيارة دائماً مع زوجته.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
       { n:4, c:"F", de:"Die Sprecherin fährt jeden Tag mit ihrem Motorrad zur Arbeit.", ar:"المتحدثة تذهب إلى العمل بالدراجة النارية كل يوم.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
@@ -788,6 +1196,9 @@ const HOREN_EXAMS = [
   }
 ];
 
+// ============================================================
+// AutoTrans — ترجمة تلقائية عبر Google Translate API
+// ============================================================
 const globalTransCache = {};
 
 function AutoTrans({ text, lang, force = false }) {
@@ -821,6 +1232,9 @@ function AutoTrans({ text, lang, force = false }) {
   return <span>{translated}</span>;
 }
 
+// ============================================================
+// SmartTrans — ترجمة ذكية: كيستعمل الترجمة اليدوية يلا كانت، وإلا كيدير AutoTrans
+// ============================================================
 function SmartTrans({ obj, lang }) {
   if (!obj) return "";
   const textDe = obj.de || obj.en || (obj.q ? obj.q : "") || (typeof obj === 'string' ? obj : "");
@@ -830,12 +1244,15 @@ function SmartTrans({ obj, lang }) {
   }
   
   if (['ar', 'ma', 'en', 'fr'].includes(lang)) {
-     return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
+    return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
   }
 
   return <AutoTrans text={textDe} lang={lang} />;
 }
 
+// ============================================================
+// HorenCard — بطاقة دروس الاستماع
+// ============================================================
 function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
@@ -1015,6 +1432,9 @@ function HorenCard({ exam, userLang, showTranslation }) {
   );
 }
 
+// ============================================================
+// HorenGateway — بوابة الدخول لدروس الاستماع
+// ============================================================
 function HorenGateway({ onStart, userLang }) {
   return (
     <div style={{ paddingBottom: 100 }}>
@@ -1035,12 +1455,16 @@ function HorenGateway({ onStart, userLang }) {
     </div>
   );
 }
+// ============================================================
+// ExamView — عرض الامتحان (Lesen + Horen + Matching + Sprach)
+// ✅ يحتوي على: زر التصحيح الأزرق، Matching الجديد، التوضيح 💡
+// ============================================================
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
   const [modalGap, setModalGap] = useState(null);
   const [activeGap, setActiveGap] = useState(null);
-  const [activeMatchingQ, setActiveMatchingQ] = useState(null); // ✅ للماتشينغ الجديد
+  const [activeMatchingQ, setActiveMatchingQ] = useState(null); // ✅ Matching
   const [showTranslation, setShowTranslation] = useState(false);
   const [excluded, setExcluded] = useState({});
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -1065,7 +1489,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
     return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
   };
 
-  // ✅ الدوال الجديدة ديال الماتشينغ
+  // ✅ Matching helpers
   const clearMatch = (qNumber) => {
     const newAns = { ...ans };
     delete newAns[qNumber];
@@ -1211,8 +1635,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
           </div>
         )}
 
-        {/* ✅ الماتشينغ الجديد */}
-        {exam.type === "matching" && (
+        {/* ✅ Matching الجديد */}
+        {exam.type === "matching" && exam.ads && (
           <div>
             <div className="card" style={{ padding: 20 }}>
               <h3 className="de" style={{ fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>SITUATIONEN</h3>
@@ -1286,6 +1710,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         {(exam.type === "headings" || exam.type === "mcq") && exam.items && exam.items.map((it, idx) => {
           const sel = ans[it.n];
           const isDone = done !== null || (mode === "practice" && sel !== undefined);
+          const options = exam.type === "headings" ? (exam.options || []) : (it.opts || []);
           return (
             <div key={it.n} className="card" style={{ padding: 16 }}>
               <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
@@ -1305,7 +1730,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                   )}
                 </div>
               </div>
-              {(exam.type === "headings" ? exam.options : it.opts).map(o => (
+              {options.map(o => (
                 <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isDone} style={{ padding: 14 }}>
                   <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em" }}>{o.k}</div>
                   <div className="de" style={{ flex: 1, textAlign: "left" }}>
@@ -1325,34 +1750,38 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         })}
       </div>
 
-      {/* Modal لـ Sprach 1 مع التوضيح الجديد */}
-      {modalGap !== null && exam.type === "sprach1" && (
-        <div className="overlay" onClick={() => setModalGap(null)}>
-          <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
-              <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("gap_num", userLang)} ({modalGap})</h3>
-              <button className="btnI" onClick={() => setModalGap(null)}>✕</button>
-            </div>
-            <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {exam.items.find(x => x.n === modalGap).opts.map((opt, i) => (
-                <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? "var(--blue)" : "var(--line)", background: ans[modalGap] === opt ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[modalGap] === opt ? "var(--blue)" : "var(--text)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
-                  <span style={{ opacity: 0.5, fontWeight: 900, marginRight: 12 }}>{String.fromCharCode(65 + i)}</span>
-                  <span className="de" style={{fontSize:"1.05em", flex: 1}}>{opt}</span>
-                  {ans[modalGap] === opt && <span style={{ color: "var(--blue)", fontSize:"1.2em" }}>✓</span>}
-                </button>
-              ))}
-            </div>
-            {/* ✅ التوضيح الجديد */}
-            {exam.items.find(x => x.n === modalGap).exp && (
-              <div className="t2-ar" style={{marginTop: 20, fontSize: "0.95em"}}>
-                💡 {exam.items.find(x => x.n === modalGap).exp}
+      {/* ✅ Modal Sprach 1 مع التوضيح 💡 */}
+      {modalGap !== null && exam.type === "sprach1" && (() => {
+        const gapItem = exam.items.find(x => x.n === modalGap);
+        if (!gapItem) return null;
+        return (
+          <div className="overlay" onClick={() => setModalGap(null)}>
+            <div className="sheet" onClick={e => e.stopPropagation()}>
+              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
+                <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("gap_num", userLang)} ({modalGap})</h3>
+                <button className="btnI" onClick={() => setModalGap(null)}>✕</button>
               </div>
-            )}
+              <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                {(gapItem.opts || []).map((opt, i) => (
+                  <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? "var(--blue)" : "var(--line)", background: ans[modalGap] === opt ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[modalGap] === opt ? "var(--blue)" : "var(--text)" }} onClick={() => pick(gapItem, opt)}>
+                    <span style={{ opacity: 0.5, fontWeight: 900, marginRight: 12 }}>{String.fromCharCode(65 + i)}</span>
+                    <span className="de" style={{fontSize:"1.05em", flex: 1}}>{opt}</span>
+                    {ans[modalGap] === opt && <span style={{ color: "var(--blue)", fontSize:"1.2em" }}>✓</span>}
+                  </button>
+                ))}
+              </div>
+              {/* ✅ التوضيح 💡 */}
+              {gapItem.exp && (
+                <div className="t2-ar" style={{marginTop: 20, fontSize: "0.95em"}}>
+                  💡 {gapItem.exp}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      )}
+        );
+      })()}
 
-      {/* Modal لـ Sprach 2 */}
+      {/* Modal Sprach 2 */}
       {activeGap !== null && exam.type === "sprach2" && (
          <div className="overlay" onClick={() => setActiveGap(null)}>
            <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1361,7 +1790,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                <button className="btnI" onClick={() => setActiveGap(null)}>✕</button>
              </div>
              <div className="word-bank" style={{marginBottom:0, gridTemplateColumns: "1fr"}}>
-               {exam.wordBank.map(w => {
+               {(exam.wordBank || []).map(w => {
                  const isUsed = Object.values(ans).includes(w.w) && ans[activeGap] !== w.w;
                  return (
                    <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => pickSprach2(w.w)} style={{ padding: "14px", borderColor: ans[activeGap] === w.w ? "var(--blue)" : "var(--line)", background: ans[activeGap] === w.w ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[activeGap] === w.w ? "var(--blue)" : "var(--text)" }}>
@@ -1374,6 +1803,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
          </div>
       )}
 
+      {/* ✅ Bottom Bar — زر التصحيح الأزرق */}
       <div className="bottom-bar">
         <button onClick={done !== null ? reset : finish} className="btn-prev-bar">
           {done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}
@@ -1389,7 +1819,10 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
   );
 }
 
-function SchreibenView({ userLang, dark, setDark }) {
+// ============================================================
+// SchreibenView
+// ============================================================
+function SchreibenView({ userLang, dark, setDark, isPaid, isAdmin, trialActive }) {
   const [selected, setSelected] = useState(null);
   const [showTransText, setShowTransText] = useState(false);
   const [showTransTask, setShowTransTask] = useState(false);
@@ -1397,14 +1830,13 @@ function SchreibenView({ userLang, dark, setDark }) {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analyzeStep, setAnalyzeStep] = useState(0);
   const [result, setResult] = useState(null);
-  const [timeLeft, setTimeLeft] = useState(30 * 60); 
+  const [timeLeft, setTimeLeft] = useState(30 * 60);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     let timer;
     if (selected && !result && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft(prev => prev - 1);
-      }, 1000);
+      timer = setInterval(() => { setTimeLeft(prev => prev - 1); }, 1000);
     }
     return () => clearInterval(timer);
   }, [selected, result, timeLeft]);
@@ -1431,7 +1863,7 @@ function SchreibenView({ userLang, dark, setDark }) {
         clearInterval(interval);
         finishAnalysis();
       }
-    }, 800); 
+    }, 800);
   };
 
   const finishAnalysis = () => {
@@ -1442,14 +1874,14 @@ function SchreibenView({ userLang, dark, setDark }) {
     if (isGibberish) {
       setResult({
         score: 0, maxScore: 45, contentScore: "0/5",
-        generalEval: userLang === 'hi' ? "नमस्ते, पाठ की सामग्री खाली है और यह वह नहीं है जो आवश्यक है। आपको जर्मन शब्दों के साथ एक वास्तविक प्रतिक्रिया लिखनी होगी।" : "سلام كَشْ بو، فمحتوى الرسالة خالي من المعلومات وهاداشي ماشي هو المطلوب. خصك تكتب رد حقيقي فيه كلمات ألمانية مفهومة.",
-        contentFeedback: userLang === 'hi' ? "आपने कार्य के किसी भी बिंदु का उल्लेख नहीं किया। कोई पठनीय सामग्री नहीं है।" : "ما ذكرت حتى نقطة من النقط المطلوبة فالمهمة. ما كاينش محتوى مقروء.",
+        generalEval: userLang === 'hi' ? "नमस्ते, पाठ की सामग्री खाली है और यह वह नहीं है जो आवश्यक है।" : "سلام كَشْ بو، فمحتوى الرسالة خالي من المعلومات وهاداشي ماشي هو المطلوب. خصك تكتب رد حقيقي فيه كلمات ألمانية مفهومة.",
+        contentFeedback: userLang === 'hi' ? "आपने कार्य के किसी भी बिंदु का उल्लेख नहीं किया।" : "ما ذكرت حتى نقطة من النقط المطلوبة فالمهمة. ما كاينش محتوى مقروء.",
         errors: []
       });
     } else {
       setResult({
         score: 35, maxScore: 45, contentScore: "4/5",
-        generalEval: userLang === 'hi' ? "अच्छा प्रयास! आपने अधिकांश आवश्यक बिंदुओं का उत्तर दिया है, लेकिन कुछ छोटी भाषाई त्रुटियां हैं।" : "مجهود جيد! لقد أجبت على معظم النقاط المطلوبة، ولكن هناك بعض الأخطاء اللغوية البسيطة.",
+        generalEval: userLang === 'hi' ? "अच्छा प्रयास! आपने अधिकांश आवश्यक बिंदुओं का उत्तर दिया है।" : "مجهود جيد! لقد أجبت على معظم النقاط المطلوبة، ولكن هناك بعض الأخطاء اللغوية البسيطة.",
         contentFeedback: userLang === 'hi' ? "आपने कार्य में अधिकांश आवश्यक बिंदुओं का उल्लेख किया है।" : "لقد ذكرت أغلب النقاط المطلوبة في المهمة.",
         errors: [{ error: "Ich habe gehen", fix: "Ich bin gegangen", type: userLang === 'hi' ? "व्याकरण (Grammatik)" : "قواعد (Grammatik)" }]
       });
@@ -1457,6 +1889,37 @@ function SchreibenView({ userLang, dark, setDark }) {
     setIsAnalyzing(false);
   };
 
+  // ✅ فتح درس Schreiben — مع دعم Premium
+  const openLesson = async (item) => {
+    if (item.isPremium) {
+      const hasAccess = isPaid || isAdmin || trialActive;
+      if (!hasAccess) {
+        wa(t("wa_upgrade_msg", userLang) + " - " + item.title);
+        return;
+      }
+      // محاولة جلب المحتوى من Supabase
+      const { data, error } = await sb.from('premium_lessons').select('data').eq('id', item.id).single();
+      if (error || !data) {
+        alert("الدرس مازال ما تحطش فسوبابيز: " + item.id);
+        return;
+      }
+      const loaded = data.data;
+      setSelected({ ...item, ...loaded, isPremium: true });
+    } else {
+      setSelected(item);
+    }
+    setUserText("");
+    setResult(null);
+    setShowTransText(false);
+    setShowTransTask(false);
+    setTimeLeft(30 * 60);
+  };
+
+  const filteredLessons = SCHREIBEN_DATA.filter(item =>
+    (item.title || "").toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // ---- شاشة القائمة ----
   if (!selected) {
     return (
       <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
@@ -1468,25 +1931,22 @@ function SchreibenView({ userLang, dark, setDark }) {
           <div style={{ color: "var(--muted)", padding: "10px 30px", fontWeight: 900 }}>B2</div>
         </div>
         <div style={{ position: "relative", marginBottom: 20 }}>
-          <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+          <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
         </div>
-        {SCHREIBEN_DATA.map(item => (
-          <div key={item.id} onClick={() => { 
-            if (item.isPremium) {
-              alert("هاد الدرس خاصو يكون مخلص ولا فتريال. ولكن المحتوى ديالو مازال ما تحطش فسوبابيز.");
-              return;
-            }
-            setSelected(item); setUserText(""); setResult(null); setShowTransText(false); setShowTransTask(false); setTimeLeft(30 * 60); 
-          }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
+        {filteredLessons.map(item => (
+          <div key={item.id} onClick={() => openLesson(item)} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
             <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{item.title}</div>
-            <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{item.level}</div>
-            {item.isPremium && <span style={{ marginLeft: 8, fontSize: "0.85em", color: "var(--red)" }}>🔒 Premium</span>}
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{item.level || "B1"}</div>
+              {item.isPremium && <span style={{ fontSize: "0.85em", color: "var(--red)", fontWeight: 900 }}>🔒 Premium</span>}
+            </div>
           </div>
         ))}
       </div>
     );
   }
 
+  // ---- شاشة النتيجة ----
   if (result) {
     return (
       <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
@@ -1547,6 +2007,7 @@ function SchreibenView({ userLang, dark, setDark }) {
     );
   }
 
+  // ---- شاشة الكتابة ----
   return (
     <div style={{ padding: "20px 12px", paddingBottom: 120 }}>
       {isAnalyzing && (
@@ -1558,7 +2019,7 @@ function SchreibenView({ userLang, dark, setDark }) {
              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: "#22C55E", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
           </div>
           <h2 style={{ fontSize: "1.8em", fontWeight: 900, marginBottom: 10 }}>{userLang === 'hi' ? 'स्मार्ट सुधार' : 'جاري التصحيح الذكي'}</h2>
-          <p style={{ color: "var(--muted)", marginBottom: 40 }}>{userLang === 'hi' ? 'हम उन्नत AI तकनीकों का उपयोग करके आपके पाठ की समीक्षा कर रहे हैं' : 'نقوم بمراجعة نصك باستخدام تقنيات AI المطورة'}</p>
+          <p style={{ color: "var(--muted)", marginBottom: 40 }}>{userLang === 'hi' ? 'हम आपके पाठ की समीक्षा कर रहे हैं' : 'نقوم بمراجعة نصك'}</p>
           <div style={{ width: "100%", maxWidth: 300 }}>
             {[userLang === 'hi' ? "स्मार्ट सुधारक तैयार करना..." : "تحضير المصحح الذكي...", userLang === 'hi' ? "वाक्य संरचना का विश्लेषण..." : "تحليل بنية الجمل...", userLang === 'hi' ? "व्याकरण और शब्दावली की समीक्षा..." : "مراجعة القواعد والمفردات...", userLang === 'hi' ? "अंतिम रिपोर्ट तैयार करना..." : "توليد التقرير النهائي..."].map((step, idx) => (
               <div key={idx} style={{ color: analyzeStep === idx + 1 ? "#22C55E" : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
@@ -1585,9 +2046,9 @@ function SchreibenView({ userLang, dark, setDark }) {
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
           <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
           <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>SITUATION</span>
-          <span style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level}</span>
+          <span style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level || "B1"}</span>
         </div>
-        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
+        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text || ""}</div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> {t("trans_text", userLang)}
@@ -1598,7 +2059,7 @@ function SchreibenView({ userLang, dark, setDark }) {
         </div>
         {showTransText && (
           <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
-            {selected.transText[userLang] || <AutoTrans text={selected.text} lang={userLang} force={true} />}
+            {(selected.transText && selected.transText[userLang]) || <AutoTrans text={selected.text || ""} lang={userLang} force={true} />}
           </div>
         )}
       </div>
@@ -1609,8 +2070,8 @@ function SchreibenView({ userLang, dark, setDark }) {
           <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>AUFGABE</span>
           <span style={{ marginLeft: "auto", background: "var(--line)", color: "var(--muted)", padding: "4px 12px", borderRadius: 8, fontSize: "0.8em", fontWeight: 900 }}>150–180 {t("words_count", userLang)}</span>
         </div>
-        <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task}</div>
-        {selected.points.map((pt, idx) => (
+        <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task || ""}</div>
+        {(selected.points || []).map((pt, idx) => (
           <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
             <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#22C55E", color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
             <div className="de" style={{ background: "var(--paper)", padding: "12px 16px", borderRadius: 12, flex: 1, border: "1px solid var(--line)" }}>{pt}</div>
@@ -1626,8 +2087,8 @@ function SchreibenView({ userLang, dark, setDark }) {
         </div>
         {showTransTask && (
           <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
-            <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask[userLang] || <AutoTrans text={selected.task} lang={userLang} force={true} />}</div>
-            {(selected.transPoints[userLang] || selected.transPoints['en'] || selected.transPoints['ar'] || []).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
+            <div style={{ fontWeight: 900, marginBottom: 8 }}>{(selected.transTask && selected.transTask[userLang]) || <AutoTrans text={selected.task || ""} lang={userLang} force={true} />}</div>
+            {((selected.transPoints && (selected.transPoints[userLang] || selected.transPoints['en'] || selected.transPoints['ar'])) || []).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
           </div>
         )}
       </div>
@@ -1655,6 +2116,9 @@ function SchreibenView({ userLang, dark, setDark }) {
   );
 }
 
+// ============================================================
+// NotificationsBell
+// ============================================================
 function NotificationsBell({ userLang }) {
   const [notifs, setNotifs] = useState([]);
   const [open, setOpen] = useState(false);
@@ -1705,8 +2169,7 @@ function NotificationsBell({ userLang }) {
 
       {open && (
         <>
-          <div style={{ position: 'fixed', inset: 0, zIndex: 999 }}
-               onClick={() => setOpen(false)} />
+          <div style={{ position: 'fixed', inset: 0, zIndex: 999 }} onClick={() => setOpen(false)} />
           <div style={{
             position: 'absolute', top: 48, right: 0, width: 320, maxHeight: 420,
             overflowY: 'auto', background: 'var(--paper)', borderRadius: 16,
@@ -1741,6 +2204,9 @@ function NotificationsBell({ userLang }) {
   );
 }
 
+// ============================================================
+// AdminPanel
+// ============================================================
 function AdminPanel({ userLang, onClose }) {
   const [users, setUsers] = useState([]);
   const [notifs, setNotifs] = useState([]);
@@ -1788,8 +2254,8 @@ function AdminPanel({ userLang, onClose }) {
   const sendNotification = async () => {
     if (!notifTitle.trim() || !notifMsg.trim()) return alert(t('fill_all_fields', userLang) || 'عمر جميع الحقول');
     setSending(true);
-    const { error } = await sb.from('notifications').insert([{ 
-      title: notifTitle.trim(), message: notifMsg.trim(), is_active: true 
+    const { error } = await sb.from('notifications').insert([{
+      title: notifTitle.trim(), message: notifMsg.trim(), is_active: true
     }]);
     setSending(false);
     if (error) return alert("مشكل: " + error.message);
@@ -1800,7 +2266,7 @@ function AdminPanel({ userLang, onClose }) {
 
   const filtered = users.filter(u => {
     const q = search.toLowerCase();
-    return (u.email || '').toLowerCase().includes(q) || 
+    return (u.email || '').toLowerCase().includes(q) ||
            (u.unique_name || '').toLowerCase().includes(q);
   });
 
@@ -1921,6 +2387,9 @@ function AdminPanel({ userLang, onClose }) {
   );
 }
 
+// ============================================================
+// App — المكوّن الرئيسي
+// ============================================================
 function App() {
   const [user, setUser] = useState(null);
   const [isPaid, setIsPaid] = useState(false);
@@ -1938,7 +2407,7 @@ function App() {
   const [settings, setSettings] = useState(false);
   const [results, setResults] = useState(() => { try { return JSON.parse(localStorage.getItem("ep_results") || "{}"); } catch (e) { return {}; } });
   const [searchQuery, setSearchQuery] = useState("");
-  const [userLang, setUserLang] = useState(null); 
+  const [userLang, setUserLang] = useState(null);
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
   const [showHorenLessons, setShowHorenLessons] = useState(false);
   const [showHorenTrans, setShowHorenTrans] = useState(false);
@@ -1959,13 +2428,14 @@ function App() {
   }, []);
 
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
-  
+
   useEffect(() => {
     if (user && !user.isGuest && user.id) {
       const deviceId = localStorage.getItem("ep_device_id");
       sb.from('profiles').select('is_paid, active_device_id, trial_started_at, is_blocked, is_admin').eq('id', user.id).single()
         .then(({ data, error }) => {
           if (error) { console.error("profiles fetch:", error); return; }
+          if (data) {
             if (data.is_blocked) {
               alert("⚠️ تم حظر حسابك. تواصل مع الدعم الفني.");
               localStorage.removeItem("ep_user");
@@ -2022,7 +2492,7 @@ function App() {
 
   useEffect(() => { document.documentElement.style.setProperty("--fs", fs / 100); try { localStorage.setItem("ep_fs", fs); } catch (e) {} }, [fs]);
   useEffect(() => { try { localStorage.setItem("ep_results", JSON.stringify(results)); } catch (e) {} }, [results]);
-  
+
   useEffect(() => {
     let interval = null;
     if (exam && timeLeft > 0) {
@@ -2032,13 +2502,13 @@ function App() {
   }, [exam, timeLeft]);
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
-  
+
   const handleAuth = async (e) => {
     e.preventDefault();
     const uniqueName = e.target.unique_name.value.trim();
     const uniqueCode = e.target.unique_code.value.trim();
     if (!uniqueName || !uniqueCode) return;
-    
+
     let deviceId = localStorage.getItem("ep_device_id");
     if (!deviceId) {
       deviceId = (window.crypto && window.crypto.randomUUID) ? crypto.randomUUID() : ('dev_' + Date.now() + '_' + Math.random().toString(36).slice(2));
@@ -2052,18 +2522,18 @@ function App() {
       const { data: newData, error: newError } = await sb.auth.signUp({ email, password: uniqueCode });
       if (newError) return alert("مشكل: " + newError.message);
       if (!newData?.user) return alert("ما قدرناش نصاوبو الحساب. تحقق من إعدادات Supabase.");
-      
-      const { error: upsertError } = await sb.from('profiles').upsert([{ 
-        id: newData.user.id, 
+
+      const { error: upsertError } = await sb.from('profiles').upsert([{
+        id: newData.user.id,
         email: uniqueName,
         unique_name: uniqueName,
-        is_paid: false, 
+        is_paid: false,
         active_device_id: deviceId,
         is_blocked: false,
         trial_started_at: new Date().toISOString()
       }], { onConflict: 'id' });
       if (upsertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + upsertError.message);
-      
+
       const userObj = { ...newData.user, name: uniqueName, isGuest: false };
       setUser(userObj);
       localStorage.setItem("ep_user", JSON.stringify(userObj));
@@ -2074,7 +2544,7 @@ function App() {
       localStorage.setItem("ep_user", JSON.stringify(userObj));
     }
   };
-  
+
   const handleGuest = () => {
     const guest = { name: "زائر", isGuest: true };
     setUser(guest);
@@ -2085,25 +2555,25 @@ function App() {
     setTrialEndsAt(null);
     localStorage.setItem("ep_user", JSON.stringify(guest));
   };
-  
-  const logout = () => { 
-    localStorage.removeItem("ep_user"); 
-    setIsPaid(false); 
+
+  const logout = () => {
+    localStorage.removeItem("ep_user");
+    setIsPaid(false);
     setIsAdmin(false);
     setIsBlocked(false);
-    setTrialActive(false); 
-    setTrialEndsAt(null); 
-    setUser(null); 
-    sb.auth.signOut(); 
+    setTrialActive(false);
+    setTrialEndsAt(null);
+    setUser(null);
+    sb.auth.signOut();
   };
 
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
-  const go = (v) => { 
-    setView(v); 
-    setExam(null); 
+  const go = (v) => {
+    setView(v);
+    setExam(null);
     setShowHorenLessons(false);
     setIsSideMenuOpen(false);
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
   };
 
   const levelExams = EXAMS.filter(e => e.level === level);
@@ -2123,6 +2593,7 @@ function App() {
     }
   };
 
+  // ---- Splash ----
   if (!isReady) {
     return (
       <div className="splash-screen">
@@ -2132,6 +2603,7 @@ function App() {
     );
   }
 
+  // ---- اختيار اللغة ----
   if (!userLang) {
     return (
       <div className="auth-screen">
@@ -2154,6 +2626,7 @@ function App() {
     );
   }
 
+  // ---- تسجيل الدخول ----
   if (!user) {
     return (
       <div className="auth-screen">
@@ -2162,15 +2635,15 @@ function App() {
             <LogoImage size={80} />
             <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("welcome", userLang)}</h2>
           </div>
-          
+
           <form onSubmit={handleAuth}>
             <input className="auth-input" name="unique_name" placeholder={t("unique_name_placeholder", userLang)} required />
             <input className="auth-input" name="unique_code" placeholder={t("unique_code_placeholder", userLang)} required />
             <button type="submit" className="auth-btn">{t("login", userLang)}</button>
           </form>
-          
+
           <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>{t("or", userLang)}</div>
-          
+
           <button className="auth-btn guest" onClick={handleGuest}>
             👤 {t("guest", userLang)}
           </button>
@@ -2179,6 +2652,7 @@ function App() {
     );
   }
 
+  // ---- محظور ----
   if (isBlocked) {
     return (
       <div className="auth-screen">
@@ -2191,20 +2665,22 @@ function App() {
     );
   }
 
+  // ---- ExamView ----
   if (exam) {
-    return <ExamView 
-      exam={exam} 
-      userLang={userLang} 
-      dark={dark} 
-      setDark={setDark} 
-      onBack={() => {setExam(null); setTimeLeft(30*60);}} 
-      onNext={() => handleNextExam(exam)} 
+    return <ExamView
+      exam={exam}
+      userLang={userLang}
+      dark={dark}
+      setDark={setDark}
+      onBack={() => {setExam(null); setTimeLeft(30*60);}}
+      onNext={() => handleNextExam(exam)}
       onSave={saveResult}
       timeLeft={timeLeft}
       setTimeLeft={setTimeLeft}
     />;
   }
 
+  // ---- Main App ----
   return (
     <div style={{ paddingBottom: 100 }}>
       <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
@@ -2258,13 +2734,13 @@ function App() {
           <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
-            
+
             <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
               <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
                 <LogoImage size={90} />
               </div>
               <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
-              
+
               <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}>
                 <p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p>
                 <p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p>
@@ -2280,7 +2756,7 @@ function App() {
         {view === "lesen" && (
           <div>
             <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
-            
+
             {trialActive && !isPaid && (
               <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))", border: "1.5px solid #22C55E", borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ fontSize: "2em" }}>🎁</div>
@@ -2294,7 +2770,7 @@ function App() {
             <div style={{ marginBottom: 16 }}>
               <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
-            
+
             {level === "B2" ? (
                <div className="card" style={{ textAlign: "center", padding: 40 }}>
                  <h2>{t("coming_soon", userLang)}</h2>
@@ -2346,7 +2822,7 @@ function App() {
         )}
 
         {view === "schreiben" && (
-          <SchreibenView userLang={userLang} dark={dark} setDark={setDark} />
+          <SchreibenView userLang={userLang} dark={dark} setDark={setDark} isPaid={isPaid} isAdmin={isAdmin} trialActive={trialActive} />
         )}
 
         {view === "admin" && isAdmin && (
@@ -2367,7 +2843,7 @@ function App() {
           { id: "horen", label: t("horen", userLang), icon: "🎧" },
           { id: "schreiben", label: t("schreiben", userLang), icon: "✎" },
           { id: "sprechen", label: t("sprechen", userLang), icon: "🎙" },
-          { id: "pruefung", label: t("pruefung", userLang), icon: "🎓" } 
+          { id: "pruefung", label: t("pruefung", userLang), icon: "🎓" }
         ].map((item) => (
           <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)}>
             <span className="ic">{item.icon}</span>
@@ -2401,6 +2877,7 @@ function App() {
 
                 return (
                   <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={async () => {
+                    if (!existingExam) return;
                     if (isPremium && hasAccess) {
                       const { data, error } = await sb.from('premium_lessons').select('data').eq('id', existingExam.id).single();
                       if (error || !data) {
@@ -2408,7 +2885,7 @@ function App() {
                       } else {
                         setExam(data.data); setSelectedExamTitle(null); setTimeLeft(30*60);
                       }
-                    } else if (existingExam) {
+                    } else {
                       setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(30*60);
                     }
                   }}>
@@ -2432,7 +2909,7 @@ function App() {
               <strong style={{fontSize:"1.3em"}}>{t("settings", userLang)}</strong>
               <button className="btnI" onClick={() => setSettings(false)}>✕</button>
             </div>
-            
+
             <div style={{ marginBottom: 20 }}>
               <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>{t("change_lang", userLang)}</span>
               <div className="lang-grid" style={{ maxHeight: 200 }}>
@@ -2454,7 +2931,7 @@ function App() {
               </div>
             </div>
             <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>{t("reset_size", userLang)}</button>
-            
+
             <div style={{ marginTop: 20, textAlign: "center" }}>
               <button onClick={logout} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)" }}>
                 {t("logout", userLang)}
@@ -2467,6 +2944,9 @@ function App() {
   );
 }
 
+// ============================================================
+// Render — بدء التطبيق
+// ============================================================
 ReactDOM.createRoot(document.getElementById("root")).render(<App />);
 </script>
 </body>
