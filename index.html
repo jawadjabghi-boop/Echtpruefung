@@ -1,4 +1,4 @@
-12027
+2027
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="html-root">
 <head>
@@ -112,32 +112,12 @@
   .dark .menu-item:hover, .dark .menu-item.active { background: #333; color: var(--gold); border-right-color: var(--gold); }
   .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
   .menu-overlay.active { display: block; }
-  
-  /* Updated Floating Buttons */
-  .bottom-bar { 
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-    display: flex; align-items: center; justify-content: space-between; gap: 10px; 
-    background: transparent; padding: 0; z-index: 1000; width: 92%; max-width: 450px; 
-  }
-  .btn-prev-bar { 
-    background: #FFF; border: 1px solid var(--line); border-radius: 20px; 
-    padding: 12px 20px; color: var(--blue); font-weight: 900; 
-    cursor: pointer; font-size: 0.9em; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-  }
-  .dark .btn-prev-bar { background: #1e293b; color: #FFF; border-color: #334155; }
-  .btn-correct-bar { 
-    background: linear-gradient(135deg, #2962ff, #1565c0); color: white; 
-    border: none; border-radius: 20px; padding: 12px 25px; font-weight: 900; 
-    display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(41, 98, 255, 0.3); 
-    cursor: pointer; flex-grow: 1; justify-content: center; font-size: 1em; 
-  }
-  .btn-next-bar { 
-    background: linear-gradient(135deg, #2962ff, #1565c0); border: none; 
-    border-radius: 20px; width: 50px; height: 45px; display: flex; 
-    justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); 
-    cursor: pointer; flex-shrink: 0; transform: rotate(180deg); color: white;
-  }
-
+  .bottom-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: space-between; gap: 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 40px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 1px solid #f1f5f9; z-index: 1000; width: 92%; max-width: 450px; }
+  .dark .bottom-bar { background: rgba(26, 26, 26, 0.95); border-color: #333; }
+  .btn-prev-bar { background: #f1f5f9; border: none; border-radius: 20px; padding: 12px 20px; color: #334155; font-weight: 900; cursor: pointer; font-size: 0.9em; }
+  .dark .btn-prev-bar { background: #333; color: #FFF; }
+  .btn-correct-bar { background: linear-gradient(135deg, #00c853, #00e676); color: white; border: none; border-radius: 20px; padding: 12px 25px; font-weight: 900; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3); cursor: pointer; flex-grow: 1; justify-content: center; font-size: 0.95em; }
+  .btn-next-bar { background: linear-gradient(135deg, #2962ff, #1565c0); border: none; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); cursor: pointer; flex-shrink: 0; transform: rotate(180deg); }
   .timer-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 16px; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-variant-numeric: tabular-nums; font-size: 16px; }
   .dark .timer-badge { background: rgba(26, 26, 26, 0.95); border-color: #333; color: #FFF; }
   .keyboard-area { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
@@ -197,6 +177,7 @@ const UI_TEXTS = {
 };
 
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
+
 const SCHREIBEN_DATA = [
   {
     id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
@@ -260,45 +241,417 @@ const SCHREIBEN_DATA = [
       fr: ["(1) De quelle offre n'étiez-vous pas satisfait ?", "(2) Expliquez pourquoi l'offre n'a pas suscité l'enthousiasme.", "(3) Suggestions d'amélioration : Que pourrait faire TIKKI TAKKA de mieux selon vous ?"],
       hi: ["(1) आप किस ऑफर से संतुष्ट नहीं थे?", "(2) समझाएं कि ऑफर ने उत्साह क्यों नहीं दिया।", "(3) सुधार के लिए सुझाव: आपकी राय में TIKKI TAKKA क्या बेहतर कर सकता था?"]
     }
+  }
+];
+
+const EXAMS = [
+{
+  id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a", de:"Eltern trotz Kritik mit der Schule zufrieden", ar:"الآباء راضون عن المدرسة رغم الانتقادات", ma:"الوالدين مرتاحين مع المدرسة رغم الانتقادات", en:"Parents satisfied with school despite criticism", fr:"Parents satisfaits de l'école malgré les critiques"},
+    {k:"b", de:"Elektromobilität für Angestellte", ar:"التنقل الكهربائي للموظفين", ma:"الدراجات الكهربائية للموظفين", en:"E-mobility for employees", fr:"Mobilité électrique pour les employés"},
+    {k:"c", de:"STÄRKUNG VON BUS UND BAHN", ar:"تعزيز الحافلات والقطارات", ma:"تقوية الطوبيسات والقطارات", en:"Strengthening of bus and train", fr:"Renforcement des bus et des trains"},
+    {k:"d", de:"Schule und Umweltschutz", ar:"المدرسة وحماية البيئة", ma:"المدرسة والحفاظ على البيئة", en:"School and environmental protection", fr:"École et protection de l'environnement"},
+    {k:"e", de:"Bald keine Firmenwagen mehr?", ar:"هل ستختفي سيارات الشركات قريباً؟", ma:"قريباش غادي تحيد الطوموبيلات ديال الشركات؟", en:"Soon no more company cars?", fr:"Bientôt plus de voitures de société ?"},
+    {k:"f", de:"Ticketpreise bei der Bahn", ar:"أسعار التذاكر في السكك الحديدية", ma:"أثمنة التذاكر فالقطار", en:"Train ticket prices", fr:"Prix des billets de train"},
+    {k:"g", de:"Lehrerberuf wird immer attraktiver", ar:"مهنة التدريس تصبح أكثر جاذبية", ma:"مهنة الأستاذ ولات كتعجب كثر", en:"Teaching profession is becoming more attractive", fr:"Le métier d'enseignant devient plus attractif"},
+    {k:"h", de:"Engagement für die Natur", ar:"الالتزام بالطبيعة", ma:"الاهتمام بالطبيعة", en:"Commitment to nature", fr:"Engagement pour la nature"},
+    {k:"i", de:"Preissenkungen bei Bus, Straßenbahn und U-Bahn!", ar:"تخفيضات في الحافلات والترام والمترو!", ma:"تخفيضات فالطوبيس والطرامواي والميترو!", en:"Price reductions for bus, tram and subway!", fr:"Réductions de prix pour bus, tram et métro !"},
+    {k:"j", de:"ZU WENIG LEHRER - STADT REAGIERT", ar:"نقص في المعلمين - المدينة تتخذ إجراءات", ma:"قلال الأساتذة - المدينة دارت شي حلول", en:"TOO FEW TEACHERS - CITY REACTS", fr:"PAS ASSEZ D'ENSEIGNANTS - LA VILLE RÉAGIT"}
+  ],
+  items:[
+    {n:1, c:"b", de:"Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen?", ar:"الإعلان يروّج لتأجير الدراجات الكهربائية بدل سيارات الشركة.", ma:"الإعلان كيشجع على كراء البيسكليتات الكهربائية بلاصة طوموبيلات الشركة.", en:"The ad promotes leasing e-bikes instead of company cars.", fr:"L'annonce fait la promotion de la location de vélos électriques au lieu de voitures de société."},
+    {n:2, c:"h", de:"NaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz.", ar:"جمعية تعمل في حماية البيئة والحيوانات.", ma:"جمعية كتخدم فحماية البيئة والحيوانات.", en:"An association working for environmental and animal protection.", fr:"Une association qui œuvre pour la protection de l'environnement et des animaux."},
+    {n:3, c:"f", de:"Die Bahn erhöht dieses Jahr die Ticketpreise nicht. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr.", ar:"النص يتكلم عن عدم رفع أسعار تذاكر القطار هذا العام.", ma:"النص كيهضر على عدم رفع أثمنة تذاكر القطار هاد العام.", en:"The text talks about not increasing train ticket prices this year.", fr:"Le texte parle de la non-augmentation des prix des billets de train cette année."},
+    {n:4, c:"a", de:"Vergangenen Monat wurden etwa tausend Eltern befragt. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei.", ar:"80% من الآباء راضون عن المدرسة، لكن 40% فقط يرون أن أبناءهم مجهزون للمهنة.", ma:"80% من الوالدين مرتاحين مع المدرسة، ولكن غير 40% كيشوفو بلي ولادهم واجدين للمهنة.", en:"80% of parents are satisfied with the school, but only 40% think their children are prepared for a profession.", fr:"80 % des parents sont satisfaits de l'école, mais seulement 40 % pensent que leurs enfants sont préparés à un métier."},
+    {n:5, c:"j", de:"Berlin. In der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Daher plant der Berliner Senat eine Werbekampagne.", ar:"نقص كبير في المعلمين في برلين، والمدينة تطلق حملة لجذب المعلمين.", ma:"نقص كبير فالأساتذة فبرلين، والمدينة كتحضر حملة لجذب الأساتذة.", en:"A major teacher shortage in Berlin, and the city is launching a campaign to attract teachers.", fr:"Une grave pénurie d'enseignants à Berlin, et la ville lance une campagne pour attirer les enseignants."}
+  ]
+},
+{
+  id:"alex-t2", title:"Alex Und Cora", level:"B1", sub:"Teile 2", type:"mcq",
+  paragraphs: [
+    { de: "Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt.", ar: "سواء كان كلباً أو قطة أو فأراً: الحيوانات الأليفة تحظى بشعبية كبيرة في ألمانيا.", ma: "سواء كان كلب ولا قط ولا فار: الحيوانات الأليفة كيعجبو بزاف فألمانيا.", en: "Whether dog, cat or mouse: pets are very popular in Germany.", fr: "Qu'il s'agisse de chiens, de chats ou de souris : les animaux de compagnie sont très populaires en Allemagne." },
+    { de: "In deutschen Haushalten gibt es rund 34 Millionen Haustiere. Besonders Katzen sind sehr beliebt.", ar: "يوجد في الأسر الألمانية حوالي 34 مليون حيوان أليف. القطط تحظى بشعبية خاصة.", ma: "كاين فالدور ديال الألمان حوالي 34 مليون حيوان أليف. القطط كيعجبو بزاف.", en: "There are around 34 million pets in German households. Cats are particularly popular.", fr: "Il y a environ 34 millions d'animaux de compagnie dans les foyers allemands. Les chats sont particulièrement populaires." },
+    { de: "Der Hundeexperte Marius Klotz sieht es kritisch: Wichtig sind klare Regeln, die der Hund verstehen kann.", ar: "خبير الكلاب ماريوس كلوتز يرى الأمر بشكل نقدي: المهم هو القواعد الواضحة التي يمكن للكلب فهمها.", ma: "خبير الكلاب ماريوس كلوتز كيشوفها بنقد: المهم هو القواعد الواضحة اللي يقدر الكلب يفهمها.", en: "Dog expert Marius Klotz sees it critically: Clear rules that the dog can understand are important.", fr: "L'expert canin Marius Klotz est critique : des règles claires que le chien peut comprendre sont importantes." }
+  ],
+  items:[
+    { n:1, c:"C", q:"Die Hundebesitzerin Elli Herfeld", qar:"مالكة الكلب إيلي هيرفيلد", qma:"مولات الكلب إيلي هيرفيلد", qen:"The dog owner Elli Herfeld", qfr:"La propriétaire du chien Elli Herfeld",
+      opts:[
+        {k:"A", de:"feiert ihren Geburtstag immer mit ihrem Hund.", ar:"تحتفل بعيد ميلادها دائماً مع كلبها.", ma:"كتحتفل بعيد ميلادها ديما مع الكلب ديالها.", en:"always celebrates her birthday with her dog.", fr:"fête toujours son anniversaire avec son chien."},
+        {k:"B", de:"sieht ihren Hund als festes Familienmitglied.", ar:"تعتبر كلبها فرداً ثابتاً في العائلة.", ma:"كتشوف الكلب ديالها بحال شي فرد من العائلة.", en:"sees her dog as a permanent family member.", fr:"considère son chien comme un membre permanent de la famille."},
+        {k:"C", de:"backt ihrem Hund zum Geburtstag einen Kuchen.", ar:"تخبز لكلبها كعكة عيد ميلاد.", ma:"كتطيب للكلب ديالها كيكة فعيد ميلادو.", en:"bakes her dog a cake for his birthday.", fr:"prépare un gâteau d'anniversaire pour son chien."}
+      ]
+    },
+    { n:2, c:"A", q:"In Seniorenheimen gibt es oft Tiere, damit", qar:"غالباً ما توجد حيوانات في دور رعاية المسنين لكي", qma:"فدار المسنين غالباً كيكونو حيوانات باش", qen:"There are often animals in retirement homes so that", qfr:"Il y a souvent des animaux dans les maisons de retraite pour que",
+      opts:[
+        {k:"A", de:"die Senioren etwas tun, was gut für sie ist.", ar:"يقوم كبار السن بشيء مفيد لهم.", ma:"يديرو ناس الكبار شي حاجة مفيدة ليهم.", en:"the seniors do something that is good for them.", fr:"les seniors fassent quelque chose qui est bon pour eux."},
+        {k:"B", de:"sie auf die älteren Menschen aufpassen.", ar:"يعتنون بكبار السن.", ma:"يعيطو على الناس الكبار.", en:"they take care of the elderly.", fr:"ils s'occupent des personnes âgées."},
+        {k:"C", de:"die Senioren mehr spazieren gehen.", ar:"يمشي كبار السن أكثر.", ma:"يمشيو الناس الكبار بزاف.", en:"the seniors go for more walks.", fr:"les seniors se promènent davantage."}
+      ]
+    },
+    { n:3, c:"A", q:"Bettina Schröther …", qar:"بيتينا شرودر...", qma:"بيتينا شرودر...", qen:"Bettina Schröther ...", qfr:"Bettina Schröther ...",
+      opts:[
+        {k:"A", de:"verbringt die ganze Freizeit mit ihrem Hund.", ar:"تقضي كل وقت فراغها مع كلبها.", ma:"كتدوز كل وقت الفراغ ديالها مع الكلب ديالها.", en:"spends all her free time with her dog.", fr:"passe tout son temps libre avec son chien."},
+        {k:"B", de:"macht mit ihrem Hund regelmäßig Wellnessurlaube.", ar:"تأخذ عطلات صحية مع كلبها بانتظام.", ma:"كتاخد عطلات ديال الراحة مع الكلب ديالها بانتظام.", en:"regularly takes wellness holidays with her dog.", fr:"prend régulièrement des vacances bien-être avec son chien."},
+        {k:"C", de:"lässt ihren Hund in einer Hundeschule erziehen.", ar:"تترك كلبها يتدرب في مدرسة للكلاب.", ma:"كتخلي الكلب ديالها يتدرب فمدرسة ديال الكلاب.", en:"has her dog trained in a dog school.", fr:"fait dresser son chien dans une école de chiens."}
+      ]
+    },
+    { n:4, c:"C", q:"Nach Meinung von Hundeexperte Marius Klotz sollte man", qar:"وفقاً لرأي خبير الكلاب ماريوس كلوتز يجب على المرء", qma:"على حساب خبير الكلاب ماريوس كلوتز خاص الواحد", qen:"According to dog expert Marius Klotz, one should", qfr:"Selon l'avis de l'expert canin Marius Klotz, on devrait",
+      opts:[
+        {k:"A", de:"sich zur Ernährung des Tiers beraten lassen.", ar:"استشارة حول تغذية الحيوان.", ma:"ياخد نصيحة على الماكلة ديال الحيوان.", en:"get advice on the animal's nutrition.", fr:"demander conseil sur l'alimentation de l'animal."},
+        {k:"B", de:"seinen Hund immer gut behandeln.", ar:"معاملة كلبه دائماً بشكل جيد.", ma:"يعامل الكلب ديالو ديما مزيان.", en:"always treat his dog well.", fr:"toujours bien traiter son chien."},
+        {k:"C", de:"die Regeln bei der Hundeerziehung beachten.", ar:"مراعاة القواعد في تربية الكلاب.", ma:"يحترم القواعد فتربية الكلاب.", en:"pay attention to the rules of dog training.", fr:"respecter les règles d'éducation canine."}
+      ]
+    }
+  ]
+},
+{
+  id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching",
+  ads:[
+    {k:"A", t:"Café Simon", de:"3 × in Passau Ihr Konditor\n1 = Rindermarkt 10\n2 = Ludwigsplatz 6\n3 = Donau-Passage\n• Hausgemachte Pralinen\n• Kuchen, Torten und Eis\n• Kleiner Mittagstisch", ar:"شوكولاتة، كعك، تورتات وآيس كريم منزلية الصنع", ma:"شوكولا، كيك، تورتة وآيس كريم ديال الدار", en:"Homemade pralines, cakes, tarts and ice cream", fr:"Pralines, gâteaux, tartes et glaces faits maison"},
+    {k:"B", t:"Tourismusschulen", de:"4190 Bad Leonfelden\nHagauer Str. 17, Tel. 07213/6955\nHöhere Lehranstalt: 5 Jahre, Matura\nFV-Kolleg: 3 Semester – endet mit Matura\nHotelhandelsschule: 3 Jahre\nTourismufachschule: 3 Jahre", ar:"مؤسسات تعليمية عليا، مدرسة تجارة الفنادق، مدرسة السياحة", ma:"مدارس عليا، مدرسة ديال الفندقة والسياحة", en:"Higher education, hotel trade school, tourism school", fr:"Enseignement supérieur, école de commerce hôtelier, école de tourisme"},
+    {k:"C", t:"Liederbühne Robinson", de:"KLEINKUNST VOM FEINSTEN\n• Urgemütliche Gaststube\n• Idyllischer Biergarten\n• Preiswerte Schmankerl\n• Vegetarische Spezialitäten\nSeewog 2 • 93486 Runding-Vierau\nTel. 09971-4651\nan der B20 Cham–Furth i. W.\ngeöffnet von Mi bis Sa von 17:00–1:00 Uhr\nSonn- und Feiertage ab 11:00 Uhr", ar:"فنون صغيرة، أطباق نباتية خاصة", ma:"فنون، ماكلة نباتية", en:"Small arts, vegetarian specialties", fr:"Petit art, spécialités végétariennes"},
+    {k:"D", t:"Interkulturelle Arbeit", de:"Berufsbegleitende Fortbildung für Fachkräfte in pädagogischen, sozialen und Gesundheitsberufen.\nJan./Feb.\nParitätisches Bildungswerk.\nTel.: 0421 / 174720", ar:"تدريب مهني للمتخصصين أثناء العمل", ma:"تكوين مهني للأطر خلال الخدمة", en:"In-service training for professionals", fr:"Formation continue pour professionnels"},
+    {k:"E", t:"Restaurantcafé Chesa W. Pressl", de:"Schweizer und bayerische Küche,\nFischspezialitäten aus heimischen Gewässern\nRömerplatz 3 (Hängebrücke)\n94032 Passau\nTel. 0851 / 33331", ar:"مطبخ سويسري وبافاري، أسماك متخصصة", ma:"ماكلة سويسرية وبافارية، سمك", en:"Swiss and Bavarian cuisine, fish specialties", fr:"Cuisine suisse et bavaroise, spécialités de poisson"},
+    {k:"F", t:"BIZ (Berufsinformationszentrum)", de:"Sie stehen vor beruflichen Entscheidungen\nDann informieren Sie sich im\nB I Z\nBerufsinformationszentrum\nÖffnungszeiten:\nMo, Di, Mi: 8.00 bis 12.00 Uhr\n14.00 bis 15.30 Uhr\nDo: 8.00 bis 12.00 Uhr • 14.00 bis 18.00 Uhr\nFr: 8.00 bis 12.00 Uhr\nSie finden dort ein breitgefächertes Angebot an Medien zu den Themen:\nAUSBILDUNG • STUDIUM\nArbeitsamt Passau, Innstraße 30, Tel. 0851/590-390", ar:"معلومات حول التكوين والدراسة", ma:"معلومات على التكوين والدراسة", en:"Information on training and studies", fr:"Informations sur la formation et les études"},
+    {k:"G", t:"Abendkurs für Einsteiger", de:"Keine Angst vor neuen Technologien\nDieser Kurs richtet sich an alle diejenigen, die sich bisher mit dem Computer noch gar nicht befasst haben. Neben theoretischen Grundwissen wird ein praktischer Einstieg in die Betriebssysteme Windows und Linux vermittelt.\nVHS Favoriten · Tel.: 01-785342", ar:"أساسيات الكمبيوتر", ma:"أساسيات ديال الكمبيوتر", en:"Computer basics", fr:"Bases de l'informatique"},
+    {k:"H", t:"MortizCafé", de:"Unterer Sand 2 Passau\nAquarium\n• täglich bis 18 Uhr\n• Kaffee so viel du willst\n   eine Tasse Frische\n   eine Tasse Milch\n   eine Tasse Zucker\n• täglich von 18 Uhr bis 21 Uhr\n   Beck’s\n   Jever\n   Bitburger\n   Badeger\n   Budweiser", ar:"قهوة بقدر ما تريد", ma:"قهوة باللي بغيتي", en:"Coffee as much as you want", fr:"Café autant que tu veux"},
+    {k:"I", t:"Rathausekeller", de:"Originelles Weinkolal mit österreichischen, italienischen und französischen Qualitätsweinen sowie großer Auswahl an kaltem und warmem Buffet.\nMontag und Dienstag – Ruhetage\nA 4785 Halbach/Freinberg\nTel.: 0043/7713/6104", ar:"مطعم ونبيذ", ma:"مطعم ونبيذ", en:"Restaurant and wine", fr:"Restaurant et vin"},
+    {k:"J", t:"Internationales Studium", de:"Fremdsprachen +\nBetriebswirtschaft.\nStaatlicher Uni-Abschluss\nB.A. in European\nAdministration. 2 Jahre in\nKöln + 1 Jahr in England\noder Frankreich.\nInfos anfordern:\nEuro Akademie\nElsa-Brandström-Str. 8\n50668 Köln\n(0221) 736074", ar:"لغات أجنبية + إدارة أعمال، بكالوريوس في الإدارة الأوروبية", ma:"لغات أجنبية + إدارة، إجازة فالإدارة الأوروبية", en:"Foreign languages + Business administration, B.A. in European Administration", fr:"Langues étrangères + Gestion d'entreprise, B.A. en Administration Européenne"},
+    {k:"K", t:"USA-Aufenthalt für Schüler", de:"Ein Schuljahr an einer High School, sehr gute Gastfamilien, beste Betreuung, Prospekte und ausführliches Video kostenlos von:\nfee-Sprachreisen\nLeibnizstr. 3\n70193 Stuttgart\nTel. 0711 / 638048\nFax 6365378", ar:"سنة دراسية في مدرسة ثانوية", ma:"عام دراسي فمدرسة ثانوية بأمريكا", en:"One school year at a High School", fr:"Une année scolaire dans un lycée"},
+    {k:"L", t:"Bachls Kerzenstub’n", de:"TANZEN + ESSEN Live-Musik mit TANZ\nGenießen Sie unsere herzhaft deftigen Fleischspezialitäten!\n93136 Keilberg Tel.: 0851/9111-0\nGeöffnet: Di–Sa ab 17.00 Uhr, Übernachtung für Reisende", ar:"رقص وأكل، موسيقى حية مع رقص", ma:"رقص وماكلة، موسيقى حية مع الرقص", en:"DANCE + FOOD, Live music with DANCE", fr:"DANSE + NOURRITURE, Musique live avec DANSE"}
+  ],
+  items:[
+    {n:1, c:"H", de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.", ar:"تحب قضاء ساعات طويلة في المقهى، ولكنك لا ترغب في إنفاق الكثير من المال.", ma:"كتحب تدوز ساعات فالمقهى، ولكن ما بغيتيش تصرف فلوس بزاف.", en:"You like spending many hours in a cafe but don't want to spend much money.", fr:"Vous aimez passer de nombreuses heures dans un café mais ne voulez pas dépenser beaucoup d'argent."},
+    {n:2, c:"G", de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer.", ar:"لقد غيرت مهنتك مؤخرًا وتحتاج إلى معرفة أساسية للعمل على الكمبيوتر من أجل المهمة الجديدة.", ma:"بدلتي الخدمة دابا وكتحتاج تعرف أساسيات الكمبيوتر للمهمة الجديدة.", en:"You have just changed jobs and need basic computer skills for the new task.", fr:"Vous venez de changer de métier et avez besoin de connaissances informatiques de base pour votre nouvelle tâche."},
+    {n:3, c:"D", de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein.", ar:"تعمل في مستشفى وتتعامل غالبًا مع مرضى من جميع أنحاء العالم. ترغب في أن تكون أكثر تأهيلاً لهذه الوظيفة.", ma:"كتخدم فالمستشفى وكتعامل مع مرضى من العالم كامل. بغيتي تكون واجد كثر لهاد الخدمة.", en:"You work in a hospital and often deal with patients from all over the world. You want to be better qualified for this work.", fr:"Vous travaillez dans un hôpital et avez souvent affaire à des patients du monde entier. Vous souhaitez être mieux qualifié pour ce travail."},
+    {n:4, c:"X", de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit.", ar:"ترغب في حضور دورة رقص للمبتدئين. لديك وقت فقط في المساء.", ma:"بغيتي تمشي لدورة ديال الرقص للمبتدئين. عندك غير الليل.", en:"You would like to attend a dance course for beginners. You only have time in the evening.", fr:"Vous souhaitez suivre un cours de danse pour débutants. Vous n'avez le temps que le soir."},
+    {n:5, c:"J", de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren um später vielleicht auch dort zu arbeiten.", ar:"ترغب في العمل في مجال يتعلق باللغات الأجنبية. لذلك تريد الدراسة في الخارج وربما العمل هناك لاحقًا.", ma:"بغيتي تخدم شي حاجة فاللغات. داكشي علاش بغيتي تقرا فالخارج وربما تخدم تما من بعد.", en:"You want to work in a field related to foreign languages. That's why you want to study abroad and maybe work there later.", fr:"Vous souhaitez travailler dans un domaine lié aux langues étrangères. C'est pourquoi vous voulez étudier à l'étranger et peut-être y travailler plus tard."},
+    {n:6, c:"A", de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am Liebsten süße Sachen isst.", ar:"تريد قضاء فترة بعد الظهر المريحة في المدينة مع أحد معارفك. تعلم أن صديقك يفضل تناول الأشياء الحلوة.", ma:"بغيتي تدوز شي نهار مريح فالمدينة مع شي صاحب. عارف بلي صحابك كيحب الحلويات.", en:"You want to spend a cozy afternoon in the city with an acquaintance. You know that your acquaintance loves eating sweet things.", fr:"Vous voulez passer un après-midi agréable en ville avec une connaissance. Vous savez que votre connaissance aime manger des choses sucrées."},
+    {n:7, c:"I", de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren.", ar:"صديقك من الولايات المتحدة يزورك. هو خبير في النبيذ ويرغب في تذوق النبيذ الأوروبي.", ma:"صاحبك من أمريكا جاي يزورك. هو خبير فنبيذ وبغى يدوق النبيذ الأوروبي.", en:"Your friend from the USA is visiting. He is a wine connoisseur and wants to try European wines.", fr:"Votre ami des États-Unis est en visite. Il est connaisseur en vin et souhaite goûter des vins européens."},
+    {n:8, c:"X", de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen.", ar:"في وقت فراغك، ترغب في التعرف على بلدان أخرى وثقافات وتقاليد مختلفة.", ma:"فوقت الفراغ ديالك، بغيتي تعرف بلدان وثقافات وتقاليد أخرى.", en:"In your free time, you want to deal with other countries, foreign cultures and traditions.", fr:"Pendant votre temps libre, vous souhaitez vous intéresser à d'autres pays, cultures et traditions étrangères."},
+    {n:9, c:"F", de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung.", ar:"ابنة أصدقائك أنهت للتو الثانوية العامة وهي غير متأكدة مما تريد فعله لاحقًا. تحتاج إلى معلومات واستشارة.", ma:"بنت صحابك دازت الباك دابا وما عارفاش شنو بغات دير من بعد. كتحتاج معلومات ونصيحة.", en:"Your friend's daughter has just graduated from high school and is unsure what she wants to do later. She needs information and advice.", fr:"La fille de vos amis vient d'obtenir son baccalauréat et ne sait pas ce qu'elle veut faire plus tard. Elle a besoin d'informations et de conseils."},
+    {n:10, c:"C", de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch.", ar:"ترغب في تناول الطعام مع أصدقائك في مكان يقدم برنامج ترفيهي. لكن أصدقاؤك لا يتناولون اللحوم أو الأسماك.", ma:"بغيتي تاكل مع صحابك فشي بلاصة فيها برنامج ترفيهي. ولكن صحابك ما كياكلوش اللحم ولا الحوت.", en:"You want to eat with friends in a restaurant with an entertainment program. But your friends eat neither meat nor fish.", fr:"Vous souhaitez manger avec des amis dans un restaurant avec un programme de divertissement. Mais vos amis ne mangent ni viande ni poisson."}
+  ]
+},
+{
+  id:"alex-sp1", title:"Alex Und Cora", level:"B1", sub:"Sprach 1", type:"sprach1",
+  text: `Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, .....(1)..... ich seit zwei Monaten in einem Altersheim .....(2)..... der Nähe von Schaffhausen. Die Arbeit in .....(3)..... Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge .....(4)..... zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich .....(5)..... gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir .....(6)..... ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr .....(7)..... gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, .....(8)..... ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna .....(9)..... auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du .....(10)..... bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie`,
+  transText: {
+    ar: `شافهاوزن، في...\nمرحباً إيزابيل،\nكيف حالك؟ هل اجتزت امتحاناتك؟\nكما تعلمين، أنا أعمل منذ شهرين في دار للمسنين بالقرب من شافهاوزن. العمل في هذا المنزل يعجبني، رغم أنه مرهق جداً في بعض الأحيان. الشيء الجميل بشكل خاص هو التواصل الوثيق مع بعض كبار السن. هناك سيدة، آنا رينجير، أحبها كثيراً. عمرها 96 عاماً وتجلس على كرسي متحرك، لكنها دائماً مبتهجة. أمس أخبرتني عن حياتها بأكملها. عملت بجد حتى سن 84. حتى عندما كانت فتاة في الثامنة من عمرها، كان عليها أن تعمل لدى مزارع لأن والديها لم يتمكنا من إطعام الأسرة المكونة من تسعة أفراد. في وقت لاحق عملت آنا كخياطة.\nإلى جانب عملها، لم تتخل آنا أبداً عن شيء واحد: تسلق الجبال! كان هذا دائماً شغفها الكبير. هذه المرأة مثيرة للإعجاب حقاً!\nولكن من المؤكد أنك مررت بالكثير من التجارب أيضاً. سأكون سعيداً جداً إذا كتبت لي مرة أخرى قريباً!\nتحياتي الحارة\nجوليا`,
+    ma: `شافهاوزن، في...\nمرحباً إيزابيل،\nكيف حالك؟ واش دوزتي الامتحانات ديالك؟\nبحال ما كتعرفي، أنا كنخدم منذ شهرين في دار المسنين قرب شافهاوزن. الخدمة في هاد الدار كتعجبني، رغم أنها مرهقة جداً في بعض الأحيان. الحاجة الزوينة بزاف هي التواصل القريب مع بعض الناس الكبار. كاينة سيدة، آنا رينجير، كنحبها بزاف. عمرها 96 عاماً وكتجلس على كرسي متحرك، ولكنها دائماً مبتهجة. البارح حكات ليا على حياتها كاملة. خدمت بجد حتى لسن 84. حتى ملي كانت بنت عندها 8 سنين، كان عليها تخدم عند مزارع حيت والديها ما قدروش يكلو عائلة ديال 9 ديال الناس. من بعد آنا خدمت كخياطة.\nإلى جانب الخدمة ديالها، آنا عمرها ما تنازلت على حاجة وحدة: تسلق الجبال! هادشي كان ديما شغفها الكبير. هاد السيدة مثيرة للإعجاب بزاف!\nولكن أكيد نتا حتى نتا دوزتي بزاف ديال التجارب. غادي نفرح بزاف يلا كتبتي ليا مرة أخرى قريباً!\nتحياتي الحارة\nجوليا`
   },
-  // ========== دروس الكتابة الجديدة (Premium Empty Templates) ==========
-  { id: "sch4", title: "Sophie - Würzburg Und Freizeit", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch5", title: "Nadja - Garten Am Stadtrand", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch6", title: "Nicole - Probleme Mit Dem Bruder", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch7", title: "Andreas - Neuer Kollege Und Büroalltag", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch8", title: "Annika - Gemeinsamer Sommerurlaub", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch9", title: "Iris - Abschlussparty Organisieren", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch10", title: "Caroline - Gastschülerin Aus Marokko", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch11", title: "Vera - Arbeitsweg Und Neue Stelle", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch12", title: "Jennifer - Einladung Zur Hochzeit", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch13", title: "Andreas - Neue Wohnung Und Computer", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch14", title: "Thomas - Überraschungsausflug", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch15", title: "Tamara - Treffen Und Neuer Job", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch16", title: "Jan - Urlaub In Rom", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch17", title: "Viktor - Urlaub In Malta", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch18", title: "Anna - Katze Und Blumen", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch19", title: "Nora - Neue Wohnung Und Leute Kennenlernen", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch20", title: "Claudia - Zoobesuch Und Geburtstag", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch21", title: "Karla - Umzug Und Neue Arbeit", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch22", title: "Mara - Reise Und Neuer Freund", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch23", title: "Annika - Gemeinsamer Urlaub (Teil 2)", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch24", title: "Sonja - Musikfestival", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch25", title: "Rita - Hochzeit Und Neuigkeiten", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch26", title: "Anne - Laras Geburtstag", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch27", title: "Paul - Ausflug In Die Berge", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch28", title: "Jakob - Nachbarn Und Wohnung", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch29", title: "Emilia", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch30", title: "Tobias", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch31", title: "Naco", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch32", title: "Alicia", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch33", title: "Cora Und Alex", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch34", title: "Miroslav", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch35", title: "Corinna", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} },
-  { id: "sch36", title: "Moritz", level: "B1", isPremium: true, text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {} }
+  items:[
+    {n:1, c:"arbeite", opts:["arbeite","arbeiten","arbeiteten"]},
+    {n:2, c:"in", opts:["auf","bei","in"]},
+    {n:3, c:"diesem", opts:["diesem","diesen","dieses"]},
+    {n:4, c:"Kontakt", opts:["Kontakt","Kontakte","Kontakten"]},
+    {n:5, c:"besonders", opts:["besondere","besonderes","besonders"]},
+    {n:6, c:"ihr", opts:["ihr","ihre","ihres"]},
+    {n:7, c:"hart", opts:["hart","harte","härter"]},
+    {n:8, c:"weil", opts:["daher","deshalb","weil"]},
+    {n:9, c:"aber", opts:["aber","als","wie"]},
+    {n:10, c:"hast", opts:["bist","hast","wirst"]}
+  ]
+},
+{
+  id:"alex-sp2", title:"Alex Und Cora", level:"B1", sub:"Sprach 2", type:"sprach2",
+  wordBank:[{k:"a",w:"an"},{k:"b",w:"Bekannte"},{k:"c",w:"bereits"},{k:"d",w:"dafür"},{k:"e",w:"darüber"},{k:"f",w:"dass"},{k:"g",w:"Familie"},{k:"h",w:"kann"},{k:"i",w:"mich"},{k:"j",w:"mit"},{k:"k",w:"muss"},{k:"l",w:"ob"},{k:"m",w:"sehr"},{k:"n",w:"was"},{k:"o",w:"welche"}],
+  text: `Sehr geehrte Damen und Herren,\n\nnachdem ich Ihr Inserat gelesen habe, möchte ich .....(1)..... gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und .....(2)..... einladen. .....(3)..... wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen .....(4)..... Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und .....(5)..... Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, .....(6)..... genügend Parkplätze vorhanden sind.\n\nEs wäre .....(7)..... freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken .....(8)...... Bitte senden Sie mir einen Prospekt Ihres Hotels .....(9)..... genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai .....(10)..... ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\n\nMit freundlichen Grüßen\nBarbara Heuberger`,
+  transText: {
+    ar: `سيداتي وسادتي،\n\nبعد أن قرأت إعلانكم، أود الحصول على مزيد من المعلومات حول مطعمكم. بعد شهر سأحتفل بعيد ميلادي الثلاثين وأود دعوة العديد من الأصدقاء والمعارف. لذلك سيكون فندقكم مناسباً جداً بالتأكيد. لذلك لدي بعض الأسئلة لكم: أتوقع حوالي 25 شخصاً. كم تبلغ تكلفة استئجار الغرفة المناسبة وما هي الأطباق التي يمكنكم التوصية بها؟ نظراً لأن جميع الضيوف تقريباً سيأتون بالسيارة، سيكون من المهم أيضاً التأكد من توفر ما يكفي من مواقف السيارات.\n\nسأكون ممتناً جداً إذا تمكنتم من إبلاغي في أقرب وقت ممكن حتى أتمكن من إرسال الدعوات. يرجى إرسال كتيب عن فندقكم مع وصف دقيق للطريق. إذا كانت غرفكم محجوزة بالكامل لشهر مايو، فيرجى إبلاغي على الفور.\n\nمع أطيب التحيات\nباربرا هوبرغر`,
+    ma: `سيداتي وسادتي،\n\nمن بعد ما قريت الإعلان ديالكم، بغيت نعرف كثر على المطعم ديالكم. من بعد شهر غادي نحتفل بعيد ميلادي الثلاثين وبغيت نعيط لبزاف ديال الصحاب والمعارف. داكشي علاش الفندق ديالكم أكيد غادي يكون مناسب بزاف. داكشي علاش عندي شي أسئلة ليكم: كنتوقع حوالي 25 ديال الناس. بشحال كتكري الغرفة المناسبة وشنو هي الماكلة اللي تقدرو تنصحوني بها؟ حيت تقريباً كاع الضيوف غادي يجيو بالطوموبيل، خاصنا نتأكدو بلي كاينين مواقف كافيين للطوموبيلات.\n\nغادي نكون ممتن بزاف يلا قديتو تخبروني في أقرب وقت ممكن باش نقدر نصيفط الدعوات. عفاك صيفطو ليا كتيب على الفندق ديالكم مع وصف دقيق للطريق. يلا كانت الغرف ديالكم محجوزة بالكامل لشهر ماي، عفاك خبروني دغيا.\n\nمع أطيب التحيات\nباربرا هوبرغر`
+  },
+  items:[{n:1, c:"mich"},{n:2, c:"Bekannte"},{n:3, c:"dafür"},{n:4, c:"an"},{n:5, c:"welche"},{n:6, c:"dass"},{n:7, c:"sehr"},{n:8, c:"kann"},{n:9, c:"mit"},{n:10, c:"bereits"}]
+},
+{
+  id:"rita-t1", title:"Rita", level:"B1", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a", de:"Japanische Studie: Vielschläfer leben länger", ar:"دراسة يابانية: من ينامون كثيراً يعيشون أطول", ma:"دراسة يابانية: اللي كينعسو بزاف كيعيشو كثر", en:"Japanese study: heavy sleepers live longer", fr:"Étude japonaise : les gros dormeurs vivent plus longtemps"},
+    {k:"b", de:"USA: Nachfrage nach funktionellen Lebensmitteln geht zurück", ar:"الولايات المتحدة: تراجع الطلب على الأطعمة الوظيفية", ma:"أمريكا: الطلب على الماكلة الصحية نقص", en:"USA: Demand for functional foods is falling", fr:"États-Unis : la demande d'aliments fonctionnels diminue"},
+    {k:"c", de:"Studie zeigt: Heiraten macht dick", ar:"دراسة تظهر: الزواج يزيد الوزن", ma:"دراسة كتقول: الزواج كيزيد فالوزن", en:"Study shows: Marriage makes you fat", fr:"Une étude montre : le mariage fait grossir"},
+    {k:"d", de:"Die Mehrheit der Schweizer treibt aktiv Sport", ar:"غالبية السويسريين يمارسون الرياضة بانتظام", ma:"أغلبية السويسريين كيديرو الرياضة", en:"The majority of Swiss people actively do sports", fr:"La majorité des Suisses font du sport activement"},
+    {k:"e", de:"Neu im Trend: Jung und Gesund - mit Schokolade", ar:"الجديد في الموضة: الشباب والصحة - مع الشوكولاتة", ma:"ترند جديد: الشباب والصحة بالشوكولا", en:"New trend: Young and healthy - with chocolate", fr:"Nouvelle tendance : Jeune et en bonne santé - avec du chocolat"},
+    {k:"f", de:"Schweizer sollen gesünder leben", ar:"يجب على السويسريين أن يعيشوا حياة أكثر صحة", ma:"السويسريين خاصهم يعيشو حياة صحية كثر", en:"Swiss people should live healthier", fr:"Les Suisses devraient vivre plus sainement"},
+    {k:"g", de:"Statistik: Unverheiratete haben oft ein paar Kilos zu viel", ar:"إحصائية: العزاب غالباً ما يعانون من زيادة الوزن", ma:"إحصائية: اللي ماعندهمش الدار كيكونو زايدين شوية فالوزن", en:"Statistics: Unmarried people often have a few extra kilos", fr:"Statistiques : Les célibataires ont souvent quelques kilos en trop"},
+    {k:"h", de:"Teures Essen für mehr Jugend und Schönheit", ar:"طعام باهظ الثمن من أجل المزيد من الشباب والجمال", ma:"ماكلة غالية على قبل الشباب والزين", en:"Expensive food for more youth and beauty", fr:"Nourriture chère pour plus de jeunesse et de beauté"},
+    {k:"i", de:"Weniger schlafen - länger leben", ar:"النوم أقل - العيش أطول", ma:"نعس قليل - عيش كثر", en:"Sleep less - live longer", fr:"Dormir moins - vivre plus longtemps"},
+    {k:"j", de:"Schokolade essen - jung bleiben", ar:"تناول الشوكولاتة - البقاء شاباً", ma:"كول الشوكولا - بقى شاب", en:"Eat chocolate - stay young", fr:"Manger du chocolat - rester jeune"}
+  ],
+  items:[
+    {n:1, c:"h", de:"Du bist, was du isst, hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Dort kaufen bereits viele Leute neue teure Lebensmittel, die jüngeres Aussehen versprechen.", ar:"اتجاه جديد من أمريكا: أطعمة غالية تعد بمظهر أصغر، والناس مستعدون لدفع الكثير.", ma:"ترند جديد من أمريكا: ماكلة غالية كتعطي مظهر صغير، والناس واجدين يخلصو بزاف.", en:"New trend from the USA: expensive foods promise a younger appearance, and people are willing to pay a lot.", fr:"Nouvelle tendance des États-Unis : des aliments chers promettent une apparence plus jeune, et les gens sont prêts à payer cher."},
+    {n:2, c:"c", de:"Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern.", ar:"المتزوجون حديثاً يكتسبون وزناً بسبب تغيير عاداتهم الغذائية.", ma:"اللي تزوجو جديد كيزيدو فالوزن حيت كيبدلو عادات الماكلة ديالهم.", en:"Newly married couples often gain weight because they change their eating habits.", fr:"Les jeunes mariés prennent souvent du poids parce qu'ils changent leurs habitudes alimentaires."},
+    {n:3, c:"e", de:"Der Schokolade-Boom hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy Behandlungen mit Schokolade an.", ar:"النص يتكلم عن علاجات تجميل بالشوكولاتة في فندق سويسري.", ma:"النص كيهضر على علاجات ديال الزين بالشوكولا فشي فندق سويسري.", en:"The text is about chocolate beauty treatments in a Swiss hotel.", fr:"Le texte parle de soins de beauté au chocolat dans un hôtel suisse."},
+    {n:4, c:"f", de:"Nach dem Motto „beschwingt und bewegt“ starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei soll die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen.", ar:"حملة صحية سويسرية لتشجيع الناس على الرياضة وأكل متوازن.", ma:"حملة صحية سويسرية باش تشجع الناس على الرياضة والماكلة المتوازنة.", en:"A Swiss health campaign to encourage people to exercise and eat a balanced diet.", fr:"Une campagne de santé suisse pour encourager les gens à faire du sport et à manger équilibré."},
+    {n:5, c:"i", de:"Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit und bezog sich auf eine neue japanische Studie.", ar:"الدراسة اليابانية تقول إن النوم الطويل يقلل العمر، والعنوان الصحيح هو النوم أقل.", ma:"الدراسة اليابانية كتقول بلي النعاس الطويل كينقص العمر، والعنوان الصحيح هو نعس قليل.", en:"The Japanese study says that long sleep reduces lifespan, and the correct title is sleep less.", fr:"L'étude japonaise dit que dormir longtemps réduit l'espérance de vie, et le bon titre est dormir moins."}
+  ]
+},
+{
+  id:"rita-t2", title:"Rita", level:"B1", sub:"Teile 2", type:"mcq",
+  paragraphs: [
+    { de: "Endlich wird der Traum von Louis Palmer wahr: Der Schweizer startet mit seinem Auto, das mit Sonnenenergie fährt, zur Weltumrundung.", ar: "أخيراً يتحقق حلم لويس بالمر: يبدأ السويسري رحلته حول العالم بسيارته التي تعمل بالطاقة الشمسية.", ma: "أخيراً تحقق الحلم ديال لويس بالمر: السويسري غادي يدور العالم بالطوموبيل ديالو اللي كتمشي بالطاقة الشمسية.", en: "Louis Palmer's dream is finally coming true: the Swiss man is starting his trip around the world in a solar-powered car.", fr: "Le rêve de Louis Palmer se réalise enfin : le Suisse entame son tour du monde dans une voiture solaire." },
+    { de: "Entwickelt für mich ein Fahrzeug für eine Weltreise, die mit Sonnenenergie fährt, forderte Louis Palmer Studenten auf. Heute ist das Auto fertig: ein dreirädriges Fahrzeug mit zwei Sitzplätzen.", ar: "\"طوروا لي مركبة لرحلة حول العالم تعمل بالطاقة الشمسية\"، طلب لويس بالمر من طلاب في جامعات سويسرية.", ma: "\"طورو ليا طوموبيل تدور العالم بالطاقة الشمسية\"، هادشي طلبو لويس بالمر من طلبة فجامعات سويسرية.", en: "\"Develop a solar-powered vehicle for a trip around the world for me,\" Louis Palmer asked students at Swiss universities.", fr: "\"Développez-moi un véhicule solaire pour un tour du monde\", a demandé Louis Palmer à des étudiants d'universités suisses." },
+    { de: "Phase eins begann mit 23 Jahren: Er zog aus, um 50 Länder auf allen Kontinenten zu bereisen: Anstatt an die Uni zu gehen, habe ich die Welt studiert.", ar: "بدأت المرحلة الأولى في سن 23: خرج للسفر إلى 50 دولة في جميع القارات: \"بدلاً من الذهاب إلى الجامعة، درست العالم\".", ma: "المرحلة الأولى بدات فسن 23: خرج باش يسافر لـ 50 بلاد فجميع القارات: \"بلاصة ما نمشي للجامعة، قريت العالم\".", en: "Phase one began at the age of 23: He set out to travel to 50 countries on all continents: \"Instead of going to university, I studied the world.\"", fr: "La première phase a commencé à l'âge de 23 ans : Il est parti voyager dans 50 pays sur tous les continents : \"Au lieu d'aller à l'université, j'ai étudié le monde.\"" }
+  ],
+  items:[
+    { n:1, c:"C", q:"Mit 23 Jahren wollte Louis Palmer", qar:"في سن 23 أراد لويس بالمر", qma:"فسن 23 لويس بالمر بغى", qen:"At 23, Louis Palmer wanted", qfr:"À 23 ans, Louis Palmer voulait",
+      opts:[
+        {k:"A", de:"für Studenten Reisen nach Südamerika organisieren", ar:"تنظيم رحلات للطلاب إلى أمريكا الجنوبية", ma:"ينظم رحلات للطلبة لأمريكا الجنوبية", en:"organize trips to South America for students", fr:"organiser des voyages en Amérique du Sud pour les étudiants"},
+        {k:"B", de:"mit dem Fahrrad durch 50 verschiedene Länder fahren", ar:"السفر بالدراجة عبر 50 دولة مختلفة", ma:"يسافر بالبيسكليت عبر 50 بلاد", en:"travel by bike through 50 different countries", fr:"voyager à vélo à travers 50 pays différents"},
+        {k:"C", de:"viele verschiedene Länder kennen lernen", ar:"التعرف على دول كثيرة مختلفة", ma:"يتعرف على بزاف ديال البلدان", en:"get to know many different countries", fr:"découvrir de nombreux pays différents"}
+      ]
+    },
+    { n:2, c:"C", q:"Sein Projekt konnte Palmer realisieren,", qar:"تمكن بالمر من تحقيق مشروعه", qma:"بالمر قدر يحقق المشروع ديالو", qen:"Palmer was able to realize his project", qfr:"Palmer a pu réaliser son projet",
+      opts:[
+        {k:"A", de:"weil er einen Preis von einer Universität gewonnen hat", ar:"لأنه فاز بجائزة من جامعة", ma:"حيت ربح جايزة من جامعة", en:"because he won a prize from a university", fr:"parce qu'il a gagné un prix d'une université"},
+        {k:"B", de:"weil er finanzielle Unterstützung von vier Universitäten erhalten hat.", ar:"لأنه تلقى دعماً مالياً من أربع جامعات", ma:"حيت خد دعم مالي من 4 جامعات", en:"because he received financial support from four universities.", fr:"parce qu'il a reçu un soutien financier de quatre universités."},
+        {k:"C", de:"weil ihn Firmen und Universitäten unterstützt haben", ar:"لأن الشركات والجامعات دعمته", ma:"حيت الشركات والجامعات دعموه", en:"because companies and universities supported him", fr:"parce que des entreprises et des universités l'ont soutenu"}
+      ]
+    },
+    { n:3, c:"A", q:"Palmers Auto", qar:"سيارة بالمر", qma:"طوموبيل بالe Palmer",
+      opts:[
+        {k:"A", de:"fährt mit alternativer Energie", ar:"تسير بالطاقة البديلة", ma:"كتمشي بالطاقة البديلة", en:"runs on alternative energy", fr:"roule à l'énergie alternative"},
+        {k:"B", de:"geht auf eine dreijährige Weltreise", ar:"تذهب في رحلة حول العالم لمدة ثلاث سنوات", ma:"غادي تدور العالم لمدة 3 سنين", en:"goes on a three-year world trip", fr:"part pour un tour du monde de trois ans"},
+        {k:"C", de:"hat genug Platz für sieben Personen", ar:"لديها مساحة كافية لسبعة أشخاص", ma:"فيها بلاصة لـ 7 ديال الناس", en:"has enough space for seven people", fr:"a assez de place pour sept personnes"}
+      ]
+    },
+    { n:4, c:"A", q:"Louis Palmer", qar:"لويس بالمر", qma:"لويس بالمر", qen:"Louis Palmer", qfr:"Louis Palmer",
+      opts:[
+        {k:"A", de:"wird sich in nächster Zeit nicht langweilen", ar:"لن يشعر بالملل في المستقبل القريب", ma:"ماغاديش يحس بالملل فالمستقبل القريب", en:"will not be bored in the near future", fr:"ne va pas s'ennuyer dans un proche avenir"},
+        {k:"B", de:"möchte mit seinem Auto nicht durch Großstädte fahren", ar:"لا يريد القيادة في المدن الكبرى", ma:"ما بغاش يسوق فالمدن الكبار", en:"doesn't want to drive through big cities", fr:"ne veut pas conduire dans les grandes villes"},
+        {k:"C", de:"hat für die Weltreise sechs Sprachen gelernt", ar:"تعلم ست لغات لرحلة حول العالم", ma:"تعلم 6 ديال اللغات باش يدور العالم", en:"learned six languages for the world trip", fr:"a appris six langues pour le tour du monde"}
+      ]
+    },
+    { n:5, c:"C", q:"Schon als Jugendlicher", qar:"حتى وهو مراهق", qma:"حتى وهو صغير", qen:"Even as a teenager", qfr:"Même adolescent",
+      opts:[
+        {k:"A", de:"baute Louis an einem umweltfreundlichen Auto", ar:"بنى لويس سيارة صديقة للبيئة", ma:"بنى لويس طوموبيل صديقة للبيئة", en:"Louis built an eco-friendly car", fr:"Louis a construit une voiture écologique"},
+        {k:"B", de:"wollte Louis etwas für die Umwelt tun.", ar:"أراد لويس فعل شيء للبيئة", ma:"بغى لويس يدير شي حاجة للبيئة", en:"Louis wanted to do something for the environment.", fr:"Louis voulait faire quelque chose pour l'environnement."},
+        {k:"C", de:"wusste Louis genau, wie er sein Leben einteilen will", ar:"عرف لويس بالضبط كيف يقسم حياته", ma:"عرف لويس مزيان كيفاش يقسم الحياة ديالو", en:"Louis knew exactly how he wanted to divide his life", fr:"Louis savait exactement comment il voulait diviser sa vie"}
+      ]
+    }
+  ]
+},
+{
+  id:"rita-t3", title:"Rita", level:"B1", sub:"Teile 3", type:"matching",
+  ads:[
+    {k:"A", t:"Surf & Travel", de:"Kurztrips der Deutschen Bahn", ar:"رحلات قصيرة بالقطار الألماني", ma:"رحلات قصيرة بالقطار الألماني", en:"Short trips by Deutsche Bahn", fr:"Courts trajets avec la Deutsche Bahn"},
+    {k:"B", t:"Für den Fernsehfilm", de:"Kleindarsteller und Statisten gesucht", ar:"مطلوب ممثلون إضافيون في فيلم تلفزيوني", ma:"مطلوبين ممثلين ففيلم تلفزيوني", en:"Extras and background actors wanted for a TV movie", fr:"Figurants et acteurs recherchés pour un téléfilm"},
+    {k:"C", t:"Messejobs", de:"Hostessen und Promoter für Messen", ar:"عمل كمضيفين في المعارض", ma:"خدامة ديال الضيافة فالمعارض", en:"Hosts and promoters for trade fairs", fr:"Hôtes et promoteurs pour les foires"},
+    {k:"D", t:"Verkehrsmuseum Erfurt", de:"Mobilität und Technik, Geschichte des Autos", ar:"متحف النقل وتاريخ السيارات", ma:"متحف النقل وتاريخ الطوموبيلات", en:"Transport museum, history of the car", fr:"Musée des transports, histoire de la voiture"},
+    {k:"E", t:"ADAC Urlaub mobil", de:"Berlin plus Autoreise durch Deutschland", ar:"باقة برلين ثم رحلة بالسيارة في ألمانيا", ma:"باكية برلين ومن بعد رحلة بالطوموبيل فألمانيا", en:"Berlin plus car trip through Germany", fr:"Berlin plus voyage en voiture à travers l'Allemagne"},
+    {k:"F", t:"Filmclub", de:"Filmvorführungen, Kino", ar:"نادي سينما", ma:"نادي ديال السينما", en:"Film club, cinema", fr:"Ciné-club, cinéma"},
+    {k:"G", t:"Ökomobil", de:"Garten- und Landschaftsbau, Ausbildung", ar:"مؤسسة لتكوين في البستنة", ma:"مؤسسة للتكوين فالبستنة", en:"Landscape gardening, training", fr:"Aménagement paysager, formation"},
+    {k:"H", t:"Jung gebliebener Rentner", de:"Sucht Freizeitpartnerin für Kino, Reisen", ar:"متقاعد يبحث عن شريكة للسينما والسفر", ma:"متقاعد كيقلب على شريكة للسينما والسفر", en:"Young-at-heart pensioner seeks companion for cinema, travel", fr:"Retraité resté jeune cherche compagne pour cinéma, voyages"},
+    {k:"I", t:"Feng Shui für den Garten", de:"Vortragsabend, Beratung", ar:"أمسية حول تصميم الحدائق بالفنغ شوي", ma:"أمسية على تصميم الجنانات بالفنغ شوي", en:"Lecture evening, advice on garden Feng Shui", fr:"Soirée conférence, conseils Feng Shui pour le jardin"},
+    {k:"J", t:"Studentinnen/SchülerInnen gesucht", de:"Betreuung im Kinderferienlager", ar:"مشرفون لمخيم صيفي للأطفال", ma:"مشرفين لمخيم صيفي ديال الدراري", en:"Students wanted for holiday camp supervision", fr:"Étudiants recherchés pour la garde en colonie de vacances"},
+    {k:"K", t:"Gemeinsam schöne Dinge genießen", de:"Akademikerin sucht Partner für Konzerte", ar:"أكاديمية تبحث عن شريك للحفلات والسفر", ma:"أكاديمية كتقلب على شريك للحفلات والسفر", en:"Academic seeks partner for concerts and travel", fr:"Universitaire cherche partenaire pour concerts et voyages"},
+    {k:"L", t:"Samstagswerkstatt", de:"Aufbau des Autos, Reparatur und Pflege", ar:"ورشة لتعلم إصلاح السيارة", ma:"ورشة باش تتعلم تصليح الطوموبيل", en:"Saturday workshop, car repair", fr:"Atelier du samedi, réparation auto"}
+  ],
+  items:[
+    {n:1, c:"H", de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann.", ar:"معرفتك في منتصف الثلاثينيات وتبحث عن شريك يمكنها الذهاب معه إلى السينما بانتظام.", ma:"صحابك فمنتصف الثلاثينات وكتقلب على شريك تقدر تمشي معاه للسينما.", en:"Your acquaintance is in her mid-thirties and is looking for a partner to go to the cinema with regularly.", fr:"Votre connaissance a la trentaine et cherche un partenaire avec qui aller régulièrement au cinéma."},
+    {n:2, c:"I", de:"Sie wollen Ihren Garten verändern ipps.", ar:"ترغب في تغيير حديقتك وتبحث عن استشارات أو نصائح.", ma:"بغيتي تبدل الجنينة ديالك وكتقلب على نصايح.", en:"You want to change your garden and are looking for advice/tips.", fr:"Vous voulez changer votre jardin et cherchez des conseils."},
+    {n:3, c:"J", de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job.", ar:"ابن أصدقائك قد أنهى للتو الثانوية العامة ويبحث عن عمل لمدة شهرين في الصيف.", ma:"ولد صحابك داز الباك دابا وكيقلب على خدمة فالصيف لشهرين.", en:"Your friend's son has just graduated and is looking for a job for two months in the summer.", fr:"Le fils de vos amis vient d'avoir son bac et cherche un emploi pour deux mois en été."},
+    {n:4, c:"X", de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen.", ar:"يريد صديقك العمل في وظيفة جانبية تتعلق بأعمال الحدائق.", ma:"صاحبك بغى يدير شي خدمة جانبية فالبستنة.", en:"Your friend wants to take on garden work as a side job.", fr:"Votre ami veut prendre un petit boulot dans le jardinage."},
+    {n:5, c:"K", de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann.", ar:"عمك البالغ من العمر 45 عامًا يبحث عن شريكة يمكنه السفر معها.", ma:"عمك اللي عندو 45 عام كيقلب على شريكة يسافر معاها.", en:"Your 45-year-old uncle is looking for a partner to travel with.", fr:"Votre oncle de 45 ans cherche une partenaire pour voyager."},
+    {n:6, c:"B", de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen.", ar:"ترغب في المشاركة في فيلم وكسب بعض المال.", ma:"بغيتي تمثل فشي فيلم وتربح شي فلوس.", en:"You would like to act in a film and earn some money.", fr:"Vous aimeriez jouer dans un film et gagner de l'argent."},
+    {n:7, c:"D", de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen.", ar:"ابن أصدقائك مهتم بتاريخ السيارات، وتريد أن تقدم له شيئًا مثيرًا للاهتمام يوم الأحد.", ma:"ولد صحابك مهتم بتاريخ الطوموبيلات، وبغيتي تمشي بيه لشي بلاصة زوينة نهار الأحد.", en:"Your friend's son is interested in car history. On Sunday you want to do something interesting for him.", fr:"Le fils de vos amis s'intéresse à l'histoire de l'automobile. Dimanche, vous voulez lui faire découvrir quelque chose d'intéressant."},
+    {n:8, c:"X", de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen.", ar:"تبحث عن وظيفة وتحتاج إلى نصائح لطلبات التوظيف الخاصة بك.", ma:"كتقلب على خدمة وكتحتاج نصايح على الCV ديالك.", en:"You are looking for a job and need tips for your applications.", fr:"Vous cherchez un emploi et avez besoin de conseils pour vos candidatures."},
+    {n:9, c:"E", de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot.", ar:"في الإجازة، تريد القيام برحلة بالسيارة عبر ألمانيا وتبحث عن عرض مناسب.", ma:"فالعطلة بغيتي تسافر بالطوموبيل فألمانيا وكتقلب على عرض مناسب.", en:"On vacation you want to take a car trip through Germany and are looking for a suitable offer.", fr:"En vacances, vous voulez faire un voyage en voiture à travers l'Allemagne et cherchez une offre adaptée."},
+    {n:10, c:"L", de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen.", ar:"ترغب معارفك في تعلم كيفية إجراء إصلاحات بسيطة على سيارتها بنفسها.", ma:"صحابك بغات تتعلم كيفاش تصلح الطوموبيل ديالها بوحدها.", en:"Your acquaintance wants to learn how to do minor repairs on her car herself.", fr:"Votre connaissance veut apprendre à faire elle-même de petites réparations sur sa voiture."}
+  ]
+},
+{
+  id:"rita-sp1", title:"Rita", level:"B1", sub:"Sprach 1", type:"sprach1",
+  text: `Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich .....(1)..... erzählen. Am Anfang .....(2)..... ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt .....(3)..... zwei Antworten bekommen habe. Aber zum Glück hat einer davon .....(4).....: Ich werde nun zwei Nachmittage in der Woche als Babysitterin .....(5)..... einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und .....(6)..... sind sehr nett. Wir haben in der .....(7)..... Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und .....(8)..... Kindermuseum gegangen. .....(9)..... kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir .....(10)..... .\nLiebe Grüße\nDeine Tanja`,
+  transText: {
+    ar: `عزيزتي كاثرين،\nلقد نجحت! أخيراً حصلت على وظيفة. كما وعدتك، أريد أن أخبرك فوراً بالخبر. في البداية كنت محبطة جداً، لأنني تلقيت فقط إجابتين من إجمالي طلبات التوظيف الكثيرة التي أرسلتها. لكن لحسن الحظ، نجح أحدها: سأعمل الآن كجليسة أطفال لأسرة لديها طفلان، لمدة فترتين بعد الظهر في الأسبوع. يبلغان من العمر 3 و 5 سنوات وكلاهما لطيفان جداً. لقد قمنا بالكثير من الأشياء معاً في الأسبوع الأول، وذهبنا إلى حديقة الحيوان ومتحف الأطفال. بهذه الطريقة لا يمكنك التعرف على المدينة على الإطلاق، لكن الأمر ممتع للغاية بالنسبة لي!\nأتمنى لك كل التوفيق اليوم، اكتبي لي قريباً كيف حالك.\nمع أطيب التحيات\nتانيا`,
+    ma: `عزيزتي كاثرين،\nنجحت! أخيراً حصلت على عمل. كما وعدتك، أريد أن أخبرك على الفور. في البداية كنت محبطة جداً، لأنني تلقيت فقط إجابتين من إجمالي طلبات التوظيف الكثيرة التي أرسلتها. لكن لحسن الحظ، نجح أحدها: سأعمل الآن كجليسة أطفال لأسرة لديها طفلان، لمدة فترتين بعد الظهر في الأسبوع. يبلغان من العمر 3 و 5 سنوات وكلاهما لطيفان جداً. لقد قمنا بالكثير من الأشياء معاً في الأسبوع الأول، وذهبنا إلى حديقة الحيوان ومتحف الأطفال. بهذه الطريقة لا يمكنك التعرف على المدينة على الإطلاق، لكن الأمر ممتع للغاية بالنسبة لي!\nأتمنى لك كل التوفيق اليوم، اكتبي لي قريباً كيف حالك.\nمع أطيب التحيات\nتانيا`
+  },
+  items:[
+    {n:1, c:"davon", opts:["dafür","damit","davon"]},
+    {n:2, c:"war", opts:["bin","habe","war"]},
+    {n:3, c:"nur", opts:["doch","nur","schon"]},
+    {n:4, c:"gepasst", opts:["gepasst","passen","passt"]},
+    {n:5, c:"bei", opts:["an","bei","zu"]},
+    {n:6, c:"beide", opts:["beide","beiden","beides"]},
+    {n:7, c:"ersten", opts:["erster","ersten","erstes"]},
+    {n:8, c:"ins", opts:["im","in","ins"]},
+    {n:9, c:"Besser", opts:["Am besten","Besser","Gut"]},
+    {n:10, c:"geht", opts:["geht","geht's","ging"]}
+  ]
+},
+{
+  id:"rita-sp2", title:"Rita", level:"B1", sub:"Sprach 2", type:"sprach2",
+  wordBank:[{k:"a",w:"der"},{k:"b",w:"die"},{k:"c",w:"Erst"},{k:"d",w:"geeignet"},{k:"e",w:"gerne"},{k:"f",w:"hätte"},{k:"g",w:"in"},{k:"h",w:"muss"},{k:"i",w:"nach"},{k:"j",w:"noch"},{k:"k",w:"schon"},{k:"l",w:"wann"},{k:"m",w:"wäre"},{k:"n",w:"wenn"},{k:"o",w:"wo"}],
+  text: `Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC`,
+  transText: {
+    ar: `إعلانكم في صحيفة فرانكفورتر روندشاو\n\nعزيزتي السيدة هيرمان،\n\nلقد قرأت إعلانكم في صحيفة فرانكفورتر روندشاو بتاريخ 5 أكتوبر وأنا مهتمة جداً بشقة بثلاث غرف.\n\nأعيش حالياً في كراكوف (بولندا). ولكن قريباً سأضطر إلى الانتقال إلى فرانكفورت مع ابني (3 سنوات) لأسباب مهنية. لذلك أبحث عن شقة اعتباراً من 1 نوفمبر، يجب أن تكون في موقع مركزي قدر الإمكان. لذلك فإن شقتكم مناسبة تماماً لنا.\n\nومع ذلك، لدي بعض الأسئلة حول إعلانكم: هل الشقة مناسبة أيضاً للأطفال الصغار؟ وهل توجد ملعب أطفال في الجوار يمكن لابني اللعب فيه؟ بالإضافة إلى ذلك، أود أن أعرف ما إذا كان يُسمح بتربية الحيوانات الأليفة في الشقة. إذا كان ذلك ممكناً، نود أن نجلب كلبنا معنا.\n\nأشكركم مسبقاً على ردكم وأحييكم بتحية طيبة.\n\nكاسيا كلوك`,
+    ma: `إعلانكم في صحيفة فرانكفورتر روندشاو\n\nعزيزتي السيدة هيرمان،\n\nقريت الإعلان ديالكم في صحيفة فرانكفورتر روندشاو بتاريخ 5 أكتوبر وأنا مهتمة بزاف بشقة فيها 3 ديال الغرف.\n\nدابا كنعيش في كراكوف (بولندا). ولكن قريباً غادي نضطر ننتقل لفرانكفورت مع ولدي (3 سنين) لأسباب مهنية. داكشي علاش كنقلب على شقة من 1 نوفمبر، خاصها تكون في موقع مركزي قد ما يمكن. داكشي علاش الشقة ديالكم مناسبة تماماً لينا.\n\nولكن عندي شي أسئلة على الإعلان ديالكم: واش الشقة مناسبة حتى للدراري الصغار؟ وواش كاين شي ملعب ديال الدراري قريب فين يقدر ولدي يلعب؟ بالإضافة لهادشي، بغيت نعرف واش مسموح بتربية الحيوانات الأليفة في الشقة. يلا كان ممكن، بغينا نجيبو الكلب ديالنا معانا.\n\nكنشكركم مقدماً على الرد ديالكم وكنحييكم بتحية طيبة.\n\nكاسيا كلوك`
+  },
+  items:[{n:1, c:"muss"},{n:2, c:"nach"},{n:3, c:"die"},{n:4, c:"wäre"},{n:5, c:"geeignet"},{n:6, c:"wo"},{n:7, c:"gerne"},{n:8, c:"der"},{n:9, c:"wenn"},{n:10, c:"schon"}]
+},
+{
+  id:"caroline-t1", title:"Caroline", level:"B1", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a", de:"Diskussion über Flughafen und Arbeitsplätze", ar:"نقاش حول المطار وفرص العمل", ma:"نقاش على المطار والخدمة", en:"Discussion about airport and jobs", fr:"Discussion sur l'aéroport et l'emploi"},
+    {k:"b", de:"Flughafen Frankfurt beliebter Veranstaltungsort", ar:"مطار فرانكفورت: مكان مفضل للفعاليات", ma:"مطار فرانكفورت: بلاصة مفضلة للفعاليات", en:"Frankfurt Airport popular event location", fr:"L'aéroport de Francfort, lieu d'événements populaire"},
+    {k:"c", de:"Umwelt und Flughafen: Ein Informationsabend der Bürger", ar:"البيئة والمطار: أمسية معلوماتية للمواطنين", ma:"البيئة والمطار: أمسية للمواطنين", en:"Environment and airport: citizens' info evening", fr:"Environnement et aéroport : soirée d'information citoyenne"},
+    {k:"d", de:"Neue Kurse: Museumsführung für junge Väter", ar:"دورات جديدة: جولات في المتحف للآباء الشباب", ma:"دورات جديدة: جولات فالمتحف للآباء الشباب", en:"New courses: museum tour for young fathers", fr:"Nouveaux cours : visite de musée pour jeunes pères"},
+    {k:"e", de:"Neue Kurse für Kinder", ar:"دورات جديدة للأطفال", ma:"دورات جديدة للدراري", en:"New courses for children", fr:"Nouveaux cours pour enfants"},
+    {k:"f", de:"Experten gegen Vergrößerung des Flughafens", ar:"خبراء يعارضون توسيع المطار", ma:"خبراء ضد توسيع المطار", en:"Experts against airport expansion", fr:"Experts contre l'agrandissement de l'aéroport"},
+    {k:"g", de:"Demonstration gegen Fluglärm", ar:"مظاهرة ضد الضوضاء الناتجة عن الطيران", ma:"مظاهرة ضد الصداع ديال الطيارات", en:"Demonstration against aircraft noise", fr:"Manifestation contre le bruit des avions"},
+    {k:"h", de:"Familienbildung Schwerpunkt Beruf und Familie", ar:"التوفيق بين العمل والأسرة: محور تعليم الأسرة", ma:"التوفيق بين الخدمة والعائلة", en:"Family education focus on work and family", fr:"Éducation familiale axée sur le travail et la famille"},
+    {k:"i", de:"Flughafen Frankfurt wird 10 Jahre", ar:"مطار فرانكفورت يحتفل بمرور 10 سنوات", ma:"مطار فرانكفورت كيحتفل بمرور 10 سنين", en:"Frankfurt Airport turns 10", fr:"L'aéroport de Francfort fête ses 10 ans"},
+    {k:"j", de:"Neue Kurse: Spiele für Mütter und Kinder", ar:"دورات جديدة: ألعاب للأمهات والأطفال", ma:"دورات جديدة: ألعاب للأمهات والدراري", en:"New courses: games for mothers and children", fr:"Nouveaux cours : jeux pour mères et enfants"}
+  ],
+  items:[
+    {n:1, c:"b", de:"Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen und Tagungen.", ar:"مطار فرانكفورت مكان مفضل للشركات لتنظيم الفعاليات والمؤتمرات.", ma:"مطار فرانكفورت بلاصة مفضلة للشركات باش ينظمو الفعاليات.", en:"Frankfurt Airport is a popular location for events and conferences for many companies.", fr:"L'aéroport de Francfort est un lieu populaire pour les événements et conférences de nombreuses entreprises."},
+    {n:2, c:"h", de:"Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht. Diesmal steht das Thema Berufstätige Eltern im Mittelpunkt.", ar:"برنامج لمراكز التعليم الأسري حول التوفيق بين العمل والأسرة.", ma:"برنامج ديال مراكز التعليم الأسري على التوفيق بين الخدمة والعائلة.", en:"A program for family education centers on balancing work and family.", fr:"Un programme pour les centres d'éducation familiale sur la conciliation travail-famille."},
+    {n:3, c:"e", de:"Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch beginnen zwei Malkurse für Kinder.", ar:"دورات جديدة للأطفال، من رسم وأنشطة للآباء والأطفال وورشة طين.", ma:"دورات جديدة للدراري، بحال الرسم والأنشطة.", en:"New courses for children, including painting and activities.", fr:"Nouveaux cours pour enfants, dont peinture et activités."},
+    {n:4, c:"c", de:"Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern lädt zu einem Informationsabend über den Ausbau ein.", ar:"أمسية معلومات يدعو إليها مواطنون ناشطون في البيئة حول توسعة المطار.", ma:"أمسية معلوماتية دعا ليها ناس ناشطين فالبيئة على توسيع المطار.", en:"An info evening hosted by environmentally active citizens about the airport expansion.", fr:"Une soirée d'information organisée par des citoyens actifs sur l'environnement concernant l'expansion de l'aéroport."},
+    {n:5, c:"a", de:"Eine Bürgergruppe lädt zu einer öffentlichen Expertenbefragung zum Thema Arbeitsplätze am Frankfurter Flughafen ein.", ar:"لقاء عام مع خبراء حول فرص العمل في المطار.", ma:"لقاء عام مع الخبراء على فرص الخدمة فالمطار.", en:"A public expert panel on jobs at Frankfurt Airport.", fr:"Une table ronde publique d'experts sur l'emploi à l'aéroport de Francfort."}
+  ]
+},
+{
+  id:"caroline-t2", title:"Caroline", level:"B1", sub:"Teile 2", type:"mcq",
+  paragraphs: [
+    { de: "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite. Sie sind die Problemlöser im Kindergarten.", ar: "آن وميلاني (كلاهما 6 سنوات) تساعدان المربيات باقتراحات مفيدة.", ma: "آن وميلاني (بجوج عندهم 6 سنين) كيعاونو المربيات بالاقتراحات.", en: "Anne and Melanie (both 6) help educators with suggestions. They are the problem solvers in kindergarten.", fr: "Anne et Melanie (toutes deux 6 ans) aident les éducatrices avec des suggestions." },
+    { de: "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia-Computern installiert.", ar: "في إطار هذا المشروع، سيتم تركيب محطتين متنقلتين في رياض الأطفال البلدية.", ma: "فهاد المشروع، غادي يحطو جوج محطات متنقلين فرض الأطفال.", en: "As part of this project, two mobile stations will be installed in municipal kindergartens.", fr: "Dans le cadre de ce projet, deux stations mobiles seront installées dans les jardins d'enfants municipaux." },
+    { de: "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus.", ar: "لكن قبل أن تصل أجهزة الكمبيوتر إلى رياض الأطفال، كان لا بد من توعية الآباء.", ma: "ولكن قبل ما توصل الكمبيوترات لرض الأطفال، كان خاص توعية الوالدين.", en: "However, before the computers arrived in the kindergartens, the parents had to be educated.", fr: "Cependant, avant l'arrivée des ordinateurs dans les jardins d'enfants, il fallait informer les parents." },
+    { de: "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend überflüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm.", ar: "لقد هدأت هذه المخاوف في غضون ذلك، وتظهر التجربة الميدانية أنها زائدة عن الحاجة إلى حد كبير. يحرص المربيات أيضاً على ألا يجلس الأطفال أمام الكمبيوتر لأكثر من 15 إلى 20 دقيقة، ويجلبون برامج إبداعية إلى الشاشة قبل كل شيء.", ma: "هاد المخاوف هدات دابا، والتجربة كتبين بلي هادشي زايد. المربيات كيحرصو بلي الدراري ما يقعدوش كثر من 15 ولا 20 دقيقة قدام الكمبيوتر، وكتجيبو ليهم برامج إبداعية.", en: "These fears have now subsided and experience on site shows that they are largely superfluous. The educators also make sure that the children never sit in front of the computers for longer than 15 to 20 minutes, and above all bring creative software to the screen.", fr: "Ces craintes se sont depuis lors apaisées et l'expérience sur le terrain montre qu'elles sont largement superflues. Les éducatrices veillent également à ce que les enfants ne restent jamais plus de 15 à 20 minutes devant les ordinateurs, et mettent surtout des logiciels créatifs à l'écran." },
+    { de: "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte.", ar: "على أي حال، فإن النعاس الوحيد أمام الكمبيوتر هو بالأحرى من شؤون البالغين - فالأطفال يلعبون دائماً في مجموعات من شخصين أو ثلاثة على الجهاز. لاحظت إيفا شيلينغ أن الأطفال يتعاملون مع بعضهم البعض بسلام شديد على الكمبيوتر، ويساعدون بعضهم البعض، ولا يوجد سوى القليل من الصراعات.", ma: "القعدة بوحدك قدام الكمبيوتر هي حاجة ديال الكبار - الدراري ديما كيلعبو بجوج ولا بثلاثة. إيفا شيلينغ لاحظات بلي الدراري كيتعاملو مزيان مع بعضياتهم قدام الكمبيوتر، كيعاونو بعضياتهم، وما كاينش المشاكل.", en: "Lonely brooding in front of the computer is probably more a matter for adults anyway - the children always play in twos or threes on the machine. Eva Schilling has observed that the children treat each other very peacefully on the computer, they help each other, there are few conflicts.", fr: "La rêverie solitaire devant l'ordinateur est de toute façon plutôt l'affaire des adultes - les enfants jouent toujours à deux ou à trois sur la machine. Eva Schilling a observé que les enfants se traitent très paisiblement sur l'ordinateur, ils s'entraident, il y a peu de conflits." }
+  ],
+  items:[
+    { n:1, c:"A", q:"Das Schulamt hat ein Projekt gestartet, bei dem", qar:"بدأ مكتب المدرسة مشروعاً حيث", qma:"بدا مكتب المدرسة شي مشروع فين", qen:"The school authority started a project where", qfr:"L'administration scolaire a lancé un projet où",
+      opts:[
+        {k:"A", de:"Computer in Kindergärten aufgestellt werden.", ar:"يتم وضع أجهزة الكمبيوتر في رياض الأطفال.", ma:"كيحطو الكمبيوترات فرض الأطفال.", en:"computers are set up in kindergartens.", fr:"des ordinateurs sont installés dans les jardins d'enfants."},
+        {k:"B", de:"Computerspiele für Vierjährige entwickelt werden sollen.", ar:"تطوير ألعاب كمبيوتر للأطفال في الرابعة.", ma:"يطورو ألعاب للدراري اللي عندهم 4 سنين.", en:"computer games for four-year-olds should be developed.", fr:"des jeux informatiques pour les enfants de quatre ans doivent être développés."},
+        {k:"C", de:"Kinder neue Farbdrucker ausprobieren sollen.", ar:"يجب أن يجرب الأطفال طابعات ملونة جديدة.", ma:"الدراري خاصهم يجربو طابعات ملونة جداد.", en:"children should try out new color printers.", fr:"les enfants devraient essayer de nouvelles imprimantes couleur."}
+      ]
+    },
+    { n:2, c:"A", q:"Die Kinder", qar:"الأطفال", qma:"الدراري", qen:"The children", qfr:"Les enfants",
+      opts:[
+        {k:"A", de:"hatten großen Spaß bei dem Projekt.", ar:"استمتعوا كثيراً بالمشروع.", ma:"مبسطين بزاف بالمشروع.", en:"had a lot of fun with the project.", fr:"se sont beaucoup amusés avec le projet."},
+        {k:"B", de:"wollten lieber draußen im Freien spielen.", ar:"أرادوا اللعب في الخارج.", ma:"بغاو يلعبو برا.", en:"would rather play outside.", fr:"préféraient jouer dehors."},
+        {k:"C", de:"wussten nicht, wann sie ins Studio im Netz gehen sollten.", ar:"لم يعرفوا متى يذهبون إلى استوديو الإنترنت.", ma:"ما عرفوش إمتى يمشيو لاستوديو الأنترنيت.", en:"didn't know when to go to the internet studio.", fr:"ne savaient pas quand aller au studio internet."}
+      ]
+    },
+    { n:3, c:"A", q:"Eltern fürchten, dass", qar:"الآباء يخافون من أن", qma:"الوالدين كيخافو من أن", qen:"Parents fear that", qfr:"Les parents craignent que",
+      opts:[
+        {k:"A", de:"der Computer ihren Kindern schadet.", ar:"الكمبيوتر يضر أطفالهم.", ma:"الكمبيوتر يضر الدراري ديالهم.", en:"the computer harms their children.", fr:"l'ordinateur nuise à leurs enfants."},
+        {k:"B", de:"ihre Kinder nicht so früh aufstehen können.", ar:"أطفالهم لا يستطيعون الاستيقاظ مبكراً.", ma:"الدراري ديالهم ما يقدروش يفيقو بكري.", en:"their children can't get up so early.", fr:"leurs enfants ne puissent pas se lever si tôt."},
+        {k:"C", de:"ihre Kinder vor dem Computer Angst haben.", ar:"أطفالهم يخافون من الكمبيوتر.", ma:"الدراري ديالهم كيخافو من الكمبيوتر.", en:"their children are afraid of the computer.", fr:"leurs enfants aient peur de l'ordinateur."}
+      ]
+    },
+    { n:4, c:"C", q:"Die Erzieherinnen", qar:"المربيات", qma:"المربيات", qen:"The educators", qfr:"Les éducatrices",
+      opts:[
+        {k:"A", de:"arbeiten jeden Tag 15 bis 20 Minuten am Computer.", ar:"يعملون يومياً 15 إلى 20 دقيقة على الكمبيوتر.", ma:"كيخدمو كل نهار 15 لـ 20 دقيقة على الكمبيوتر.", en:"work on the computer every day for 15 to 20 minutes.", fr:"travaillent sur l'ordinateur tous les jours pendant 15 à 20 minutes."},
+        {k:"B", de:"spielen immer mit zwei oder drei Kindern am Computer.", ar:"يلعبون دائماً مع طفلين أو ثلاثة على الكمبيوتر.", ma:"كيلعبو ديما مع جوج ولا ثلاثة دراري على الكمبيوتر.", en:"always play with two or three children on the computer.", fr:"jouent toujours avec deux ou trois enfants sur l'ordinateur."},
+        {k:"C", de:"wählen für die Kinder die Software aus.", ar:"يختارون البرامج للأطفال.", ma:"كيختارو البرامج للدراري.", en:"choose the software for the children.", fr:"choisissent le logiciel pour les enfants."}
+      ]
+    },
+    { n:5, c:"B", q:"Wenn die Kinder am Computer sitzen, dann", qar:"عندما يجلس الأطفال على الكمبيوتر، فإنهم", qma:"ملي كيقعدو الدراري على الكمبيوتر، كيديرو", qen:"When the children sit at the computer, then", qfr:"Lorsque les enfants sont assis à l'ordinateur, alors",
+      opts:[
+        {k:"A", de:"gibt es häufig Streit.", ar:"غالباً ما يكون هناك شجار.", ma:"غالباً كيكون الشجار.", en:"there is often arguing.", fr:"il y a souvent des disputes."},
+        {k:"B", de:"hilft ein Kind dem anderen.", ar:"يساعد طفل الآخر.", ma:"كينعاون طفل الآخر.", en:"one child helps the other.", fr:"un enfant aide l'autre."},
+        {k:"C", de:"können sich die meisten nicht lange konzentrieren.", ar:"معظمهم لا يستطيعون التركيز لفترة طويلة.", ma:"أغلبهم ما يقدروش يركزو لمدة طويلة.", en:"most of them can't concentrate for long.", fr:"la plupart d'entre eux ne peuvent pas se concentrer longtemps."}
+      ]
+    }
+  ]
+},
+{
+  id:"caroline-t3", title:"Caroline", level:"B1", sub:"Teile 3", type:"matching",
+  ads:[
+    {k:"A", t:"Museum der Stadt Füssen", de:"Lechhalde 3 · 87629 Füssen", ar:"متحف مدينة فوسن", ma:"متحف مدينة فوسن", en:"Museum of the city of Füssen", fr:"Musée de la ville de Füssen"},
+    {k:"B", t:"Franziskaner Stüberl", de:"Gutbürgerliche Allgäuer und Bayerische Küche", ar:"مطعم بافاري", ma:"مطعم بافاري", en:"Bavarian restaurant", fr:"Restaurant bavarois"},
+    {k:"C", t:"Sennerei-Genossenschaft Bayern", de:"Allgäuer Emmentaler, Bergkäse", ar:"تعاونية أجبان", ma:"تعاونية أجبان", en:"Cheese cooperative", fr:"Coopérative fromagère"},
+    {k:"D", t:"Sprachen lernen & Leute treffen", de:"Bildungsurlaub für Erwachsene", ar:"تعلم اللغات", ma:"تعلم اللغات", en:"Language learning", fr:"Apprentissage des langues"},
+    {k:"E", t:"Jahreskonzert Füssen", de:"Mozart, Klavierkonzert", ar:"حفل موسيقي", ma:"حفل موسيقي", en:"Annual concert", fr:"Concert annuel"},
+    {k:"F", t:"Das Heimatmuseum Füssen", de:"Montag bis Freitag geöffnet", ar:"متحف التراث", ma:"متحف التراث", en:"Heritage museum", fr:"Musée du patrimoine"},
+    {k:"G", t:"bonCas", de:"Spezialitätenkäserei", ar:"مصنع أجبان", ma:"مصنع أجبان", en:"Cheese factory", fr:"Fromagerie"},
+    {k:"H", t:"Alfa Sprachreisen", de:"High-School-Programme für 12- bis 18-Jährige", ar:"رحلات لغوية", ma:"رحلات لغوية", en:"Language trips", fr:"Voyages linguistiques"},
+    {k:"I", t:"Amadeus", de:"Cafe, Bistro", ar:"مقهى", ma:"مقهى", en:"Cafe", fr:"Café"},
+    {k:"J", t:"Free-System", de:"Englisch, Französisch, Intensivkurse", ar:"نظام لغات", ma:"نظام لغات", en:"Language system", fr:"Système de langues"},
+    {k:"K", t:"Ritterstub’n", de:"Fischspezialitäten", ar:"مطعم أسماك", ma:"مطعم أسماك", en:"Fish restaurant", fr:"Restaurant de poisson"},
+    {k:"L", t:"Alpenrösle", de:"Hotel-Restaurant", ar:"فندق ومطعم", ma:"فندق ومطعم", en:"Hotel-restaurant", fr:"Hôtel-restaurant"}
+  ],
+  items:[
+    {n:1, c:"E", de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen.", ar:"ترغب في الذهاب إلى حفل بيانو في نهاية الأسبوع.", ma:"بغيتي تمشي لحفل بيانو فآخر السيمانة.", en:"You want to go to a piano concert on the weekend.", fr:"Vous voulez aller à un concert de piano le week-end."},
+    {n:2, c:"F", de:"Sie sind in Füssen und wollen am Montag ins Museum gehen.", ar:"أنت في فوسن وتريد الذهاب إلى المتحف يوم الاثنين.", ma:"نتا ففوسن وبغيتي تمشي للمتحف نهار الاثنين.", en:"You are in Füssen and want to go to the museum on Monday.", fr:"Vous êtes à Füssen et voulez aller au musée lundi."},
+    {n:3, c:"B", de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen.", ar:"أنت في جنوب ألمانيا في إجازة وترغب في تذوق إحدى الأطباق البافارية.", ma:"نتا فجنوب ألمانيا فالعطلة وبغيتي تاكل ماكلة بافارية.", en:"You are on vacation in southern Germany and want to eat a Bavarian specialty.", fr:"Vous êtes en vacances dans le sud de l'Allemagne et souhaitez manger une spécialité bavaroise."},
+    {n:4, c:"K", de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet.", ar:"لقد قمت بترتيب لقاء مع معارفك لتناول وجبة سمك.", ma:"دوزتي موعد مع صحابك باش تاكلو الحوت.", en:"You have arranged to meet acquaintances for a fish dinner.", fr:"Vous avez organisé un dîner de poisson avec des connaissances."},
+    {n:5, c:"C", de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen.", ar:"أنت في بافاريا وترغب في شراء منتجات الجبن المتخصصة.", ma:"نتا فبافاريا وبغيتي تشري الجبن.", en:"You are in Bavaria and want to buy cheese specialties.", fr:"Vous êtes en Bavière et voulez acheter des spécialités fromagères."},
+    {n:6, c:"X", de:"Sie möchten einen Deutschkurs in Wien besuchen.", ar:"ترغب في حضور دورة لتعلم اللغة الألمانية في فيينا.", ma:"بغيتي تمشي لدورة ديال الألمانية ففيينا.", en:"You want to attend a German course in Vienna.", fr:"Vous voulez suivre un cours d'allemand à Vienne."},
+    {n:7, c:"H", de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen.", ar:"ابنك البالغ من العمر 16 عاماً يجب أن يتعلم الإنجليزية في الخارج خلال العطلة.", ma:"ولدك اللي عندو 16 عام خاصو يتعلم الإنجليزية فالخارج فالعطلة.", en:"Your 16-year-old son should learn English abroad during the holidays.", fr:"Votre fils de 16 ans devrait apprendre l'anglais à l'étranger pendant les vacances."},
+    {n:8, c:"X", de:"Sie interessieren sich für einen Sprachkurs auf CD.", ar:"تهتم بدورة لتعلم اللغة على أقراص مدمجة.", ma:"مهتم بدورة ديال اللغة على سي دي.", en:"You are interested in a language course on CD.", fr:"Vous êtes intéressé par un cours de langue sur CD."},
+    {n:9, c:"X", de:"Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt.", ar:"ترغب في أن تتعلم ابنتك البالغة من العمر 10 سنوات لغة أجنبية خلال العطلة.", ma:"بغيتي بنتك اللي عندها 10 سنين تتعلم لغة فالعطلة.", en:"You want your 10-year-old daughter to learn a foreign language during the holidays.", fr:"Vous voulez que votre fille de 10 ans apprenne une langue étrangère pendant les vacances."},
+    {n:10, c:"L", de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten.", ar:"ترغب إحدى معارفك في الاحتفال بعيد ميلادها في مطعم والإقامة هناك أيضاً.", ma:"صحابك بغات تحتفل بعيد ميلادها فمطعم وتبات تما.", en:"An acquaintance wants to celebrate her birthday in a restaurant and stay overnight.", fr:"Une connaissance veut fêter son anniversaire dans un restaurant et y passer la nuit."}
+  ]
+},
+{
+  id:"caroline-sp1", title:"Caroline", level:"B1", sub:"Sprach 1", type:"sprach1",
+  text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalteIn Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
+  transText: {
+    ar: `عزيزتي كاثرين،\nمنذ أن أخبرتك آخر مرة عن إقامتي لتعلم اللغة في سويسرا، حدث الكثير. أنا أعرف هذا البلد جيداً الآن. سويسرا حقاً ليست كبيرة. ولكن في كل منطقة يتم التحدث بلهجة مختلفة أو حتى بلغة مختلفة. هذا أمر لا يصدق تقريباً بالنسبة لي! في أستراليا، يمكنك القيادة بالسيارة لمدة 24 ساعة على التوالي، وعندما تصل إلى هناك، لا يزال الناس يتحدثون نفس اللغة. في البداية، أربكني هذا المزيج اللغوي كثيراً، ولكن الآن أفهم تقريباً كل شيء عندما يتحدث إلي شخص ما باللهجة السويسرية الألمانية. لكن لا يمكنني الرد إلا بالألمانية الفصحى. هناك بعض الاختلافات بين المدرسة هنا ونظامنا المدرسي في أستراليا: في سويسرا يتحدث المعلمون كثيراً ويجب على الطلاب الاحتفاظ بالكثير في رؤوسهم أو كتابته. في أستراليا، نعمل غالباً في إطار مشاريع ونقوم بجميع المهام على الكمبيوتر.\nمع أطيب التحيات\nجاك`,
+    ma: `عزيزتي كاثرين،\nمن بعد ما خبرتك آخر مرة على الإقامة ديالي باش نتعلم اللغة فسويسرا، وقع بزاف ديال الحوايج. دابا كنعرف هاد البلاد مزيان. سويسرا بصح ماشي كبيرة. ولكن فكل منطقة كيهضرو بلهجة مختلفة ولا حتى بلغة مختلفة. هادشي بالنسبة ليا شبه مستحيل! فأستراليا، كتقدر تسوق الطوموبيل لمدة 24 ساعة على التوالي، وملي توصل، كتلاقى الناس تما مازال كيهضرو نفس اللغة. في البداية، هاد الخلط اللغوي ربلني بزاف، ولكن دابا كنفهم تقريباً كلشي ملي شي واحد كيهضر معايا بالألمانية السويسرية. ولكن ما كنقدرش نجاوب غير بالألمانية الفصحى. كاينين شي فروقات بين المدرسة هنا والنظام المدرسي ديالنا فأستراليا: فسويسرا الأساتذة كيهضرو بزاف والتلاميذ خاصهم يحفظو بزاف ديال الحوايج ولا يكتبوهم. فأستراليا، كنخدمو غالباً فإطار مشاريع وكنديرو تقريباً كاع المهام على الكمبيوتر.\nمع أطيب التحيات\nجاك`
+  },
+  items:[
+    {n:1, c:"erzählt", opts:["erzähle","erzählen","erzählt"]},
+    {n:2, c:"dieses", opts:["diese","diesen","dieses"]},
+    {n:3, c:"aber", opts:["aber","obwohl","sondern"]},
+    {n:4, c:"für", opts:["an","für","vor"]},
+    {n:5, c:"wenn", opts:["als","wann","wenn"]},
+    {n:6, c:"schon", opts:["wenn","ganz","schon"]},
+    {n:7, c:"jetzt", opts:["früher","jetzt","seit"]},
+    {n:8, c:"Unterschiede", opts:["Unterschied","Unterschiede","Unterschieden"]},
+    {n:9, c:"müssen", opts:["brauchen","haben","müssen"]},
+    {n:10, c:"dem", opts:["dem","den","der"]}
+  ]
+},
+{
+  id:"caroline-sp2", title:"Caroline", level:"B1", sub:"Sprach 2", type:"sprach2",
+  wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
+  text: `QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……`,
+  transText: {
+    ar: `نظام الكم\n\nلعبة اليانصيب - النظام\n\nأوتو - سور ألي 100. D-10120 برلين\n\nعزيزي لاعب اليانصيب،\n\nمن لا يريد أن يكون هناك أيضاً عند الفوز بستة أرقام صحيحة في اليانصيب؟ لا تثق بالحظ فقط عند لعب اليانصيب، لأنك يمكنك تحسين فرصك بشكل كبير إذا لعبت بنظام اليانصيب الخاص بنا - وذلك مقابل 5 يورو فقط في الأسبوع! بدلاً من اللعب بمفردك، العب معنا في مجتمع لاعبين قوي. هذا يزيد تلقائياً من فرصك! وماذا يمكنك أن تفوز؟ مع نظام الكم الخاص بنا، لديك فرصة للفوز بمليون يورو! سوف تتلقى جميع المكاسب على الفور وبدون خصم 100% - نحن نضمن لك ذلك!\n\nلقد أقنعت نفسي بذلك! العب معنا نظام الكم: أكثر من 700 مجموعة من نظام الكم فازت معاً بأكثر من سبعة ملايين يورو.\n\nتحياتي الحارة\nسابين ماير-بوتز\n\nملاحظة: كفرصة ربح خاصة، ستتلقى اليوم لعبة الأرقام الأربعة الصحيحة المجانية. شارك بالتأكيد واربح! أنا أعبر لك عن أمنياتي……`,
+    ma: `نظام الكم\n\nلعبة اليانصيب - النظام\n\nأوتو - سور ألي 100. D-10120 برلين\n\nعزيزي لاعب اليانصيب،\n\nشكون ما بغاش يكون تما حتا هو ملي كتربح 6 ديال الأرقام فاللوتو؟ ماتيقش غير فالحظ ملي كتلعب اللوتو، حيت نتا تقدر تحسن الفرص ديالك بزاف يلا لعبت بنظام اللوتو ديالنا - وهاداك غير بـ 5 يورو فالسيمانة! بلاصة ما تلعب بوحدك، العب معانا فمجتمع ديال اللاعبين قوي. هادشي كيزيد تلقائياً من الفرص ديالك! وشنو تقدر تربح؟ مع نظام الكم ديالنا، عندك فرصة تربح مليون يورو! غادي تتلقى كاع الأرباح دغيا وبلا خصم 100% - حنا كنضمنو ليك هادشي!\n\nأنا قنعت راسي بهادشي! العب معانا نظام الكم: كثر من 700 مجموعة ديال نظام الكم ربحو مع بعضياتهم كثر من 7 ملايين يورو.\n\nتحياتي الحارة\nسابين ماير-بوتز\n\nملاحظة: كفرصة ربح خاصة، غادي تتلقى اليوم لعبة الأرقام الأربعة الصحيحة المجانية. شارك أكيد وربح! أنا كنعبر ليك على أمنياتي……`
+  },
+  items:[{n:1, c:"einmal"},{n:2, c:"nur"},{n:3, c:"können"},{n:4, c:"wenn"},{n:5, c:"statt"},{n:6, c:"ganz"},{n:7, c:"bei"},{n:8, c:"garantieren"},{n:9, c:"Über"},{n:10, c:"machen"}]
+},
+{
+  id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings",
+  options:[
+    {k:"a", de:"Abendwanderungen ab 89 Euro", ar:"جولات مسائية من 89 يورو", ma:"جولات فالليل من 89 يورو", en:"Evening hikes from 89 euros", fr:"Randonnées nocturnes à partir de 89 euros"},
+    {k:"b", de:"Ausflugsziele für Literaturinteressierte", ar:"أهداف سياحية لمحبي الأدب", ma:"بلايص سياحية لمحبي الكتب", en:"Excursion destinations for literature lovers", fr:"Destinations d'excursion pour les amateurs de littérature"},
+    {k:"c", de:"Hinweis für Besucher der Bregenzer Festspiele", ar:"ملاحظة لزوار مهرجان بريغنتس", ma:"ملاحظة لزوار مهرجان بريغنتس", en:"Notice for visitors to the Bregenz Festival", fr:"Avis aux visiteurs du festival de Bregenz"},
+    {k:"d", de:"Ihre Zeitung folgt Ihnen in den Urlaub", ar:"صحيفتك تتبعك في العطلة", ma:"الجريدة ديالك كتتبعك فالعطلة", en:"Your newspaper follows you on vacation", fr:"Votre journal vous suit en vacances"},
+    {k:"e", de:"Laute Musik stört den Nachbarn", ar:"الموسيقى الصاخبة تزعج الجار", ma:"الموسيقى اللي عالية كتقلق الجيران", en:"Loud music disturbs the neighbor", fr:"La musique forte dérange le voisin"},
+    {k:"f", de:"Musikveranstaltungen am Nachmittag", ar:"فعاليات موسيقية بعد الظهر", ma:"حفلات موسيقية فالعشية", en:"Afternoon music events", fr:"Événements musicaux l'après-midi"},
+    {k:"g", de:"Neue Zeitung für Ihre Urlaubsplanung", ar:"صحيفة جديدة لتخطيط عطلتك", ma:"جريدة جديدة لتخطيط العطلة", en:"New newspaper for your vacation planning", fr:"Nouveau journal pour planifier vos vacances"},
+    {k:"h", de:"Rekord: 70.000 Besucher im Bücherdorf", ar:"رقم قياسي: 70,000 زائر في قرية الكتب", ma:"رقم قياسي: 70,000 زائر فقرية الكتب", en:"Record: 70,000 visitors in the book village", fr:"Record : 70 000 visiteurs dans le village du livre"},
+    {k:"i", de:"Schlechtes Wetter: Festspiele abgesagt", ar:"طقس سيئ: إلغاء المهرجانات", ma:"الجو خايب: المهرجانات تلغات", en:"Bad weather: festivals canceled", fr:"Mauvais temps : festivals annulés"},
+    {k:"j", de:"Wandern ohne Gepäck", ar:"المشي بدون أمتعة", ma:"المشي بلا حوايج", en:"Hiking without luggage", fr:"Randonnée sans bagages"}
+  ],
+  items:[
+    {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen.", ar:"صحيفتك تتبعك في العطلة.", ma:"الجريدة ديالك كتتبعك فالعطلة.", en:"Your newspaper follows you on vacation.", fr:"Votre journal vous suit en vacances."},
+    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Das Gepäck wird von einer Spedition transportiert.", ar:"المشي بدون أمتعة في منتجع شتاتكيلف. يتم نقل الأمتعة بواسطة شركة نقل.", ma:"المشي بلا حوايج فمنتجع شتاتكيلف. الحوايج كتنقلها شركة نقل.", en:"Hiking without luggage in the Luftkurort Stadtkylf. Luggage is transported by a moving company.", fr:"Randonnée sans bagages dans la station climatique de Stadtkylf. Les bagages sont transportés par une société de déménagement."},
+    {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
+    {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
+    {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
+  ]
+},
+{
+  id:"vera-t2", title:"Vera", level:"B1", sub:"Teile 2", isPremium: true, type:"mcq",
+  paragraphs: [], items: [] 
+},
+{
+  id:"vera-t3", title:"Vera", level:"B1", sub:"Teile 3", isPremium: true, type:"mcq",
+  paragraphs: [], items: [] 
+}
 ];
 const HOREN_EXAMS = [
   {
-    id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Verstehen. Teil 1. Sie hören nun 5 kurze Texte. Dazu sollen Sie 5 Aufgaben lösen.", pitch: 1.0, rate: 0.95 },
       { text: "In der heutigen Sendung geht es um persönliche Erfahrungen mit dem Einkaufen im Internet. Nummer 41.", pitch: 1.0, rate: 0.95 },
@@ -321,7 +674,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h2", title: "Bus zur Arbeit (Andreas 1 und 2)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h2", title: "Bus zur Arbeit (Andreas 1 und 2)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Guten Tag und herzlich willkommen bei Radio Aktuell. Heute hören Sie kurze Beiträge zum Thema Arbeitsweg. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich fahre jeden Tag mit dem Auto zur Arbeit. Morgens ist das für mich am bequemsten. Der Bus wäre vielleicht günstiger, aber ich möchte flexibel sein und nicht an Fahrpläne gebunden.", pitch: 0.8, rate: 1.0 },
@@ -343,7 +696,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h3", title: "Bus zur Arbeit (Vera)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h3", title: "Bus zur Arbeit (Vera)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich fahre nie mit dem Auto zur Arbeit. Das ist mir zu teuer und ich möchte auch etwas für meine Gesundheit tun.", pitch: 1.1, rate: 1.0 },
@@ -365,7 +718,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h4", title: "Arbeitsplatz für Vater", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h4", title: "Arbeitsplatz für Vater", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Mit Beiträgen von Deutschlehrer Orhan Yiğit. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Mein Vater hat eine Arbeit. Er ist nicht immer glücklich, aber er mag seinen Job. Ich finde, er braucht keinen neuen Arbeitsplatz. Wichtiger ist, dass er genug Freizeit hat. Wir könnten dann mehr Zeit zusammen verbringen.", pitch: 1.2, rate: 1.0 },
@@ -387,7 +740,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h5", title: "Einzelkind", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h5", title: "Einzelkind", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich bin Karim. Ich habe einen Bruder und eine Schwester. Als Kind musste ich sehr früh lernen, Rücksicht auf die anderen zu nehmen.", pitch: 1.1, rate: 1.0 },
@@ -409,7 +762,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h6", title: "Urlaub", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h6", title: "Urlaub", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen Teil 1. Sie hören nun 5 kurze Texte. Mit Beiträgen von Deutschlehrer Orhan Yiğit. Das heutige Thema ist Urlaubserinnerungen.", pitch: 1.0, rate: 0.95 },
       { text: "Nummer 41. Als Kind wollte ich unbedingt Urlaub wie meine Freunde machen, Sonne, Strand und Meer. Doch meine Eltern fuhren lieber in die Berge. Während andere im Wasser spielten, mussten wir wandern gehen. Ich fand das oft langweilig.", pitch: 1.2, rate: 1.0 },
@@ -427,7 +780,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h7", title: "Kinder in der Schule", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h7", title: "Kinder in der Schule", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen Teil 1. Sie hören nun 5 kurze Texte. Mit Beiträgen von Deutschlehrer Orhan Yiğit. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Also, ich finde es sehr wichtig, dass meine Kinder gute Noten bekommen. Die Schule ist der Schlüssel für ihre Zukunft. Ich achte darauf, dass sie lernen und ihre Hausaufgaben machen.", pitch: 1.1, rate: 1.0 },
@@ -445,7 +798,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h8", title: "Radwege", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h8", title: "Radwege", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich fahre jeden Tag mit dem Fahrrad zur Arbeit. Die Radwege in der Stadt machen das einfacher und sicherer.", pitch: 1.1, rate: 1.0 },
@@ -463,7 +816,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h9", title: "Fremdsprache", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h9", title: "Fremdsprache", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich bin dagegen, dass Kinder so früh eine Fremdsprache lernen. Sie sollten erst mal ihre Muttersprache richtig beherrschen.", pitch: 1.1, rate: 1.0 },
@@ -481,7 +834,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h10", title: "Sport als für Kultur", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h10", title: "Sport als für Kultur", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Verstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Sport spielt eine viel größere Rolle in meinem Leben als Kultur. Ich treibe regelmäßig Sport, weil es mir hilft, fit zu bleiben und Stress abzubauen.", pitch: 1.2, rate: 1.0 },
@@ -499,7 +852,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h11", title: "Computer", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h11", title: "Computer", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen, Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich habe zu Hause einen Computer. Eigentlich benutze ich ihn oft, besonders um E-Mails zu schreiben oder Filme zu schauen.", pitch: 0.85, rate: 1.0 },
@@ -517,7 +870,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h12", title: "Arbeit zu fahren", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h12", title: "Arbeit zu fahren", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich finde Busfahren ehrlich gesagt nicht so gut, der Bus ist oft zu voll und unpünktlich. Deshalb nehme ich lieber mein Auto oder fahre mit dem Fahrrad.", pitch: 1.1, rate: 1.0 },
@@ -527,7 +880,7 @@ const HOREN_EXAMS = [
       { text: "Nummer 45. Mit dem Fahrrad zur Arbeit fahre ich eigentlich nie. Ich habe gar kein Fahrrad mehr. Ich habe mir vor 2 Jahren ein Motorrad gekauft und das benutze ich jetzt jeden Tag.", pitch: 1.05, rate: 1.0 }
     ],
     items: [
-      { n:1, c:"F", de:"Der Sprecher könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدث يمكنه تخيل الذهاب بالحافلة.", story:"مراتو ديما عندها الطوموبر ديالها." },
+      { n:1, c:"F", de:"Der Sprecher könnte sich vorstellen, mit dem Bus zur Arbeit zu fahren.", ar:"المتحدث يمكنه تخيل الذهاب بالحافلة.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
       { n:2, c:"F", de:"Die Sprecherin geht gern zu Fuß.", ar:"المتحدثة تحب المشي على الأقدام.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
       { n:3, c:"R", de:"Der Sprecher findet es in Ordnung, dass seine Frau immer das Auto hat.", ar:"المتحدث يجد أنه لا بأس أن تكون السيارة دائماً مع زوجته.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
       { n:4, c:"F", de:"Die Sprecherin fährt jeden Tag mit ihrem Motorrad zur Arbeit.", ar:"المتحدثة تذهب إلى العمل بالدراجة النارية كل يوم.", story:"مراتو ديما عندها الطوموبيل، وهاد الشي علاش هو كيمشي للخدمة بالموتور ديالها." },
@@ -535,7 +888,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h13", title: "Handys", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h13", title: "Handys", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Also, ich finde Handys oft störend. Neulich war ich im Café und jemand telefonierte laut neben mir. Ich finde, man sollte mehr Rücksicht nehmen.", pitch: 1.1, rate: 1.0 },
@@ -553,7 +906,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h14", title: "Filme", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h14", title: "Filme", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich sehe mir am liebsten lustige Filme an. Nach einem langen Tag möchte ich einfach lachen und mich entspannen.", pitch: 1.1, rate: 1.0 },
@@ -571,7 +924,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h15", title: "Urlaub oft auf dem Land", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h15", title: "Urlaub oft auf dem Land", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Die Familie von Yusuf macht oft Urlaub auf dem Land. Aber dieses Mal fahren sie in die Stadt, nach Wien.", pitch: 1.0, rate: 1.0 },
@@ -589,7 +942,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h16", title: "Fleisch", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h16", title: "Fleisch", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich esse nicht mehr so viel Fleisch wie früher. Ich achte mehr auf meine Gesundheit und die Umwelt.", pitch: 1.1, rate: 1.0 },
@@ -607,7 +960,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h17", title: "Meinung", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h17", title: "Meinung", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Willkommen zu unserem heutigen Radiobeitrag. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich arbeite sehr gern im Büro. Nur zu Hause zu bleiben und mich den ganzen Tag um mein Kind zu kümmern, wäre auf Dauer nichts für mich.", pitch: 1.1, rate: 1.0 },
@@ -625,7 +978,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h18", title: "München", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h18", title: "München", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Der Zug um 18:16 Uhr fährt direkt nach München. Sie müssen nicht umsteigen.", pitch: 1.1, rate: 1.0 },
@@ -643,7 +996,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h19", title: "Haushalt", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h19", title: "Haushalt", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich muss im Haushalt fast alles alleine machen. Das ist manchmal ganz schön anstrengend.", pitch: 1.1, rate: 1.0 },
@@ -661,7 +1014,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h20", title: "City-Kino", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h20", title: "City-Kino", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Die nächste Bahn nach Füssen fährt um 10.55 Uhr ab. Sie haben noch etwas Zeit.", pitch: 1.1, rate: 1.0 },
@@ -679,7 +1032,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h21", title: "Einkäufe im Internet (المعدل)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h21", title: "Einkäufe im Internet (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Verstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich erledige alle meine Einkäufe im Internet. Das ist so bequem und ich muss nicht in die Stadt fahren.", pitch: 1.1, rate: 1.0 },
@@ -697,7 +1050,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h22", title: "Radwege (المعدل)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h22", title: "Radwege (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich sehe in Radwegen klare Vorteile. Sie machen das Radfahren sicherer und fördern die Gesundheit.", pitch: 1.1, rate: 1.0 },
@@ -715,7 +1068,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h23", title: "Kinder in der Schule (المعدل)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h23", title: "Kinder in der Schule (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Für die Sprecherin steht der schulische Erfolg ihrer Kinder nicht an erster Stelle. Wichtiger ist, dass sie sich gut entwickeln.", pitch: 1.1, rate: 1.0 },
@@ -733,7 +1086,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h24", title: "Urlaub (المعدل)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h24", title: "Urlaub (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich bin als Kind mit meiner Familie nie in Urlaub gefahren. Wir hatten einfach kein Geld dafür.", pitch: 1.1, rate: 1.0 },
@@ -751,7 +1104,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h25", title: "Einzelkind (المعدل)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h25", title: "Einzelkind (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Die Sprecherin muss sich oft um ihre Geschwister kümmern. Das ist manchmal anstrengend.", pitch: 1.1, rate: 1.0 },
@@ -769,7 +1122,7 @@ const HOREN_EXAMS = [
     ]
   },
   {
-    id: "h26", title: "Kinder in der Schule (Kinder / Stelle) (المعدل)", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
+    id: "h26", title: "Kinder in der Schule (Kinder / Stelle) (المعدل)", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
       { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Für die Sprecherin steht der schulische Erfolg ihrer Kinder nicht an erster Stelle. Wichtiger ist, dass sie sich gut entwickeln.", pitch: 1.1, rate: 1.0 },
@@ -1035,12 +1388,12 @@ function HorenGateway({ onStart, userLang }) {
     </div>
   );
 }
+
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
   const [modalGap, setModalGap] = useState(null);
   const [activeGap, setActiveGap] = useState(null);
-  const [activeMatchingQ, setActiveMatchingQ] = useState(null); // ✅ للماتشينغ الجديد
   const [showTranslation, setShowTranslation] = useState(false);
   const [excluded, setExcluded] = useState({});
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -1063,25 +1416,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
   const usedElsewhere = (n, k) => {
     if ((exam.type !== "matching" && exam.type !== "headings") || k === "X") return false;
     return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
-  };
-
-  // ✅ الدوال الجديدة ديال الماتشينغ
-  const clearMatch = (qNumber) => {
-    const newAns = { ...ans };
-    delete newAns[qNumber];
-    setAns(newAns);
-  };
-
-  const pickMatch = (qNumber, adKey) => {
-    if (done !== null) return;
-    const newAns = { ...ans };
-    Object.keys(newAns).forEach(key => {
-      if (newAns[key] === adKey) delete newAns[key];
-    });
-    newAns[qNumber] = adKey;
-    setAns(newAns);
-    const nextQ = exam.items.find(x => newAns[x.n] === undefined);
-    setActiveMatchingQ(nextQ ? nextQ.n : null);
   };
 
   const pick = (it, k) => {
@@ -1126,7 +1460,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
   };
 
   const finish = () => { setDone(score); onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setExcluded({}); setActiveMatchingQ(null); window.scrollTo(0, 0); };
+  const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -1211,77 +1545,47 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
           </div>
         )}
 
-        {/* ✅ الماتشينغ الجديد */}
-        {exam.type === "matching" && (
-          <div>
-            <div className="card" style={{ padding: 20 }}>
-              <h3 className="de" style={{ fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>SITUATIONEN</h3>
-              {exam.items.map((it) => {
-                const isMatched = ans[it.n];
-                const isActive = activeMatchingQ === it.n;
-                return (
-                  <div key={it.n}
-                    onClick={() => setActiveMatchingQ(isActive ? null : it.n)}
-                    style={{
-                      display: "flex", gap: 12, alignItems: "center",
-                      padding: 12, marginBottom: 8, borderRadius: 12,
-                      background: isActive ? "rgba(37, 99, 235, 0.1)" : "var(--paper)",
-                      border: isActive ? "2px solid var(--blue)" : "2px solid transparent",
-                      cursor: "pointer", transition: "all 0.2s"
-                    }}>
-                    <div style={{
-                      width: 32, height: 32, borderRadius: "50%",
-                      background: isActive ? "var(--blue)" : "var(--line)",
-                      color: isActive ? "#FFF" : "var(--text)",
-                      display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0
-                    }}>{it.n}</div>
-                    <div style={{ flex: 1 }}>
-                      <div className="de" style={{ fontSize: "1.05em", fontWeight: 600 }}>{it.de}</div>
-                      {showTranslation && (
-                        <div style={{ marginTop: 4, fontSize: "0.85em", color: "var(--muted)" }}>
-                          <SmartTrans obj={it} lang={userLang} />
-                        </div>
-                      )}
-                    </div>
-                    {isMatched && (
-                      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <div style={{ width: 32, height: 32, borderRadius: "50%", background: "var(--okbg)", color: "var(--okc)", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, border: "1px solid var(--okc)" }}>{isMatched}</div>
-                        <button onClick={(e) => { e.stopPropagation(); clearMatch(it.n); }} style={{ background: "transparent", border: "none", fontSize: "1.2em", color: "var(--red)", cursor: "pointer", padding: 4 }}>✕</button>
-                      </div>
-                    )}
-                  </div>
-                )
-              })}
+        {exam.type === "matching" && exam.ads && exam.ads.map(ad => (
+          <div key={ad.k} className="card" style={{ padding: 16 }}>
+            <div style={{ borderBottom: "1px solid var(--line)", paddingBottom: 12, marginBottom: 12 }}>
+              <span className="de" style={{ color: "var(--red)", fontWeight: 900, fontSize: "1.1em" }}>ANZEIGE {ad.k}</span>
+              <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
+              <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4, whiteSpace: "pre-wrap" }}>{ad.de}</div>
+              {showTranslation && <div style={{ marginTop: 4, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={ad} lang={userLang} /></div>}
             </div>
-            <div className="card" style={{ padding: 20 }}>
-              <h3 className="de" style={{ fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>ANZEIGEN</h3>
-              {exam.ads.map((ad) => {
-                const isUsed = Object.values(ans).includes(ad.k);
-                return (
-                  <div key={ad.k}
-                    onClick={() => { if (!activeMatchingQ) return; pickMatch(activeMatchingQ, ad.k); }}
-                    style={{
-                      padding: 16, marginBottom: 12, borderRadius: 12,
-                      background: isUsed ? "var(--okbg)" : "var(--paper)",
-                      border: "1px solid var(--line)", opacity: isUsed ? 0.7 : 1,
-                      cursor: activeMatchingQ ? "pointer" : "default", transition: "all 0.2s"
-                    }}>
-                    <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 8 }}>
-                      <div style={{ background: "var(--blue)", color: "#FFF", padding: "4px 12px", borderRadius: 8, fontWeight: 900 }}>{ad.k}</div>
-                      <div className="de" style={{ fontWeight: 900 }}>{ad.t}</div>
-                    </div>
-                    <div className="de" style={{ fontSize: "0.95em", color: "var(--muted)", whiteSpace: "pre-wrap" }}>{ad.de}</div>
-                    {showTranslation && (
-                      <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", borderTop: "1px dashed var(--line)", paddingTop: 8 }}>
-                        <SmartTrans obj={ad} lang={userLang} />
-                      </div>
-                    )}
+            {exam.items.map(it => {
+              const isSel = ans[it.n] === ad.k;
+              const isElse = ans[it.n] && ans[it.n] !== ad.k;
+              const isExc = excluded[it.n]?.[ad.k];
+              let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s", cursor: (done !== null || isExc || isElse) ? "default" : "pointer" };
+              
+              if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; }
+              else if (isElse) { st.opacity = 0.3; st.pointerEvents = "none"; }
+              else if (isExc) { st.opacity = 0.3; st.textDecoration = "line-through"; st.pointerEvents = "none"; }
+              
+              if (done !== null) {
+                if (ad.k === it.c) { st.background = "var(--okbg)"; st.borderColor = "var(--okc)"; st.color = "var(--okc)"; }
+                else if (isSel) { st.background = "var(--badbg)"; st.borderColor = "var(--badc)"; st.color = "var(--badc)"; }
+              }
+              return (
+                <div key={it.n} style={{ display: "flex", gap: 12, alignItems: "flex-start", direction: "ltr" }}>
+                  <button onClick={() => {
+                    if (done !== null || isSel || isElse) return;
+                    setExcluded(prev => {
+                      const n = {...prev}; if(!n[it.n]) n[it.n] = {};
+                      n[it.n][ad.k] = !n[it.n][ad.k]; return n;
+                    });
+                  }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>✕</button>
+                  <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
+                  <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
+                    <span className="de">{it.de}</span>
+                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={it} lang={userLang} /></div>}
                   </div>
-                )
-              })}
-            </div>
+                </div>
+              );
+            })}
           </div>
-        )}
+        ))}
 
         {(exam.type === "headings" || exam.type === "mcq") && exam.items && exam.items.map((it, idx) => {
           const sel = ans[it.n];
@@ -1325,7 +1629,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         })}
       </div>
 
-      {/* Modal لـ Sprach 1 مع التوضيح الجديد */}
       {modalGap !== null && exam.type === "sprach1" && (
         <div className="overlay" onClick={() => setModalGap(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1342,17 +1645,10 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                 </button>
               ))}
             </div>
-            {/* ✅ التوضيح الجديد */}
-            {exam.items.find(x => x.n === modalGap).exp && (
-              <div className="t2-ar" style={{marginTop: 20, fontSize: "0.95em"}}>
-                💡 {exam.items.find(x => x.n === modalGap).exp}
-              </div>
-            )}
           </div>
         </div>
       )}
 
-      {/* Modal لـ Sprach 2 */}
       {activeGap !== null && exam.type === "sprach2" && (
          <div className="overlay" onClick={() => setActiveGap(null)}>
            <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1471,16 +1767,9 @@ function SchreibenView({ userLang, dark, setDark }) {
           <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
         </div>
         {SCHREIBEN_DATA.map(item => (
-          <div key={item.id} onClick={() => { 
-            if (item.isPremium) {
-              alert("هاد الدرس خاصو يكون مخلص ولا فتريال. ولكن المحتوى ديالو مازال ما تحطش فسوبابيز.");
-              return;
-            }
-            setSelected(item); setUserText(""); setResult(null); setShowTransText(false); setShowTransTask(false); setTimeLeft(30 * 60); 
-          }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
+          <div key={item.id} onClick={() => { setSelected(item); setUserText(""); setResult(null); setShowTransText(false); setShowTransTask(false); setTimeLeft(30 * 60); }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
             <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{item.title}</div>
             <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{item.level}</div>
-            {item.isPremium && <span style={{ marginLeft: 8, fontSize: "0.85em", color: "var(--red)" }}>🔒 Premium</span>}
           </div>
         ))}
       </div>
@@ -1627,7 +1916,7 @@ function SchreibenView({ userLang, dark, setDark }) {
         {showTransTask && (
           <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
             <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask[userLang] || <AutoTrans text={selected.task} lang={userLang} force={true} />}</div>
-            {(selected.transPoints[userLang] || selected.transPoints['en'] || selected.transPoints['ar'] || []).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
+            {(selected.transPoints[userLang] || selected.transPoints['en'] || selected.transPoints['ar']).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
           </div>
         )}
       </div>
@@ -1966,6 +2255,7 @@ function App() {
       sb.from('profiles').select('is_paid, active_device_id, trial_started_at, is_blocked, is_admin').eq('id', user.id).single()
         .then(({ data, error }) => {
           if (error) { console.error("profiles fetch:", error); return; }
+          if (data) {
             if (data.is_blocked) {
               alert("⚠️ تم حظر حسابك. تواصل مع الدعم الفني.");
               localStorage.removeItem("ep_user");
@@ -2460,9 +2750,7 @@ function App() {
                 {t("logout", userLang)}
               </button>
             </div>
-          </div>
-        </div>
-      )}
+       }
     </div>
   );
 }
