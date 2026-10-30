@@ -1,166 +1,211 @@
+0
 <!DOCTYPE html>
 <html lang="ar" dir="rtl" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EchtPrüfung 2029</title>
+
+<script>
+window.__APP_MOUNTED__ = false;
+window.__APP_ERRORS__ = [];
+(function() {
+  function showError(title, details) {
+    if (window.__APP_MOUNTED__) return;
+    var root = document.getElementById('root');
+    if (!root) return;
+    root.innerHTML = '<div style="padding:24px;font-family:Cairo,system-ui,sans-serif;direction:rtl;text-align:center;min-height:100vh;display:flex;justify-content:center;align-items:center;background:#fff"><div style="max-width:500px;width:100%"><div style="font-size:50px;margin-bottom:16px">⚠️</div><h2 style="color:#DD0000;font-size:1.3em;margin:0 0 16px;font-weight:900">' + title + '</h2><div style="background:#FEE2E2;border:1px solid #DD0000;padding:14px;border-radius:12px;margin-bottom:20px;text-align:left;direction:ltr;font-size:12px;word-break:break-word;color:#7F1D1D;font-family:monospace;line-height:1.6;max-height:180px;overflow:auto">' + details + '</div><button onclick="location.reload()" style="padding:16px;background:#DD0000;color:#fff;border:none;border-radius:14px;font-size:1.05em;font-weight:900;cursor:pointer;font-family:inherit;width:100%;margin-bottom:10px">🔄 إعادة المحاولة</button><button onclick="localStorage.clear();location.reload()" style="padding:12px;background:transparent;color:#64748B;border:1px solid #E2E8F0;border-radius:14px;font-size:0.9em;font-weight:700;cursor:pointer;font-family:inherit;width:100%">🗑️ مسح البيانات وإعادة المحاولة</button></div></div>';
+  }
+  window.addEventListener('error', function(e) {
+    window.__APP_ERRORS__.push(e.message || 'Unknown');
+    if (!window.__APP_MOUNTED__) setTimeout(function() {
+      if (!window.__APP_MOUNTED__) showError('التطبيق ما قدرش يتحمل', (e.message || 'Unknown') + '<br>' + (e.filename || '') + ':' + (e.lineno || ''));
+    }, 500);
+  });
+  window.addEventListener('unhandledrejection', function(e) {
+    window.__APP_ERRORS__.push('Promise: ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
+  });
+  setTimeout(function() {
+    if (!window.__APP_MOUNTED__) {
+      var d = window.__APP_ERRORS__.length > 0 ? window.__APP_ERRORS__.slice(0,3).join('<br>') : 'التطبيق تأخر ف التحميل. تحقق من الإنترنت.';
+      showError('التطبيق تأخر ف التحميل', d);
+    }
+  }, 20000);
+})();
+</script>
+
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.26.4/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+
 <style>
-  :root{
-    --ink:#111111; --gold:#FFCE00; --red:#DD0000; --blue:#2563EB; 
-    --paper:#FFFFFF; --card:#F8FAFC;
-    --text:#111111; --muted:#64748B; --line:#E2E8F0; 
-    --okc:#15803D; --okbg:#DCFCE7;
-    --badc:#DD0000; --badbg:#FEE2E2; --fs:1;
-  }
-  .dark{
-    --paper:#0A0A0A; --card:#1A1A1A; --text:#F8FAFC; --muted:#94A3B8; --line:#333333;
-    --ink:#F8FAFC; --gold:#FFCE00; --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
-    --blue: #60A5FA;
-  }
-  html{ font-size:calc(18px * var(--fs)); }
-  *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-  body{ 
-    margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s;
-    background-color: var(--paper);
-    background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.08) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.08) 0%, transparent 45%);
-    background-attachment: fixed;
-  }
-  .dark body { background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.1) 0%, transparent 45%); }
-  button{ font-family:inherit; cursor:pointer; border:none; background:transparent; }
-  .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
-  .card{ background:rgba(255,255,255,0.7); border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:12px; box-shadow:0 8px 32px rgba(0,0,0,0.04); backdrop-filter: blur(12px); transition: transform 0.2s; }
-  .dark .card { background:rgba(26,26,26,0.7); }
-  .card:active { transform: scale(0.98); }
-  .header{ position:sticky; top:0; z-index:30; margin:0; display:flex; justify-content:space-between; align-items:center; background:var(--paper); border-bottom:1px solid var(--line); padding:8px 12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
-  .header::after{ content:""; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); }
-  .brand{ display:flex; align-items:center; gap:8px; }
-  .logo{ width:36px; height:36px; border-radius:10px; background:var(--ink); display:flex; align-items:center; justify-content:center; }
-  .header-title{ font-weight: 900; font-size: 1.1em; }
-  .header-subtitle{ font-size: .75em; color: var(--muted); font-weight: bold; display: flex; align-items: center; gap: 4px; }
-  .btnI{ width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--text); display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
-  .btnI:active{ background:var(--line); transform:scale(0.9); }
-  .btn{ border-radius:16px; padding:16px; font-weight:800; background:linear-gradient(135deg, var(--ink), #333); color:var(--gold); width:100%; font-size:1.05em; transition:all 0.2s; box-shadow: 0 8px 25px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.1); }
-  .btn:active { transform: translateY(2px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
-  .dark .btn { background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); }
-  .btn.ghost{ background:var(--card); color:var(--text); border:1.5px solid var(--line); box-shadow: none; }
-  .modeBtn { flex: 1; padding: 10px 8px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 0.9em; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; cursor: pointer; }
-  .modeBtn.on { border-color: var(--red); background: var(--red); color: #FFF; box-shadow: 0 4px 15px rgba(221,0,0,0.25); }
-  .dark .modeBtn.on { background: var(--gold); border-color: var(--gold); color: var(--ink); box-shadow: 0 4px 15px rgba(255,206,0,0.25); }
-  .opt{ display:flex; gap:12px; align-items:flex-start; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:16px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
-  .opt.sel{ border-color:var(--blue); background:rgba(37, 99, 235, .1); color: var(--blue); }
-  .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); }
-  .opt.bad{ border-color:var(--badc); background:var(--badbg); color:var(--badc); }
-  .opt.faded{ opacity:.4; }
-  .opt.dis { opacity: 0.4; pointer-events: none; background: var(--line); color: var(--muted); cursor: not-allowed; }
-  .letter{ width:32px; height:32px; border-radius:50%; background:var(--card); display:flex; align-items:center; justify-content:center; font-weight:900; flex-shrink:0; font-size:1.1em; border:1px solid var(--line); }
-  .fb{ border-radius:14px; padding:14px; margin-top:10px; font-size:.95em; line-height:1.8; }
-  .fb.good{ background:var(--okbg); color:var(--okc); }
-  .fb.bad{ background:var(--badbg); color:var(--badc); }
-  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; gap: 4px; box-shadow:0 -4px 20px rgba(0,0,0,0.05); }
-  .nav button{ color:var(--muted); font-size:.7em; font-weight:800; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; flex: 1; transition:all 0.2s; border-radius: 12px; padding: 6px 0; }
-  .nav button.on{ color:var(--red); background: rgba(221,0,0,0.08); }
-  .dark .nav button.on{ color:var(--gold); background: rgba(255,206,0,0.15); }
-  .overlay{ position:fixed; inset:0; background:rgba(0,0,0,.6); z-index:50; display:flex; justify-content:center; align-items:center; padding:20px; backdrop-filter:blur(6px); }
-  .sheet{ background:var(--card); border:1px solid var(--line); border-radius:28px; padding:24px; width:100%; max-width:440px; max-height:85vh; overflow-y:auto; color:var(--text); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
-  .word-bank{ display:grid; grid-template-columns:repeat(2,1fr); gap:10px; padding:14px; background:var(--paper); border-radius:16px; border:1px dashed var(--line); }
-  .word-btn{ padding:12px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--text); font-weight:800; font-size:1em; text-align:right; display:flex; gap:10px; align-items:center; }
-  .word-btn.used{ opacity:.3; text-decoration:line-through; pointer-events:none; }
-  .splash-screen{ position:fixed; inset:0; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:9999; background:var(--paper); }
-  .splash-logo{ width:180px; height:180px; animation:pulse 2s infinite; }
-  @keyframes pulse{ 0%{transform:scale(1)} 50%{transform:scale(1.08)} 100%{transform:scale(1)} }
-  .auth-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
-  .auth-card{ background:rgba(255,255,255,0.8); backdrop-filter:blur(20px); padding:32px; border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,0.1); border:1px solid var(--line); width:100%; max-width:420px; }
-  .dark .auth-card { background:rgba(26,26,26,0.8); }
-  .auth-input{ width:100%; padding:16px; margin-bottom:16px; border-radius:14px; border:1px solid var(--line); background:var(--paper); color:var(--text); font-family:inherit; outline:none; font-size:1.05em; transition: border 0.2s; text-align: center; font-weight: bold; }
-  .auth-input:focus{ border-color:var(--blue); }
-  .auth-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:var(--ink); color:var(--gold); font-weight:800; font-size:1.1em; cursor:pointer; margin-bottom:12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
-  .auth-btn.guest{ background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); box-shadow: 0 8px 20px rgba(255,206,0,0.3); }
-  .lang-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; max-height:400px; overflow-y:auto; padding-right:5px; }
-  .lang-btn{ display:flex; align-items:center; gap:8px; padding:12px; border-radius:14px; background:var(--paper); border:2px solid var(--line); color:var(--text); font-weight:800; transition:all 0.2s; text-align:right; font-size:0.85em; }
-  .lang-btn.on{ background:rgba(37, 99, 235, 0.08); border-color:var(--blue); color:var(--blue); }
-  .inline-gap{ display:inline-flex; align-items:center; justify-content:center; min-width:90px; border-bottom:2px dashed var(--blue); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900; vertical-align:middle; background:rgba(37, 99, 235,0.05); border-radius:6px 6px 0 0; }
-  .inline-gap.filled{ border-bottom-style:solid; background:rgba(37, 99, 235,0.15); color:var(--blue); }
-  .sp1-correct{ background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--okc); }
-  .sp1-wrong{ background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--badc); }
-  .rf-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
-  .rf-circle.sel { border-color: var(--blue); background: rgba(37, 99, 235, 0.1); }
-  .rf-circle.sel::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); }
-  .rf-circle.good { border-color: var(--okc) !important; background: var(--okbg) !important; }
-  .rf-circle.good::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--okc) !important; }
-  .rf-circle.bad { border-color: var(--badc) !important; background: var(--badbg) !important; }
-  .rf-circle.bad::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--badc) !important; }
-  .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); }
-  .horen-gateway-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); }
-  .horen-gateway-icon { width: 70px; height: 70px; border-radius: 20px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; color: #22C55E; font-size: 2em; }
-  .horen-start-btn { width: 100%; padding: 16px; border-radius: 16px; background: rgba(34, 197, 94, 0.1); color: #22C55E; font-weight: 900; font-size: 1.1em; display: flex; justify-content: center; align-items: center; gap: 10px; transition: all 0.2s; border: 1.5px solid rgba(34, 197, 94, 0.3); }
-  .horen-start-btn:active { transform: scale(0.98); background: rgba(34, 197, 94, 0.2); }
-  @keyframes spin { 100% { transform: rotate(360deg); } }
-  .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: #fff; box-shadow: -2px 0 15px rgba(0,0,0,0.1); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1002; display: flex; flex-direction: column; }
-  .dark .side-menu { background: #1a1a1a; }
-  .side-menu.active { right: 0; }
-  .side-menu-header { background: linear-gradient(135deg, #1e293b, #334155); padding: 30px 20px; text-align: center; color: white; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
-  .logo-circle { width: 60px; height: 60px; background: linear-gradient(135deg, #DD0000, #FFCE00); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; color: white; margin: 0 auto 10px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-  .menu-item { display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: #334155; text-decoration: none; font-weight: bold; transition: 0.2s; font-size: 1.1em; }
-  .dark .menu-item { color: #fff; }
-  .menu-item:hover, .menu-item.active { background: #f1f5f9; color: #2962ff; border-right: 4px solid #2962ff; }
-  .dark .menu-item:hover, .dark .menu-item.active { background: #333; color: var(--gold); border-right-color: var(--gold); }
-  .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
-  .menu-overlay.active { display: block; }
-
-  /* ✅ Floating Bar — Updated Blue Buttons */
-  .bottom-bar { 
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
-    display: flex; align-items: center; justify-content: space-between; gap: 10px; 
-    background: transparent; padding: 0; z-index: 1000; width: 92%; max-width: 450px; 
-  }
-  .btn-prev-bar { 
-    background: #FFF; border: 1px solid var(--line); border-radius: 20px; 
-    padding: 12px 20px; color: var(--blue); font-weight: 900; 
-    cursor: pointer; font-size: 0.9em; box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-  }
-  .dark .btn-prev-bar { background: #1e293b; color: #FFF; border-color: #334155; }
-  .btn-correct-bar { 
-    background: linear-gradient(135deg, #2962ff, #1565c0); color: white; 
-    border: none; border-radius: 20px; padding: 12px 25px; font-weight: 900; 
-    display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(41, 98, 255, 0.3); 
-    cursor: pointer; flex-grow: 1; justify-content: center; font-size: 1em; 
-  }
-  .btn-next-bar { 
-    background: linear-gradient(135deg, #2962ff, #1565c0); border: none; 
-    border-radius: 20px; width: 50px; height: 45px; display: flex; 
-    justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); 
-    cursor: pointer; flex-shrink: 0; transform: rotate(180deg); color: white;
-  }
-
-  .timer-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 16px; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-variant-numeric: tabular-nums; font-size: 16px; }
-  .dark .timer-badge { background: rgba(26, 26, 26, 0.95); border-color: #333; color: #FFF; }
-  .keyboard-area { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-  .key-btn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); font-weight: 900; font-size: 1.1em; color: var(--text); display: flex; justify-content: center; align-items: center; }
-  .word-counter { background: var(--line); padding: 8px 16px; border-radius: 12px; font-size: 0.9em; font-weight: 900; }
+:root{--ink:#111111;--gold:#FFCE00;--red:#DD0000;--blue:#2563EB;--paper:#FFFFFF;--card:#F8FAFC;--text:#111111;--muted:#64748B;--line:#E2E8F0;--okc:#15803D;--okbg:#DCFCE7;--badc:#DD0000;--badbg:#FEE2E2;--fs:1}
+.dark{--paper:#0A0A0A;--card:#1A1A1A;--text:#F8FAFC;--muted:#94A3B8;--line:#333333;--ink:#F8FAFC;--gold:#FFCE00;--okc:#86EFAC;--okbg:#14532D;--badc:#FCA5A5;--badbg:#7F1D1D;--blue:#60A5FA}
+html{font-size:calc(18px * var(--fs))}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;color:var(--text);font-family:'Cairo',system-ui,sans-serif;direction:rtl;min-height:100vh;padding-bottom:100px;transition:background .3s,color .3s;background-color:var(--paper);background-image:radial-gradient(circle at 10% 20%,rgba(221,0,0,0.08) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(255,206,0,0.08) 0%,transparent 45%);background-attachment:fixed}
+.dark body{background-image:radial-gradient(circle at 10% 20%,rgba(221,0,0,0.15) 0%,transparent 40%),radial-gradient(circle at 90% 80%,rgba(255,206,0,0.1) 0%,transparent 45%)}
+button{font-family:inherit;cursor:pointer;border:none;background:transparent}
+.de{direction:ltr;text-align:left;font-family:system-ui,-apple-system,sans-serif}
+.card{background:rgba(255,255,255,0.7);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 8px 32px rgba(0,0,0,0.04);backdrop-filter:blur(12px);transition:transform 0.2s}
+.dark .card{background:rgba(26,26,26,0.7)}
+.card:active{transform:scale(0.98)}
+.header{position:sticky;top:0;z-index:30;margin:0;display:flex;justify-content:space-between;align-items:center;background:var(--paper);border-bottom:1px solid var(--line);padding:8px 12px;box-shadow:0 2px 10px rgba(0,0,0,0.05)}
+.header::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%)}
+.brand{display:flex;align-items:center;gap:8px}
+.logo{width:36px;height:36px;border-radius:10px;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.header-title{font-weight:900;font-size:1.1em}
+.header-subtitle{font-size:.75em;color:var(--muted);font-weight:bold;display:flex;align-items:center;gap:4px}
+.btnI{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--text);display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.btnI:active{background:var(--line);transform:scale(0.9)}
+.btn{border-radius:16px;padding:16px;font-weight:800;background:linear-gradient(135deg,var(--ink),#333);color:var(--gold);width:100%;font-size:1.05em;transition:all 0.2s;box-shadow:0 8px 25px rgba(0,0,0,0.15);border:1px solid rgba(255,255,255,0.1)}
+.btn:active{transform:translateY(2px);box-shadow:0 4px 15px rgba(0,0,0,0.15)}
+.dark .btn{background:linear-gradient(135deg,var(--gold),#F5B82E);color:var(--ink)}
+.btn.ghost{background:var(--card);color:var(--text);border:1.5px solid var(--line);box-shadow:none}
+.modeBtn{flex:1;padding:10px 8px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--text);font-weight:800;font-size:0.9em;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s;cursor:pointer}
+.modeBtn.on{border-color:var(--red);background:var(--red);color:#FFF;box-shadow:0 4px 15px rgba(221,0,0,0.25)}
+.dark .modeBtn.on{background:var(--gold);border-color:var(--gold);color:var(--ink);box-shadow:0 4px 15px rgba(255,206,0,0.25)}
+.opt{display:flex;gap:12px;align-items:flex-start;border:2px solid transparent;background:var(--paper);color:var(--text);border-radius:16px;padding:14px;margin-bottom:8px;width:100%;text-align:right;transition:all .2s;font-size:1.05em;box-shadow:0 2px 8px rgba(0,0,0,0.02)}
+.opt.sel{border-color:var(--blue);background:rgba(37,99,235,.1);color:var(--blue)}
+.opt.good{border-color:var(--okc);background:var(--okbg);color:var(--okc)}
+.opt.bad{border-color:var(--badc);background:var(--badbg);color:var(--badc)}
+.opt.faded{opacity:.4}
+.opt.dis{opacity:0.4;pointer-events:none;background:var(--line);color:var(--muted);cursor:not-allowed}
+.letter{width:32px;height:32px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;font-weight:900;flex-shrink:0;font-size:1.1em;border:1px solid var(--line)}
+.fb{border-radius:14px;padding:14px;margin-top:10px;font-size:.95em;line-height:1.8}
+.fb.good{background:var(--okbg);color:var(--okc)}
+.fb.bad{background:var(--badbg);color:var(--badc)}
+.nav{position:fixed;bottom:0;left:0;right:0;background:var(--paper);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px 20px;z-index:40;gap:4px;box-shadow:0 -4px 20px rgba(0,0,0,0.05)}
+.nav button{color:var(--muted);font-size:.7em;font-weight:800;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex:1;transition:all 0.2s;border-radius:12px;padding:6px 0}
+.nav button.on{color:var(--red);background:rgba(221,0,0,0.08)}
+.dark .nav button.on{color:var(--gold);background:rgba(255,206,0,0.15)}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:50;display:flex;justify-content:center;align-items:center;padding:20px;backdrop-filter:blur(6px)}
+.sheet{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:24px;width:100%;max-width:440px;max-height:85vh;overflow-y:auto;color:var(--text);box-shadow:0 20px 50px rgba(0,0,0,0.2)}
+.word-bank{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:14px;background:var(--paper);border-radius:16px;border:1px dashed var(--line)}
+.word-btn{padding:12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--text);font-weight:800;font-size:1em;text-align:right;display:flex;gap:10px;align-items:center}
+.word-btn.used{opacity:.3;text-decoration:line-through;pointer-events:none}
+.splash-screen{position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;background:var(--paper)}
+.splash-logo{width:180px;height:180px;animation:pulse 2s infinite}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.08)}100%{transform:scale(1)}}
+.auth-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+.auth-card{background:rgba(255,255,255,0.8);backdrop-filter:blur(20px);padding:32px;border-radius:28px;box-shadow:0 20px 50px rgba(0,0,0,0.1);border:1px solid var(--line);width:100%;max-width:420px}
+.dark .auth-card{background:rgba(26,26,26,0.8)}
+.auth-input{width:100%;padding:16px;margin-bottom:16px;border-radius:14px;border:1px solid var(--line);background:var(--paper);color:var(--text);font-family:inherit;outline:none;font-size:1.05em;transition:border 0.2s;text-align:center;font-weight:bold}
+.auth-input:focus{border-color:var(--blue)}
+.auth-btn{width:100%;padding:16px;border-radius:14px;border:none;background:var(--ink);color:var(--gold);font-weight:800;font-size:1.1em;cursor:pointer;margin-bottom:12px;box-shadow:0 8px 20px rgba(0,0,0,0.15)}
+.auth-btn.guest{background:linear-gradient(135deg,var(--gold),#F5B82E);color:var(--ink);box-shadow:0 8px 20px rgba(255,206,0,0.3)}
+.lang-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-height:400px;overflow-y:auto;padding-right:5px}
+.lang-btn{display:flex;align-items:center;gap:8px;padding:12px;border-radius:14px;background:var(--paper);border:2px solid var(--line);color:var(--text);font-weight:800;transition:all 0.2s;text-align:right;font-size:0.85em}
+.lang-btn.on{background:rgba(37,99,235,0.08);border-color:var(--blue);color:var(--blue)}
+.inline-gap{display:inline-flex;align-items:center;justify-content:center;min-width:90px;border-bottom:2px dashed var(--blue);padding:2px 8px;margin:0 6px;cursor:pointer;font-weight:900;vertical-align:middle;background:rgba(37,99,235,0.05);border-radius:6px 6px 0 0}
+.inline-gap.filled{border-bottom-style:solid;background:rgba(37,99,235,0.15);color:var(--blue)}
+.sp1-correct{background:var(--okbg);color:var(--okc);padding:4px 12px;border-radius:6px;font-weight:900;margin:0 4px;border:1px solid var(--okc)}
+.sp1-wrong{background:var(--badbg);color:var(--badc);text-decoration:line-through;padding:4px 12px;border-radius:6px;font-weight:900;margin:0 4px;border:1px solid var(--badc)}
+.rf-circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.2s}
+.rf-circle.sel{border-color:var(--blue);background:rgba(37,99,235,0.1)}
+.rf-circle.sel::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--blue)}
+.rf-circle.good{border-color:var(--okc)!important;background:var(--okbg)!important}
+.rf-circle.good::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--okc)!important}
+.rf-circle.bad{border-color:var(--badc)!important;background:var(--badbg)!important}
+.rf-circle.bad::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--badc)!important}
+.t2-ar{background:rgba(37,99,235,0.05);padding:16px;border-radius:14px;margin-top:12px;color:var(--text);font-size:1.05em;line-height:1.8;border-right:5px solid var(--blue)}
+.horen-gateway-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:20px;box-shadow:0 8px 30px rgba(0,0,0,0.05)}
+.horen-gateway-icon{width:70px;height:70px;border-radius:20px;background:rgba(34,197,94,0.1);display:flex;align-items:center;justify-content:center;color:#22C55E;font-size:2em}
+.horen-start-btn{width:100%;padding:16px;border-radius:16px;background:rgba(34,197,94,0.1);color:#22C55E;font-weight:900;font-size:1.1em;display:flex;justify-content:center;align-items:center;gap:10px;transition:all 0.2s;border:1.5px solid rgba(34,197,94,0.3)}
+.horen-start-btn:active{transform:scale(0.98);background:rgba(34,197,94,0.2)}
+@keyframes spin{100%{transform:rotate(360deg)}}
+.side-menu{position:fixed;top:0;right:-280px;width:280px;height:100%;background:#fff;box-shadow:-2px 0 15px rgba(0,0,0,0.1);transition:0.3s cubic-bezier(0.4,0,0.2,1);z-index:1002;display:flex;flex-direction:column}
+.dark .side-menu{background:#1a1a1a}
+.side-menu.active{right:0}
+.side-menu-header{background:linear-gradient(135deg,#1e293b,#334155);padding:30px 20px;text-align:center;color:white;border-bottom-left-radius:20px;border-bottom-right-radius:20px}
+.logo-circle{width:60px;height:60px;background:linear-gradient(135deg,#DD0000,#FFCE00);border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:24px;font-weight:bold;color:white;margin:0 auto 10px auto;box-shadow:0 4px 10px rgba(0,0,0,0.2)}
+.menu-item{display:flex;align-items:center;gap:15px;padding:15px 20px;color:#334155;text-decoration:none;font-weight:bold;transition:0.2s;font-size:1.1em}
+.dark .menu-item{color:#fff}
+.menu-item:hover,.menu-item.active{background:#f1f5f9;color:#2962ff;border-right:4px solid #2962ff}
+.dark .menu-item:hover,.dark .menu-item.active{background:#333;color:var(--gold);border-right-color:var(--gold)}
+.menu-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1001}
+.menu-overlay.active{display:block}
+.bottom-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);display:flex;align-items:center;justify-content:space-between;gap:10px;background:transparent;padding:0;z-index:1000;width:92%;max-width:450px}
+.btn-prev-bar{background:#FFF;border:1px solid var(--line);border-radius:20px;padding:12px 20px;color:var(--blue);font-weight:900;cursor:pointer;font-size:0.9em;box-shadow:0 4px 15px rgba(0,0,0,0.1)}
+.dark .btn-prev-bar{background:#1e293b;color:#FFF;border-color:#334155}
+.btn-correct-bar{background:linear-gradient(135deg,#2962ff,#1565c0);color:white;border:none;border-radius:20px;padding:12px 25px;font-weight:900;display:flex;align-items:center;gap:8px;box-shadow:0 4px 15px rgba(41,98,255,0.3);cursor:pointer;flex-grow:1;justify-content:center;font-size:1em}
+.btn-next-bar{background:linear-gradient(135deg,#2962ff,#1565c0);border:none;border-radius:20px;width:50px;height:45px;display:flex;justify-content:center;align-items:center;box-shadow:0 4px 10px rgba(41,98,255,0.3);cursor:pointer;flex-shrink:0;transform:rotate(180deg);color:white}
+.timer-badge{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.95);backdrop-filter:blur(5px);border:1px solid #e2e8f0;color:#1e293b;padding:8px 16px;border-radius:25px;font-weight:bold;box-shadow:0 4px 10px rgba(0,0,0,0.1);font-variant-numeric:tabular-nums;font-size:16px}
+.dark .timer-badge{background:rgba(26,26,26,0.95);border-color:#333;color:#FFF}
+.keyboard-area{padding:16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.key-btn{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--paper);font-weight:900;font-size:1.1em;color:var(--text);display:flex;justify-content:center;align-items:center}
+.word-counter{background:var(--line);padding:8px 16px;border-radius:12px;font-size:0.9em;font-weight:900}
 </style>
 </head>
 <body>
-<div id="root"></div>
+
+<div id="root">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:Cairo,system-ui,sans-serif;text-align:center;padding:20px;background:#fff">
+    <div style="width:70px;height:70px;border:5px solid #E2E8F0;border-top-color:#DD0000;border-radius:50%;animation:__spin 1s linear infinite"></div>
+    <p style="margin:24px 0 0;font-weight:900;color:#111;font-size:1.2em">EchtPrüfung</p>
+    <p style="margin:8px 0 0;font-weight:700;color:#64748B">جاري تحميل التطبيق...</p>
+  </div>
+</div>
+<style>@keyframes __spin{100%{transform:rotate(360deg)}}</style>
 
 <script type="text/babel">
+/* ═══════════════════════════════════════════════════════
+   ✅ فحص المكتبات
+   ═══════════════════════════════════════════════════════ */
+if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof supabase === 'undefined') {
+  var missing = [];
+  if (typeof React === 'undefined') missing.push('React');
+  if (typeof ReactDOM === 'undefined') missing.push('ReactDOM');
+  if (typeof supabase === 'undefined') missing.push('Supabase');
+  document.getElementById('root').innerHTML =
+    '<div style="padding:24px;font-family:Cairo,sans-serif;direction:rtl;text-align:center;min-height:100vh;display:flex;justify-content:center;align-items:center;background:#fff"><div style="max-width:500px">' +
+    '<div style="font-size:50px;margin-bottom:16px">📡</div>' +
+    '<h2 style="color:#DD0000;font-weight:900">مكتبات ما تحملتش</h2>' +
+    '<div style="background:#FEE2E2;padding:14px;border-radius:12px;margin:20px 0;text-align:left;direction:ltr;font-size:13px;color:#7F1D1D;font-family:monospace">' + missing.join(', ') + '</div>' +
+    '<p style="color:#64748B">الإنترنت بطيء. جرب WiFi أو VPN.</p>' +
+    '<button onclick="location.reload()" style="padding:16px 40px;background:#DD0000;color:#fff;border:none;border-radius:14px;font-size:1.1em;font-weight:900;cursor:pointer;margin-top:20px;font-family:inherit">🔄 إعادة المحاولة</button>' +
+    '</div></div>';
+  window.__APP_MOUNTED__ = true;
+  throw new Error('Missing libs');
+}
+
 const { useState, useEffect, useRef } = React;
 const WA = "212600000000";
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
 const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
 const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
-const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
+let sb;
+try {
+  sb = supabase.createClient(supabaseUrl, supabaseKey);
+} catch (e) {
+  document.getElementById('root').innerHTML =
+    '<div style="padding:24px;font-family:Cairo,sans-serif;direction:rtl;text-align:center;min-height:100vh;display:flex;justify-content:center;align-items:center;background:#fff"><div style="max-width:500px">' +
+    '<div style="font-size:50px;margin-bottom:16px">🔑</div>' +
+    '<h2 style="color:#DD0000;font-weight:900">مشكل ف Supabase</h2>' +
+    '<div style="background:#FEE2E2;padding:14px;border-radius:12px;margin:20px 0;text-align:left;direction:ltr;font-size:12px;color:#7F1D1D;font-family:monospace;word-break:break-all">' + e.message + '</div>' +
+    '<button onclick="location.reload()" style="padding:16px 40px;background:#DD0000;color:#fff;border:none;border-radius:14px;font-weight:900;cursor:pointer;font-family:inherit">🔄 إعادة المحاولة</button>' +
+    '</div></div>';
+  window.__APP_MOUNTED__ = true;
+  throw e;
+}
+
+/* ═══════════════════════════════════════════════════════
+   ✅ Logo SVG
+   ═══════════════════════════════════════════════════════ */
 const LogoImage = ({ size = 50 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#111111" /><stop offset="100%" stopColor="#222222" /></linearGradient>
-      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#FFCE00" /><stop offset="100%" stopColor="#F5B82E" /></linearGradient>
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#111111" /><stop offset="100%" stopColor="#222222" />
+      </linearGradient>
+      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stopColor="#FFCE00" /><stop offset="100%" stopColor="#F5B82E" />
+      </linearGradient>
     </defs>
     <rect width="100" height="100" rx="24" fill="url(#bgGrad)" />
     <rect width="98" height="98" x="1" y="1" rx="23" stroke="rgba(255,255,255,0.1)" strokeWidth="2" fill="none" />
@@ -172,6 +217,9 @@ const LogoImage = ({ size = 50 }) => (
   </svg>
 );
 
+/* ═══════════════════════════════════════════════════════
+   ✅ LANGS — 11 لغة
+   ═══════════════════════════════════════════════════════ */
 const LANGS = [
   { c:"ma", n:"الدارجة", f:"🇲🇦" }, { c:"ar", n:"العربية", f:"📜" },
   { c:"hi", n:"हिन्दी", f:"🇮🇳" }, { c:"id", n:"Indonesia", f:"🇮🇩" },
@@ -181,6 +229,9 @@ const LANGS = [
   { c:"ne", n:"नेपाली", f:"🇳🇵" }
 ];
 
+/* ═══════════════════════════════════════════════════════
+   ✅ UI_TEXTS — كل النصوص بالـ 11 لغة
+   ═══════════════════════════════════════════════════════ */
 const UI_TEXTS = {
   ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"سلام، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمين", name:"الاسم", code:"الكود", status:"الحالة", paid:"مخلص", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً", unique_name_placeholder:"الاسم الفريد (Unique Name)", unique_code_placeholder:"الكود الفريد (Unique Code)", login_or_register:"دخول / إنشاء حساب", account_blocked:"تم حظر حسابك", contact_support:"تواصل مع الدعم الفني", please_wait:"جاري التحميل...", results:"النتائج", score:"النقطة", date:"التاريخ", search_users:"بحث عن مستخدم...", delete_notif:"حذف", confirm_delete_notif:"واش بصح باغي تحذف هاد الإشعار؟", sent_success:"تم الإرسال بنجاح!", fill_all_fields:"عمر جميع الحقول", sending:"جاري الإرسال...", previous_notifs:"الإشعارات السابقة", new_notif:"إرسال إشعار جديد", active:"نشط", inactive:"موقوف" },
   ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا تجد جميع دروس الاستماع. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ خطأ", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"مرحباً، أريد ترقية حسابي إلى Pro لفتح جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمون", name:"الاسم", code:"الكود", status:"الحالة", paid:"مدفوع", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً", unique_name_placeholder:"الاسم الفريد", unique_code_placeholder:"الكود الفريد", login_or_register:"دخول / إنشاء حساب", account_blocked:"تم حظر حسابك", contact_support:"تواصل مع الدعم الفني", please_wait:"جاري التحميل...", results:"النتائج", score:"النقطة", date:"التاريخ", search_users:"بحث عن مستخدم...", delete_notif:"حذف", confirm_delete_notif:"هل تريد حقاً حذف هذا الإشعار؟", sent_success:"تم الإرسال بنجاح!", fill_all_fields:"يرجى ملء جميع الحقول", sending:"جاري الإرسال...", previous_notifs:"الإشعارات السابقة", new_notif:"إرسال إشعار جديد", active:"نشط", inactive:"موقوف" },
@@ -195,11 +246,11 @@ const UI_TEXTS = {
   hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ", search_placeholder:"विषय खोजें...", listen_title:"सुनने के पाठ", listen_desc:"यहां आपको सभी सुनने के पाठ मिलेंगे। सुनना शुरू करने और सवालों के जवाब देने के लिए बटन दबाएं।", gap_num:"रिक्त स्थान", choose_word_gap:"रिक्त स्थान के लिए शब्द चुनें", story_memo:"याद रखने के लिए कहानी", check_btn:"जांचें", next_btn:"अगला", back_btn:"वापस", reset_btn:"रीसेट", coming_soon:"जल्द आ रहा है...", settings:"सेटिंग्स", change_lang:"भाषा बदलें", text_size:"पाठ का आकार", reset_size:"मूल आकार पर लौटें", logout:"लॉग आउट", whatsapp:"व्हाट्सएप", lang_note:"आपके द्वारा चुनी गई भाषा पूरे ऐप में रहेगी", or:"या", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ उत्तर नहीं दिया", the_answer:"उत्तर", b1_level:"स्तर B1", b2_level:"स्तर B2", side_menu:"साइड मेनू", ai_correct:"✨ AI जाँच", trans_text:"पाठ अनुवाद", trans_task:"कार्य अनुवाद", show:"दिखाएं", hide:"छिपाएं", words_count:"शब्द", locked:"बंद", upgrade_pro:"Pro में अपग्रेड करें", trial_active:"मुफ़्त परीक्षण सक्रिय", trial_ended:"परीक्षण समाप्त", wa_upgrade_msg:"नमस्ते, मैं सभी पाठों को अनलॉक करने के लिए Pro में अपग्रेड करना चाहता हूं", admin_panel:"एडमिन पैनल", notifications:"सूचनाएं", block:"ब्लॉक", unblock:"अनब्लॉक", mark_paid:"भुगतान के रूप में चिह्नित करें", mark_unpaid:"अवैतनिक के रूप में चिह्नित करें", save:"सहेजें", cancel:"रद्द करें", users:"उपयोगकर्ता", name:"नाम", code:"कोड", status:"स्थिति", paid:"भुगतान किया", blocked:"अवरुद्ध", actions:"कार्रवाई", send_notification:"सूचना भेजें", title_ar:"शीर्षक", message_ar:"संदेश", no_notifications:"अभी तक कोई सूचना नहीं", unique_name_placeholder:"अद्वितीय नाम", unique_code_placeholder:"अद्वितीय कोड", login_or_register:"लॉगिन / रजिस्टर", account_blocked:"आपका खाता ब्लॉक कर दिया गया है", contact_support:"तकनीकी सहायता से संपर्क करें", please_wait:"लोड हो रहा है...", results:"परिणाम", score:"स्कोर", date:"तारीख", search_users:"उपयोगकर्ता खोजें...", delete_notif:"हटाएं", confirm_delete_notif:"क्या आप वाकई इस सूचना को हटाना चाहते हैं?", sent_success:"सफलतापूर्वक भेजा गया!", fill_all_fields:"कृपया सभी फ़ील्ड भरें", sending:"भेज रहा है...", previous_notifs:"पिछली सूचनाएं", new_notif:"नई सूचना भेजें", active:"सक्रिय", inactive:"निष्क्रिय" }
 };
 
+/* ✅ helper ديال الترجمة */
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
 // ============================================================
-// الجزء 2: SCHREIBEN_DATA (36 درس) + EXAMS (Lesen)
+// SCHREIBEN_DATA — 36 درس
 // ============================================================
-
 const SCHREIBEN_DATA = [
   // ============================================================
   // الدرس 1: Urlaub Im Schwarzwald — كامل، مجاني
@@ -300,15 +351,13 @@ const SCHREIBEN_DATA = [
     text: "", task: "", points: [], transText: {}, transTask: {}, transPoints: {}
   }))
 ];
-
 // ============================================================
 // EXAMS — دروس القراءة (Lesen)
 // ============================================================
-
 const EXAMS = [
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   // ALEX — 5 أجزاء كاملة
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   {
     id: "alex-t1", title: "Alex", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
     options: [
@@ -412,9 +461,9 @@ const EXAMS = [
     ]
   },
 
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   // RITA — 5 أجزاء كاملة
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   {
     id: "rita-t1", title: "Rita", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
     options: [
@@ -467,7 +516,7 @@ const EXAMS = [
     id: "rita-t3", title: "Rita", level: "B1", sub: "Teile 3", type: "matching", isPremium: false,
     ads: [
       { k: "A", t: "Foto-Kurse Köln", de: "Lernen Sie fotografieren! Kurse für Anfänger und Fortgeschrittene. Wochenendkurse und Abendkurse.", ar: "تعلم التصوير! دورات للمبتدئين والمتقدمين. دورات نهاية الأسبوع ودورات مسائية.", ma: "تعلم التصوير! دورات للمبتدئين والمتقدمين. دورات نهاية السيمانة ودورات ف العشية.", en: "Learn photography! Courses for beginners and advanced. Weekend and evening courses.", fr: "Apprenez la photographie ! Cours pour débutants et avancés. Cours du week-end et du soir." },
-      { k: "B", t: "Jobcenter Köln", de: "Kostenlose Beratung für Arbeitssuchende. Hilfe beim Lebenslauf und bei Bewerbungen. Termine nach Vereinbarung.", ar: "استشارة مجانية للباحثين عن عمل. مساعدة في السيرة الذاتية والطلبات. مواعيد بالاتفاق.", ma: "استشارة فابور للباحثين على الخدمة. مساعدة ف CV والطلبات. مواعيد بالاتفاق.", en: "Free advice for job seekers. Help with CV and applications. Appointments by arrangement.", fr: "Conseil gratuit pour les demandeurs d'emploi. Aide pour le CV et les candidatures. Rendez-vous sur arrangement." },
+      { k: "B", t: "Jobcenter Köln", de: "Kostenlose Beratung für Arbeitssuchende. Hilfe beim Lebenslauf und bei Bewerbungen. Termine nach Vereinbarung.", ar: "استشارة مجانية للباحثين عن عمل. مساعدة في السيرة الذاتية والطلبات. مواعيد بالاتفاق.", ma: "استشارة فابور للباحثين على الخدمة. مساعدة ف CV والطلبات. مواعيد باfor job seekers. Help with CV and applications. Appointments by arrangement.", fr: "Conseil gratuit pour les demandeurs d'emploi. Aide pour le CV et les candidatures. Rendez-vous sur arrangement." },
       { k: "C", t: "Umzugshelfer Plus", de: "Professionelle Umzugshilfe in ganz Deutschland. Faire Preise, erfahrenes Team. Kostenloses Angebot.", ar: "مساعدة احترافية في الانتقال في جميع أنحاء ألمانيا. أسعار عادلة، فريق ذو خبرة. عرض مجاني.", ma: "مساعدة احترافية ف الانتقال ف ألمانيا كاملة. أثمنة عادلة، فريق عندو خبرة. عرض فابور.", en: "Professional moving help throughout Germany. Fair prices, experienced team. Free quote.", fr: "Aide au déménagement professionnelle dans toute l'Allemagne. Prix équitables, équipe expérimentée. Devis gratuit." },
       { k: "D", t: "Sprachinstitut Madrid", de: "Spanisch lernen in Madrid! Intensivkurse im Sommer, Unterkunft in Gastfamilien möglich.", ar: "تعلم الإسبانية في مدريد! دورات مكثفة في الصيف، إقامة مع عائلات مضيفة ممكنة.", ma: "تعلم الإسبانية ف مدريد! دورات مكثفة ف الصيف، إقامة مع عائلات مضيفة ممكنة.", en: "Learn Spanish in Madrid! Intensive summer courses, accommodation with host families possible.", fr: "Apprenez l'espagnol à Madrid ! Cours intensifs d'été, hébergement en famille d'accueil possible." },
       { k: "E", t: "Malkurse Kunterbunt", de: "Malen für Erwachsene jeden Mittwoch. Material inklusive. Neue Kurse beginnen im Mai.", ar: "الرسم للبالغين كل أربعاء. المواد مشمولة. تبدأ دورات جديدة في مايو.", ma: "الرسم للكبار كل أربعاء. المواد مشمولة. دورات جديدة كتبدا ف ماي.", en: "Painting for adults every Wednesday. Materials included. New courses start in May.", fr: "Peinture pour adultes chaque mercredi. Matériel inclus. Nouveaux cours en mai." },
@@ -479,7 +528,7 @@ const EXAMS = [
       { n: 1, c: "A", de: "Rita möchte lernen, bessere Fotos zu machen.", ar: "تريد ريتا تعلم التقاط صور أفضل.", ma: "ريتا باغية تتعلم تاخد تصاور أحسن.", en: "Rita wants to learn to take better photos.", fr: "Rita veut apprendre à prendre de meilleures photos." },
       { n: 2, c: "D", de: "Rita plant einen Sprachaufenthalt in Spanien im Sommer.", ar: "تخطط ريتا لإقامة لغوية في إسبانيا في الصيف.", ma: "ريتا كتخطط لإقامة لغوية ف إسبانيا ف الصيف.", en: "Rita is planning a language stay in Spain in summer.", fr: "Rita prévoit un séjour linguistique en Espagne cet été." },
       { n: 3, c: "B", de: "Rita braucht Unterstützung bei ihrer Bewerbung.", ar: "تحتاج ريتا دعماً في طلب التوظيف.", ma: "ريتا كتحتاج دعم ف طلب الخدمة ديالها.", en: "Rita needs support with her application.", fr: "Rita a besoin d'aide pour sa candidature." },
-      { n: 4, c: "C", de: "Rita zieht nach Berlin u Transport.", ar: "ستنتقل ريتا إلى برلين وتحتاج مساعدة في النقل.", ma: "ريتا غادي تنتقل ل برلين وكتحتاج مساعدة ف النقل.", en: "Rita is moving to Berlin and needs help with transport.", fr: "Rita déménage à Berlin et a besoin d'aide pour le transport." },
+      { n: 4, c: "C", de: "Rita zieht nach Berlin und braucht Hilfe beim Transport.", ar: "ستنتقل ريتا إلى برلين وتحتاج مساعدة في النقل.", ma: "ريتا غادي تنتقل ل برلين وكتحتاج مساعدة ف النقل.", en: "Rita is moving to Berlin and needs help with transport.", fr: "Rita déménage à Berlin et a besoin d'aide pour le transport." },
       { n: 5, c: "E", de: "Rita möchte in ihrer Freizeit kreativ sein und etwas Neues ausprobieren.", ar: "تريد ريتا أن تكون مبدعة في وقت فراغها وتجرب شيئاً جديداً.", ma: "ريتا باغية تكون مبدعة ف وقت الفراغ ديالها وتجرب شي حاجة جديدة.", en: "Rita wants to be creative in her free time and try something new.", fr: "Rita veut être créative pendant son temps libre et essayer quelque chose de nouveau." }
     ]
   },
@@ -518,9 +567,9 @@ const EXAMS = [
     ]
   },
 
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   // CAROLINE — 5 أجزاء كاملة
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   {
     id: "caroline-t1", title: "Caroline", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
     options: [
@@ -624,9 +673,9 @@ const EXAMS = [
     ]
   },
 
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   // VERA — T1 كامل، والباقي skeleton Premium
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
   {
     id: "vera-t1", title: "Vera", level: "B1", sub: "Teile 1", type: "headings", isPremium: false,
     options: [
@@ -644,65 +693,38 @@ const EXAMS = [
       { n: 5, c: "d", de: "Vera hat mit dem Klavierspielen angefangen und nimmt seit zwei Monaten Unterricht.", ar: "بدأت فيرا بالعزف على البيانو وتأخذ دروساً منذ شهرين.", ma: "فيرا بدات تعزف على البيانو وكتاخد دروس من جوج شهور.", en: "Vera has started playing the piano and has been taking lessons for two months.", fr: "Vera a commencé à jouer du piano et prend des cours depuis deux mois." }
     ]
   },
-  // Vera T2/T3/SP1/SP2 — Premium skeletons (تُحمّل من Supabase)
   { id: "vera-t2", title: "Vera", level: "B1", sub: "Teile 2", type: "mcq", isPremium: true },
   { id: "vera-t3", title: "Vera", level: "B1", sub: "Teile 3", type: "matching", isPremium: true },
   { id: "vera-sp1", title: "Vera", level: "B1", sub: "Sprach 1", type: "sprach1", isPremium: true },
   { id: "vera-sp2", title: "Vera", level: "B1", sub: "Sprach 2", type: "sprach2", isPremium: true },
 
-  // ============================================================
-  // 24 درس جديد × 5 أجزاء = 120 skeleton Premium (مولّدين برمجياً)
-  // ============================================================
+  // ═══════════════════════════════════════════════════════
+  // 24 درس × 5 أجزاء = 120 skeleton Premium
+  // ═══════════════════════════════════════════════════════
   ...(() => {
     const LESSONS = [
-      { title: "Eva", slug: "eva" },
-      { title: "Paul", slug: "paul" },
-      { title: "Iris", slug: "iris" },
-      { title: "Jan", slug: "jan" },
-      { title: "Miroslav", slug: "miroslav" },
-      { title: "Andreas 1", slug: "andreas1" },
-      { title: "Annika 2", slug: "annika2" },
-      { title: "Sonja", slug: "sonja" },
-      { title: "Nadja / Claudia", slug: "nadjaclaudia" },
-      { title: "Karla", slug: "karla" },
-      { title: "Viktor", slug: "viktor" },
-      { title: "Moritz", slug: "moritz" },
-      { title: "Corina", slug: "corina" },
-      { title: "Petra", slug: "petra" },
-      { title: "Tamara / Jakob", slug: "tamarajakob" },
-      { title: "Nicole", slug: "nicole" },
-      { title: "Andreas 2", slug: "andreas2" },
-      { title: "Thomas / Anna", slug: "thomasanna" },
-      { title: "Sophie", slug: "sophie" },
-      { title: "Alicia", slug: "alicia" },
-      { title: "Annika 1", slug: "annika1" },
-      { title: "Jennifer", slug: "jennifer" },
-      { title: "Mara", slug: "mara" },
-      { title: "Miroslav 2", slug: "miroslav2" }
+      { title: "Eva", slug: "eva" }, { title: "Paul", slug: "paul" }, { title: "Iris", slug: "iris" },
+      { title: "Jan", slug: "jan" }, { title: "Miroslav", slug: "miroslav" }, { title: "Andreas 1", slug: "andreas1" },
+      { title: "Annika 2", slug: "annika2" }, { title: "Sonja", slug: "sonja" }, { title: "Nadja / Claudia", slug: "nadjaclaudia" },
+      { title: "Karla", slug: "karla" }, { title: "Viktor", slug: "viktor" }, { title: "Moritz", slug: "moritz" },
+      { title: "Corina", slug: "corina" }, { title: "Petra", slug: "petra" }, { title: "Tamara / Jakob", slug: "tamarajakob" },
+      { title: "Nicole", slug: "nicole" }, { title: "Andreas 2", slug: "andreas2" }, { title: "Thomas / Anna", slug: "thomasanna" },
+      { title: "Sophie", slug: "sophie" }, { title: "Alicia", slug: "alicia" }, { title: "Annika 1", slug: "annika1" },
+      { title: "Jennifer", slug: "jennifer" }, { title: "Mara", slug: "mara" }, { title: "Miroslav 2", slug: "miroslav2" }
     ];
     const PARTS = [
-      { sub: "Teile 1", type: "headings", suf: "t1" },
-      { sub: "Teile 2", type: "mcq", suf: "t2" },
-      { sub: "Teile 3", type: "matching", suf: "t3" },
-      { sub: "Sprach 1", type: "sprach1", suf: "sp1" },
+      { sub: "Teile 1", type: "headings", suf: "t1" }, { sub: "Teile 2", type: "mcq", suf: "t2" },
+      { sub: "Teile 3", type: "matching", suf: "t3" }, { sub: "Sprach 1", type: "sprach1", suf: "sp1" },
       { sub: "Sprach 2", type: "sprach2", suf: "sp2" }
     ];
-    return LESSONS.flatMap(l =>
-      PARTS.map(p => ({
-        id: `${l.slug}-${p.suf}`,
-        title: l.title,
-        level: "B1",
-        sub: p.sub,
-        type: p.type,
-        isPremium: true
-      }))
-    );
+    return LESSONS.flatMap(l => PARTS.map(p => ({
+      id: `${l.slug}-${p.suf}`, title: l.title, level: "B1", sub: p.sub, type: p.type, isPremium: true
+    })));
   })()
 ];
 // ============================================================
-// الجزء 3: HOREN_EXAMS (26 درس) + AutoTrans + SmartTrans + HorenCard + HorenGateway
+// HOREN_EXAMS — 26 درس استماع
 // ============================================================
-
 const HOREN_EXAMS = [
   {
     id: "h1", title: "Einkäufe im Internet", level: "B1", sub: "Teile 1", type: "horen", isPremium: true,
@@ -1194,9 +1216,8 @@ const HOREN_EXAMS = [
     ]
   }
 ];
-
 // ============================================================
-// AutoTrans — ترجمة تلقائية عبر Google Translate API
+// AutoTrans — ترجمة تلقائية عبر Google Translate
 // ============================================================
 const globalTransCache = {};
 
@@ -1232,7 +1253,7 @@ function AutoTrans({ text, lang, force = false }) {
 }
 
 // ============================================================
-// SmartTrans — ترجمة ذكية: كيستعمل الترجمة اليدوية يلا كانت، وإلا كيدير AutoTrans
+// SmartTrans — ترجمة ذكية
 // ============================================================
 function SmartTrans({ obj, lang }) {
   if (!obj) return "";
@@ -1455,17 +1476,15 @@ function HorenGateway({ onStart, userLang }) {
   );
 }
 // ============================================================
-// ExamView — عرض الامتحان (Lesen + Horen + Matching + Sprach)
-// ✅ يحتوي على: زر التصحيح الأزرق، Matching الجديد، التوضيح 💡
+// ExamView — عرض الامتحان
 // ============================================================
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
   const [modalGap, setModalGap] = useState(null);
   const [activeGap, setActiveGap] = useState(null);
-  const [activeMatchingQ, setActiveMatchingQ] = useState(null); // ✅ Matching
+  const [activeMatchingQ, setActiveMatchingQ] = useState(null);
   const [showTranslation, setShowTranslation] = useState(false);
-  const [excluded, setExcluded] = useState({});
   const [scrollProgress, setScrollProgress] = useState(0);
   const [mode, setMode] = useState("exam");
 
@@ -1488,7 +1507,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
     return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
   };
 
-  // ✅ Matching helpers
   const clearMatch = (qNumber) => {
     const newAns = { ...ans };
     delete newAns[qNumber];
@@ -1549,7 +1567,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
   };
 
   const finish = () => { setDone(score); onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setExcluded({}); setActiveMatchingQ(null); window.scrollTo(0, 0); };
+  const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setActiveMatchingQ(null); window.scrollTo(0, 0); };
 
   const formatTime = (seconds) => {
     const m = Math.floor(seconds / 60);
@@ -1634,7 +1652,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
           </div>
         )}
 
-        {/* ✅ Matching الجديد */}
         {exam.type === "matching" && exam.ads && (
           <div>
             <div className="card" style={{ padding: 20 }}>
@@ -1749,7 +1766,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         })}
       </div>
 
-      {/* ✅ Modal Sprach 1 مع التوضيح 💡 */}
       {modalGap !== null && exam.type === "sprach1" && (() => {
         const gapItem = exam.items.find(x => x.n === modalGap);
         if (!gapItem) return null;
@@ -1769,7 +1785,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                   </button>
                 ))}
               </div>
-              {/* ✅ التوضيح 💡 */}
               {gapItem.exp && (
                 <div className="t2-ar" style={{marginTop: 20, fontSize: "0.95em"}}>
                   💡 {gapItem.exp}
@@ -1780,7 +1795,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         );
       })()}
 
-      {/* Modal Sprach 2 */}
       {activeGap !== null && exam.type === "sprach2" && (
          <div className="overlay" onClick={() => setActiveGap(null)}>
            <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1802,7 +1816,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
          </div>
       )}
 
-      {/* ✅ Bottom Bar — زر التصحيح الأزرق */}
       <div className="bottom-bar">
         <button onClick={done !== null ? reset : finish} className="btn-prev-bar">
           {done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}
@@ -1888,7 +1901,6 @@ function SchreibenView({ userLang, dark, setDark, isPaid, isAdmin, trialActive }
     setIsAnalyzing(false);
   };
 
-  // ✅ فتح درس Schreiben — مع دعم Premium
   const openLesson = async (item) => {
     if (item.isPremium) {
       const hasAccess = isPaid || isAdmin || trialActive;
@@ -1896,7 +1908,6 @@ function SchreibenView({ userLang, dark, setDark, isPaid, isAdmin, trialActive }
         wa(t("wa_upgrade_msg", userLang) + " - " + item.title);
         return;
       }
-      // محاولة جلب المحتوى من Supabase
       const { data, error } = await sb.from('premium_lessons').select('data').eq('id', item.id).single();
       if (error || !data) {
         alert("الدرس مازال ما تحطش فسوبابيز: " + item.id);
@@ -1918,7 +1929,6 @@ function SchreibenView({ userLang, dark, setDark, isPaid, isAdmin, trialActive }
     (item.title || "").toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // ---- شاشة القائمة ----
   if (!selected) {
     return (
       <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
@@ -1945,7 +1955,6 @@ function SchreibenView({ userLang, dark, setDark, isPaid, isAdmin, trialActive }
     );
   }
 
-  // ---- شاشة النتيجة ----
   if (result) {
     return (
       <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
@@ -2006,7 +2015,6 @@ function SchreibenView({ userLang, dark, setDark, isPaid, isAdmin, trialActive }
     );
   }
 
-  // ---- شاشة الكتابة ----
   return (
     <div style={{ padding: "20px 12px", paddingBottom: 120 }}>
       {isAnalyzing && (
@@ -2114,9 +2122,8 @@ function SchreibenView({ userLang, dark, setDark, isPaid, isAdmin, trialActive }
     </div>
   );
 }
-
 // ============================================================
-// NotificationsBell
+// NotificationsBell — جرس الإشعارات
 // ============================================================
 function NotificationsBell({ userLang }) {
   const [notifs, setNotifs] = useState([]);
@@ -2204,7 +2211,7 @@ function NotificationsBell({ userLang }) {
 }
 
 // ============================================================
-// AdminPanel
+// AdminPanel — لوحة التحكم
 // ============================================================
 function AdminPanel({ userLang, onClose }) {
   const [users, setUsers] = useState([]);
@@ -2390,6 +2397,9 @@ function AdminPanel({ userLang, onClose }) {
 // App — المكوّن الرئيسي
 // ============================================================
 function App() {
+  // ✅ إشارة للتطبيق بأنه تحمّل بنجاح
+  useEffect(() => { window.__APP_MOUNTED__ = true; }, []);
+
   const [user, setUser] = useState(null);
   const [isPaid, setIsPaid] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -2592,7 +2602,6 @@ function App() {
     }
   };
 
-  // ---- Splash ----
   if (!isReady) {
     return (
       <div className="splash-screen">
@@ -2602,7 +2611,6 @@ function App() {
     );
   }
 
-  // ---- اختيار اللغة ----
   if (!userLang) {
     return (
       <div className="auth-screen">
@@ -2625,7 +2633,6 @@ function App() {
     );
   }
 
-  // ---- تسجيل الدخول ----
   if (!user) {
     return (
       <div className="auth-screen">
@@ -2651,7 +2658,6 @@ function App() {
     );
   }
 
-  // ---- محظور ----
   if (isBlocked) {
     return (
       <div className="auth-screen">
@@ -2664,7 +2670,6 @@ function App() {
     );
   }
 
-  // ---- ExamView ----
   if (exam) {
     return <ExamView
       exam={exam}
@@ -2679,7 +2684,6 @@ function App() {
     />;
   }
 
-  // ---- Main App ----
   return (
     <div style={{ paddingBottom: 100 }}>
       <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
@@ -2944,9 +2948,25 @@ function App() {
 }
 
 // ============================================================
-// Render — بدء التطبيق
+// Render النهائي مع معالجة الأخطاء
 // ============================================================
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+try {
+  const root = ReactDOM.createRoot(document.getElementById("root"));
+  root.render(<App />);
+  setTimeout(function() {
+    if (document.getElementById('root').children.length > 0) {
+      window.__APP_MOUNTED__ = true;
+    }
+  }, 1500);
+} catch (e) {
+  document.getElementById('root').innerHTML =
+    '<div style="padding:24px;font-family:Cairo,sans-serif;direction:rtl;text-align:center;min-height:100vh;display:flex;justify-content:center;align-items:center;background:#fff"><div style="max-width:500px">' +
+    '<h2 style="color:#DD0000;font-weight:900">خطأ ف React</h2>' +
+    '<pre style="background:#FEE2E2;padding:14px;border-radius:10px;text-align:left;direction:ltr;font-size:12px;color:#7F1D1D;max-width:100%;overflow:auto">' + e.message + '</pre>' +
+    '<button onclick="location.reload()" style="margin-top:20px;padding:14px 32px;background:#DD0000;color:#fff;border:none;border-radius:12px;font-weight:900;cursor:pointer;font-family:inherit">🔄 إعادة المحاولة</button>' +
+    '</div></div>';
+  window.__APP_MOUNTED__ = true;
+}
 </script>
 </body>
 </html>
