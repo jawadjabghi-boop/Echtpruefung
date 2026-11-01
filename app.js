@@ -1,57 +1,11 @@
 // ==========================================
-// app.js — التطبيق الرئيسي (النسخة النهائية والمحمية)
+// app.js — التطبيق الرئيسي (النسخة النهائية والمصححة)
 // ==========================================
 
 var useState = React.useState;
 var useEffect = React.useEffect;
 var useRef = React.useRef;
 var Component = React.Component;
-
-// ============================================================
-// 🛡️ Device Fingerprint — يستعمل فـ التسجيل والدخول
-// ============================================================
-async function getDeviceFingerprint() {
-  try {
-    const parts = [
-      navigator.userAgent, navigator.language,
-      (navigator.languages || []).join(','),
-      navigator.platform,
-      navigator.hardwareConcurrency || '0',
-      navigator.maxTouchPoints || '0',
-      (navigator.deviceMemory || '0').toString(),
-      screen.width + 'x' + screen.height,
-      screen.colorDepth.toString(),
-      Intl.DateTimeFormat().resolvedOptions().timeZone || ''
-    ];
-    try {
-      const c = document.createElement('canvas');
-      c.width = 240; c.height = 60;
-      const ctx = c.getContext('2d');
-      ctx.textBaseline = 'top';
-      ctx.font = '14px Arial';
-      ctx.fillStyle = '#069';
-      ctx.fillText('EchtPrüfung::2029', 2, 15);
-      ctx.fillStyle = 'rgba(102,204,0,0.7)';
-      ctx.fillText('EchtPrüfung::2029', 4, 17);
-      parts.push(c.toDataURL());
-    } catch(e) {}
-    try {
-      const gl = document.createElement('canvas').getContext('webgl');
-      const dbg = gl.getExtension('WEBGL_debug_renderer_info');
-      if (dbg) {
-        parts.push(gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) || '');
-        parts.push(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) || '');
-      }
-    } catch(e) {}
-    const buf = await crypto.subtle.digest('SHA-256',
-      new TextEncoder().encode(parts.join('|||')));
-    return Array.from(new Uint8Array(buf))
-      .map(b => b.toString(16).padStart(2, '0')).join('');
-  } catch(e) {
-    console.error('Fingerprint error:', e);
-    return null;
-  }
-}
 
 var ErrorBoundary = class extends Component {
   constructor(p) { super(p); this.state = { err: null }; }
@@ -204,121 +158,26 @@ function App() {
     const { data, error } = await sb.auth.signInWithPassword({ email, password: uniqueCode });
 
     if (error) {
-      // ============================================
-      // 🛡️ SIGNUP PATH — حماية متعددة الطبقات
-      // ============================================
-      if (!window.Security) {
-        return alert("⚠️ خطأ في تحميل طبقة الأمان. أعد تحميل الصفحة.");
-      }
-
-      // 1. Rate limit
-      const rl = window.Security.checkRateLimit();
-      if (!rl.allowed) {
-        return alert("⚠️ عدد كبير من محاولات التسجيل (" + rl.used + "/" + rl.max + "). حاول بعد ساعة.");
-      }
-
-      // 2. تفاعل المستخدم
-      if (!window.Security.hasUserInteracted()) {
-        return alert("⚠️ خاصك تتفاعل مع الصفحة قبل التسجيل.");
-      }
-
-      // 3. Time gate
-      if (!window.Security.isTimeGateValid(3)) {
-        return alert("⚠️ انتظر شوية قبل التسجيل (3 ثواني على الأقل).");
-      }
-
-      // 4. Honeypot
-      if (!window.Security.checkHoneypot(e.target)) {
-        return alert("⚠️ خطأ فـ التحقق.");
-      }
-
-      // 5. Fingerprint + PoW
-      const fingerprint = await getDeviceFingerprint();
-      if (!fingerprint) {
-        return alert("⚠️ ما قدرناش نتعرفو على الجهاز. جرب متصفح آخر.");
-      }
-
-      const submitBtn = e.target.querySelector('button[type="submit"]');
-      const origText = submitBtn ? submitBtn.textContent : '';
-      if (submitBtn) { submitBtn.textContent = "⏳ جاري التحقق..."; submitBtn.disabled = true; }
-
-      const pow = await window.Security.getPoW(fingerprint);
-
-      if (submitBtn) { submitBtn.textContent = origText; submitBtn.disabled = false; }
-
-      if (!pow) {
-        return alert("⚠️ فشل التحقق من الجهاز. جرب متصفح آخر.");
-      }
-
-      // 6. SignUp مع metadata
-      const { data: newData, error: newError } = await sb.auth.signUp({
-        email,
-        password: uniqueCode,
-        options: {
-          data: {
-            fingerprint: fingerprint,
-            pow_nonce: pow.nonce,
-            pow_hash: pow.hash,
-          }
-        }
-      });
-
+      const { data: newData, error: newError } = await sb.auth.signUp({ email, password: uniqueCode });
       if (newError) return alert("مشكل: " + newError.message);
       if (!newData?.user) return alert("ما قدرناش نصاوبو الحساب. تحقق من إعدادات Supabase.");
 
-      // 7. سجل المحاولة
-      window.Security.recordAttempt();
-
-      // 8. Upsert بروفايل (بلا trial_started_at)
       const { error: upsertError } = await sb.from('profiles').upsert([{
         id: newData.user.id,
         email: uniqueName,
         unique_name: uniqueName,
-        active_device_id: deviceId
+        is_paid: false,
+        active_device_id: deviceId,
+        is_blocked: false,
+        trial_started_at: new Date().toISOString()
       }], { onConflict: 'id' });
       if (upsertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + upsertError.message);
-
-      // 9. طلب التجربة من السيرفر
-      const { data: trialRes, error: trialErr } = await sb.rpc('claim_trial_secure');
-      if (trialErr) {
-        console.error('Trial RPC error:', trialErr);
-      } else if (trialRes && trialRes[0] && !trialRes[0].granted) {
-        if (trialRes[0].reason === 'trial_already_used') {
-          alert("⚠️ هاد الهاتف استافد من التجربة من قبل. يمكنك الاشتراك للحصول على الوصول الكامل.");
-        } else if (trialRes[0].reason === 'invalid_pow') {
-          alert("⚠️ فشل التحقق الأمني.");
-        } else if (trialRes[0].reason === 'no_fingerprint') {
-          alert("⚠️ لم يتم التعرف على الجهاز.");
-        }
-      }
 
       const userObj = { ...newData.user, name: uniqueName, isGuest: false };
       setUser(userObj);
       localStorage.setItem("ep_user", JSON.stringify(userObj));
-
     } else {
-      // ============================================
-      // 🛡️ SIGNIN PATH — تبديل الجهاز الآمن
-      // ============================================
-      const { error: devErr } = await sb.rpc('secure_login_device', {
-        new_device_id: deviceId
-      });
-
-      if (devErr) {
-        const m = devErr.message || '';
-        if (m.includes('cooldown')) {
-          alert("⏳ ما تقدرش تبدل الجهاز دابا. انتظر 7 أيام أو تواصل مع الدعم.");
-        } else if (m.includes('blocked')) {
-          alert("🚫 الحساب محظور.");
-        } else if (m.includes('not_authenticated')) {
-          alert("⚠️ جلسة منتهية. أعد تسجيل الدخول.");
-        } else {
-          alert("⚠️ خطأ: " + m);
-        }
-        await sb.auth.signOut();
-        return;
-      }
-
+      await sb.from('profiles').update({ active_device_id: deviceId }).eq('id', data.user.id);
       const userObj = { ...data.user, name: uniqueName, isGuest: false };
       setUser(userObj);
       localStorage.setItem("ep_user", JSON.stringify(userObj));
@@ -413,24 +272,9 @@ function App() {
             <LogoImage size={80} />
             <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("welcome", userLang)}</h2>
           </div>
-          <form onSubmit={handleAuth} id="signup-form">
-            <input
-              className="auth-input"
-              name="unique_name"
-              placeholder={t("unique_name_placeholder", userLang)}
-              onFocus={() => window.Security && window.Security.markFormOpen()}
-              required
-            />
+          <form onSubmit={handleAuth}>
+            <input className="auth-input" name="unique_name" placeholder={t("unique_name_placeholder", userLang)} required />
             <input className="auth-input" name="unique_code" placeholder={t("unique_code_placeholder", userLang)} required />
-            {/* 🍯 Honeypot — مخفي */}
-            <input
-              type="text"
-              name="website_hp"
-              tabIndex="-1"
-              autoComplete="off"
-              className="hp-field"
-              aria-hidden="true"
-            />
             <button type="submit" className="auth-btn">{t("login", userLang)}</button>
           </form>
           <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>{t("or", userLang)}</div>
@@ -573,6 +417,7 @@ function App() {
 
         {view === "horen" && (
           <div>
+            {/* هنا الإصلاح: إلا كان B2 كيبان قريباً ديريكت بلا بوابة */}
             {level === "B2" ? (
                <div className="card" style={{ textAlign: "center", padding: 40, marginTop: 20 }}><h2>{t("coming_soon", userLang)}</h2></div>
             ) : !showHorenLessons ? (
@@ -588,6 +433,7 @@ function App() {
                     <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>{t("back_btn", userLang)}</button>
                   </div>
                 </div>
+                {/* هنا الإصلاح: كنفلترو الدروس حسب المستوى */}
                 {HOREN_EXAMS.filter(ex => ex.level === level).map(ex => (
                   <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
                 ))}
@@ -596,6 +442,7 @@ function App() {
           </div>
         )}
 
+        {/* هنا الإصلاح: زدنا level و setLevel لصفحة الكتابة */}
         {view === "schreiben" && <SchreibenView userLang={userLang} dark={dark} setDark={setDark} isPaid={isPaid} isAdmin={isAdmin} trialActive={trialActive} level={level} setLevel={setLevel} />}
         
         {view === "admin" && isAdmin && <AdminPanel userLang={userLang} onClose={() => go('home')} />}
