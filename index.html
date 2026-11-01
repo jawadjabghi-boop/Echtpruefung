@@ -111,7 +111,6 @@
   .dark .menu-item:hover, .dark .menu-item.active { background: #333; color: var(--gold); border-right-color: var(--gold); }
   .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
   .menu-overlay.active { display: block; }
-
   .bottom-bar { 
     position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); 
     display: flex; align-items: center; justify-content: space-between; gap: 10px; 
@@ -135,7 +134,6 @@
     justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); 
     cursor: pointer; flex-shrink: 0; transform: rotate(180deg); color: white;
   }
-
   .timer-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 16px; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-variant-numeric: tabular-nums; font-size: 16px; }
   .dark .timer-badge { background: rgba(26, 26, 26, 0.95); border-color: #333; color: #FFF; }
   .keyboard-area { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
@@ -146,10 +144,51 @@
 <body>
 <div id="root"></div>
 
-<script type="text/babel" src="data-b1.js"></script>
-<script type="text/babel" src="data-b2.js"></script>
-<script type="text/babel" src="components.js"></script>
-<script type="text/babel" src="app.js"></script>
+<script>
+(async function loadApp() {
+  var root = document.getElementById('root');
+
+  if (typeof Babel === 'undefined') {
+    root.innerHTML = '<div style="padding:20px;direction:rtl;font-family:sans-serif"><h2 style="color:#DD0000">خطأ: Babel ما تحملش</h2><p>تحقق من اتصالك بالإنترنت وأعد تحميل الصفحة</p></div>';
+    return;
+  }
+  if (typeof React === 'undefined') {
+    root.innerHTML = '<div style="padding:20px;direction:rtl;font-family:sans-serif"><h2 style="color:#DD0000">خطأ: React ما تحملش</h2><p>تحقق من اتصالك بالإنترنت وأعد تحميل الصفحة</p></div>';
+    return;
+  }
+
+  root.innerHTML = '<div style="padding:20px;text-align:center;direction:rtl;font-family:sans-serif"><p style="color:#64748B">جاري تحميل التطبيق...</p></div>';
+
+  var files = ['data-b1.js', 'data-b2.js', 'components.js', 'app.js'];
+  var loaded = [];
+
+  for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    try {
+      var res = await fetch(file + '?v=' + Date.now());
+      if (!res.ok) throw new Error('HTTP ' + res.status + ' - ' + file);
+      var code = await res.text();
+      var compiled = Babel.transform(code, { presets: ['react'], filename: file }).code;
+      (0, eval)(compiled);
+      loaded.push(file);
+      console.log('✅ Loaded:', file);
+    } catch (err) {
+      console.error('❌ Error in', file, err);
+      root.innerHTML =
+        '<div style="padding:20px;direction:rtl;font-family:sans-serif">' +
+        '<h2 style="color:#DD0000">⚠️ خطأ فـ تحميل التطبيق</h2>' +
+        '<p><b>الملف:</b> ' + file + '</p>' +
+        '<pre style="background:#FEE2E2;padding:16px;border-radius:12px;direction:ltr;text-align:left;overflow:auto;font-size:12px;white-space:pre-wrap">' + (err.stack || err.message || String(err)) + '</pre>' +
+        '<p style="color:#666">حل Console (F12) لمزيد من التفاصيل</p>' +
+        '</div>';
+      return;
+    }
+  }
+
+  root.innerHTML = '';
+  console.log('🎉 All files loaded successfully:', loaded);
+})();
+</script>
 
 </body>
 </html>
