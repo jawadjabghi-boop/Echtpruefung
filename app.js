@@ -1,6 +1,35 @@
 // ==========================================
-// app.js — التطبيق الرئيسي
+// app.js — التطبيق الرئيسي (النسخة النهائية والمصححة)
 // ==========================================
+
+var useState = React.useState;
+var useEffect = React.useEffect;
+var useRef = React.useRef;
+var Component = React.Component;
+
+// حطينا ErrorBoundary هنا باش ما يقلبش عليها فـ ملفات أخرى
+var ErrorBoundary = class extends Component {
+  constructor(p) { super(p); this.state = { err: null }; }
+  static getDerivedStateFromError(err) { return { err }; }
+  componentDidCatch(err, info) { console.error("💥 App Error:", err, info); }
+  render() {
+    if (this.state.err) {
+      return (
+        <div style={{ padding: 30, fontFamily: "Cairo, sans-serif", textAlign: "center", direction: "rtl" }}>
+          <h2 style={{ color: "#DD0000" }}>⚠️ وقع خطأ فـ التطبيق</h2>
+          <pre style={{ background: "#FEE2E2", padding: 16, borderRadius: 12, textAlign: "left", direction: "ltr", fontSize: 12, overflow: "auto", whiteSpace: "pre-wrap" }}>
+            {String((this.state.err && this.state.err.message) || this.state.err)}
+          </pre>
+          <p style={{ color: "#64748B" }}>حل Console (F12) باش تشوف التفاصيل الكاملة</p>
+          <button onClick={() => location.reload()} style={{ padding: "12px 24px", background: "#111", color: "#FFCE00", border: "none", borderRadius: 12, fontWeight: 900, cursor: "pointer" }}>
+            إعادة التحميل
+          </button>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+};
 
 // ==========================================
 // App — المكوّن الرئيسي
@@ -185,6 +214,7 @@ function App() {
   };
 
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
+  
   const go = (v) => {
     setView(v);
     setExam(null);
@@ -210,7 +240,6 @@ function App() {
     }
   };
 
-  // ---- Splash ----
   if (!isReady) {
     return (
       <div className="splash-screen">
@@ -220,7 +249,6 @@ function App() {
     );
   }
 
-  // ---- اختيار اللغة ----
   if (!userLang) {
     return (
       <div className="auth-screen">
@@ -243,7 +271,6 @@ function App() {
     );
   }
 
-  // ---- تسجيل الدخول ----
   if (!user) {
     return (
       <div className="auth-screen">
@@ -252,15 +279,12 @@ function App() {
             <LogoImage size={80} />
             <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("welcome", userLang)}</h2>
           </div>
-
           <form onSubmit={handleAuth}>
             <input className="auth-input" name="unique_name" placeholder={t("unique_name_placeholder", userLang)} required />
             <input className="auth-input" name="unique_code" placeholder={t("unique_code_placeholder", userLang)} required />
             <button type="submit" className="auth-btn">{t("login", userLang)}</button>
           </form>
-
           <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>{t("or", userLang)}</div>
-
           <button className="auth-btn guest" onClick={handleGuest}>
             👤 {t("guest", userLang)}
           </button>
@@ -269,7 +293,6 @@ function App() {
     );
   }
 
-  // ---- محظور ----
   if (isBlocked) {
     return (
       <div className="auth-screen">
@@ -282,7 +305,6 @@ function App() {
     );
   }
 
-  // ---- ExamView ----
   if (exam) {
     return <ExamView
       exam={exam}
@@ -297,7 +319,6 @@ function App() {
     />;
   }
 
-  // ---- Main App ----
   return (
     <div style={{ paddingBottom: 100 }}>
       <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
@@ -351,18 +372,15 @@ function App() {
           <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
-
             <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
               <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}>
                 <LogoImage size={90} />
               </div>
               <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
-
               <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}>
                 <p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p>
                 <p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p>
               </div>
-
               <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}>
                 <span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#F5B82E" }}>B2</span>
               </div>
@@ -373,7 +391,6 @@ function App() {
         {view === "lesen" && (
           <div>
             <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
-
             {trialActive && !isPaid && (
               <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))", border: "1.5px solid #22C55E", borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
                 <div style={{ fontSize: "2em" }}>🎁</div>
@@ -383,15 +400,11 @@ function App() {
                 </div>
               </div>
             )}
-
             <div style={{ marginBottom: 16 }}>
               <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
-
             {level === "B2" ? (
-               <div className="card" style={{ textAlign: "center", padding: 40 }}>
-                 <h2>{t("coming_soon", userLang)}</h2>
-               </div>
+               <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div>
             ) : uniqueTitles.map(title => (
               <button key={title} className="card" onClick={() => setSelectedExamTitle(title)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -421,15 +434,11 @@ function App() {
                     <button onClick={() => setShowHorenTrans(!showHorenTrans)} className="btnI" style={{ width: 40, height: 40, color: showHorenTrans ? "var(--blue)" : "var(--text)", borderColor: showHorenTrans ? "var(--blue)" : "var(--line)" }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
                     </button>
-                    <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>
-                      {t("back_btn", userLang)}
-                    </button>
+                    <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>{t("back_btn", userLang)}</button>
                   </div>
                 </div>
                 {level === "B2" ? (
-                   <div className="card" style={{ textAlign: "center", padding: 40 }}>
-                     <h2>{t("coming_soon", userLang)}</h2>
-                   </div>
+                   <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div>
                 ) : HOREN_EXAMS.map(ex => (
                   <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
                 ))}
@@ -438,19 +447,9 @@ function App() {
           </div>
         )}
 
-        {view === "schreiben" && (
-          <SchreibenView userLang={userLang} dark={dark} setDark={setDark} isPaid={isPaid} isAdmin={isAdmin} trialActive={trialActive} />
-        )}
-
-        {view === "admin" && isAdmin && (
-          <AdminPanel userLang={userLang} onClose={() => go('home')} />
-        )}
-
-        {(view === "sprechen" || view === "pruefung") && (
-          <div className="card" style={{ textAlign: "center", padding: 40 }}>
-            <h2>{t("coming_soon", userLang)}</h2>
-          </div>
-        )}
+        {view === "schreiben" && <SchreibenView userLang={userLang} dark={dark} setDark={setDark} isPaid={isPaid} isAdmin={isAdmin} trialActive={trialActive} />}
+        {view === "admin" && isAdmin && <AdminPanel userLang={userLang} onClose={() => go('home')} />}
+        {(view === "sprechen" || view === "pruefung") && <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div>}
       </main>
 
       <nav className="nav">
@@ -508,7 +507,7 @@ function App() {
                   }}>
                     <span className="de" style={{ fontWeight: 800, display: "flex", alignItems: "center", gap: 8 }}>
                       {subName}
-                      {showTrialHint && <span style={{ fontSize: "0.7em", color: "#22C55E", padding: "2px 8px", background: "rgba(34,197,94,0.15)", borderRadius: 6, fontWeight: 900 }}>🎁 {userLang === 'en' ? 'Trial' : 'تجربة'}</span>}
+                      {showTrialHint && <span style={{ fontSize: "0.7em", color: "#22C55E", padding: "2px 8px", background: "rgba(34,197,94,0.15)", borderRadius: 6, fontWeight: 900 }}>🎁 تجربة</span>}
                     </span>
                     {existingExam && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>}
                   </button>
@@ -526,7 +525,6 @@ function App() {
               <strong style={{fontSize:"1.3em"}}>{t("settings", userLang)}</strong>
               <button className="btnI" onClick={() => setSettings(false)}>✕</button>
             </div>
-
             <div style={{ marginBottom: 20 }}>
               <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>{t("change_lang", userLang)}</span>
               <div className="lang-grid" style={{ maxHeight: 200 }}>
@@ -538,7 +536,6 @@ function App() {
                 ))}
               </div>
             </div>
-
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
               <span style={{fontWeight:900, fontSize:"1.1em"}}>{t("text_size", userLang)}</span>
               <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
@@ -548,11 +545,8 @@ function App() {
               </div>
             </div>
             <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>{t("reset_size", userLang)}</button>
-
             <div style={{ marginTop: 20, textAlign: "center" }}>
-              <button onClick={logout} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)" }}>
-                {t("logout", userLang)}
-              </button>
+              <button onClick={logout} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)" }}>{t("logout", userLang)}</button>
             </div>
           </div>
         </div>
