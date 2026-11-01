@@ -1,4 +1,3 @@
-
 // ==========================================
 // app.js — التطبيق الرئيسي (النسخة النهائية والمصححة)
 // ==========================================
@@ -8,7 +7,6 @@ var useEffect = React.useEffect;
 var useRef = React.useRef;
 var Component = React.Component;
 
-// حطينا ErrorBoundary هنا باش ما يقلبش عليها فـ ملفات أخرى
 var ErrorBoundary = class extends Component {
   constructor(p) { super(p); this.state = { err: null }; }
   static getDerivedStateFromError(err) { return { err }; }
@@ -21,10 +19,7 @@ var ErrorBoundary = class extends Component {
           <pre style={{ background: "#FEE2E2", padding: 16, borderRadius: 12, textAlign: "left", direction: "ltr", fontSize: 12, overflow: "auto", whiteSpace: "pre-wrap" }}>
             {String((this.state.err && this.state.err.message) || this.state.err)}
           </pre>
-          <p style={{ color: "#64748B" }}>حل Console (F12) باش تشوف التفاصيل الكاملة</p>
-          <button onClick={() => location.reload()} style={{ padding: "12px 24px", background: "#111", color: "#FFCE00", border: "none", borderRadius: 12, fontWeight: 900, cursor: "pointer" }}>
-            إعادة التحميل
-          </button>
+          <button onClick={() => location.reload()} style={{ padding: "12px 24px", background: "#111", color: "#FFCE00", border: "none", borderRadius: 12, fontWeight: 900, cursor: "pointer", marginTop: 20 }}>إعادة التحميل</button>
         </div>
       );
     }
@@ -32,9 +27,6 @@ var ErrorBoundary = class extends Component {
   }
 };
 
-// ==========================================
-// App — المكوّن الرئيسي
-// ==========================================
 function App() {
   const [user, setUser] = useState(null);
   const [isPaid, setIsPaid] = useState(false);
@@ -425,7 +417,10 @@ function App() {
 
         {view === "horen" && (
           <div>
-            {!showHorenLessons ? (
+            {/* هنا الإصلاح: إلا كان B2 كيبان قريباً ديريكت بلا بوابة */}
+            {level === "B2" ? (
+               <div className="card" style={{ textAlign: "center", padding: 40, marginTop: 20 }}><h2>{t("coming_soon", userLang)}</h2></div>
+            ) : !showHorenLessons ? (
               <HorenGateway onStart={() => setShowHorenLessons(true)} userLang={userLang} />
             ) : (
               <div>
@@ -438,9 +433,8 @@ function App() {
                     <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>{t("back_btn", userLang)}</button>
                   </div>
                 </div>
-                {level === "B2" ? (
-                   <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div>
-                ) : HOREN_EXAMS.map(ex => (
+                {/* هنا الإصلاح: كنفلترو الدروس حسب المستوى */}
+                {HOREN_EXAMS.filter(ex => ex.level === level).map(ex => (
                   <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
                 ))}
               </div>
@@ -448,7 +442,9 @@ function App() {
           </div>
         )}
 
-        {view === "schreiben" && <SchreibenView userLang={userLang} dark={dark} setDark={setDark} isPaid={isPaid} isAdmin={isAdmin} trialActive={trialActive} />}
+        {/* هنا الإصلاح: زدنا level و setLevel لصفحة الكتابة */}
+        {view === "schreiben" && <SchreibenView userLang={userLang} dark={dark} setDark={setDark} isPaid={isPaid} isAdmin={isAdmin} trialActive={trialActive} level={level} setLevel={setLevel} />}
+        
         {view === "admin" && isAdmin && <AdminPanel userLang={userLang} onClose={() => go('home')} />}
         {(view === "sprechen" || view === "pruefung") && <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div>}
       </main>
@@ -556,9 +552,6 @@ function App() {
   );
 }
 
-// ==========================================
-// Render — بدء التطبيق
-// ==========================================
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ErrorBoundary>
     <App />
