@@ -1,10 +1,52 @@
 // ==========================================
-// data-b1.js — الدروس الصحيحة + Premium placeholders
+// data-b1.js — الدروس + الترجمة (نسخة مصححة نهائية)
 // ==========================================
+
+var LANGS = [
+  { c:"ma", n:"الدارجة", f:"🇲🇦" }, { c:"ar", n:"العربية", f:"📜" },
+  { c:"hi", n:"हिन्दी", f:"🇮🇳" }, { c:"id", n:"Indonesia", f:"🇮🇩" },
+  { c:"tl", n:"Filipino", f:"🇵🇭" }, { c:"fa", n:"فارسی", f:"🇮🇷" },
+  { c:"sw", n:"Kiswahili", f:"🇰🇪" }, { c:"fr", n:"Français", f:"🇫🇷" },
+  { c:"en", n:"English", f:"🇬🇧" }, { c:"uz", n:"O'zbek", f:"🇺🇿" },
+  { c:"ne", n:"नेपाली", f:"🇳🇵" }
+];
+
+var UI_TEXTS = {
+  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"سلام، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمين", name:"الاسم", code:"الكود", status:"الحالة", paid:"مخلص", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً", unique_name_placeholder:"الاسم الفريد (Unique Name)", unique_code_placeholder:"الكود الفريد (Unique Code)", login_or_register:"دخول / إنشاء حساب", account_blocked:"تم حظر حسابك", contact_support:"تواصل مع الدعم الفني", please_wait:"جاري التحميل...", results:"النتائج", score:"النقطة", date:"التاريخ", search_users:"بحث عن مستخدم...", delete_notif:"حذف", confirm_delete_notif:"واش بصح باغي تحذف هاد الإشعار؟", sent_success:"تم الإرسال بنجاح!", fill_all_fields:"عمر جميع الحقول", sending:"جاري الإرسال...", previous_notifs:"الإشعارات السابقة", new_notif:"إرسال إشعار جديد", active:"نشط", inactive:"موقوف" },
+  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا تجد جميع دروس الاستماع. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ خطأ", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"مرحباً، أريد ترقية حسابي إلى Pro لفتح جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمون", name:"الاسم", code:"الكود", status:"الحالة", paid:"مدفوع", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً", unique_name_placeholder:"الاسم الفريد", unique_code_placeholder:"الكود الفريد", login_or_register:"دخول / إنشاء حساب", account_blocked:"تم حظر حسابك", contact_support:"تواصل مع الدعم الفني", please_wait:"جاري التحميل...", results:"النتائج", score:"النقطة", date:"التاريخ", search_users:"بحث عن مستخدم...", delete_notif:"حذف", confirm_delete_notif:"هل تريد حقاً حذف هذا الإشعار؟", sent_success:"تم الإرسال بنجاح!", fill_all_fields:"يرجى ملء جميع الحقول", sending:"جاري الإرسال...", previous_notifs:"الإشعارات السابقة", new_notif:"إرسال إشعار جديد", active:"نشط", inactive:"موقوف" },
+  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons", search_placeholder:"Search for a topic...", listen_title:"Listening Lessons", listen_desc:"Here you will find all listening lessons. Click the button to start listening and solving questions.", gap_num:"Gap", choose_word_gap:"Choose word for gap", story_memo:"Story to memorize", check_btn:"Check", next_btn:"Next", back_btn:"Back", reset_btn:"Reset", coming_soon:"Coming soon...", settings:"Settings", change_lang:"Change Language", text_size:"Text Size", reset_size:"Reset to original size", logout:"Logout", whatsapp:"WhatsApp", lang_note:"The language you choose will remain with you throughout the app", or:"or", correct:"✓ Correct", wrong:"✗ Wrong", no_answer:"⚠️ No answer", the_answer:"Answer", b1_level:"Level B1", b2_level:"Level B2", side_menu:"Side Menu", ai_correct:"✨ AI Check", trans_text:"Translate Text", trans_task:"Translate Task", show:"Show", hide:"Hide", words_count:"Words", locked:"Locked", upgrade_pro:"Upgrade to Pro", trial_active:"Free Trial Active", trial_ended:"Trial Ended", wa_upgrade_msg:"Hello, I want to upgrade to Pro to unlock all lessons", admin_panel:"Admin Panel", notifications:"Notifications", block:"Block", unblock:"Unblock", mark_paid:"Mark as Paid", mark_unpaid:"Mark as Unpaid", save:"Save", cancel:"Cancel", users:"Users", name:"Name", code:"Code", status:"Status", paid:"Paid", blocked:"Blocked", actions:"Actions", send_notification:"Send Notification", title_ar:"Title", message_ar:"Message", no_notifications:"No notifications yet", unique_name_placeholder:"Unique Name", unique_code_placeholder:"Unique Code", login_or_register:"Login / Register", account_blocked:"Your account has been blocked", contact_support:"Contact technical support", please_wait:"Loading...", results:"Results", score:"Score", date:"Date", search_users:"Search users...", delete_notif:"Delete", confirm_delete_notif:"Are you sure you want to delete this notification?", sent_success:"Sent successfully!", fill_all_fields:"Please fill all fields", sending:"Sending...", previous_notifs:"Previous Notifications", new_notif:"Send New Notification", active:"Active", inactive:"Inactive" },
+  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute", search_placeholder:"Rechercher un sujet...", listen_title:"Leçons d'écoute", listen_desc:"Ici vous trouverez toutes les leçons d'écoute. Cliquez sur le bouton pour commencer à écouter et à répondre aux questions.", gap_num:"Espace", choose_word_gap:"Choisir le mot pour l'espace", story_memo:"Histoire à mémoriser", check_btn:"Vérifier", next_btn:"Suivant", back_btn:"Retour", reset_btn:"Réinitialiser", coming_soon:"Bientôt...", settings:"Paramètres", change_lang:"Changer de langue", text_size:"Taille du texte", reset_size:"Rétablir la taille d'origine", logout:"Déconnexion", whatsapp:"WhatsApp", lang_note:"La langue que vous choisissez restera avec vous tout au long de l'application", or:"ou", correct:"✓ Correct", wrong:"✗ Faux", no_answer:"⚠️ Sans réponse", the_answer:"Réponse", b1_level:"Niveau B1", b2_level:"Niveau B2", side_menu:"Menu Latéral", ai_correct:"✨ Correction IA", trans_text:"Traduire le texte", trans_task:"Traduire la tâche", show:"Afficher", hide:"Masquer", words_count:"Mots", locked:"Verrouillé", upgrade_pro:"Passer à Pro", trial_active:"Essai Gratuit Actif", trial_ended:"Essai Terminé", wa_upgrade_msg:"Bonjour, je souhaite passer à Pro pour débloquer toutes les leçons", admin_panel:"Panneau d'Admin", notifications:"Notifications", block:"Bloquer", unblock:"Débloquer", mark_paid:"Marquer Payé", mark_unpaid:"Marquer Non Payé", save:"Enregistrer", cancel:"Annuler", users:"Utilisateurs", name:"Nom", code:"Code", status:"Statut", paid:"Payé", blocked:"Bloqué", actions:"Actions", send_notification:"Envoyer Notification", title_ar:"Titre", message_ar:"Message", no_notifications:"Aucune notification pour le moment", unique_name_placeholder:"Nom unique", unique_code_placeholder:"Code unique", login_or_register:"Connexion / Inscription", account_blocked:"Votre compte a été bloqué", contact_support:"Contactez le support technique", please_wait:"Chargement...", results:"Résultats", score:"Score", date:"Date", search_users:"Rechercher des utilisateurs...", delete_notif:"Supprimer", confirm_delete_notif:"Voulez-vous vraiment supprimer cette notification ?", sent_success:"Envoyé avec succès !", fill_all_fields:"Veuillez remplir tous les champs", sending:"Envoi...", previous_notifs:"Notifications Précédentes", new_notif:"Envoyer une Nouvelle Notification", active:"Actif", inactive:"Inactif" }
+};
+
+var t = function(key, lang) {
+  if (UI_TEXTS[lang] && UI_TEXTS[lang][key]) return UI_TEXTS[lang][key];
+  if (UI_TEXTS.en[key]) return UI_TEXTS.en[key];
+  return key;
+};
+
+var WA = "212600000000";
+var wa = function(x) { return window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(x), "_blank"); };
 
 // ==========================================
 // SCHREIBEN_DATA
 // ==========================================
+var __schreibenPremium = [
+  "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand", "Nicole - Probleme Mit Dem Bruder",
+  "Andreas - Neuer Kollege Und Büroalltag", "Annika - Gemeinsamer Sommerurlaub",
+  "Iris - Abschlussparty Organisieren", "Caroline - Gastschülerin Aus Marokko",
+  "Vera - Arbeitsweg Und Neue Stelle", "Jennifer - Einladung Zur Hochzeit",
+  "Andreas - Neue Wohnung Und Computer", "Thomas - Überraschungsausflug",
+  "Tamara - Treffen Und Neuer Job", "Jan - Urlaub In Rom", "Viktor - Urlaub In Malta",
+  "Anna - Katze Und Blumen", "Nora - Neue Wohnung Und Leute Kennenlernen",
+  "Claudia - Zoobesuch Und Geburtstag", "Karla - Umzug Und Neue Arbeit",
+  "Mara - Reise Und Neuer Freund", "Annika - Gemeinsamer Urlaub (Teil 2)",
+  "Sonja - Musikfestival", "Rita - Hochzeit Und Neuigkeiten", "Anne - Laras Geburtstag",
+  "Paul - Ausflug In Die Berge", "Jakob - Nachbarn Und Wohnung", "Emilia", "Tobias",
+  "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
+].map(function(title, i) {
+  return { id: "sch" + (i + 4), title: title, level: "B1", isPremium: true, text: "", task: "", points: [] };
+});
+
 var SCHREIBEN_DATA = [
   {
     id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1", isPremium: false,
@@ -24,10 +66,10 @@ var SCHREIBEN_DATA = [
     task: "Schreiben Sie eine Antwort. Behandeln Sie folgende Punkte:",
     points: ["Mit welchem Angebot waren Sie nicht zufrieden?", "Erklären Sie, warum das Angebot nicht begeistert hat.", "Vorschläge für Verbesserungen: Was könnte TIKKI TAKKA Ihrer Meinung nach besser machen?"]
   }
-];
+].concat(__schreibenPremium);
 
 // ==========================================
-// EXAMS — دروس القراءة
+// EXAMS
 // ==========================================
 var __examsPremiumLessons = [
   { title: "Eva", slug: "eva" }, { title: "Paul", slug: "paul" }, { title: "Iris", slug: "iris" },
@@ -41,412 +83,338 @@ var __examsPremiumLessons = [
 ];
 
 var __examsPremiumParts = [
-  { sub: "Teile 1", type: "headings", suf: "t1" },
-  { sub: "Teile 2", type: "mcq", suf: "t2" },
-  { sub: "Teile 3", type: "matching", suf: "t3" },
-  { sub: "Sprach 1", type: "sprach1", suf: "sp1" },
+  { sub: "Teile 1", type: "headings", suf: "t1" }, { sub: "Teile 2", type: "mcq", suf: "t2" },
+  { sub: "Teile 3", type: "matching", suf: "t3" }, { sub: "Sprach 1", type: "sprach1", suf: "sp1" },
   { sub: "Sprach 2", type: "sprach2", suf: "sp2" }
 ];
 
 var __examsPremium = [];
 __examsPremiumLessons.forEach(function(l) {
   __examsPremiumParts.forEach(function(p) {
-    __examsPremium.push({
-      id: l.slug + "-" + p.suf,
-      title: l.title,
-      level: "B1",
-      sub: p.sub,
-      type: p.type,
-      isPremium: true
-    });
+    __examsPremium.push({ id: l.slug + "-" + p.suf, title: l.title, level: "B1", sub: p.sub, type: p.type, isPremium: true });
   });
 });
 
 var __examsMain = [
-// ================= ALEX UND CORA =================
-{
-  id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
-  options:[
-    {k:"a", de:"Eltern trotz Kritik mit der Schule zufrieden"},
-    {k:"b", de:"Elektromobilität für Angestellte"},
-    {k:"c", de:"STÄRKUNG VON BUS UND BAHN"},
-    {k:"d", de:"Schule und Umweltschutz"},
-    {k:"e", de:"Bald keine Firmenwagen mehr?"},
-    {k:"f", de:"Ticketpreise bei der Bahn"},
-    {k:"g", de:"Lehrerberuf wird immer attraktiver"},
-    {k:"h", de:"Engagement für die Natur"},
-    {k:"i", de:"Preissenkungen bei Bus, Straßenbahn und U-Bahn!"},
-    {k:"j", de:"ZU WENIG LEHRER - STADT REAGIERT"}
-  ],
-  items:[
-    {n:1, c:"b", de:"Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen?"},
-    {n:2, c:"h", de:"NaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz."},
-    {n:3, c:"f", de:"Die Bahn erhöht dieses Jahr die Ticketpreise nicht. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr."},
-    {n:4, c:"a", de:"Vergangenen Monat wurden etwa tausend Eltern befragt. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei."},
-    {n:5, c:"j", de:"Berlin. In der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Daher plant der Berliner Senat eine Werbekampagne."}
-  ]
-},
-{
-  id:"alex-t2", title:"Alex Und Cora", level:"B1", sub:"Teile 2", type:"mcq", isPremium: false,
-  paragraphs: [
-    { de: "Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt." },
-    { de: "In deutschen Haushalten gibt es rund 34 Millionen Haustiere. Besonders Katzen sind sehr beliebt." },
-    { de: "Der Hundeexperte Marius Klotz sieht es kritisch: Wichtig sind klare Regeln, die der Hund verstehen kann." }
-  ],
-  items:[
-    { n:1, c:"C", q:"Die Hundebesitzerin Elli Herfeld",
-      opts:[
+  {
+    id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
+    options:[
+      {k:"a", de:"Eltern trotz Kritik mit der Schule zufrieden"}, {k:"b", de:"Elektromobilität für Angestellte"},
+      {k:"c", de:"STÄRKUNG VON BUS UND BAHN"}, {k:"d", de:"Schule und Umweltschutz"},
+      {k:"e", de:"Bald keine Firmenwagen mehr?"}, {k:"f", de:"Ticketpreise bei der Bahn"},
+      {k:"g", de:"Lehrerberuf wird immer attraktiver"}, {k:"h", de:"Engagement für die Natur"},
+      {k:"i", de:"Preissenkungen bei Bus, Straßenbahn und U-Bahn!"}, {k:"j", de:"ZU WENIG LEHRER - STADT REAGIERT"}
+    ],
+    items:[
+      {n:1, c:"b", de:"Sie haben Mitarbeiter, die gern mit dem Fahrrad zur Arbeit kommen? Warum dann nicht mehr E-Bikes leasen statt nur teure Firmenwagen?"},
+      {n:2, c:"h", de:"NaturVerband ist der größte Umweltverband in Deutschland. Er engagiert sich für Umwelt- und Tierschutz."},
+      {n:3, c:"f", de:"Die Bahn erhöht dieses Jahr die Ticketpreise nicht. Günstiger werden außerdem die Tickets im öffentlichen Nahverkehr."},
+      {n:4, c:"a", de:"Vergangenen Monat wurden etwa tausend Eltern befragt. Dabei sagten 80%, dass die Schule gut oder sogar sehr gut sei."},
+      {n:5, c:"j", de:"Berlin. In der Hauptstadt herrscht weiterhin Lehrermangel: Tausende Lehrkräfte fehlen. Daher plant der Berliner Senat eine Werbekampagne."}
+    ]
+  },
+  {
+    id:"alex-t2", title:"Alex Und Cora", level:"B1", sub:"Teile 2", type:"mcq", isPremium: false,
+    paragraphs: [
+      { de: "Egal ob Hund, Katze oder Maus: Haustiere sind in Deutschland sehr beliebt." },
+      { de: "In deutschen Haushalten gibt es rund 34 Millionen Haustiere. Besonders Katzen sind sehr beliebt." },
+      { de: "Der Hundeexperte Marius Klotz sieht es kritisch: Wichtig sind klare Regeln, die der Hund verstehen kann." }
+    ],
+    items:[
+      { n:1, c:"C", q:"Die Hundebesitzerin Elli Herfeld", opts:[
         {k:"A", de:"feiert ihren Geburtstag immer mit ihrem Hund."},
         {k:"B", de:"sieht ihren Hund als festes Familienmitglied."},
         {k:"C", de:"backt ihrem Hund zum Geburtstag einen Kuchen."}
-      ]
-    },
-    { n:2, c:"A", q:"In Seniorenheimen gibt es oft Tiere, damit",
-      opts:[
+      ]},
+      { n:2, c:"A", q:"In Seniorenheimen gibt es oft Tiere, damit", opts:[
         {k:"A", de:"die Senioren etwas tun, was gut für sie ist."},
         {k:"B", de:"sie auf die älteren Menschen aufpassen."},
         {k:"C", de:"die Senioren mehr spazieren gehen."}
-      ]
-    },
-    { n:3, c:"A", q:"Bettina Schröther …",
-      opts:[
+      ]},
+      { n:3, c:"A", q:"Bettina Schröther …", opts:[
         {k:"A", de:"verbringt die ganze Freizeit mit ihrem Hund."},
         {k:"B", de:"macht mit ihrem Hund regelmäßig Wellnessurlaube."},
         {k:"C", de:"lässt ihren Hund in einer Hundeschule erziehen."}
-      ]
-    },
-    { n:4, c:"C", q:"Nach Meinung von Hundeexperte Marius Klotz sollte man",
-      opts:[
+      ]},
+      { n:4, c:"C", q:"Nach Meinung von Hundeexperte Marius Klotz sollte man", opts:[
         {k:"A", de:"sich zur Ernährung des Tiers beraten lassen."},
         {k:"B", de:"seinen Hund immer gut behandeln."},
         {k:"C", de:"die Regeln bei der Hundeerziehung beachten."}
-      ]
-    }
-  ]
-},
-{
-  id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching", isPremium: false,
-  ads:[
-    {k:"A", t:"Café Simon", de:"Hausgemachte Pralinen, Kuchen, Torten und Eis"},
-    {k:"B", t:"Tourismusschulen", de:"Höhere Lehranstalt, Hotelhandelsschule, Tourismusfachschule"},
-    {k:"C", t:"Liederbühne Robinson", de:"Kleinkunst, Vegetarische Spezialitäten"},
-    {k:"D", t:"Interkulturelle Arbeit", de:"Berufsbegleitende Fortbildung für Fachkräfte"},
-    {k:"E", t:"Restaurantcafé Chesa W. Pressl", de:"Schweizer und bayerische Küche, Fischspezialitäten"},
-    {k:"F", t:"BIZ (Berufsinformationszentrum)", de:"Informationen zu Ausbildung und Studium"},
-    {k:"G", t:"Abendkurs für Einsteiger", de:"Computer Grundwissen"},
-    {k:"H", t:"MortizCafé", de:"Kaffee so viel du willst"},
-    {k:"I", t:"Bachls Kerzenstub'n", de:"TANZEN + ESSEN, Live-Musik mit TANZ"},
-    {k:"J", t:"Internationales Studium", de:"Fremdsprachen + Betriebswirtschaft, B.A. in European Administration"},
-    {k:"K", t:"USA-Aufenthalt für Schüler", de:"Ein Schuljahr an einer High School"},
-    {k:"L", t:"Samstagswerkstatt", de:"Aufbau des Autos, Reparatur und Pflege"}
-  ],
-  items:[
-    {n:1, c:"H", de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben."},
-    {n:2, c:"G", de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer."},
-    {n:3, c:"D", de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein."},
-    {n:4, c:"X", de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit."},
-    {n:5, c:"J", de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren um später vielleicht auch dort zu arbeiten."},
-    {n:6, c:"A", de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am Liebsten süße Sachen isst."},
-    {n:7, c:"I", de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren."},
-    {n:8, c:"X", de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen."},
-    {n:9, c:"F", de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung."},
-    {n:10, c:"C", de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch."}
-  ]
-},
-{
-  id:"alex-sp1", title:"Alex Und Cora", level:"B1", sub:"Sprach 1", type:"sprach1", isPremium: false,
-  text: "Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, .....(1)..... ich seit zwei Monaten in einem Altersheim .....(2)..... der Nähe von Schaffhausen. Die Arbeit in .....(3)..... Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge .....(4)..... zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich .....(5)..... gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir .....(6)..... ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr .....(7)..... gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, .....(8)..... ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna .....(9)..... auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du .....(10)..... bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie",
-  items:[
-    {n:1, c:"arbeite", opts:["arbeite","arbeiten","arbeiteten"]},
-    {n:2, c:"in", opts:["auf","bei","in"]},
-    {n:3, c:"diesem", opts:["diesem","diesen","dieses"]},
-    {n:4, c:"Kontakt", opts:["Kontakt","Kontakte","Kontakten"]},
-    {n:5, c:"besonders", opts:["besondere","besonderes","besonders"]},
-    {n:6, c:"ihr", opts:["ihr","ihre","ihres"]},
-    {n:7, c:"hart", opts:["hart","harte","härter"]},
-    {n:8, c:"weil", opts:["daher","deshalb","weil"]},
-    {n:9, c:"aber", opts:["aber","als","wie"]},
-    {n:10, c:"hast", opts:["bist","hast","wirst"]}
-  ]
-},
-{
-  id:"alex-sp2", title:"Alex Und Cora", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: false,
-  wordBank:[{k:"a",w:"an"},{k:"b",w:"Bekannte"},{k:"c",w:"bereits"},{k:"d",w:"dafür"},{k:"e",w:"darüber"},{k:"f",w:"dass"},{k:"g",w:"Familie"},{k:"h",w:"kann"},{k:"i",w:"mich"},{k:"j",w:"mit"},{k:"k",w:"muss"},{k:"l",w:"ob"},{k:"m",w:"sehr"},{k:"n",w:"was"},{k:"o",w:"welche"}],
-  text: "Sehr geehrte Damen und Herren,\n\nnachdem ich Ihr Inserat gelesen habe, möchte ich .....(1)..... gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und .....(2)..... einladen. .....(3)..... wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen .....(4)..... Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und .....(5)..... Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, .....(6)..... genügend Parkplätze vorhanden sind.\n\nEs wäre .....(7)..... freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken .....(8)...... Bitte senden Sie mir einen Prospekt Ihres Hotels .....(9)..... genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai .....(10)..... ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\n\nMit freundlichen Grüßen\nBarbara Heuberger",
-  items:[{n:1, c:"mich"},{n:2, c:"Bekannte"},{n:3, c:"dafür"},{n:4, c:"an"},{n:5, c:"welche"},{n:6, c:"dass"},{n:7, c:"sehr"},{n:8, c:"kann"},{n:9, c:"mit"},{n:10, c:"bereits"}]
-},
-
-// ================= RITA =================
-{
-  id:"rita-t1", title:"Rita", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
-  options:[
-    {k:"a", de:"Japanische Studie: Vielschläfer leben länger"},
-    {k:"b", de:"USA: Nachfrage nach funktionellen Lebensmitteln geht zurück"},
-    {k:"c", de:"Studie zeigt: Heiraten macht dick"},
-    {k:"d", de:"Die Mehrheit der Schweizer treibt aktiv Sport"},
-    {k:"e", de:"Neu im Trend: Jung und Gesund - mit Schokolade"},
-    {k:"f", de:"Schweizer sollen gesünder leben"},
-    {k:"g", de:"Statistik: Unverheiratete haben oft ein paar Kilos zu viel"},
-    {k:"h", de:"Teures Essen für mehr Jugend und Schönheit"},
-    {k:"i", de:"Weniger schlafen - länger leben"},
-    {k:"j", de:"Schokolade essen - jung bleiben"}
-  ],
-  items:[
-    {n:1, c:"h", de:"Du bist, was du isst, hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Dort kaufen bereits viele Leute neue teure Lebensmittel, die jüngeres Aussehen versprechen."},
-    {n:2, c:"c", de:"Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern."},
-    {n:3, c:"e", de:"Der Schokolade-Boom hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy Behandlungen mit Schokolade an."},
-    {n:4, c:"f", de:"Nach dem Motto „beschwingt und bewegt“ starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei soll die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen."},
-    {n:5, c:"i", de:"Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit und bezog sich auf eine neue japanische Studie."}
-  ]
-},
-{
-  id:"rita-t2", title:"Rita", level:"B1", sub:"Teile 2", type:"mcq", isPremium: false,
-  paragraphs: [
-    { de: "Endlich wird der Traum von Louis Palmer wahr: Der Schweizer startet mit seinem Auto, das mit Sonnenenergie fährt, zur Weltumrundung." },
-    { de: "Entwickelt für mich ein Fahrzeug für eine Weltreise, die mit Sonnenenergie fährt, forderte Louis Palmer Studenten auf. Heute ist das Auto fertig: ein dreirädriges Fahrzeug mit zwei Sitzplätzen." },
-    { de: "Phase eins begann mit 23 Jahren: Er zog aus, um 50 Länder auf allen Kontinenten zu bereisen: Anstatt an die Uni zu gehen, habe ich die Welt studiert." }
-  ],
-  items:[
-    { n:1, c:"C", q:"Mit 23 Jahren wollte Louis Palmer",
-      opts:[
+      ]}
+    ]
+  },
+  {
+    id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching", isPremium: false,
+    ads:[
+      {k:"A", t:"Café Simon", de:"Hausgemachte Pralinen, Kuchen, Torten und Eis"},
+      {k:"B", t:"Tourismusschulen", de:"Höhere Lehranstalt, Hotelhandelsschule, Tourismusfachschule"},
+      {k:"C", t:"Liederbühne Robinson", de:"Kleinkunst, Vegetarische Spezialitäten"},
+      {k:"D", t:"Interkulturelle Arbeit", de:"Berufsbegleitende Fortbildung für Fachkräfte"},
+      {k:"E", t:"Restaurantcafé Chesa W. Pressl", de:"Schweizer und bayerische Küche, Fischspezialitäten"},
+      {k:"F", t:"BIZ (Berufsinformationszentrum)", de:"Informationen zu Ausbildung und Studium"},
+      {k:"G", t:"Abendkurs für Einsteiger", de:"Computer Grundwissen"},
+      {k:"H", t:"MortizCafé", de:"Kaffee so viel du willst"},
+      {k:"I", t:"Bachls Kerzenstub'n", de:"TANZEN + ESSEN, Live-Musik mit TANZ"},
+      {k:"J", t:"Internationales Studium", de:"Fremdsprachen + Betriebswirtschaft, B.A. in European Administration"},
+      {k:"K", t:"USA-Aufenthalt für Schüler", de:"Ein Schuljahr an einer High School"},
+      {k:"L", t:"Samstagswerkstatt", de:"Aufbau des Autos, Reparatur und Pflege"}
+    ],
+    items:[
+      {n:1, c:"H", de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben."},
+      {n:2, c:"G", de:"Sie haben gerade den Beruf gewechselt und brauchen für die neue Aufgabe Grundkenntnisse für die Arbeit am Computer."},
+      {n:3, c:"D", de:"Sie arbeiten in einem Krankenhaus und haben dort häufig mit Patienten aus aller Welt zu tun. Sie möchten für diese Arbeit noch besser qualifiziert sein."},
+      {n:4, c:"X", de:"Sie möchten gern einen Tanzkurs für Anfänger besuchen. Sie haben nur abends Zeit."},
+      {n:5, c:"J", de:"Sie möchten beruflich etwas mit Fremdsprachen machen. Deshalb wollen Sie im Ausland studieren um später vielleicht auch dort zu arbeiten."},
+      {n:6, c:"A", de:"Sie wollen mit einem Bekannten einen gemütlichen Nachmittag in der Stadt verbringen. Sie wissen, dass Ihr Bekannter am Liebsten süße Sachen isst."},
+      {n:7, c:"I", de:"Ihr Freund aus den USA ist zu Besuch. Er ist Weinkenner und möchte europäische Weine probieren."},
+      {n:8, c:"X", de:"In Ihrer Freizeit möchten Sie sich mit anderen Ländern, fremden Kulturen und Traditionen beschäftigen."},
+      {n:9, c:"F", de:"Die Tochter Ihrer Freunde hat gerade Abitur gemacht und ist nicht sicher, was sie später machen will. Sie braucht Informationen und Beratung."},
+      {n:10, c:"C", de:"Sie möchten mit Freunden in einem Lokal mit Unterhaltungsprogramm essen. Ihre Freunde essen aber weder Fleisch noch Fisch."}
+    ]
+  },
+  {
+    id:"alex-sp1", title:"Alex Und Cora", level:"B1", sub:"Sprach 1", type:"sprach1", isPremium: false,
+    text: "Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, .....(1)..... ich seit zwei Monaten in einem Altersheim .....(2)..... der Nähe von Schaffhausen. Die Arbeit in .....(3)..... Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge .....(4)..... zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich .....(5)..... gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir .....(6)..... ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr .....(7)..... gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, .....(8)..... ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna .....(9)..... auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du .....(10)..... bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie",
+    items:[
+      {n:1, c:"arbeite", opts:["arbeite","arbeiten","arbeiteten"]},
+      {n:2, c:"in", opts:["auf","bei","in"]},
+      {n:3, c:"diesem", opts:["diesem","diesen","dieses"]},
+      {n:4, c:"Kontakt", opts:["Kontakt","Kontakte","Kontakten"]},
+      {n:5, c:"besonders", opts:["besondere","besonderes","besonders"]},
+      {n:6, c:"ihr", opts:["ihr","ihre","ihres"]},
+      {n:7, c:"hart", opts:["hart","harte","härter"]},
+      {n:8, c:"weil", opts:["daher","deshalb","weil"]},
+      {n:9, c:"aber", opts:["aber","als","wie"]},
+      {n:10, c:"hast", opts:["bist","hast","wirst"]}
+    ]
+  },
+  {
+    id:"alex-sp2", title:"Alex Und Cora", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: false,
+    wordBank:[{k:"a",w:"an"},{k:"b",w:"Bekannte"},{k:"c",w:"bereits"},{k:"d",w:"dafür"},{k:"e",w:"darüber"},{k:"f",w:"dass"},{k:"g",w:"Familie"},{k:"h",w:"kann"},{k:"i",w:"mich"},{k:"j",w:"mit"},{k:"k",w:"muss"},{k:"l",w:"ob"},{k:"m",w:"sehr"},{k:"n",w:"was"},{k:"o",w:"welche"}],
+    text: "Sehr geehrte Damen und Herren,\n\nnachdem ich Ihr Inserat gelesen habe, möchte ich .....(1)..... gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und .....(2)..... einladen. .....(3)..... wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen .....(4)..... Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und .....(5)..... Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, .....(6)..... genügend Parkplätze vorhanden sind.\n\nEs wäre .....(7)..... freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken .....(8)...... Bitte senden Sie mir einen Prospekt Ihres Hotels .....(9)..... genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai .....(10)..... ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\n\nMit freundlichen Grüßen\nBarbara Heuberger",
+    items:[{n:1, c:"mich"},{n:2, c:"Bekannte"},{n:3, c:"dafür"},{n:4, c:"an"},{n:5, c:"welche"},{n:6, c:"dass"},{n:7, c:"sehr"},{n:8, c:"kann"},{n:9, c:"mit"},{n:10, c:"bereits"}]
+  },
+  {
+    id:"rita-t1", title:"Rita", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
+    options:[
+      {k:"a", de:"Japanische Studie: Vielschläfer leben länger"}, {k:"b", de:"USA: Nachfrage nach funktionellen Lebensmitteln geht zurück"},
+      {k:"c", de:"Studie zeigt: Heiraten macht dick"}, {k:"d", de:"Die Mehrheit der Schweizer treibt aktiv Sport"},
+      {k:"e", de:"Neu im Trend: Jung und Gesund - mit Schokolade"}, {k:"f", de:"Schweizer sollen gesünder leben"},
+      {k:"g", de:"Statistik: Unverheiratete haben oft ein paar Kilos zu viel"}, {k:"h", de:"Teures Essen für mehr Jugend und Schönheit"},
+      {k:"i", de:"Weniger schlafen - länger leben"}, {k:"j", de:"Schokolade essen - jung bleiben"}
+    ],
+    items:[
+      {n:1, c:"h", de:"Du bist, was du isst, hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Dort kaufen bereits viele Leute neue teure Lebensmittel, die jüngeres Aussehen versprechen."},
+      {n:2, c:"c", de:"Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern."},
+      {n:3, c:"e", de:"Der Schokolade-Boom hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy Behandlungen mit Schokolade an."},
+      {n:4, c:"f", de:"Nach dem Motto „beschwingt und bewegt“ starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei soll die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen."},
+      {n:5, c:"i", de:"Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit und bezog sich auf eine neue japanische Studie."}
+    ]
+  },
+  {
+    id:"rita-t2", title:"Rita", level:"B1", sub:"Teile 2", type:"mcq", isPremium: false,
+    paragraphs: [
+      { de: "Endlich wird der Traum von Louis Palmer wahr: Der Schweizer startet mit seinem Auto, das mit Sonnenenergie fährt, zur Weltumrundung." },
+      { de: "Entwickelt für mich ein Fahrzeug für eine Weltreise, die mit Sonnenenergie fährt, forderte Louis Palmer Studenten auf. Heute ist das Auto fertig: ein dreirädriges Fahrzeug mit zwei Sitzplätzen." },
+      { de: "Phase eins begann mit 23 Jahren: Er zog aus, um 50 Länder auf allen Kontinenten zu bereisen: Anstatt an die Uni zu gehen, habe ich die Welt studiert." }
+    ],
+    items:[
+      { n:1, c:"C", q:"Mit 23 Jahren wollte Louis Palmer", opts:[
         {k:"A", de:"für Studenten Reisen nach Südamerika organisieren"},
         {k:"B", de:"mit dem Fahrrad durch 50 verschiedene Länder fahren"},
         {k:"C", de:"viele verschiedene Länder kennen lernen"}
-      ]
-    },
-    { n:2, c:"C", q:"Sein Projekt konnte Palmer realisieren,",
-      opts:[
+      ]},
+      { n:2, c:"C", q:"Sein Projekt konnte Palmer realisieren,", opts:[
         {k:"A", de:"weil er einen Preis von einer Universität gewonnen hat"},
         {k:"B", de:"weil er finanzielle Unterstützung von vier Universitäten erhalten hat."},
         {k:"C", de:"weil ihn Firmen und Universitäten unterstützt haben"}
-      ]
-    },
-    { n:3, c:"A", q:"Palmers Auto",
-      opts:[
+      ]},
+      { n:3, c:"A", q:"Palmers Auto", opts:[
         {k:"A", de:"fährt mit alternativer Energie"},
         {k:"B", de:"geht auf eine dreijährige Weltreise"},
         {k:"C", de:"hat genug Platz für sieben Personen"}
-      ]
-    },
-    { n:4, c:"A", q:"Louis Palmer",
-      opts:[
+      ]},
+      { n:4, c:"A", q:"Louis Palmer", opts:[
         {k:"A", de:"wird sich in nächster Zeit nicht langweilen"},
         {k:"B", de:"möchte mit seinem Auto nicht durch Großstädte fahren"},
         {k:"C", de:"hat für die Weltreise sechs Sprachen gelernt"}
-      ]
-    },
-    { n:5, c:"C", q:"Schon als Jugendlicher",
-      opts:[
+      ]},
+      { n:5, c:"C", q:"Schon als Jugendlicher", opts:[
         {k:"A", de:"baute Louis an einem umweltfreundlichen Auto"},
         {k:"B", de:"wollte Louis etwas für die Umwelt tun."},
         {k:"C", de:"wusste Louis genau, wie er sein Leben einteilen will"}
-      ]
-    }
-  ]
-},
-{
-  id:"rita-t3", title:"Rita", level:"B1", sub:"Teile 3", type:"matching", isPremium: false,
-  ads:[
-    {k:"A", t:"Surf & Travel", de:"Kurztrips der Deutschen Bahn"},
-    {k:"B", t:"Für den Fernsehfilm", de:"Kleindarsteller und Statisten gesucht"},
-    {k:"C", t:"Messejobs", de:"Hostessen und Promoter für Messen"},
-    {k:"D", t:"Verkehrsmuseum Erfurt", de:"Mobilität und Technik, Geschichte des Autos"},
-    {k:"E", t:"ADAC Urlaub mobil", de:"Berlin plus Autoreise durch Deutschland"},
-    {k:"F", t:"Filmclub", de:"Filmvorführungen, Kino"},
-    {k:"G", t:"Ökomobil", de:"Garten- und Landschaftsbau, Ausbildung"},
-    {k:"H", t:"Jung gebliebener Rentner", de:"Sucht Freizeitpartnerin für Kino, Reisen"},
-    {k:"I", t:"Feng Shui für den Garten", de:"Vortragsabend, Beratung"},
-    {k:"J", t:"Studentinnen/SchülerInnen gesucht", de:"Betreuung im Kinderferienlager"},
-    {k:"K", t:"Gemeinsam schöne Dinge genießen", de:"Akademikerin sucht Partner für Konzerte"},
-    {k:"L", t:"Samstagswerkstatt", de:"Aufbau des Autos, Reparatur und Pflege"}
-  ],
-  items:[
-    {n:1, c:"H", de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann."},
-    {n:2, c:"I", de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps."},
-    {n:3, c:"J", de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job."},
-    {n:4, c:"X", de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen."},
-    {n:5, c:"K", de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann."},
-    {n:6, c:"B", de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen."},
-    {n:7, c:"D", de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen."},
-    {n:8, c:"X", de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen."},
-    {n:9, c:"E", de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot."},
-    {n:10, c:"L", de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen."}
-  ]
-},
-{
-  id:"rita-sp1", title:"Rita", level:"B1", sub:"Sprach 1", type:"sprach1", isPremium: false,
-  text: "Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich .....(1)..... erzählen. Am Anfang .....(2)..... ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt .....(3)..... zwei Antworten bekommen habe. Aber zum Glück hat einer davon .....(4).....: Ich werde nun zwei Nachmittage in der Woche als Babysitterin .....(5)..... einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und .....(6)..... sind sehr nett. Wir haben in der .....(7)..... Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und .....(8)..... Kindermuseum gegangen. .....(9)..... kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir .....(10)..... .\nLiebe Grüße\nDeine Tanja",
-  items:[
-    {n:1, c:"davon", opts:["dafür","damit","davon"]},
-    {n:2, c:"war", opts:["bin","habe","war"]},
-    {n:3, c:"nur", opts:["doch","nur","schon"]},
-    {n:4, c:"gepasst", opts:["gepasst","passen","passt"]},
-    {n:5, c:"bei", opts:["an","bei","zu"]},
-    {n:6, c:"beide", opts:["beide","beiden","beides"]},
-    {n:7, c:"ersten", opts:["erster","ersten","erstes"]},
-    {n:8, c:"ins", opts:["im","in","ins"]},
-    {n:9, c:"Besser", opts:["Am besten","Besser","Gut"]},
-    {n:10, c:"geht", opts:["geht","geht's","ging"]}
-  ]
-},
-{
-  id:"rita-sp2", title:"Rita", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: false,
-  wordBank:[{k:"a",w:"der"},{k:"b",w:"die"},{k:"c",w:"Erst"},{k:"d",w:"geeignet"},{k:"e",w:"gerne"},{k:"f",w:"hätte"},{k:"g",w:"in"},{k:"h",w:"muss"},{k:"i",w:"nach"},{k:"j",w:"noch"},{k:"k",w:"schon"},{k:"l",w:"wann"},{k:"m",w:"wäre"},{k:"n",w:"wenn"},{k:"o",w:"wo"}],
-  text: "Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC",
-  items:[{n:1, c:"muss"},{n:2, c:"nach"},{n:3, c:"die"},{n:4, c:"wäre"},{n:5, c:"geeignet"},{n:6, c:"wo"},{n:7, c:"gerne"},{n:8, c:"der"},{n:9, c:"wenn"},{n:10, c:"schon"}]
-},
-
-// ================= CAROLINE =================
-{
-  id:"caroline-t1", title:"Caroline", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
-  options:[
-    {k:"a", de:"Diskussion über Flughafen und Arbeitsplätze"},
-    {k:"b", de:"Flughafen Frankfurt beliebter Veranstaltungsort"},
-    {k:"c", de:"Umwelt und Flughafen: Ein Informationsabend der Bürger"},
-    {k:"d", de:"Neue Kurse: Museumsführung für junge Väter"},
-    {k:"e", de:"Neue Kurse für Kinder"},
-    {k:"f", de:"Experten gegen Vergrößerung des Flughafens"},
-    {k:"g", de:"Demonstration gegen Fluglärm"},
-    {k:"h", de:"Familienbildung Schwerpunkt Beruf und Familie"},
-    {k:"i", de:"Flughafen Frankfurt wird 10 Jahre"},
-    {k:"j", de:"Neue Kurse: Spiele für Mütter und Kinder"}
-  ],
-  items:[
-    {n:1, c:"b", de:"Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen und Tagungen."},
-    {n:2, c:"h", de:"Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht. Diesmal steht das Thema Berufstätige Eltern im Mittelpunkt."},
-    {n:3, c:"e", de:"Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch beginnen zwei Malkurse für Kinder."},
-    {n:4, c:"c", de:"Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern lädt zu einem Informationsabend über den Ausbau ein."},
-    {n:5, c:"a", de:"Eine Bürgergruppe lädt zu einer öffentlichen Expertenbefragung zum Thema Arbeitsplätze am Frankfurter Flughafen ein."}
-  ]
-},
-{
-  id:"caroline-t2", title:"Caroline", level:"B1", sub:"Teile 2", type:"mcq", isPremium: false,
-  paragraphs: [
-    { de: "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite. Sie sind die Problemlöser im Kindergarten." },
-    { de: "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia-Computern installiert." },
-    { de: "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus." },
-    { de: "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend überflüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm." },
-    { de: "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte." }
-  ],
-  items:[
-    { n:1, c:"A", q:"Das Schulamt hat ein Projekt gestartet, bei dem",
-      opts:[
+      ]}
+    ]
+  },
+  {
+    id:"rita-t3", title:"Rita", level:"B1", sub:"Teile 3", type:"matching", isPremium: false,
+    ads:[
+      {k:"A", t:"Surf & Travel", de:"Kurztrips der Deutschen Bahn"},
+      {k:"B", t:"Für den Fernsehfilm", de:"Kleindarsteller und Statisten gesucht"},
+      {k:"C", t:"Messejobs", de:"Hostessen und Promoter für Messen"},
+      {k:"D", t:"Verkehrsmuseum Erfurt", de:"Mobilität und Technik, Geschichte des Autos"},
+      {k:"E", t:"ADAC Urlaub mobil", de:"Berlin plus Autoreise durch Deutschland"},
+      {k:"F", t:"Filmclub", de:"Filmvorführungen, Kino"},
+      {k:"G", t:"Ökomobil", de:"Garten- und Landschaftsbau, Ausbildung"},
+      {k:"H", t:"Jung gebliebener Rentner", de:"Sucht Freizeitpartnerin für Kino, Reisen"},
+      {k:"I", t:"Feng Shui für den Garten", de:"Vortragsabend, Beratung"},
+      {k:"J", t:"Studentinnen/SchülerInnen gesucht", de:"Betreuung im Kinderferienlager"},
+      {k:"K", t:"Gemeinsam schöne Dinge genießen", de:"Akademikerin sucht Partner für Konzerte"},
+      {k:"L", t:"Samstagswerkstatt", de:"Aufbau des Autos, Reparatur und Pflege"}
+    ],
+    items:[
+      {n:1, c:"H", de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann."},
+      {n:2, c:"I", de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps."},
+      {n:3, c:"J", de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job."},
+      {n:4, c:"X", de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen."},
+      {n:5, c:"K", de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann."},
+      {n:6, c:"B", de:"Sie möchten gern bei einem Film mitspielen und etwas Geld verdienen."},
+      {n:7, c:"D", de:"Der Sohn Ihrer Freunde interessiert sich für die Geschichte des Autos. Am Sonntag wollen Sie ihm etwas Interessantes machen."},
+      {n:8, c:"X", de:"Sie suchen eine Stelle und brauchen Tipps für ihre Bewerbungen."},
+      {n:9, c:"E", de:"Im Urlaub wollen Sie mit dem Auto eine Reise durch Deutschland machen und suchen ein passendes Angebot."},
+      {n:10, c:"L", de:"Ihre Bekannte möchte lernen, wie sie kleinere Reparaturen an ihrem Wagen selbst machen."}
+    ]
+  },
+  {
+    id:"rita-sp1", title:"Rita", level:"B1", sub:"Sprach 1", type:"sprach1", isPremium: false,
+    text: "Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich .....(1)..... erzählen. Am Anfang .....(2)..... ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt .....(3)..... zwei Antworten bekommen habe. Aber zum Glück hat einer davon .....(4).....: Ich werde nun zwei Nachmittage in der Woche als Babysitterin .....(5)..... einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und .....(6)..... sind sehr nett. Wir haben in der .....(7)..... Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und .....(8)..... Kindermuseum gegangen. .....(9)..... kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir .....(10)..... .\nLiebe Grüße\nDeine Tanja",
+    items:[
+      {n:1, c:"davon", opts:["dafür","damit","davon"]}, {n:2, c:"war", opts:["bin","habe","war"]},
+      {n:3, c:"nur", opts:["doch","nur","schon"]}, {n:4, c:"gepasst", opts:["gepasst","passen","passt"]},
+      {n:5, c:"bei", opts:["an","bei","zu"]}, {n:6, c:"beide", opts:["beide","beiden","beides"]},
+      {n:7, c:"ersten", opts:["erster","ersten","erstes"]}, {n:8, c:"ins", opts:["im","in","ins"]},
+      {n:9, c:"Besser", opts:["Am besten","Besser","Gut"]}, {n:10, c:"geht", opts:["geht","geht's","ging"]}
+    ]
+  },
+  {
+    id:"rita-sp2", title:"Rita", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: false,
+    wordBank:[{k:"a",w:"der"},{k:"b",w:"die"},{k:"c",w:"Erst"},{k:"d",w:"geeignet"},{k:"e",w:"gerne"},{k:"f",w:"hätte"},{k:"g",w:"in"},{k:"h",w:"muss"},{k:"i",w:"nach"},{k:"j",w:"noch"},{k:"k",w:"schon"},{k:"l",w:"wann"},{k:"m",w:"wäre"},{k:"n",w:"wenn"},{k:"o",w:"wo"}],
+    text: "Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC",
+    items:[{n:1, c:"muss"},{n:2, c:"nach"},{n:3, c:"die"},{n:4, c:"wäre"},{n:5, c:"geeignet"},{n:6, c:"wo"},{n:7, c:"gerne"},{n:8, c:"der"},{n:9, c:"wenn"},{n:10, c:"schon"}]
+  },
+  {
+    id:"caroline-t1", title:"Caroline", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
+    options:[
+      {k:"a", de:"Diskussion über Flughafen und Arbeitsplätze"}, {k:"b", de:"Flughafen Frankfurt beliebter Veranstaltungsort"},
+      {k:"c", de:"Umwelt und Flughafen: Ein Informationsabend der Bürger"}, {k:"d", de:"Neue Kurse: Museumsführung für junge Väter"},
+      {k:"e", de:"Neue Kurse für Kinder"}, {k:"f", de:"Experten gegen Vergrößerung des Flughafens"},
+      {k:"g", de:"Demonstration gegen Fluglärm"}, {k:"h", de:"Familienbildung Schwerpunkt Beruf und Familie"},
+      {k:"i", de:"Flughafen Frankfurt wird 10 Jahre"}, {k:"j", de:"Neue Kurse: Spiele für Mütter und Kinder"}
+    ],
+    items:[
+      {n:1, c:"b", de:"Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen und Tagungen."},
+      {n:2, c:"h", de:"Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht. Diesmal steht das Thema Berufstätige Eltern im Mittelpunkt."},
+      {n:3, c:"e", de:"Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch beginnen zwei Malkurse für Kinder."},
+      {n:4, c:"c", de:"Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern lädt zu einem Informationsabend über den Ausbau ein."},
+      {n:5, c:"a", de:"Eine Bürgergruppe lädt zu einer öffentlichen Expertenbefragung zum Thema Arbeitsplätze am Frankfurter Flughafen ein."}
+    ]
+  },
+  {
+    id:"caroline-t2", title:"Caroline", level:"B1", sub:"Teile 2", type:"mcq", isPremium: false,
+    paragraphs: [
+      { de: "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite. Sie sind die Problemlöser im Kindergarten." },
+      { de: "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia-Computern installiert." },
+      { de: "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus." },
+      { de: "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend überflüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm." },
+      { de: "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte." }
+    ],
+    items:[
+      { n:1, c:"A", q:"Das Schulamt hat ein Projekt gestartet, bei dem", opts:[
         {k:"A", de:"Computer in Kindergärten aufgestellt werden."},
         {k:"B", de:"Computerspiele für Vierjährige entwickelt werden sollen."},
         {k:"C", de:"Kinder neue Farbdrucker ausprobieren sollen."}
-      ]
-    },
-    { n:2, c:"A", q:"Die Kinder",
-      opts:[
+      ]},
+      { n:2, c:"A", q:"Die Kinder", opts:[
         {k:"A", de:"hatten großen Spaß bei dem Projekt."},
         {k:"B", de:"wollten lieber draußen im Freien spielen."},
         {k:"C", de:"wussten nicht, wann sie ins Studio im Netz gehen sollten."}
-      ]
-    },
-    { n:3, c:"A", q:"Eltern fürchten, dass",
-      opts:[
+      ]},
+      { n:3, c:"A", q:"Eltern fürchten, dass", opts:[
         {k:"A", de:"der Computer ihren Kindern schadet."},
         {k:"B", de:"ihre Kinder nicht so früh aufstehen können."},
         {k:"C", de:"ihre Kinder vor dem Computer Angst haben."}
-      ]
-    },
-    { n:4, c:"C", q:"Die Erzieherinnen",
-      opts:[
+      ]},
+      { n:4, c:"C", q:"Die Erzieherinnen", opts:[
         {k:"A", de:"arbeiten jeden Tag 15 bis 20 Minuten am Computer."},
         {k:"B", de:"spielen immer mit zwei oder drei Kindern am Computer."},
         {k:"C", de:"wählen für die Kinder die Software aus."}
-      ]
-    },
-    { n:5, c:"B", q:"Wenn die Kinder am Computer sitzen, dann",
-      opts:[
+      ]},
+      { n:5, c:"B", q:"Wenn die Kinder am Computer sitzen, dann", opts:[
         {k:"A", de:"gibt es häufig Streit."},
         {k:"B", de:"hilft ein Kind dem anderen."},
         {k:"C", de:"können sich die meisten nicht lange konzentrieren."}
-      ]
-    }
-  ]
-},
-{
-  id:"caroline-t3", title:"Caroline", level:"B1", sub:"Teile 3", type:"matching", isPremium: false,
-  ads:[
-    {k:"A", t:"Museum der Stadt Füssen", de:"Lechhalde 3 · 87629 Füssen"},
-    {k:"B", t:"Franziskaner Stüberl", de:"Gutbürgerliche Allgäuer und Bayerische Küche"},
-    {k:"C", t:"Sennerei-Genossenschaft Bayern", de:"Allgäuer Emmentaler, Bergkäse"},
-    {k:"D", t:"Sprachen lernen & Leute treffen", de:"Bildungsurlaub für Erwachsene"},
-    {k:"E", t:"Jahreskonzert Füssen", de:"Mozart, Klavierkonzert"},
-    {k:"F", t:"Das Heimatmuseum Füssen", de:"Montag bis Freitag geöffnet"},
-    {k:"G", t:"bonCas", de:"Spezialitätenkäserei"},
-    {k:"H", t:"Alfa Sprachreisen", de:"High-School-Programme für 12- bis 18-Jährige"},
-    {k:"I", t:"Amadeus", de:"Cafe, Bistro"},
-    {k:"J", t:"Free-System", de:"Englisch, Französisch, Intensivkurse"},
-    {k:"K", t:"Ritterstub’n", de:"Fischspezialitäten"},
-    {k:"L", t:"Alpenrösle", de:"Hotel-Restaurant"}
-  ],
-  items:[
-    {n:1, c:"E", de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen."},
-    {n:2, c:"F", de:"Sie sind in Füssen und wollen am Montag ins Museum gehen."},
-    {n:3, c:"B", de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen."},
-    {n:4, c:"K", de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet."},
-    {n:5, c:"C", de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen."},
-    {n:6, c:"X", de:"Sie möchten einen Deutschkurs in Wien besuchen."},
-    {n:7, c:"H", de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen."},
-    {n:8, c:"X", de:"Sie interessieren sich für einen Sprachkurs auf CD."},
-    {n:9, c:"X", de:"Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt."},
-    {n:10, c:"L", de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten."}
-  ]
-},
-{
-  id:"caroline-sp1", title:"Caroline", level:"B1", sub:"Sprach 1", type:"sprach1", isPremium: false,
-  text: "Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack",
-  items:[
-    {n:1, c:"erzählt", opts:["erzähle","erzählen","erzählt"]},
-    {n:2, c:"dieses", opts:["diese","diesen","dieses"]},
-    {n:3, c:"aber", opts:["aber","obwohl","sondern"]},
-    {n:4, c:"für", opts:["an","für","vor"]},
-    {n:5, c:"wenn", opts:["als","wann","wenn"]},
-    {n:6, c:"schon", opts:["wenn","ganz","schon"]},
-    {n:7, c:"jetzt", opts:["früher","jetzt","seit"]},
-    {n:8, c:"Unterschiede", opts:["Unterschied","Unterschiede","Unterschieden"]},
-    {n:9, c:"müssen", opts:["brauchen","haben","müssen"]},
-    {n:10, c:"dem", opts:["dem","den","der"]}
-  ]
-},
-{
-  id:"caroline-sp2", title:"Caroline", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: false,
-  wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
-  text: "QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……",
-  items:[{n:1, c:"einmal"},{n:2, c:"nur"},{n:3, c:"können"},{n:4, c:"wenn"},{n:5, c:"statt"},{n:6, c:"ganz"},{n:7, c:"bei"},{n:8, c:"garantieren"},{n:9, c:"Über"},{n:10, c:"machen"}]
-},
-
-// ================= VERA (Teile 1 فقط) =================
-{
-  id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
-  options:[
-    {k:"a", de:"Abendwanderungen ab 89 Euro"},
-    {k:"b", de:"Ausflugsziele für Literaturinteressierte"},
-    {k:"c", de:"Hinweis für Besucher der Bregenzer Festspiele"},
-    {k:"d", de:"Ihre Zeitung folgt Ihnen in den Urlaub"},
-    {k:"e", de:"Laute Musik stört den Nachbarn"},
-    {k:"f", de:"Musikveranstaltungen am Nachmittag"},
-    {k:"g", de:"Neue Zeitung für Ihre Urlaubsplanung"},
-    {k:"h", de:"Rekord: 70.000 Besucher im Bücherdorf"},
-    {k:"i", de:"Schlechtes Wetter: Festspiele abgesagt"},
-    {k:"j", de:"Wandern ohne Gepäck"}
-  ],
-  items:[
-    {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen."},
-    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betriebe übernehmen den Gepäcktransport."},
-    {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin."},
-    {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher."},
-    {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten."}
-  ]
-}
+      ]}
+    ]
+  },
+  {
+    id:"caroline-t3", title:"Caroline", level:"B1", sub:"Teile 3", type:"matching", isPremium: false,
+    ads:[
+      {k:"A", t:"Museum der Stadt Füssen", de:"Lechhalde 3 · 87629 Füssen"},
+      {k:"B", t:"Franziskaner Stüberl", de:"Gutbürgerliche Allgäuer und Bayerische Küche"},
+      {k:"C", t:"Sennerei-Genossenschaft Bayern", de:"Allgäuer Emmentaler, Bergkäse"},
+      {k:"D", t:"Sprachen lernen & Leute treffen", de:"Bildungsurlaub für Erwachsene"},
+      {k:"E", t:"Jahreskonzert Füssen", de:"Mozart, Klavierkonzert"},
+      {k:"F", t:"Das Heimatmuseum Füssen", de:"Montag bis Freitag geöffnet"},
+      {k:"G", t:"bonCas", de:"Spezialitätenkäserei"},
+      {k:"H", t:"Alfa Sprachreisen", de:"High-School-Programme für 12- bis 18-Jährige"},
+      {k:"I", t:"Amadeus", de:"Cafe, Bistro"},
+      {k:"J", t:"Free-System", de:"Englisch, Französisch, Intensivkurse"},
+      {k:"K", t:"Ritterstub’n", de:"Fischspezialitäten"},
+      {k:"L", t:"Alpenrösle", de:"Hotel-Restaurant"}
+    ],
+    items:[
+      {n:1, c:"E", de:"Sie wollen am Wochenende gerne in ein Klavierkonzert gehen."},
+      {n:2, c:"F", de:"Sie sind in Füssen und wollen am Montag ins Museum gehen."},
+      {n:3, c:"B", de:"Sie sind in Süddeutschland im Urlaub und möchten gerne eine bayerische Spezialität essen."},
+      {n:4, c:"K", de:"Sie haben sich mit Bekannten zu einem Fischessen verabredet."},
+      {n:5, c:"C", de:"Sie sind in Bayern und wollen Käsespezialitäten einkaufen."},
+      {n:6, c:"X", de:"Sie möchten einen Deutschkurs in Wien besuchen."},
+      {n:7, c:"H", de:"Ihr 16 jähriger Sohn soll in den Ferien im Ausland Englisch lernen."},
+      {n:8, c:"X", de:"Sie interessieren sich für einen Sprachkurs auf CD."},
+      {n:9, c:"X", de:"Sie wollen, dass Ihre 10-jährige Tochter in den Ferien eine Fremdsprache lernt."},
+      {n:10, c:"L", de:"Eine Bekannte will ihren Geburtstag in einem Restaurant feiern und dort auch übernachten."}
+    ]
+  },
+  {
+    id:"caroline-sp1", title:"Caroline", level:"B1", sub:"Sprach 1", type:"sprach1", isPremium: false,
+    text: "Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack",
+    items:[
+      {n:1, c:"erzählt", opts:["erzähle","erzählen","erzählt"]}, {n:2, c:"dieses", opts:["diese","diesen","dieses"]},
+      {n:3, c:"aber", opts:["aber","obwohl","sondern"]}, {n:4, c:"für", opts:["an","für","vor"]},
+      {n:5, c:"wenn", opts:["als","wann","wenn"]}, {n:6, c:"schon", opts:["wenn","ganz","schon"]},
+      {n:7, c:"jetzt", opts:["früher","jetzt","seit"]}, {n:8, c:"Unterschiede", opts:["Unterschied","Unterschiede","Unterschieden"]},
+      {n:9, c:"müssen", opts:["brauchen","haben","müssen"]}, {n:10, c:"dem", opts:["dem","den","der"]}
+    ]
+  },
+  {
+    id:"caroline-sp2", title:"Caroline", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: false,
+    wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
+    text: "QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……",
+    items:[{n:1, c:"einmal"},{n:2, c:"nur"},{n:3, c:"können"},{n:4, c:"wenn"},{n:5, c:"statt"},{n:6, c:"ganz"},{n:7, c:"bei"},{n:8, c:"garantieren"},{n:9, c:"Über"},{n:10, c:"machen"}]
+  },
+  {
+    id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
+    options:[
+      {k:"a", de:"Abendwanderungen ab 89 Euro"}, {k:"b", de:"Ausflugsziele für Literaturinteressierte"},
+      {k:"c", de:"Hinweis für Besucher der Bregenzer Festspiele"}, {k:"d", de:"Ihre Zeitung folgt Ihnen in den Urlaub"},
+      {k:"e", de:"Laute Musik stört den Nachbarn"}, {k:"f", de:"Musikveranstaltungen am Nachmittag"},
+      {k:"g", de:"Neue Zeitung für Ihre Urlaubsplanung"}, {k:"h", de:"Rekord: 70.000 Besucher im Bücherdorf"},
+      {k:"i", de:"Schlechtes Wetter: Festspiele abgesagt"}, {k:"j", de:"Wandern ohne Gepäck"}
+    ],
+    items:[
+      {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen."},
+      {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betriebe übernehmen den Gepäcktransport."},
+      {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin."},
+      {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher."},
+      {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten."}
+    ]
+  }
 ];
 
 var EXAMS = __examsMain.concat(__examsPremium);
 
 // ==========================================
-// HOREN_EXAMS — دروس الاستماع (h1-h20)
+// HOREN_EXAMS
 // ==========================================
 var HOREN_EXAMS = [
   {
