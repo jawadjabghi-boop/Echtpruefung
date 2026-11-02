@@ -1,6 +1,19 @@
 // ==========================================
-// data-b1.js — الدروس + الترجمة (نسخة مصححة نهائية)
+// data-b1.js — الدروس + الترجمة + ربط Supabase (مصحح 100%)
 // ==========================================
+
+var WA = "212600000000";
+var wa = function(x) { return window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(x), "_blank"); };
+
+// 🔗 ربط Supabase (هنا كان المشكل)
+var supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
+var supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
+var sb = null;
+try {
+  if (typeof supabase !== 'undefined') {
+    sb = supabase.createClient(supabaseUrl, supabaseKey);
+  }
+} catch(e) { console.error("Supabase error:", e); }
 
 var LANGS = [
   { c:"ma", n:"الدارجة", f:"🇲🇦" }, { c:"ar", n:"العربية", f:"📜" },
@@ -23,9 +36,6 @@ var t = function(key, lang) {
   if (UI_TEXTS.en[key]) return UI_TEXTS.en[key];
   return key;
 };
-
-var WA = "212600000000";
-var wa = function(x) { return window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(x), "_blank"); };
 
 // ==========================================
 // SCHREIBEN_DATA
