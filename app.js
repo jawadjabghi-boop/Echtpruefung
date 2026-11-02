@@ -65,7 +65,7 @@ function App() {
   const [showHorenTrans, setShowHorenTrans] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30 * 60);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState(null); // 📱 PWA Install
+  const [deferredPrompt, setDeferredPrompt] = useState(null); // 📱 PWA Install State
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -82,7 +82,7 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // 📱 تفعيل زر تحميل التطبيق (PWA)
+  // 📱 PWA Install Logic
   useEffect(() => {
     const handleBeforeInstallPrompt = (e) => {
       e.preventDefault();
@@ -93,7 +93,10 @@ function App() {
   }, []);
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) return;
+    if (!deferredPrompt) {
+      alert("لتثبيت التطبيق على هاتفك:\n\n1. اضغط على النقط الثلاثة (⋮) في أعلى المتصفح.\n2. اختر 'إضافة إلى الشاشة الرئيسية' (Add to Home screen).\n\n(إذا كنت تستعمل iPhone، اضغط على زر المشاركة في Safari ثم 'إضافة إلى الشاشة الرئيسية').");
+      return;
+    }
     deferredPrompt.prompt();
     await deferredPrompt.userChoice;
     setDeferredPrompt(null);
@@ -467,12 +470,10 @@ function App() {
         <div style={{ display: "flex", gap: 6 }}>
           <NotificationsBell userLang={userLang} />
           
-          {/* 📱 زر تحميل التطبيق (PWA) */}
-          {deferredPrompt && (
-            <button className="btnI" onClick={handleInstallClick} title="تحميل التطبيق" style={{ color: "var(--gold)", borderColor: "var(--gold)" }}>
-              📥
-            </button>
-          )}
+          {/* 📱 زر تحميل التطبيق (PWA) - يظهر دائماً */}
+          <button className="btnI" onClick={handleInstallClick} title="تحميل التطبيق" style={{ color: "var(--gold)", borderColor: "var(--gold)" }}>
+            📥
+          </button>
 
           <button className="btnI" onClick={() => setDark(!dark)}>
             {dark ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
