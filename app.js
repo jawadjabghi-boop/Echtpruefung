@@ -1,5 +1,5 @@
 // ==========================================
-// app.js — التطبيق الرئيسي (النسخة النهائية والمصححة)
+// app.js — التطبيق الرئيسي (النسخة النهائية والمصححة + جلسة وحدة)
 // ==========================================
 
 var useState = React.useState;
@@ -115,6 +115,37 @@ function App() {
     }
   }, [user]);
 
+  // 🛡️ [هنا التعديل 1]: الجلسة الواحدة فقط (كل 30 ثانية)
+  useEffect(() => {
+    if (!user || user.isGuest || !user.id) return;
+    const deviceId = localStorage.getItem("ep_device_id");
+    if (!deviceId) return;
+    const interval = setInterval(async () => {
+      try {
+        const { data } = await sb.from('profiles').select('active_device_id, is_blocked').eq('id', user.id).single();
+        if (data) {
+          if (data.is_blocked) {
+            alert("⚠️ تم حظر حسابك.");
+            localStorage.removeItem("ep_user");
+            setUser(null);
+            setIsBlocked(true);
+            await sb.auth.signOut();
+            return;
+          }
+          if (data.active_device_id && data.active_device_id !== deviceId) {
+            alert("⚠️ تم تسجيل الدخول من هاتف آخر. تم إنهاء الجلسة السابقة.");
+            localStorage.removeItem("ep_user");
+            setUser(null);
+            setIsPaid(false);
+            setTrialActive(false);
+            await sb.auth.signOut();
+          }
+        }
+      } catch (e) { /* silent */ }
+    }, 30000);
+    return () => clearInterval(interval);
+  }, [user]);
+
   useEffect(() => {
     if (!trialActive || !trialEndsAt) { setTrialCountdown(""); return; }
     const update = () => {
@@ -142,6 +173,7 @@ function App() {
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
 
+  // 🛡️ [هنا التعديل 2]: إصلاح مشكل User already registered
   const handleAuth = async (e) => {
     e.preventDefault();
     const uniqueName = e.target.unique_name.value.trim();
@@ -155,30 +187,50 @@ function App() {
     }
 
     const email = `${uniqueName}@echt.com`;
-    const { data, error } = await sb.auth.signInWithPassword({ email, password: uniqueCode });
+    
+    // 1. نحاولو ندخلو (Sign In) أولاً
+    const { data: signInData, error: signInError } = await sb.auth.signInWithPassword({ email, password: uniqueCode });
 
-    if (error) {
-      const { data: newData, error: newError } = await sb.auth.signUp({ email, password: uniqueCode });
-      if (newError) return alert("مشكل: " + newError.message);
-      if (!newData?.user) return alert("ما قدرناش نصاوبو الحساب. تحقق من إعدادات Supabase.");
-
-      const { error: upsertError } = await sb.from('profiles').upsert([{
-        id: newData.user.id,
-        email: uniqueName,
-        unique_name: uniqueName,
-        is_paid: false,
-        active_device_id: deviceId,
-        is_blocked: false,
-        trial_started_at: new Date().toISOString()
-      }], { onConflict: 'id' });
-      if (upsertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + upsertError.message);
-
-      const userObj = { ...newData.user, name: uniqueName, isGuest: false };
-      setUser(userObj);
-      localStorage.setItem("ep_user", JSON.stringify(userObj));
+    if (signInError) {
+      // 2. إلا كان الخطأ هو "Invalid login credentials" (يعني الحساب ما كاينش)
+      if (signInError.message.includes('Invalid login credentials')) {
+        
+        // 3. نحاولو نسجلو (Sign Up) حساب جديد
+        const { data: signUpData, error: signUpError } = await sb.auth.signUp({ email, password: uniqueCode });
+        
+        if (signUpError) {
+          // إلا كان الحساب كاين ولكن الباسورد غلط
+          if (signUpError.message.includes('User already registered')) {
+            return alert("⚠️ هذا الاسم مستعمل من قبل. يرجى التأكد من كلمة المرور أو اختيار اسم آخر.");
+          }
+          return alert("مشكل فـ التسجيل: " + signUpError.message);
+        }
+        
+        if (!signUpData?.user) return alert("ما قدرناش نصاوبو الحساب.");
+        
+        const { error: upsertError } = await sb.from('profiles').upsert([{
+          id: signUpData.user.id,
+          email: uniqueName,
+          unique_name: uniqueName,
+          is_paid: false,
+          active_device_id: deviceId,
+          is_blocked: false,
+          trial_started_at: new Date().toISOString()
+        }], { onConflict: 'id' });
+        
+        if (upsertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + upsertError.message);
+        
+        const userObj = { ...signUpData.user, name: uniqueName, isGuest: false };
+        setUser(userObj);
+        localStorage.setItem("ep_user", JSON.stringify(userObj));
+        
+      } else {
+        return alert("مشكل فـ الدخول: " + signInError.message);
+      }
     } else {
-      await sb.from('profiles').update({ active_device_id: deviceId }).eq('id', data.user.id);
-      const userObj = { ...data.user, name: uniqueName, isGuest: false };
+      // 4. تسجيل الدخول نجح
+      await sb.from('profiles').update({ active_device_id: deviceId }).eq('id', signInData.user.id);
+      const userObj = { ...signInData.user, name: uniqueName, isGuest: false };
       setUser(userObj);
       localStorage.setItem("ep_user", JSON.stringify(userObj));
     }
@@ -417,7 +469,6 @@ function App() {
 
         {view === "horen" && (
           <div>
-            {/* هنا الإصلاح: إلا كان B2 كيبان قريباً ديريكت بلا بوابة */}
             {level === "B2" ? (
                <div className="card" style={{ textAlign: "center", padding: 40, marginTop: 20 }}><h2>{t("coming_soon", userLang)}</h2></div>
             ) : !showHorenLessons ? (
@@ -433,7 +484,6 @@ function App() {
                     <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>{t("back_btn", userLang)}</button>
                   </div>
                 </div>
-                {/* هنا الإصلاح: كنفلترو الدروس حسب المستوى */}
                 {HOREN_EXAMS.filter(ex => ex.level === level).map(ex => (
                   <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
                 ))}
@@ -442,7 +492,6 @@ function App() {
           </div>
         )}
 
-        {/* هنا الإصلاح: زدنا level و setLevel لصفحة الكتابة */}
         {view === "schreiben" && <SchreibenView userLang={userLang} dark={dark} setDark={setDark} isPaid={isPaid} isAdmin={isAdmin} trialActive={trialActive} level={level} setLevel={setLevel} />}
         
         {view === "admin" && isAdmin && <AdminPanel userLang={userLang} onClose={() => go('home')} />}
