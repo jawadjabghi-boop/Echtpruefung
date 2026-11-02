@@ -188,7 +188,7 @@ function App() {
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
 
-  // 🛡️ إصلاح مشكل الدخول + إضافة بصمة الهاتف + رسالة الدعم
+  // 🛡️ إصلاح مشكل الدخول + إضافة بصمة الهاتف
   const handleAuth = async (e) => {
     e.preventDefault();
     const uniqueName = e.target.unique_name.value.trim();
@@ -225,14 +225,22 @@ function App() {
         if (signUpError) {
           const errMsg = signUpError.message || "";
           
-          // 👇 هنا كنمسكو أي خطأ ديال السيرفر (Database error أو trial_already_used) وكنعطيو رسالة الدعم
+          // 👇 هنا التعديل ديال الرسالة (مترجمة ونقية بلا أي ذكر للإيميل ولا الهاتف)
           if (errMsg.includes('trial_already_used') || errMsg.includes('Database error') || errMsg.includes('missing_fingerprint')) {
-            // 👇 هنا كنحددو رقم الهاتف والرسالة الجاهزة
-            const phoneNumber = "212600000000"; // ⬅️ بدل هاد الرقم برقم الواتساب ديالك
-            const prefilledText = encodeURIComponent("مرحباً، لقد استعملت التجربة المجانية في تطبيق EchtPrüfung وأرغب في الاشتراك في النسخة الكاملة (Pro). الرجاء تزويدي بتفاصيل الدفع.");
-            const waLink = `https://wa.me/${phoneNumber}?text=${prefilledText}`;
             
-            return alert("⚠️ لقد تم استعمال هذا الهاتف من قبل للاستفادة من التجربة المجانية.\n\nلا يمكن إنشاء حساب جديد من نفس الهاتف.\n\nللاشتراك في النسخة الكاملة، يرجى التواصل مع الدعم الفني عبر واتساب:\n" + waLink);
+            const msgMap = {
+              ar: "لقد استفدت من التجربة المجانية ولديك حساب بالفعل.",
+              ma: "راك استافدتي من التجربة المجانية وكتوفر على حساب بالفعل.",
+              de: "Du hast bereits von der kostenlosen Testversion profitiert und hast ein Konto.",
+              en: "You have already benefited from the free trial and have an account.",
+              fr: "Vous avez déjà bénéficié de l'essai gratuit et possédez un compte.",
+              es: "Ya has aprovechado la prueba gratuita y tienes una cuenta.",
+              tr: "Zaten ücretsiz deneme sürümünden yararlandınız ve bir hesabınız var.",
+              fa: "شما قبلاً از نسخه آزمایشی رایگان استفاده کرده‌اید و حساب دارید."
+            };
+            
+            // كيرجع الرسالة حسب اللغة اللي ختارها المستخدم، وإلا كيرجع بالعربية
+            return alert(msgMap[userLang] || msgMap['ar']);
           }
           
           if (errMsg.includes('User already registered')) {
