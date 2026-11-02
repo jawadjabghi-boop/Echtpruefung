@@ -130,7 +130,7 @@ function App() {
     }
   }, [user]);
 
-  // 🛡️ [التعديل 1]: الجلسة الواحدة فقط (كل 30 ثانية)
+  // 🛡️ الجلسة الواحدة فقط (كل 30 ثانية)
   useEffect(() => {
     if (!user || user.isGuest || !user.id) return;
     const deviceId = localStorage.getItem("ep_device_id");
@@ -188,7 +188,7 @@ function App() {
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
 
-  // 🛡️ [التعديل 2]: إصلاح مشكل User already registered + إضافة بصمة الهاتف
+  // 🛡️ إصلاح مشكل الدخول + إضافة بصمة الهاتف + رسالة الدعم
   const handleAuth = async (e) => {
     e.preventDefault();
     const uniqueName = e.target.unique_name.value.trim();
@@ -223,14 +223,20 @@ function App() {
         });
         
         if (signUpError) {
-          // إلا كان السيرفر رفض التسجيل حيت البصمة مستعملة
-          if (signUpError.message.includes('trial_already_used')) {
-            return alert("⚠️ هاد الهاتف استافد من التجربة المجانية من قبل. يمكنك الاشتراك للحصول على الوصول الكامل.");
+          const errMsg = signUpError.message || "";
+          
+          // 👇 هنا كنمسكو أي خطأ ديال السيرفر (Database error أو trial_already_used) وكنعطيو رسالة الدعم
+          if (errMsg.includes('trial_already_used') || errMsg.includes('Database error') || errMsg.includes('missing_fingerprint')) {
+            const waLink = "https://wa.me/212600000000"; // 👈 بدل هذا الرقم برقم الواتساب ديالك
+            return alert("⚠️ لقد استفدت من التجربة المجانية من قبل على هذا الهاتف.\n\nللاشتراك في النسخة الكاملة، يرجى التواصل مع الدعم الفني عبر واتساب:\n" + waLink);
           }
-          if (signUpError.message.includes('User already registered')) {
+          
+          if (errMsg.includes('User already registered')) {
             return alert("⚠️ هذا الاسم مستعمل من قبل. يرجى التأكد من كلمة المرور أو اختيار اسم آخر.");
           }
-          return alert("مشكل فـ التسجيل: " + signUpError.message);
+          
+          // أي خطأ آخر
+          return alert("⚠️ حدث خطأ أثناء التسجيل. يرجى المحاولة مرة أخرى.");
         }
         
         if (!signUpData?.user) return alert("ما قدرناش نصاوبو الحساب.");
