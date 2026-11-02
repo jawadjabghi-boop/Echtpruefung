@@ -227,8 +227,12 @@ function App() {
           
           // 👇 هنا كنمسكو أي خطأ ديال السيرفر (Database error أو trial_already_used) وكنعطيو رسالة الدعم
           if (errMsg.includes('trial_already_used') || errMsg.includes('Database error') || errMsg.includes('missing_fingerprint')) {
-            const waLink = "https://wa.me/212600000000"; // 👈 بدل هذا الرقم برقم الواتساب ديالك
-            return alert("⚠️ لقد استفدت من التجربة المجانية من قبل على هذا الهاتف.\n\nللاشتراك في النسخة الكاملة، يرجى التواصل مع الدعم الفني عبر واتساب:\n" + waLink);
+            // 👇 هنا كنحددو رقم الهاتف والرسالة الجاهزة
+            const phoneNumber = "212600000000"; // ⬅️ بدل هاد الرقم برقم الواتساب ديالك
+            const prefilledText = encodeURIComponent("مرحباً، لقد استعملت التجربة المجانية في تطبيق EchtPrüfung وأرغب في الاشتراك في النسخة الكاملة (Pro). الرجاء تزويدي بتفاصيل الدفع.");
+            const waLink = `https://wa.me/${phoneNumber}?text=${prefilledText}`;
+            
+            return alert("⚠️ لقد تم استعمال هذا الهاتف من قبل للاستفادة من التجربة المجانية.\n\nلا يمكن إنشاء حساب جديد من نفس الهاتف.\n\nللاشتراك في النسخة الكاملة، يرجى التواصل مع الدعم الفني عبر واتساب:\n" + waLink);
           }
           
           if (errMsg.includes('User already registered')) {
