@@ -1,11 +1,26 @@
 // ==========================================
-// app.js — التطبيق الرئيسي (النسخة النهائية والمصححة + جلسة وحدة)
+// app.js — التطبيق الرئيسي (النسخة النهائية والمحمية)
 // ==========================================
 
 var useState = React.useState;
 var useEffect = React.useEffect;
 var useRef = React.useRef;
 var Component = React.Component;
+
+// 🛡️ دالة حساب بصمة الهاتف (باش نمنعو تكرار التجربة)
+async function getDeviceFingerprint() {
+  try {
+    const parts = [
+      navigator.userAgent,
+      navigator.language,
+      screen.width + 'x' + screen.height,
+      screen.colorDepth,
+      new Date().getTimezoneOffset()
+    ];
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(parts.join('|')));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  } catch (e) { return null; }
+}
 
 var ErrorBoundary = class extends Component {
   constructor(p) { super(p); this.state = { err: null }; }
@@ -115,7 +130,7 @@ function App() {
     }
   }, [user]);
 
-  // 🛡️ [هنا التعديل 1]: الجلسة الواحدة فقط (كل 30 ثانية)
+  // 🛡️ [التعديل 1]: الجلسة الواحدة فقط (كل 30 ثانية)
   useEffect(() => {
     if (!user || user.isGuest || !user.id) return;
     const deviceId = localStorage.getItem("ep_device_id");
@@ -173,7 +188,7 @@ function App() {
 
   const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
 
-  // 🛡️ [هنا التعديل 2]: إصلاح مشكل User already registered
+  // 🛡️ [التعديل 2]: إصلاح مشكل User already registered + إضافة بصمة الهاتف
   const handleAuth = async (e) => {
     e.preventDefault();
     const uniqueName = e.target.unique_name.value.trim();
@@ -195,11 +210,23 @@ function App() {
       // 2. إلا كان الخطأ هو "Invalid login credentials" (يعني الحساب ما كاينش)
       if (signInError.message.includes('Invalid login credentials')) {
         
-        // 3. نحاولو نسجلو (Sign Up) حساب جديد
-        const { data: signUpData, error: signUpError } = await sb.auth.signUp({ email, password: uniqueCode });
+        // 3. نحسبو بصمة الهاتف ونحاولو نسجلو (Sign Up) حساب جديد
+        const fingerprint = await getDeviceFingerprint();
+        if (!fingerprint) return alert("⚠️ ما قدرناش نتعرفو على الجهاز. جرب متصفح آخر.");
+
+        const { data: signUpData, error: signUpError } = await sb.auth.signUp({ 
+          email, 
+          password: uniqueCode,
+          options: {
+            data: { fingerprint: fingerprint } // 👈 كنصيفطو البصمة للسيرفر
+          }
+        });
         
         if (signUpError) {
-          // إلا كان الحساب كاين ولكن الباسورد غلط
+          // إلا كان السيرفر رفض التسجيل حيت البصمة مستعملة
+          if (signUpError.message.includes('trial_already_used')) {
+            return alert("⚠️ هاد الهاتف استافد من التجربة المجانية من قبل. يمكنك الاشتراك للحصول على الوصول الكامل.");
+          }
           if (signUpError.message.includes('User already registered')) {
             return alert("⚠️ هذا الاسم مستعمل من قبل. يرجى التأكد من كلمة المرور أو اختيار اسم آخر.");
           }
