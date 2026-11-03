@@ -161,21 +161,21 @@
 <body>
 <div id="root"></div>
 
-<!-- نظام كشف الأخطاء باش ما تبقاش الشاشة بيضاء -->
+<!-- كود كاشف الأخطاء -->
 <script>
   function showFatalError(msg, url, line, col, error) {
     const root = document.getElementById('root');
-    if (root) {
+    if (root && root.innerHTML === '') {
       root.innerHTML = `
         <div style="padding: 24px; margin: 16px; background: #FEE2E2; border: 2px solid #B91C1C; border-radius: 16px; color: #7F1D1D; font-family: 'Cairo', sans-serif; direction: rtl; text-align: right; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-          <h2 style="margin-top: 0; display: flex; align-items: center; gap: 8px;">⚠️ وقع خطأ في التطبيق!</h2>
+          <h2 style="margin-top: 0; display: flex; align-items: center; gap: 8px;">⚠️ وقع خطأ!</h2>
           <p style="font-weight: bold; font-size: 1.1em;">${msg}</p>
           <p style="font-size: 0.9em; margin-bottom: 4px;"><strong>الملف:</strong> ${url || 'غير معروف'}</p>
           <p style="font-size: 0.9em; margin-bottom: 16px;"><strong>السطر:</strong> ${line || 'غير معروف'}:${col || ''}</p>
           <div style="background: #FFF; padding: 12px; border-radius: 8px; overflow-x: auto; direction: ltr; text-align: left; border: 1px solid #FCA5A5;">
             <pre style="margin: 0; font-family: monospace; font-size: 0.85em; color: #B91C1C;">${error ? error.stack : 'لا توجد تفاصيل إضافية'}</pre>
           </div>
-          <p style="margin-top: 16px; font-size: 0.9em; color: #B91C1C;">💡 <b>نصيحة:</b> هاد الخطأ كيعني أن كاين شي مشكل فالكود. تأكد من ترتيب الملفات فـ index.html وأنك نسخت الكود كامل بلا ما تنقص شي حاجة.</p>
+          <p style="margin-top: 16px; font-size: 0.9em; color: #B91C1C;">💡 صيفط هاد الرسالة للمبرمج باش يصلح المشكل.</p>
         </div>
       `;
     }
@@ -185,18 +185,40 @@
     showFatalError(msg, url, line, col, error);
     return false;
   };
-  window.onunhandledrejection = function(event) {
-    showFatalError('Unhandled Promise Rejection: ' + (event.reason ? event.reason.message : 'Unknown error'), '', '', '', event.reason);
-  };
 </script>
 
-<!-- تحميل الملفات ديال الداتا والواجهات -->
-<script type="text/babel" src="data-b1.js"></script>
-<script type="text/babel" src="data-b2.js"></script>
-<script type="text/babel" src="components.js"></script>
-<script type="text/babel" src="app.js"></script>
+<!-- ⚠️ تحميل ملفات الداتا كـ JavaScript عادي (بلا Babel) باش ما يوقعش مشكل الترتيب -->
+<script src="data-b1.js"></script>
+<script src="data-b2.js"></script>
 
-<!-- تسجيل Service Worker للتطبيق -->
+<!-- ⚠️ تحميل الواجهات والتطبيق بـ Babel، ولكن واحد ورا واحد -->
+<script type="text/babel">
+  // هاد الكود كيحمّل components.js ومن بعد app.js بالترتيب
+  function loadScript(src, callback) {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', src, false); // Synchronous = بالترتيب
+    xhr.send();
+    if (xhr.status === 200) {
+      const script = document.createElement('script');
+      script.type = 'text/babel';
+      script.textContent = xhr.responseText;
+      document.body.appendChild(script);
+      if (callback) callback();
+    } else {
+      showFatalError("ما قدرناش نقراو الملف: " + src, src, 0, 0, null);
+    }
+  }
+
+  try {
+    loadScript('components.js', function() {
+      loadScript('app.js');
+    });
+  } catch (e) {
+    showFatalError("مشكل فتحميل الملفات: " + e.message, '', 0, 0, e);
+  }
+</script>
+
+<!-- Service Worker -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
