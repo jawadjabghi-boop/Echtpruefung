@@ -1,52 +1,62 @@
 // ==========================================
-// security.js — Supabase + Constants + React Hooks
+// security.js — ملف الحماية الأساسي
+// كيمنع الكليك اليمين، اختصارات المطورين، والنسخ
 // ==========================================
 
-// ---------- Supabase ----------
-var supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
-var supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
-var sb = null;
-try {
-  if (typeof supabase !== 'undefined') {
-    sb = supabase.createClient(supabaseUrl, supabaseKey);
-  }
-} catch(e) { console.error("Supabase error:", e); }
+// 1. منع الكليك اليمين (Context Menu) فكاع التطبيق
+document.addEventListener('contextmenu', event => event.preventDefault());
 
-// ---------- WhatsApp ----------
-var WA = "212600000000";
-var wa = function(t) { return window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank"); };
+// 2. منع اختصارات لوحة المفاتيح (F12, Ctrl+Shift+I, Ctrl+U, إلخ)
+document.addEventListener('keydown', (event) => {
+    // منع F12
+    if (event.key === 'F12' || event.keyCode === 123) {
+        event.preventDefault();
+        return false;
+    }
+    // منع Ctrl+Shift+I (أدوات المطورين)
+    if (event.ctrlKey && event.shiftKey && (event.key === 'I' || event.key === 'i' || event.keyCode === 73)) {
+        event.preventDefault();
+        return false;
+    }
+    // منع Ctrl+Shift+J (Console)
+    if (event.ctrlKey && event.shiftKey && (event.key === 'J' || event.key === 'j' || event.keyCode === 74)) {
+        event.preventDefault();
+        return false;
+    }
+    // منع Ctrl+U (عرض الكود المصدري)
+    if (event.ctrlKey && (event.key === 'U' || event.key === 'u' || event.keyCode === 85)) {
+        event.preventDefault();
+        return false;
+    }
+    // منع Ctrl+S (حفظ الصفحة)
+    if (event.ctrlKey && (event.key === 'S' || event.key === 's' || event.keyCode === 83)) {
+        event.preventDefault();
+        return false;
+    }
+});
 
-// ---------- React Hooks (globals) ----------
-var useState = React.useState;
-var useEffect = React.useEffect;
-var useRef = React.useRef;
+// 3. منع سحب وإفلات العناصر (Drag and Drop)
+document.addEventListener('dragstart', event => event.preventDefault());
 
-// ---------- Languages ----------
-var LANGS = [
-  { c:"ma", n:"الدارجة", f:"🇲🇦" }, { c:"ar", n:"العربية", f:"📜" },
-  { c:"hi", n:"हिन्दी", f:"🇮🇳" }, { c:"id", n:"Indonesia", f:"🇮🇩" },
-  { c:"tl", n:"Filipino", f:"🇵🇭" }, { c:"fa", n:"فارسی", f:"🇮🇷" },
-  { c:"sw", n:"Kiswahili", f:"🇰🇪" }, { c:"fr", n:"Français", f:"🇫🇷" },
-  { c:"en", n:"English", f:"🇬🇧" }, { c:"uz", n:"O'zbek", f:"🇺🇿" },
-  { c:"ne", n:"नेपाली", f:"🇳🇵" }
-];
+// 4. منع النسخ (Copy) إلا فـ بلاصات معينة بحال (textarea ديال الكتابة)
+document.addEventListener('copy', (event) => {
+    // واش المستخدم واقف فـ textarea ولا input؟ (باش يقدرو ينسخو اللي كتبو)
+    const activeElement = document.activeElement;
+    if (activeElement.tagName === 'TEXTAREA' || activeElement.tagName === 'INPUT') {
+        return; // خليه ينسخ عادي
+    }
+    event.preventDefault(); // إلا كان كيحاول ينسخ نص من التطبيق، منعو
+});
 
-// ---------- UI Texts ----------
-var UI_TEXTS = {
-  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة" },
-  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة" },
-  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ", search_placeholder:"विषय खोजें...", listen_title:"सुनने के पाठ", listen_desc:"यहां आपको सभी सुनने के पाठ मिलेंगे। सुनना शुरू करने और सवालों के जवाब देने के लिए बटन दबाएं।", gap_num:"रिक्त स्थान", choose_word_gap:"रिक्त स्थान के लिए शब्द चुनें", story_memo:"याद रखने के लिए कहानी", check_btn:"जांचें", next_btn:"अगला", back_btn:"वापस", reset_btn:"रीसेट", coming_soon:"जल्द आ रहा है...", settings:"सेटिंग्स", change_lang:"भाषा बदलें", text_size:"पाठ का आकार", reset_size:"मूल आकार पर लौटें", logout:"लॉग आउट", whatsapp:"व्हाट्सएप", lang_note:"आपके द्वारा चुनी गई भाषा पूरे ऐप में रहेगी", or:"या", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ उत्तर नहीं दिया", the_answer:"उत्तर", b1_level:"स्तर B1", b2_level:"स्तर B2", side_menu:"साइड मेनू", ai_correct:"✨ AI जाँच", trans_text:"पाठ अनुवाद", trans_task:"कार्य अनुवाद", show:"दिखाएं", hide:"छिपाएं", words_count:"शब्द" },
-  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons", search_placeholder:"Search for a topic...", listen_title:"Listening Lessons", listen_desc:"Here you will find all listening lessons. Click the button to start listening and solving questions.", gap_num:"Gap", choose_word_gap:"Choose word for gap", story_memo:"Story to memorize", check_btn:"Check", next_btn:"Next", back_btn:"Back", reset_btn:"Reset", coming_soon:"Coming soon...", settings:"Settings", change_lang:"Change Language", text_size:"Text Size", reset_size:"Reset to original size", logout:"Logout", whatsapp:"WhatsApp", lang_note:"The language you choose will remain with you throughout the app", or:"or", correct:"✓ Correct", wrong:"✗ Wrong", no_answer:"⚠️ No answer", the_answer:"Answer", b1_level:"Level B1", b2_level:"Level B2", side_menu:"Side Menu", ai_correct:"✨ AI Check", trans_text:"Translate Text", trans_task:"Translate Task", show:"Show", hide:"Hide", words_count:"Words" },
-  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute", search_placeholder:"Rechercher un sujet...", listen_title:"Leçons d'écoute", listen_desc:"Ici vous trouverez toutes les leçons d'écoute. Cliquez sur le bouton pour commencer à écouter et à répondre aux questions.", gap_num:"Espace", choose_word_gap:"Choisir le mot pour l'espace", story_memo:"Histoire à mémoriser", check_btn:"Vérifier", next_btn:"Suivant", back_btn:"Retour", reset_btn:"Réinitialiser", coming_soon:"Bientôt...", settings:"Paramètres", change_lang:"Changer de langue", text_size:"Taille du texte", reset_size:"Rétablir la taille d'origine", logout:"Déconnexion", whatsapp:"WhatsApp", lang_note:"La langue que vous choisissez restera avec vous tout au long de l'application", or:"ou", correct:"✓ Correct", wrong:"✗ Faux", no_answer:"⚠️ Sans réponse", the_answer:"Réponse", b1_level:"Niveau B1", b2_level:"Niveau B2", side_menu:"Menu Latéral", ai_correct:"✨ Correction IA", trans_text:"Traduire le texte", trans_task:"Traduire la tâche", show:"Afficher", hide:"Masquer", words_count:"Mots" },
-  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", banner_title:"Berlatih untuk ujian sebenarnya dan dapatkan!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"ID Unik Anda", login:"Masuk", guest:"Masuk sebagai tamu", support:"Dukungan Teknis", start_now:"Mulai Sekarang", listen_lessons:"Pelajaran Mendengarkan", search_placeholder:"Cari topik...", listen_title:"Pelajaran Mendengarkan", listen_desc:"Di sini Anda akan menemukan semua pelajaran mendengarkan. Klik tombol untuk mulai mendengarkan dan menjawab pertanyaan.", gap_num:"Celah", choose_word_gap:"Pilih kata untuk celah", story_memo:"Cerita untuk dihafal", check_btn:"Periksa", next_btn:"Berikutnya", back_btn:"Kembali", reset_btn:"Atur ulang", coming_soon:"Segera hadir...", settings:"Pengaturan", change_lang:"Ubah Bahasa", text_size:"Ukuran Teks", reset_size:"Kembalikan ke ukuran asli", logout:"Keluar", whatsapp:"WhatsApp", lang_note:"Bahasa yang Anda pilih akan tetap bersama Anda di seluruh aplikasi", or:"atau", correct:"✓ Benar", wrong:"✗ Salah", no_answer:"⚠️ Tidak ada jawaban", the_answer:"Jawaban", b1_level:"Tingkat B1", b2_level:"Tingkat B2", side_menu:"Menu Samping", ai_correct:"✨ Pemeriksaan AI", trans_text:"Terjemahkan Teks", trans_task:"Terjemahkan Tugas", show:"Tampilkan", hide:"Sembunyikan", words_count:"Kata" },
-  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbabasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Magsanay para sa tunay na pagsusulit at makuha ito!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Ang Iyong Natatanging ID", login:"Mag-login", guest:"Mag-login bilang bisita", support:"Teknikal na Suporta", start_now:"Simulan Ngayon", listen_lessons:"Mga Aralin sa Pakikinig", search_placeholder:"Maghanap ng paksa...", listen_title:"Mga Aralin sa Pakikinig", listen_desc:"Dito mo makikita ang lahat ng mga aralin sa pakikinig. I-click ang button upang simulan ang pakikinig at pagsagot sa mga tanong.", gap_num:"Puwang", choose_word_gap:"Pumili ng salita para sa puwang", story_memo:"Kuwento upang isaulo", check_btn:"Suriin", next_btn:"Susunod", back_btn:"Bumalik", reset_btn:"I-reset", coming_soon:"Malapit na...", settings:"Mga Setting", change_lang:"Palitan ang Wika", text_size:"Laki ng Teksto", reset_size:"I-reset sa orihinal na laki", logout:"Mag-logout", whatsapp:"WhatsApp", lang_note:"Ang wikang iyong pipiliin ay mananatili sa iyo sa buong app", or:"o", correct:"✓ Tama", wrong:"✗ Mali", no_answer:"⚠️ Walang sagot", the_answer:"Sagot", b1_level:"Antas B1", b2_level:"Antas B2", side_menu:"Side Menu", ai_correct:"✨ AI Check", trans_text:"Isalin ang Teksto", trans_task:"Isalin ang Gawain", show:"Ipakita", hide:"Itago", words_count:"Salita" },
-  fa: { welcome:"خوش آمدید", choose_lang:"زبان را انتخاب کنید", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", banner_title:"برای آزمون واقعی تمرین کنید و آن را دریافت کنید!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"شناسه منحصر به فرد شما", login:"ورود", guest:"ورود به عنوان مهمان", support:"پشتیبانی فنی", start_now:"شروع کنید", listen_lessons:"دروس شنیداری", search_placeholder:"جستجوی موضوع...", listen_title:"دروس شنیداری", listen_desc:"در اینجا تمام دروس شنیداری را پیدا خواهید کرد. برای شروع گوش دادن و پاسخ دادن به سوالات، دکمه را فشار دهید.", gap_num:"جای خالی", choose_word_gap:"کلمه را برای جای خالی انتخاب کنید", story_memo:"داستان برای حفظ کردن", check_btn:"بررسی", next_btn:"بعدی", back_btn:"بازگشت", reset_btn:"بازنشانی", coming_soon:"به زودی...", settings:"تنظیمات", change_lang:"تغییر زبان", text_size:"اندازه متن", reset_size:"بازنشانی به اندازه اصلی", logout:"خروج", whatsapp:"واتساپ", lang_note:"زبانی که انتخاب می کنید در طول برنامه با شما خواهد بود", or:"یا", correct:"✓ درست", wrong:"✗ اشتباه", no_answer:"⚠️ بدون پاسخ", the_answer:"پاسخ", b1_level:"سطح B1", b2_level:"سطح B2", side_menu:"منوی کناری", ai_correct:"✨ بررسی هوش مصنوعی", trans_text:"ترجمه متن", trans_task:"ترجمه وظیفه", show:"نمایش", hide:"پنهان کردن", words_count:"کلمه" },
-  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", banner_title:"Fanya mazoezi kwa mtihani halisi na uupate!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Kitambulisho chako cha kipekee", login:"Ingia", guest:"Ingia kama mgeni", support:"Msaada wa Kiufundi", start_now:"Anza Sasa", listen_lessons:"Masomo ya Kusikiliza", search_placeholder:"Tafuta mada...", listen_title:"Masomo ya Kusikiliza", listen_desc:"Hapa utapata masomo yote ya kusikiliza. Bonyeza kitufe ili kuanza kusikiliza na kujibu maswali.", gap_num:"Pengo", choose_word_gap:"Chagua neno kwa pengo", story_memo:"Hadithi ya kukariri", check_btn:"Angalia", next_btn:"Inayofuata", back_btn:"Rudi", reset_btn:"Weka upya", coming_soon:"Inakuja hivi karibuni...", settings:"Mipangilio", change_lang:"Badilisha Lugha", text_size:"Ukubwa wa Maandishi", reset_size:"Rejesha kwa ukubwa wa awali", logout:"Toka", whatsapp:"WhatsApp", lang_note:"Lugha unayochagua itabaki nawe katika programu yote", or:"au", correct:"✓ Sahihi", wrong:"✗ Mbaya", no_answer:"⚠️ Hakuna jibu", the_answer:"Jibu", b1_level:"Kiwango B1", b2_level:"Kiwango B2", side_menu:"Menyu ya Pembeni", ai_correct:"✨ Ukaguzi wa AI", trans_text:"Tafsiri Maandishi", trans_task:"Tafsiri Kazi", show:"Onyesha", hide:"Ficha", words_count:"Neno" },
-  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", banner_title:"Haqiqiy imtihonga tayyorlaning va uni oling!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Sizning noyob IDingiz", login:"Kirish", guest:"Mehmon sifatida kirish", support:"Texnik yordam", start_now:"Hozir boshlang", listen_lessons:"Tinglash darslari", search_placeholder:"Mavzu qidirish...", listen_title:"Tinglash darslari", listen_desc:"Bu yerda barcha tinglash darslarini topasiz. Tinglashni boshlash va savollarga javob berish uchun tugmani bosing.", gap_num:"Bo'sh joy", choose_word_gap:"Bo'sh joy uchun so'zni tanlang", story_memo:"Yodlash uchun hikoya", check_btn:"Tekshirish", next_btn:"Keyingi", back_btn:"Orqaga", reset_btn:"Qayta boshlash", coming_soon:"Tez orada...", settings:"Sozlamalar", change_lang:"Tilni o'zgartirish", text_size:"Matn hajmi", reset_size:"Asl hajmga qaytarish", logout:"Chiqish", whatsapp:"WhatsApp", lang_note:"Siz tanlagan til butun ilova davomida saqlanadi", or:"yoki", correct:"✓ To'g'ri", wrong:"✗ Noto'g'ri", no_answer:"⚠️ Javob berilmadi", the_answer:"Javob", b1_level:"B1 darajasi", b2_level:"B2 darajasi", side_menu:"Yon menyu", ai_correct:"✨ AI tekshiruvi", trans_text:"Matnni tarjima qilish", trans_task:"Vazifani tarjima qilish", show:"Ko'rsatish", hide:"Yashirish", words_count:"So'z" },
-  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"वास्तविक परीक्षाको लागि अभ्यास गर्नुहोस् र यो प्राप्त गर्नुहोस्!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"तपाईंको अद्वितीय आईडी", login:"लगइन", guest:"अतिथिको रूपमा प्रवेश", support:"प्राविधिक सहयोग", start_now:"अब सुरु गर्नुहोस्", listen_lessons:"सुन्ने पाठहरू", search_placeholder:"विषय खोज्नुहोस्...", listen_title:"सुन्ने पाठहरू", listen_desc:"यहाँ तपाईंले सबै सुन्ने पाठहरू पाउनुहुनेछ। सुन्न सुरु गर्न र प्रश्नहरूको जवाफ दिन बटन थिच्नुहोस्।", gap_num:"खाली ठाउँ", choose_word_gap:"खाली ठाउँको लागि शब्द छान्नुहोस्", story_memo:"सम्झनको लागि कथा", check_btn:"जाँच गर्नुहोस्", next_btn:"अर्को", back_btn:"फर्कनुहोस्", reset_btn:"रिसेट", coming_soon:"चाँडै आउँदैछ...", settings:"सेटिङ्हरू", change_lang:"भाषा परिवर्तन गर्नुहोस्", text_size:"पाठको आकार", reset_size:"मूल आकारमा फर्कनुहोस्", logout:"लगआउट", whatsapp:"WhatsApp", lang_note:"तपाईंले छान्नुभएको भाषा सम्पूर्ण एपमा रहनेछ", or:"वा", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ जवाफ दिइएन", the_answer:"जवाफ", b1_level:"स्तर B1", b2_level:"स्तर B2", side_menu:"साइड मेनु", ai_correct:"✨ AI जाँच", trans_text:"पाठ अनुवाद गर्नुहोस्", trans_task:"कार्य अनुवाद गर्नुहोस्", show:"देखाउनुहोस्", hide:"लुकाउनुहोस्", words_count:"शब्द" }
-};
+// 5. منع التحديد (Selection) ديال النص فكاع التطبيق (اختياري ولكن كيزيد فالحماية)
+// *ملاحظة: هادشي كيقدر يزعف المستخدمين حيت ما يقدروش يحددو النصوص باش يترجموها،
+// إلا بغيتي تخليه، حيد الـ // من السطرين اللي لتحت.
+/*
+const style = document.createElement('style');
+style.innerHTML = `* { -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; } textarea, input { user-select: text !important; }`;
+document.head.appendChild(style);
+*/
 
-// ---------- Translation Helper ----------
-var t = function(key, lang) {
-  return (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
-};
+// 6. رسالة تحذيرية فـ Console ديال المتصفح
+console.log("%c⛔ وقف!", "color: red; font-size: 40px; font-weight: bold;");
+console.log("%cهاد البلاصة مخصصة للمبرمجين. إلا كنتي كتحاول تسرق الكود، راه ماغاديش تربح والو.", "color: #FFCE00; font-size: 16px; font-weight: bold;");
