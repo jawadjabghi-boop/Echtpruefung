@@ -1,7 +1,6 @@
 // ==========================================
-// data-b1.js — الجزء 1 من 2
-// المتغيرات + اللغات + الترجمة + دروس الكتابة
-// + EXAMS (Alex + Rita من كود 1 — طبق الأصل)
+// data-b1.js — الجزء 1 من 3
+// Header + WA + supabase + LANGS + UI_TEXTS + t
 // ==========================================
 
 var WA = "212600000000";
@@ -39,8 +38,12 @@ var UI_TEXTS = {
   hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ", search_placeholder:"विषय खोजें...", listen_title:"सुनने के पाठ", listen_desc:"यहां आपको सभी सुनने के पाठ मिलेंगे। सुनना शुरू करने और सवालों के जवाब देने के लिए बटन दबाएं।", gap_num:"रिक्त स्थान", choose_word_gap:"रिक्त स्थान के लिए शब्द चुनें", story_memo:"याद रखने के लिए कहानी", check_btn:"जांचें", next_btn:"अगला", back_btn:"वापस", reset_btn:"रीसेट", coming_soon:"जल्द आ रहा है...", settings:"सेटिंग्स", change_lang:"भाषा बदलें", text_size:"पाठ का आकार", reset_size:"मूल आकार पर लौटें", logout:"लॉग आउट", whatsapp:"व्हाट्सएप", lang_note:"आपके द्वारा चुनी गई भाषा पूरे ऐप में रहेगी", or:"या", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ उत्तर नहीं दिया", the_answer:"उत्तर", b1_level:"स्तर B1", b2_level:"स्तर B2", side_menu:"साइड मेनू", ai_correct:"✨ AI जाँच", trans_text:"पाठ अनुवाद", trans_task:"कार्य अनुवाद", show:"दिखाएं", hide:"छिपाएं", words_count:"शब्द", locked:"बंद", upgrade_pro:"Pro में अपग्रेड करें", trial_active:"मुफ़्त परीक्षण सक्रिय", trial_ended:"परीक्षण समाप्त", wa_upgrade_msg:"नमस्ते, मैं सभी पाठों को अनलॉक करने के लिए Pro में अपग्रेड करना चाहता हूं", admin_panel:"एडमिन पैनल", notifications:"सूचनाएं", block:"ब्लॉक", unblock:"अनब्लॉक", mark_paid:"भुगतान के रूप में चिह्नित करें", mark_unpaid:"अवैतनिक के रूप में चिह्नित करें", save:"सहेजें", cancel:"रद्द करें", users:"उपयोगकर्ता", name:"नाम", code:"कोड", status:"स्थिति", paid:"भुगतान किया", blocked:"अवरुद्ध", actions:"कार्रवाई", send_notification:"सूचना भेजें", title_ar:"शीर्षक", message_ar:"संदेश", no_notifications:"अभी तक कोई सूचना नहीं", unique_name_placeholder:"अद्वितीय नाम", unique_code_placeholder:"अद्वितीय कोड", login_or_register:"लॉगिन / रजिस्टर", account_blocked:"आपका खाता ब्लॉक कर दिया गया है", contact_support:"तकनीकी सहायता से संपर्क करें", please_wait:"लोड हो रहा है...", results:"परिणाम", score:"स्कोर", date:"तारीख", search_users:"उपयोगकर्ता खोजें...", delete_notif:"हटाएं", confirm_delete_notif:"क्या आप वाकई इस सूचना को हटाना चाहते हैं?", sent_success:"सफलतापूर्वक भेजा गया!", fill_all_fields:"कृपया सभी फ़ील्ड भरें", sending:"भेज रहा है...", previous_notifs:"पिछली सूचनाएं", new_notif:"नई सूचना भेजें", active:"सक्रिय", inactive:"निष्क्रिय" }
 };
 
-var t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
-
+var t = function(key, lang) {
+  return (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
+};
+// ==========================================
+// SCHREIBEN_DATA — دروس الكتابة
+// ==========================================
 var SCHREIBEN_DATA = [
   {
     id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
@@ -49,16 +52,18 @@ var SCHREIBEN_DATA = [
       ar: `عزيزي/عزيزتي...\n\nعندي ليك مفاجأة زوينة. تخيل شنو عرض عليا عمي. عيط ليا نهار السبت. عندو دار كبيرة ديال العطلة في الغابة السوداء (Schwarzwald). نقدر ناخد الدار فهاد العطلة. ونقدر نجيب معايا حتى صحابي! واش هادشي ماشي فكرة زوينة لينا؟ نقدر ونتجمعو تما كاملين. أنت، والديك وصحابك، وأنا مع عائلتي وصحابي. غادي نفرح بزاف يلا صدقات هاد القضية. عفاك جاوبني في أقرب وقت باش نقدر وخططو لكشي. عطلة في الغابة السوداء - غتكون رائعة!\n\nتحياتي القلبية\nبيترا`,
       ma: `عزيزي/عزيزتي...\n\nعندي ليك مفاجأة زوينة. تخيل شنو عرض عليا عمي. عيط ليا نهار السبت. عندو دار كبيرة ديال العطلة في الغابة السوداء (Schwarzwald). نقدر ناخد الدار فهاد العطلة. ونقدر نجيب معايا حتى صحابي! واش هادشي ماشي فكرة زوينة لينا؟ نقدر ونتجمعو تما كاملين. أنت، والديك وصحابك، وأنا مع عائلتي وصحابي. غادي نفرح بزاف يلا صدقات هاد القضية. عفاك جاوبني في أقرب وقت باش نقدر وخططو لكشي. عطلة في الغابة السوداء - غتكون رائعة!\n\nتحياتي القلبية\nبيترا`,
       en: `Dear...\n\nI have a great surprise. Imagine what my uncle offered me. He called me on Saturday. He has a big holiday house in the Black Forest. I can have the house for the holidays for free. I can also bring friends! Wouldn't that be something for us? We could all meet there. You, your parents and friends, and me with my family and my friends. I would be incredibly happy if that would work out. Please write to me as soon as you can so that we can plan everything. Vacation in the Black Forest - that will be incredibly beautiful!\n\nBest regards\nPetra`,
-      fr: `Cher/Chère...\n\nJ'ai une super surprise. Imagine ce que mon oncle m'a proposé. Il m'a appelé samedi. Il a une grande maison de vacances dans la Forêt-Noire. Je peux avoir la maison pour les vacances gratuitement. Je peux aussi amener des amis ! Ne serait-ce pas quelque chose pour nous ? Nous pourrions tous nous y retrouver. Toi, tes parents et amis, et moi avec ma famille et mes amis. Je serais incroyablement heureux si cela pouvait fonctionner. S'il te plaît, écris-moi dès que tu peux pour que nous puissions tout planifier. Des vacances dans la Forêt-Noire - ce sera incroyablement beau !\n\nCordialement\nPetra`
+      fr: `Cher/Chère...\n\nJ'ai une super surprise. Imagine ce que mon oncle m'a proposé. Il m'a appelé samedi. Il a une grande maison de vacances dans la Forêt-Noire. Je peux avoir la maison pour les vacances gratuitement. Je peux aussi amener des amis ! Ne serait-ce pas quelque chose pour nous ? Nous pourrions tous nous y retrouver. Toi, tes parents et amis, et moi avec ma famille et mes amis. Je serais incroyablement heureux si cela pouvait fonctionner. S'il te plaît, écris-moi dès que tu peux pour que nous puissions tout planifier. Des vacances dans la Forêt-Noire - ce sera incroyablement beau !\n\nCordialement\nPetra`,
+      hi: `प्रिय...\n\nमेरे पास एक शानदार आश्चर्य है। सोचो मेरे चाचा ने मुझे क्या पेशकश की। उन्होंने मुझे शनिवार को फोन किया। ब्लैक फॉरेस्ट में उनका छुट्टियों का एक बड़ा घर है। मैं छुट्टियों के लिए घर मुफ्त में ले सकता हूं। मैं दोस्तों को भी ला सकता हूं! क्या यह हमारे लिए कुछ नहीं होगा? हम सब वहां मिल सकते हैं। तुम, तुम्हारे माता-पिता और दोस्त, और मैं अपने परिवार और अपने दोस्तों के साथ। अगर यह काम करेगा तो मैं अविश्वसनीय रूप से खुश होऊंगा। कृपया मुझे जल्द से जल्द लिखें ताकि हम सब कुछ योजना बना सकें। ब्लैक फॉरेस्ट में छुट्टी - यह अविश्वसनीय रूप से सुंदर होगी!\n\nसादर\nपेट्रा`
     },
     task: "Antworten Sie auf den Brief. Schreiben Sie etwas zu den folgenden Punkten:",
-    transTask: { ar: "جاوب على الرسالة. كتب على هاد النقط:", ma: "جاوب على الرسالة. كتب على هاد النقط:", en: "Answer the letter. Write something about the following points:", fr: "Répondez à la lettre. Écrivez quelque chose sur les points suivants :" },
+    transTask: { ar: "جاوب على الرسالة. كتب على هاد النقط:", ma: "جاوب على الرسالة. كتب على هاد النقط:", en: "Answer the letter. Write something about the following points:", fr: "Répondez à la lettre. Écrivez quelque chose sur les points suivants :", hi: "पत्र का जवाब दें। निम्नलिखित बिंदुओं पर कुछ लिखें:" },
     points: ["Warum Sie gern nach Deutschland kommen möchten?", "Wie Sie anreisen wollen?", "Was Sie gemeinsam machen könnten?", "Wen Sie mitbringen möchten?"],
     transPoints: {
       ar: ["(1) علاش باغي تجي لألمانيا.", "(2) كيفاش غادي تسافر.", "(3) شنو تقدرو ديرو مجموعين.", "(4) شكون باغي تجيب معاك."],
       ma: ["(1) علاش باغي تجي لألمانيا.", "(2) كيفاش غادي تسافر.", "(3) شنو تقدرو ديرو مجموعين.", "(4) شكون باغي تجيب معاك."],
       en: ["(1) Why you would like to come to Germany.", "(2) How you want to travel.", "(3) What you could do together.", "(4) Who you want to bring."],
-      fr: ["(1) Pourquoi vous aimeriez venir en Allemagne.", "(2) Comment vous voulez voyager.", "(3) Ce que vous pourriez faire ensemble.", "(4) Qui vous voulez amener."]
+      fr: ["(1) Pourquoi vous aimeriez venir en Allemagne.", "(2) Comment vous voulez voyager.", "(3) Ce que vous pourriez faire ensemble.", "(4) Qui vous voulez amener."],
+      hi: ["(1) आप जर्मनी क्यों आना चाहेंगे।", "(2) आप कैसे यात्रा करना चाहते हैं।", "(3) आप एक साथ क्या कर सकते हैं।", "(4) आप किसे लाना चाहते हैं।"]
     }
   },
   {
@@ -68,16 +73,18 @@ var SCHREIBEN_DATA = [
       ar: `عزيزي/عزيزتي...\n\nكيف تسير الأمور مع تعلم اللغة الألمانية؟ هل تتقدم بشكل جيد، وماذا تفعل في الوقت الحالي؟ تخيل، لقد حصلت على الوظيفة الجديدة في مجلة VIA! أنا أعمل الآن كصحفية، وكان هذا دائماً حلم حياتي!\n\nمجلة VIA يقرأها بشكل أساسي الشباب. لذلك نكتب الكثير عن المهن والتدريبات وأيضاً عن وقت الفراغ والرياضة. للأعداد القادمة من VIA، نخطط الآن لسلسلة جديدة عن المهن المرغوبة. ما هي في الواقع مهنة أحلامك؟ إذا كنت ترغب في ذلك، سأرسل لك بكل سرور عدداً مجانياً من VIA لترى ما أفعله.\n\nأتطلع بالفعل إلى ردك.\n\nتحياتي القلبية\nإيفا`,
       ma: `عزيزي/عزيزتي...\n\nكيفاش دازة معاك القراية ديال الألمانية؟ واصل مزيان؟ وشنو كدير دابا؟ تخيل، خديت الخدمة الجديدة فالمجلة VIA! أنا دابا كنخدم كصحفية، وهادشي كان ديما الحلم ديالي!\n\nالمجلة VIA كيقراها بزاف الشباب. داكشي علاش كنكتبو بزاف على المهن والتكوينات وحتى على وقت الفراغ والرياضة. للأعداد الجاية ديال VIA، كنخطوطو دابا لسلسلة جديدة على المهن اللي كيحلمو بيها الناس. شنو هو الحلم ديالك فالمستقبل؟ يلا بغيتي، نصيفط ليك عدد مجاني من VIA باش تشوف شنو كندير.\n\nكنتسنى فالرد ديالك.\n\nتحياتي\nإيفا`,
       en: `Dear...\n\nhow are things going with learning German? Are you making good progress, and what are you doing at the moment? Imagine, I got the new job at the magazine VIA! I am now working as a journalist, and that was always my dream job!\n\nVIA is read mainly by younger people. That's why we write a lot about professions and training and also about leisure and sports. For the next issues of VIA we are now planning a new series about dream jobs. What is your dream job actually? If you want, I'll gladly send you a free copy of VIA so you can see what I do.\n\nI am already looking forward to your answer.\n\nBest regards\nEva`,
-      fr: `Cher/Chère...\n\ncomment se passe l'apprentissage de l'allemand ? Est-ce que tu progresses bien, et qu'est-ce que tu fais en ce moment ? Figure-toi que j'ai obtenu le nouveau poste au magazine VIA ! Je travaille maintenant comme journaliste, et c'était toujours mon métier de rêve !\n\nVIA est surtout lu par les jeunes. C'est pourquoi nous écrivons beaucoup sur les métiers et les formations, mais aussi sur les loisirs et le sport. Pour les prochains numéros de VIA, nous prévoyons maintenant une nouvelle série sur les métiers de rêve. Quel est ton métier de rêve ? Si tu veux, je te donnerai volontiers un numéro gratuit de VIA pour que tu voies ce que je fais.\n\nJe me réjouis déjà de ta réponse.\n\nCordialement\nEva`
+      fr: `Cher/Chère...\n\ncomment se passe l'apprentissage de l'allemand ? Est-ce que tu progresses bien, et qu'est-ce que tu fais en ce moment ? Figure-toi que j'ai obtenu le nouveau poste au magazine VIA ! Je travaille maintenant comme journaliste, et c'était toujours mon métier de rêve !\n\nVIA est surtout lu par les jeunes. C'est pourquoi nous écrivons beaucoup sur les métiers et les formations, mais aussi sur les loisirs et le sport. Pour les prochains numéros de VIA, nous prévoyons maintenant une nouvelle série sur les métiers de rêve. Quel est ton métier de rêve ? Si tu veux, je te donnerai volontiers un numéro gratuit de VIA pour que tu voies ce que je fais.\n\nJe me réjouis déjà de ta réponse.\n\nCordialement\nEva`,
+      hi: `प्रिय...\n\nजर्मन सीखना कैसा चल रहा है? क्या आप अच्छी प्रगति कर रहे हैं, और इस समय क्या कर रहे हैं? कल्पना कीजिए, मुझे VIA पत्रिका में नई नौकरी मिल गई! मैं अब एक पत्रकार के रूप में काम कर रहा हूँ, और यह हमेशा मेरा सपनों का काम था!\n\nVIA मुख्य रूप से युवा लोगों द्वारा पढ़ा जाता है। इसलिए हम पेशे और प्रशिक्षण के बारे में बहुत कुछ लिखते हैं और आराम और खेल के बारे में भी। VIA के अगले अंकों के लिए हम अब सपनों की नौकरियों के बारे में एक नई श्रृंखला की योजना बना रहे हैं। वास्तव में आपका सपनों का काम क्या है? यदि आप चाहें, तो मैं आपको VIA की एक मुफ्त प्रति भेजकर खुशी से भेज दूंगा ताकि आप देख सकें कि मैं क्या करता हूं।\n\nमैं पहले से ही आपके जवाब का इंतजार कर रहा हूं।\n\nसादर\nएवा`
     },
     task: "Schreiben Sie Ihrer Bekannten nun einen Antwortbrief, der die folgenden Punkte enthält:",
-    transTask: { ar: "كتب لصاحبك رسالة رد كتضمن هاد النقط:", ma: "كتب لصاحبك رسالة رد كتضمن هاد النقط:", en: "Write an answer letter to your acquaintance containing the following points:", fr: "Écrivez maintenant une lettre de réponse à votre connaissance contenant les points suivants :" },
+    transTask: { ar: "كتب لصاحبك رسالة رد كتضمن هاد النقط:", ma: "كتب لصاحبك رسالة رد كتضمن هاد النقط:", en: "Write an answer letter to your acquaintance containing the following points:", fr: "Écrivez maintenant une lettre de réponse à votre connaissance contenant les points suivants :", hi: "अपने परिचित को एक उत्तर पत्र लिखें जिसमें निम्नलिखित बिंदु हों:" },
     points: ["Fortschritte beim Deutsch Lernen", "Auf Evas neue Stelle reagieren", "Was es Neues bei Ihnen gibt", "Ihr Traumberuf"],
     transPoints: {
       ar: ["(1) التقدم في تعلم الألمانية.", "(2) رد الفعل على وظيفة إيفا الجديدة.", "(3) الجديد عندك.", "(4) مهنة أحلامك."],
       ma: ["(1) التقدم في تعلم الألمانية.", "(2) رد الفعل على وظيفة إيفا الجديدة.", "(3) الجديد عندك.", "(4) مهنة أحلامك."],
       en: ["(1) Progress in learning German.", "(2) React to Eva's new job.", "(3) What's new with you.", "(4) Your dream job."],
-      fr: ["(1) Progrès dans l'apprentissage de l'allemand.", "(2) Réagir au nouveau poste d'Eva.", "(3) Quoi de neuf chez vous.", "(4) Votre métier de rêve."]
+      fr: ["(1) Progrès dans l'apprentissage de l'allemand.", "(2) Réagir au nouveau poste d'Eva.", "(3) Quoi de neuf chez vous.", "(4) Votre métier de rêve."],
+      hi: ["(1) जर्मन सीखने में प्रगति।", "(2) ईवा की नई नौकरी पर प्रतिक्रिया दें।", "(3) आपके यहाँ क्या नया है।", "(4) आपका सपनों का काम।"]
     }
   },
   {
@@ -87,34 +94,41 @@ var SCHREIBEN_DATA = [
       ar: `مغامرة الحفلات للأطفال!\nاستمتعوا بحفلات الأطفال المثيرة مع TIKKI TAKKA!\n\n• ألعاب مغامرات وأنشطة حفلات ممتعة\n• بحث عن الكنز ورحلات اكتشاف مثيرة\n• سحرة، مهرجون وتزيين وجه الأطفال\n• باقات حفلات رائعة لتجارب لا تُنسى\nأسعار رائعة!\n\nمغامرة TIKKI TAKKA\nطريق بيركن 5، 12345 مدينة المثال\nwww.tikki-takka.de\n+49 1234 567890\n\nلقد حجزتم في شركة مغامرة TIKKI TAKKA بحثًا عن الكنز بمناسبة عيد ميلاد طفلكم. على الرغم من الأسعار المعقولة، إلا أن حفلة عيد الميلاد لم تكن كما هو متوقع ولم تكونوا راضين عنها. اكتبوا شكوى واذكروا النقاط المذكورة.`,
       ma: `مغامرة الحفلات للدراري!\nاستمتعو بحفلات الدراري المثيرة مع TIKKI TAKKA!\n\n• ألعاب مغامرات وأنشطة حفلات ممتعة\n• بحث على الكنز ورحلات اكتشاف مثيرة\n• سحرة، مهرجين وتزيين وجه الدراري\n• باقات حفلات زوينة لتجارب ما تتنساش\nأثمنة زوينة!\n\nمغامرة TIKKI TAKKA\nطريق بيركن 5، 12345 مدينة المثال\nwww.tikki-takka.de\n+49 1234 567890\n\nحجزتو فشركة مغامرة TIKKI TAKKA بحث على الكنز بمناسبة عيد ميلاد ولدكم. رغم الأثمنة المعقولة، ولكن حفلة عيد الميلاد ما كانتش بحال ما كنتو متوقعين وما كنتوش راضيين عليها. كتبو شكوى وذكرو النقط المذكورة.`,
       en: `The party adventure for children!\nExperience exciting children's parties with TIKKI TAKKA!\n\n• Adventurous games and fun party animation\n• Fun treasure hunts & exciting discovery trips\n• Magicians, clowns & face painting\n• Great party packages for unforgettable experiences\nGREAT PROMOTIONAL PRICES!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nYou booked a treasure hunt for your child's birthday at the company Abenteuer TIKKI TAKKA. Despite reasonable prices, the birthday party was not as nice as expected and you are not satisfied with it. Write a complaint and address the mentioned points.`,
-      fr: `L'aventure de fête pour les enfants !\nVivez des fêtes d'enfants passionnantes avec TIKKI TAKKA !\n\n• Jeux aventureux et animation de fête amusante\n• Chasses au trésor amusantes et voyages de découverte passionnants\n• Magiciens, clowns et maquillage pour enfants\n• Superbes forfaits de fête pour des expériences inoubliables\nSUPER PRIX PROMOTIONNELS !\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nVous avez réservé une chasse au trésor pour l'anniversaire de votre enfant auprès de la société Abenteuer TIKKI TAKKA. Malgré des prix raisonnables, la fête d'anniversaire n'était pas aussi belle que prévu et vous n'en êtes pas satisfait. Rédigez une réclamation et abordez les points mentionnés.`
+      fr: `L'aventure de fête pour les enfants !\nVivez des fêtes d'enfants passionnantes avec TIKKI TAKKA !\n\n• Jeux aventureux et animation de fête amusante\n• Chasses au trésor amusantes et voyages de découverte passionnants\n• Magiciens, clowns et maquillage pour enfants\n• Superbes forfaits de fête pour des expériences inoubliables\nSUPER PRIX PROMOTIONNELS !\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nVous avez réservé une chasse au trésor pour l'anniversaire de votre enfant auprès de la société Abenteuer TIKKI TAKKA. Malgré des prix raisonnables, la fête d'anniversaire n'était pas aussi belle que prévu et vous n'en êtes pas satisfait. Rédigez une réclamation et abordez les points mentionnés.`,
+      hi: `बच्चों के लिए पार्टी साहसिक कार्य!\nTIKKI TAKKA के साथ रोमांचक बच्चों की पार्टियों का अनुभव करें!\n\n• साहसिक खेल और मजेदार पार्टी एनिमेशन\n• मजेदार खजाने की खोज और रोमांचक खोज यात्राएं\n• जादूगर, जोकर और चेहरे की पेंटिंग\n• अविस्मरणीय अनुभवों के लिए बेहतरीन पार्टी पैकेज\nशानदार प्रोत्साहन मूल्य!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nआपने कंपनी Abenteuer TIKKI TAKKA में अपने बच्चे के जन्मदिन के लिए खजाने की खोज बुक की है। उचित कीमतों के बावजूद, जन्मदिन की पार्टी उम्मीद के मुताबिक अच्छी नहीं थी और आप इससे संतुष्ट नहीं हैं। एक शिकायत लिखें और उल्लिखित बिंदुओं को संबोधित करें।`
     },
     task: "Schreiben Sie eine Antwort. Behandeln Sie folgende Punkte:",
-    transTask: { ar: "اكتب شكوى واذكر النقاط المذكورة:", ma: "كتبو شكوى وذكرو النقط المذكورة:", en: "Write a complaint and address the mentioned points:", fr: "Rédigez une réclamation et abordez les points mentionnés :" },
+    transTask: { ar: "اكتب شكوى واذكر النقاط المذكورة:", ma: "كتبو شكوى وذكرو النقط المذكورة:", en: "Write a complaint and address the mentioned points:", fr: "Rédigez une réclamation et abordez les points mentionnés :", hi: "एक शिकायत लिखें और उल्लिखित बिंदुओं को संबोधित करें:" },
     points: ["Mit welchem Angebot waren Sie nicht zufrieden?", "Erklären Sie, warum das Angebot nicht begeistert hat.", "Vorschläge für Verbesserungen: Was könnte TIKKI TAKKA Ihrer Meinung nach besser machen?"],
     transPoints: {
       ar: ["(1) أشمن عرض ما كنتوش راضيين عليه؟", "(2) شرحوا علاش العرض ما عجبكمش.", "(3) اقتراحات للتحسين: شنو تقدر TIKKI TAKKA دير حسن فحالكم؟"],
       ma: ["(1) أشمن عرض ما كنتوش راضيين عليه؟", "(2) شرحوا علاش العرض ما عجبكمش.", "(3) اقتراحات للتحسين: شنو تقدر TIKKI TAKKA دير حسن فحالكم؟"],
       en: ["(1) Which offer were you not satisfied with?", "(2) Explain why the offer did not inspire enthusiasm.", "(3) Suggestions for improvement: What could TIKKI TAKKA do better in your opinion?"],
-      fr: ["(1) De quelle offre n'étiez-vous pas satisfait ?", "(2) Expliquez pourquoi l'offre n'a pas suscité l'enthousiasme.", "(3) Suggestions d'amélioration : Que pourrait faire TIKKI TAKKA de mieux selon vous ?"]
+      fr: ["(1) De quelle offre n'étiez-vous pas satisfait ?", "(2) Expliquez pourquoi l'offre n'a pas suscité l'enthousiasme.", "(3) Suggestions d'amélioration : Que pourrait faire TIKKI TAKKA de mieux selon vous ?"],
+      hi: ["(1) आप किस ऑफर से संतुष्ट नहीं थे?", "(2) समझाएं कि ऑफर ने उत्साह क्यों नहीं दिया।", "(3) सुधार के लिए सुझाव: आपकी राय में TIKKI TAKKA क्या बेहतर कर सकता था?"]
     }
-  },
-  ...([
-    "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand", "Nicole - Probleme Mit Dem Bruder",
-    "Andreas - Neuer Kollege Und Büroalltag", "Annika - Gemeinsamer Sommerurlaub",
-    "Iris - Abschlussparty Organisieren", "Caroline - Gastschülerin Aus Marokko",
-    "Vera - Arbeitsweg Und Neue Stelle", "Jennifer - Einladung Zur Hochzeit",
-    "Andreas - Neue Wohnung Und Computer", "Thomas - Überraschungsausflug",
-    "Tamara - Treffen Und Neuer Job", "Jan - Urlaub In Rom", "Viktor - Urlaub In Malta",
-    "Anna - Katze Und Blumen", "Nora - Neue Wohnung Und Leute Kennenlernen",
-    "Claudia - Zoobesuch Und Geburtstag", "Karla - Umzug Und Neue Arbeit",
-    "Mara - Reise Und Neuer Freund", "Annika - Gemeinsamer Urlaub (Teil 2)",
-    "Sonja - Musikfestival", "Rita - Hochzeit Und Neuigkeiten", "Anne - Laras Geburtstag",
-    "Paul - Ausflug In Die Berge", "Jakob - Nachbarn Und Wohnung", "Emilia", "Tobias",
-    "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
-  ].map((title, i) => ({
-    id: `sch${i + 4}`,
-    title: title,
+  }
+];
+
+// placeholders بـ for loop (بلا spread)
+var _schPlaceholderTitles = [
+  "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand", "Nicole - Probleme Mit Dem Bruder",
+  "Andreas - Neuer Kollege Und Büroalltag", "Annika - Gemeinsamer Sommerurlaub",
+  "Iris - Abschlussparty Organisieren", "Caroline - Gastschülerin Aus Marokko",
+  "Vera - Arbeitsweg Und Neue Stelle", "Jennifer - Einladung Zur Hochzeit",
+  "Andreas - Neue Wohnung Und Computer", "Thomas - Überraschungsausflug",
+  "Tamara - Treffen Und Neuer Job", "Jan - Urlaub In Rom", "Viktor - Urlaub In Malta",
+  "Anna - Katze Und Blumen", "Nora - Neue Wohnung Und Leute Kennenlernen",
+  "Claudia - Zoobesuch Und Geburtstag", "Karla - Umzug Und Neue Arbeit",
+  "Mara - Reise Und Neuer Freund", "Annika - Gemeinsamer Urlaub (Teil 2)",
+  "Sonja - Musikfestival", "Rita - Hochzeit Und Neuigkeiten", "Anne - Laras Geburtstag",
+  "Paul - Ausflug In Die Berge", "Jakob - Nachbarn Und Wohnung", "Emilia", "Tobias",
+  "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
+];
+for (var _schI = 0; _schI < _schPlaceholderTitles.length; _schI++) {
+  SCHREIBEN_DATA.push({
+    id: "sch" + (_schI + 4),
+    title: _schPlaceholderTitles[_schI],
     level: "B1",
     isPremium: true,
     text: "",
@@ -123,8 +137,8 @@ var SCHREIBEN_DATA = [
     transText: {},
     transTask: {},
     transPoints: {}
-  }))
-];
+  });
+}
 
 // ==========================================
 // EXAMS — دروس القراءة (Lesen)
@@ -366,6 +380,7 @@ var EXAMS = [
     text: `Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC`,
     items:[{n:1, c:"muss"},{n:2, c:"nach"},{n:3, c:"die"},{n:4, c:"wäre"},{n:5, c:"geeignet"},{n:6, c:"wo"},{n:7, c:"gerne"},{n:8, c:"der"},{n:9, c:"wenn"},{n:10, c:"schon"}]
   },
+
   // ==========================================
   // CAROLINE — من Code 1 (طبق الأصل)
   // ==========================================
@@ -396,7 +411,7 @@ var EXAMS = [
     paragraphs: [
       { de: "Anne und Melanie (beide 6) stehen Erzieherinnen mit Vorschlägen hilfreich zur Seite. Sie sind die Problemlöser im Kindergarten.", ar: "آن وميلاني (كلاهما 6 سنوات) تساعدان المربيات باقتراحات مفيدة.", ma: "آن وميلاني (بجوج عندهم 6 سنين) كيعاونو المربيات بالاقتراحات.", en: "Anne and Melanie (both 6) help educators with suggestions. They are the problem solvers in kindergarten.", fr: "Anne et Melanie (toutes deux 6 ans) aident les éducatrices avec des suggestions." },
       { de: "Im Rahmen dieses Projekts werden in städtischen Kindergärten zwei Wanderstationen mit je drei Multimedia-Computern installiert.", ar: "في إطار هذا المشروع، سيتم تركيب محطتين متنقلتين في رياض الأطفال البلدية.", ma: "فهاد المشروع، غادي يحطو جوج محطات متنقلين فرض الأطفال.", en: "As part of this project, two mobile stations will be installed in municipal kindergartens.", fr: "Dans le cadre de ce projet, deux stations mobiles seront installées dans les jardins d'enfants municipaux." },
-      { de: "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus.", ar: "لكن قبل أن تصل أجهزة الكمبيوتر إلى رياض الأطفال، كان لا بد من توعية الآباء.", ma: "ولكن قبل ما توصل الكمبيوترات لرض الأطفال، كان خاص توعية الوالدين.", en: "However, before the computers arrived in the kindergartens, the parents had to be educated.", fr: "Cependant, avant l'arrivée des ordinateurs dans les jardins d'enfants, il fallait informer les parents." },
+      { de: "Bevor jedoch die Computer in die Kindergärten kamen, waren die Eltern aufzuklären. Bei manchen Eltern löste das Stichwort Computer akute Ängste aus.", ar: "لكن قبل أن تصل أجهزة الكمبيوتر إلى رياض الأطفال، كان لا بد من توعية الآباء.", ma: "ولكن قبل ما توصل الكمبيوترات لرض الأطفال، كان خاص توعية الوالدين.", en: "However, before the computers arrived in the kindergartens, the parents had to be educated.", fr: "Cependant, avant l'arrivée des ordinateurs dans les jardins d'eformer les parents." },
       { de: "Diese Ängste haben sich inzwischen gelegt und die Erfahrung vor Ort zeigt, dass sie weitgehend überflüssig sind. Die Erzieherinnen achten auch darauf, dass die Kinder nie länger als 15 bis 20 Minuten vor den Computern sitzen, und holen vor allem kreative Software auf den Bildschirm.", ar: "لقد هدأت هذه المخاوف في غضون ذلك، وتظهر التجربة الميدانية أنها زائدة عن الحاجة إلى حد كبير. يحرص المربيات أيضاً على ألا يجلس الأطفال أمام الكمبيوتر لأكثر من 15 إلى 20 دقيقة، ويجلبون برامج إبداعية إلى الشاشة قبل كل شيء.", ma: "هاد المخاوف هدات دابا، والتجربة كتبين بلي هادشي زايد. المربيات كيحرصو بلي الدراري ما يقعدوش كثر من 15 ولا 20 دقيقة قدام الكمبيوتر، وكتجيبو ليهم برامج إبداعية.", en: "These fears have now subsided and experience on site shows that they are largely superfluous. The educators also make sure that the children never sit in front of the computers for longer than 15 to 20 minutes, and above all bring creative software to the screen.", fr: "Ces craintes se sont depuis lors apaisées et l'expérience sur le terrain montre qu'elles sont largement superflues. Les éducatrices veillent également à ce que les enfants ne restent jamais plus de 15 à 20 minutes devant les ordinateurs, et mettent surtout des logiciels créatifs à l'écran." },
       { de: "Das einsame Dämmern vor dem Computer ist wohl ohnehin eher Sache der Erwachsenen – die Kinder spielen immer zu zweit oder zu dritt an der Maschine. Eva Schilling hat beobachtet, dass die Kinder am Computer sehr friedlich miteinander umgehen, sie helfen sich gegenseitig, es gibt wenig Konflikte.", ar: "على أي حال، فإن النعاس الوحيد أمام الكمبيوتر هو بالأحرى من شؤون البالغين - فالأطفال يلعبون دائماً في مجموعات من شخصين أو ثلاثة على الجهاز. لاحظت إيفا شيلينغ أن الأطفال يتعاملون مع بعضهم البعض بسلام شديد على الكمبيوتر، ويساعدون بعضهم البعض، ولا يوجد سوى القليل من الصراعات.", ma: "القعدة بوحدك قدام الكمبيوتر هي حاجة ديال الكبار - الدراري ديما كيلعبو بجوج ولا بثلاثة. إيفا شيلينغ لاحظات بلي الدراري كيتعاملو مزيان مع بعضياتهم قدام الكمبيوتر، كيعاونو بعضياتهم، وما كاينش المشاكل.", en: "Lonely brooding in front of the computer is probably more a matter for adults anyway - the children always play in twos or threes on the machine. Eva Schilling has observed that the children treat each other very peacefully on the computer, they help each other, there are few conflicts.", fr: "La rêverie solitaire devant l'ordinateur est de toute façon plutôt l'affaire des adultes - les enfants jouent toujours à deux ou à trois sur la machine. Eva Schilling a observé que les enfants se traitent très paisiblement sur l'ordinateur, ils s'entraident, il y a peu de conflits." }
     ],
@@ -491,7 +506,7 @@ var EXAMS = [
   },
 
   // ==========================================
-  // VERA — t1 من كود 1 (طبق الأصل) + t2..sp2 placeholders
+  // VERA — t1 من كود 1 + t2..sp2 placeholders
   // ==========================================
   {
     id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings", isPremium: false,
@@ -518,33 +533,45 @@ var EXAMS = [
   { id:"vera-t2", title:"Vera", level:"B1", sub:"Teile 2", type:"mcq", isPremium: true },
   { id:"vera-t3", title:"Vera", level:"B1", sub:"Teile 3", type:"matching", isPremium: true },
   { id:"vera-sp1", title:"Vera", level:"B1", sub:"Sprach 1", type:"sprach1", isPremium: true },
-  { id:"vera-sp2", title:"Vera", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: true },
-
-  // ==========================================
-  // الدروس المتبقية — premium placeholders من كود 2
-  // ==========================================
-  ...(() => {
-    const LESSONS = [
-      { title: "Eva", slug: "eva" }, { title: "Paul", slug: "paul" }, { title: "Iris", slug: "iris" },
-      { title: "Jan", slug: "jan" }, { title: "Miroslav", slug: "miroslav" }, { title: "Andreas 1", slug: "andreas1" },
-      { title: "Annika 2", slug: "annika2" }, { title: "Sonja", slug: "sonja" }, { title: "Nadja / Claudia", slug: "nadjaclaudia" },
-      { title: "Karla", slug: "karla" }, { title: "Viktor", slug: "viktor" }, { title: "Moritz", slug: "moritz" },
-      { title: "Corina", slug: "corina" }, { title: "Petra", slug: "petra" }, { title: "Tamara / Jakob", slug: "tamarajakob" },
-      { title: "Nicole", slug: "nicole" }, { title: "Andreas 2", slug: "andreas2" }, { title: "Thomas / Anna", slug: "thomasanna" },
-      { title: "Sophie", slug: "sophie" }, { title: "Alicia", slug: "alicia" }, { title: "Annika 1", slug: "annika1" },
-      { title: "Jennifer", slug: "jennifer" }, { title: "Mara", slug: "mara" }, { title: "Miroslav 2", slug: "miroslav2" }
-    ];
-    const PARTS = [
-      { sub: "Teile 1", type: "headings", suf: "t1" }, { sub: "Teile 2", type: "mcq", suf: "t2" },
-      { sub: "Teile 3", type: "matching", suf: "t3" }, { sub: "Sprach 1", type: "sprach1", suf: "sp1" },
-      { sub: "Sprach 2", type: "sprach2", suf: "sp2" }
-    ];
-    return LESSONS.flatMap(l => PARTS.map(p => ({ id: l.slug + "-" + p.suf, title: l.title, level: "B1", sub: p.sub, type: p.type, isPremium: true })));
-  })()
+  { id:"vera-sp2", title:"Vera", level:"B1", sub:"Sprach 2", type:"sprach2", isPremium: true }
 ];
 
+// placeholders للدروس المتبقية بـ for loop (بلا spread)
+var _examLessons = [
+  { title: "Eva", slug: "eva" }, { title: "Paul", slug: "paul" }, { title: "Iris", slug: "iris" },
+  { title: "Jan", slug: "jan" }, { title: "Miroslav", slug: "miroslav" }, { title: "Andreas 1", slug: "andreas1" },
+  { title: "Annika 2", slug: "annika2" }, { title: "Sonja", slug: "sonja" }, { title: "Nadja / Claudia", slug: "nadjaclaudia" },
+  { title: "Karla", slug: "karla" }, { title: "Viktor", slug: "viktor" }, { title: "Moritz", slug: "moritz" },
+  { title: "Corina", slug: "corina" }, { title: "Petra", slug: "petra" }, { title: "Tamara / Jakob", slug: "tamarajakob" },
+  { title: "Nicole", slug: "nicole" }, { title: "Andreas 2", slug: "andreas2" }, { title: "Thomas / Anna", slug: "thomasanna" },
+  { title: "Sophie", slug: "sophie" }, { title: "Alicia", slug: "alicia" }, { title: "Annika 1", slug: "annika1" },
+  { title: "Jennifer", slug: "jennifer" }, { title: "Mara", slug: "mara" }, { title: "Miroslav 2", slug: "miroslav2" }
+];
+
+var _examParts = [
+  { sub: "Teile 1", type: "headings", suf: "t1" },
+  { sub: "Teile 2", type: "mcq", suf: "t2" },
+  { sub: "Teile 3", type: "matching", suf: "t3" },
+  { sub: "Sprach 1", type: "sprach1", suf: "sp1" },
+  { sub: "Sprach 2", type: "sprach2", suf: "sp2" }
+];
+
+for (var _exI = 0; _exI < _examLessons.length; _exI++) {
+  for (var _exJ = 0; _exJ < _examParts.length; _exJ++) {
+    var _l = _examLessons[_exI];
+    var _p = _examParts[_exJ];
+    EXAMS.push({
+      id: _l.slug + "-" + _p.suf,
+      title: _l.title,
+      level: "B1",
+      sub: _p.sub,
+      type: _p.type,
+      isPremium: true
+    });
+  }
+}
 // ==========================================
-// HOREN_EXAMS — دروس الاستماع (Hören) — 26 درس من كود 1
+// HOREN_EXAMS — دروس الاستماع (Hören) — 26 درس
 // ==========================================
 var HOREN_EXAMS = [
   {
@@ -1037,3 +1064,4 @@ var HOREN_EXAMS = [
     ]
   }
 ];
+
