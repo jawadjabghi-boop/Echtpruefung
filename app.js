@@ -1,6 +1,5 @@
 // ==========================================
-// app.js
-// المنطق الأساسي للتطبيق (App Component)
+// app.js — المنطق الأساسي للتطبيق (App Component)
 // ==========================================
 
 function App() {
@@ -26,7 +25,6 @@ function App() {
   const [showHorenTrans, setShowHorenTrans] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30 * 60);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const [showSubscription, setShowSubscription] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -548,38 +546,6 @@ function App() {
               <button onClick={logout} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)" }}>
                 {t("logout", userLang)}
               </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {showSubscription && (
-        <div className="overlay" onClick={() => setShowSubscription(false)}>
-          <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>عروض الاشتراك</h3>
-              <button className="btnI" onClick={() => setShowSubscription(false)}>✕</button>
-            </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <div className="card" style={{ margin: 0, padding: 16, border: "2px solid var(--gold)", background: "rgba(245,184,46,0.05)" }}>
-                <h4 style={{ margin: "0 0 8px", fontSize: "1.1em", color: "var(--gold)" }}>تجربة مجانية</h4>
-                <p style={{ margin: "0 0 12px", fontSize: "1.5em", fontWeight: 900 }}>0 درهم <span style={{ fontSize: "0.5em", color: "var(--muted)" }}>/ يومين</span></p>
-                <button className="btn" style={{ background: "#25D366", color: "#fff", padding: "10px" }} onClick={() => wa("مرحباً، بغيت نستافد من تجربة يومين مجانية فـ EchtPrüfung.")}>واتساب - تجربة مجانية</button>
-              </div>
-              <div className="card" style={{ margin: 0, padding: 16 }}>
-                <h4 style={{ margin: "0 0 8px", fontSize: "1.1em" }}>اشتراك 15 يوم</h4>
-                <p style={{ margin: "0 0 12px", fontSize: "1.5em", fontWeight: 900 }}>30 درهم</p>
-                <button className="btn ghost" style={{ padding: "10px" }} onClick={() => wa("مرحباً، بغيت نشترك لمدة 15 يوم بـ 30 درهم فـ EchtPrüfung.")}>واتساب - اشتراك 15 يوم</button>
-              </div>
-              <div className="card" style={{ margin: 0, padding: 16, position: "relative", overflow: "hidden" }}>
-                <div style={{ position: "absolute", top: 10, left: 10, background: "var(--badc)", color: "#fff", padding: "2px 8px", borderRadius: 4, fontSize: "0.7em", fontWeight: 900 }}>عرض خاص</div>
-                <h4 style={{ margin: "0 0 8px", fontSize: "1.1em" }}>اشتراك شهر كامل</h4>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
-                  <span style={{ fontSize: "1.5em", fontWeight: 900, color: "var(--gold)" }}>60 درهم</span>
-                  <span style={{ fontSize: "1em", textDecoration: "line-through", color: "var(--badc)" }}>125 درهم</span>
-                </div>
-                <button className="btn" style={{ padding: "10px" }} onClick={() => wa("مرحباً، بغيت نستافد من عرض الشهر بـ 60 درهم فـ EchtPrüfung.")}>واتساب - اشتراك شهر كامل</button>
-              </div>
             </div>
           </div>
         </div>
