@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EchtPrüfung 2029</title>
 
-<!-- 🚀 إعدادات PWA (تحميل التطبيق) -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#000000">
 <link rel="apple-touch-icon" href="icon-192.png">
@@ -150,59 +149,19 @@
 <body>
 <div id="root"></div>
 
-<script>
-(async function loadApp() {
-  var root = document.getElementById('root');
+<!-- ✅ التحميل الجديد — بدون eval، بدون loader -->
+<script src="data-b1.js"></script>
+<script src="data-b2.js"></script>
+<script type="text/babel" data-presets="react" src="components.js"></script>
+<script type="text/babel" data-presets="react" src="app.js"></script>
 
-  if (typeof Babel === 'undefined') {
-    root.innerHTML = '<div style="padding:20px;direction:rtl;font-family:sans-serif"><h2 style="color:#DD0000">خطأ: Babel ما تحملش</h2><p>تحقق من اتصالك بالإنترنت وأعد تحميل الصفحة</p></div>';
-    return;
-  }
-  if (typeof React === 'undefined') {
-    root.innerHTML = '<div style="padding:20px;direction:rtl;font-family:sans-serif"><h2 style="color:#DD0000">خطأ: React ما تحملش</h2><p>تحقق من اتصالك بالإنترنت وأعد تحميل الصفحة</p></div>';
-    return;
-  }
-
-  root.innerHTML = '<div style="padding:20px;text-align:center;direction:rtl;font-family:sans-serif"><p style="color:#64748B">جاري تحميل التطبيق...</p></div>';
-
-  var files = ['data-b1.js', 'data-b2.js', 'components.js', 'app.js'];
-  var loaded = [];
-
-  for (var i = 0; i < files.length; i++) {
-    var file = files[i];
-    try {
-      var res = await fetch(file + '?v=' + Date.now());
-      if (!res.ok) throw new Error('HTTP ' + res.status + ' - ' + file);
-      var code = await res.text();
-      var compiled = Babel.transform(code, { presets: ['react'], filename: file }).code;
-      (0, eval)(compiled);
-      loaded.push(file);
-      console.log('✅ Loaded:', file);
-    } catch (err) {
-      console.error('❌ Error in', file, err);
-      root.innerHTML =
-        '<div style="padding:20px;direction:rtl;font-family:sans-serif">' +
-        '<h2 style="color:#DD0000">⚠️ خطأ فـ تحميل التطبيق</h2>' +
-        '<p><b>الملف:</b> ' + file + '</p>' +
-        '<pre style="background:#FEE2E2;padding:16px;border-radius:12px;direction:ltr;text-align:left;overflow:auto;font-size:12px;white-space:pre-wrap">' + (err.stack || err.message || String(err)) + '</pre>' +
-        '<p style="color:#666">حل Console (F12) لمزيد من التفاصيل</p>' +
-        '</div>';
-      return;
-    }
-  }
-
-  root.innerHTML = '';
-  console.log('🎉 All files loaded successfully:', loaded);
-})();
-</script>
-
-<!-- 🚀 تسجيل Service Worker (خاص بـ PWA) -->
+<!-- Service Worker -->
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('sw.js')
-        .then(reg => console.log('✅ Service Worker registered'))
-        .catch(err => console.log('❌ SW error:', err));
+        .then(function(reg) { console.log('✅ Service Worker registered'); })
+        .catch(function(err) { console.log('❌ SW error:', err); });
     });
   }
 </script>
