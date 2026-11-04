@@ -1,73 +1,67 @@
-2028
+ch10
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="html-root">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>EchtPrüfung</title>
+<title>EchtPrüfung 2029</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
 <script src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root{
     --ink:#111111; --gold:#FFCE00; --red:#DD0000; --blue:#2563EB; 
     --paper:#FFFFFF; --card:#F8FAFC;
-    --text:#111111; --muted:#64748B; --line:#E2E8F0; --okc:#15803D; --okbg:#DCFCE7;
+    --text:#111111; --muted:#64748B; --line:#E2E8F0; 
+    --okc:#15803D; --okbg:#DCFCE7;
     --badc:#DD0000; --badbg:#FEE2E2; --fs:1;
   }
   .dark{
     --paper:#0A0A0A; --card:#1A1A1A; --text:#F8FAFC; --muted:#94A3B8; --line:#333333;
     --ink:#F8FAFC; --gold:#FFCE00; --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
+    --blue: #60A5FA;
   }
 
   html{ font-size:calc(18px * var(--fs)); }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   
-  /* 🌟 الخلفية الاحترافية (Spray) */
   body{ 
     margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s;
     background-color: var(--paper);
-    background-image: 
-      radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.1) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.1) 0%, transparent 45%),
-      radial-gradient(circle at 50% 50%, rgba(17, 17, 17, 0.05) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.08) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.08) 0%, transparent 45%);
     background-attachment: fixed;
   }
   .dark body {
-    background-image: 
-      radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.2) 0%, transparent 40%),
-      radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.15) 0%, transparent 45%),
-      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+    background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.15) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.1) 0%, transparent 45%);
   }
   
   button{ font-family:inherit; cursor:pointer; border:none; background:transparent; }
   .de{ direction:ltr; text-align:left; font-family:system-ui,-apple-system,sans-serif; }
   
-  /* Glassmorphism Effect */
-  .card{ background:rgba(255,255,255,0.7); border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:12px; box-shadow:0 8px 32px rgba(0,0,0,0.05); backdrop-filter: blur(12px); transition: transform 0.2s; }
+  .card{ background:rgba(255,255,255,0.7); border:1px solid var(--line); border-radius:20px; padding:16px; margin-bottom:12px; box-shadow:0 8px 32px rgba(0,0,0,0.04); backdrop-filter: blur(12px); transition: transform 0.2s; }
   .dark .card { background:rgba(26,26,26,0.7); }
   .card:active { transform: scale(0.98); }
 
-  .header{ position:sticky; top:12px; z-index:30; margin:12px; display:flex; justify-content:space-between; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:20px; padding:12px 16px; box-shadow:0 4px 20px rgba(0,0,0,0.08); overflow:hidden; }
-  .header::after{ content:""; position:absolute; bottom:0; left:20px; right:20px; height:3px; border-radius:3px 3px 0 0; background:linear-gradient(90deg,#111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); opacity:1; }
-  .brand{ display:flex; align-items:center; gap:12px; }
-  .logo{ width:46px; height:46px; border-radius:14px; background:var(--ink); display:flex; align-items:center; justify-content:center; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  .header{ position:sticky; top:0; z-index:30; margin:0; display:flex; justify-content:space-between; align-items:center; background:var(--paper); border-bottom:1px solid var(--line); padding:8px 12px; box-shadow:0 2px 10px rgba(0,0,0,0.05); }
+  .header::after{ content:""; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,#111 33.33%,#DD0000 33.33%,#DD0000 66.66%,#FFCE00 66.66%); }
+  .brand{ display:flex; align-items:center; gap:8px; }
+  .logo{ width:36px; height:36px; border-radius:10px; background:var(--ink); display:flex; align-items:center; justify-content:center; }
+  .header-title{ font-weight: 900; font-size: 1.1em; }
+  .header-subtitle{ font-size: .75em; color: var(--muted); font-weight: bold; display: flex; align-items: center; gap: 4px; }
   
-  /* 🌟 الأزرار الاحترافية */
-  .btnI{ width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--text); display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+  .btnI{ width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--text); display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
   .btnI:active{ background:var(--line); transform:scale(0.9); }
   .btn{ border-radius:16px; padding:16px; font-weight:800; background:linear-gradient(135deg, var(--ink), #333); color:var(--gold); width:100%; font-size:1.05em; transition:all 0.2s; box-shadow: 0 8px 25px rgba(0,0,0,0.15); border: 1px solid rgba(255,255,255,0.1); }
   .btn:active { transform: translateY(2px); box-shadow: 0 4px 15px rgba(0,0,0,0.15); }
   .dark .btn { background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); }
   .btn.ghost{ background:var(--card); color:var(--text); border:1.5px solid var(--line); box-shadow: none; }
   
-  /* 🌟 أزرار نمط الامتحان والتدريب */
-  .modeBtn { flex: 1; padding: 14px 8px; border-radius: 16px; border: 2px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 1em; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; cursor: pointer; }
-  .modeBtn.on { border-color: var(--red); background: var(--red); color: #FFF; box-shadow: 0 8px 20px rgba(221,0,0,0.3); }
-  .dark .modeBtn.on { background: var(--gold); border-color: var(--gold); color: var(--ink); box-shadow: 0 8px 20px rgba(255,206,0,0.3); }
+  .modeBtn { flex: 1; padding: 10px 8px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--card); color: var(--text); font-weight: 800; font-size: 0.9em; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; cursor: pointer; }
+  .modeBtn.on { border-color: var(--red); background: var(--red); color: #FFF; box-shadow: 0 4px 15px rgba(221,0,0,0.25); }
+  .dark .modeBtn.on { background: var(--gold); border-color: var(--gold); color: var(--ink); box-shadow: 0 4px 15px rgba(255,206,0,0.25); }
 
-  /* 🌟 الأجوبة: أزرق (مختار)، أخضر (صحيح)، أحمر (غلط) */
   .opt{ display:flex; gap:12px; align-items:flex-start; border:2px solid transparent; background:var(--paper); color:var(--text); border-radius:16px; padding:14px; margin-bottom:8px; width:100%; text-align:right; transition:all .2s; font-size:1.05em; box-shadow: 0 2px 8px rgba(0,0,0,0.02); }
   .opt.sel{ border-color:var(--blue); background:rgba(37, 99, 235, .1); color: var(--blue); }
   .opt.good{ border-color:var(--okc); background:var(--okbg); color:var(--okc); }
@@ -81,9 +75,8 @@
   .fb.good{ background:var(--okbg); color:var(--okc); }
   .fb.bad{ background:var(--badbg); color:var(--badc); }
   
-  /* القائمة السفلية */
-  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:12px 4px 20px; z-index:40; gap: 4px; box-shadow: 0 -4px 20px rgba(0,0,0,0.05); }
-  .nav button{ color:var(--muted); font-size:.75em; font-weight:800; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; flex: 1; transition:all 0.2s; border-radius: 12px; padding: 6px 0; }
+  .nav{ position:fixed; bottom:0; left:0; right:0; background:var(--paper); border-top:1px solid var(--line); display:flex; justify-content:space-around; padding:8px 4px 20px; z-index:40; gap: 4px; box-shadow:0 -4px 20px rgba(0,0,0,0.05); }
+  .nav button{ color:var(--muted); font-size:.7em; font-weight:800; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px; flex: 1; transition:all 0.2s; border-radius: 12px; padding: 6px 0; }
   .nav button.on{ color:var(--red); background: rgba(221,0,0,0.08); }
   .dark .nav button.on{ color:var(--gold); background: rgba(255,206,0,0.15); }
   
@@ -101,36 +94,70 @@
   .auth-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
   .auth-card{ background:rgba(255,255,255,0.8); backdrop-filter:blur(20px); padding:32px; border-radius:28px; box-shadow:0 20px 50px rgba(0,0,0,0.1); border:1px solid var(--line); width:100%; max-width:420px; }
   .dark .auth-card { background:rgba(26,26,26,0.8); }
-  .auth-input{ width:100%; padding:16px; margin-bottom:16px; border-radius:14px; border:1px solid var(--line); background:var(--paper); color:var(--text); font-family:inherit; outline:none; font-size:1.05em; transition: border 0.2s; }
+  .auth-input{ width:100%; padding:16px; margin-bottom:16px; border-radius:14px; border:1px solid var(--line); background:var(--paper); color:var(--text); font-family:inherit; outline:none; font-size:1.05em; transition: border 0.2s; text-align: center; font-weight: bold; }
   .auth-input:focus{ border-color:var(--blue); }
   .auth-btn{ width:100%; padding:16px; border-radius:14px; border:none; background:var(--ink); color:var(--gold); font-weight:800; font-size:1.1em; cursor:pointer; margin-bottom:12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
   .auth-btn.guest{ background:linear-gradient(135deg, var(--gold), #F5B82E); color:var(--ink); box-shadow: 0 8px 20px rgba(255,206,0,0.3); }
   
   .lang-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:10px; max-height:400px; overflow-y:auto; padding-right:5px; }
-  .lang-btn{ display:flex; align-items:center; gap:10px; padding:12px; border-radius:14px; background:var(--paper); border:2px solid var(--line); color:var(--text); font-weight:800; transition:all 0.2s; text-align:right; font-size:0.95em; }
+  .lang-btn{ display:flex; align-items:center; gap:8px; padding:12px; border-radius:14px; background:var(--paper); border:2px solid var(--line); color:var(--text); font-weight:800; transition:all 0.2s; text-align:right; font-size:0.85em; }
   .lang-btn.on{ background:rgba(37, 99, 235, 0.08); border-color:var(--blue); color:var(--blue); }
   
-  /* الفراغات Sprach */
   .inline-gap{ display:inline-flex; align-items:center; justify-content:center; min-width:90px; border-bottom:2px dashed var(--blue); padding:2px 8px; margin:0 6px; cursor:pointer; font-weight:900; vertical-align:middle; background:rgba(37, 99, 235,0.05); border-radius:6px 6px 0 0; }
   .inline-gap.filled{ border-bottom-style:solid; background:rgba(37, 99, 235,0.15); color:var(--blue); }
   .sp1-correct{ background:var(--okbg); color:var(--okc); padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--okc); }
   .sp1-wrong{ background:var(--badbg); color:var(--badc); text-decoration:line-through; padding:4px 12px; border-radius:6px; font-weight:900; margin:0 4px; border:1px solid var(--badc); }
 
-  /* Hören */
   .rf-circle { width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; }
   .rf-circle.sel { border-color: var(--blue); background: rgba(37, 99, 235, 0.1); }
-  .rf-circle.good { border-color: var(--okc); background: var(--okbg); }
-  .rf-circle.bad { border-color: var(--badc); background: var(--badbg); }
   .rf-circle.sel::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--blue); }
-  .rf-circle.good::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--okc); }
-  .rf-circle.bad::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--badc); }
+  .rf-circle.good { border-color: var(--okc) !important; background: var(--okbg) !important; }
+  .rf-circle.good::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--okc) !important; }
+  .rf-circle.bad { border-color: var(--badc) !important; background: var(--badbg) !important; }
+  .rf-circle.bad::after { content: ""; width: 14px; height: 14px; border-radius: 50%; background: var(--badc) !important; }
   
   .audio-header { display:flex; align-items:center; gap:10px; font-weight:900; color:var(--red); margin-bottom:12px; }
   .dark .audio-header { color:var(--gold); }
   .audio-icon-big { display:flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:50%; background:rgba(221,0,0,0.1); color:var(--red); }
   .dark .audio-icon-big { background:rgba(255,206,0,0.1); color:var(--gold); }
   
-  .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); direction: rtl; text-align: right; }
+  .t2-ar { background: rgba(37, 99, 235, 0.05); padding: 16px; border-radius: 14px; margin-top: 12px; color: var(--text); font-size: 1.05em; line-height: 1.8; border-right: 5px solid var(--blue); }
+
+  .horen-gateway-card { background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 20px; box-shadow: 0 8px 30px rgba(0,0,0,0.05); }
+  .horen-gateway-icon { width: 70px; height: 70px; border-radius: 20px; background: rgba(34, 197, 94, 0.1); display: flex; align-items: center; justify-content: center; color: #22C55E; font-size: 2em; }
+  .horen-start-btn { width: 100%; padding: 16px; border-radius: 16px; background: rgba(34, 197, 94, 0.1); color: #22C55E; font-weight: 900; font-size: 1.1em; display: flex; justify-content: center; align-items: center; gap: 10px; transition: all 0.2s; border: 1.5px solid rgba(34, 197, 94, 0.3); }
+  .horen-start-btn:active { transform: scale(0.98); background: rgba(34, 197, 94, 0.2); }
+
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+
+  .menu-btn { position: absolute; top: 15px; right: 15px; z-index: 1000; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 12px; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  .dark .menu-btn { background: #1a1a1a; color: #fff; border-color: #333; }
+  .side-menu { position: fixed; top: 0; right: -280px; width: 280px; height: 100%; background: #fff; box-shadow: -2px 0 15px rgba(0,0,0,0.1); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1002; display: flex; flex-direction: column; }
+  .dark .side-menu { background: #1a1a1a; }
+  .side-menu.active { right: 0; }
+  .side-menu-header { background: linear-gradient(135deg, #1e293b, #334155); padding: 30px 20px; text-align: center; color: white; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+  .logo-circle { width: 60px; height: 60px; background: linear-gradient(135deg, #DD0000, #FFCE00); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; color: white; margin: 0 auto 10px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  .menu-item { display: flex; align-items: center; gap: 15px; padding: 15px 20px; color: #334155; text-decoration: none; font-weight: bold; transition: 0.2s; font-size: 1.1em; }
+  .dark .menu-item { color: #fff; }
+  .menu-item:hover, .menu-item.active { background: #f1f5f9; color: #2962ff; border-right: 4px solid #2962ff; }
+  .dark .menu-item:hover, .dark .menu-item.active { background: #333; color: var(--gold); border-right-color: var(--gold); }
+  .menu-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1001; }
+  .menu-overlay.active { display: block; }
+
+  .bottom-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; justify-content: space-between; gap: 15px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(15px); padding: 10px 20px; border-radius: 40px; box-shadow: 0 8px 30px rgba(0,0,0,0.15); border: 1px solid #f1f5f9; z-index: 1000; width: 92%; max-width: 450px; }
+  .dark .bottom-bar { background: rgba(26, 26, 26, 0.95); border-color: #333; }
+  .btn-prev-bar { background: #f1f5f9; border: none; border-radius: 20px; padding: 12px 20px; color: #334155; font-weight: 900; cursor: pointer; font-size: 0.9em; }
+  .dark .btn-prev-bar { background: #333; color: #FFF; }
+  .btn-correct-bar { background: linear-gradient(135deg, #00c853, #00e676); color: white; border: none; border-radius: 20px; padding: 12px 25px; font-weight: 900; display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 15px rgba(0, 200, 83, 0.3); cursor: pointer; flex-grow: 1; justify-content: center; font-size: 0.95em; }
+  .btn-next-bar { background: linear-gradient(135deg, #2962ff, #1565c0); border: none; border-radius: 50%; width: 45px; height: 45px; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 10px rgba(41, 98, 255, 0.3); cursor: pointer; flex-shrink: 0; transform: rotate(180deg); }
+  
+  .timer-badge { display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(5px); border: 1px solid #e2e8f0; color: #1e293b; padding: 8px 16px; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-variant-numeric: tabular-nums; font-size: 16px; }
+  .dark .timer-badge { background: rgba(26, 26, 26, 0.95); border-color: #333; color: #FFF; }
+  .timer-badge.warning { background: #fee2e2; color: #dc2626; border-color: #fecaca; animation: pulse 1s infinite; }
+
+  .keyboard-area { padding: 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .key-btn { width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); font-weight: 900; font-size: 1.1em; color: var(--text); display: flex; justify-content: center; align-items: center; }
+  .word-counter { background: var(--line); padding: 8px 16px; border-radius: 12px; font-size: 0.9em; font-weight: 900; }
 </style>
 </head>
 <body>
@@ -138,8 +165,12 @@
 
 <script type="text/babel">
 const { useState, useEffect, useRef } = React;
-const WA = "212600000000"; // ⚠️ بدل رقم الواتساب هنا
+const WA = "212600000000"; 
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
+
+const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
+const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
+const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
 const LogoImage = ({ size = 50 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -157,15 +188,6 @@ const LogoImage = ({ size = 50 }) => (
   </svg>
 );
 
-const HoerenIcon = ({ size = 24 }) => (
-  <svg width={size * 1.8} height={size} viewBox="0 0 44 24" fill="none">
-    <rect x="1" y="5" width="18" height="14" rx="2" fill="#22C55E"/>
-    <circle cx="7" cy="12" r="2.5" fill="white"/>
-    <path d="M19 9l7-4v14l-7-4v-6z" fill="#22C55E"/>
-    <path d="M31 15 Q35 12 31 9 M36 17 Q40 12 36 7 M40 18 Q44 12 40 6" stroke="#FFCE00" strokeWidth="1.8" fill="none" strokeLinecap="round"/>
-  </svg>
-);
-
 const LANGS = [
   { c:"ma", n:"الدارجة", f:"🇲🇦" }, { c:"ar", n:"العربية", f:"📜" },
   { c:"hi", n:"हिन्दी", f:"🇮🇳" }, { c:"id", n:"Indonesia", f:"🇮🇩" },
@@ -175,28 +197,89 @@ const LANGS = [
   { c:"ne", n:"नेपाली", f:"🇳🇵" }
 ];
 
-const tr = (obj, lang) => {
-  if (!obj) return "";
-  if (typeof obj === 'string') return obj;
-  return obj[lang] || obj['ar'] || obj['en'] || obj['de'] || "";
+const UI_TEXTS = {
+  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"سلام، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمين", name:"الاسم", code:"الكود", status:"الحالة", paid:"مخلص", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً" },
+  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", banner_title:"تدرب على الامتحان الحقيقي واذهب للحصول عليه!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"الكود الفريد الخاص بك", login:"تسجيل الدخول", guest:"دخول كزائر", support:"الدعم الفني", start_now:"ابدأ الآن", listen_lessons:"دروس الاستماع", search_placeholder:"...بحث عن موضوع", listen_title:"دروس الاستماع", listen_desc:"هنا كتلقى جميع دروس الهورن. اضغط على الزر لبدء الاستماع وحل الأسئلة.", gap_num:"الفراغ", choose_word_gap:"اختر الكلمة للفراغ", story_memo:"قصة للحفظ", check_btn:"تصحيح", next_btn:"التالي", back_btn:"رجوع", reset_btn:"إعادة", coming_soon:"قريباً...", settings:"الإعدادات", change_lang:"تغيير اللغة / Language", text_size:"حجم النص", reset_size:"إعادة الحجم الأصلي", logout:"خروج", whatsapp:"واتساب", lang_note:"اللغة التي تختارها ستبقى معك طوال التطبيق", or:"أو", correct:"✓ صحيح", wrong:"✗ غلط", no_answer:"⚠️ لم تجب", the_answer:"الجواب", b1_level:"المستوى B1", b2_level:"المستوى B2", side_menu:"القائمة الجانبية", ai_correct:"✨ تصحيح AI", trans_text:"ترجمة النص", trans_task:"ترجمة المهمة", show:"إظهار", hide:"إخفاء", words_count:"كلمة", locked:"مقفول", upgrade_pro:"ترقية إلى Pro", trial_active:"تجربة مجانية نشطة", trial_ended:"انتهت التجربة", wa_upgrade_msg:"سلام، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس", admin_panel:"لوحة التحكم", notifications:"الإشعارات", block:"حظر", unblock:"إلغاء الحظر", mark_paid:"تفعيل الدفع", mark_unpaid:"إلغاء الدفع", save:"حفظ", cancel:"إلغاء", users:"المستخدمين", name:"الاسم", code:"الكود", status:"الحالة", paid:"مخلص", blocked:"محظور", actions:"إجراءات", send_notification:"إرسال إشعار", title_ar:"العنوان", message_ar:"الرسالة", no_notifications:"لا توجد إشعارات حالياً" },
+  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"असली परीक्षा के लिए अभ्यास करें और इसे प्राप्त करें!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"आपकी अनूठी आईडी", login:"लॉगिन करें", guest:"अतिथि के रूप में प्रवेश", support:"तकनीकी सहायता", start_now:"अब शुरू करें", listen_lessons:"सुनने के पाठ", search_placeholder:"विषय खोजें...", listen_title:"सुनने के पाठ", listen_desc:"यहां आपको सभी सुनने के पाठ मिलेंगे। सुनना शुरू करने और सवालों के जवाब देने के लिए बटन दबाएं।", gap_num:"रिक्त स्थान", choose_word_gap:"रिक्त स्थान के लिए शब्द चुनें", story_memo:"याद रखने के लिए कहानी", check_btn:"जांचें", next_btn:"अगला", back_btn:"वापस", reset_btn:"रीसेट", coming_soon:"जल्द आ रहा है...", settings:"सेटिंग्स", change_lang:"भाषा बदलें", text_size:"पाठ का आकार", reset_size:"मूल आकार पर लौटें", logout:"लॉग आउट", whatsapp:"व्हाट्सएप", lang_note:"आपके द्वारा चुनी गई भाषा पूरे ऐप में रहेगी", or:"या", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ उत्तर नहीं दिया", the_answer:"उत्तर", b1_level:"स्तर B1", b2_level:"स्तर B2", side_menu:"साइड मेनू", ai_correct:"✨ AI जाँच", trans_text:"पाठ अनुवाद", trans_task:"कार्य अनुवाद", show:"दिखाएं", hide:"छिपाएं", words_count:"शब्द", locked:"बंद", upgrade_pro:"Pro में अपग्रेड करें", trial_active:"मुफ़्त परीक्षण सक्रिय", trial_ended:"परीक्षण समाप्त", wa_upgrade_msg:"नमस्ते, मैं सभी पाठों को अनलॉक करने के लिए Pro में अपग्रेड करना चाहता हूं", admin_panel:"एडमिन पैनल", notifications:"सूचनाएं", block:"ब्लॉक", unblock:"अनब्लॉक", mark_paid:"भुगतान के रूप में चिह्नित करें", mark_unpaid:"अवैतनिक के रूप में चिह्नित करें", save:"सहेजें", cancel:"रद्द करें", users:"उपयोगकर्ता", name:"नाम", code:"कोड", status:"स्थिति", paid:"भुगतान किया", blocked:"अवरुद्ध", actions:"कार्रवाई", send_notification:"सूचना भेजें", title_ar:"शीर्षक", message_ar:"संदेश", no_notifications:"अभी तक कोई सूचना नहीं" },
+  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", banner_title:"Train for the real exam and get it!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Your Unique ID", login:"Login", guest:"Login as Guest", support:"Technical Support", start_now:"Start Now", listen_lessons:"Listening Lessons", search_placeholder:"Search for a topic...", listen_title:"Listening Lessons", listen_desc:"Here you will find all listening lessons. Click the button to start listening and solving questions.", gap_num:"Gap", choose_word_gap:"Choose word for gap", story_memo:"Story to memorize", check_btn:"Check", next_btn:"Next", back_btn:"Back", reset_btn:"Reset", coming_soon:"Coming soon...", settings:"Settings", change_lang:"Change Language", text_size:"Text Size", reset_size:"Reset to original size", logout:"Logout", whatsapp:"WhatsApp", lang_note:"The language you choose will remain with you throughout the app", or:"or", correct:"✓ Correct", wrong:"✗ Wrong", no_answer:"⚠️ No answer", the_answer:"Answer", b1_level:"Level B1", b2_level:"Level B2", side_menu:"Side Menu", ai_correct:"✨ AI Check", trans_text:"Translate Text", trans_task:"Translate Task", show:"Show", hide:"Hide", words_count:"Words", locked:"Locked", upgrade_pro:"Upgrade to Pro", trial_active:"Free Trial Active", trial_ended:"Trial Ended", wa_upgrade_msg:"Hello, I want to upgrade to Pro to unlock all lessons", admin_panel:"Admin Panel", notifications:"Notifications", block:"Block", unblock:"Unblock", mark_paid:"Mark as Paid", mark_unpaid:"Mark as Unpaid", save:"Save", cancel:"Cancel", users:"Users", name:"Name", code:"Code", status:"Status", paid:"Paid", blocked:"Blocked", actions:"Actions", send_notification:"Send Notification", title_ar:"Title", message_ar:"Message", no_notifications:"No notifications yet" },
+  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", banner_title:"Entraînez-vous pour le vrai examen et obtenez-le !", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Votre identifiant unique", login:"Se connecter", guest:"Entrer en tant qu'invité", support:"Support Technique", start_now:"Commencer", listen_lessons:"Leçons d'écoute", search_placeholder:"Rechercher un sujet...", listen_title:"Leçons d'écoute", listen_desc:"Ici vous trouverez toutes les leçons d'écoute. Cliquez sur le bouton pour commencer à écouter et à répondre aux questions.", gap_num:"Espace", choose_word_gap:"Choisir le mot pour l'espace", story_memo:"Histoire à mémoriser", check_btn:"Vérifier", next_btn:"Suivant", back_btn:"Retour", reset_btn:"Réinitialiser", coming_soon:"Bientôt...", settings:"Paramètres", change_lang:"Changer de langue", text_size:"Taille du texte", reset_size:"Rétablir la taille d'origine", logout:"Déconnexion", whatsapp:"WhatsApp", lang_note:"La langue que vous choisissez restera avec vous tout au long de l'application", or:"ou", correct:"✓ Correct", wrong:"✗ Faux", no_answer:"⚠️ Sans réponse", the_answer:"Réponse", b1_level:"Niveau B1", b2_level:"Niveau B2", side_menu:"Menu Latéral", ai_correct:"✨ Correction IA", trans_text:"Traduire le texte", trans_task:"Traduire la tâche", show:"Afficher", hide:"Masquer", words_count:"Mots", locked:"Verrouillé", upgrade_pro:"Passer à Pro", trial_active:"Essai Gratuit Actif", trial_ended:"Essai Terminé", wa_upgrade_msg:"Bonjour, je souhaite passer à Pro pour débloquer toutes les leçons", admin_panel:"Panneau d'Admin", notifications:"Notifications", block:"Bloquer", unblock:"Débloquer", mark_paid:"Marquer Payé", mark_unpaid:"Marquer Non Payé", save:"Enregistrer", cancel:"Annuler", users:"Utilisateurs", name:"Nom", code:"Code", status:"Statut", paid:"Payé", blocked:"Bloqué", actions:"Actions", send_notification:"Envoyer Notification", title_ar:"Titre", message_ar:"Message", no_notifications:"Aucune notification pour le moment" },
+  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengarkan", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", banner_title:"Berlatih untuk ujian nyata dan dapatkan!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"ID Unik Anda", login:"Masuk", guest:"Masuk sebagai Tamu", support:"Dukungan Teknis", start_now:"Mulai Sekarang", listen_lessons:"Pelajaran Mendengarkan", search_placeholder:"Cari topik...", listen_title:"Pelajaran Mendengarkan", listen_desc:"Di sini Anda akan menemukan semua pelajaran mendengarkan. Klik tombol untuk mulai mendengarkan dan menjawab pertanyaan.", gap_num:"Celah", choose_word_gap:"Pilih kata untuk celah", story_memo:"Cerita untuk dihafal", check_btn:"Periksa", next_btn:"Selanjutnya", back_btn:"Kembali", reset_btn:"Atur Ulang", coming_soon:"Segera hadir...", settings:"Pengaturan", change_lang:"Ganti Bahasa", text_size:"Ukuran Teks", reset_size:"Kembalikan ke ukuran asli", logout:"Keluar", whatsapp:"WhatsApp", lang_note:"Bahasa yang Anda pilih akan tetap bersama Anda di seluruh aplikasi", or:"atau", correct:"✓ Benar", wrong:"✗ Salah", no_answer:"⚠️ Tidak ada jawaban", the_answer:"Jawaban", b1_level:"Tingkat B1", b2_level:"Tingkat B2", side_menu:"Menu Samping", ai_correct:"✨ Pemeriksaan AI", trans_text:"Terjemahkan Teks", trans_task:"Terjemahkan Tugas", show:"Tampilkan", hide:"Sembunyikan", words_count:"Kata", locked:"Terkunci", upgrade_pro:"Tingkatkan ke Pro", trial_active:"Uji Coba Gratis Aktif", trial_ended:"Uji Coba Berakhir", wa_upgrade_msg:"Halo, saya ingin meningkatkan ke Pro untuk membuka semua pelajaran", admin_panel:"Panel Admin", notifications:"Notifikasi", block:"Blokir", unblock:"Buka Blokir", mark_paid:"Tandai Lunas", mark_unpaid:"Tandai Belum Lunas", save:"Simpan", cancel:"Batal", users:"Pengguna", name:"Nama", code:"Kode", status:"Status", paid:"Lunas", blocked:"Diblokir", actions:"Tindakan", send_notification:"Kirim Notifikasi", title_ar:"Judul", message_ar:"Pesan", no_notifications:"Belum ada notifikasi" },
+  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Mode ng Pagsusulit", practice_mode:"Mode ng Pagsasanay", banner_title:"Magsanay para sa tunay na pagsusulit at kunin ito!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Ang Iyong Natatanging ID", login:"Mag-login", guest:"Mag-login bilang Bisita", support:"Teknikal na Suporta", start_now:"Simulan Ngayon", listen_lessons:"Mga Aralin sa Pakikinig", search_placeholder:"Maghanap ng paksa...", listen_title:"Mga Aralin sa Pakikinig", listen_desc:"Dito mo makikita ang lahat ng aralin sa pakikinig. I-click ang button upang magsimulang makinig at sumagot ng mga tanong.", gap_num:"Puwang", choose_word_gap:"Pumili ng salita para sa puwang", story_memo:"Kuwento na dapat tandaan", check_btn:"Suriin", next_btn:"Susunod", back_btn:"Bumalik", reset_btn:"I-reset", coming_soon:"Malapit na...", settings:"Mga Setting", change_lang:"Palitan ang Wika", text_size:"Laki ng Teksto", reset_size:"Ibalik sa orihinal na laki", logout:"Mag-logout", whatsapp:"WhatsApp", lang_note:"Ang wikang pipiliin mo ay mananatili sa iyo sa buong app", or:"o", correct:"✓ Tama", wrong:"✗ Mali", no_answer:"⚠️ Walang sagot", the_answer:"Sagot", b1_level:"Antas B1", b2_level:"Antas B2", side_menu:"Side Menu", ai_correct:"✨ AI Check", trans_text:"Isalin ang Teksto", trans_task:"Isalin ang Gawain", show:"Ipakita", hide:"Itago", words_count:"Salita", locked:"Naka-lock", upgrade_pro:"Mag-upgrade sa Pro", trial_active:"Aktibong Libreng Pagsubok", trial_ended:"Tapos na ang Pagsubok", wa_upgrade_msg:"Kumusta, gusto kong mag-upgrade sa Pro para ma-unlock ang lahat ng aralin", admin_panel:"Admin Panel", notifications:"Mga Abiso", block:"I-block", unblock:"I-unblock", mark_paid:"Markahan bilang Bayad", mark_unpaid:"Markahan bilang Hindi Bayad", save:"I-save", cancel:"Kanselahin", users:"Mga Gumagamit", name:"Pangalan", code:"Code", status:"Katayuan", paid:"Bayad", blocked:"Naka-block", actions:"Mga Aksyon", send_notification:"Magpadala ng Abiso", title_ar:"Pamagat", message_ar:"Mensahe", no_notifications:"Wala pang abiso" },
+  fa: { welcome:"خوش آمدید", choose_lang:"انتخاب زبان", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", banner_title:"برای آزمون واقعی تمرین کنید و آن را دریافت کنید!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"شناسه منحصر به فرد شما", login:"ورود", guest:"ورود به عنوان مهمان", support:"پشتیبانی فنی", start_now:"همین حالا شروع کنید", listen_lessons:"دروس شنیداری", search_placeholder:"جستجوی موضوع...", listen_title:"دروس شنیداری", listen_desc:"در اینجا تمام دروس شنیداری را پیدا خواهید کرد. برای شروع گوش دادن و پاسخ به سوالات روی دکمه کلیک کنید.", gap_num:"جای خالی", choose_word_gap:"کلمه را برای جای خالی انتخاب کنید", story_memo:"داستان برای حفظ کردن", check_btn:"بررسی", next_btn:"بعدی", back_btn:"بازگشت", reset_btn:"بازنشانی", coming_soon:"به زودی...", settings:"تنظیمات", change_lang:"تغییر زبان", text_size:"اندازه متن", reset_size:"بازگشت به اندازه اصلی", logout:"خروج", whatsapp:"واتساپ", lang_note:"زبانی که انتخاب می کنید در سراسر برنامه با شما خواهد بود", or:"یا", correct:"✓ درست", wrong:"✗ نادرست", no_answer:"⚠️ بدون پاسخ", the_answer:"پاسخ", b1_level:"سطح B1", b2_level:"سطح B2", side_menu:"منوی کناری", ai_correct:"✨ بررسی هوش مصنوعی", trans_text:"ترجمه متن", trans_task:"ترجمه وظیفه", show:"نمایش", hide:"پنهان کردن", words_count:"کلمه", locked:"قفل شده", upgrade_pro:"ارتقا به پرو", trial_active:"دوره آزمایشی رایگان فعال", trial_ended:"دوره آزمایشی به پایان رسید", wa_upgrade_msg:"سلام، می‌خواهم به پرو ارتقا پیدا کنم تا همه درس‌ها را باز کنم", admin_panel:"پنل مدیریت", notifications:"اعلان‌ها", block:"مسدود کردن", unblock:"رفع مسدودی", mark_paid:"علامت‌گذاری به عنوان پرداخت شده", mark_unpaid:"علامت‌گذاری به عنوان پرداخت نشده", save:"ذخیره", cancel:"لغو", users:"کاربران", name:"نام", code:"کد", status:"وضعیت", paid:"پرداخت شده", blocked:"مسدود شده", actions:"عملیات", send_notification:"ارسال اعلان", title_ar:"عنوان", message_ar:"پیام", no_notifications:"هنوز اعلانی وجود ندارد" },
+  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", banner_title:"Jizatiti kwa mtihani wa kweli na uupate!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Kitambulisho Chako cha Kipekee", login:"Ingia", guest:"Ingia kama Mgeni", support:"Msaada wa Kiufundi", start_now:"Anza Sasa", listen_lessons:"Masomo ya Kusikiliza", search_placeholder:"Tafuta mada...", listen_title:"Masomo ya Kusikiliza", listen_desc:"Hapa utapata masomo yote ya kusikiliza. Bofya kitufe ili kuanza kusikiliza na kujibu maswali.", gap_num:"Pengo", choose_word_gap:"Chagua neno kwa pengo", story_memo:"Hadithi ya kukumbuka", check_btn:"Angalia", next_btn:"Inayofuata", back_btn:"Rudi", reset_btn:"Weka upya", coming_soon:"Inakuja hivi karibuni...", settings:"Mipangilio", change_lang:"Badilisha Lugha", text_size:"Ukubwa wa Maandishi", reset_size:"Rudisha kwa ukubwa wa awali", logout:"Toka", whatsapp:"WhatsApp", lang_note:"Lugha unayochagua itabaki nawe katika programu yote", or:"au", correct:"✓ Sahihi", wrong:"✗ Makosa", no_answer:"⚠️ Hakuna jibu", the_answer:"Jibu", b1_level:"Kiwango B1", b2_level:"Kiwango B2", side_menu:"Menyu ya Pembeni", ai_correct:"✨ Ukaguzi wa AI", trans_text:"Tafsiri Maandishi", trans_task:"Tafsiri Kazi", show:"Onyesha", hide:"Ficha", words_count:"Neno", locked:"Imefungwa", upgrade_pro:"Pandisha hadhi hadi Pro", trial_active:"Jaribio la Bure Linatumika", trial_ended:"Jaribio Limeisha", wa_upgrade_msg:"Habari, nataka kupandisha hadhi hadi Pro ili kufungua masomo yote", admin_panel:"Paneli ya Msimamizi", notifications:"Arifa", block:"Zuia", unblock:"Fungua", mark_paid:"Weka alama kama Imelipwa", mark_unpaid:"Weka alama kama Haijalipwa", save:"Hifadhi", cancel:"Ghairi", users:"Watumiaji", name:"Jina", code:"Msimbo", status:"Hali", paid:"Imelipwa", blocked:"Imezuiwa", actions:"Vitendo", send_notification:"Tuma Arifa", title_ar:"Kichwa", message_ar:"Ujumbe", no_notifications:"Hakuna arifa bado" },
+  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", banner_title:"Haqiqiy imtihonga tayyorlaning va uni oling!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"Sizning noyob ID-ingiz", login:"Kirish", guest:"Mehmon sifatida kirish", support:"Texnik yordam", start_now:"Hoziroq boshlang", listen_lessons:"Tinglash darslari", search_placeholder:"Mavzu qidirish...", listen_title:"Tinglash darslari", listen_desc:"Bu yerda barcha tinglash darslarini topasiz. Tinglashni boshlash va savollarga javob berish uchun tugmani bosing.", gap_num:"Bo'shliq", choose_word_gap:"Bo'shliq uchun so'zni tanlang", story_memo:"Yodlash uchun hikoya", check_btn:"Tekshirish", next_btn:"Keyingi", back_btn:"Orqaga", reset_btn:"Qayta tiklash", coming_soon:"Tez orada...", settings:"Sozlamalar", change_lang:"Tilni o'zgartirish", text_size:"Matn hajmi", reset_size:"Asl hajmga qaytarish", logout:"Chiqish", whatsapp:"WhatsApp", lang_note:"Siz tanlagan til butun ilova davomida siz bilan qoladi", or:"yoki", correct:"✓ To'g'ri", wrong:"✗ Noto'g'ri", no_answer:"⚠️ Javob yo'q", the_answer:"Javob", b1_level:"B1 darajasi", b2_level:"B2 darajasi", side_menu:"Yon menyu", ai_correct:"✨ AI tekshiruvi", trans_text:"Matnni tarjima qilish", trans_task:"Vazifani tarjima qilish", show:"Ko'rsatish", hide:"Yashirish", words_count:"So'z", locked:"Qulflangan", upgrade_pro:"Pro-ga o'tish", trial_active:"Bepul sinov faol", trial_ended:"Sinov tugadi", wa_upgrade_msg:"Salom, barcha darslarni ochish uchun Pro-ga o'tmoqchiman", admin_panel:"Admin paneli", notifications:"Bildirishnomalar", block:"Bloklash", unblock:"Blokdan chiqarish", mark_paid:"To'langan deb belgilash", mark_unpaid:"To'lanmagan deb belgilash", save:"Saqlash", cancel:"Bekor qilish", users:"Foydalanuvchilar", name:"Ism", code:"Kod", status:"Holat", paid:"To'langan", blocked:"Bloklangan", actions:"Amallar", send_notification:"Bildirishnoma yuborish", title_ar:"Sarlavha", message_ar:"Xabar", no_notifications:"Hozircha bildirishnomalar yo'q" },
+  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", banner_title:"वास्तविक परीक्षाको लागि अभ्यास गर्नुहोस् र प्राप्त गर्नुहोस्!", banner_sub:"Trainiere für die echte Prüfung und hol sie dir!", id_placeholder:"तपाईंको अद्वितीय आईडी", login:"लगइन", guest:"अतिथिको रूपमा प्रवेश", support:"प्राविधिक सहयोग", start_now:"अहिले सुरु गर्नुहोस्", listen_lessons:"सुन्ने पाठहरू", search_placeholder:"विषय खोज्नुहोस्...", listen_title:"सुन्ने पाठहरू", listen_desc:"यहाँ तपाईंले सबै सुन्ने पाठहरू फेला पार्नुहुनेछ। सुन्न सुरु गर्न र प्रश्नहरूको जवाफ दिन बटन क्लिक गर्नुहोस्।", gap_num:"खाली ठाउँ", choose_word_gap:"खाली ठाउँको लागि शब्द छान्नुहोस्", story_memo:"सम्झनको लागि कथा", check_btn:"जाँच गर्नुहोस्", next_btn:"अर्को", back_btn:"पछाडि", reset_btn:"रिसेट गर्नुहोस्", coming_soon:"चाँडै आउँदैछ...", settings:"सेटिङहरू", change_lang:"भाषा परिवर्तन गर्नुहोस्", text_size:"पाठको आकार", reset_size:"मूल आकारमा फर्काउनुहोस्", logout:"लगआउट", whatsapp:"WhatsApp", lang_note:"तपाईंले छान्नुभएको भाषा सम्पूर्ण एपमा तपाईंसँग रहनेछ", or:"वा", correct:"✓ सही", wrong:"✗ गलत", no_answer:"⚠️ जवाफ छैन", the_answer:"जवाफ", b1_level:"स्तर B1", b2_level:"स्तर B2", side_menu:"साइड मेनु", ai_correct:"✨ AI जाँच", trans_text:"पाठ अनुवाद गर्नुहोस्", trans_task:"कार्य अनुवाद गर्नुहोस्", show:"देखाउनुहोस्", hide:"लुकाउनुहोस्", words_count:"शब्द", locked:"लक गरिएको", upgrade_pro:"प्रो मा अपग्रेड गर्नुहोस्", trial_active:"नि:शुल्क परीक्षण सक्रिय", trial_ended:"परीक्षण समाप्त भयो", wa_upgrade_msg:"नमस्ते, सबै पाठहरू अनलक गर्न म प्रो मा अपग्रेड गर्न चाहन्छु", admin_panel:"एडमिन प्यानल", notifications:"सूचनाहरू", block:"ब्लक गर्नुहोस्", unblock:"अनब्लक गर्नुहोस्", mark_paid:"भुक्तानी भएको चिन्ह लगाउनुहोस्", mark_unpaid:"भुक्तानी नभएको चिन्ह लगाउनुहोस्", save:"सुरक्षित गर्नुहोस्", cancel:"रद्द गर्नुहोस्", users:"प्रयोगकर्ताहरू", name:"नाम", code:"कोड", status:"स्थिति", paid:"भुक्तानी भयो", blocked:"ब्लक गरिएको", actions:"कार्यहरू", send_notification:"सूचना पठाउनुहोस्", title_ar:"शीर्षक", message_ar:"सन्देश", no_notifications:"अहिलेसम्म कुनै सूचना छैन" }
 };
 
-const UI_TEXTS = {
-  ma: { welcome:"مرحبا بيك", choose_lang:"ختار اللغة ديالك", home:"الرئيسية", lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", support:"الدعم الفني", contact:"تواصل معنا" },
-  ar: { welcome:"مرحباً بك", choose_lang:"اختر لغتك", home:"الرئيسية", lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", pruefung:"امتحان", exam_mode:"نمط الامتحان", practice_mode:"نمط التدريب", support:"الدعم الفني", contact:"تواصل معنا" },
-  hi: { welcome:"स्वागत है", choose_lang:"भाषा चुनें", home:"होम", lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", support:"सहायता", contact:"संपर्क करें" },
-  id: { welcome:"Selamat datang", choose_lang:"Pilih bahasa", home:"Beranda", lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", pruefung:"Ujian", exam_mode:"Mode Ujian", practice_mode:"Mode Latihan", support:"Dukungan", contact:"Hubungi kami" },
-  tl: { welcome:"Maligayang pagdating", choose_lang:"Pumili ng wika", home:"Home", lesen:"Pagbabasa", horen:"Pakikinig", schreiben:"Pagsusulat", sprechen:"Pagsasalita", pruefung:"Pagsusulit", exam_mode:"Exam Mode", practice_mode:"Practice Mode", support:"Suporta", contact:"Makipag-ugnayan" },
-  fa: { welcome:"خوش آمدید", choose_lang:"زبان را انتخاب کنید", home:"خانه", lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت کردن", pruefung:"آزمون", exam_mode:"حالت آزمون", practice_mode:"حالت تمرین", support:"پشتیبانی", contact:"تماس با ما" },
-  sw: { welcome:"Karibu", choose_lang:"Chagua lugha", home:"Nyumbani", lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", pruefung:"Mtihani", exam_mode:"Hali ya Mtihani", practice_mode:"Hali ya Mazoezi", support:"Msaada", contact:"Wasiliana nasi" },
-  fr: { welcome:"Bienvenue", choose_lang:"Choisissez la langue", home:"Accueil", lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Expression orale", pruefung:"Examen", exam_mode:"Mode Examen", practice_mode:"Mode Entraînement", support:"Support", contact:"Contactez-nous" },
-  en: { welcome:"Welcome", choose_lang:"Choose language", home:"Home", lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", pruefung:"Exam", exam_mode:"Exam Mode", practice_mode:"Practice Mode", support:"Support", contact:"Contact Us" },
-  uz: { welcome:"Xush kelibsiz", choose_lang:"Tilni tanlang", home:"Bosh sahifa", lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", pruefung:"Imtihon", exam_mode:"Imtihon rejimi", practice_mode:"Mashq rejimi", support:"Yordam", contact:"Bog'lanish" },
-  ne: { welcome:"स्वागत छ", choose_lang:"भाषा छान्नुहोस्", home:"गृहपृष्ठ", lesen:"पढ्ने", horen:"सुन्ने", schreiben:"लेख्ने", sprechen:"बोल्ने", pruefung:"परीक्षा", exam_mode:"परीक्षा मोड", practice_mode:"अभ्यास मोड", support:"सहयोग", contact:"सम्पर्क" }
-};
 const t = (key, lang) => (UI_TEXTS[lang] && UI_TEXTS[lang][key]) || UI_TEXTS.en[key] || key;
+
+const SCHREIBEN_DATA = [
+  {
+    id: "sch1", title: "Urlaub Im Schwarzwald - Antwort An Petra", level: "B1",
+    text: `Liebe(r).......\n\nIch habe eine tolle Überraschung. stelle dir vor, was mir mein Onkel angeboten hat. Er rief mich am Samstag an. Er hat ein großes Ferienhaus im Schwarzwald. Das Haus kann ich für die Ferien kostenlos haben. Ich kann auch Freunde mitbringen! Wäre das nichts für uns? Wir könnten uns alle dort treffen. Du, deine Eltern und Freunde, und ich mit meiner Familie und meinen Freunden. Ich würde mich wahnsinnig freuen, wenn das klappen würde. Bitte schreibe mir so schnell du kannst, damit wir alles planen können. Urlaub im Schwarzwald - das wird traumhaft schön!\n\nHerzliche Grüße\nPetra`,
+    transText: {
+      ar: `عزيزي/عزيزتي...\n\nعندي ليك مفاجأة زوينة. تخيل شنو عرض عليا عمي. عيط ليا نهار السبت. عندو دار كبيرة ديال العطلة في الغابة السوداء (Schwarzwald). نقدر ناخد الدار فهاد العطلة. ونقدر نجيب معايا حتى صحابي! واش هادشي ماشي فكرة زوينة لينا؟ نقدر ونتجمعو تما كاملين. أنت، والديك وصحابك، وأنا مع عائلتي وصحابي. غادي نفرح بزاف يلا صدقات هاد القضية. عفاك جاوبني في أقرب وقت باش نقدر وخططو لكشي. عطلة في الغابة السوداء - غتكون رائعة!\n\nتحياتي القلبية\nبيترا`,
+      ma: `عزيزي/عزيزتي...\n\nعندي ليك مفاجأة زوينة. تخيل شنو عرض عليا عمي. عيط ليا نهار السبت. عندو دار كبيرة ديال العطلة في الغابة السوداء (Schwarzwald). نقدر ناخد الدار فهاد العطلة. ونقدر نجيب معايا حتى صحابي! واش هادشي ماشي فكرة زوينة لينا؟ نقدر ونتجمعو تما كاملين. أنت، والديك وصحابك، وأنا مع عائلتي وصحابي. غادي نفرح بزاف يلا صدقات هاد القضية. عفاك جاوبني في أقرب وقت باش نقدر وخططو لكشي. عطلة في الغابة السوداء - غتكون رائعة!\n\nتحياتي القلبية\nبيترا`,
+      en: `Dear...\n\nI have a great surprise. Imagine what my uncle offered me. He called me on Saturday. He has a big holiday house in the Black Forest. I can have the house for the holidays for free. I can also bring friends! Wouldn't that be something for us? We could all meet there. You, your parents and friends, and me with my family and my friends. I would be incredibly happy if that would work out. Please write to me as soon as you can so that we can plan everything. Vacation in the Black Forest - that will be incredibly beautiful!\n\nBest regards\nPetra`,
+      fr: `Cher/Chère...\n\nJ'ai une super surprise. Imagine ce que mon oncle m'a proposé. Il m'a appelé samedi. Il a une grande maison de vacances dans la Forêt-Noire. Je peux avoir la maison pour les vacances gratuitement. Je peux aussi amener des amis ! Ne serait-ce pas quelque chose pour nous ? Nous pourrions tous nous y retrouver. Toi, tes parents et amis, et moi avec ma famille et mes amis. Je serais incroyablement heureux si cela pouvait fonctionner. S'il te plaît, écris-moi dès que tu peux pour que nous puissions tout planifier. Des vacances dans la Forêt-Noire - ce sera incroyablement beau !\n\nCordialement\nPetra`,
+      hi: `प्रिय...\n\nमेरे पास एक शानदार आश्चर्य है। सोचो मेरे चाचा ने मुझे क्या पेशकश की। उन्होंने मुझे शनिवार को फोन किया। ब्लैक फॉरेस्ट में उनका छुट्टियों का एक बड़ा घर है। मैं छुट्टियों के लिए घर मुफ्त में ले सकता हूं। मैं दोस्तों को भी ला सकता हूं! क्या यह हमारे लिए कुछ नहीं होगा? हम सब वहां मिल सकते हैं। तुम, तुम्हारे माता-पिता और दोस्त, और मैं अपने परिवार और अपने दोस्तों के साथ। अगर यह काम करेगा तो मैं अविश्वसनीय रूप से खुश होऊंगा। कृपया मुझे जल्द से जल्द लिखें ताकि हम सब कुछ योजना बना सकें। ब्लैक फॉरेस्ट में छुट्टी - यह अविश्वसनीय रूप से सुंदर होगी!\n\nसादर\nपेट्रा`
+    },
+    task: "Antworten Sie auf den Brief. Schreiben Sie etwas zu den folgenden Punkten:",
+    transTask: { ar: "جاوب على الرسالة. كتب على هاد النقط:", ma: "جاوب على الرسالة. كتب على هاد النقط:", en: "Answer the letter. Write something about the following points:", fr: "Répondez à la lettre. Écrivez quelque chose sur les points suivants :", hi: "पत्र का जवाब दें। निम्नलिखित बिंदुओं पर कुछ लिखें:" },
+    points: ["Warum Sie gern nach Deutschland kommen möchten?", "Wie Sie anreisen wollen?", "Was Sie gemeinsam machen könnten?", "Wen Sie mitbringen möchten?"],
+    transPoints: {
+      ar: ["(1) علاش باغي تجي لألمانيا.", "(2) كيفاش غادي تسافر.", "(3) شنو تقدرو ديرو مجموعين.", "(4) شكون باغي تجيب معاك."],
+      ma: ["(1) علاش باغي تجي لألمانيا.", "(2) كيفاش غادي تسافر.", "(3) شنو تقدرو ديرو مجموعين.", "(4) شكون باغي تجيب معاك."],
+      en: ["(1) Why you would like to come to Germany.", "(2) How you want to travel.", "(3) What you could do together.", "(4) Who you want to bring."],
+      fr: ["(1) Pourquoi vous aimeriez venir en Allemagne.", "(2) Comment vous voulez voyager.", "(3) Ce que vous pourriez faire ensemble.", "(4) Qui vous voulez amener."],
+      hi: ["(1) आप जर्मनी क्यों आना चाहेंगे।", "(2) आप कैसे यात्रा करना चाहते हैं।", "(3) आप एक साथ क्या कर सकते हैं।", "(4) आप किसे लाना चाहते हैं।"]
+    }
+  },
+  {
+    id: "sch2", title: "Eva - Traumberuf Und Neuigkeiten", level: "B1",
+    text: `Liebe(r).......\n\nwie geht es denn so mit dem Deutsch lernen? Kommst du gut voran, und was machst du im Moment so? Stell dir vor, ich habe die neue Stelle bei der Zeitschrift VIA bekommen! ich arbeite jetzt als Journalistin, und das war ja immer mein Traumberuf!\n\nVIA wird vor allem von jüngeren Leuten gelesen. Deshalb schreiben wir viel über Berufe und Ausbildungen und auch über Freizeit und Sport. Für die nächsten Hefte von VIA planen wir jetzt eine neue Serie über Berufs wünsche. Was ist eigentlich dein Traumberuf? Wenn du möchtest, schicke ich dir gerne einmal ein Gratisheft von VIA, damit du siehst, was ich so mache.\n\nIch freue mich schon auf deine Antwort.\n\nHerzliche Grüße\nEva`,
+    transText: {
+      ar: `عزيزي/عزيزتي...\n\nكيف تسير الأمور مع تعلم اللغة الألمانية؟ هل تتقدم بشكل جيد، وماذا تفعل في الوقت الحالي؟ تخيل، لقد حصلت على الوظيفة الجديدة في مجلة VIA! أنا أعمل الآن كصحفية، وكان هذا دائماً حلم حياتي!\n\nمجلة VIA يقرأها بشكل أساسي الشباب. لذلك نكتب الكثير عن المهن والتدريبات وأيضاً عن وقت الفراغ والرياضة. للأعداد القادمة من VIA، نخطط الآن لسلسلة جديدة عن المهن المرغوبة. ما هي في الواقع مهنة أحلامك؟ إذا كنت ترغب في ذلك، سأرسل لك بكل سرور عدداً مجانياً من VIA لترى ما أفعله.\n\nأتطلع بالفعل إلى ردك.\n\nتحياتي القلبية\nإيفا`,
+      ma: `عزيزي/عزيزتي...\n\nكيفاش دازة معاك القراية ديال الألمانية؟ واصل مزيان؟ وشنو كدير دابا؟ تخيل، خديت الخدمة الجديدة فالمجلة VIA! أنا دابا كنخدم كصحفية، وهادشي كان ديما الحلم ديالي!\n\nالمجلة VIA كيقراها بزاف الشباب. داكشي علاش كنكتبو بزاف على المهن والتكوينات وحتى على وقت الفراغ والرياضة. للأعداد الجاية ديال VIA، كنخطوطو دابا لسلسلة جديدة على المهن اللي كيحلمو بيها الناس. شنو هو الحلم ديالك فالمستقبل؟ يلا بغيتي، نصيفط ليك عدد مجاني من VIA باش تشوف شنو كندير.\n\nكنتسنى فالرد ديالك.\n\nتحياتي\nإيفا`,
+      en: `Dear...\n\nhow are things going with learning German? Are you making good progress, and what are you doing at the moment? Imagine, I got the new job at the magazine VIA! I am now working as a journalist, and that was always my dream job!\n\nVIA is read mainly by younger people. That's why we write a lot about professions and training and also about leisure and sports. For the next issues of VIA we are now planning a new series about dream jobs. What is your dream job actually? If you want, I'll gladly send you a free copy of VIA so you can see what I do.\n\nI am already looking forward to your answer.\n\nBest regards\nEva`,
+      fr: `Cher/Chère...\n\ncomment se passe l'apprentissage de l'allemand ? Est-ce que tu progresses bien, et qu'est-ce que tu fais en ce moment ? Figure-toi que j'ai obtenu le nouveau poste au magazine VIA ! Je travaille maintenant comme journaliste, et c'était toujours mon métier de rêve !\n\nVIA est surtout lu par les jeunes. C'est pourquoi nous écrivons beaucoup sur les métiers et les formations, mais aussi sur les loisirs et le sport. Pour les prochains numéros de VIA, nous prévoyons maintenant une nouvelle série sur les métiers de rêve. Quel est ton métier de rêve ? Si tu veux, je te donnerai volontiers un numéro gratuit de VIA pour que tu voies ce que je fais.\n\nJe me réjouis déjà de ta réponse.\n\nCordialement\nEva`,
+      hi: `प्रिय...\n\nजर्मन सीखना कैसा चल रहा है? क्या आप अच्छी प्रगति कर रहे हैं, और इस समय क्या कर रहे हैं? कल्पना कीजिए, मुझे VIA पत्रिका में नई नौकरी मिल गई! मैं अब एक पत्रकार के रूप में काम कर रहा हूँ, और यह हमेशा मेरा सपनों का काम था!\n\nVIA मुख्य रूप से युवा लोगों द्वारा पढ़ा जाता है। इसलिए हम पेशे और प्रशिक्षण के बारे में बहुत कुछ लिखते हैं और आराम और खेल के बारे में भी। VIA के अगले अंकों के लिए हम अब सपनों की नौकरियों के बारे में एक नई श्रृंखला की योजना बना रहे हैं। वास्तव में आपका सपनों का काम क्या है? यदि आप चाहें, तो मैं आपको VIA की एक मुफ्त प्रति भेजकर खुशी से भेज दूंगा ताकि आप देख सकें कि मैं क्या करता हूं।\n\nमैं पहले से ही आपके जवाब का इंतजार कर रहा हूं।\n\nसादर\nएवा`
+    },
+    task: "Schreiben Sie Ihrer Bekannten nun einen Antwortbrief, der die folgenden Punkte enthält:",
+    transTask: { ar: "كتب لصاحبك رسالة رد كتضمن هاد النقط:", ma: "كتب لصاحبك رسالة رد كتضمن هاد النقط:", en: "Write an answer letter to your acquaintance containing the following points:", fr: "Écrivez maintenant une lettre de réponse à votre connaissance contenant les points suivants :", hi: "अपने परिचित को एक उत्तर पत्र लिखें जिसमें निम्नलिखित बिंदु हों:" },
+    points: ["Fortschritte beim Deutsch Lernen", "Auf Evas neue Stelle reagieren", "Was es Neues bei Ihnen gibt", "Ihr Traumberuf"],
+    transPoints: {
+      ar: ["(1) التقدم في تعلم الألمانية.", "(2) رد الفعل على وظيفة إيفا الجديدة.", "(3) الجديد عندك.", "(4) مهنة أحلامك."],
+      ma: ["(1) التقدم في تعلم الألمانية.", "(2) رد الفعل على وظيفة إيفا الجديدة.", "(3) الجديد عندك.", "(4) مهنة أحلامك."],
+      en: ["(1) Progress in learning German.", "(2) React to Eva's new job.", "(3) What's new with you.", "(4) Your dream job."],
+      fr: ["(1) Progrès dans l'apprentissage de l'allemand.", "(2) Réagir au nouveau poste d'Eva.", "(3) Quoi de neuf chez vous.", "(4) Votre métier de rêve."],
+      hi: ["(1) जर्मन सीखने में प्रगति।", "(2) ईवा की नई नौकरी पर प्रतिक्रिया दें।", "(3) आपके यहाँ क्या नया है।", "(4) आपका सपनों का काम।"]
+    }
+  },
+  {
+    id: "sch3", title: "TIKKI TAKKA - Beschwerde", level: "B2",
+    text: `Das Party-Abenteuer für Kinder!\nErleben Sie spannende Kinder-Partys mit TIKKI TAKKA!\n\n• Abenteuerliche Spiele und lustige Party-Animation\n• Spaßige Schatzsuchen & spannende Entdeckungsreisen\n• Zauberer, Clowns & Kinderschminken\n• Tolle Party-Pakete für unvergessliche Erlebnisse\nTOLLE AKTIONSPREISE!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nSie haben bei der Firma Abenteuer TIKKI TAKKA eine Schatzsuche für den Geburtstag Ihres Kindes gebucht. Trotz günstiger Preise war die Geburtstagsfeier nicht so schön wie erwartet und Sie sind nicht damit zufrieden. Schreiben Sie eine Beschwerde und gehen Sie dabei auf die genannten Punkte ein.`,
+    transText: {
+      ar: `مغامرة الحفلات للأطفال!\nاستمتعوا بحفلات الأطفال المثيرة مع TIKKI TAKKA!\n\n• ألعاب مغامرات وأنشطة حفلات ممتعة\n• بحث عن الكنز ورحلات اكتشاف مثيرة\n• سحرة، مهرجون وتزيين وجه الأطفال\n• باقات حفلات رائعة لتجارب لا تُنسى\nأسعار رائعة!\n\nمغامرة TIKKI TAKKA\nطريق بيركن 5، 12345 مدينة المثال\nwww.tikki-takka.de\n+49 1234 567890\n\nلقد حجزتم في شركة مغامرة TIKKI TAKKA بحثًا عن الكنز بمناسبة عيد ميلاد طفلكم. على الرغم من الأسعار المعقولة، إلا أن حفلة عيد الميلاد لم تكن كما هو متوقع ولم تكونوا راضين عنها. اكتبوا شكوى واذكروا النقاط المذكورة.`,
+      ma: `مغامرة الحفلات للدراري!\nاستمتعو بحفلات الدراري المثيرة مع TIKKI TAKKA!\n\n• ألعاب مغامرات وأنشطة حفلات ممتعة\n• بحث على الكنز ورحلات اكتشاف مثيرة\n• سحرة، مهرجين وتزيين وجه الدراري\n• باقات حفلات زوينة لتجارب ما تتنساش\nأثمنة زوينة!\n\nمغامرة TIKKI TAKKA\nطريق بيركن 5، 12345 مدينة المثال\nwww.tikki-takka.de\n+49 1234 567890\n\nحجزتو فشركة مغامرة TIKKI TAKKA بحث على الكنز بمناسبة عيد ميلاد ولدكم. رغم الأثمنة المعقولة، ولكن حفلة عيد الميلاد ما كانتش بحال ما كنتو متوقعين وما كنتوش راضيين عليها. كتبو شكوى وذكرو النقط المذكورة.`,
+      en: `The party adventure for children!\nExperience exciting children's parties with TIKKI TAKKA!\n\n• Adventurous games and fun party animation\n• Fun treasure hunts & exciting discovery trips\n• Magicians, clowns & face painting\n• Great party packages for unforgettable experiences\nGREAT PROMOTIONAL PRICES!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nYou booked a treasure hunt for your child's birthday at the company Abenteuer TIKKI TAKKA. Despite reasonable prices, the birthday party was not as nice as expected and you are not satisfied with it. Write a complaint and address the mentioned points.`,
+      fr: `L'aventure de fête pour les enfants !\nVivez des fêtes d'enfants passionnantes avec TIKKI TAKKA !\n\n• Jeux aventureux et animation de fête amusante\n• Chasses au trésor amusantes et voyages de découverte passionnants\n• Magiciens, clowns et maquillage pour enfants\n• Superbes forfaits de fête pour des expériences inoubliables\nSUPER PRIX PROMOTIONNELS !\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nVous avez réservé une chasse au trésor pour l'anniversaire de votre enfant auprès de la société Abenteuer TIKKI TAKKA. Malgré des prix raisonnables, la fête d'anniversaire n'était pas aussi belle que prévu et vous n'en êtes pas satisfait. Rédigez une réclamation et abordez les points mentionnés.`,
+      hi: `बच्चों के लिए पार्टी साहसिक कार्य!\nTIKKI TAKKA के साथ रोमांचक बच्चों की पार्टियों का अनुभव करें!\n\n• साहसिक खेल और मजेदार पार्टी एनिमेशन\n• मजेदार खजाने की खोज और रोमांचक खोज यात्राएं\n• जादूगर, जोकर और चेहरे की पेंटिंग\n• अविस्मरणीय अनुभवों के लिए बेहतरीन पार्टी पैकेज\nशानदार प्रोत्साहन मूल्य!\n\nAbenteuer TIKKI TAKKA\nBirkenweg 5, 12345 Beispielstadt\nwww.tikki-takka.de\n+49 1234 567890\n\nआपने कंपनी Abenteuer TIKKI TAKKA में अपने बच्चे के जन्मदिन के लिए खजाने की खोज बुक की है। उचित कीमतों के बावजूद, जन्मदिन की पार्टी उम्मीद के मुताबिक अच्छी नहीं थी और आप इससे संतुष्ट नहीं हैं। एक शिकायत लिखें और उल्लिखित बिंदुओं को संबोधित करें।`
+    },
+    task: "Schreiben Sie eine Antwort. Behandeln Sie folgende Punkte:",
+    transTask: { ar: "اكتب شكوى واذكر النقاط المذكورة:", ma: "كتبو شكوى وذكرو النقط المذكورة:", en: "Write a complaint and address the mentioned points:", fr: "Rédigez une réclamation et abordez les points mentionnés :", hi: "एक शिकायत लिखें और उल्लिखित बिंदुओं को संबोधित करें:" },
+    points: ["Mit welchem Angebot waren Sie nicht zufrieden?", "Erklären Sie, warum das Angebot nicht begeistert hat.", "Vorschläge für Verbesserungen: Was könnte TIKKI TAKKA Ihrer Meinung nach besser machen?"],
+    transPoints: {
+      ar: ["(1) أشمن عرض ما كنتوش راضيين عليه؟", "(2) شرحوا علاش العرض ما عجبكمش.", "(3) اقتراحات للتحسين: شنو تقدر TIKKI TAKKA دير حسن فحالكم؟"],
+      ma: ["(1) أشمن عرض ما كنتوش راضيين عليه؟", "(2) شرحوا علاش العرض ما عجبكمش.", "(3) اقتراحات للتحسين: شنو تقدر TIKKI TAKKA دير حسن فحالكم؟"],
+      en: ["(1) Which offer were you not satisfied with?", "(2) Explain why the offer did not inspire enthusiasm.", "(3) Suggestions for improvement: What could TIKKI TAKKA do better in your opinion?"],
+      fr: ["(1) De quelle offre n'étiez-vous pas satisfait ?", "(2) Expliquez pourquoi l'offre n'a pas suscité l'enthousiasme.", "(3) Suggestions d'amélioration : Que pourrait faire TIKKI TAKKA de mieux selon vous ?"],
+      hi: ["(1) आप किस ऑफर से संतुष्ट नहीं थे?", "(2) समझाएं कि ऑफर ने उत्साह क्यों नहीं दिया।", "(3) सुधार के लिए सुझाव: आपकी राय में TIKKI TAKKA क्या बेहतर कर सकता था?"]
+    }
+  }
+];
+
 const EXAMS = [
-// ================= ALEX =================
 {
   id:"alex-t1", title:"Alex Und Cora", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -260,18 +343,18 @@ const EXAMS = [
 {
   id:"alex-t3", title:"Alex Und Cora", level:"B1", sub:"Teile 3", type:"matching",
   ads:[
-    {k:"A", t:"Café Simon", de:"Hausgemachte Pralinen, Kuchen, Torten und Eis", ar:"شوكولاتة، كعك، تورتات وآيس كريم منزلية الصنع", ma:"شوكولا، كيك، تورتة وآيس كريم ديال الدار", en:"Homemade pralines, cakes, tarts and ice cream", fr:"Pralines, gâteaux, tartes et glaces faits maison"},
-    {k:"B", t:"Tourismusschulen", de:"Höhere Lehranstalt, Hotelhandelsschule, Tourismusfachschule", ar:"مؤسسات تعليمية عليا، مدرسة تجارة الفنادق، مدرسة السياحة", ma:"مدارس عليا، مدرسة ديال الفندقة والسياحة", en:"Higher education, hotel trade school, tourism school", fr:"Enseignement supérieur, école de commerce hôtelier, école de tourisme"},
-    {k:"C", t:"Liederbühne Robinson", de:"Kleinkunst, Vegetarische Spezialitäten", ar:"فنون صغيرة، أطباق نباتية خاصة", ma:"فنون، ماكلة نباتية", en:"Small arts, vegetarian specialties", fr:"Petit art, spécialités végétariennes"},
-    {k:"D", t:"Interkulturelle Arbeit", de:"Berufsbegleitende Fortbildung für Fachkräfte", ar:"تدريب مهني للمتخصصين أثناء العمل", ma:"تكوين مهني للأطر خلال الخدمة", en:"In-service training for professionals", fr:"Formation continue pour professionnels"},
-    {k:"E", t:"Restaurantcafé Chesa W. Pressl", de:"Schweizer und bayerische Küche, Fischspezialitäten", ar:"مطبخ سويسري وبافاري، أسماك متخصصة", ma:"ماكلة سويسرية وبافارية، سمك", en:"Swiss and Bavarian cuisine, fish specialties", fr:"Cuisine suisse et bavaroise, spécialités de poisson"},
-    {k:"F", t:"BIZ (Berufsinformationszentrum)", de:"Informationen zu Ausbildung und Studium", ar:"معلومات حول التكوين والدراسة", ma:"معلومات على التكوين والدراسة", en:"Information on training and studies", fr:"Informations sur la formation et les études"},
-    {k:"G", t:"Abendkurs für Einsteiger", de:"Computer Grundwissen", ar:"أساسيات الكمبيوتر", ma:"أساسيات ديال الكمبيوتر", en:"Computer basics", fr:"Bases de l'informatique"},
-    {k:"H", t:"MortizCafé", de:"Kaffee so viel du willst", ar:"قهوة بقدر ما تريد", ma:"قهوة باللي بغيتي", en:"Coffee as much as you want", fr:"Café autant que tu veux"},
-    {k:"I", t:"Bachls Kerzenstub'n", de:"TANZEN + ESSEN, Live-Musik mit TANZ", ar:"رقص وأكل، موسيقى حية مع رقص", ma:"رقص وماكلة، موسيقى حية مع الرقص", en:"DANCE + FOOD, Live music with DANCE", fr:"DANSE + NOURRITURE, Musique live avec DANSE"},
-    {k:"J", t:"Internationales Studium", de:"Fremdsprachen + Betriebswirtschaft, B.A. in European Administration", ar:"لغات أجنبية + إدارة أعمال، بكالوريوس في الإدارة الأوروبية", ma:"لغات أجنبية + إدارة، إجازة فالإدارة الأوروبية", en:"Foreign languages + Business administration, B.A. in European Administration", fr:"Langues étrangères + Gestion d'entreprise, B.A. en Administration Européenne"},
-    {k:"K", t:"USA-Aufenthalt für Schüler", de:"Ein Schuljahr an einer High School", ar:"سنة دراسية في مدرسة ثانوية", ma:"عام دراسي فمدرسة ثانوية بأمريكا", en:"One school year at a High School", fr:"Une année scolaire dans un lycée"},
-    {k:"L", t:"Samstagswerkstatt", de:"Aufbau des Autos, Reparatur und Pflege", ar:"بنية السيارة، الإصلاح والصيانة", ma:"بنية الطوموبيل، التصليح والصيانة", en:"Car structure, repair and maintenance", fr:"Structure de la voiture, réparation et entretien"}
+    {k:"A", t:"Café Simon", de:"3 × in Passau Ihr Konditor\n1 = Rindermarkt 10\n2 = Ludwigsplatz 6\n3 = Donau-Passage\n• Hausgemachte Pralinen\n• Kuchen, Torten und Eis\n• Kleiner Mittagstisch", ar:"شوكولاتة، كعك، تورتات وآيس كريم منزلية الصنع", ma:"شوكولا، كيك، تورتة وآيس كريم ديال الدار", en:"Homemade pralines, cakes, tarts and ice cream", fr:"Pralines, gâteaux, tartes et glaces faits maison"},
+    {k:"B", t:"Tourismusschulen", de:"4190 Bad Leonfelden\nHagauer Str. 17, Tel. 07213/6955\nHöhere Lehranstalt: 5 Jahre, Matura\nFV-Kolleg: 3 Semester – endet mit Matura\nHotelhandelsschule: 3 Jahre\nTourismufachschule: 3 Jahre", ar:"مؤسسات تعليمية عليا، مدرسة تجارة الفنادق، مدرسة السياحة", ma:"مدارس عليا، مدرسة ديال الفندقة والسياحة", en:"Higher education, hotel trade school, tourism school", fr:"Enseignement supérieur, école de commerce hôtelier, école de tourisme"},
+    {k:"C", t:"Liederbühne Robinson", de:"KLEINKUNST VOM FEINSTEN\n• Urgemütliche Gaststube\n• Idyllischer Biergarten\n• Preiswerte Schmankerl\n• Vegetarische Spezialitäten\nSeewog 2 • 93486 Runding-Vierau\nTel. 09971-4651\nan der B20 Cham–Furth i. W.\ngeöffnet von Mi bis Sa von 17:00–1:00 Uhr\nSonn- und Feiertage ab 11:00 Uhr", ar:"فنون صغيرة، أطباق نباتية خاصة", ma:"فنون، ماكلة نباتية", en:"Small arts, vegetarian specialties", fr:"Petit art, spécialités végétariennes"},
+    {k:"D", t:"Interkulturelle Arbeit", de:"Berufsbegleitende Fortbildung für Fachkräfte in pädagogischen, sozialen und Gesundheitsberufen.\nJan./Feb.\nParitätisches Bildungswerk.\nTel.: 0421 / 174720", ar:"تدريب مهني للمتخصصين أثناء العمل", ma:"تكوين مهني للأطر خلال الخدمة", en:"In-service training for professionals", fr:"Formation continue pour professionnels"},
+    {k:"E", t:"Restaurantcafé Chesa W. Pressl", de:"Schweizer und bayerische Küche,\nFischspezialitäten aus heimischen Gewässern\nRömerplatz 3 (Hängebrücke)\n94032 Passau\nTel. 0851 / 33331", ar:"مطبخ سويسري وبافاري، أسماك متخصصة", ma:"ماكلة سويسرية وبافارية، سمك", en:"Swiss and Bavarian cuisine, fish specialties", fr:"Cuisine suisse et bavaroise, spécialités de poisson"},
+    {k:"F", t:"BIZ (Berufsinformationszentrum)", de:"Sie stehen vor beruflichen Entscheidungen\nDann informieren Sie sich im\nB I Z\nBerufsinformationszentrum\nÖffnungszeiten:\nMo, Di, Mi: 8.00 bis 12.00 Uhr\n14.00 bis 15.30 Uhr\nDo: 8.00 bis 12.00 Uhr • 14.00 bis 18.00 Uhr\nFr: 8.00 bis 12.00 Uhr\nSie finden dort ein breitgefächertes Angebot an Medien zu den Themen:\nAUSBILDUNG • STUDIUM\nArbeitsamt Passau, Innstraße 30, Tel. 0851/590-390", ar:"معلومات حول التكوين والدراسة", ma:"معلومات على التكوين والدراسة", en:"Information on training and studies", fr:"Informations sur la formation et les études"},
+    {k:"G", t:"Abendkurs für Einsteiger", de:"Keine Angst vor neuen Technologien\nDieser Kurs richtet sich an alle diejenigen, die sich bisher mit dem Computer noch gar nicht befasst haben. Neben theoretischen Grundwissen wird ein praktischer Einstieg in die Betriebssysteme Windows und Linux vermittelt.\nVHS Favoriten · Tel.: 01-785342", ar:"أساسيات الكمبيوتر", ma:"أساسيات ديال الكمبيوتر", en:"Computer basics", fr:"Bases de l'informatique"},
+    {k:"H", t:"MortizCafé", de:"Unterer Sand 2 Passau\nAquarium\n• täglich bis 18 Uhr\n• Kaffee so viel du willst\n   eine Tasse Frische\n   eine Tasse Milch\n   eine Tasse Zucker\n• täglich von 18 Uhr bis 21 Uhr\n   Beck’s\n   Jever\n   Bitburger\n   Badeger\n   Budweiser", ar:"قهوة بقدر ما تريد", ma:"قهوة باللي بغيتي", en:"Coffee as much as you want", fr:"Café autant que tu veux"},
+    {k:"I", t:"Rathausekeller", de:"Originelles Weinkolal mit österreichischen, italienischen und französischen Qualitätsweinen sowie großer Auswahl an kaltem und warmem Buffet.\nMontag und Dienstag – Ruhetage\nA 4785 Halbach/Freinberg\nTel.: 0043/7713/6104", ar:"مطعم ونبيذ", ma:"مطعم ونبيذ", en:"Restaurant and wine", fr:"Restaurant et vin"},
+    {k:"J", t:"Internationales Studium", de:"Fremdsprachen +\nBetriebswirtschaft.\nStaatlicher Uni-Abschluss\nB.A. in European\nAdministration. 2 Jahre in\nKöln + 1 Jahr in England\noder Frankreich.\nInfos anfordern:\nEuro Akademie\nElsa-Brandström-Str. 8\n50668 Köln\n(0221) 736074", ar:"لغات أجنبية + إدارة أعمال، بكالوريوس في الإدارة الأوروبية", ma:"لغات أجنبية + إدارة، إجازة فالإدارة الأوروبية", en:"Foreign languages + Business administration, B.A. in European Administration", fr:"Langues étrangères + Gestion d'entreprise, B.A. en Administration Européenne"},
+    {k:"K", t:"USA-Aufenthalt für Schüler", de:"Ein Schuljahr an einer High School, sehr gute Gastfamilien, beste Betreuung, Prospekte und ausführliches Video kostenlos von:\nfee-Sprachreisen\nLeibnizstr. 3\n70193 Stuttgart\nTel. 0711 / 638048\nFax 6365378", ar:"سنة دراسية في مدرسة ثانوية", ma:"عام دراسي فمدرسة ثانوية بأمريكا", en:"One school year at a High School", fr:"Une année scolaire dans un lycée"},
+    {k:"L", t:"Bachls Kerzenstub’n", de:"TANZEN + ESSEN Live-Musik mit TANZ\nGenießen Sie unsere herzhaft deftigen Fleischspezialitäten!\n93136 Keilberg Tel.: 0851/9111-0\nGeöffnet: Di–Sa ab 17.00 Uhr, Übernachtung für Reisende", ar:"رقص وأكل، موسيقى حية مع رقص", ma:"رقص وماكلة، موسيقى حية مع الرقص", en:"DANCE + FOOD, Live music with DANCE", fr:"DANSE + NOURRITURE, Musique live avec DANSE"}
   ],
   items:[
     {n:1, c:"H", de:"Sie verbringen gern viele Stunden im Cafe, wollen aber nicht viel Geld ausgeben.", ar:"تحب قضاء ساعات طويلة في المقهى، ولكنك لا ترغب في إنفاق الكثير من المال.", ma:"كتحب تدوز ساعات فالمقهى، ولكن ما بغيتيش تصرف فلوس بزاف.", en:"You like spending many hours in a cafe but don't want to spend much money.", fr:"Vous aimez passer de nombreuses heures dans un café mais ne voulez pas dépenser beaucoup d'argent."},
@@ -289,6 +372,10 @@ const EXAMS = [
 {
   id:"alex-sp1", title:"Alex Und Cora", level:"B1", sub:"Sprach 1", type:"sprach1",
   text: `Schaffhausen, den...\nHallo Isabelle,\nwie geht es dir? Hast du deine Prüfungen geschafft?\nWie du ja weißt, .....(1)..... ich seit zwei Monaten in einem Altersheim .....(2)..... der Nähe von Schaffhausen. Die Arbeit in .....(3)..... Haus gefällt mir gut, obwohl es manchmal auch sehr stressig ist. Besonders schön ist der enge .....(4)..... zu einigen der alten Menschen. Eine Frau, Anna Ringier, mag ich .....(5)..... gern. Sie ist schon 96 Jahre alt und sitzt im Rollstuhl, aber sie ist immer fröhlich. Gestern hat sie mir .....(6)..... ganzes Leben erzählt. Sie hat bis zum 84. Lebensjahr .....(7)..... gearbeitet. Schon als achtjähriges Mädchen musste sie bei einem Bauern arbeiten, .....(8)..... ihre Eltern die neunköpfige Familie nicht ernähren konnten. Später arbeitete Anna als Schneiderin.\nNeben ihrer Arbeit hat Anna .....(9)..... auf eine Sache nie verzichtet: das Bergsteigen! Das war immer ihre große Leidenschaft. Diese Frau ist wirklich sehr beeindruckend!\nAber du .....(10)..... bestimmt auch viel erlebt. Ich würde mich sehr freuen, wenn du mir bald wieder einmal schreibst!\nHerzliche Grüße\ndeine Julie`,
+  transText: {
+    ar: `شافهاوزن، في...\nمرحباً إيزابيل،\nكيف حالك؟ هل اجتزت امتحاناتك؟\nكما تعلمين، أنا أعمل منذ شهرين في دار للمسنين بالقرب من شافهاوزن. العمل في هذا المنزل يعجبني، رغم أنه مرهق جداً في بعض الأحيان. الشيء الجميل بشكل خاص هو التواصل الوثيق مع بعض كبار السن. هناك سيدة، آنا رينجير، أحبها كثيراً. عمرها 96 عاماً وتجلس على كرسي متحرك، لكنها دائماً مبتهجة. أمس أخبرتني عن حياتها بأكملها. عملت بجد حتى سن 84. حتى عندما كانت فتاة في الثامنة من عمرها، كان عليها أن تعمل لدى مزارع لأن والديها لم يتمكنا من إطعام الأسرة المكونة من تسعة أفراد. في وقت لاحق عملت آنا كخياطة.\nإلى جانب عملها، لم تتخل آنا أبداً عن شيء واحد: تسلق الجبال! كان هذا دائماً شغفها الكبير. هذه المرأة مثيرة للإعجاب حقاً!\nولكن من المؤكد أنك مررت بالكثير من التجارب أيضاً. سأكون سعيداً جداً إذا كتبت لي مرة أخرى قريباً!\nتحياتي الحارة\nجوليا`,
+    ma: `شافهاوزن، في...\nمرحباً إيزابيل،\nكيف حالك؟ واش دوزتي الامتحانات ديالك؟\nبحال ما كتعرفي، أنا كنخدم منذ شهرين في دار المسنين قرب شافهاوزن. الخدمة في هاد الدار كتعجبني، رغم أنها مرهقة جداً في بعض الأحيان. الحاجة الزوينة بزاف هي التواصل القريب مع بعض الناس الكبار. كاينة سيدة، آنا رينجير، كنحبها بزاف. عمرها 96 عاماً وكتجلس على كرسي متحرك، ولكنها دائماً مبتهجة. البارح حكات ليا على حياتها كاملة. خدمت بجد حتى لسن 84. حتى ملي كانت بنت عندها 8 سنين، كان عليها تخدم عند مزارع حيت والديها ما قدروش يكلو عائلة ديال 9 ديال الناس. من بعد آنا خدمت كخياطة.\nإلى جانب الخدمة ديالها، آنا عمرها ما تنازلت على حاجة وحدة: تسلق الجبال! هادشي كان ديما شغفها الكبير. هاد السيدة مثيرة للإعجاب بزاف!\nولكن أكيد نتا حتى نتا دوزتي بزاف ديال التجارب. غادي نفرح بزاف يلا كتبتي ليا مرة أخرى قريباً!\nتحياتي الحارة\nجوليا`
+  },
   items:[
     {n:1, c:"arbeite", opts:["arbeite","arbeiten","arbeiteten"]},
     {n:2, c:"in", opts:["auf","bei","in"]},
@@ -306,10 +393,12 @@ const EXAMS = [
   id:"alex-sp2", title:"Alex Und Cora", level:"B1", sub:"Sprach 2", type:"sprach2",
   wordBank:[{k:"a",w:"an"},{k:"b",w:"Bekannte"},{k:"c",w:"bereits"},{k:"d",w:"dafür"},{k:"e",w:"darüber"},{k:"f",w:"dass"},{k:"g",w:"Familie"},{k:"h",w:"kann"},{k:"i",w:"mich"},{k:"j",w:"mit"},{k:"k",w:"muss"},{k:"l",w:"ob"},{k:"m",w:"sehr"},{k:"n",w:"was"},{k:"o",w:"welche"}],
   text: `Sehr geehrte Damen und Herren,\n\nnachdem ich Ihr Inserat gelesen habe, möchte ich .....(1)..... gern genauer über Ihr Restaurant informieren. In einem Monat feiere ich meinen 30. Geburtstag und möchte dazu viele Freunde und .....(2)..... einladen. .....(3)..... wäre Ihr Hotel sicher sehr gut geeignet. Deshalb noch einige Fragen .....(4)..... Sie: Ich rechne ungefähr mit 25 Personen. Wie hoch ist die Miete für den passenden Raum und .....(5)..... Gerichte können Sie mir empfehlen? Da fast alle Gäste mit dem Auto kommen werden, wäre es auch wichtig, .....(6)..... genügend Parkplätze vorhanden sind.\n\nEs wäre .....(7)..... freundlich von Ihnen, wenn Sie mir möglichst bald Bescheid geben könnten, damit ich die Einladungen verschicken .....(8)...... Bitte senden Sie mir einen Prospekt Ihres Hotels .....(9)..... genauer Wegbeschreibung. Sollten Ihre Räume für den Monat Mai .....(10)..... ausgebucht sein, geben Sie mir bitte umgehend Bescheid.\n\nMit freundlichen Grüßen\nBarbara Heuberger`,
+  transText: {
+    ar: `سيداتي وسادتي،\n\nبعد أن قرأت إعلانكم، أود الحصول على مزيد من المعلومات حول مطعمكم. بعد شهر سأحتفل بعيد ميلادي الثلاثين وأود دعوة العديد من الأصدقاء والمعارف. لذلك سيكون فندقكم مناسباً جداً بالتأكيد. لذلك لدي بعض الأسئلة لكم: أتوقع حوالي 25 شخصاً. كم تبلغ تكلفة استئجار الغرفة المناسبة وما هي الأطباق التي يمكنكم التوصية بها؟ نظراً لأن جميع الضيوف تقريباً سيأتون بالسيارة، سيكون من المهم أيضاً التأكد من توفر ما يكفي من مواقف السيارات.\n\nسأكون ممتناً جداً إذا تمكنتم من إبلاغي في أقرب وقت ممكن حتى أتمكن من إرسال الدعوات. يرجى إرسال كتيب عن فندقكم مع وصف دقيق للطريق. إذا كانت غرفكم محجوزة بالكامل لشهر مايو، فيرجى إبلاغي على الفور.\n\nمع أطيب التحيات\nباربرا هوبرغر`,
+    ma: `سيداتي وسادتي،\n\nمن بعد ما قريت الإعلان ديالكم، بغيت نعرف كثر على المطعم ديالكم. من بعد شهر غادي نحتفل بعيد ميلادي الثلاثين وبغيت نعيط لبزاف ديال الصحاب والمعارف. داكشي علاش الفندق ديالكم أكيد غادي يكون مناسب بزاف. داكشي علاش عندي شي أسئلة ليكم: كنتوقع حوالي 25 ديال الناس. بشحال كتكري الغرفة المناسبة وشنو هي الماكلة اللي تقدرو تنصحوني بها؟ حيت تقريباً كاع الضيوف غادي يجيو بالطوموبيل، خاصنا نتأكدو بلي كاينين مواقف كافيين للطوموبيلات.\n\nغادي نكون ممتن بزاف يلا قديتو تخبروني في أقرب وقت ممكن باش نقدر نصيفط الدعوات. عفاك صيفطو ليا كتيب على الفندق ديالكم مع وصف دقيق للطريق. يلا كانت الغرف ديالكم محجوزة بالكامل لشهر ماي، عفاك خبروني دغيا.\n\nمع أطيب التحيات\nباربرا هوبرغر`
+  },
   items:[{n:1, c:"mich"},{n:2, c:"Bekannte"},{n:3, c:"dafür"},{n:4, c:"an"},{n:5, c:"welche"},{n:6, c:"dass"},{n:7, c:"sehr"},{n:8, c:"kann"},{n:9, c:"mit"},{n:10, c:"bereits"}]
 },
-
-// ================= RITA =================
 {
   id:"rita-t1", title:"Rita", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -395,7 +484,7 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"H", de:"Ihre Bekannte ist Mitte dreißig und sucht einen Partner, mit dem sie regelmäßig ins Kino gehen kann.", ar:"معرفتك في منتصف الثلاثينيات وتبحث عن شريك يمكنها الذهاب معه إلى السينما بانتظام.", ma:"صحابك فمنتصف الثلاثينات وكتقلب على شريك تقدر تمشي معاه للسينما.", en:"Your acquaintance is in her mid-thirties and is looking for a partner to go to the cinema with regularly.", fr:"Votre connaissance a la trentaine et cherche un partenaire avec qui aller régulièrement au cinéma."},
-    {n:2, c:"I", de:"Sie wollen Ihren Garten verändern und suchen Beratung/Tipps.", ar:"ترغب في تغيير حديقتك وتبحث عن استشارات أو نصائح.", ma:"بغيتي تبدل الجنينة ديالك وكتقلب على نصايح.", en:"You want to change your garden and are looking for advice/tips.", fr:"Vous voulez changer votre jardin et cherchez des conseils."},
+    {n:2, c:"I", de:"Sie wollen Ihren Garten verändernتغيير حديقتك وتبحث عن استشارات أو نصائح.", ma:"بغيتي تبدل الجنينة ديالك وكتقلب على نصايح.", en:"You want to change your garden and are looking for advice/tips.", fr:"Vous voulez changer votre jardin et cherchez des conseils."},
     {n:3, c:"J", de:"Der Sohn Ihrer Freunde hat gerade das Abitur gemacht und sucht im Sommer für zwei Monate einen Job.", ar:"ابن أصدقائك قد أنهى للتو الثانوية العامة ويبحث عن عمل لمدة شهرين في الصيف.", ma:"ولد صحابك داز الباك دابا وكيقلب على خدمة فالصيف لشهرين.", en:"Your friend's son has just graduated and is looking for a job for two months in the summer.", fr:"Le fils de vos amis vient d'avoir son bac et cherche un emploi pour deux mois en été."},
     {n:4, c:"X", de:"Ihr Freund möchte im Nebenjob Gartenarbeiten übernehmen.", ar:"يريد صديقك العمل في وظيفة جانبية تتعلق بأعمال الحدائق.", ma:"صاحبك بغى يدير شي خدمة جانبية فالبستنة.", en:"Your friend wants to take on garden work as a side job.", fr:"Votre ami veut prendre un petit boulot dans le jardinage."},
     {n:5, c:"K", de:"Ihr 45-jähriger Onkel sucht eine Partnerin, mit der er zusammen verreisen kann.", ar:"عمك البالغ من العمر 45 عامًا يبحث عن شريكة يمكنه السفر معها.", ma:"عمك اللي عندو 45 عام كيقلب على شريكة يسافر معاها.", en:"Your 45-year-old uncle is looking for a partner to travel with.", fr:"Votre oncle de 45 ans cherche une partenaire pour voyager."},
@@ -409,6 +498,10 @@ const EXAMS = [
 {
   id:"rita-sp1", title:"Rita", level:"B1", sub:"Sprach 1", type:"sprach1",
   text: `Liebe Catherine,\nich hab's geschafft! Endlich habe ich einen Job bekommen. Wie versprochen möchte ich dir gleich .....(1)..... erzählen. Am Anfang .....(2)..... ich ziemlich enttäuscht, weil ich auf meine vielen Bewerbungsschreiben insgesamt .....(3)..... zwei Antworten bekommen habe. Aber zum Glück hat einer davon .....(4).....: Ich werde nun zwei Nachmittage in der Woche als Babysitterin .....(5)..... einer Familie arbeiten, die zwei Kinder hat. Sie sind 3 und 5 Jahre alt und .....(6)..... sind sehr nett. Wir haben in der .....(7)..... Woche bereits Vieles gemeinsam gemacht, sind in den Zoo und .....(8)..... Kindermuseum gegangen. .....(9)..... kann man eine Stadt gar nicht kennenlernen, und es macht mir viel Spaß!\nFür heute wünsche ich dir alles Gute, schreibe mir bald, wie es dir .....(10)..... .\nLiebe Grüße\nDeine Tanja`,
+  transText: {
+    ar: `عزيزتي كاثرين،\nلقد نجحت! أخيراً حصلت على وظيفة. كما وعدتك، أريد أن أخبرك فوراً بالخبر. في البداية كنت محبطة جداً، لأنني تلقيت فقط إجابتين من إجمالي طلبات التوظيف الكثيرة التي أرسلتها. لكن لحسن الحظ، نجح أحدها: سأعمل الآن كجليسة أطفال لأسرة لديها طفلان، لمدة فترتين بعد الظهر في الأسبوع. يبلغان من العمر 3 و 5 سنوات وكلاهما لطيفان جداً. لقد قمنا بالكثير من الأشياء معاً في الأسبوع الأول، وذهبنا إلى حديقة الحيوان ومتحف الأطفال. بهذه الطريقة لا يمكنك التعرف على المدينة على الإطلاق، لكن الأمر ممتع للغاية بالنسبة لي!\nأتمنى لك كل التوفيق اليوم، اكتبي لي قريباً كيف حالك.\nمع أطيب التحيات\nتانيا`,
+    ma: `عزيزتي كاثرين،\nنجحت! أخيراً حصلت على عمل. كما وعدتك، أريد أن أخبرك على الفور. في البداية كنت محبطة جداً، لأنني تلقيت فقط إجابتين من إجمالي طلبات التوظيف الكثيرة التي أرسلتها. لكن لحسن الحظ، نجح أحدها: سأعمل الآن كجليسة أطفال لأسرة لديها طفلان، لمدة فترتين بعد الظهر في الأسبوع. يبلغان من العمر 3 و 5 سنوات وكلاهما لطيفان جداً. لقد قمنا بالكثير من الأشياء معاً في الأسبوع الأول، وذهبنا إلى حديقة الحيوان ومتحف الأطفال. بهذه الطريقة لا يمكنك التعرف على المدينة على الإطلاق، لكن الأمر ممتع للغاية بالنسبة لي!\nأتمنى لك كل التوفيق اليوم، اكتبي لي قريباً كيف حالك.\nمع أطيب التحيات\nتانيا`
+  },
   items:[
     {n:1, c:"davon", opts:["dafür","damit","davon"]},
     {n:2, c:"war", opts:["bin","habe","war"]},
@@ -426,10 +519,12 @@ const EXAMS = [
   id:"rita-sp2", title:"Rita", level:"B1", sub:"Sprach 2", type:"sprach2",
   wordBank:[{k:"a",w:"der"},{k:"b",w:"die"},{k:"c",w:"Erst"},{k:"d",w:"geeignet"},{k:"e",w:"gerne"},{k:"f",w:"hätte"},{k:"g",w:"in"},{k:"h",w:"muss"},{k:"i",w:"nach"},{k:"j",w:"noch"},{k:"k",w:"schon"},{k:"l",w:"wann"},{k:"m",w:"wäre"},{k:"n",w:"wenn"},{k:"o",w:"wo"}],
   text: `Ihre Anzeige in der Frankfurter Rundschau\n\nSehr geehrte Frau Herrmann ,\n\nich habe Ihre Anzeige in der Frankfurter Rundschau vom 5. Oktober gelesen und interessiere mich sehr für die 3-Zimmer-Wohnung.\n\nZurzeit wohne ich noch in Krakau (Polen). Demnächst .....(1)..... ich aber aus beruflichen Gründen mit meinem Sohn (3 Jahre) .....(2)..... Frankfurt umziehen. Deshalb suche ich zum 1. November eine Wohnung, .....(3)..... möglichst zentral gelegen sein sollte. Ihre Wohnung .....(4)..... deshalb genau richtig für uns.\n\nIch hätte jedoch noch einige Fragen zu Ihrer Anzeige: Ist die Wohnung auch für Kleinkinder .....(5).....? Und gibt es in der näheren Umgebung einen Spielplatz, .....(6)..... mein Sohn spielen könnte? Außerdem würde ich .....(7)..... wissen, ob die Haltung von Haustieren in .....(8)..... Wohnung erlaubt ist. .....(9)..... es möglich ist, würden wir nämlich gerne unseren Hund mitbringen.\n\nIch danke Ihnen .....(10)..... jetzt für Ihre Antwort und grüße Sie freundlich.\n\nKASIA KLOC`,
+  transText: {
+    ar: `إعلانكم في صحيفة فرانكفورتر روندشاو\n\nعزيزتي السيدة هيرمان،\n\nلقد قرأت إعلانكم في صحيفة فرانكفورتر روندشاو بتاريخ 5 أكتوبر وأنا مهتمة جداً بشقة بثلاث غرف.\n\nأعيش حالياً في كراكوف (بولندا). ولكن قريباً سأضطر إلى الانتقال إلى فرانكفورت مع ابني (3 سنوات) لأسباب مهنية. لذلك أبحث عن شقة اعتباراً من 1 نوفمبر، يجب أن تكون في موقع مركزي قدر الإمكان. لذلك فإن شقتكم مناسبة تماماً لنا.\n\nومع ذلك، لدي بعض الأسئلة حول إعلانكم: هل الشقة مناسبة أيضاً للأطفال الصغار؟ وهل توجد ملعب أطفال في الجوار يمكن لابني اللعب فيه؟ بالإضافة إلى ذلك، أود أن أعرف ما إذا كان يُسمح بتربية الحيوانات الأليفة في الشقة. إذا كان ذلك ممكناً، نود أن نجلب كلبنا معنا.\n\nأشكركم مسبقاً على ردكم وأحييكم بتحية طيبة.\n\nكاسيا كلوك`,
+    ma: `إعلانكم في صحيفة فرانكفورتر روندشاو\n\nعزيزتي السيدة هيرمان،\n\nقريت الإعلان ديالكم في صحيفة فرانكفورتر روندشاو بتاريخ 5 أكتوبر وأنا مهتمة بزاف بشقة فيها 3 ديال الغرف.\n\nدابا كنعيش في كراكوف (بولندا). ولكن قريباً غادي نضطر ننتقل لفرانكفورت مع ولدي (3 سنين) لأسباب مهنية. داكشي علاش كنقلب على شقة من 1 نوفمبر، خاصها تكون في موقع مركزي قد ما يمكن. داكشي علاش الشقة ديالكم مناسبة تماماً لينا.\n\nولكن عندي شي أسئلة على الإعلان ديالكم: واش الشقة مناسبة حتى للدراري الصغار؟ وواش كاين شي ملعب ديال الدراري قريب فين يقدر ولدي يلعب؟ بالإضافة لهادشي، بغيت نعرف واش مسموح بتربية الحيوانات الأليفة في الشقة. يلا كان ممكن، بغينا نجيبو الكلب ديالنا معانا.\n\nكنشكركم مقدماً على الرد ديالكم وكنحييكم بتحية طيبة.\n\nكاسيا كلوك`
+  },
   items:[{n:1, c:"muss"},{n:2, c:"nach"},{n:3, c:"die"},{n:4, c:"wäre"},{n:5, c:"geeignet"},{n:6, c:"wo"},{n:7, c:"gerne"},{n:8, c:"der"},{n:9, c:"wenn"},{n:10, c:"schon"}]
 },
-
-// ================= CAROLINE =================
 {
   id:"caroline-t1", title:"Caroline", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -530,7 +625,11 @@ const EXAMS = [
 },
 {
   id:"caroline-sp1", title:"Caroline", level:"B1", sub:"Sprach 1", type:"sprach1",
-  text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalten oder aufschreiben. In Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
+  text: `Liebe Catherine,\nseit ich dir letzte Mal von meinem Sprachhaufenhalt in der Schweiz .....(1)..... habe, ist viel passiert. Ich kenne .....(2)..... Land jetzt schon recht gut. Die Schweiz ist ja wirklich nicht groß. .....(3)..... in jeder Gegend wird ein anderer Dialekt oder gar eine andere Sprache gesprochen. Das ist .....(4)..... mich fast unglaublich! Bei uns in Australien fährt man mit dem Auto 24 Stunden lang geradeaus, und .....(5)..... man ankommt, dann sprechen die Leute dort immer noch dieselbe Sprache. Am Anfang hat mich das Sprachgemisch .....(6)..... sehr verwirrt, aber .....(7)..... verstehe ich fast alles, wenn jemand auf Schweizerdeutsch zu mir spricht. Ich kann aber nur auf Hochdeutsch antworten. Zwischen der Schule hier und unserem Schulsystem in Australien gibt es einige .....(8).....: In der Schweiz sprechen die Lehrer viel und die Schüler .....(9)..... Vieles im Kopf behalteIn Australien arbeiten wir meistens im Rahmen von Projekten und machen eigentlich alle Aufgaben auf .....(10)..... Computer.\nViele Grüße\nJack`,
+  transText: {
+    ar: `عزيزتي كاثرين،\nمنذ أن أخبرتك آخر مرة عن إقامتي لتعلم اللغة في سويسرا، حدث الكثير. أنا أعرف هذا البلد جيداً الآن. سويسرا حقاً ليست كبيرة. ولكن في كل منطقة يتم التحدث بلهجة مختلفة أو حتى بلغة مختلفة. هذا أمر لا يصدق تقريباً بالنسبة لي! في أستراليا، يمكنك القيادة بالسيارة لمدة 24 ساعة على التوالي، وعندما تصل إلى هناك، لا يزال الناس يتحدثون نفس اللغة. في البداية، أربكني هذا المزيج اللغوي كثيراً، ولكن الآن أفهم تقريباً كل شيء عندما يتحدث إلي شخص ما باللهجة السويسرية الألمانية. لكن لا يمكنني الرد إلا بالألمانية الفصحى. هناك بعض الاختلافات بين المدرسة هنا ونظامنا المدرسي في أستراليا: في سويسرا يتحدث المعلمون كثيراً ويجب على الطلاب الاحتفاظ بالكثير في رؤوسهم أو كتابته. في أستراليا، نعمل غالباً في إطار مشاريع ونقوم بجميع المهام على الكمبيوتر.\nمع أطيب التحيات\nجاك`,
+    ma: `عزيزتي كاثرين،\nمن بعد ما خبرتك آخر مرة على الإقامة ديالي باش نتعلم اللغة فسويسرا، وقع بزاف ديال الحوايج. دابا كنعرف هاد البلاد مزيان. سويسرا بصح ماشي كبيرة. ولكن فكل منطقة كيهضرو بلهجة مختلفة ولا حتى بلغة مختلفة. هادشي بالنسبة ليا شبه مستحيل! فأستراليا، كتقدر تسوق الطوموبيل لمدة 24 ساعة على التوالي، وملي توصل، كتلاقى الناس تما مازال كيهضرو نفس اللغة. في البداية، هاد الخلط اللغوي ربلني بزاف، ولكن دابا كنفهم تقريباً كلشي ملي شي واحد كيهضر معايا بالألمانية السويسرية. ولكن ما كنقدرش نجاوب غير بالألمانية الفصحى. كاينين شي فروقات بين المدرسة هنا والنظام المدرسي ديالنا فأستراليا: فسويسرا الأساتذة كيهضرو بزاف والتلاميذ خاصهم يحفظو بزاف ديال الحوايج ولا يكتبوهم. فأستراليا، كنخدمو غالباً فإطار مشاريع وكنديرو تقريباً كاع المهام على الكمبيوتر.\nمع أطيب التحيات\nجاك`
+  },
   items:[
     {n:1, c:"erzählt", opts:["erzähle","erzählen","erzählt"]},
     {n:2, c:"dieses", opts:["diese","diesen","dieses"]},
@@ -548,10 +647,12 @@ const EXAMS = [
   id:"caroline-sp2", title:"Caroline", level:"B1", sub:"Sprach 2", type:"sprach2",
   wordBank:[{k:"a",w:"bei"},{k:"b",w:"bereits"},{k:"c",w:"einmal"},{k:"d",w:"Eure"},{k:"e",w:"ganz"},{k:"f",w:"garantieren"},{k:"g",w:"Gestern"},{k:"h",w:"können"},{k:"i",w:"machen"},{k:"j",w:"nur"},{k:"k",w:"statt"},{k:"l",w:"Technisch"},{k:"m",w:"Über"},{k:"n",w:"Unser"},{k:"o",w:"wenn"}],
   text: `QUANTUM-SYSTEM\n\nDas Lotterie – Systemspiel\n\nOtto – Suhr- Allee 100. D- 10120 Berlin\n\nSehr geehrte Lottospieler,\n\nwer möchte nicht auch .....(1)..... bei sechs Richtigen im Lotto dabei sein? Vertrauen Sie beim Lottospiel nicht .....(2)..... auf das Glück, denn Sie .....(3)..... Ihre Chancen selbst stark verbessern, .....(4)..... Sie mit unserem Lotterie-System spielen – und das für nur 5 Euro in der Woche! .....(5)..... allein zu spielen, spielen Sie mit uns in einer starken Spielergemeinschaft. Dadurch erhöhen sich .....(6)..... automatisch Ihre Chancen! Und was Sie gewinnen können? .....(7)..... unserem Quantum-System spielen Sie mit einer Chance auf einen Gewinn von 1 Million Euro! Alle Gewinne erhalten Sie umgehend und ungekürzt zu 100% – das .....(8)..... wir Ihnen!\n\nDavon habe ich mich selbst überzeugt! Spielen Sie mit uns das Quantum-System: .....(9)..... 700 Quantum-Systemspielgruppen haben zusammen schon über sieben Millionen Euro gewonnen.\n\nHerzliche Grüße\nIhre SABINE MEIER-PÜTZ\n\nPS: Als besondere Gewinnchance erhalten Sie heute das Vier-Richtige-Gratisspiel. .....(10)..... Sie hier unbedingt mit und gewinnen Sie! Ich drücke Ihnen die Daumen……`,
+  transText: {
+    ar: `نظام الكم\n\nلعبة اليانصيب - النظام\n\nأوتو - سور ألي 100. D-10120 برلين\n\nعزيزي لاعب اليانصيب،\n\nمن لا يريد أن يكون هناك أيضاً عند الفوز بستة أرقام صحيحة في اليانصيب؟ لا تثق بالحظ فقط عند لعب اليانصيب، لأنك يمكنك تحسين فرصك بشكل كبير إذا لعبت بنظام اليانصيب الخاص بنا - وذلك مقابل 5 يورو فقط في الأسبوع! بدلاً من اللعب بمفردك، العب معنا في مجتمع لاعبين قوي. هذا يزيد تلقائياً من فرصك! وماذا يمكنك أن تفوز؟ مع نظام الكم الخاص بنا، لديك فرصة للفوز بمليون يورو! سوف تتلقى جميع المكاسب على الفور وبدون خصم 100% - نحن نضمن لك ذلك!\n\nلقد أقنعت نفسي بذلك! العب معنا نظام الكم: أكثر من 700 مجموعة من نظام الكم فازت معاً بأكثر من سبعة ملايين يورو.\n\nتحياتي الحارة\nسابين ماير-بوتز\n\nملاحظة: كفرصة ربح خاصة، ستتلقى اليوم لعبة الأرقام الأربعة الصحيحة المجانية. شارك بالتأكيد واربح! أنا أعبر لك عن أمنياتي……`,
+    ma: `نظام الكم\n\nلعبة اليانصيب - النظام\n\nأوتو - سور ألي 100. D-10120 برلين\n\nعزيزي لاعب اليانصيب،\n\nشكون ما بغاش يكون تما حتا هو ملي كتربح 6 ديال الأرقام فاللوتو؟ ماتيقش غير فالحظ ملي كتلعب اللوتو، حيت نتا تقدر تحسن الفرص ديالك بزاف يلا لعبت بنظام اللوتو ديالنا - وهاداك غير بـ 5 يورو فالسيمانة! بلاصة ما تلعب بوحدك، العب معانا فمجتمع ديال اللاعبين قوي. هادشي كيزيد تلقائياً من الفرص ديالك! وشنو تقدر تربح؟ مع نظام الكم ديالنا، عندك فرصة تربح مليون يورو! غادي تتلقى كاع الأرباح دغيا وبلا خصم 100% - حنا كنضمنو ليك هادشي!\n\nأنا قنعت راسي بهادشي! العب معانا نظام الكم: كثر من 700 مجموعة ديال نظام الكم ربحو مع بعضياتهم كثر من 7 ملايين يورو.\n\nتحياتي الحارة\nسابين ماير-بوتز\n\nملاحظة: كفرصة ربح خاصة، غادي تتلقى اليوم لعبة الأرقام الأربعة الصحيحة المجانية. شارك أكيد وربح! أنا كنعبر ليك على أمنياتي……`
+  },
   items:[{n:1, c:"einmal"},{n:2, c:"nur"},{n:3, c:"können"},{n:4, c:"wenn"},{n:5, c:"statt"},{n:6, c:"ganz"},{n:7, c:"bei"},{n:8, c:"garantieren"},{n:9, c:"Über"},{n:10, c:"machen"}]
 },
-
-// ================= VERA =================
 {
   id:"vera-t1", title:"Vera", level:"B1", sub:"Teile 1", type:"headings",
   options:[
@@ -568,11 +669,19 @@ const EXAMS = [
   ],
   items:[
     {n:1, c:"d", de:"Wenn Sie verreisen, wünschen wir ihnen erholsame Ferien. Bitte denken Sie daran, sich ihre Zeitung in den Urlaubtort nachsenden zu lassen.", ar:"صحيفتك تتبعك في العطلة.", ma:"الجريدة ديالك كتتبعك فالعطلة.", en:"Your newspaper follows you on vacation.", fr:"Votre journal vous suit en vacances."},
-    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Die Betriebe übernehmen den Gepäcktransport.", ar:"المشي بدون أمتعة.", ma:"المشي بلا حوايج.", en:"Hiking without luggage.", fr:"Randonnée sans bagages."},
+    {n:2, c:"j", de:"Im Luftkurort Stadtkylf werden dreitägige Wanderungen ohne Gepäck veranstaltet. Das Gepäck wird von einer Spedition transportiert.", ar:"المشي بدون أمتعة في منتجع شتاتكيلف. يتم نقل الأمتعة بواسطة شركة نقل.", ma:"المشي بلا حوايج فمنتجع شتاتكيلف. الحوايج كتنقلها شركة نقل.", en:"Hiking without luggage in the Luftkurort Stadtkylf. Luggage is transported by a moving company.", fr:"Randonnée sans bagages dans la station climatique de Stadtkylf. Les bagages sont transportés par une société de déménagement."},
     {n:3, c:"e", de:"Für den einen ist es musikalischer Hochgenuss für den anderen schlicht Lärm. Die Gemeinde weist auf Mittagsruhe hin.", ar:"الموسيقى الصاخبة تزعج الجار.", ma:"الموسيقى اللي عالية كتقلق الجيران.", en:"Loud music disturbs the neighbor.", fr:"La musique forte dérange le voisin."},
     {n:4, c:"b", de:"Das erste deutsche Bücherdorf hat in Mühlbeck seine Tore geöffnet. In acht Antiquariaten warten über 70 000 Bücher.", ar:"أهداف سياحية لمحبي الأدب (قرية الكتب).", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب).", en:"Excursion destinations for literature lovers (book village).", fr:"Destinations d'excursion pour les amateurs de littérature (village du livre)."},
     {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei leichtem Regen auf der Seebühne abzuhalten.", ar:"ملاحظة لزوار مهرجان بريغنتس.", ma:"ملاحظة لزوار مهرجان بريغنتس.", en:"Notice for visitors to the Bregenz Festival.", fr:"Avis aux visiteurs du festival de Bregenz."}
   ]
+},
+{
+  id:"vera-t2", title:"Vera", level:"B1", sub:"Teile 2", isPremium: true, type:"mcq",
+  paragraphs: [], items: [] 
+},
+{
+  id:"vera-t3", title:"Vera", level:"B1", sub:"Teile 3", isPremium: true, type:"mcq",
+  paragraphs: [], items: [] 
 }
 ];
 
@@ -674,7 +783,7 @@ const HOREN_EXAMS = [
       { text: "Nummer 42.", pitch: 1.0, rate: 0.95 },
       { text: "Das war manchmal anstrengend, aber heute habe ich ein sehr gutes Verhältnis zu meinem Bruder. Wir helfen uns immer.", pitch: 1.0, rate: 0.95 },
       { text: "Nummer 43.", pitch: 1.0, rate: 0.95 },
-      { text: "Meine Schwester und mein Bruder verstehen sich auch sehr gut. Wir sind immer für einande 1.0 },
+      { text: "Meine Schwester und mein Bruder verstehen sich auch sehr gut. Wir sind immer für einander da.", pitch: 1.2, rate: 1.0 },
       { text: "Nummer 44.", pitch: 1.0, rate: 0.95 },
       { text: "Ich wäre nie gerne ein Einzelkind gewesen.", pitch: 0.8, rate: 1.0 },
       { text: "Nummer 45.", pitch: 1.0, rate: 0.95 },
@@ -799,7 +908,7 @@ const HOREN_EXAMS = [
   {
     id: "h12", title: "Arbeit zu fahren", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
-      { text: "Half esteem. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
+      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Ich finde Busfahren ehrlich gesagt nicht so gut, der Bus ist oft zu voll und unpünktlich. Deshalb nehme ich lieber mein Auto oder fahre mit dem Fahrrad.", pitch: 1.1, rate: 1.0 },
       { text: "Nummer 42. Zu Fuß zur Arbeit gehen? Nein, das mache ich fast nie. Es ist zu weit und ich brauche über eine Stunde. Ich nehme meistens das Auto oder fahre mit dem Motorrad.", pitch: 0.9, rate: 1.0 },
       { text: "Nummer 43. Meine Frau nimmt jeden Morgen das Auto zur Arbeit. Ich finde das völlig in Ordnung. Wir haben nur ein Auto und sie hat einen längeren Weg. Ich fahre mit dem Fahrrad.", pitch: 1.2, rate: 1.0 },
@@ -817,7 +926,7 @@ const HOREN_EXAMS = [
   {
     id: "h13", title: "Handys", level: "B1", sub: "Teile 1", type: "horen",
     audio: [
-      { text: "Have a stain. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
+      { text: "Hörverstehen. Teil 1. Sie hören nun 5 kurze Texte. Nummer 41.", pitch: 1.0, rate: 0.95 },
       { text: "Also, ich finde Handys oft störend. Neulich war ich im Café und jemand telefonierte laut neben mir. Ich finde, man sollte mehr Rücksicht nehmen.", pitch: 1.1, rate: 1.0 },
       { text: "Nummer 42. Ich telefoniere eigentlich nie mit Freunden. Wir schreiben uns ab und zu Nachrichten. Aber telefonieren mag ich nicht. Das ist mir oft zu laut und zu privat.", pitch: 0.85, rate: 1.0 },
       { text: "Nummer 43. Meine Partnerin rufe ich selten mit dem Handy an. Meistens sehen wir uns sowieso zu Hause. Telefonieren finde ich anstrengend, besonders unterwegs.", pitch: 1.2, rate: 1.0 },
@@ -1067,10 +1176,55 @@ const HOREN_EXAMS = [
     ]
   }
 ];
-// ==========================================
-// مكون عرض دروس Hören (العداد + التصحيح)
-// ==========================================
-function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
+const globalTransCache = {};
+
+function AutoTrans({ text, lang, force = false }) {
+  const [translated, setTranslated] = useState(text);
+  
+  useEffect(() => {
+    if (!text) return;
+    if (!force && ['ar', 'ma', 'en', 'fr', 'de'].includes(lang)) {
+      setTranslated(text);
+      return;
+    }
+    
+    const cacheKey = `${lang}_${text}`;
+    if (globalTransCache[cacheKey]) {
+      setTranslated(globalTransCache[cacheKey]);
+      return;
+    }
+
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data && data[0]) {
+          const result = data[0].map(item => item[0]).join('');
+          globalTransCache[cacheKey] = result;
+          setTranslated(result);
+        }
+      })
+      .catch(() => setTranslated(text));
+  }, [text, lang, force]);
+
+  return <span>{translated}</span>;
+}
+
+function SmartTrans({ obj, lang }) {
+  if (!obj) return "";
+  const textDe = obj.de || obj.en || (obj.q ? obj.q : "") || (typeof obj === 'string' ? obj : "");
+  
+  if (typeof obj === 'object' && obj[lang]) {
+    return <span>{obj[lang]}</span>;
+  }
+  
+  if (['ar', 'ma', 'en', 'fr'].includes(lang)) {
+     return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
+  }
+
+  return <AutoTrans text={textDe} lang={lang} />;
+}
+
+function HorenCard({ exam, userLang, showTranslation }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -1079,6 +1233,7 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
   const audioInterval = useRef(null);
 
   const pts = 5;
+  const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
 
   useEffect(() => {
@@ -1141,13 +1296,15 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
     setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c }));
   };
 
+  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : userLang === 'hi' ? "सही" : "";
+  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : userLang === 'hi' ? "गलत" : "";
+
   return (
     <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
       <h3 className="de" style={{ fontSize: "1.3em", fontWeight: 900, margin: "0 0 16px", color: "var(--ink)" }}>
         {exam.title}
       </h3>
 
-      {/* الأوديو والعداد */}
       <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
         <button onClick={toggleAudio} style={{
           width: 56, height: 56, borderRadius: "50%", flexShrink: 0,
@@ -1168,25 +1325,40 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
         </div>
       </div>
 
-      {/* جدول R / F */}
       <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
         <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
-          <div style={{ width: 60, textAlign: "center" }}>R</div>
-          <div style={{ width: 60, textAlign: "center" }}>F</div>
-          <div style={{ flex: 1, paddingLeft: 10 }}>AUSSAGE</div>
+          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <span style={{ fontSize: '1.3em' }}>R</span>
+            {labelR && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelR}</span>}
+          </div>
+          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <span style={{ fontSize: '1.3em' }}>F</span>
+            {labelF && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelF}</span>}
+          </div>
+          <div style={{ flex: 1, paddingLeft: 10, display: 'flex', alignItems: 'center' }}>AUSSAGE</div>
         </div>
         {exam.items.map((it) => {
           const isRight = ans[it.n] === "R";
           const isFalsch = ans[it.n] === "F";
+          const isCorrect = ans[it.n] === it.c;
+          
           let rClass = "rf-circle", fClass = "rf-circle";
-          if (isRight) rClass += " sel"; // أزرق
-          if (isFalsch) fClass += " sel"; // أزرق
+          
           if (done) {
-            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad"; // أخضر أو أحمر
-            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad"; // أخضر أو أحمر
+            if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad"; else rClass += " faded";
+            if (it.c === "F") fClass += " good"; else if (isFalsch) fClass += " bad"; else fClass += " faded";
+          } else {
+            if (isRight) rClass += " sel";
+            if (isFalsch) fClass += " sel";
           }
+          
+          let rowBg = "var(--card)";
+          if (done) {
+            rowBg = isCorrect ? "var(--okbg)" : "var(--badbg)";
+          }
+          
           return (
-            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "12px 0", background: done ? (ans[it.n] === it.c ? "var(--okbg)" : "var(--badbg)") : "var(--card)" }}>
+            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "12px 0", background: rowBg }}>
               <div style={{ width: 60, display: "flex", justifyContent: "center" }}>
                 <div className={rClass} onClick={() => pickHoren(it.n, "R")}></div>
               </div>
@@ -1196,54 +1368,75 @@ function HorenCard({ exam, userLang, showTranslation, setShowTranslation }) {
               <div style={{ flex: 1, fontSize: "0.95em", lineHeight: 1.6, paddingRight: 10 }}>
                 <span style={{ opacity: 0.5, marginLeft: 8, fontWeight: 900 }}>{it.n}</span>
                 <span className="de">{it.de}</span>
-                {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                {showTranslation && (
+                  <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : "rtl", textAlign: userLang === 'hi' ? 'left' : "right" }}>
+                    <SmartTrans obj={it} lang={userLang} />
+                  </div>
+                )}
               </div>
             </div>
           );
         })}
       </div>
 
-      {/* أزرار التحكم */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--blue)", fontWeight: 800, background: "rgba(37, 99, 235, 0.1)", padding: "10px 16px", borderRadius: 12 }}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          قصة للحفظ
+          {t("story_memo", userLang)}
         </button>
         <div style={{ display: "flex", gap: 10 }}>
           {!done ? (
-            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "12px 28px", borderRadius: 14, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)" }}>Prüfen (تصحيح)</button>
+            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)" }}>{t("check_btn", userLang)}</button>
           ) : (
-            <div style={{ fontWeight: 900, color: score === 25 ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / 25</div>
+            <div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / {total}</div>
           )}
         </div>
       </div>
-      {showStory && <div className="t2-ar" style={{ marginTop: 16 }}>{exam.items[0].story}</div>}
+      {showStory && (
+        <div className="t2-ar" style={{ marginTop: 16 }}>
+          {userLang === 'ar' || userLang === 'ma' ? exam.items[0].story : (
+            <AutoTrans text={exam.items[0].story} lang={userLang} force={true} />
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
-// ==========================================
-// مكون الامتحانات (Lesen + Horen)
-// ==========================================
-function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
+function HorenGateway({ onStart, userLang }) {
+  return (
+    <div style={{ paddingBottom: 100 }}>
+      <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px", textAlign: "center" }}>Hören</h1>
+      <div className="horen-gateway-card">
+        <div className="horen-gateway-icon">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+        </div>
+        <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>{t("listen_title", userLang)}</h2>
+        <p style={{ color: "var(--muted)", fontSize: "1em", margin: 0, lineHeight: 1.6 }}>
+          {t("listen_desc", userLang)}
+        </p>
+        <button className="horen-start-btn" onClick={onStart}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 3l14 9-14 9V3z"/></svg>
+          {t("start_now", userLang)}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
   const [modalGap, setModalGap] = useState(null);
   const [activeGap, setActiveGap] = useState(null);
   const [showTranslation, setShowTranslation] = useState(false);
   const [excluded, setExcluded] = useState({});
-  const [showHeader, setShowHeader] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [mode, setMode] = useState("exam"); // exam / practice
-
-  const lastScrollY = React.useRef(0);
+  const [mode, setMode] = useState("exam");
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY < 50) setShowHeader(true);
-      else if (currentScrollY > lastScrollY.current && currentScrollY > 100) setShowHeader(false);
-      lastScrollY.current = currentScrollY;
       const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
       if (totalScroll > 0) setScrollProgress((currentScrollY / totalScroll) * 100);
     };
@@ -1255,7 +1448,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
 
-  // منع تكرار الأجوبة
   const usedElsewhere = (n, k) => {
     if ((exam.type !== "matching" && exam.type !== "headings") || k === "X") return false;
     return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
@@ -1264,15 +1456,14 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const pick = (it, k) => {
     if (done !== null) return;
     if (usedElsewhere(it.n, k)) return;
-    if (mode === "practice" && ans[it.n] !== undefined && exam.type !== "matching") return;
 
     if (ans[it.n] === k) {
       const newAns = { ...ans };
       delete newAns[it.n];
       setAns(newAns);
-      return;
+    } else {
+      setAns({ ...ans, [it.n]: k });
     }
-    setAns({ ...ans, [it.n]: k });
     if (modalGap) setModalGap(null);
   };
 
@@ -1292,12 +1483,12 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
     const sel = ans[it.n];
     const isDone = done !== null || (mode === "practice" && sel !== undefined);
     if (isDone) {
-      if (k === it.c) return "opt good"; // أخضر
-      if (sel === k) return "opt bad"; // أحمر
+      if (k === it.c) return "opt good";
+      if (sel === k) return "opt bad";
       return "opt faded";
     }
     if (mode === "exam") {
-      if (sel === k) return "opt sel"; // أزرق
+      if (sel === k) return "opt sel";
       return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
     }
     if (sel === undefined) return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
@@ -1307,33 +1498,40 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
   const finish = () => { setDone(score); onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
 
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
   return (
-    <div style={{ paddingBottom: 100 }}>
-      {/* شريط التقدم */}
+    <div style={{ paddingBottom: 120 }}>
       <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 4, zIndex: 100, backgroundImage: "linear-gradient(to right, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)", backgroundSize: `${scrollProgress}% 100%`, backgroundRepeat: "no-repeat" }} />
 
-      <div style={{ position: "sticky", top: 0, zIndex: 30, background: "var(--paper)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", transition: 'transform 0.3s ease-in-out', transform: showHeader ? 'translateY(0)' : 'translateY(-100%)', boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
+      <div style={{ position: "sticky", top: 0, zIndex: 30, background: "var(--paper)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button onClick={onBack} className="btnI" style={{ width: 40, height: 40 }}>
+          <button onClick={onBack} className="btnI" style={{ width: 36, height: 36 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M15 18l-6-6 6-6"/></svg>
           </button>
           <div>
-            <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", lineHeight: 1.2 }}>{exam.title}</div>
-            <div className="de" style={{ fontSize: ".75em", color: "var(--muted)", fontWeight: "bold" }}>{exam.type === "horen" ? "HÖREN" : "LESEN"} · {exam.sub.toUpperCase()}</div>
+            <div className="de" style={{ fontWeight: 900, fontSize: "1em", lineHeight: 1.2 }}>{exam.title}</div>
+            <div className="de" style={{ fontSize: ".7em", color: "var(--muted)", fontWeight: "bold" }}>{exam.type === "horen" ? "HÖREN" : "LESEN"} · {exam.sub.toUpperCase()}</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-           <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? "var(--blue)" : "var(--text)" }}>
+           <div className="timer-badge" style={{ padding: '4px 10px', fontSize: '14px' }}>
+             ⏱️ {formatTime(timeLeft)}
+           </div>
+           <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? "var(--blue)" : "var(--text)", borderColor: showTranslation ? "var(--blue)" : "var(--line)" }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
            </button>
-           <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 40, height: 40 }}>
-            {dark ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+           <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 36, height: 36 }}>
+            {dark ? <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
            </button>
         </div>
       </div>
 
       <div style={{ margin: "10px 12px" }}>
-        {/* أزرار نمط الامتحان والتدريب */}
         {exam.type !== "matching" && exam.type !== "horen" && (
           <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
             <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }}>🎯 {t("exam_mode", userLang)}</button>
@@ -1342,7 +1540,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
         )}
 
         {exam.type === "horen" && (
-          <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} setShowTranslation={setShowTranslation} />
+          <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} />
         )}
 
         {exam.type === "mcq" && (
@@ -1350,7 +1548,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
             {exam.paragraphs.map((p, i) => (
               <div key={i} style={{ marginBottom: 16 }}>
                 <p className="de" style={{ lineHeight: 1.8, fontSize: "1.05em", margin: 0 }}>{p.de}</p>
-                {showTranslation && <div className="t2-ar">{tr(p, userLang)}</div>}
+                {showTranslation && <div className="t2-ar"><SmartTrans obj={p} lang={userLang} /></div>}
               </div>
             ))}
           </div>
@@ -1375,6 +1573,11 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
               }
               return <span key={i} className="de" style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
             })}
+            {showTranslation && (
+              <div className="t2-ar" style={{ marginTop: 20 }}>
+                {exam.transText ? <SmartTrans obj={exam.transText} lang={userLang} /> : <AutoTrans text={exam.text.replace(/\.{3,}\s*\(\d+\)\s*\.{3,}/g, " ___ ")} lang={userLang} force={true} />}
+              </div>
+            )}
           </div>
         )}
 
@@ -1384,20 +1587,21 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
               <span className="de" style={{ color: "var(--red)", fontWeight: 900, fontSize: "1.1em" }}>ANZEIGE {ad.k}</span>
               <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
               <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4 }}>{ad.de}</div>
+              {showTranslation && <div style={{ marginTop: 4, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={ad} lang={userLang} /></div>}
             </div>
             {exam.items.map(it => {
               const isSel = ans[it.n] === ad.k;
               const isElse = ans[it.n] && ans[it.n] !== ad.k;
               const isExc = excluded[it.n]?.[ad.k];
-              let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s" };
+              let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s", cursor: (done !== null || isExc || isElse) ? "default" : "pointer" };
               
-              if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; } // أزرق
+              if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; }
               else if (isElse) { st.opacity = 0.3; st.pointerEvents = "none"; }
               else if (isExc) { st.opacity = 0.3; st.textDecoration = "line-through"; st.pointerEvents = "none"; }
               
               if (done !== null) {
-                if (ad.k === it.c) { st.background = "var(--okbg)"; st.borderColor = "var(--okc)"; st.color = "var(--okc)"; } // أخضر
-                else if (isSel) { st.background = "var(--badbg)"; st.borderColor = "var(--badc)"; st.color = "var(--badc)"; } // أحمر
+                if (ad.k === it.c) { st.background = "var(--okbg)"; st.borderColor = "var(--okc)"; st.color = "var(--okc)"; }
+                else if (isSel) { st.background = "var(--badbg)"; st.borderColor = "var(--badc)"; st.color = "var(--badc)"; }
               }
               return (
                 <div key={it.n} style={{ display: "flex", gap: 12, alignItems: "flex-start", direction: "ltr" }}>
@@ -1409,9 +1613,9 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                     });
                   }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}>✕</button>
                   <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
-                  <div onClick={() => { if(!isExc && !isElse && done === null) setAns({...ans, [it.n]: ad.k}); }} style={st}>
+                  <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
                     <span className="de">{it.de}</span>
-                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(it, userLang)}</div>}
+                    {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={it} lang={userLang} /></div>}
                   </div>
                 </div>
               );
@@ -1427,11 +1631,16 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
               <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
                 <div className="letter" style={{ width: 36, height: 36, fontSize: "1.1em", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>{idx + 1}</div>
                 <div style={{ flex: 1 }}>
-                  {exam.type === "headings" && <div className="de" style={{ lineHeight: 1.6, fontSize: "1.05em" }}>{it.de}</div>}
+                  {exam.type === "headings" && (
+                    <div style={{ lineHeight: 1.6, fontSize: "1.05em" }}>
+                      <div className="de">{it.de}</div>
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={it} lang={userLang} /></div>}
+                    </div>
+                  )}
                   {exam.type === "mcq" && (
                     <div>
                       <p className="de" style={{ fontWeight: 900, margin: 0, fontSize: "1.05em" }}>{it.q}</p>
-                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em" }}>{tr(it, userLang)}</div>}
+                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={{de: it.q}} lang={userLang} /></div>}
                     </div>
                   )}
                 </div>
@@ -1441,14 +1650,14 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
                   <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em" }}>{o.k}</div>
                   <div className="de" style={{ flex: 1, textAlign: "left" }}>
                     {o.de}
-                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: "rtl", textAlign: "right" }}>{tr(o, userLang)}</div>}
+                    {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={o} lang={userLang} /></div>}
                   </div>
                 </button>
               ))}
               {isDone && mode === "practice" && (
                 <div className={sel === it.c ? "fb good" : "fb bad"} style={{ marginTop: 12, padding: 14, fontSize: "0.95em", borderRadius: 12 }}>
-                  <b>{sel === it.c ? "✓ صحيح" : (sel ? "✗ غلط" : "⚠️ لم تجب")}</b>
-                  {sel !== it.c && <span style={{fontWeight:900}}> — الجواب: {it.c}</span>}
+                  <b>{sel === it.c ? t("correct", userLang) : (sel ? t("wrong", userLang) : t("no_answer", userLang))}</b>
+                  {sel !== it.c && <span style={{fontWeight:900}}> — {t("the_answer", userLang)}: {it.c}</span>}
                 </div>
               )}
             </div>
@@ -1456,12 +1665,11 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
         })}
       </div>
 
-      {/* النوافذ المنبثقة */}
       {modalGap !== null && exam.type === "sprach1" && (
         <div className="overlay" onClick={() => setModalGap(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
             <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
-              <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>الفراغ ({modalGap})</h3>
+              <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("gap_num", userLang)} ({modalGap})</h3>
               <button className="btnI" onClick={() => setModalGap(null)}>✕</button>
             </div>
             <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
@@ -1481,7 +1689,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
          <div className="overlay" onClick={() => setActiveGap(null)}>
            <div className="sheet" onClick={e => e.stopPropagation()}>
              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
-               <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>اختر الكلمة للفراغ ({activeGap})</h3>
+               <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("choose_word_gap", userLang)} ({activeGap})</h3>
                <button className="btnI" onClick={() => setActiveGap(null)}>✕</button>
              </div>
              <div className="word-bank" style={{marginBottom:0, gridTemplateColumns: "1fr"}}>
@@ -1498,87 +1706,565 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang }) {
          </div>
       )}
 
-      {/* أزرار لتحت */}
-      <div style={{ position: "fixed", bottom: 20, left: 16, right: 16, display: "flex", justifyContent: "space-between", zIndex: 100 }}>
-        <button onClick={done !== null ? reset : finish} style={{
-          padding: "14px 28px", borderRadius: 24, fontWeight: 900, color: done !== null ? "var(--ink)" : "var(--gold)",
-          background: done !== null ? "var(--card)" : "var(--ink)", border: done !== null ? "1px solid var(--line)" : "none",
-          boxShadow: "0 8px 20px rgba(0,0,0,0.15)", fontSize: "1em"
-        }}>
-          {done !== null ? "إعادة" : "تصحيح"}
+      <div className="bottom-bar">
+        <button onClick={done !== null ? reset : finish} className="btn-prev-bar">
+          {done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}
         </button>
-        <button onClick={() => done !== null ? onBack() : onNext()} style={{
-          padding: "14px 28px", borderRadius: 24, fontWeight: 900, color: "var(--ink)", background: "var(--paper)", border: "1px solid var(--line)",
-          boxShadow: "0 8px 20px rgba(0,0,0,0.1)", fontSize: "1em"
-        }}>
-          {done !== null ? "رجوع" : "التالي"}
+        <button onClick={() => done !== null ? onBack() : onNext()} className="btn-correct-bar">
+          {done !== null ? t("back_btn", userLang) : t("next_btn", userLang)}
+        </button>
+        <button className="btn-next-bar" onClick={done !== null ? onBack : onNext}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="15 18 9 12 15 6"></polyline></svg>
         </button>
       </div>
     </div>
   );
 }
-// ==========================================
-// التطبيق الرئيسي App
-// ==========================================
+
+function SchreibenView({ userLang, dark, setDark }) {
+  const [selected, setSelected] = useState(null);
+  const [showTransText, setShowTransText] = useState(false);
+  const [showTransTask, setShowTransTask] = useState(false);
+  const [userText, setUserText] = useState("");
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+  const [analyzeStep, setAnalyzeStep] = useState(0);
+  const [result, setResult] = useState(null);
+  
+  const [timeLeft, setTimeLeft] = useState(30 * 60); 
+
+  useEffect(() => {
+    let timer;
+    if (selected && !result && timeLeft > 0) {
+      timer = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(timer);
+  }, [selected, result, timeLeft]);
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
+  const wordCount = userText.trim() === "" ? 0 : userText.trim().split(/\s+/).length;
+  const insertChar = (char) => setUserText(prev => prev + char);
+
+  const checkWithAI = () => {
+    if (!userText.trim()) return;
+    setIsAnalyzing(true);
+    setAnalyzeStep(1);
+    setResult(null);
+
+    let currentStep = 1;
+    const interval = setInterval(() => {
+      currentStep++;
+      setAnalyzeStep(currentStep);
+      if (currentStep > 4) {
+        clearInterval(interval);
+        finishAnalysis();
+      }
+    }, 800); 
+  };
+
+  const finishAnalysis = () => {
+    const cleanText = userText.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, '').trim();
+    const words = cleanText.split(/\s+/).filter(w => w.length > 0);
+    
+    const isGibberish = words.length < 10 || /(.)\1{3,}/.test(userText) || cleanText.length < 15;
+
+    if (isGibberish) {
+      setResult({
+        score: 0, maxScore: 45, contentScore: "0/5",
+        generalEval: userLang === 'hi' ? "नमस्ते, पाठ की सामग्री खाली है और यह वह नहीं है जो आवश्यक है। आपको जर्मन शब्दों के साथ एक वास्तविक प्रतिक्रिया लिखनी होगी।" : "سلام كَشْ بو، فمحتوى الرسالة خالي من المعلومات وهاداشي ماشي هو المطلوب. خصك تكتب رد حقيقي فيه كلمات ألمانية مفهومة.",
+        contentFeedback: userLang === 'hi' ? "आपने कार्य के किसी भी बिंदु का उल्लेख नहीं किया। कोई पठनीय सामग्री नहीं है।" : "ما ذكرت حتى نقطة من النقط المطلوبة فالمهمة. ما كاينش محتوى مقروء.",
+        errors: []
+      });
+    } else {
+      setResult({
+        score: 35, maxScore: 45, contentScore: "4/5",
+        generalEval: userLang === 'hi' ? "अच्छा प्रयास! आपने अधिकांश आवश्यक बिंदुओं का उत्तर दिया है, लेकिन कुछ छोटी भाषाई त्रुटियां हैं।" : "مجهود جيد! لقد أجبت على معظم النقاط المطلوبة، ولكن هناك بعض الأخطاء اللغوية البسيطة.",
+        contentFeedback: userLang === 'hi' ? "आपने कार्य में अधिकांश आवश्यक बिंदुओं का उल्लेख किया है।" : "لقد ذكرت أغلب النقاط المطلوبة في المهمة.",
+        errors: [{ error: "Ich habe gehen", fix: "Ich bin gegangen", type: userLang === 'hi' ? "व्याकरण (Grammatik)" : "قواعد (Grammatik)" }]
+      });
+    }
+    setIsAnalyzing(false);
+  };
+
+  if (!selected) {
+    return (
+      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <h1 className="de" style={{ margin: 0, fontSize: "2.5em", fontWeight: 900, color: "var(--ink)" }}>Schreiben</h1>
+        </div>
+        <div style={{ display: "flex", background: "var(--line)", borderRadius: 99, padding: 4, marginBottom: 20, width: "fit-content", margin: "0 auto 20px" }}>
+          <div style={{ background: "#22C55E", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
+          <div style={{ color: "var(--muted)", padding: "10px 30px", fontWeight: 900 }}>B2</div>
+        </div>
+        <div style={{ position: "relative", marginBottom: 20 }}>
+          <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+        </div>
+        {SCHREIBEN_DATA.map(item => (
+          <div key={item.id} onClick={() => { setSelected(item); setUserText(""); setResult(null); setShowTransText(false); setShowTransTask(false); setTimeLeft(30 * 60); }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
+            <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{item.title}</div>
+            <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{item.level}</div>
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  if (result) {
+    return (
+      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+          <button onClick={() => setResult(null)} className="btnI" style={{ width: 40, height: 40 }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <h2 style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{userLang === 'hi' ? 'संपादक पर वापस जाएं' : 'رجوع إلى المحرر'}</h2>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
+          <div style={{ width: 120, height: 120, borderRadius: "50%", border: "8px solid var(--line)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderTopColor: result.score === 0 ? "var(--red)" : "#22C55E" }}>
+            <span style={{ fontSize: "2.5em", fontWeight: 900 }}>{result.score}</span>
+            <span style={{ color: "var(--muted)", fontSize: "0.8em" }}>/ {result.maxScore} {userLang === 'hi' ? 'अंक' : 'نقطة'}</span>
+          </div>
+          <div style={{ background: result.score < 20 ? "var(--red)" : "#22C55E", color: "#FFF", padding: "4px 16px", borderRadius: 20, fontWeight: 900, marginTop: 12, fontSize: "0.9em" }}>
+            {result.score < 20 ? (userLang === 'hi' ? 'अभ्यास की जरूरत है' : 'يحتاج لتدريب') : (userLang === 'hi' ? 'उत्कृष्ट' : 'ممتاز')}
+          </div>
+        </div>
+        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, fontSize: "1.4em", fontWeight: 900, color: "var(--ink)" }}>⚠️ {userLang === 'hi' ? 'सामान्य मूल्यांकन' : 'التقييم العام'}</div>
+          <p style={{ fontSize: "1.05em", lineHeight: 1.8, color: "var(--text)", marginBottom: 16 }}>{result.generalEval}</p>
+          <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 16, padding: 16 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <span style={{ fontSize: "1.5em", fontWeight: 900, color: "var(--ink)" }}>{result.contentScore}</span>
+              <span style={{ fontWeight: 900, color: "var(--muted)" }}>Content</span>
+            </div>
+            <p style={{ margin: 0, color: "var(--muted)", fontSize: "0.9em" }}>{result.contentFeedback}</p>
+          </div>
+        </div>
+        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900 }}>
+              <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> {userLang === 'hi' ? 'आपका पाठ' : 'النص الخاص بك'}
+            </div>
+          </div>
+          <div className="de" style={{ background: "var(--paper)", border: "1px solid var(--line)", padding: 16, borderRadius: 12, whiteSpace: "pre-wrap" }}>{userText}</div>
+        </div>
+        <div className="card" style={{ padding: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>
+            <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> {userLang === 'hi' ? 'त्रुटियों का विस्तृत विश्लेषण' : 'التحليل التفصيلي للأخطاء'}
+          </div>
+          {result.errors.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "40px 20px", border: "2px dashed var(--line)", borderRadius: 16 }}>
+              <div style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(221,0,0,0.1)", display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 16px", color: "var(--red)", fontSize: "1.5em", fontWeight: 900 }}>!</div>
+              <h3 style={{ margin: "0 0 8px", color: "var(--red)", fontSize: "1.3em" }}>{userLang === 'hi' ? 'दिखाने के लिए कोई त्रुटि नहीं' : 'لا توجد أخطاء للعرض'}</h3>
+              <p style={{ margin: 0, color: "var(--muted)" }}>{userLang === 'hi' ? 'इस प्रयास में कोई त्रुटि नहीं मिली।' : 'لم يتم العثور على أخطاء في هذه المحاولة.'}</p>
+            </div>
+          ) : (
+            <div>
+              {result.errors.map((err, i) => (
+                <div key={i} style={{ background: "var(--paper)", padding: 12, borderRadius: 12, marginBottom: 8, borderRight: "4px solid var(--red)" }}>
+                  <div style={{ color: "var(--red)", fontWeight: 900, textDecoration: "line-through" }}>{err.error}</div>
+                  <div style={{ color: "#22C55E", fontWeight: 900 }}>{userLang === 'hi' ? 'सुझाव' : 'الاقتراح'}: {err.fix}</div>
+                  <div style={{ color: "var(--muted)", fontSize: "0.8em", marginTop: 4 }}>{err.type}</div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ padding: "20px 12px", paddingBottom: 120 }}>
+      {isAnalyzing && (
+        <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 999, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20 }}>
+          <div style={{ position: "relative", marginBottom: 30 }}>
+             <div style={{ width: 120, height: 120, borderRadius: "50%", border: "4px solid rgba(34, 197, 94, 0.2)", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+             </div>
+             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: "#22C55E", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
+          </div>
+          <h2 style={{ fontSize: "1.8em", fontWeight: 900, marginBottom: 10 }}>{userLang === 'hi' ? 'स्मार्ट सुधार' : 'جاري التصحيح الذكي'}</h2>
+          <p style={{ color: "var(--muted)", marginBottom: 40 }}>{userLang === 'hi' ? 'हम उन्नत AI तकनीकों का उपयोग करके आपके पाठ की समीक्षा कर रहे हैं' : 'نقوم بمراجعة نصك باستخدام تقنيات AI المطورة'}</p>
+          <div style={{ width: "100%", maxWidth: 300 }}>
+            {[userLang === 'hi' ? "स्मार्ट सुधारक तैयार करना..." : "تحضير المصحح الذكي...", userLang === 'hi' ? "वाक्य संरचना का विश्लेषण..." : "تحليل بنية الجمل...", userLang === 'hi' ? "व्याकरण और शब्दावली की समीक्षा..." : "مراجعة القواعد والمفردات...", userLang === 'hi' ? "अंतिम रिपोर्ट तैयार करना..." : "توليد التقرير النهائي..."].map((step, idx) => (
+              <div key={idx} style={{ color: analyzeStep === idx + 1 ? "#22C55E" : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
+                {analyzeStep === idx + 1 && "✨ "} {step}
+              </div>
+            ))}
+          </div>
+          <div style={{ width: "80%", height: 8, background: "var(--line)", borderRadius: 99, marginTop: 40, overflow: "hidden" }}>
+             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: "#22C55E", transition: "width 0.3s" }}></div>
+          </div>
+        </div>
+      )}
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <button onClick={() => setSelected(null)} className="btnI" style={{ width: 40, height: 40 }}>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+          <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{selected.title}</h2>
+        </div>
+        
+        <div className="timer-badge" style={{ padding: '6px 12px', fontSize: '15px' }}>
+          ⏱️ {formatTime(timeLeft)}
+        </div>
+      </div>
+
+      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
+          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>SITUATION</span>
+          <span style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level}</span>
+        </div>
+        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> {t("trans_text", userLang)}
+          </div>
+          <button onClick={() => setShowTransText(!showTransText)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
+            {showTransText ? t("hide", userLang) : t("show", userLang)}
+          </button>
+        </div>
+        {showTransText && (
+          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
+            {selected.transText[userLang] || <AutoTrans text={selected.text} lang={userLang} force={true} />}
+          </div>
+        )}
+      </div>
+
+      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
+          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>AUFGABE</span>
+          <span style={{ marginLeft: "auto", background: "var(--line)", color: "var(--muted)", padding: "4px 12px", borderRadius: 8, fontSize: "0.8em", fontWeight: 900 }}>150–180 {t("words_count", userLang)}</span>
+        </div>
+        <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task}</div>
+        {selected.points.map((pt, idx) => (
+          <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
+            <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#22C55E", color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
+            <div className="de" style={{ background: "var(--paper)", padding: "12px 16px", borderRadius: 12, flex: 1, border: "1px solid var(--line)" }}>{pt}</div>
+          </div>
+        ))}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> {t("trans_task", userLang)}
+          </div>
+          <button onClick={() => setShowTransTask(!showTransTask)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
+            {showTransTask ? t("hide", userLang) : t("show", userLang)}
+          </button>
+        </div>
+        {showTransTask && (
+          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
+            <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask[userLang] || <AutoTrans text={selected.task} lang={userLang} force={true} />}</div>
+            {(selected.transPoints[userLang] || selected.transPoints['en'] || selected.transPoints['ar']).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
+          </div>
+        )}
+      </div>
+
+      <div className="card" style={{ padding: 0, overflow: "hidden" }}>
+        <div className="keyboard-area">
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'].map(c => (
+              <button key={c} onClick={() => insertChar(c)} className="key-btn">{c}</button>
+            ))}
+          </div>
+          <div className="word-counter">
+            <span style={{ color: wordCount >= 150 && wordCount <= 180 ? "#22C55E" : "var(--muted)" }}>{wordCount}</span> / 150-180
+          </div>
+        </div>
+        <textarea value={userText} onChange={(e) => setUserText(e.target.value)} placeholder={userLang === 'hi' ? '...यहाँ अपना उत्तर लिखना शुरू करें' : '...ابدأ في كتابة إجابتك هنا'} className="de" style={{ width: "100%", minHeight: 250, padding: 20, border: "none", background: "var(--card)", color: "var(--text)", fontSize: "1.05em", lineHeight: 1.6, resize: "vertical", outline: "none" }}></textarea>
+      </div>
+
+      <div className="bottom-bar" style={{ maxWidth: 400 }}>
+        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar">
+          ✨ {isAnalyzing ? (userLang === 'hi' ? 'सुधार हो रहा है...' : 'جاري التصحيح...') : t("ai_correct", userLang)}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function AdminPanel({ userLang, onClose }) {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [notifTitle, setNotifTitle] = useState("");
+  const [notifMsg, setNotifMsg] = useState("");
+
+  useEffect(() => {
+    sb.from('profiles').select('*').then(({ data, error }) => {
+      if (!error && data) setUsers(data);
+      setLoading(false);
+    });
+  }, []);
+
+  const togglePaid = async (id, current) => {
+    await sb.from('profiles').update({ is_paid: !current }).eq('id', id);
+    setUsers(users.map(u => u.id === id ? { ...u, is_paid: !current } : u));
+  };
+
+  const toggleBlock = async (id, current) => {
+    await sb.from('profiles').update({ is_blocked: !current }).eq('id', id);
+    setUsers(users.map(u => u.id === id ? { ...u, is_blocked: !current } : u));
+  };
+
+  const sendNotification = async () => {
+    if (!notifTitle || !notifMsg) return alert("عمر العنوان والرسالة");
+    const { error } = await sb.from('notifications').insert([{ title: notifTitle, message: notifMsg, is_active: true }]);
+    if (error) alert("مشكل: " + error.message);
+    else {
+      alert("✅ تصيفط الإشعار بنجاح!");
+      setNotifTitle(""); setNotifMsg("");
+    }
+  };
+
+  return (
+    <div style={{ padding: 20, paddingBottom: 100 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+        <h2 style={{ margin: 0, fontSize: "1.5em", fontWeight: 900 }}>👑 {t("admin_panel", userLang)}</h2>
+        <button onClick={onClose} className="btnI">✕</button>
+      </div>
+
+      <div className="card" style={{ marginBottom: 20 }}>
+        <h3 style={{ margin: "0 0 16px", fontWeight: 900 }}>📢 {t("notifications", userLang)}</h3>
+        <input className="auth-input" placeholder={t("title_ar", userLang)} value={notifTitle} onChange={e => setNotifTitle(e.target.value)} />
+        <textarea className="auth-input" rows={3} placeholder={t("message_ar", userLang)} value={notifMsg} onChange={e => setNotifMsg(e.target.value)} />
+        <button className="btn" onClick={sendNotification}>{t("send_notification", userLang)}</button>
+      </div>
+
+      <div className="card">
+        <h3 style={{ margin: "0 0 16px", fontWeight: 900 }}>👥 {t("users", userLang)} ({users.length})</h3>
+        {loading ? <p>Loading...</p> : users.map(u => (
+          <div key={u.id} style={{ borderBottom: "1px solid var(--line)", padding: "12px 0", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
+            <div>
+              <div style={{ fontWeight: 900 }}>{u.email || u.unique_name}</div>
+              <div style={{ fontSize: "0.8em", color: "var(--muted)" }}>
+                {u.is_paid ? "✅ مخلص" : "❌ غير مخلص"} | {u.is_blocked ? "🚫 محظور" : "🟢 نشط"}
+              </div>
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              <button className="btn ghost" style={{ padding: "8px 12px", fontSize: "0.8em", width: "auto", color: u.is_paid ? "var(--red)" : "var(--okc)" }} onClick={() => togglePaid(u.id, u.is_paid)}>
+                {u.is_paid ? t("mark_unpaid", userLang) : t("mark_paid", userLang)}
+              </button>
+              <button className="btn ghost" style={{ padding: "8px 12px", fontSize: "0.8em", width: "auto", color: u.is_blocked ? "var(--okc)" : "var(--red)" }} onClick={() => toggleBlock(u.id, u.is_blocked)}>
+                {u.is_blocked ? t("unblock", userLang) : t("block", userLang)}
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function App() {
   const [user, setUser] = useState(null);
+  const [isPaid, setIsPaid] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isBlocked, setIsBlocked] = useState(false);
+  const [trialActive, setTrialActive] = useState(false);
+  const [trialEndsAt, setTrialEndsAt] = useState(null);
+  const [trialCountdown, setTrialCountdown] = useState("");
+  const [notifications, setNotifications] = useState([]);
   const [isReady, setIsReady] = useState(false);
   const [view, setView] = useState("home");
   const [level, setLevel] = useState("B1");
   const [exam, setExam] = useState(null);
   const [dark, setDark] = useState(false);
   const [fs, setFs] = useState(() => { try { return Number(localStorage.getItem("ep_fs")) || 100; } catch (e) { return 100; } });
-  const [menu, setMenu] = useState(false);
   const [settings, setSettings] = useState(false);
   const [results, setResults] = useState(() => { try { return JSON.parse(localStorage.getItem("ep_results") || "{}"); } catch (e) { return {}; } });
   const [searchQuery, setSearchQuery] = useState("");
   const [userLang, setUserLang] = useState(null); 
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
+  const [showHorenLessons, setShowHorenLessons] = useState(false);
+  const [showHorenTrans, setShowHorenTrans] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(30 * 60);
+  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
-  // شاشة السبلاش
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
     const savedUser = localStorage.getItem("ep_user");
     const savedLang = localStorage.getItem("ep_lang");
-    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedUser) {
+      const parsed = JSON.parse(savedUser);
+      if (parsed.isGuest || parsed.id) {
+        setUser(parsed);
+      } else {
+        localStorage.removeItem("ep_user");
+      }
+    }
     if (savedLang) setUserLang(savedLang);
+    
+    // Fetch Notifications
+    sb.from('notifications').select('*').eq('is_active', true).then(({ data }) => {
+      if (data) setNotifications(data);
+    });
+
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
+  
+  useEffect(() => {
+    if (user && !user.isGuest && user.id) {
+      const deviceId = localStorage.getItem("ep_device_id");
+      sb.from('profiles').select('is_paid, active_device_id, trial_started_at, is_blocked, is_admin').eq('id', user.id).single()
+        .then(({ data, error }) => {
+          if (error) { console.error("profiles fetch:", error); return; }
+          if (data) {
+            if (data.is_blocked) {
+              alert("⚠️ تم حظر حسابك. تواصل مع الدعم الفني.");
+              localStorage.removeItem("ep_user");
+              setUser(null);
+              setIsBlocked(true);
+              return;
+            }
+            setIsBlocked(false);
+            setIsAdmin(!!data.is_admin);
+            
+            if (data.active_device_id && data.active_device_id !== deviceId) {
+              alert("⚠️ تم تسجيل الدخول من هاتف آخر. تم إنهاء الجلسة السابقة.");
+              localStorage.removeItem("ep_user");
+              setUser(null);
+              setIsPaid(false);
+              setTrialActive(false);
+              return;
+            }
+            
+            setIsPaid(!!data.is_paid);
+            if (data.trial_started_at && !data.is_paid) {
+              const start = new Date(data.trial_started_at).getTime();
+              const end = start + 24 * 60 * 60 * 1000;
+              if (Date.now() < end) {
+                setTrialActive(true);
+                setTrialEndsAt(end);
+              } else {
+                setTrialActive(false);
+                setTrialEndsAt(null);
+              }
+            }
+          }
+        });
+    } else {
+      setIsPaid(false);
+      setIsAdmin(false);
+      setIsBlocked(false);
+      setTrialActive(false);
+      setTrialEndsAt(null);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (!trialActive || !trialEndsAt) { setTrialCountdown(""); return; }
+    const update = () => {
+      const diff = trialEndsAt - Date.now();
+      if (diff <= 0) {
+        setTrialActive(false);
+        setTrialCountdown("");
+        return;
+      }
+      const h = Math.floor(diff / (60 * 60 * 1000));
+      const m = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+      setTrialCountdown(`${h}س ${m}د`);
+    };
+    update();
+    const interval = setInterval(update, 30000);
+    return () => clearInterval(interval);
+  }, [trialActive, trialEndsAt]);
+
   useEffect(() => { document.documentElement.style.setProperty("--fs", fs / 100); try { localStorage.setItem("ep_fs", fs); } catch (e) {} }, [fs]);
   useEffect(() => { try { localStorage.setItem("ep_results", JSON.stringify(results)); } catch (e) {} }, [results]);
+  
+  useEffect(() => {
+    let interval = null;
+    if (exam && timeLeft > 0) {
+      interval = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+    }
+    return () => clearInterval(interval);
+  }, [exam, timeLeft]);
 
-  const handleLangSelect = (c) => {
-    setUserLang(c);
-    localStorage.setItem("ep_lang", c);
-  };
-
-  const handleAuth = (e) => {
+  const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
+  
+  const handleAuth = async (e) => {
     e.preventDefault();
-    const uniqueCode = e.target.code.value;
-    if (uniqueCode.trim()) {
-      const newUser = { name: uniqueCode.trim(), isGuest: false };
-      setUser(newUser);
-      localStorage.setItem("ep_user", JSON.stringify(newUser));
+    const uniqueName = e.target.unique_name.value.trim();
+    const uniqueCode = e.target.unique_code.value.trim();
+    if (!uniqueName || !uniqueCode) return;
+    
+    let deviceId = localStorage.getItem("ep_device_id");
+    if (!deviceId) {
+      deviceId = crypto.randomUUID();
+      localStorage.setItem("ep_device_id", deviceId);
+    }
+
+    const email = `${uniqueName}@echt.com`;
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: uniqueCode });
+
+    if (error) {
+      const { data: newData, error: newError } = await sb.auth.signUp({ email, password: uniqueCode });
+      if (newError) return alert("مشكل: " + newError.message);
+      if (!newData?.user) return alert("ما قدرناش نصاوبو الحساب. تحقق من إعدادات Supabase.");
+      
+      const { error: insertError } = await sb.from('profiles').insert([{ 
+        id: newData.user.id, 
+        email: uniqueName, 
+        is_paid: false, 
+        active_device_id: deviceId,
+        is_blocked: false
+      }]);
+      if (insertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + insertError.message);
+      
+      const userObj = { ...newData.user, name: uniqueName, isGuest: false };
+      setUser(userObj);
+      localStorage.setItem("ep_user", JSON.stringify(userObj));
+    } else {
+      await sb.from('profiles').update({ active_device_id: deviceId }).eq('id', data.user.id);
+      const userObj = { ...data.user, name: uniqueName, isGuest: false };
+      setUser(userObj);
+      localStorage.setItem("ep_user", JSON.stringify(userObj));
     }
   };
-
+  
   const handleGuest = () => {
     const guest = { name: "زائر", isGuest: true };
     setUser(guest);
+    setIsPaid(false);
+    setIsAdmin(false);
+    setIsBlocked(false);
+    setTrialActive(false);
+    setTrialEndsAt(null);
     localStorage.setItem("ep_user", JSON.stringify(guest));
   };
-
-  const logout = () => { localStorage.removeItem("ep_user"); setUser(null); };
+  
+  const logout = () => { 
+    localStorage.removeItem("ep_user"); 
+    setIsPaid(false); 
+    setIsAdmin(false);
+    setIsBlocked(false);
+    setTrialActive(false); 
+    setTrialEndsAt(null); 
+    setUser(null); 
+    sb.auth.signOut(); 
+  };
 
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
-  const go = (v) => { setView(v); setExam(null); setMenu(false); window.scrollTo(0, 0); };
+  const go = (v) => { 
+    setView(v); 
+    setExam(null); 
+    setShowHorenLessons(false);
+    setIsSideMenuOpen(false);
+    window.scrollTo(0, 0); 
+  };
 
   const levelExams = EXAMS.filter(e => e.level === level);
   const uniqueTitles = Array.from(new Set(levelExams.map(e => e.title))).filter(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
 
-  // دالة الانتقال للامتحان التالي (نفس السلسلة)
   const handleNextExam = (currentExam) => {
     const currentIndex = EXAMS.findIndex(e => e.id === currentExam.id);
     if (currentIndex !== -1 && currentIndex < EXAMS.length - 1) {
@@ -1586,7 +2272,7 @@ function App() {
       if (nextEx.title === currentExam.title) {
         setExam(nextEx);
       } else {
-        setExam(null); // رجع للقائمة
+        setExam(null);
       }
     } else {
       setExam(null);
@@ -1602,21 +2288,20 @@ function App() {
     );
   }
 
-  // 1. شاشة اختيار اللغة (إجبارية)
   if (!userLang) {
     return (
       <div className="auth-screen">
         <div className="auth-card">
           <div style={{ textAlign: "center", marginBottom: 30 }}>
             <LogoImage size={80} />
-            <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>اختر لغتك / Choose Language</h2>
-            <p style={{color: "var(--muted)", fontSize: "0.95em", marginTop: 8}}>اللغة التي تختارها ستبقى معك طوال التطبيق</p>
+            <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("choose_lang", "ar")}</h2>
+            <p style={{color: "var(--muted)", fontSize: "0.95em", marginTop: 8}}>{t("lang_note", "ar")}</p>
           </div>
           <div className="lang-grid">
             {LANGS.map(l => (
               <button key={l.c} onClick={() => handleLangSelect(l.c)} className="lang-btn">
                 <span style={{ fontSize: "1.6em" }}>{l.f}</span>
-                <span style={{ fontSize: "0.95em" }}>{l.n}</span>
+                <span style={{ fontSize: "0.95em", fontWeight: 800 }}>{l.n}</span>
               </button>
             ))}
           </div>
@@ -1625,7 +2310,6 @@ function App() {
     );
   }
 
-  // 2. شاشة تسجيل الدخول
   if (!user) {
     return (
       <div className="auth-screen">
@@ -1636,66 +2320,103 @@ function App() {
           </div>
           
           <form onSubmit={handleAuth}>
-            <input className="auth-input" name="code" placeholder="الكود الفريد الخاص بك (Unique ID)" required />
-            <button type="submit" className="auth-btn">تسجيل الدخول</button>
+            <input className="auth-input" name="unique_name" placeholder="الاسم الفريد (Unique Name)" required />
+            <input className="auth-input" name="unique_code" placeholder="الكود الفريد (Unique Code)" required />
+            <button type="submit" className="auth-btn">{t("login", userLang)}</button>
           </form>
           
-          <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>أو</div>
+          <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>{t("or", userLang)}</div>
           
           <button className="auth-btn guest" onClick={handleGuest}>
-            👤 دخول سريع (نقرة واحدة كزائر)
+            👤 {t("guest", userLang)}
           </button>
         </div>
       </div>
     );
   }
 
-  // 3. عرض الامتحان
+  if (isBlocked) {
+    return (
+      <div className="auth-screen">
+        <div className="auth-card" style={{ textAlign: "center" }}>
+          <h2 style={{ color: "var(--red)", fontWeight: 900 }}>🚫 تم حظر حسابك</h2>
+          <p style={{ color: "var(--muted)" }}>تواصل مع الدعم الفني.</p>
+          <button className="auth-btn" onClick={logout}>{t("logout", userLang)}</button>
+        </div>
+      </div>
+    );
+  }
+
   if (exam) {
     return <ExamView 
       exam={exam} 
       userLang={userLang} 
       dark={dark} 
       setDark={setDark} 
-      onBack={() => setExam(null)} 
+      onBack={() => {setExam(null); setTimeLeft(30*60);}} 
       onNext={() => handleNextExam(exam)} 
-      onSave={saveResult} 
+      onSave={saveResult}
+      timeLeft={timeLeft}
+      setTimeLeft={setTimeLeft}
     />;
   }
 
-  // 4. واجهة التطبيق الرئيسية
   return (
     <div style={{ paddingBottom: 100 }}>
-      {/* الهيدر */}
+      <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
+      <nav className={`side-menu ${isSideMenuOpen ? 'active' : ''}`}>
+        <div className="side-menu-header">
+            <div className="logo-circle">De</div>
+            <h2>EchtPrüfung</h2>
+            <p style={{fontSize: '0.8em', opacity: 0.8}}>{user.name}</p>
+        </div>
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B1'); go('lesen'); setIsSideMenuOpen(false);}} className={`menu-item ${level === 'B1' ? 'active' : ''}`}>
+            📚 {t("b1_level", userLang)}
+        </a>
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B2'); go('lesen'); setIsSideMenuOpen(false);}} className={`menu-item ${level === 'B2' ? 'active' : ''}`}>
+            📚 {t("b2_level", userLang)}
+        </a>
+        {isAdmin && (
+          <a href="#" onClick={(e) => {e.preventDefault(); go('admin'); setIsSideMenuOpen(false);}} className={`menu-item ${view === 'admin' ? 'active' : ''}`}>
+            👑 {t("admin_panel", userLang)}
+          </a>
+        )}
+      </nav>
+
       <div className="header">
         <div className="brand">
-          <div className="logo"><LogoImage size={46} /></div>
+          <button className="btnI" onClick={() => setIsSideMenuOpen(true)} style={{ marginRight: 8 }}>
+            ☰
+          </button>
+          <div className="logo"><LogoImage size={36} /></div>
           <div>
-            <div style={{ fontWeight: 900, fontSize: "1.1em" }}>EchtPrüfung</div>
-            <div className="de" style={{ fontSize: ".8em", color: "var(--muted)", fontWeight:"bold", display: "flex", alignItems: "center", gap: 6 }}>
-              <span>Deutsch B1</span> <span>•</span>
+            <div className="header-title">EchtPrüfung</div>
+            <div className="header-subtitle de">
+              <span>Deutsch {level}</span> <span>•</span>
               <span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</span>
               <span>{LANGS.find(l => l.c === userLang)?.n}</span>
             </div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div style={{ display: "flex", gap: 6 }}>
           <button className="btnI" onClick={() => setDark(!dark)}>
-            {dark ? <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
+            {dark ? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg> : <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>}
           </button>
           <button className="btnI" onClick={() => setSettings(true)}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          </button>
-          <button className="btnI" onClick={() => setMenu(true)}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 7h16M4 12h10M4 17h16"/></svg>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
           </button>
         </div>
       </div>
 
       <main style={{ margin: "0 12px", paddingTop: 10 }}>
-        {/* الرئيسية */}
         {view === "home" && (
           <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
+            {notifications.length > 0 && (
+              <div style={{ width: "100%", maxWidth: 400, background: "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}>
+                <div style={{ fontWeight: 900, fontSize: "1.1em", color: "#111" }}>📢 {notifications[0].title}</div>
+                <div style={{ fontSize: "0.9em", color: "#333", marginTop: 4 }}>{notifications[0].message}</div>
+              </div>
+            )}
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
             
@@ -1706,8 +2427,8 @@ function App() {
               <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
               
               <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}>
-                <p style={{ margin: 0, color: "#FFF", fontSize: "1.2em", fontWeight: 900 }}>تدرب على الامتحان الحقيقي واذهب للحصول عليه!</p>
-                <p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.9em", fontWeight: "bold", textAlign: "center" }}>Trainiere für die echte Prüfung und hol sie dir!</p>
+                <p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p>
+                <p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p>
               </div>
 
               <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}>
@@ -1717,15 +2438,29 @@ function App() {
           </div>
         )}
 
-        {/* قسم القراءة (Lesen) */}
         {view === "lesen" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen</h1>
+            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
+            
+            {trialActive && !isPaid && (
+              <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))", border: "1.5px solid #22C55E", borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}>
+                <div style={{ fontSize: "2em" }}>🎁</div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 900, color: "#22C55E", fontSize: "1em" }}>{t("trial_active", userLang)}</div>
+                  <div style={{ color: "var(--muted)", fontSize: "0.85em" }}>{trialCountdown} — {userLang === 'en' ? 'All premium lessons unlocked' : 'جميع الدروس المدفوعة محلولة'}</div>
+                </div>
+              </div>
+            )}
+
             <div style={{ marginBottom: 16 }}>
-              <input type="text" placeholder="...بحث عن موضوع" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+              <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
             
-            {uniqueTitles.map(title => (
+            {level === "B2" ? (
+               <div className="card" style={{ textAlign: "center", padding: 40 }}>
+                 <h2>{t("coming_soon", userLang)}</h2>
+               </div>
+            ) : uniqueTitles.map(title => (
               <button key={title} className="card" onClick={() => setSelectedExamTitle(title)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20 }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div>
@@ -1742,51 +2477,66 @@ function App() {
           </div>
         )}
 
-        {/* قسم الاستماع (Hören) */}
         {view === "horen" && (
           <div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören</h1>
-              <div style={{ display: "inline-flex", background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: 4 }}>
-                <button className={`tab ${level === "B1" ? "on" : ""}`} onClick={() => setLevel("B1")} style={{ padding: "8px 20px", fontSize: "1em", borderRadius: 12, background: level === "B1" ? "var(--red)" : "transparent", color: level === "B1" ? "#FFF" : "var(--muted)", fontWeight: "bold", border: "none" }}>B1</button>
-                <button className={`tab ${level === "B2" ? "on" : ""}`} onClick={() => setLevel("B2")} style={{ padding: "8px 20px", fontSize: "1em", borderRadius: 12, background: level === "B2" ? "var(--red)" : "transparent", color: level === "B2" ? "#FFF" : "var(--muted)", fontWeight: "bold", border: "none" }}>B2</button>
-              </div>
-            </div>
-            
-            {HOREN_EXAMS.filter(e => e.level === level).map(ex => (
-              <button key={ex.id} className="card" onClick={() => setExam(ex)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div>
-                    <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{ex.title}</div>
-                    <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
-                      <span className="chip" style={{ background: "rgba(255,206,0,0.15)", color: "var(--gold)", padding: "4px 10px", borderRadius: 8 }}>{level}</span>
-                      <span>{ex.sub}</span>
-                    </div>
+            {!showHorenLessons ? (
+              <HorenGateway onStart={() => setShowHorenLessons(true)} userLang={userLang} />
+            ) : (
+              <div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                  <h1 className="de" style={{ margin: 0, color: "var(--red)", fontSize: "2.2em" }}>Hören {level}</h1>
+                  <div style={{ display: 'flex', gap: 8 }}>
+                    <button onClick={() => setShowHorenTrans(!showHorenTrans)} className="btnI" style={{ width: 40, height: 40, color: showHorenTrans ? "var(--blue)" : "var(--text)", borderColor: showHorenTrans ? "var(--blue)" : "var(--line)" }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
+                    </button>
+                    <button onClick={() => setShowHorenLessons(false)} className="btn ghost" style={{ width: "auto", padding: "8px 16px", fontSize: "0.9em" }}>
+                      {t("back_btn", userLang)}
+                    </button>
                   </div>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
                 </div>
-              </button>
-            ))}
+                {level === "B2" ? (
+                   <div className="card" style={{ textAlign: "center", padding: 40 }}>
+                     <h2>{t("coming_soon", userLang)}</h2>
+                   </div>
+                ) : HOREN_EXAMS.map(ex => (
+                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
+                ))}
+              </div>
+            )}
           </div>
         )}
 
-        {(view === "schreiben" || view === "sprechen" || view === "pruefung") && (
+        {view === "schreiben" && (
+          <SchreibenView userLang={userLang} dark={dark} setDark={setDark} />
+        )}
+
+        {view === "admin" && isAdmin && (
+          <AdminPanel userLang={userLang} onClose={() => go('home')} />
+        )}
+
+        {(view === "sprechen" || view === "pruefung") && (
           <div className="card" style={{ textAlign: "center", padding: 40 }}>
-            <h2>قريباً...</h2>
+            <h2>{t("coming_soon", userLang)}</h2>
           </div>
         )}
       </main>
 
-      {/* القائمة السفلية (أسماء كتتبدل باللغة) */}
       <nav className="nav">
-        {["home", "lesen", "horen", "schreiben", "sprechen", "pruefung"].map((k) => (
-          <button key={k} className={view === k ? "on" : ""} onClick={() => go(k)}>
-            <span style={{ fontSize: "0.85em", fontWeight: 900 }}>{t(k, userLang)}</span>
+        {[
+          { id: "home", label: t("home", userLang), icon: "⌂" },
+          { id: "lesen", label: t("lesen", userLang), icon: "📖" },
+          { id: "horen", label: t("horen", userLang), icon: "🎧" },
+          { id: "schreiben", label: t("schreiben", userLang), icon: "✎" },
+          { id: "sprechen", label: t("sprechen", userLang), icon: "🎙" },
+          { id: "pruefung", label: t("pruefung", userLang), icon: "🎓" } 
+        ].map((item) => (
+          <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)}>
+            <span className="ic">{item.icon}</span>
+            <span>{item.label}</span>
           </button>
         ))}
       </nav>
 
-      {/* نافذة اختيار الأجزاء (Lesen) */}
       {selectedExamTitle && (
         <div className="overlay" onClick={() => setSelectedExamTitle(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
@@ -1797,11 +2547,36 @@ function App() {
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(subName => {
                 const existingExam = EXAMS.find(e => e.title === selectedExamTitle && e.level === level && e.sub === subName);
+                const isPremium = existingExam?.isPremium === true;
+                const hasAccess = isPaid || trialActive || isAdmin;
+                const showTrialHint = isPremium && trialActive && !isPaid && !isAdmin;
+
+                if (isPremium && !hasAccess) {
+                  return (
+                    <button key={subName} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px", borderRadius: 14 }} onClick={() => wa(t("wa_upgrade_msg", userLang) + " - " + selectedExamTitle + " " + subName)}>
+                      <span className="de" style={{ fontWeight: 800 }}>🔒 {subName} ({t("locked", userLang)})</span>
+                      <span style={{ fontSize: "0.8em", fontWeight: "bold", color: "var(--red)" }}>⭐ {t("upgrade_pro", userLang)}</span>
+                    </button>
+                  );
+                }
+
                 return (
-                  <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={() => {
-                      if (existingExam) { setExam(existingExam); setSelectedExamTitle(null); }
+                  <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={async () => {
+                    if (isPremium && hasAccess) {
+                      const { data, error } = await sb.from('premium_lessons').select('data').eq('id', existingExam.id).single();
+                      if (error || !data) {
+                        alert("الدرس مازال ماحطيتوهش فسوبابيز: " + existingExam.id);
+                      } else {
+                        setExam(data.data); setSelectedExamTitle(null); setTimeLeft(30*60);
+                      }
+                    } else if (existingExam) {
+                      setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(30*60);
+                    }
                   }}>
-                    <span className="de" style={{ fontWeight: 800 }}>{subName}</span>
+                    <span className="de" style={{ fontWeight: 800, display: "flex", alignItems: "center", gap: 8 }}>
+                      {subName}
+                      {showTrialHint && <span style={{ fontSize: "0.7em", color: "#22C55E", padding: "2px 8px", background: "rgba(34,197,94,0.15)", borderRadius: 6, fontWeight: 900 }}>🎁 {userLang === 'en' ? 'Trial' : 'تجربة'}</span>}
+                    </span>
                     {existingExam && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>}
                   </button>
                 );
@@ -1811,53 +2586,16 @@ function App() {
         </div>
       )}
 
-      {/* القائمة الجانبية (Menu) */}
-      {menu && (
-        <div className="overlay" onClick={() => setMenu(false)}>
-          <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: "hidden" }}>
-            <div style={{ padding: "30px 20px", background: "var(--paper)", textAlign: "center", borderBottom: "1px solid var(--line)", position: "relative" }}>
-              <button className="btnI" style={{ position: "absolute", top: 16, left: 16 }} onClick={() => setMenu(false)}>✕</button>
-              
-              {/* السمية ديال المستخدم */}
-              <div style={{ width: 80, height: 80, margin: "0 auto 12px", borderRadius: "50%", background: "linear-gradient(135deg, #111 33%, #DD0000 33%, #DD0000 66%, #FFCE00 66%)", padding: 3 }}>
-                <div style={{ width: "100%", height: "100%", borderRadius: "50%", background: "var(--card)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.5em", fontWeight: 900, color: "var(--ink)" }}>
-                  {user.name.charAt(0).toUpperCase()}
-                </div>
-              </div>
-              <h2 style={{ margin: 0 }}>{user.name}</h2>
-              
-              <div style={{ display: "flex", gap: 10, marginTop: 16 }}>
-                <button onClick={() => wa("مرحباً")} style={{ flex: 1, padding: "10px", background: "#25D366", color: "#FFF", borderRadius: 12, fontWeight: 900, display: "flex", justifyContent: "center", alignItems: "center", gap: 6 }}>
-                  واتساب
-                </button>
-                <button onClick={logout} style={{ flex: 1, padding: "10px", background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 12, fontWeight: 900 }}>
-                  خروج
-                </button>
-              </div>
-            </div>
-
-            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 10 }}>
-              {["lesen", "horen", "schreiben", "sprechen"].map(k => (
-                <button key={k} onClick={() => { setView(k); setMenu(false); }} className="btn ghost" style={{ display: "flex", justifyContent: "flex-start", gap: 10, padding: 16 }}>
-                  <span style={{ textTransform: "capitalize", fontWeight: 900 }}>{t(k, userLang)}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* الإعدادات */}
       {settings && (
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <strong style={{fontSize:"1.3em"}}>الإعدادات</strong>
+              <strong style={{fontSize:"1.3em"}}>{t("settings", userLang)}</strong>
               <button className="btnI" onClick={() => setSettings(false)}>✕</button>
             </div>
             
             <div style={{ marginBottom: 20 }}>
-              <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>تغيير اللغة / Language</span>
+              <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>{t("change_lang", userLang)}</span>
               <div className="lang-grid" style={{ maxHeight: 200 }}>
                 {LANGS.map(lang => (
                   <button key={lang.c} onClick={() => { setUserLang(lang.c); localStorage.setItem("ep_lang", lang.c); }} className={`lang-btn ${userLang === lang.c ? "on" : ""}`} style={{ padding: "10px" }}>
@@ -1869,14 +2607,20 @@ function App() {
             </div>
 
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-              <span style={{fontWeight:900, fontSize:"1.1em"}}>حجم النص</span>
-              <div sty{{ display: "flex", gap: 10, alignItems: "center" }}>
+              <span style={{fontWeight:900, fontSize:"1.1em"}}>{t("text_size", userLang)}</span>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
                 <button className="btnI" onClick={() => setFs(Math.max(80, fs - 10))}>−</button>
                 <span style={{ minWidth: 48, textAlign: "center", fontWeight: 900, fontSize:"1.1em" }}>{fs}%</span>
                 <button className="btnI" onClick={() => setFs(Math.min(150, fs + 10))}>+</button>
               </div>
             </div>
-            <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>إعادة الحجم الأصلي</button>
+            <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>{t("reset_size", userLang)}</button>
+            
+            <div style={{ marginTop: 20, textAlign: "center" }}>
+              <button onClick={logout} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)" }}>
+                {t("logout", userLang)}
+              </button>
+            </div>
           </div>
         </div>
       )}
