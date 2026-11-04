@@ -1,11 +1,12 @@
 // ==========================================
 // ملف إضافة الدروس المقفولة (Pro) + ربط Supabase
-// النسخة النهائية: حل مشكل الكليك + واتساب + لغة مرنة
+// النسخة النهائية: واتساب مضمون + حل مشكل الكليك + لغة مرنة
 // ==========================================
 
-// 1. إعدادات الواتساب (بدل الرقم هنا برقمك الحقيقي)
-const WA_NUMBER = "212600000000"; 
-const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung")}`;
+// ⚠️ 1. رقم الواتساب ديالك (تم إضافته بنجاح)
+const WA_NUMBER = "212680193427"; 
+const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
+const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
 
 // 2. إعدادات Supabase
 const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
@@ -269,9 +270,12 @@ function openProModal(doc, title, msg) {
         <div style="font-weight: 900; font-size: 1.2em; color: var(--text); margin-bottom: 8px;">${getT('locked')}</div>
         <div style="color: var(--muted); font-size: 0.95em;">${msg}</div>
       </div>
-      <a href="${WA_LINK}" target="_blank" style="display: block; text-align: center; text-decoration: none; margin-top: 16px; width: 100%; padding: 16px; border-radius: 14px; background: linear-gradient(135deg, var(--gold), #F5B82E); color: var(--ink); font-weight: 900; border: none; font-size: 1.1em; cursor: pointer; box-shadow: 0 4px 15px rgba(245,184,46,0.3); box-sizing: border-box;">
+      
+      <!-- زر الواتساب المضمون -->
+      <button onclick="window.open('${WA_LINK}', '_blank')" style="width: 100%; padding: 16px; border-radius: 14px; background: linear-gradient(135deg, var(--gold), #F5B82E); color: var(--ink); font-weight: 900; border: none; font-size: 1.1em; cursor: pointer; box-shadow: 0 4px 15px rgba(245,184,46,0.3); margin-top: 16px;">
         ${getT('subscribe')}
-      </a>
+      </button>
+      
     </div>
   `;
   doc.body.appendChild(overlay);
