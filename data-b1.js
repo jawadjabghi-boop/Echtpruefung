@@ -490,7 +490,7 @@ var SCHREIBEN_DATA = [
     transText: {},
     transTask: {},
     transPoints: {}
-  }))
+  })))
 ];
 
 var HOREN_EXAMS = [
