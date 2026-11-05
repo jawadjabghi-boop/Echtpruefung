@@ -3,15 +3,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>EchtPrüfung</title>
+  <title>EchtPrüfung - Debug Mode</title>
   <style>
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #0F1B33; }
     iframe { width: 100%; height: 100%; border: none; display: block; }
+    
+    /* ستايل ديال شاشة الخطأ */
+    #error-log {
+      display: none; 
+      position: fixed; 
+      top: 0; left: 0; right: 0; 
+      background: #DD0000; 
+      color: white; 
+      z-index: 999999; 
+      padding: 15px; 
+      font-family: monospace; 
+      white-space: pre-wrap; 
+      font-size: 14px;
+      direction: ltr;
+      text-align: left;
+      max-height: 50vh;
+      overflow-y: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
+  
+  <!-- هنا فين غادي تبان الأخطاء -->
+  <div id="error-log">جاري التحميل... إلا بقيتي هنا، راه كاين مشكل.</div>
+
   <iframe id="app-frame" src="./app.html"></iframe>
-  <script src="./addon.js"></script>
+  
+  <!-- هاد السكريبت كيسمع للأخطاء -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const errorLog = document.getElementById('error-log');
+      const iframe = document.getElementById('app-frame');
+
+      function showError(msg) {
+        errorLog.style.display = 'block';
+        errorLog.innerText = "⚠️ ERROR DETECTED:\n\n" + msg;
+      }
+
+      // 1. كيسمع للأخطاء ديال index.html (الغلاف)
+      window.addEventListener('error', (e) => {
+        showError(`File: ${e.filename}\nLine: ${e.lineno}\nMessage: ${e.message}`);
+      });
+
+      // 2. كيسمع للأخطاء اللي كيوقعو داخل app.html (React)
+      iframe.addEventListener('load', () => {
+        try {
+          iframe.contentWindow.addEventListener('error', (e) => {
+            // يلا كان الخطأ فـ React ولا Babel
+            let file = e.filename ? e.filename.split('/').pop() : 'app.html';
+            showError(`Inside app.html (React Error)\nFile: ${file}\nLine: ${e.lineno}\nMessage: ${e.message}`);
+          });
+        } catch (err) {
+          console.log("Cannot access iframe errors (CORS).");
+        }
+      });
+      
+      // 3. تحميل addon.js من بعد التحميل
+      const script = document.createElement('script');
+      script.src = './addon.js';
+      script.onerror = () => {
+         showError("Failed to load addon.js. Check if the file exists and has no errors.");
+      };
+      document.body.appendChild(script);
+    });
+  </script>
 </body>
 </html>
