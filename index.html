@@ -7,33 +7,12 @@
   <style>
     html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: #0F1B33; }
     iframe { width: 100%; height: 100%; border: none; display: block; }
-    
-    /* ستايل ديال شاشة الخطأ */
-    #error-log {
-      display: none; 
-      position: fixed; 
-      top: 0; left: 0; right: 0; 
-      background: #DD0000; 
-      color: white; 
-      z-index: 999999; 
-      padding: 15px; 
-      font-family: monospace; 
-      white-space: pre-wrap; 
-      font-size: 14px;
-      direction: ltr;
-      text-align: left;
-      max-height: 50vh;
-      overflow-y: auto;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-    }
+    #error-log { display: none; position: fixed; top: 0; left: 0; right: 0; background: #DD0000; color: white; z-index: 999999; padding: 15px; font-family: monospace; white-space: pre-wrap; font-size: 14px; direction: ltr; text-align: left; max-height: 50vh; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-  
-  <!-- هنا فين غادي تبان الأخطاء -->
   <div id="error-log">جاري التحميل...</div>
-
   <iframe id="app-frame" src="./app.html"></iframe>
   
   <script>
@@ -41,43 +20,32 @@
       const errorLog = document.getElementById('error-log');
       const iframe = document.getElementById('app-frame');
 
-      // دالة باش تظهر الخطأ
       function showError(msg) {
         errorLog.style.display = 'block';
         errorLog.innerText = "⚠️ ERROR DETECTED:\n\n" + msg;
       }
 
-      // 1. جبد الأخطاء ديال index.html
       window.addEventListener('error', (e) => {
         showError(`[index.html] \nFile: ${e.filename}\nLine: ${e.lineno}\nMessage: ${e.message}`);
       });
 
-      // 2. جبد الأخطاء اللي كيوقعو داخل app.html (React)
       iframe.addEventListener('load', () => {
         try {
-          // كنسمعو للأخطاء ديال الـ iframe
           iframe.contentWindow.addEventListener('error', (e) => {
             let file = e.filename ? e.filename.split('/').pop() : 'app.html';
             showError(`[Inside app.html]\nFile: ${file}\nLine: ${e.lineno}\nMessage: ${e.message}`);
           });
-          
-          // كنسمعو لحالة الـ Unhandled Rejection (مثلا مشكل فـ Supabase)
           iframe.contentWindow.addEventListener('unhandledrejection', (e) => {
             showError(`[Promise Error in app.html]\nMessage: ${e.reason.message || e.reason}`);
           });
-          
         } catch (err) {
-          // يلا كان مشكل فـ CORS (الملفات ماشي فنفس الدومين)
           showError("Cannot access iframe errors (CORS Policy or Same-Origin issue).");
         }
       });
       
-      // 3. تحميل addon.js
       const script = document.createElement('script');
       script.src = './addon.js';
-      script.onerror = () => {
-         showError("Failed to load addon.js. Check if the file exists and is spelled correctly.");
-      };
+      script.onerror = () => { showError("Failed to load addon.js. Check if the file exists."); };
       document.body.appendChild(script);
     });
   </script>
