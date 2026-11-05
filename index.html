@@ -32,44 +32,51 @@
 <body>
   
   <!-- هنا فين غادي تبان الأخطاء -->
-  <div id="error-log">جاري التحميل... إلا بقيتي هنا، راه كاين مشكل.</div>
+  <div id="error-log">جاري التحميل...</div>
 
   <iframe id="app-frame" src="./app.html"></iframe>
   
-  <!-- هاد السكريبت كيسمع للأخطاء -->
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       const errorLog = document.getElementById('error-log');
       const iframe = document.getElementById('app-frame');
 
+      // دالة باش تظهر الخطأ
       function showError(msg) {
         errorLog.style.display = 'block';
         errorLog.innerText = "⚠️ ERROR DETECTED:\n\n" + msg;
       }
 
-      // 1. كيسمع للأخطاء ديال index.html (الغلاف)
+      // 1. جبد الأخطاء ديال index.html
       window.addEventListener('error', (e) => {
-        showError(`File: ${e.filename}\nLine: ${e.lineno}\nMessage: ${e.message}`);
+        showError(`[index.html] \nFile: ${e.filename}\nLine: ${e.lineno}\nMessage: ${e.message}`);
       });
 
-      // 2. كيسمع للأخطاء اللي كيوقعو داخل app.html (React)
+      // 2. جبد الأخطاء اللي كيوقعو داخل app.html (React)
       iframe.addEventListener('load', () => {
         try {
+          // كنسمعو للأخطاء ديال الـ iframe
           iframe.contentWindow.addEventListener('error', (e) => {
-            // يلا كان الخطأ فـ React ولا Babel
             let file = e.filename ? e.filename.split('/').pop() : 'app.html';
-            showError(`Inside app.html (React Error)\nFile: ${file}\nLine: ${e.lineno}\nMessage: ${e.message}`);
+            showError(`[Inside app.html]\nFile: ${file}\nLine: ${e.lineno}\nMessage: ${e.message}`);
           });
+          
+          // كنسمعو لحالة الـ Unhandled Rejection (مثلا مشكل فـ Supabase)
+          iframe.contentWindow.addEventListener('unhandledrejection', (e) => {
+            showError(`[Promise Error in app.html]\nMessage: ${e.reason.message || e.reason}`);
+          });
+          
         } catch (err) {
-          console.log("Cannot access iframe errors (CORS).");
+          // يلا كان مشكل فـ CORS (الملفات ماشي فنفس الدومين)
+          showError("Cannot access iframe errors (CORS Policy or Same-Origin issue).");
         }
       });
       
-      // 3. تحميل addon.js من بعد التحميل
+      // 3. تحميل addon.js
       const script = document.createElement('script');
       script.src = './addon.js';
       script.onerror = () => {
-         showError("Failed to load addon.js. Check if the file exists and has no errors.");
+         showError("Failed to load addon.js. Check if the file exists and is spelled correctly.");
       };
       document.body.appendChild(script);
     });
