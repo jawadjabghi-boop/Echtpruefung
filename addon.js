@@ -86,13 +86,21 @@
   }
 
   function injectLesenLessons() {
-    const main = document.querySelector('main');
-    if (!main) return;
-    const h1 = main.querySelector('h1');
-    if (!h1 || !h1.textContent.includes('Lesen')) return;
-    if (main.querySelector('.injected-lesen')) return;
+    const viewDiv = document.querySelector('main > div');
+    if (!viewDiv) return;
+    const h1 = viewDiv.querySelector('h1');
+    
+    // يلا ماشي صفحة القراية، مسح أي حقن قديم
+    if (!h1 || !h1.textContent.includes('Lesen')) {
+      const old = document.querySelector('.injected-lesen-container');
+      if (old) old.remove();
+      return;
+    }
+    
+    if (viewDiv.querySelector('.injected-lesen-container')) return;
 
     const container = document.createElement('div');
+    container.className = 'injected-lesen-container';
     container.style = "width: 100%; display: block;";
 
     LOCKED_LESEN_NAMES.forEach(name => {
@@ -116,18 +124,25 @@
       `;
       container.appendChild(btn);
     });
-    main.appendChild(container);
+    viewDiv.appendChild(container);
   }
 
   function injectSchreibenLessons() {
-    const main = document.querySelector('main');
-    if (!main) return;
-    const h1 = main.querySelector('h1');
-    if (!h1 || !h1.textContent.includes('Schreiben')) return;
-    if (main.querySelector('.injected-schreiben')) return;
+    const viewDiv = document.querySelector('main > div');
+    if (!viewDiv) return;
+    const h1 = viewDiv.querySelector('h1');
+    
+    if (!h1 || !h1.textContent.includes('Schreiben')) {
+      const old = document.querySelector('.injected-schreiben-container');
+      if (old) old.remove();
+      return;
+    }
+    
+    if (viewDiv.querySelector('.injected-schreiben-container')) return;
 
     const existingText = document.body.innerText;
     const container = document.createElement('div');
+    container.className = 'injected-schreiben-container';
     container.style = "width: 100%; display: block;";
 
     LOCKED_SCHREIBEN_NAMES.forEach(name => {
@@ -146,20 +161,25 @@
       `;
       container.appendChild(btn);
     });
-    main.appendChild(container);
+    viewDiv.appendChild(container);
   }
 
   function injectPruefungLessons() {
     const activeNav = document.querySelector('.nav button.on');
     if (!activeNav) return;
     const navText = activeNav.innerText || activeNav.textContent;
-    if (!navText.includes('امتحان') && !navText.includes('Prüfung')) return;
-    
-    const main = document.querySelector('main');
-    if (!main) return;
-    if (main.querySelector('.injected-pruefung')) return;
+    const viewDiv = document.querySelector('main > div');
+    if (!viewDiv) return;
 
-    const defaultCard = main.querySelector('.card');
+    if (!navText.includes('امتحان') && !navText.includes('Prüfung')) {
+       const old = document.querySelector('.injected-pruefung');
+       if (old) old.remove();
+       return;
+    }
+    
+    if (viewDiv.querySelector('.injected-pruefung')) return;
+
+    const defaultCard = viewDiv.querySelector('.card');
     if (defaultCard) defaultCard.style.display = 'none';
 
     const container = document.createElement('div');
@@ -208,17 +228,24 @@
     });
 
     container.appendChild(listContainer);
-    main.appendChild(container);
+    viewDiv.appendChild(container);
   }
 
   function injectHorenLessons() {
-    const main = document.querySelector('main');
-    if (!main) return;
-    const h1 = main.querySelector('h1');
-    if (!h1 || !h1.textContent.includes('Hören')) return;
-    if (main.querySelector('.injected-horen')) return;
+    const viewDiv = document.querySelector('main > div');
+    if (!viewDiv) return;
+    const h1 = viewDiv.querySelector('h1');
+    
+    if (!h1 || !h1.textContent.includes('Hören')) {
+      const old = document.querySelector('.injected-horen-container');
+      if (old) old.remove();
+      return;
+    }
+    
+    if (viewDiv.querySelector('.injected-horen-container')) return;
 
     const container = document.createElement('div');
+    container.className = 'injected-horen-container';
     container.style = "width: 100%; display: block;";
 
     LOCKED_HOREN_NAMES.forEach(name => {
@@ -240,7 +267,7 @@
       `;
       container.appendChild(btn);
     });
-    main.appendChild(container);
+    viewDiv.appendChild(container);
   }
 
   function closeCustomModal() {
