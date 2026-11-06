@@ -8,7 +8,6 @@
 <style>
   #error-log { display: none; position: fixed; top: 0; left: 0; right: 0; background: #DD0000; color: white; z-index: 999999; padding: 15px; font-family: monospace; white-space: pre-wrap; font-size: 14px; direction: ltr; text-align: left; max-height: 50vh; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 </style>
-<!-- ✅ مراقب الأخطاء كيخدم قبل أي حاجة -->
 <script>
   window.addEventListener('error', function(e) {
     var errorLog = document.getElementById('error-log');
@@ -128,16 +127,14 @@
 </style>
 </head>
 <body>
-<!-- ✅ هاد الديف كيبان غير ملي كيوقع خطأ -->
 <div id="error-log"></div>
-
 <div id="root"></div>
 
 <script src="./data1.js"></script>
 <script src="./data2.js"></script>
 <script src="./data3.js"></script>
-
 <script type="text/babel" data-presets="env,react" src="./app.js"></script>
+<script src="./addon.js"></script>
 
 </body>
 </html>
