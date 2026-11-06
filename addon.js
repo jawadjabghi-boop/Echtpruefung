@@ -2,27 +2,21 @@
 // ملف إضافة الدروس المقفولة (Pro) + ربط Supabase
 // ==========================================
 
-// 1. إعدادات الواتساب
 const WA_NUMBER = "212680193427"; 
 const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
 const WA_FORGOT_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("مرحباً، نسيت كلمة السر ديالي فـ EchtPrüfung.")}`;
 
-// 2. إعدادات Supabase
 const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
 const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
 const sb = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseKey) : null;
 
-// 3. الترجمات (اللغة المرنة)
 const UI_TEXTS = {
-  ar: { locked: "مقفول", pro: "Pro", subscribe: "اشترك الآن عبر واتساب", checking: "جاري التحقق...", found: "تم العثور على الدرس!", found_desc: "الدرس موجود في قاعدة البيانات.", not_available: "المحتوى غير متوفر. يرجى الترقية.", not_in_db: "المحتوى غير موجود.", close: "إغلاق", min: "دقيقة", open_access: "فتح الوصول", forgot_pass: "هل نسيت كلمة السر؟" },
-  ma: { locked: "مقفول", pro: "Pro", subscribe: "اشترك دابا فواتساب", checking: "كنتحققو...", found: "لقينا الدرس!", found_desc: "الدرس واجد.", not_available: "المحتوى ماكاينش. اشترك.", not_in_db: "ماكاينش.", close: "سد", min: "دقيقة", open_access: "فتح الوصول", forgot_pass: "نسيتي كلمة السر؟" },
-  en: { locked: "Locked", pro: "Pro", subscribe: "Subscribe via WhatsApp", checking: "Checking...", found: "Lesson found!", found_desc: "Lesson is ready.", not_available: "Content unavailable. Upgrade.", not_in_db: "Not found.", close: "Close", min: "Min", open_access: "Open Access", forgot_pass: "Forgot Password?" },
-  fr: { locked: "Verrouillé", pro: "Pro", subscribe: "S'abonner via WhatsApp", checking: "Vérification...", found: "Leçon trouvée!", found_desc: "Prête.", not_available: "Indisponible. Passez à Pro.", not_in_db: "Introuvable.", close: "Fermer", min: "Min", open_access: "Ouvrir l'accès", forgot_pass: "Mot de passe oublié ?" },
-  hi: { locked: "लॉक", pro: "Pro", subscribe: "व्हाट्सएप द्वारा सब्सक्राइब करें", checking: "जाँच हो रही है...", found: "पाठ मिला!", found_desc: "तैयार है।", not_available: "अनुपलब्ध। अपग्रेड करें।", not_in_db: "नहीं मिला।", close: "बंद करें", min: "मिनट", open_access: "पहुंच खोलें", forgot_pass: "पासवर्ड भूल गए?" },
-  id: { locked: "Terkunci", pro: "Pro", subscribe: "Berlangganan via WhatsApp", checking: "Memeriksa...", found: "Ditemukan!", found_desc: "Siap.", not_available: "Tidak tersedia. Upgrade.", not_in_db: "Tidak ada.", close: "Tutup", min: "Menit", open_access: "Buka Akses", forgot_pass: "Lupa Kata Sandi?" },
-  tl: { locked: "Naka-lock", pro: "Pro", subscribe: "Mag-subscribe sa WhatsApp", checking: "Sinusuri...", found: "Natagpuan!", found_desc: "Handa na.", not_available: "Hindi available. Upgrade.", not_in_db: "Wala.", close: "Isara", min: "Min", open_access: "Buksan ang Access", forgot_pass: "Nakalimutan ang Password?" },
-  fa: { locked: "قفل", pro: "Pro", subscribe: "اشتراک در واتساپ", checking: "در حال بررسی...", found: "پیدا شد!", found_desc: "آماده است.", not_available: "در دسترس نیست. ارتقا دهید.", not_in_db: "وجود ندارد.", close: "بستن", min: "دقیقه", open_access: "باز کردن دسترسی", forgot_pass: "رمز عبور را فراموش کرده اید؟" }
+  ar: { locked: "مقفول", pro: "Pro", subscribe: "اشترك الآن عبر واتساب", checking: "جاري التحقق...", found: "تم العثور على الدرس!", found_desc: "الدرس موجود في قاعدة البيانات.", not_available: "المحتوى غير متوفر. يرجى الترقية.", not_in_db: "المحتوى غير موجود.", close: "إغلاق", min: "دقيقة", open_access: "فتح الوصول" },
+  ma: { locked: "مقفول", pro: "Pro", subscribe: "اشترك دابا فواتساب", checking: "كنتحققو...", found: "لقينا الدرس!", found_desc: "الدرس واجد.", not_available: "المحتوى ماكاينش. اشترك.", not_in_db: "ماكاينش.", close: "سد", min: "دقيقة", open_access: "فتح الوصول" },
+  en: { locked: "Locked", pro: "Pro", subscribe: "Subscribe via WhatsApp", checking: "Checking...", found: "Lesson found!", found_desc: "Lesson is ready.", not_available: "Content unavailable. Upgrade.", not_in_db: "Not found.", close: "Close", min: "Min", open_access: "Open Access" },
+  fr: { locked: "Verrouillé", pro: "Pro", subscribe: "S'abonner via WhatsApp", checking: "Vérification...", found: "Leçon trouvée!", found_desc: "Prête.", not_available: "Indisponible. Passez à Pro.", not_in_db: "Introuvable.", close: "Fermer", min: "Min", open_access: "Ouvrir l'accès" },
+  hi: { locked: "लॉक", pro: "Pro", subscribe: "व्हाट्सएप द्वारा सब्सक्राइब करें", checking: "जाँच हो रही है...", found: "पाठ मिला!", found_desc: "तैयार है।", not_available: "अनुपलब्ध। अपग्रेड करें।", not_in_db: "नहीं मिला।", close: "बंद करें", min: "मिनट", open_access: "पहुंच खोलें" }
 };
 
 function getT(key) {
@@ -31,7 +25,6 @@ function getT(key) {
   return dict[key] || UI_TEXTS['ar'][key] || key;
 }
 
-// 4. لوائح الدروس
 const LOCKED_LESEN_NAMES = [
   "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", 
   "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", 
@@ -66,57 +59,38 @@ const PRUEFUNG_EXAMS = [
   { title: "امتحان كامل عشوائي", sub: "كل الأجزاء دفعة واحدة — Teil 1 · 2 · 3 · Sprachbaustein 1 · 2", isFull: true }
 ];
 
-const LOCKED_HOREN_NAMES = [
-  "Teil 2" // درس الهورن المقفول
-];
+const LOCKED_HOREN_NAMES = [ "Teil 2" ];
 
-// ================= 5. التحقق من السوبابيز =================
 async function handleLessonClick(doc, title) {
   openLoadingModal(doc, title);
-
   if (!sb) {
     closeCustomModal(doc);
     openProModal(doc, title, getT('not_available'));
     return;
   }
-
   try {
     const savedUser = JSON.parse(localStorage.getItem('ep_user') || '{}');
     let hasAccess = false;
-
     if (savedUser && savedUser.id) {
       const { data: profile } = await sb.from('profiles').select('is_paid, trial_started_at').eq('id', savedUser.id).single();
       if (profile) {
-        if (profile.is_paid) {
-          hasAccess = true;
-        } else if (profile.trial_started_at) {
+        if (profile.is_paid) hasAccess = true;
+        else if (profile.trial_started_at) {
           const start = new Date(profile.trial_started_at).getTime();
-          const end = start + 48 * 60 * 60 * 1000; // 48 ساعة
+          const end = start + 48 * 60 * 60 * 1000;
           if (Date.now() < end) hasAccess = true;
         }
       }
     }
-
-    // التحقق من وجود الدرس في السوبابيز
-    const { data, error } = await sb.from('premium_lessons').select('*').eq('title', title).maybeSingle();
-    
     closeCustomModal(doc);
-
-    if (hasAccess) {
-      // فتح الدرس (حتى لو كان وهمي، غادي يبان لللي عندو تجربة أو خالص)
-      openFoundModal(doc, title);
-    } else {
-      openProModal(doc, title, getT('not_available'));
-    }
+    if (hasAccess) openFoundModal(doc, title);
+    else openProModal(doc, title, getT('not_available'));
   } catch (err) {
     closeCustomModal(doc);
     openProModal(doc, title, getT('not_in_db'));
   }
 }
 
-// ================= 6. دوال الحقن =================
-
-// حقن دروس Lesen
 function injectLesenLessons(doc) {
   const h1 = doc.querySelector('main h1');
   if (!h1 || !h1.textContent.includes('Lesen')) return;
@@ -131,7 +105,6 @@ function injectLesenLessons(doc) {
     btn.className = 'card injected-lesen';
     btn.dataset.name = name; 
     btn.style = "width: 100%; text-align: right; display: block; color: var(--text); padding: 16px; border: 1.5px solid var(--line); margin-bottom: 12px; border-radius: 16px; background: var(--card); cursor: pointer; position: relative;";
-    
     btn.innerHTML = `
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <div>
@@ -150,14 +123,12 @@ function injectLesenLessons(doc) {
   });
 }
 
-// حقن دروس Schreiben
 function injectSchreibenLessons(doc) {
   const h1 = doc.querySelector('main h1');
   if (!h1 || !h1.textContent.includes('Schreiben')) return;
   const mainDiv = doc.querySelector('main > div');
   if (!mainDiv) return;
   if (mainDiv.querySelector(`.injected-schreiben`)) return;
-
   const existingText = doc.body.innerText;
 
   LOCKED_SCHREIBEN_NAMES.forEach(name => {
@@ -178,7 +149,6 @@ function injectSchreibenLessons(doc) {
   });
 }
 
-// حقن دروس Prüfungen (الامتحانات)
 function injectPruefungLessons(doc) {
   const activeNav = doc.querySelector('.nav button.on');
   if (!activeNav) return;
@@ -189,7 +159,6 @@ function injectPruefungLessons(doc) {
   if (!mainDiv) return;
   if (mainDiv.querySelector('.injected-pruefung')) return;
 
-  // إخفاء النص الافتراضي "قريباً"
   const defaultCard = mainDiv.querySelector('.card');
   if (defaultCard) defaultCard.style.display = 'none';
 
@@ -242,7 +211,6 @@ function injectPruefungLessons(doc) {
   mainDiv.appendChild(container);
 }
 
-// حقن دروس Hören (الاستماع)
 function injectHorenLessons(doc) {
   const h1 = doc.querySelector('main h1');
   if (!h1 || !h1.textContent.includes('Hören')) return;
@@ -271,7 +239,6 @@ function injectHorenLessons(doc) {
   });
 }
 
-// ================= 7. النوافذ المنبثقة (Modals) =================
 function closeCustomModal(doc) {
   const existing = doc.getElementById('custom-pro-modal');
   if (existing) existing.remove();
@@ -336,47 +303,39 @@ function openProModal(doc, title, msg) {
   overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal(doc);
 }
 
-// ================= 8. التشغيل التلقائي =================
-window.addEventListener('DOMContentLoaded', () => {
+// ================= 8. التشغيل التلقائي (بالحقن المستمر) =================
+(function initAddon() {
   const iframe = document.getElementById('app-frame');
-  if (iframe) {
-    const checkIframe = () => {
-      try {
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        if (doc && doc.body) {
-          
-          // مراقبة الكليك (Event Delegation) باش يخدم 100%
-          if (!doc.body.hasAttribute('data-listener-added')) {
-            doc.body.setAttribute('data-listener-added', 'true');
-            doc.body.addEventListener('click', (e) => {
-              const btn = e.target.closest('.injected-lesen, .injected-schreiben, .injected-pruefung-card, .injected-horen');
-              if (btn && btn.dataset.name) {
-                handleLessonClick(doc, btn.dataset.name);
-              }
-            });
-          }
-
-          // مراقبة تغييرات الصفحة (React Router)
-          const observer = new MutationObserver(() => {
-            injectLesenLessons(doc);
-            injectSchreibenLessons(doc);
-            injectPruefungLessons(doc);
-            injectHorenLessons(doc);
-          });
-          observer.observe(doc.body, { childList: true, subtree: true });
-          
-          // محاولة أولية
-          injectLesenLessons(doc);
-          injectSchreibenLessons(doc);
-          injectPruefungLessons(doc);
-          injectHorenLessons(doc);
-        } else {
-          setTimeout(checkIframe, 100);
-        }
-      } catch (e) {
-        console.error("خطأ فـ الوصول للـ iframe:", e);
-      }
-    };
-    iframe.addEventListener('load', checkIframe);
+  if (!iframe) {
+    setTimeout(initAddon, 500);
+    return;
   }
-});
+
+  // محاولة الحقن كل ثانية باش نضمنو أنه كيدخل
+  setInterval(() => {
+    try {
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      if (doc && doc.body) {
+        
+        // ربط الكليك
+        if (!doc.body.hasAttribute('data-listener-added')) {
+          doc.body.setAttribute('data-listener-added', 'true');
+          doc.body.addEventListener('click', (e) => {
+            const btn = e.target.closest('.injected-lesen, .injected-schreiben, .injected-pruefung-card, .injected-horen');
+            if (btn && btn.dataset.name) {
+              handleLessonClick(doc, btn.dataset.name);
+            }
+          });
+        }
+
+        // الحقن
+        injectLesenLessons(doc);
+        injectSchreibenLessons(doc);
+        injectPruefungLessons(doc);
+        injectHorenLessons(doc);
+      }
+    } catch (e) {
+      console.error("خطأ فـ الوصول للـ iframe:", e);
+    }
+  }, 1000); 
+})();
