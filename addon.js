@@ -17,9 +17,32 @@
     return (dict[lang] || dict['en'])[key] || key;
   };
 
-  const LOCKED_LESEN_NAMES = ["Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2", "Liebe Olivia", "Rita (Modifiziert)", "Caroline (Modifiziert)"];
+  // ✅ كاع دروس القراية (B1)
+  const LOCKED_LESEN_NAMES = [
+    "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", 
+    "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", 
+    "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", 
+    "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2", "Liebe Olivia",
+    "Rita (Modifiziert)", "Caroline (Modifiziert)"
+  ];
 
-  const LOCKED_SCHREIBEN_NAMES = ["Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand", "Nicole - Probleme Mit Dem Bruder", "Andreas - Neuer Kollege Und Büroalltag", "Annika - Gemeinsamer Sommerurlaub", "Iris - Abschlussparty Organisieren", "Caroline - Gastschülerin Aus Marokko", "Vera - Arbeitsweg Und Neue Stelle", "Jennifer - Einladung Zur Hochzeit", "Andreas - Neue Wohnung Und Computer", "Thomas - Überraschungsausflug", "Tamara - Treffen Und Neuer Job", "Jan - Urlaub In Rom", "Viktor - Urlaub In Malta", "Anna - Katze Und Blumen", "Nora - Neue Wohnung Und Leute Kennenlernen", "Claudia - Zoobesuch Und Geburtstag", "Karla - Umzug Und Neue Arbeit", "Mara - Reise Und Neuer Freund", "Annika - Gemeinsamer Urlaub (Teil 2)", "Sonja - Musikfestival", "Rita - Hochzeit Und Neuigkeiten", "Anne - Laras Geburtstag", "Paul - Ausflug In Die Berge", "Jakob - Nachbarn Und Wohnung", "Emilia", "Tobias", "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"];
+  // ✅ كاع دروس الكتابة (B1)
+  const LOCKED_SCHREIBEN_NAMES = [
+    "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand",
+    "Nicole - Probleme Mit Dem Bruder", "Andreas - Neuer Kollege Und Büroalltag",
+    "Annika - Gemeinsamer Sommerurlaub", "Iris - Abschlussparty Organisieren",
+    "Caroline - Gastschülerin Aus Marokko", "Vera - Arbeitsweg Und Neue Stelle",
+    "Jennifer - Einladung Zur Hochzeit", "Andreas - Neue Wohnung Und Computer",
+    "Thomas - Überraschungsausflug", "Tamara - Treffen Und Neuer Job",
+    "Jan - Urlaub In Rom", "Viktor - Urlaub In Malta", "Anna - Katze Und Blumen",
+    "Nora - Neue Wohnung Und Leute Kennenlernen", "Claudia - Zoobesuch Und Geburtstag",
+    "Karla - Umzug Und Neue Arbeit", "Mara - Reise Und Neuer Freund",
+    "Annika - Gemeinsamer Urlaub (Teil 2)", "Sonja - Musikfestival",
+    "Rita - Hochzeit Und Neuigkeiten", "Anne - Laras Geburtstag",
+    "Paul - Ausflug In Die Berge", "Jakob - Nachbarn Und Wohnung",
+    "Emilia", "Tobias", "Naco", "Alicia", "Cora Und Alex", 
+    "Miroslav", "Corinna", "Moritz"
+  ];
 
   async function handleLessonClick(title) {
     openLoadingModal(title);
@@ -67,45 +90,54 @@
     return btn;
   }
 
+  // ✅ دالة الحقن الآمنة
   function injectLessons() {
-    // مسح أي حقن قديم باش نتفاداو التكرار
-    document.querySelectorAll('.injected-container').forEach(el => el.remove());
-
     const activeNav = document.querySelector('.nav button.on');
     if (!activeNav) return;
-    const navText = activeNav.innerText || activeNav.textContent;
-    const main = document.querySelector('main');
-    if (!main) return;
+    
+    // كنجيبو البلاصة اللي كيحط فيها React المحتوى (main > div)
+    const mainDiv = document.querySelector('main > div');
+    if (!mainDiv) return;
 
-    // حقن دروس القراية فقط فقسم القراية
+    const navText = activeNav.innerText || activeNav.textContent;
+
+    // --- قسم القراية ---
     if (navText.includes('قراية') || navText.includes('Lesen')) {
-      const container = document.createElement('div');
-      container.className = 'injected-container';
-      LOCKED_LESEN_NAMES.forEach(name => container.appendChild(createCard(name)));
-      main.appendChild(container);
-    } 
-    // حقن دروس الكتابة فقط فقسم الكتابة
-    else if (navText.includes('كتابة') || navText.includes('Schreiben')) {
-      const container = document.createElement('div');
-      container.className = 'injected-container';
-      LOCKED_SCHREIBEN_NAMES.forEach(name => container.appendChild(createCard(name)));
-      main.appendChild(container);
+      if (!mainDiv.querySelector('.injected-lesen')) {
+        const container = document.createElement('div');
+        container.className = 'injected-container injected-lesen';
+        container.style = "width: 100%; display: block; margin-top: 20px;";
+        LOCKED_LESEN_NAMES.forEach(name => container.appendChild(createCard(name)));
+        mainDiv.appendChild(container);
+      }
+    } else {
+      const old = mainDiv.querySelector('.injected-lesen');
+      if (old) old.remove();
+    }
+
+    // --- قسم الكتابة ---
+    if (navText.includes('كتابة') || navText.includes('Schreiben')) {
+      if (!mainDiv.querySelector('.injected-schreiben')) {
+        const container = document.createElement('div');
+        container.className = 'injected-container injected-schreiben';
+        container.style = "width: 100%; display: block; margin-top: 20px;";
+        const existingText = document.body.innerText;
+        LOCKED_SCHREIBEN_NAMES.forEach(name => {
+          if (existingText.includes(name)) return;
+          container.appendChild(createCard(name));
+        });
+        mainDiv.appendChild(container);
+      }
+    } else {
+      const old = mainDiv.querySelector('.injected-schreiben');
+      if (old) old.remove();
     }
   }
 
-  // مراقبة الكليك على أزرار التنقل السفلية
-  document.addEventListener('click', (e) => {
-    const navBtn = e.target.closest('.nav button');
-    if (navBtn) {
-      // كنسناو 150 ميلي ثانية باش React يسالي الرسم ديال الصفحة
-      setTimeout(injectLessons, 150); 
-    }
-  });
+  // ✅ تشغيل تلقائي كل ثانية (خفيف بزاف وماغاديش يعلق)
+  setInterval(injectLessons, 1000);
 
-  // محاولة أولية يلا كان التطبيق مفتوح ديجا فـ القراية ولا الكتابة
-  setTimeout(injectLessons, 1000);
-
-  // ====== النوافذ المنبثقة (بلا تغيير) ======
+  // ====== النوافذ المنبثقة ======
   function closeCustomModal() { const existing = document.getElementById('custom-pro-modal'); if (existing) existing.remove(); }
   function openLoadingModal(title) {
     closeCustomModal();
