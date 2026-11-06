@@ -1,3 +1,5 @@
+alert("Addon.js khedma mzyan!");
+
 (function() {
   const WA_NUMBER = "212680193427"; 
   const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
@@ -86,13 +88,17 @@
   }
 
   function injectLesenLessons() {
-    const h1 = document.querySelector('main h1');
+    const main = document.querySelector('main');
+    if (!main) return;
+    
+    const h1 = main.querySelector('h1');
     if (!h1 || !h1.textContent.includes('Lesen')) return;
-    const mainDiv = document.querySelector('main > div');
-    if (!mainDiv) return;
-    const level = h1.textContent.includes('B1') ? 'B1' : 'B2';
-    if (level !== 'B1') return; 
-    if (mainDiv.querySelector(`.injected-lesen`)) return;
+    
+    if (main.querySelector('.injected-lesen')) return;
+
+    const container = document.createElement('div');
+    container.className = 'injected-container';
+    container.style = "width: 100%; display: block;";
 
     LOCKED_LESEN_NAMES.forEach(name => {
       const btn = document.createElement('button');
@@ -104,7 +110,7 @@
           <div>
             <div class="de" style="font-weight: 900; font-size: 1.2em; color: var(--text);">${name}</div>
             <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; color: var(--muted); font-size: .9em;">
-              <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">${level}</span>
+              <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">B1</span>
               <span>90 ${getT('min')}</span>
               <span style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px;">🔒 ${getT('locked')}</span>
               <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</span>
@@ -113,17 +119,25 @@
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
         </div>
       `;
-      mainDiv.appendChild(btn);
+      container.appendChild(btn);
     });
+    
+    main.appendChild(container);
   }
 
   function injectSchreibenLessons() {
-    const h1 = document.querySelector('main h1');
+    const main = document.querySelector('main');
+    if (!main) return;
+    
+    const h1 = main.querySelector('h1');
     if (!h1 || !h1.textContent.includes('Schreiben')) return;
-    const mainDiv = document.querySelector('main > div');
-    if (!mainDiv) return;
-    if (mainDiv.querySelector(`.injected-schreiben`)) return;
+    
+    if (main.querySelector('.injected-schreiben')) return;
+
     const existingText = document.body.innerText;
+    const container = document.createElement('div');
+    container.className = 'injected-container';
+    container.style = "width: 100%; display: block;";
 
     LOCKED_SCHREIBEN_NAMES.forEach(name => {
       if (existingText.includes(name)) return; 
@@ -139,8 +153,10 @@
           <div style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</div>
         </div>
       `;
-      mainDiv.appendChild(btn);
+      container.appendChild(btn);
     });
+    
+    main.appendChild(container);
   }
 
   function injectPruefungLessons() {
@@ -149,11 +165,11 @@
     const navText = activeNav.innerText || activeNav.textContent;
     if (!navText.includes('امتحان') && !navText.includes('Prüfung')) return;
     
-    const mainDiv = document.querySelector('main > div');
-    if (!mainDiv) return;
-    if (mainDiv.querySelector('.injected-pruefung')) return;
+    const main = document.querySelector('main');
+    if (!main) return;
+    if (main.querySelector('.injected-pruefung')) return;
 
-    const defaultCard = mainDiv.querySelector('.card');
+    const defaultCard = main.querySelector('.card');
     if (defaultCard) defaultCard.style.display = 'none';
 
     const container = document.createElement('div');
@@ -202,15 +218,21 @@
     });
 
     container.appendChild(listContainer);
-    mainDiv.appendChild(container);
+    main.appendChild(container);
   }
 
   function injectHorenLessons() {
-    const h1 = document.querySelector('main h1');
+    const main = document.querySelector('main');
+    if (!main) return;
+    
+    const h1 = main.querySelector('h1');
     if (!h1 || !h1.textContent.includes('Hören')) return;
-    const mainDiv = document.querySelector('main > div');
-    if (!mainDiv) return;
-    if (mainDiv.querySelector(`.injected-horen`)) return;
+    
+    if (main.querySelector('.injected-horen')) return;
+
+    const container = document.createElement('div');
+    container.className = 'injected-container';
+    container.style = "width: 100%; display: block;";
 
     LOCKED_HOREN_NAMES.forEach(name => {
       const btn = document.createElement('div');
@@ -229,8 +251,10 @@
           </div>
         </div>
       `;
-      mainDiv.appendChild(btn);
+      container.appendChild(btn);
     });
+    
+    main.appendChild(container);
   }
 
   function closeCustomModal() {
@@ -297,7 +321,6 @@
     overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
   }
 
-  // ================= التشغيل التلقائي (بالحقن المستمر) =================
   setInterval(() => {
     try {
       if (!document.body.hasAttribute('data-listener-added')) {
