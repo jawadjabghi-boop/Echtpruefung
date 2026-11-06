@@ -85,20 +85,7 @@
     }
   }
 
-  function injectLesenLessons() {
-    const viewDiv = document.querySelector('main > div');
-    if (!viewDiv) return;
-    const h1 = viewDiv.querySelector('h1');
-    
-    // يلا ماشي صفحة القراية، مسح أي حقن قديم
-    if (!h1 || !h1.textContent.includes('Lesen')) {
-      const old = document.querySelector('.injected-lesen-container');
-      if (old) old.remove();
-      return;
-    }
-    
-    if (viewDiv.querySelector('.injected-lesen-container')) return;
-
+  function injectLesenLessons(viewDiv) {
     const container = document.createElement('div');
     container.className = 'injected-lesen-container';
     container.style = "width: 100%; display: block;";
@@ -127,19 +114,7 @@
     viewDiv.appendChild(container);
   }
 
-  function injectSchreibenLessons() {
-    const viewDiv = document.querySelector('main > div');
-    if (!viewDiv) return;
-    const h1 = viewDiv.querySelector('h1');
-    
-    if (!h1 || !h1.textContent.includes('Schreiben')) {
-      const old = document.querySelector('.injected-schreiben-container');
-      if (old) old.remove();
-      return;
-    }
-    
-    if (viewDiv.querySelector('.injected-schreiben-container')) return;
-
+  function injectSchreibenLessons(viewDiv) {
     const existingText = document.body.innerText;
     const container = document.createElement('div');
     container.className = 'injected-schreiben-container';
@@ -164,21 +139,7 @@
     viewDiv.appendChild(container);
   }
 
-  function injectPruefungLessons() {
-    const activeNav = document.querySelector('.nav button.on');
-    if (!activeNav) return;
-    const navText = activeNav.innerText || activeNav.textContent;
-    const viewDiv = document.querySelector('main > div');
-    if (!viewDiv) return;
-
-    if (!navText.includes('امتحان') && !navText.includes('Prüfung')) {
-       const old = document.querySelector('.injected-pruefung');
-       if (old) old.remove();
-       return;
-    }
-    
-    if (viewDiv.querySelector('.injected-pruefung')) return;
-
+  function injectPruefungLessons(viewDiv) {
     const defaultCard = viewDiv.querySelector('.card');
     if (defaultCard) defaultCard.style.display = 'none';
 
@@ -231,19 +192,7 @@
     viewDiv.appendChild(container);
   }
 
-  function injectHorenLessons() {
-    const viewDiv = document.querySelector('main > div');
-    if (!viewDiv) return;
-    const h1 = viewDiv.querySelector('h1');
-    
-    if (!h1 || !h1.textContent.includes('Hören')) {
-      const old = document.querySelector('.injected-horen-container');
-      if (old) old.remove();
-      return;
-    }
-    
-    if (viewDiv.querySelector('.injected-horen-container')) return;
-
+  function injectHorenLessons(viewDiv) {
     const container = document.createElement('div');
     container.className = 'injected-horen-container';
     container.style = "width: 100%; display: block;";
@@ -268,6 +217,39 @@
       container.appendChild(btn);
     });
     viewDiv.appendChild(container);
+  }
+
+  function updateInjectedLessons() {
+    const main = document.querySelector('main');
+    if (!main) return;
+    
+    const viewDiv = main.querySelector('div');
+    if (!viewDiv) return;
+    
+    const activeNav = document.querySelector('.nav button.on');
+    if (!activeNav) return;
+    const navText = activeNav.innerText || activeNav.textContent;
+    const h1 = viewDiv.querySelector('h1');
+    const h1Text = h1 ? h1.textContent : "";
+
+    // مسح جميع الحاويات القديمة باش نضمنو ما كاينش تضارب
+    const allContainers = ['.injected-lesen-container', '.injected-schreiben-container', '.injected-pruefung', '.injected-horen-container'];
+    allContainers.forEach(sel => {
+      main.querySelectorAll(sel).forEach(el => el.remove());
+    });
+
+    if (h1Text.includes('Lesen') || navText.includes('قراءة') || navText.includes('Lesen')) {
+      injectLesenLessons(viewDiv);
+    } 
+    else if (h1Text.includes('Schreiben') || navText.includes('كتابة') || navText.includes('Schreiben')) {
+      injectSchreibenLessons(viewDiv);
+    }
+    else if (h1Text.includes('Hören') || navText.includes('استماع') || navText.includes('Hören')) {
+      injectHorenLessons(viewDiv);
+    }
+    else if (h1Text.includes('Prüfungen') || navText.includes('امتحان') || navText.includes('Prüfung')) {
+      injectPruefungLessons(viewDiv);
+    }
   }
 
   function closeCustomModal() {
@@ -346,10 +328,7 @@
         });
       }
 
-      injectLesenLessons();
-      injectSchreibenLessons();
-      injectPruefungLessons();
-      injectHorenLessons();
+      updateInjectedLessons();
     } catch (e) {
       console.error("خطأ فـ الحقن:", e);
     }
