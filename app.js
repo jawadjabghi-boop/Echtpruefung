@@ -12,7 +12,7 @@ const sb = supabase.createClient(supabaseUrl, supabaseKey);
 const { UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS } = window;
 const t = (key, lang) => (UI_TEXTS && UI_TEXTS[lang] && UI_TEXTS[lang][key]) || (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) || key;
 
-// ✅ لائحة الأسماء الفارغة (Placeholders) لجميع الأقسام
+// ✅ لائحة الأسماء الحقيقية مقسمة حسب الأقسام
 const PLACEHOLDER_LESSONS = {
   "Lesen": {
     "Teile 1": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
@@ -22,9 +22,9 @@ const PLACEHOLDER_LESSONS = {
     "Sprach 2": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Petra", "Corina", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2."]
   },
   "Hören": {
-    "Teil 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
-    "Teil 2": ["Vorlesung", "Interview", "Radiobericht"],
-    "Teil 3": ["Gespräch im Büro", "Dialog im Alltag"]
+    "Teile 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
+    "Teile 2": ["Vorlesung", "Interview", "Radiobericht"],
+    "Teile 3": ["Gespräch im Büro", "Dialog im Alltag"]
   },
   "Schreiben": [
     "Urlaub Im Schwarzwald", "Eva - Traumberuf", "Sophie - Würzburg", "Nadja - Garten", 
@@ -602,294 +602,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
     </div>
   );
 }
-function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa }) {
-  const [selected, setSelected] = useState(null);
-  const [showTransText, setShowTransText] = useState(false);
-  const [showTransTask, setShowTransTask] = useState(false);
-  const [userText, setUserText] = useState("");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analyzeStep, setAnalyzeStep] = useState(0);
-  const [result, setResult] = useState(null);
-  
-  const [timeLeft, setTimeLeft] = useState(90 * 60); 
-
-  useEffect(() => {
-    let timer;
-    if (selected && !result && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft(prev => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [selected, result, timeLeft]);
-
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
-
-  const wordCount = userText.trim() === "" ? 0 : userText.trim().split(/\s+/).length;
-  const insertChar = (char) => setUserText(prev => prev + char);
-
-  const checkWithAI = () => {
-    if (!userText.trim()) return;
-    setIsAnalyzing(true);
-    setAnalyzeStep(1);
-    setResult(null);
-
-    let currentStep = 1;
-    const interval = setInterval(() => {
-      currentStep++;
-      setAnalyzeStep(currentStep);
-      if (currentStep > 4) {
-        clearInterval(interval);
-        finishAnalysis();
-      }
-    }, 800); 
-  };
-
-  const finishAnalysis = () => {
-    const cleanText = userText.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, '').trim();
-    const words = cleanText.split(/\s+/).filter(w => w.length > 0);
-    
-    const isGibberish = words.length < 10 || /(.)\1{3,}/.test(userText) || cleanText.length < 15;
-
-    if (isGibberish) {
-      setResult({
-        score: 0, maxScore: 45, contentScore: "0/5",
-        generalEval: userLang === 'hi' ? "नमस्ते, पाठ की सामग्री खाली है और यह वह नहीं है जो आवश्यक है। आपको जर्मन शब्दों के साथ एक वास्तविक प्रतिक्रिया लिखनी होगी।" : "سلام كَشْ بو، فمحتوى الرسالة خالي من المعلومات وهاداشي ماشي هو المطلوب. خصك تكتب رد حقيقي فيه كلمات ألمانية مفهومة.",
-        contentFeedback: userLang === 'hi' ? "आपने कार्य के किसी भी बिंदु का उल्लेख नहीं किया। कोई पठनीय सामग्री नहीं है।" : "ما ذكرت حتى نقطة من النقط المطلوبة فالمهمة. ما كاينش محتوى مقروء.",
-        errors: []
-      });
-    } else {
-      setResult({
-        score: 35, maxScore: 45, contentScore: "4/5",
-        generalEval: userLang === 'hi' ? "अच्छा प्रयास! आपने अधिकांश आवश्यक बिंदुओं का उत्तर दिया है, लेकिन कुछ छोटी भाषाई त्रुटियां हैं।" : "مجهود جيد! لقد أجبت على معظم النقاط المطلوبة، ولكن هناك بعض الأخطاء اللغوية البسيطة.",
-        contentFeedback: userLang === 'hi' ? "आपने कार्य में अधिकांश आवश्यक बिंदुओं का उल्लेख किया है।" : "لقد ذكرت أغلب النقاط المطلوبة في المهمة.",
-        errors: [{ error: "Ich habe gehen", fix: "Ich bin gegangen", type: userLang === 'hi' ? "व्याकरण (Grammatik)" : "قواعد (Grammatik)" }]
-      });
-    }
-    setIsAnalyzing(false);
-  };
-
-  // فلترة دروس الشريبن من سوبابيز
-  const dynamicSchreiben = supabaseLessons.filter(les => (les.sub === "Schreiben" || les.data?.sub === "Schreiben"));
-  const displayLessons = dynamicSchreiben.length > 0 ? dynamicSchreiben.map(l => l.data || l) : SCHREIBEN_DATA;
-
-  if (!selected) {
-    return (
-      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h1 className="de" style={{ margin: 0, fontSize: "2.5em", fontWeight: 900, color: "var(--ink)" }}>Schreiben</h1>
-        </div>
-        <div style={{ display: "flex", background: "var(--line)", borderRadius: 99, padding: 4, marginBottom: 20, width: "fit-content", margin: "0 auto 20px" }}>
-          <div style={{ background: "#22C55E", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
-          <div style={{ color: "var(--muted)", padding: "10px 30px", fontWeight: 900 }}>B2</div>
-        </div>
-        <div style={{ position: "relative", marginBottom: 20 }}>
-          <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
-        </div>
-        
-        {displayLessons.map(item => (
-          <div key={item.id} onClick={() => { setSelected(item); setUserText(""); setResult(null); setShowTransText(false); setShowTransTask(false); setTimeLeft(90 * 60); }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
-            <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{item.title}</div>
-            <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{item.level || 'B1'}</div>
-          </div>
-        ))}
-
-        {/* ✅ الأسماء الفارغة فـ الكتابة */}
-        <div style={{ marginTop: 20 }}>
-          <h3 style={{ color: "var(--muted)", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>مواضيع قيد التجهيز (قريباً) ⏳</h3>
-          {PLACEHOLDER_LESSONS["Schreiben"]?.filter(name => 
-            !displayLessons.some(les => les.title === name)
-          ).map((name, idx) => (
-            <div key={idx} className="card" style={{ padding: 20, marginBottom: 12, border: "1.5px dashed var(--line)", background: "var(--paper)", opacity: 0.7 }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--muted)" }}>{name}</div>
-                <div style={{ fontSize: "1.5em", opacity: 0.5 }}>⏳</div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  if (result) {
-    return (
-      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-          <button onClick={() => setResult(null)} className="btnI" style={{ width: 40, height: 40 }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-          <h2 style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{userLang === 'hi' ? 'संपादक पर वापस जाएं' : 'رجوع إلى المحرر'}</h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
-          <div style={{ width: 120, height: 120, borderRadius: "50%", border: "8px solid var(--line)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderTopColor: result.score === 0 ? "var(--red)" : "#22C55E" }}>
-            <span style={{ fontSize: "2.5em", fontWeight: 900 }}>{result.score}</span>
-            <span style={{ color: "var(--muted)", fontSize: "0.8em" }}>/ {result.maxScore} {userLang === 'hi' ? 'अंक' : 'نقطة'}</span>
-          </div>
-          <div style={{ background: result.score < 20 ? "var(--red)" : "#22C55E", color: "#FFF", padding: "4px 16px", borderRadius: 20, fontWeight: 900, marginTop: 12, fontSize: "0.9em" }}>
-            {result.score < 20 ? (userLang === 'hi' ? 'अभ्यास की जरूरत है' : 'يحتاج لتدريب') : (userLang === 'hi' ? 'उत्कृष्ट' : 'ممتاز')}
-          </div>
-        </div>
-        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, fontSize: "1.4em", fontWeight: 900, color: "var(--ink)" }}>⚠️ {userLang === 'hi' ? 'सामान्य मूल्यांकन' : 'التقييم العام'}</div>
-          <p style={{ fontSize: "1.05em", lineHeight: 1.8, color: "var(--text)", marginBottom: 16 }}>{result.generalEval}</p>
-          <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 16, padding: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <span style={{ fontSize: "1.5em", fontWeight: 900, color: "var(--ink)" }}>{result.contentScore}</span>
-              <span style={{ fontWeight: 900, color: "var(--muted)" }}>Content</span>
-            </div>
-            <p style={{ margin: 0, color: "var(--muted)", fontSize: "0.9em" }}>{result.contentFeedback}</p>
-          </div>
-        </div>
-        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900 }}>
-              <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> {userLang === 'hi' ? 'आपका पाठ' : 'النص الخاص بك'}
-            </div>
-          </div>
-          <div className="de" style={{ background: "var(--paper)", border: "1px solid var(--line)", padding: 16, borderRadius: 12, whiteSpace: "pre-wrap" }}>{userText}</div>
-        </div>
-        <div className="card" style={{ padding: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>
-            <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> {userLang === 'hi' ? 'त्रुटियों का विस्तृत विश्लेषण' : 'التحليل التفصيلي للأخطاء'}
-          </div>
-          {result.errors.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "40px 20px", border: "2px dashed var(--line)", borderRadius: 16 }}>
-              <div style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(221,0,0,0.1)", display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 16px", color: "var(--red)", fontSize: "1.5em", fontWeight: 900 }}>!</div>
-              <h3 style={{ margin: "0 0 8px", color: "var(--red)", fontSize: "1.3em" }}>{userLang === 'hi' ? 'दिखाने के लिए कोई त्रुटि नहीं' : 'لا توجد أخطاء للعرض'}</h3>
-              <p style={{ margin: 0, color: "var(--muted)" }}>{userLang === 'hi' ? 'इस प्रयास में कोई त्रुटि नहीं मिली।' : 'لم يتم العثور على أخطاء في هذه المحاولة.'}</p>
-            </div>
-          ) : (
-            <div>
-              {result.errors.map((err, i) => (
-                <div key={i} style={{ background: "var(--paper)", padding: 12, borderRadius: 12, marginBottom: 8, borderRight: "4px solid var(--red)" }}>
-                  <div style={{ color: "var(--red)", fontWeight: 900, textDecoration: "line-through" }}>{err.error}</div>
-                  <div style={{ color: "#22C55E", fontWeight: 900 }}>{userLang === 'hi' ? 'सुझाव' : 'الاقتراح'}: {err.fix}</div>
-                  <div style={{ color: "var(--muted)", fontSize: "0.8em", marginTop: 4 }}>{err.type}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ padding: "20px 12px", paddingBottom: 120 }}>
-      {isAnalyzing && (
-        <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 999, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20 }}>
-          <div style={{ position: "relative", marginBottom: 30 }}>
-             <div style={{ width: 120, height: 120, borderRadius: "50%", border: "4px solid rgba(34, 197, 94, 0.2)", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#22C55E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
-             </div>
-             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: "#22C55E", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
-          </div>
-          <h2 style={{ fontSize: "1.8em", fontWeight: 900, marginBottom: 10 }}>{userLang === 'hi' ? 'स्मार्ट सुधार' : 'جاري التصحيح الذكي'}</h2>
-          <p style={{ color: "var(--muted)", marginBottom: 40 }}>{userLang === 'hi' ? 'हम उन्नत AI तकनीकों का उपयोग करके आपके पाठ की समीक्षा कर रहे हैं' : 'نقوم بمراجعة نصك باستخدام تقنيات AI المطورة'}</p>
-          <div style={{ width: "100%", maxWidth: 300 }}>
-            {[userLang === 'hi' ? "स्मार्ट सुधारक तैयार करना..." : "تحضير المصحح الذكي...", userLang === 'hi' ? "वाक्य संरचना का विश्लेषण..." : "تحليل بنية الجمل...", userLang === 'hi' ? "व्याकरण और शब्दावली की समीक्षा..." : "مراجعة القواعد والمفردات...", userLang === 'hi' ? "अंतिम रिपोर्ट तैयार करना..." : "توليد التقرير النهائي..."].map((step, idx) => (
-              <div key={idx} style={{ color: analyzeStep === idx + 1 ? "#22C55E" : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
-                {analyzeStep === idx + 1 && "✨ "} {step}
-              </div>
-            ))}
-          </div>
-          <div style={{ width: "80%", height: 8, background: "var(--line)", borderRadius: 99, marginTop: 40, overflow: "hidden" }}>
-             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: "#22C55E", transition: "width 0.3s" }}></div>
-          </div>
-        </div>
-      )}
-
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <button onClick={() => setSelected(null)} className="btnI" style={{ width: 40, height: 40 }}>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-          </button>
-          <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{selected.title}</h2>
-        </div>
-        
-        <div className="timer-badge" style={{ padding: '6px 12px', fontSize: '15px' }}>
-          ⏱️ {formatTime(timeLeft)}
-        </div>
-      </div>
-
-      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
-          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>SITUATION</span>
-          <span style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level}</span>
-        </div>
-        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> {t("trans_text", userLang)}
-          </div>
-          <button onClick={() => setShowTransText(!showTransText)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
-            {showTransText ? t("hide", userLang) : t("show", userLang)}
-          </button>
-        </div>
-        {showTransText && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
-            {selected.transText?.[userLang] || <AutoTrans text={selected.text} lang={userLang} force={true} />}
-          </div>
-        )}
-      </div>
-
-      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
-          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>AUFGABE</span>
-          <span style={{ marginLeft: "auto", background: "var(--line)", color: "var(--muted)", padding: "4px 12px", borderRadius: 8, fontSize: "0.8em", fontWeight: 900 }}>150–180 {t("words_count", userLang)}</span>
-        </div>
-        <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task}</div>
-        {selected.points.map((pt, idx) => (
-          <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
-            <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#22C55E", color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
-            <div className="de" style={{ background: "var(--paper)", padding: "12px 16px", borderRadius: 12, flex: 1, border: "1px solid var(--line)" }}>{pt}</div>
-          </div>
-        ))}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg> {t("trans_task", userLang)}
-          </div>
-          <button onClick={() => setShowTransTask(!showTransTask)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900 }}>
-            {showTransTask ? t("hide", userLang) : t("show", userLang)}
-          </button>
-        </div>
-        {showTransTask && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
-            <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask?.[userLang] || <AutoTrans text={selected.task} lang={userLang} force={true} />}</div>
-            {(selected.transPoints?.[userLang] || selected.transPoints?.['en'] || selected.transPoints?.['ar'] || []).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
-          </div>
-        )}
-      </div>
-
-      <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-        <div className="keyboard-area">
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'].map(c => (
-              <button key={c} onClick={() => insertChar(c)} className="key-btn">{c}</button>
-            ))}
-          </div>
-          <div className="word-counter">
-            <span style={{ color: wordCount >= 150 && wordCount <= 180 ? "#22C55E" : "var(--muted)" }}>{wordCount}</span> / 150-180
-          </div>
-        </div>
-        <textarea value={userText} onChange={(e) => setUserText(e.target.value)} placeholder={userLang === 'hi' ? '...यहाँ अपना उत्तर लिखना शुरू करें' : '...ابدأ في كتابة إجابتك هنا'} className="de" style={{ width: "100%", minHeight: 250, padding: 20, border: "none", background: "var(--card)", color: "var(--text)", fontSize: "1.05em", lineHeight: 1.6, resize: "vertical", outline: "none" }}></textarea>
-      </div>
-
-      <div className="bottom-bar" style={{ maxWidth: 400 }}>
-        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar">
-          ✨ {isAnalyzing ? (userLang === 'hi' ? 'सुधार हो रहा है...' : 'جاري التصحيح...') : t("ai_correct", userLang)}
-        </button>
-      </div>
-    </div>
-  );
-}
 function AdminPanel({ userLang, onClose }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -1118,35 +830,30 @@ function App() {
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
   const go = (v) => { setView(v); setExam(null); setShowHorenLessons(false); setIsSideMenuOpen(false); window.scrollTo(0, 0); };
 
-  // ✅ فلترة دروس القراءة والاستماع
-  const levelExams = EXAMS.filter(e => e.level === level && e.sub === activeTab);
-  
-  const groupedExams = levelExams.reduce((acc, exam) => {
-    if (!acc[exam.title]) acc[exam.title] = [];
-    acc[exam.title].push(exam);
-    return acc;
-  }, {});
-  
-  const uniqueTitles = Object.keys(groupedExams).filter(title => title.toLowerCase().includes(searchQuery.toLowerCase()));
+  // ✅ الدالة اللي كتحل الدروس (محلية أو من سوبابيز)
+  const handleLessonClick = async (title, sub, localExams) => {
+    if (localExams && localExams.length > 0) {
+      if (localExams.length > 1) {
+        setSelectedExamGroup(localExams); // كيطلع النافذة ديال (أصلي/معدل)
+      } else {
+        setExam(localExams[0]); // كيحل ديريكت
+        setTimeLeft(90*60);
+      }
+    } else {
+      // كيقلب على الدرس فـ سوبابيز
+      const safeSub = sub.toLowerCase().replace(/ /g, '');
+      const safeTitle = title.toLowerCase().replace(/ /g, '-');
+      const supabaseId = `${safeTitle}-${safeSub}`; 
 
-  const filteredSupabaseLessons = supabaseLessons.filter(les => {
-    const sub = les.sub || les.data?.sub;
-    const title = les.title || les.data?.title || "";
-    return sub === activeTab && title.toLowerCase().includes(searchQuery.toLowerCase());
-  });
-
-  const filteredHorenLessons = supabaseLessons.filter(les => {
-    const sub = les.sub || les.data?.sub;
-    return sub && sub.includes(activeHorenTab);
-  });
-
-  const handleNextExam = (currentExam) => {
-    const currentIndex = EXAMS.findIndex(e => e.id === currentExam.id);
-    if (currentIndex !== -1 && currentIndex < EXAMS.length - 1) {
-      const nextEx = EXAMS[currentIndex + 1];
-      if (nextEx.title === currentExam.title) setExam(nextEx);
-      else setExam(null);
-    } else setExam(null);
+      const { data, error } = await sb.from('premium_lessons').select('data').eq('id', supabaseId).single();
+      
+      if (error || !data) {
+        alert(`⚠️ الدرس "${title}" مازال ما تحطش فـ سوبابيز.\n(المعرف المطلوب: ${supabaseId})`);
+      } else {
+        setExam(data.data);
+        setTimeLeft(90*60);
+      }
+    }
   };
 
   if (!isReady) return <div className="splash-screen"><div className="splash-logo"><LogoImage size={180} /></div><h1 className="de" style={{ color: "var(--text)", fontSize: "2.5em", marginTop: 20, fontWeight: 900 }}>EchtPrüfung</h1></div>;
@@ -1191,7 +898,7 @@ function App() {
   }
 
   if (exam) {
-    return <ExamView exam={exam} userLang={userLang} dark={dark} setDark={setDark} onBack={() => {setExam(null); setTimeLeft(90*60);}} onNext={() => handleNextExam(exam)} onSave={saveResult} timeLeft={timeLeft} setTimeLeft={setTimeLeft} />;
+    return <ExamView exam={exam} userLang={userLang} dark={dark} setDark={setDark} onBack={() => {setExam(null); setTimeLeft(90*60);}} onNext={() => setExam(null)} onSave={saveResult} timeLeft={timeLeft} setTimeLeft={setTimeLeft} />;
   }
 
   return (
@@ -1246,30 +953,21 @@ function App() {
               ))}
             </div>
             
-            {level === "B2" ? <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div> : uniqueTitles.map(title => (
-              <button key={title} className="card" onClick={() => { if (groupedExams[title].length > 1) setSelectedExamGroup(groupedExams[title]); else { setExam(groupedExams[title][0]); setTimeLeft(90*60); } }} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20 }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <div><div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div><div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div></div>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-                </div>
-              </button>
-            ))}
-
-            <div style={{ marginTop: 20 }}>
-              <h3 style={{ color: "var(--gold)", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>دروس إضافية {activeTab} PRO ⭐</h3>
-              {filteredSupabaseLessons.map((les) => (
-                <div key={les.id} className="card" onClick={() => { if (isPaid || trialActive || isAdmin) { setExam(les.data); setTimeLeft(90*60); } else { wa(t("wa_upgrade_msg", userLang) + " - " + les.title); } }} style={{ padding: 20, marginBottom: 12, cursor: "pointer", border: "1.5px solid var(--gold)", background: "rgba(255,206,0,0.05)" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><div><div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>{les.title}</div><div style={{ display: "flex", gap: 6, marginTop: 6 }}><span style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "2px 8px", borderRadius: 6, fontSize: ".8em", fontWeight: 900 }}>🔒 مقفول</span></div></div><div style={{ fontSize: "1.5em" }}>🔒</div></div>
-                </div>
-              ))}
-            </div>
-
-            <div style={{ marginTop: 20 }}>
-              <h3 style={{ color: "var(--muted)", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>دروس قيد التجهيز (قريباً) ⏳</h3>
-              {PLACEHOLDER_LESSONS["Lesen"][activeTab]?.filter(name => !filteredSupabaseLessons.some(les => les.title === name) && name.toLowerCase().includes(searchQuery.toLowerCase())).map((name, idx) => (
-                <div key={idx} className="card" style={{ padding: 20, marginBottom: 12, border: "1.5px dashed var(--line)", background: "var(--paper)", opacity: 0.7 }}><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--muted)" }}>{name}</div><div style={{ fontSize: "1.5em", opacity: 0.5 }}>⏳</div></div></div>
-              ))}
-            </div>
+            {level === "B2" ? <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div> : (
+              PLACEHOLDER_LESSONS["Lesen"][activeTab]
+                ?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()))
+                .map((name, idx) => {
+                  const localExams = EXAMS.filter(e => e.title === name && e.sub === activeTab && e.level === level);
+                  return (
+                    <button key={idx} className="card" onClick={() => handleLessonClick(name, activeTab, localExams)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <div><div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div><div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div></div>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                      </div>
+                    </button>
+                  );
+                })
+            )}
           </div>
         )}
 
@@ -1277,24 +975,37 @@ function App() {
           <div>
             <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Hören {level}</h1>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, background: "var(--card)", padding: 16, borderRadius: 24, border: "1px solid var(--line)", marginBottom: 20 }}>
-              {["Teil 1", "Teil 2", "Teil 3"].map(tab => (
+              {["Teile 1", "Teile 2", "Teile 3"].map(tab => (
                 <button key={tab} onClick={() => setActiveHorenTab(tab)} style={{ padding: "14px 8px", borderRadius: 16, fontWeight: 900, border: activeHorenTab === tab ? "2px solid var(--blue)" : "2px solid transparent", background: activeHorenTab === tab ? "rgba(37, 99, 235, 0.1)" : "transparent", color: activeHorenTab === tab ? "var(--blue)" : "var(--muted)" }}>🎧 {tab}</button>
               ))}
             </div>
-            {filteredHorenLessons.map((les) => (
-               <div key={les.id} className="card" onClick={() => { if (isPaid || trialActive || isAdmin) { setExam(les.data); setTimeLeft(90*60); } else { wa(t("wa_upgrade_msg", userLang) + " - " + les.title); } }} style={{ padding: 20, marginBottom: 12, cursor: "pointer", border: "1.5px solid var(--gold)", background: "rgba(255,206,0,0.05)" }}><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>{les.title}</div><div style={{ fontSize: "1.5em" }}>🔒</div></div></div>
-            ))}
-            <div style={{ marginTop: 20 }}>
-              <h3 style={{ color: "var(--muted)", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>دروس قيد التجهيز (قريباً) ⏳</h3>
-              {PLACEHOLDER_LESSONS["Hören"][activeHorenTab]?.filter(name => !filteredHorenLessons.some(les => les.title === name)).map((name, idx) => (
-                <div key={idx} className="card" style={{ padding: 20, marginBottom: 12, border: "1.5px dashed var(--line)", background: "var(--paper)", opacity: 0.7 }}><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--muted)" }}>{name}</div><div style={{ fontSize: "1.5em", opacity: 0.5 }}>⏳</div></div></div>
-              ))}
-            </div>
+            
+            {PLACEHOLDER_LESSONS["Hören"][activeHorenTab]?.map((name, idx) => {
+              const localExams = HOREN_EXAMS.filter(e => e.title === name);
+              return (
+                <button key={idx} className="card" onClick={() => handleLessonClick(name, activeHorenTab, localExams)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                  </div>
+                </button>
+              );
+            })}
           </div>
         )}
 
         {view === "schreiben" && (
-          <SchreibenView userLang={userLang} dark={dark} setDark={setDark} supabaseLessons={supabaseLessons} isPaid={isPaid} trialActive={trialActive} isAdmin={isAdmin} wa={wa} />
+          <SchreibenView 
+            userLang={userLang} 
+            dark={dark} 
+            setDark={setDark} 
+            supabaseLessons={supabaseLessons} 
+            isPaid={isPaid} 
+            trialActive={trialActive} 
+            isAdmin={isAdmin} 
+            wa={wa} 
+            onLessonClick={handleLessonClick} 
+          />
         )}
 
         {view === "pruefung" && (
@@ -1314,7 +1025,9 @@ function App() {
           <div>
              <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
              {PLACEHOLDER_LESSONS["Sprechen"].map((name, idx) => (
-                <div key={idx} className="card" style={{ padding: 20, marginBottom: 12, border: "1.5px dashed var(--line)", background: "var(--paper)", opacity: 0.7 }}><div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}><div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--muted)" }}>{name}</div><div style={{ fontSize: "1.5em", opacity: 0.5 }}>⏳</div></div></div>
+                <button key={idx} className="card" onClick={() => handleLessonClick(name, "Sprechen", [])} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
+                  <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
+                </button>
               ))}
           </div>
         )}
@@ -1341,23 +1054,6 @@ function App() {
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
                 </button>
               ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {selectedExamTitle && (
-        <div className="overlay" onClick={() => setSelectedExamTitle(null)}>
-          <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}><h3 className="de" style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>{selectedExamTitle}</h3><button className="btnI" onClick={() => setSelectedExamTitle(null)}>✕</button></div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(subName => {
-                const existingExam = EXAMS.find(e => e.title === selectedExamTitle && e.level === level && e.sub === subName);
-                const isPremium = existingExam?.isPremium === true || (selectedExamTitle === "Vera" && (subName === "Sprach 1" || subName === "Sprach 2"));
-                const hasAccess = isPaid || trialActive || isAdmin;
-                if (isPremium && !hasAccess) return <button key={subName} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "16px", borderRadius: 14 }} onClick={() => wa(t("wa_upgrade_msg", userLang) + " - " + selectedExamTitle + " " + subName)}><span className="de" style={{ fontWeight: 800 }}>🔒 {subName} ({t("locked", userLang)})</span><span style={{ fontSize: "0.8em", fontWeight: "bold", color: "var(--red)" }}>⭐ {t("upgrade_pro", userLang)}</span></button>;
-                return <button key={subName} className="btn ghost" disabled={!existingExam} style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", opacity: existingExam ? 1 : 0.4, borderRadius: 14 }} onClick={async () => { if (isPremium && hasAccess) { const { data, error } = await sb.from('premium_lessons').select('data').eq('id', existingExam.id).single(); if (error || !data) alert("الدرس مازال ماحطيتوهش فسوبابيز: " + existingExam.id); else { setExam(data.data); setSelectedExamTitle(null); setTimeLeft(90*60); } } else if (existingExam) { setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(90*60); } }}><span className="de" style={{ fontWeight: 800, display: "flex", alignItems: "center", gap: 8 }}>{subName}</span>{existingExam && <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>}</button>;
-              })}
             </div>
           </div>
         </div>
