@@ -5,27 +5,26 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EchtPrüfung 2029</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  #error-log { display: none; position: fixed; top: 0; left: 0; right: 0; background: #DD0000; color: white; z-index: 999999; padding: 15px; font-family: monospace; white-space: pre-wrap; font-size: 14px; direction: ltr; text-align: left; max-height: 50vh; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+</style>
+<!-- ✅ مراقب الأخطاء كيخدم قبل أي حاجة -->
+<script>
+  window.addEventListener('error', function(e) {
+    var errorLog = document.getElementById('error-log');
+    if (errorLog) {
+      errorLog.style.display = 'block';
+      errorLog.innerText = "⚠️ ERROR DETECTED:\n\nFile: " + e.filename + "\nLine: " + e.lineno + "\nMessage: " + e.message;
+    }
+  });
+</script>
 <script crossorigin src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
 <script crossorigin src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
-  /* ✅ هاد الستايل ديال شاشة الأخطاء الحمراء */
-  #error-log { display: none; position: fixed; top: 0; left: 0; right: 0; background: #DD0000; color: white; z-index: 999999; padding: 15px; font-family: monospace; white-space: pre-wrap; font-size: 14px; direction: ltr; text-align: left; max-height: 50vh; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-</style>
-<style>
-  :root{
-    --ink:#111111; --gold:#FFCE00; --red:#DD0000; --blue:#2563EB; 
-    --paper:#FFFFFF; --card:#F8FAFC;
-    --text:#111111; --muted:#64748B; --line:#E2E8F0; 
-    --okc:#15803D; --okbg:#DCFCE7;
-    --badc:#DD0000; --badbg:#FEE2E2; --fs:1;
-  }
-  .dark{
-    --paper:#0A0A0A; --card:#1A1A1A; --text:#F8FAFC; --muted:#94A3B8; --line:#333333;
-    --ink:#F8FAFC; --gold:#FFCE00; --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D;
-    --blue: #60A5FA;
-  }
+  :root{ --ink:#111111; --gold:#FFCE00; --red:#DD0000; --blue:#2563EB; --paper:#FFFFFF; --card:#F8FAFC; --text:#111111; --muted:#64748B; --line:#E2E8F0; --okc:#15803D; --okbg:#DCFCE7; --badc:#DD0000; --badbg:#FEE2E2; --fs:1; }
+  .dark{ --paper:#0A0A0A; --card:#1A1A1A; --text:#F8FAFC; --muted:#94A3B8; --line:#333333; --ink:#F8FAFC; --gold:#FFCE00; --okc:#86EFAC; --okbg:#14532D; --badc:#FCA5A5; --badbg:#7F1D1D; --blue: #60A5FA; }
   html{ font-size:calc(18px * var(--fs)); }
   *{ box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
   body{ margin:0; color:var(--text); font-family:'Cairo',system-ui,sans-serif; direction:rtl; min-height:100vh; padding-bottom:100px; transition:background .3s,color .3s; background-color: var(--paper); background-image: radial-gradient(circle at 10% 20%, rgba(221, 0, 0, 0.08) 0%, transparent 40%), radial-gradient(circle at 90% 80%, rgba(255, 206, 0, 0.08) 0%, transparent 45%); background-attachment: fixed; }
@@ -134,24 +133,11 @@
 
 <div id="root"></div>
 
-<!-- ملفات البيانات (JavaScript عادي، بلا Babel) -->
 <script src="./data1.js"></script>
 <script src="./data2.js"></script>
 <script src="./data3.js"></script>
 
-<!-- ملف التطبيق (هذا وحده يحتاج Babel حيت فيه JSX) -->
 <script type="text/babel" data-presets="env,react" src="./app.js"></script>
-
-<!-- ✅ هاد السكريبت باش نوريك الأخطاء بالحمر -->
-<script>
-  window.addEventListener('error', function(e) {
-    var errorLog = document.getElementById('error-log');
-    if (errorLog) {
-      errorLog.style.display = 'block';
-      errorLog.innerText = "⚠️ ERROR DETECTED:\n\nFile: " + e.filename + "\nLine: " + e.lineno + "\nMessage: " + e.message;
-    }
-  });
-</script>
 
 </body>
 </html>
