@@ -17,32 +17,46 @@
     return (dict[lang] || dict['en'])[key] || key;
   };
 
-  const LOCKED_LESEN_NAMES = [
-    "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", 
-    "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", 
-    "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", 
-    "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2", "Liebe Olivia",
-    "Rita (Modifiziert)", "Caroline (Modifiziert)"
-  ];
+  // ✅ هيكل الأسماء حسب كل قسم (Tabs)
+  const LESSONS_BY_TEIL = {
+    "Teile 1": [
+      "Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", 
+      "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", 
+      "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", 
+      "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", 
+      "Mara", "Miroslav 2"
+    ],
+    "Teile 2": [
+      "Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", 
+      "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", 
+      "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", 
+      "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", 
+      "Mara", "Miroslav 2"
+    ],
+    "Teile 3": [
+      "Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", 
+      "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", 
+      "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", 
+      "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", 
+      "Mara", "Miroslav 2"
+    ],
+    "Sprach 1": [
+      "Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", 
+      "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", 
+      "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", 
+      "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", 
+      "Mara", "Liebe Olivia."
+    ],
+    "Sprach 2": [
+      "Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", 
+      "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", 
+      "Viktor", "Moritz", "Petra", "Corina", "Tamara / Jakob", "Nicole", 
+      "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", 
+      "Mara", "Miroslav 2."
+    ]
+  };
 
-  const LOCKED_SCHREIBEN_NAMES = [
-    "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand",
-    "Nicole - Probleme Mit Dem Bruder", "Andreas - Neuer Kollege Und Büroalltag",
-    "Annika - Gemeinsamer Sommerurlaub", "Iris - Abschlussparty Organisieren",
-    "Caroline - Gastschülerin Aus Marokko", "Vera - Arbeitsweg Und Neue Stelle",
-    "Jennifer - Einladung Zur Hochzeit", "Andreas - Neue Wohnung Und Computer",
-    "Thomas - Überraschungsausflug", "Tamara - Treffen Und Neuer Job",
-    "Jan - Urlaub In Rom", "Viktor - Urlaub In Malta", "Anna - Katze Und Blumen",
-    "Nora - Neue Wohnung Und Leute Kennenlernen", "Claudia - Zoobesuch Und Geburtstag",
-    "Karla - Umzug Und Neue Arbeit", "Mara - Reise Und Neuer Freund",
-    "Annika - Gemeinsamer Urlaub (Teil 2)", "Sonja - Musikfestival",
-    "Rita - Hochzeit Und Neuigkeiten", "Anne - Laras Geburtstag",
-    "Paul - Ausflug In Die Berge", "Jakob - Nachbarn Und Wohnung",
-    "Emilia", "Tobias", "Naco", "Alicia", "Cora Und Alex", 
-    "Miroslav", "Corinna", "Moritz"
-  ];
-
-  async function handleLessonClick(title) {
+  async function handleLessonClick(title, teil) {
     openLoadingModal(title);
     if (!sb) {
       closeCustomModal();
@@ -64,19 +78,27 @@
         }
       }
       closeCustomModal();
-      if (hasAccess) openFoundModal(title);
-      else openProModal(title, getT('not_available'));
+      
+      // هاد الجزء غادي نطوروه من بعد باش يفتح الدرس الحقيقي من سوبابيز
+      if (hasAccess) {
+        openFoundModal(title, teil); 
+      } else {
+        openProModal(title, getT('not_available'));
+      }
     } catch (err) {
       closeCustomModal();
       openProModal(title, getT('not_in_db'));
     }
   }
 
-  function createCard(name) {
+  function createCard(name, teil) {
     const btn = document.createElement('div');
     btn.className = 'card injected-item';
     btn.dataset.name = name;
+    btn.dataset.teil = teil; // تخزين القسم (مثلاً Teile 2)
     btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1px solid var(--line); border-radius: 20px; background: var(--card); box-shadow: 0 8px 32px rgba(0,0,0,0.04);";
+    
+    // شكل البطاقة
     btn.innerHTML = `
       <div class="de" style="font-weight: 900; font-size: 1.1em; margin-bottom: 12px; color: var(--text);">${name}</div>
       <div style="display: flex; gap: 8px; align-items: center;">
@@ -88,64 +110,91 @@
     return btn;
   }
 
+  // ✅ دالة الحقن الذكية (تكتشف القسم النشط وتحط الأسماء ديالو)
   function injectLessons() {
     const main = document.querySelector('main');
     if (!main) return;
 
+    // 1. نتأكدو واش حنا فقسم القراية (Lesen)
     const activeNav = document.querySelector('.nav button.on');
     const navText = activeNav ? (activeNav.innerText || activeNav.textContent) : '';
-
-    // ✅ القراية
-    if (navText.includes('قراية') || navText.includes('Lesen')) {
-      if (!main.querySelector('.injected-lesen')) {
-        const container = document.createElement('div');
-        container.className = 'injected-lesen';
-        container.style = "margin-top: 20px; display: block; width: 100%;";
-        LOCKED_LESEN_NAMES.forEach(name => container.appendChild(createCard(name)));
-        main.appendChild(container);
-      }
-    } else {
-      const old = main.querySelector('.injected-lesen');
+    if (!navText.includes('قراية') && !navText.includes('Lesen')) {
+      const old = main.querySelector('.injected-container');
       if (old) old.remove();
+      return;
     }
 
-    // ✅ الكتابة
-    if (navText.includes('كتابة') || navText.includes('Schreiben')) {
-      if (!main.querySelector('.injected-schreiben')) {
-        const container = document.createElement('div');
-        container.className = 'injected-schreiben';
-        container.style = "margin-top: 20px; display: block; width: 100%;";
-        const existingText = document.body.innerText;
-        LOCKED_SCHREIBEN_NAMES.forEach(name => {
-          if (existingText.includes(name)) return;
-          container.appendChild(createCard(name));
-        });
-        main.appendChild(container);
-      }
-    } else {
-      const old = main.querySelector('.injected-schreiben');
-      if (old) old.remove();
+    // 2. نلقاو شكون القسم النشط من الأزرار (Teile 1, Teile 2...)
+    let activeTeil = null;
+    // كنقلبو على الأزرار اللي فيها Teile ou Sprach
+    const buttons = Array.from(main.querySelectorAll('button, div'));
+    const activeTab = buttons.find(b => {
+      const text = b.innerText || b.textContent;
+      return (text.includes('Teile') || text.includes('Sprach')) && b.style.color === 'rgb(255, 255, 255)' || b.style.backgroundColor !== '';
+    });
+
+    // يلا لقينا القسم النشط
+    if (activeTab) {
+      const text = activeTab.innerText || activeTab.textContent;
+      if (text.includes('Teile 1')) activeTeil = "Teile 1";
+      else if (text.includes('Teile 2')) activeTeil = "Teile 2";
+      else if (text.includes('Teile 3')) activeTeil = "Teile 3";
+      else if (text.includes('Sprach 1')) activeTeil = "Sprach 1";
+      else if (text.includes('Sprach 2')) activeTeil = "Sprach 2";
     }
+
+    // يلا مالقيناش قسم محدد، كنخدمو بالقسم الافتراضي (Teile 1)
+    if (!activeTeil) activeTeil = "Teile 1";
+
+    // 3. نتأكدو واش درنا الحقن لهاد القسم من قبل
+    const existingContainer = main.querySelector('.injected-container');
+    if (existingContainer && existingContainer.dataset.teil === activeTeil) {
+      return; // راه محطوط، ماغاديش نعاودو
+    }
+
+    // 4. نمسحو القديم ونحطو الجديد
+    if (existingContainer) existingContainer.remove();
+
+    const container = document.createElement('div');
+    container.className = 'injected-container';
+    container.dataset.teil = activeTeil;
+    container.style = "margin-top: 20px; display: block; width: 100%;";
+
+    const lessons = LESSONS_BY_TEIL[activeTeil] || [];
+    lessons.forEach(name => container.appendChild(createCard(name, activeTeil)));
+
+    main.appendChild(container);
   }
 
-  // ✅ تشغيل كل ثانية (خفيف بزاف)
-  setInterval(injectLessons, 1000);
+  // ✅ استخدام MutationObserver بدلاً من setInterval (احترافي وخفيف)
+  const observer = new MutationObserver(() => {
+    injectLessons();
+  });
+
+  // نبداو المراقبة فاش كيتحمل الصفحة
+  window.addEventListener('load', () => {
+    observer.observe(document.body, { childList: true, subtree: true });
+    injectLessons(); // حقن أولي
+  });
 
   // ====== النوافذ المنبثقة ======
   function closeCustomModal() { const existing = document.getElementById('custom-pro-modal'); if (existing) existing.remove(); }
+  
   function openLoadingModal(title) {
     closeCustomModal();
     const overlay = document.createElement('div'); overlay.id = 'custom-pro-modal'; overlay.style = "position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); direction: rtl;";
     overlay.innerHTML = `<div style="background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; width: 100%; max-width: 440px; text-align: center; color: var(--text);"><h3 class="de" style="margin: 0 0 16px; font-size: 1.2em; font-weight: 900;">${title}</h3><div style="font-size: 2em; margin-bottom: 12px; animation: spin 1s linear infinite;">⏳</div><div style="font-weight: bold; color: var(--muted);">${getT('checking')}</div></div>`;
     document.body.appendChild(overlay);
   }
-  function openFoundModal(title) {
+
+  function openFoundModal(title, teil) {
     closeCustomModal();
     const overlay = document.createElement('div'); overlay.id = 'custom-pro-modal'; overlay.style = "position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); direction: rtl;";
-    overlay.innerHTML = `<div style="background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; width: 100%; max-width: 440px; text-align: center; color: var(--text);"><div style="font-size: 3em; margin-bottom: 16px;">🎉</div><h3 class="de" style="margin: 0 0 12px; font-size: 1.3em; font-weight: 900;">${title}</h3><div style="font-weight: 900; color: var(--okc); font-size: 1.1em; margin-bottom: 8px;">${getT('found')}</div><div style="color: var(--muted); font-size: 0.95em; margin-bottom: 20px;">${getT('found_desc')}</div><button id="close-pro-modal" style="width: 100%; padding: 16px; border-radius: 14px; background: var(--card); color: var(--text); border: 1.5px solid var(--line); font-weight: 900; cursor: pointer;">${getT('close')}</button></div>`;
+    overlay.innerHTML = `<div style="background: var(--card); border: 1px solid var(--line); border-radius: 24px; padding: 24px; width: 100%; max-width: 440px; text-align: center; color: var(--text);"><div style="font-size: 3em; margin-bottom: 16px;">🎉</div><h3 class="de" style="margin: 0 0 12px; font-size: 1.3em; font-weight: 900;">${title}</h3><div style="font-weight: 900; color: var(--okc); font-size: 1.1em; margin-bottom: 8px;">${getT('found')} (${teil})</div><div style="color: var(--muted); font-size: 0.95em; margin-bottom: 20px;">${getT('found_desc')}</div><button id="close-pro-modal" style="width: 100%; padding: 16px; border-radius: 14px; background: var(--card); color: var(--text); border: 1.5px solid var(--line); font-weight: 900; cursor: pointer;">${getT('close')}</button></div>`;
     document.body.appendChild(overlay);
     overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
   }
+
   function openProModal(title, msg) {
     closeCustomModal();
     const overlay = document.createElement('div'); overlay.id = 'custom-pro-modal'; overlay.style = "position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); direction: rtl;";
@@ -159,7 +208,9 @@
     document.body.setAttribute('data-listener-added', 'true');
     document.body.addEventListener('click', (e) => {
       const btn = e.target.closest('.injected-item');
-      if (btn && btn.dataset.name) handleLessonClick(btn.dataset.name);
+      if (btn && btn.dataset.name) {
+        handleLessonClick(btn.dataset.name, btn.dataset.teil);
+      }
     });
   }
 })();
