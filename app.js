@@ -940,6 +940,7 @@ function App() {
   
   // ✅ حالة جديدة لجلب الدروس من سوبابيز
   const [supabaseLessons, setSupabaseLessons] = useState([]);
+  const [activeTab, setActiveTab] = useState("Teile 1");
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -1121,8 +1122,15 @@ function App() {
     window.scrollTo(0, 0); 
   };
 
-  const levelExams = EXAMS.filter(e => e.level === level);
+  // ✅ الفلترة حسب التبويب النشط (Teile 1, Teile 2...) والدروس من سوبابيز
+  const levelExams = EXAMS.filter(e => e.level === level && e.sub === activeTab);
   const uniqueTitles = Array.from(new Set(levelExams.map(e => e.title))).filter(t => t.toLowerCase().includes(searchQuery.toLowerCase()));
+
+  const filteredSupabaseLessons = supabaseLessons.filter(les => {
+    const sub = les.sub || les.data?.sub;
+    const title = les.title || les.data?.title || "";
+    return sub === activeTab && title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
 
   const handleNextExam = (currentExam) => {
     const currentIndex = EXAMS.findIndex(e => e.id === currentExam.id);
@@ -1319,6 +1327,25 @@ function App() {
             <div style={{ marginBottom: 16 }}>
               <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
+
+            {/* ✅ التبويبات (Tabs) */}
+            <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 10, marginBottom: 16, scrollbarWidth: "none" }}>
+              {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab)}
+                  style={{
+                    padding: "8px 16px", borderRadius: 12, fontWeight: 900, fontSize: "0.9em", whiteSpace: "nowrap",
+                    border: "1px solid var(--line)",
+                    background: activeTab === tab ? "var(--blue)" : "var(--card)",
+                    color: activeTab === tab ? "#FFF" : "var(--text)",
+                    transition: "all 0.2s"
+                  }}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
             
             {level === "B2" ? (
                <div className="card" style={{ textAlign: "center", padding: 40 }}>
@@ -1330,7 +1357,7 @@ function App() {
                   <div>
                     <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div>
                     <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
-                      <span className="chip" style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "4px 10px", borderRadius: 8 }}>{level}</span>
+                      <span className="chip" style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span>
                       <span>90 Min</span>
                     </div>
                   </div>
@@ -1339,17 +1366,17 @@ function App() {
               </button>
             ))}
 
-            {/* ✅ عرض الدروس المقفلة القادمة من سوبابيز */}
+            {/* ✅ عرض الدروس المقفلة القادمة من سوبابيز (مفلترة حسب التبويب) */}
             <div style={{ marginTop: 20 }}>
               <h3 style={{ color: "var(--gold)", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>
-                دروس إضافية PRO ⭐
+                دروس إضافية {activeTab} PRO ⭐
               </h3>
-              {supabaseLessons.length === 0 ? (
+              {filteredSupabaseLessons.length === 0 ? (
                 <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.9em", padding: 20 }}>
-                  (لم يتم إضافة دروس في سوبابيز بعد)
+                  (لم يتم إضافة دروس فـ {activeTab} بعد)
                 </p>
               ) : (
-                supabaseLessons.map((les) => (
+                filteredSupabaseLessons.map((les) => (
                   <div key={les.id} className="card" onClick={() => {
                     if (isPaid || trialActive || isAdmin) {
                       setExam(les.data);
