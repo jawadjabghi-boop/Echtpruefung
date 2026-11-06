@@ -44,8 +44,6 @@
     "Miroslav", "Corinna", "Moritz"
   ];
 
-  const LOCKED_HOREN_NAMES = [ "Teil 2" ];
-
   async function handleLessonClick(title) {
     openLoadingModal(title);
     if (!sb) {
@@ -76,9 +74,8 @@
     }
   }
 
-  // دالة لمسح أي دروس قديمة باش التطبيق ما يبقاش تقيل وما يتخربقش
   function clearInjected() {
-    document.querySelectorAll('.injected-lesen-container, .injected-schreiben-container, .injected-horen-container').forEach(el => el.remove());
+    document.querySelectorAll('.injected-lesen-container, .injected-schreiben-container').forEach(el => el.remove());
   }
 
   function injectLessons() {
@@ -93,78 +90,60 @@
 
     clearInjected();
 
+    // قسم القراية (Lesen)
     if (navText.includes('قراية') || navText.includes('Lesen')) {
       const container = document.createElement('div');
       container.className = 'injected-lesen-container';
       container.style = "width: 100%; display: block;";
-      
+
       LOCKED_LESEN_NAMES.forEach(name => {
         const btn = document.createElement('button');
         btn.className = 'card injected-lesen';
         btn.dataset.name = name; 
-        btn.style = "width: 100%; text-align: right; display: block; color: var(--text); padding: 16px; border: 1.5px solid var(--line); margin-bottom: 12px; border-radius: 16px; background: var(--card); cursor: pointer; position: relative;";
+        
+        // استعملنا نفس التصميم ديال app.js بالضبط باش تبان حقيقية
+        btn.style = "width: 100%; text-align: right; display: block; color: var(--text); padding: 20px; margin-bottom: 12px; border-radius: 20px; background: var(--card); cursor: pointer; border: 1px solid var(--line); box-shadow: 0 8px 32px rgba(0,0,0,0.04);";
         btn.innerHTML = `
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <div>
-              <div class="de" style="font-weight: 900; font-size: 1.2em; color: var(--text);">${name}</div>
+              <div class="de" style="font-weight: 900; font-size: 1.2em;">${name}</div>
               <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; color: var(--muted); font-size: .9em;">
-                <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">B1</span>
+                <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 4px 10px; border-radius: 8px; font-weight: 900;">B1</span>
                 <span>90 ${getT('min')}</span>
                 <span style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px;">🔒 ${getT('locked')}</span>
                 <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</span>
               </div>
             </div>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
           </div>
         `;
         container.appendChild(btn);
       });
       viewDiv.appendChild(container);
     } 
+    // قسم الكتابة (Schreiben)
     else if (navText.includes('كتابة') || navText.includes('Schreiben')) {
       const container = document.createElement('div');
       container.className = 'injected-schreiben-container';
       container.style = "width: 100%; display: block;";
+      
       const existingText = document.body.innerText;
 
       LOCKED_SCHREIBEN_NAMES.forEach(name => {
         if (existingText.includes(name)) return; 
+        
         const btn = document.createElement('div');
         btn.className = 'card injected-schreiben';
         btn.dataset.name = name; 
-        btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
+        
+        // نفس التصميم ديال app.js
+        btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1px solid var(--line); border-radius: 20px; background: var(--card); box-shadow: 0 8px 32px rgba(0,0,0,0.04);";
         btn.innerHTML = `
           <div class="de" style="font-weight: 900; font-size: 1.1em; margin-bottom: 12px; color: var(--text);">${name}</div>
           <div style="display: flex; gap: 8px; align-items: center;">
             <div style="background: rgba(34, 197, 94, 0.1); color: #22C55E; padding: 4px 12px; border-radius: 8px; font-size: 0.85em; font-weight: 900;">B1</div>
             <div style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px; font-size: 0.9em;">🔒 ${getT('locked')}</div>
             <div style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</div>
-          </div>
-        `;
-        container.appendChild(btn);
-      });
-      viewDiv.appendChild(container);
-    }
-    else if (navText.includes('سماع') || navText.includes('Hören')) {
-      const container = document.createElement('div');
-      container.className = 'injected-horen-container';
-      container.style = "width: 100%; display: block;";
-
-      LOCKED_HOREN_NAMES.forEach(name => {
-        const btn = document.createElement('div');
-        btn.className = 'card injected-horen';
-        btn.dataset.name = name; 
-        btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
-        btn.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <div>
-              <div class="de" style="font-weight: 900; font-size: 1.2em; color: var(--text);">${name}</div>
-              <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; color: var(--muted); font-size: .9em;">
-                <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">B1</span>
-                <span style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px;">🔒 ${getT('locked')}</span>
-                <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</span>
-              </div>
-            </div>
           </div>
         `;
         container.appendChild(btn);
@@ -237,18 +216,16 @@
     overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
   }
 
-  // تفعيل مراقب التغييرات (MutationObserver) عوض setInterval
   const observer = new MutationObserver(() => {
     injectLessons();
   });
   
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // ربط الكليك مرة وحدة
   if (!document.body.hasAttribute('data-listener-added')) {
     document.body.setAttribute('data-listener-added', 'true');
     document.body.addEventListener('click', (e) => {
-      const btn = e.target.closest('.injected-lesen, .injected-schreiben, .injected-pruefung-card, .injected-horen');
+      const btn = e.target.closest('.injected-lesen, .injected-schreiben');
       if (btn && btn.dataset.name) {
         handleLessonClick(btn.dataset.name);
       }
