@@ -938,7 +938,7 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(90 * 60);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   
-  // ✅ حالة جديدة لجلب الدروس من سوبابيز
+  // ✅ حالة جديدة لجلب الدروس من سوبابيز والتبويب النشط
   const [supabaseLessons, setSupabaseLessons] = useState([]);
   const [activeTab, setActiveTab] = useState("Teile 1");
 
@@ -1328,21 +1328,30 @@ function App() {
               <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
             </div>
 
-            {/* ✅ التبويبات (Tabs) */}
-            <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 10, marginBottom: 16, scrollbarWidth: "none" }}>
-              {["Teile 1", "Teile 2", "Teile 3", "Sprach 1", "Sprach 2"].map(tab => (
+            {/* ✅ التبويبات (Tabs) بتصميم الشبكة والأيقونات بحال الصورة */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, background: "var(--card)", padding: 16, borderRadius: 24, border: "1px solid var(--line)", marginBottom: 20 }}>
+              {[
+                { id: "Prüfungen", icon: "📖", label: "Prüfungen" },
+                { id: "Teile 1", icon: "📝", label: "Teile 1" },
+                { id: "Teile 2", icon: "📝", label: "Teile 2" },
+                { id: "Teile 3", icon: "📝", label: "Teile 3" },
+                { id: "Sprach 1", icon: "🔠", label: "Sprach 1" },
+                { id: "Sprach 2", icon: "🔠", label: "Sprach 2" }
+              ].map(tab => (
                 <button
-                  key={tab}
-                  onClick={() => setActiveTab(tab)}
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
                   style={{
-                    padding: "8px 16px", borderRadius: 12, fontWeight: 900, fontSize: "0.9em", whiteSpace: "nowrap",
-                    border: "1px solid var(--line)",
-                    background: activeTab === tab ? "var(--blue)" : "var(--card)",
-                    color: activeTab === tab ? "#FFF" : "var(--text)",
-                    transition: "all 0.2s"
+                    display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6,
+                    padding: "14px 8px", borderRadius: 16, fontWeight: 900, fontSize: "0.85em",
+                    border: activeTab === tab.id ? "2px solid var(--blue)" : "2px solid transparent",
+                    background: activeTab === tab.id ? "rgba(37, 99, 235, 0.1)" : "transparent",
+                    color: activeTab === tab.id ? "var(--blue)" : "var(--muted)",
+                    transition: "all 0.2s", cursor: "pointer"
                   }}
                 >
-                  {tab}
+                  <span style={{ fontSize: "1.6em" }}>{tab.icon}</span>
+                  {tab.label}
                 </button>
               ))}
             </div>
