@@ -1,8 +1,4 @@
 (function() {
-  // ==========================================
-  // ملف إضافة الدروس المقفولة (Pro) + ربط Supabase
-  // ==========================================
-
   const WA_NUMBER = "212680193427"; 
   const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
   const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
