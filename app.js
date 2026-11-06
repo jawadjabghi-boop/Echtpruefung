@@ -602,7 +602,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
     </div>
   );
 }
-
 function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa }) {
   const [selected, setSelected] = useState(null);
   const [showTransText, setShowTransText] = useState(false);
