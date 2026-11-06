@@ -1,6 +1,5 @@
 // ==========================================
 // ملف إضافة الدروس المقفولة (Pro) + ربط Supabase
-// الملف كامل: Lesen + Schreiben + Prüfungen + Hören + Rita/Caroline Modifiziert
 // ==========================================
 
 // 1. إعدادات الواتساب
@@ -38,11 +37,10 @@ const LOCKED_LESEN_NAMES = [
   "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", 
   "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", 
   "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2", "Liebe Olivia",
-  "Rita (Modifiziert)", "Caroline (Modifiziert)" // الدروس المعدلة
+  "Rita (Modifiziert)", "Caroline (Modifiziert)"
 ];
 
 const LOCKED_SCHREIBEN_NAMES = [
-  "Urlaub Im Schwarzwald - Antwort An Petra", "Eva - Traumberuf Und Neuigkeiten",
   "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand",
   "Nicole - Probleme Mit Dem Bruder", "Andreas - Neuer Kollege Und Büroalltag",
   "Annika - Gemeinsamer Sommerurlaub", "Iris - Abschlussparty Organisieren",
@@ -83,11 +81,29 @@ async function handleLessonClick(doc, title) {
   }
 
   try {
+    const savedUser = JSON.parse(localStorage.getItem('ep_user') || '{}');
+    let hasAccess = false;
+
+    if (savedUser && savedUser.id) {
+      const { data: profile } = await sb.from('profiles').select('is_paid, trial_started_at').eq('id', savedUser.id).single();
+      if (profile) {
+        if (profile.is_paid) {
+          hasAccess = true;
+        } else if (profile.trial_started_at) {
+          const start = new Date(profile.trial_started_at).getTime();
+          const end = start + 48 * 60 * 60 * 1000; // 48 ساعة
+          if (Date.now() < end) hasAccess = true;
+        }
+      }
+    }
+
+    // التحقق من وجود الدرس في السوبابيز
     const { data, error } = await sb.from('premium_lessons').select('*').eq('title', title).maybeSingle();
     
     closeCustomModal(doc);
 
-    if (data) {
+    if (hasAccess) {
+      // فتح الدرس (حتى لو كان وهمي، غادي يبان لللي عندو تجربة أو خالص)
       openFoundModal(doc, title);
     } else {
       openProModal(doc, title, getT('not_available'));
