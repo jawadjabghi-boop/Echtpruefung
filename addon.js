@@ -1,4 +1,12 @@
 (function() {
+  // ✅ هادي كارطة حمراء باش نتأكدو واش addon.js خدام
+  setTimeout(() => {
+    const debug = document.createElement('div');
+    debug.style = "position: fixed; top: 10px; left: 10px; background: red; color: white; padding: 10px; z-index: 999999; font-weight: bold; direction: ltr;";
+    debug.innerText = "Addon.js is RUNNING!";
+    document.body.appendChild(debug);
+  }, 2000);
+
   const WA_NUMBER = "212680193427"; 
   const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
   const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
@@ -91,6 +99,7 @@
   function injectLessons() {
     const main = document.querySelector('main');
     if (!main) return;
+    
     const h1 = main.querySelector('h1');
     if (!h1) return;
 
@@ -127,8 +136,7 @@
     }
   }
 
-  // ✅ تشغيل تلقائي كل ثانية (خفيف بزاف)
-  injectLessons();
+  // ✅ كنقلبو كل ثانية باش نضمنو أنه كيدخل
   setInterval(injectLessons, 1000);
 
   // ====== النوافذ المنبثقة ======
