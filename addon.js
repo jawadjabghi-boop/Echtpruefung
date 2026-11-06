@@ -1,12 +1,4 @@
 (function() {
-  // ✅ هادي كارطة حمراء باش نتأكدو واش addon.js خدام
-  setTimeout(() => {
-    const debug = document.createElement('div');
-    debug.style = "position: fixed; top: 10px; left: 10px; background: red; color: white; padding: 10px; z-index: 999999; font-weight: bold; direction: ltr;";
-    debug.innerText = "Addon.js is RUNNING!";
-    document.body.appendChild(debug);
-  }, 2000);
-
   const WA_NUMBER = "212680193427"; 
   const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
   const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
@@ -99,12 +91,12 @@
   function injectLessons() {
     const main = document.querySelector('main');
     if (!main) return;
-    
-    const h1 = main.querySelector('h1');
-    if (!h1) return;
 
-    // ✅ قسم القراية
-    if (h1.innerText.includes('Lesen')) {
+    const activeNav = document.querySelector('.nav button.on');
+    const navText = activeNav ? (activeNav.innerText || activeNav.textContent) : '';
+
+    // ✅ القراية
+    if (navText.includes('قراية') || navText.includes('Lesen')) {
       if (!main.querySelector('.injected-lesen')) {
         const container = document.createElement('div');
         container.className = 'injected-lesen';
@@ -117,8 +109,8 @@
       if (old) old.remove();
     }
 
-    // ✅ قسم الكتابة
-    if (h1.innerText.includes('Schreiben')) {
+    // ✅ الكتابة
+    if (navText.includes('كتابة') || navText.includes('Schreiben')) {
       if (!main.querySelector('.injected-schreiben')) {
         const container = document.createElement('div');
         container.className = 'injected-schreiben';
@@ -136,7 +128,7 @@
     }
   }
 
-  // ✅ كنقلبو كل ثانية باش نضمنو أنه كيدخل
+  // ✅ تشغيل كل ثانية (خفيف بزاف)
   setInterval(injectLessons, 1000);
 
   // ====== النوافذ المنبثقة ======
@@ -162,6 +154,7 @@
     overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
   }
 
+  // كليك على الكارطات
   if (!document.body.hasAttribute('data-listener-added')) {
     document.body.setAttribute('data-listener-added', 'true');
     document.body.addEventListener('click', (e) => {
