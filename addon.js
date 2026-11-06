@@ -17,7 +17,6 @@
     return (dict[lang] || dict['en'])[key] || key;
   };
 
-  // ✅ كاع دروس القراية (27 اسم)
   const LOCKED_LESEN_NAMES = [
     "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", 
     "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", 
@@ -26,7 +25,6 @@
     "Rita (Modifiziert)", "Caroline (Modifiziert)"
   ];
 
-  // ✅ كاع دروس الكتابة (33 اسم)
   const LOCKED_SCHREIBEN_NAMES = [
     "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand",
     "Nicole - Probleme Mit Dem Bruder", "Andreas - Neuer Kollege Und Büroalltag",
@@ -90,55 +88,48 @@
     return btn;
   }
 
-  // ✅ دالة الحقن الآمنة (باستخدام MutationObserver)
   function injectLessons() {
-    const activeNav = document.querySelector('.nav button.on');
-    if (!activeNav) return;
-    const navText = activeNav.innerText || activeNav.textContent;
-    const mainDiv = document.querySelector('main > div');
-    if (!mainDiv) return;
+    const main = document.querySelector('main');
+    if (!main) return;
+    const h1 = main.querySelector('h1');
+    if (!h1) return;
 
-    // --- قسم القراية ---
-    if (navText.includes('قراية') || navText.includes('Lesen')) {
-      if (!mainDiv.querySelector('.injected-lesen')) {
+    // ✅ قسم القراية
+    if (h1.innerText.includes('Lesen')) {
+      if (!main.querySelector('.injected-lesen')) {
         const container = document.createElement('div');
-        container.className = 'injected-container injected-lesen';
-        container.style = "width: 100%; display: block; margin-top: 20px;";
+        container.className = 'injected-lesen';
+        container.style = "margin-top: 20px; display: block; width: 100%;";
         LOCKED_LESEN_NAMES.forEach(name => container.appendChild(createCard(name)));
-        mainDiv.appendChild(container);
+        main.appendChild(container);
       }
     } else {
-      const old = mainDiv.querySelector('.injected-lesen');
+      const old = main.querySelector('.injected-lesen');
       if (old) old.remove();
     }
 
-    // --- قسم الكتابة ---
-    if (navText.includes('كتابة') || navText.includes('Schreiben')) {
-      if (!mainDiv.querySelector('.injected-schreiben')) {
+    // ✅ قسم الكتابة
+    if (h1.innerText.includes('Schreiben')) {
+      if (!main.querySelector('.injected-schreiben')) {
         const container = document.createElement('div');
-        container.className = 'injected-container injected-schreiben';
-        container.style = "width: 100%; display: block; margin-top: 20px;";
+        container.className = 'injected-schreiben';
+        container.style = "margin-top: 20px; display: block; width: 100%;";
         const existingText = document.body.innerText;
         LOCKED_SCHREIBEN_NAMES.forEach(name => {
           if (existingText.includes(name)) return;
           container.appendChild(createCard(name));
         });
-        mainDiv.appendChild(container);
+        main.appendChild(container);
       }
     } else {
-      const old = mainDiv.querySelector('.injected-schreiben');
+      const old = main.querySelector('.injected-schreiben');
       if (old) old.remove();
     }
   }
 
-  // ✅ مراقبة تغييرات DOM وإعادة الحقن عند الحاجة
-  const observer = new MutationObserver(() => {
-    injectLessons();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-
-  // محاولة أولية
-  setTimeout(injectLessons, 1000);
+  // ✅ تشغيل تلقائي كل ثانية (خفيف بزاف)
+  injectLessons();
+  setInterval(injectLessons, 1000);
 
   // ====== النوافذ المنبثقة ======
   function closeCustomModal() { const existing = document.getElementById('custom-pro-modal'); if (existing) existing.remove(); }
@@ -163,7 +154,6 @@
     overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
   }
 
-  // كليك على الكارطات
   if (!document.body.hasAttribute('data-listener-added')) {
     document.body.setAttribute('data-listener-added', 'true');
     document.body.addEventListener('click', (e) => {
