@@ -254,6 +254,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
     </div>
   );
 }
+
 function HorenGateway({ onStart, userLang }) {
   return (
     <div style={{ paddingBottom: 100 }}>
@@ -571,6 +572,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
     </div>
   );
 }
+
 function SchreibenView({ userLang, dark, setDark }) {
   const [selected, setSelected] = useState(null);
   const [showTransText, setShowTransText] = useState(false);
@@ -839,7 +841,6 @@ function SchreibenView({ userLang, dark, setDark }) {
     </div>
   );
 }
-
 function AdminPanel({ userLang, onClose }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -936,6 +937,9 @@ function App() {
   const [showHorenTrans, setShowHorenTrans] = useState(false);
   const [timeLeft, setTimeLeft] = useState(90 * 60);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  
+  // ✅ حالة جديدة لجلب الدروس من سوبابيز
+  const [supabaseLessons, setSupabaseLessons] = useState([]);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -953,6 +957,11 @@ function App() {
     
     sb.from('notifications').select('*').eq('is_active', true).then(({ data }) => {
       if (data) setNotifications(data);
+    });
+
+    // ✅ جلب الدروس من سوبابيز
+    sb.from('premium_lessons').select('*').then(({ data }) => {
+      if (data) setSupabaseLessons(data);
     });
 
     return () => clearTimeout(timer);
@@ -1329,6 +1338,39 @@ function App() {
                 </div>
               </button>
             ))}
+
+            {/* ✅ عرض الدروس المقفلة القادمة من سوبابيز */}
+            <div style={{ marginTop: 20 }}>
+              <h3 style={{ color: "var(--gold)", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>
+                دروس إضافية PRO ⭐
+              </h3>
+              {supabaseLessons.length === 0 ? (
+                <p style={{ textAlign: "center", color: "var(--muted)", fontSize: "0.9em", padding: 20 }}>
+                  (لم يتم إضافة دروس في سوبابيز بعد)
+                </p>
+              ) : (
+                supabaseLessons.map((les) => (
+                  <div key={les.id} className="card" onClick={() => {
+                    if (isPaid || trialActive || isAdmin) {
+                      setExam(les.data);
+                      setTimeLeft(90*60);
+                    } else {
+                      wa(t("wa_upgrade_msg", userLang) + " - " + les.title);
+                    }
+                  }} style={{ padding: 20, marginBottom: 12, cursor: "pointer", border: "1.5px solid var(--gold)", background: "rgba(255,206,0,0.05)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div>
+                        <div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>{les.title}</div>
+                        <div style={{ display: "flex", gap: 6, marginTop: 6 }}>
+                          <span style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "2px 8px", borderRadius: 6, fontSize: ".8em", fontWeight: 900 }}>🔒 مقفول</span>
+                        </div>
+                      </div>
+                      <div style={{ fontSize: "1.5em" }}>🔒</div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         )}
 
