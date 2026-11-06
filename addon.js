@@ -1,5 +1,3 @@
-alert("Addon.js khedma mzyan!");
-
 (function() {
   const WA_NUMBER = "212680193427"; 
   const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
@@ -90,14 +88,11 @@ alert("Addon.js khedma mzyan!");
   function injectLesenLessons() {
     const main = document.querySelector('main');
     if (!main) return;
-    
     const h1 = main.querySelector('h1');
     if (!h1 || !h1.textContent.includes('Lesen')) return;
-    
     if (main.querySelector('.injected-lesen')) return;
 
     const container = document.createElement('div');
-    container.className = 'injected-container';
     container.style = "width: 100%; display: block;";
 
     LOCKED_LESEN_NAMES.forEach(name => {
@@ -121,22 +116,18 @@ alert("Addon.js khedma mzyan!");
       `;
       container.appendChild(btn);
     });
-    
     main.appendChild(container);
   }
 
   function injectSchreibenLessons() {
     const main = document.querySelector('main');
     if (!main) return;
-    
     const h1 = main.querySelector('h1');
     if (!h1 || !h1.textContent.includes('Schreiben')) return;
-    
     if (main.querySelector('.injected-schreiben')) return;
 
     const existingText = document.body.innerText;
     const container = document.createElement('div');
-    container.className = 'injected-container';
     container.style = "width: 100%; display: block;";
 
     LOCKED_SCHREIBEN_NAMES.forEach(name => {
@@ -155,7 +146,6 @@ alert("Addon.js khedma mzyan!");
       `;
       container.appendChild(btn);
     });
-    
     main.appendChild(container);
   }
 
@@ -224,14 +214,11 @@ alert("Addon.js khedma mzyan!");
   function injectHorenLessons() {
     const main = document.querySelector('main');
     if (!main) return;
-    
     const h1 = main.querySelector('h1');
     if (!h1 || !h1.textContent.includes('Hören')) return;
-    
     if (main.querySelector('.injected-horen')) return;
 
     const container = document.createElement('div');
-    container.className = 'injected-container';
     container.style = "width: 100%; display: block;";
 
     LOCKED_HOREN_NAMES.forEach(name => {
@@ -253,7 +240,6 @@ alert("Addon.js khedma mzyan!");
       `;
       container.appendChild(btn);
     });
-    
     main.appendChild(container);
   }
 
