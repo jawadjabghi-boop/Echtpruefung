@@ -580,7 +580,7 @@ function SchreibenView({ userLang, dark, setDark }) {
   const [analyzeStep, setAnalyzeStep] = useState(0);
   const [result, setResult] = useState(null);
   
-  const [timeLeft, setTimeLeft] = useState(30 * 60); 
+  const [timeLeft, setTimeLeft] = useState(90 * 60); 
 
   useEffect(() => {
     let timer;
@@ -656,7 +656,7 @@ function SchreibenView({ userLang, dark, setDark }) {
           <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
         </div>
         {SCHREIBEN_DATA.map(item => (
-          <div key={item.id} onClick={() => { setSelected(item); setUserText(""); setResult(null); setShowTransText(false); setShowTransTask(false); setTimeLeft(30 * 60); }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
+          <div key={item.id} onClick={() => { setSelected(item); setUserText(""); setResult(null); setShowTransText(false); setShowTransTask(false); setTimeLeft(90 * 60); }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
             <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{item.title}</div>
             <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{item.level}</div>
           </div>
@@ -934,7 +934,7 @@ function App() {
   const [selectedExamTitle, setSelectedExamTitle] = useState(null);
   const [showHorenLessons, setShowHorenLessons] = useState(false);
   const [showHorenTrans, setShowHorenTrans] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(30 * 60);
+  const [timeLeft, setTimeLeft] = useState(90 * 60);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -1065,7 +1065,8 @@ function App() {
         email: uniqueName, 
         is_paid: false, 
         active_device_id: deviceId,
-        is_blocked: false
+        is_blocked: false,
+        trial_started_at: new Date().toISOString() // بداية التجربة
       }]);
       if (insertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + insertError.message);
       
@@ -1207,7 +1208,7 @@ function App() {
       userLang={userLang} 
       dark={dark} 
       setDark={setDark} 
-      onBack={() => {setExam(null); setTimeLeft(30*60);}} 
+      onBack={() => {setExam(null); setTimeLeft(90*60);}} 
       onNext={() => handleNextExam(exam)} 
       onSave={saveResult}
       timeLeft={timeLeft}
@@ -1445,10 +1446,10 @@ function App() {
                       if (error || !data) {
                         alert("الدرس مازال ماحطيتوهش فسوبابيز: " + existingExam.id);
                       } else {
-                        setExam(data.data); setSelectedExamTitle(null); setTimeLeft(30*60);
+                        setExam(data.data); setSelectedExamTitle(null); setTimeLeft(90*60);
                       }
                     } else if (existingExam) {
-                      setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(30*60);
+                      setExam(existingExam); setSelectedExamTitle(null); setTimeLeft(90*60);
                     }
                   }}>
                     <span className="de" style={{ fontWeight: 800, display: "flex", alignItems: "center", gap: 8 }}>
