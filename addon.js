@@ -5,7 +5,6 @@
 const WA_NUMBER = "212680193427"; 
 const WA_MSG = "مرحباً، بغيت نرقّي حسابي لـ Pro باش نحل جميع الدروس فـ EchtPrüfung";
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(WA_MSG)}`;
-const WA_FORGOT_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("مرحباً، نسيت كلمة السر ديالي فـ EchtPrüfung.")}`;
 
 const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
 const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
@@ -14,9 +13,7 @@ const sb = window.supabase ? window.supabase.createClient(supabaseUrl, supabaseK
 const UI_TEXTS = {
   ar: { locked: "مقفول", pro: "Pro", subscribe: "اشترك الآن عبر واتساب", checking: "جاري التحقق...", found: "تم العثور على الدرس!", found_desc: "الدرس موجود في قاعدة البيانات.", not_available: "المحتوى غير متوفر. يرجى الترقية.", not_in_db: "المحتوى غير موجود.", close: "إغلاق", min: "دقيقة", open_access: "فتح الوصول" },
   ma: { locked: "مقفول", pro: "Pro", subscribe: "اشترك دابا فواتساب", checking: "كنتحققو...", found: "لقينا الدرس!", found_desc: "الدرس واجد.", not_available: "المحتوى ماكاينش. اشترك.", not_in_db: "ماكاينش.", close: "سد", min: "دقيقة", open_access: "فتح الوصول" },
-  en: { locked: "Locked", pro: "Pro", subscribe: "Subscribe via WhatsApp", checking: "Checking...", found: "Lesson found!", found_desc: "Lesson is ready.", not_available: "Content unavailable. Upgrade.", not_in_db: "Not found.", close: "Close", min: "Min", open_access: "Open Access" },
-  fr: { locked: "Verrouillé", pro: "Pro", subscribe: "S'abonner via WhatsApp", checking: "Vérification...", found: "Leçon trouvée!", found_desc: "Prête.", not_available: "Indisponible. Passez à Pro.", not_in_db: "Introuvable.", close: "Fermer", min: "Min", open_access: "Ouvrir l'accès" },
-  hi: { locked: "लॉक", pro: "Pro", subscribe: "व्हाट्सएप द्वारा सब्सक्राइब करें", checking: "जाँच हो रही है...", found: "पाठ मिला!", found_desc: "तैयार है।", not_available: "अनुपलब्ध। अपग्रेड करें।", not_in_db: "नहीं मिला।", close: "बंद करें", min: "मिनट", open_access: "पहुंच खोलें" }
+  en: { locked: "Locked", pro: "Pro", subscribe: "Subscribe via WhatsApp", checking: "Checking...", found: "Lesson found!", found_desc: "Lesson is ready.", not_available: "Content unavailable. Upgrade.", not_in_db: "Not found.", close: "Close", min: "Min", open_access: "Open Access" }
 };
 
 function getT(key) {
@@ -61,11 +58,11 @@ const PRUEFUNG_EXAMS = [
 
 const LOCKED_HOREN_NAMES = [ "Teil 2" ];
 
-async function handleLessonClick(doc, title) {
-  openLoadingModal(doc, title);
+async function handleLessonClick(title) {
+  openLoadingModal(title);
   if (!sb) {
-    closeCustomModal(doc);
-    openProModal(doc, title, getT('not_available'));
+    closeCustomModal();
+    openProModal(title, getT('not_available'));
     return;
   }
   try {
@@ -82,26 +79,26 @@ async function handleLessonClick(doc, title) {
         }
       }
     }
-    closeCustomModal(doc);
-    if (hasAccess) openFoundModal(doc, title);
-    else openProModal(doc, title, getT('not_available'));
+    closeCustomModal();
+    if (hasAccess) openFoundModal(title);
+    else openProModal(title, getT('not_available'));
   } catch (err) {
-    closeCustomModal(doc);
-    openProModal(doc, title, getT('not_in_db'));
+    closeCustomModal();
+    openProModal(title, getT('not_in_db'));
   }
 }
 
-function injectLesenLessons(doc) {
-  const h1 = doc.querySelector('main h1');
+function injectLesenLessons() {
+  const h1 = document.querySelector('main h1');
   if (!h1 || !h1.textContent.includes('Lesen')) return;
-  const mainDiv = doc.querySelector('main > div');
+  const mainDiv = document.querySelector('main > div');
   if (!mainDiv) return;
   const level = h1.textContent.includes('B1') ? 'B1' : 'B2';
   if (level !== 'B1') return; 
   if (mainDiv.querySelector(`.injected-lesen`)) return;
 
   LOCKED_LESEN_NAMES.forEach(name => {
-    const btn = doc.createElement('button');
+    const btn = document.createElement('button');
     btn.className = 'card injected-lesen';
     btn.dataset.name = name; 
     btn.style = "width: 100%; text-align: right; display: block; color: var(--text); padding: 16px; border: 1.5px solid var(--line); margin-bottom: 12px; border-radius: 16px; background: var(--card); cursor: pointer; position: relative;";
@@ -123,17 +120,17 @@ function injectLesenLessons(doc) {
   });
 }
 
-function injectSchreibenLessons(doc) {
-  const h1 = doc.querySelector('main h1');
+function injectSchreibenLessons() {
+  const h1 = document.querySelector('main h1');
   if (!h1 || !h1.textContent.includes('Schreiben')) return;
-  const mainDiv = doc.querySelector('main > div');
+  const mainDiv = document.querySelector('main > div');
   if (!mainDiv) return;
   if (mainDiv.querySelector(`.injected-schreiben`)) return;
-  const existingText = doc.body.innerText;
+  const existingText = document.body.innerText;
 
   LOCKED_SCHREIBEN_NAMES.forEach(name => {
     if (existingText.includes(name)) return; 
-    const btn = doc.createElement('div');
+    const btn = document.createElement('div');
     btn.className = 'card injected-schreiben';
     btn.dataset.name = name; 
     btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
@@ -149,20 +146,20 @@ function injectSchreibenLessons(doc) {
   });
 }
 
-function injectPruefungLessons(doc) {
-  const activeNav = doc.querySelector('.nav button.on');
+function injectPruefungLessons() {
+  const activeNav = document.querySelector('.nav button.on');
   if (!activeNav) return;
   const navText = activeNav.innerText || activeNav.textContent;
   if (!navText.includes('امتحان') && !navText.includes('Prüfung')) return;
   
-  const mainDiv = doc.querySelector('main > div');
+  const mainDiv = document.querySelector('main > div');
   if (!mainDiv) return;
   if (mainDiv.querySelector('.injected-pruefung')) return;
 
   const defaultCard = mainDiv.querySelector('.card');
   if (defaultCard) defaultCard.style.display = 'none';
 
-  const container = doc.createElement('div');
+  const container = document.createElement('div');
   container.className = 'injected-pruefung';
   container.style = "padding-bottom: 80px;";
 
@@ -176,10 +173,10 @@ function injectPruefungLessons(doc) {
     </div>
   `;
 
-  const listContainer = doc.createElement('div');
+  const listContainer = document.createElement('div');
   
   PRUEFUNG_EXAMS.forEach(exam => {
-    const card = doc.createElement('div');
+    const card = document.createElement('div');
     card.className = 'card injected-pruefung-card';
     card.dataset.name = exam.isFull ? "امتحان كامل عشوائي" : "Prüfungsteil " + exam.title; 
     card.style = "padding: 20px; border: 1.5px solid var(--line); margin-bottom: 16px; border-radius: 16px; background: var(--card); cursor: pointer;";
@@ -211,15 +208,15 @@ function injectPruefungLessons(doc) {
   mainDiv.appendChild(container);
 }
 
-function injectHorenLessons(doc) {
-  const h1 = doc.querySelector('main h1');
+function injectHorenLessons() {
+  const h1 = document.querySelector('main h1');
   if (!h1 || !h1.textContent.includes('Hören')) return;
-  const mainDiv = doc.querySelector('main > div');
+  const mainDiv = document.querySelector('main > div');
   if (!mainDiv) return;
   if (mainDiv.querySelector(`.injected-horen`)) return;
 
   LOCKED_HOREN_NAMES.forEach(name => {
-    const btn = doc.createElement('div');
+    const btn = document.createElement('div');
     btn.className = 'card injected-horen';
     btn.dataset.name = name; 
     btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
@@ -239,14 +236,14 @@ function injectHorenLessons(doc) {
   });
 }
 
-function closeCustomModal(doc) {
-  const existing = doc.getElementById('custom-pro-modal');
+function closeCustomModal() {
+  const existing = document.getElementById('custom-pro-modal');
   if (existing) existing.remove();
 }
 
-function openLoadingModal(doc, title) {
-  closeCustomModal(doc);
-  const overlay = doc.createElement('div');
+function openLoadingModal(title) {
+  closeCustomModal();
+  const overlay = document.createElement('div');
   overlay.id = 'custom-pro-modal';
   overlay.style = "position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); direction: rtl;";
   overlay.innerHTML = `
@@ -256,12 +253,12 @@ function openLoadingModal(doc, title) {
       <div style="font-weight: bold; color: var(--muted);">${getT('checking')}</div>
     </div>
   `;
-  doc.body.appendChild(overlay);
+  document.body.appendChild(overlay);
 }
 
-function openFoundModal(doc, title) {
-  closeCustomModal(doc);
-  const overlay = doc.createElement('div');
+function openFoundModal(title) {
+  closeCustomModal();
+  const overlay = document.createElement('div');
   overlay.id = 'custom-pro-modal';
   overlay.style = "position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); direction: rtl;";
   overlay.innerHTML = `
@@ -273,13 +270,13 @@ function openFoundModal(doc, title) {
       <button id="close-pro-modal" style="width: 100%; padding: 16px; border-radius: 14px; background: var(--card); color: var(--text); border: 1.5px solid var(--line); font-weight: 900; cursor: pointer;">${getT('close')}</button>
     </div>
   `;
-  doc.body.appendChild(overlay);
-  overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal(doc);
+  document.body.appendChild(overlay);
+  overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
 }
 
-function openProModal(doc, title, msg) {
-  closeCustomModal(doc);
-  const overlay = doc.createElement('div');
+function openProModal(title, msg) {
+  closeCustomModal();
+  const overlay = document.createElement('div');
   overlay.id = 'custom-pro-modal';
   overlay.style = "position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99999; display: flex; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(4px); direction: rtl;";
 
@@ -299,43 +296,33 @@ function openProModal(doc, title, msg) {
       </button>
     </div>
   `;
-  doc.body.appendChild(overlay);
-  overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal(doc);
+  document.body.appendChild(overlay);
+  overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
 }
 
-// ================= 8. التشغيل التلقائي (بالحقن المستمر) =================
+// ================= التشغيل التلقائي (بالحقن المستمر) =================
 (function initAddon() {
-  const iframe = document.getElementById('app-frame');
-  if (!iframe) {
-    setTimeout(initAddon, 500);
-    return;
-  }
-
   // محاولة الحقن كل ثانية باش نضمنو أنه كيدخل
   setInterval(() => {
     try {
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      if (doc && doc.body) {
-        
-        // ربط الكليك
-        if (!doc.body.hasAttribute('data-listener-added')) {
-          doc.body.setAttribute('data-listener-added', 'true');
-          doc.body.addEventListener('click', (e) => {
-            const btn = e.target.closest('.injected-lesen, .injected-schreiben, .injected-pruefung-card, .injected-horen');
-            if (btn && btn.dataset.name) {
-              handleLessonClick(doc, btn.dataset.name);
-            }
-          });
-        }
-
-        // الحقن
-        injectLesenLessons(doc);
-        injectSchreibenLessons(doc);
-        injectPruefungLessons(doc);
-        injectHorenLessons(doc);
+      // ربط الكليك
+      if (!document.body.hasAttribute('data-listener-added')) {
+        document.body.setAttribute('data-listener-added', 'true');
+        document.body.addEventListener('click', (e) => {
+          const btn = e.target.closest('.injected-lesen, .injected-schreiben, .injected-pruefung-card, .injected-horen');
+          if (btn && btn.dataset.name) {
+            handleLessonClick(btn.dataset.name);
+          }
+        });
       }
+
+      // الحقن
+      injectLesenLessons();
+      injectSchreibenLessons();
+      injectPruefungLessons();
+      injectHorenLessons();
     } catch (e) {
-      console.error("خطأ فـ الوصول للـ iframe:", e);
+      console.error("خطأ فـ الحقن:", e);
     }
   }, 1000); 
 })();
