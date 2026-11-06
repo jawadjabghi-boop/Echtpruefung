@@ -10,6 +10,10 @@
 <script crossorigin src="https://unpkg.com/@babel/standalone@7.26.4/babel.min.js"></script>
 <script crossorigin src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
+  /* ✅ هاد الستايل ديال شاشة الأخطاء الحمراء */
+  #error-log { display: none; position: fixed; top: 0; left: 0; right: 0; background: #DD0000; color: white; z-index: 999999; padding: 15px; font-family: monospace; white-space: pre-wrap; font-size: 14px; direction: ltr; text-align: left; max-height: 50vh; overflow-y: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+</style>
+<style>
   :root{
     --ink:#111111; --gold:#FFCE00; --red:#DD0000; --blue:#2563EB; 
     --paper:#FFFFFF; --card:#F8FAFC;
@@ -125,6 +129,9 @@
 </style>
 </head>
 <body>
+<!-- ✅ هاد الديف كيبان غير ملي كيوقع خطأ -->
+<div id="error-log"></div>
+
 <div id="root"></div>
 
 <!-- ملفات البيانات (JavaScript عادي، بلا Babel) -->
@@ -135,8 +142,16 @@
 <!-- ملف التطبيق (هذا وحده يحتاج Babel حيت فيه JSX) -->
 <script type="text/babel" data-presets="env,react" src="./app.js"></script>
 
-<!-- ✅ هاد السطر هو اللي كان ناقص، وهو اللي كيشعل الدروس الوهمية -->
-<script src="./addon.js"></script>
+<!-- ✅ هاد السكريبت باش نوريك الأخطاء بالحمر -->
+<script>
+  window.addEventListener('error', function(e) {
+    var errorLog = document.getElementById('error-log');
+    if (errorLog) {
+      errorLog.style.display = 'block';
+      errorLog.innerText = "⚠️ ERROR DETECTED:\n\nFile: " + e.filename + "\nLine: " + e.lineno + "\nMessage: " + e.message;
+    }
+  });
+</script>
 
 </body>
 </html>
