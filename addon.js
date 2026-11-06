@@ -44,15 +44,6 @@
     "Miroslav", "Corinna", "Moritz"
   ];
 
-  const PRUEFUNG_EXAMS = [
-    { title: "Teil 1", sub: "مطابقة النصوص والعناوين" },
-    { title: "Teil 2", sub: "النصوص الطويلة" },
-    { title: "Teil 3", sub: "الاعلانات والحالات" },
-    { title: "Sprachbaustein 1", sub: "بناء الجملة" },
-    { title: "Sprachbaustein 2", sub: "المفردات والقواعد" },
-    { title: "امتحان كامل عشوائي", sub: "كل الأجزاء دفعة واحدة — Teil 1 · 2 · 3 · Sprachbaustein 1 · 2", isFull: true }
-  ];
-
   const LOCKED_HOREN_NAMES = [ "Teil 2" ];
 
   async function handleLessonClick(title) {
@@ -85,170 +76,100 @@
     }
   }
 
-  function injectLesenLessons(viewDiv) {
-    const container = document.createElement('div');
-    container.className = 'injected-lesen-container';
-    container.style = "width: 100%; display: block;";
-
-    LOCKED_LESEN_NAMES.forEach(name => {
-      const btn = document.createElement('button');
-      btn.className = 'card injected-lesen';
-      btn.dataset.name = name; 
-      btn.style = "width: 100%; text-align: right; display: block; color: var(--text); padding: 16px; border: 1.5px solid var(--line); margin-bottom: 12px; border-radius: 16px; background: var(--card); cursor: pointer; position: relative;";
-      btn.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div class="de" style="font-weight: 900; font-size: 1.2em; color: var(--text);">${name}</div>
-            <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; color: var(--muted); font-size: .9em;">
-              <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">B1</span>
-              <span>90 ${getT('min')}</span>
-              <span style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px;">🔒 ${getT('locked')}</span>
-              <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</span>
-            </div>
-          </div>
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-        </div>
-      `;
-      container.appendChild(btn);
-    });
-    viewDiv.appendChild(container);
+  // دالة لمسح أي دروس قديمة باش التطبيق ما يبقاش تقيل وما يتخربقش
+  function clearInjected() {
+    document.querySelectorAll('.injected-lesen-container, .injected-schreiben-container, .injected-horen-container').forEach(el => el.remove());
   }
 
-  function injectSchreibenLessons(viewDiv) {
-    const existingText = document.body.innerText;
-    const container = document.createElement('div');
-    container.className = 'injected-schreiben-container';
-    container.style = "width: 100%; display: block;";
-
-    LOCKED_SCHREIBEN_NAMES.forEach(name => {
-      if (existingText.includes(name)) return; 
-      const btn = document.createElement('div');
-      btn.className = 'card injected-schreiben';
-      btn.dataset.name = name; 
-      btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
-      btn.innerHTML = `
-        <div class="de" style="font-weight: 900; font-size: 1.1em; margin-bottom: 12px; color: var(--text);">${name}</div>
-        <div style="display: flex; gap: 8px; align-items: center;">
-          <div style="background: rgba(34, 197, 94, 0.1); color: #22C55E; padding: 4px 12px; border-radius: 8px; font-size: 0.85em; font-weight: 900;">B1</div>
-          <div style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px; font-size: 0.9em;">🔒 ${getT('locked')}</div>
-          <div style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</div>
-        </div>
-      `;
-      container.appendChild(btn);
-    });
-    viewDiv.appendChild(container);
-  }
-
-  function injectPruefungLessons(viewDiv) {
-    const defaultCard = viewDiv.querySelector('.card');
-    if (defaultCard) defaultCard.style.display = 'none';
-
-    const container = document.createElement('div');
-    container.className = 'injected-pruefung';
-    container.style = "padding-bottom: 80px;";
-
-    container.innerHTML = `
-      <h1 class="de" style="font-size: 2.6em; font-weight: 900; margin: 4px 0 14px;">Zufällige Prüfungen</h1>
-      <div style="display: flex; justify-content: center; margin-bottom: 16px;">
-        <div style="display: inline-flex; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 4px;">
-          <button class="tab on" style="padding: 8px 28px; font-size: 1.1em; border-radius: 12px; background: var(--ink); color: var(--gold); font-weight: 900; border: none;">B1</button>
-          <button class="tab" style="padding: 8px 28px; font-size: 1.1em; color: var(--muted); font-weight: 900; border: none; background: transparent;">B2</button>
-        </div>
-      </div>
-    `;
-
-    const listContainer = document.createElement('div');
-    
-    PRUEFUNG_EXAMS.forEach(exam => {
-      const card = document.createElement('div');
-      card.className = 'card injected-pruefung-card';
-      card.dataset.name = exam.isFull ? "امتحان كامل عشوائي" : "Prüfungsteil " + exam.title; 
-      card.style = "padding: 20px; border: 1.5px solid var(--line); margin-bottom: 16px; border-radius: 16px; background: var(--card); cursor: pointer;";
-      
-      if (exam.isFull) {
-        card.innerHTML = `
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
-            <div style="font-weight: 900; font-size: 1.2em; color: var(--text);">${exam.title}</div>
-            <span style="background: var(--gold); color: var(--ink); padding: 2px 10px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">${getT('pro')}</span>
-          </div>
-          <div style="color: var(--muted); font-size: 0.95em; margin-bottom: 16px; line-height: 1.5;">${exam.sub}</div>
-          <button style="width: 100%; padding: 12px; border-radius: 10px; background: rgba(245,184,46,0.1); color: var(--gold); border: 1px solid var(--gold); font-weight: 900; cursor: pointer; pointer-events: none;">${getT('open_access')}</button>
-        `;
-      } else {
-        card.innerHTML = `
-          <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-            <span style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">B1</span>
-            <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">${getT('pro')}</span>
-          </div>
-          <div style="font-weight: 900; font-size: 1.2em; color: var(--text); margin-bottom: 4px;">${exam.title}</div>
-          <div style="color: var(--muted); font-size: 0.95em; margin-bottom: 16px;">${exam.sub}</div>
-          <button style="width: 100%; padding: 12px; border-radius: 10px; background: rgba(245,184,46,0.1); color: var(--gold); border: 1px solid var(--gold); font-weight: 900; cursor: pointer; pointer-events: none;">${getT('open_access')}</button>
-        `;
-      }
-      listContainer.appendChild(card);
-    });
-
-    container.appendChild(listContainer);
-    viewDiv.appendChild(container);
-  }
-
-  function injectHorenLessons(viewDiv) {
-    const container = document.createElement('div');
-    container.className = 'injected-horen-container';
-    container.style = "width: 100%; display: block;";
-
-    LOCKED_HOREN_NAMES.forEach(name => {
-      const btn = document.createElement('div');
-      btn.className = 'card injected-horen';
-      btn.dataset.name = name; 
-      btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
-      btn.innerHTML = `
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <div class="de" style="font-weight: 900; font-size: 1.2em; color: var(--text);">${name}</div>
-            <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; color: var(--muted); font-size: .9em;">
-              <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">B1</span>
-              <span style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px;">🔒 ${getT('locked')}</span>
-              <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</span>
-            </div>
-          </div>
-        </div>
-      `;
-      container.appendChild(btn);
-    });
-    viewDiv.appendChild(container);
-  }
-
-  function updateInjectedLessons() {
-    const main = document.querySelector('main');
-    if (!main) return;
-    
-    const viewDiv = main.querySelector('div');
-    if (!viewDiv) return;
-    
+  function injectLessons() {
     const activeNav = document.querySelector('.nav button.on');
     if (!activeNav) return;
     const navText = activeNav.innerText || activeNav.textContent;
-    const h1 = viewDiv.querySelector('h1');
-    const h1Text = h1 ? h1.textContent : "";
 
-    // مسح جميع الحاويات القديمة باش نضمنو ما كاينش تضارب
-    const allContainers = ['.injected-lesen-container', '.injected-schreiben-container', '.injected-pruefung', '.injected-horen-container'];
-    allContainers.forEach(sel => {
-      main.querySelectorAll(sel).forEach(el => el.remove());
-    });
+    const main = document.querySelector('main');
+    if (!main) return;
+    const viewDiv = main.firstElementChild;
+    if (!viewDiv) return;
 
-    if (h1Text.includes('Lesen') || navText.includes('قراءة') || navText.includes('Lesen')) {
-      injectLesenLessons(viewDiv);
+    clearInjected();
+
+    if (navText.includes('قراية') || navText.includes('Lesen')) {
+      const container = document.createElement('div');
+      container.className = 'injected-lesen-container';
+      container.style = "width: 100%; display: block;";
+      
+      LOCKED_LESEN_NAMES.forEach(name => {
+        const btn = document.createElement('button');
+        btn.className = 'card injected-lesen';
+        btn.dataset.name = name; 
+        btn.style = "width: 100%; text-align: right; display: block; color: var(--text); padding: 16px; border: 1.5px solid var(--line); margin-bottom: 12px; border-radius: 16px; background: var(--card); cursor: pointer; position: relative;";
+        btn.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="de" style="font-weight: 900; font-size: 1.2em; color: var(--text);">${name}</div>
+              <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; color: var(--muted); font-size: .9em;">
+                <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">B1</span>
+                <span>90 ${getT('min')}</span>
+                <span style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px;">🔒 ${getT('locked')}</span>
+                <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</span>
+              </div>
+            </div>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </div>
+        `;
+        container.appendChild(btn);
+      });
+      viewDiv.appendChild(container);
     } 
-    else if (h1Text.includes('Schreiben') || navText.includes('كتابة') || navText.includes('Schreiben')) {
-      injectSchreibenLessons(viewDiv);
+    else if (navText.includes('كتابة') || navText.includes('Schreiben')) {
+      const container = document.createElement('div');
+      container.className = 'injected-schreiben-container';
+      container.style = "width: 100%; display: block;";
+      const existingText = document.body.innerText;
+
+      LOCKED_SCHREIBEN_NAMES.forEach(name => {
+        if (existingText.includes(name)) return; 
+        const btn = document.createElement('div');
+        btn.className = 'card injected-schreiben';
+        btn.dataset.name = name; 
+        btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
+        btn.innerHTML = `
+          <div class="de" style="font-weight: 900; font-size: 1.1em; margin-bottom: 12px; color: var(--text);">${name}</div>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <div style="background: rgba(34, 197, 94, 0.1); color: #22C55E; padding: 4px 12px; border-radius: 8px; font-size: 0.85em; font-weight: 900;">B1</div>
+            <div style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px; font-size: 0.9em;">🔒 ${getT('locked')}</div>
+            <div style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</div>
+          </div>
+        `;
+        container.appendChild(btn);
+      });
+      viewDiv.appendChild(container);
     }
-    else if (h1Text.includes('Hören') || navText.includes('استماع') || navText.includes('Hören')) {
-      injectHorenLessons(viewDiv);
-    }
-    else if (h1Text.includes('Prüfungen') || navText.includes('امتحان') || navText.includes('Prüfung')) {
-      injectPruefungLessons(viewDiv);
+    else if (navText.includes('سماع') || navText.includes('Hören')) {
+      const container = document.createElement('div');
+      container.className = 'injected-horen-container';
+      container.style = "width: 100%; display: block;";
+
+      LOCKED_HOREN_NAMES.forEach(name => {
+        const btn = document.createElement('div');
+        btn.className = 'card injected-horen';
+        btn.dataset.name = name; 
+        btn.style = "padding: 20px; margin-bottom: 16px; cursor: pointer; border: 1.5px solid var(--line); border-radius: 16px; background: var(--card);";
+        btn.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <div class="de" style="font-weight: 900; font-size: 1.2em; color: var(--text);">${name}</div>
+              <div style="display: flex; gap: 8px; margin-top: 8px; align-items: center; color: var(--muted); font-size: .9em;">
+                <span class="chip" style="background: rgba(221,0,0,0.1); color: var(--red); padding: 2px 8px; border-radius: 6px; font-weight: 900;">B1</span>
+                <span style="color: var(--badc); font-weight: 900; display: flex; align-items: center; gap: 4px;">🔒 ${getT('locked')}</span>
+                <span style="background: var(--gold); color: var(--ink); padding: 2px 8px; border-radius: 6px; font-weight: 900; font-size: 0.8em;">⭐ ${getT('pro')}</span>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(btn);
+      });
+      viewDiv.appendChild(container);
     }
   }
 
@@ -316,21 +237,21 @@
     overlay.querySelector('#close-pro-modal').onclick = () => closeCustomModal();
   }
 
-  setInterval(() => {
-    try {
-      if (!document.body.hasAttribute('data-listener-added')) {
-        document.body.setAttribute('data-listener-added', 'true');
-        document.body.addEventListener('click', (e) => {
-          const btn = e.target.closest('.injected-lesen, .injected-schreiben, .injected-pruefung-card, .injected-horen');
-          if (btn && btn.dataset.name) {
-            handleLessonClick(btn.dataset.name);
-          }
-        });
-      }
+  // تفعيل مراقب التغييرات (MutationObserver) عوض setInterval
+  const observer = new MutationObserver(() => {
+    injectLessons();
+  });
+  
+  observer.observe(document.body, { childList: true, subtree: true });
 
-      updateInjectedLessons();
-    } catch (e) {
-      console.error("خطأ فـ الحقن:", e);
-    }
-  }, 1000); 
+  // ربط الكليك مرة وحدة
+  if (!document.body.hasAttribute('data-listener-added')) {
+    document.body.setAttribute('data-listener-added', 'true');
+    document.body.addEventListener('click', (e) => {
+      const btn = e.target.closest('.injected-lesen, .injected-schreiben, .injected-pruefung-card, .injected-horen');
+      if (btn && btn.dataset.name) {
+        handleLessonClick(btn.dataset.name);
+      }
+    });
+  }
 })();
