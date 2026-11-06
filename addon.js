@@ -17,7 +17,7 @@
     return (dict[lang] || dict['en'])[key] || key;
   };
 
-  // ✅ كاع دروس القراية (B1)
+  // ✅ كاع دروس القراية (27 اسم)
   const LOCKED_LESEN_NAMES = [
     "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", 
     "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", 
@@ -26,7 +26,7 @@
     "Rita (Modifiziert)", "Caroline (Modifiziert)"
   ];
 
-  // ✅ كاع دروس الكتابة (B1)
+  // ✅ كاع دروس الكتابة (33 اسم)
   const LOCKED_SCHREIBEN_NAMES = [
     "Sophie - Würzburg Und Freizeit", "Nadja - Garten Am Stadtrand",
     "Nicole - Probleme Mit Dem Bruder", "Andreas - Neuer Kollege Und Büroalltag",
@@ -90,16 +90,13 @@
     return btn;
   }
 
-  // ✅ دالة الحقن الآمنة
+  // ✅ دالة الحقن الآمنة (باستخدام MutationObserver)
   function injectLessons() {
     const activeNav = document.querySelector('.nav button.on');
     if (!activeNav) return;
-    
-    // كنجيبو البلاصة اللي كيحط فيها React المحتوى (main > div)
+    const navText = activeNav.innerText || activeNav.textContent;
     const mainDiv = document.querySelector('main > div');
     if (!mainDiv) return;
-
-    const navText = activeNav.innerText || activeNav.textContent;
 
     // --- قسم القراية ---
     if (navText.includes('قراية') || navText.includes('Lesen')) {
@@ -134,8 +131,14 @@
     }
   }
 
-  // ✅ تشغيل تلقائي كل ثانية (خفيف بزاف وماغاديش يعلق)
-  setInterval(injectLessons, 1000);
+  // ✅ مراقبة تغييرات DOM وإعادة الحقن عند الحاجة
+  const observer = new MutationObserver(() => {
+    injectLessons();
+  });
+  observer.observe(document.body, { childList: true, subtree: true });
+
+  // محاولة أولية
+  setTimeout(injectLessons, 1000);
 
   // ====== النوافذ المنبثقة ======
   function closeCustomModal() { const existing = document.getElementById('custom-pro-modal'); if (existing) existing.remove(); }
