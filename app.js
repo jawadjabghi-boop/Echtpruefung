@@ -13,7 +13,7 @@ const sb = supabase.createClient(supabaseUrl, supabaseKey);
 const { UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS } = window;
 const t = (key, lang) => (UI_TEXTS && UI_TEXTS[lang] && UI_TEXTS[lang][key]) || (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) || key;
 
-// ✅ 4. لائحة الدروس
+// ✅ 4. لائحة الدروس (تم تصحيح سميات Schreiben باش تطابق data1.js)
 const PLACEHOLDER_LESSONS = {
   "Lesen": {
     "Teile 1": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
@@ -28,7 +28,9 @@ const PLACEHOLDER_LESSONS = {
     "Teile 3": ["Gespräch im Büro", "Dialog im Alltag"]
   },
   "Schreiben": [
-    "Urlaub Im Schwarzwald", "Eva - Traumberuf", "Sophie - Würzburg", "Nadja - Garten", 
+    "Urlaub Im Schwarzwald - Antwort An Petra", 
+    "Eva - Traumberuf Und Neuigkeiten", 
+    "Sophie - Würzburg", "Nadja - Garten", 
     "Nicole - Probleme", "Andreas - Neuer Kollege", "Annika - Sommerurlaub", 
     "Iris - Abschlussparty", "Caroline - Gastschülerin", "Vera - Arbeitsweg", 
     "Jennifer - Einladung", "Andreas - Neue Wohnung", "Thomas - Überraschungsausflug", 
@@ -152,27 +154,45 @@ const LogoImage = ({ size = 50 }) => (
 
 const globalTransCache = {};
 
-// ✅ 8. محسن الترجمة (AutoTrans) باش يخدم بسرعة وبسلاسة
+// ✅ 8. الترجمة السريعة (مع قاموس مصغر للكلمات الثابتة)
+const FAST_DICT = {
+  "المعدل": { en: "Modified", fr: "Modifié", hi: "संशोधित", id: "Dimodifikasi", tl: "Binago", fa: "اصلاح شده", sw: "Iliyorekebishwa", uz: "O'zgartirilgan", ne: "परिमार्जित" },
+  "تعديلات": { en: "Versions", fr: "Versions", hi: "संस्करण", id: "Versi", tl: "Mga Bersyon", fa: "نسخه ها", sw: "Matoleo", uz: "Versiyalar", ne: "संस्करणहरू" },
+  "إغلاق": { en: "Close", fr: "Fermer", hi: "बंद करें", id: "Tutup", tl: "Isara", fa: "بستن", sw: "Funga", uz: "Yopish", ne: "बन्द गर्नुहोस्" },
+  "مراكز الامتحانات المتاحة": { en: "Available Exam Centers", fr: "Centres d'examen disponibles", hi: "उपलब्ध परीक्षा केंद्र", id: "Pusat Ujian tersedia", tl: "Mga Available na Exam Center", fa: "مراکز آزمون موجود", sw: "Vituo vya Mitihani Vinavyopatikana", uz: "Mavjud imtihon markazlari", ne: "उपलब्ध परीक्षा केन्द्रहरू" },
+  "المدن": { en: "Cities", fr: "Villes", hi: "शहर", id: "Kota", tl: "Mga Lungsod", fa: "شهرها", sw: "Miji", uz: "Shaharlar", ne: "शहरहरू" },
+  "المعاهد والمراكز": { en: "Institutes and Centers", fr: "Instituts et centres", hi: "संस्थान और केंद्र", id: "Institut dan Pusat", tl: "Mga Institute at Center", fa: "موسسات و مراکز", sw: "Taasisi na Vituo", uz: "Institutlar va markazlar", ne: "संस्थान र केन्द्रहरू" },
+  "التعديلات المتاحة": { en: "Available Versions", fr: "Versions disponibles", hi: "उपलब्ध संस्करण", id: "Versi tersedia", tl: "Mga Available na Bersyon", fa: "نسخه های موجود", sw: "Matoleo Yanayopatikana", uz: "Mavjud versiyalar", ne: "उपलब्ध संस्करणहरू" },
+  "تعديلات لهذا الموضوع": { en: "Versions for this topic", fr: "Versions pour ce sujet", hi: "इस विषय के लिए संस्करण", id: "Versi untuk topik ini", tl: "Mga bersyon para sa paksang ito", fa: "نسخه ها برای این موضوع", sw: "Matoleo kwa mada hii", uz: "Ushbu mavzu uchun versiyalar", ne: "यो विषयको लागि संस्करणहरू" },
+  "فتح الوصول": { en: "Unlock Access", fr: "Déverrouiller", hi: "पहुँच अनलॉक करें", id: "Buka Akses", tl: "I-unlock ang Access", fa: "باز کردن دسترسی", sw: "Fungua Ufikiaji", uz: "Kirishni ochish", ne: "पहुँच अनलक गर्नुहोस्" }
+};
+
 function AutoTrans({ text, lang, force = false }) {
-  const [translated, setTranslated] = useState(text);
+  const targetLang = lang === 'ma' ? 'ar' : lang;
+  const cacheKey = `${targetLang}_${text}`;
   
+  // جيب من الكاش أو القاموس دغيا
+  const [translated, setTranslated] = useState(() => {
+    if (FAST_DICT[text] && FAST_DICT[text][targetLang]) return FAST_DICT[text][targetLang];
+    return globalTransCache[cacheKey] || text;
+  });
+
   useEffect(() => {
-    if (!text) return;
+    if (!text || targetLang === 'de') return;
     
-    // يلا كانت اللغة هي العربية ولا الدارجة ولا الإنجليزية، وماكانش force، كيرجع النص كيف ما هو
-    if (!force && ['ar', 'ma', 'en'].includes(lang)) {
-      setTranslated(text);
+    if (FAST_DICT[text] && FAST_DICT[text][targetLang]) {
+      setTranslated(FAST_DICT[text][targetLang]);
       return;
     }
     
-    const cacheKey = `${lang}_${text}`;
     if (globalTransCache[cacheKey]) {
       setTranslated(globalTransCache[cacheKey]);
       return;
     }
 
-    // الترجمة الأوتوماتيكية
-    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`)
+    const controller = new AbortController();
+    
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`, { signal: controller.signal })
       .then(res => res.json())
       .then(data => {
         if (data && data[0]) {
@@ -181,8 +201,10 @@ function AutoTrans({ text, lang, force = false }) {
           setTranslated(result);
         }
       })
-      .catch(() => setTranslated(text));
-  }, [text, lang, force]);
+      .catch(() => {});
+
+    return () => controller.abort();
+  }, [text, targetLang, cacheKey]);
 
   return <span>{translated}</span>;
 }
@@ -190,15 +212,13 @@ function AutoTrans({ text, lang, force = false }) {
 function SmartTrans({ obj, lang }) {
   if (!obj) return "";
   const textDe = obj.de || obj.en || (obj.q ? obj.q : "") || (typeof obj === 'string' ? obj : "");
+  const targetLang = lang === 'ma' ? 'ar' : lang;
   
   if (typeof obj === 'object' && obj[lang]) return <span>{obj[lang]}</span>;
-  
-  // يلا كانت اللغة موجودة فالنص، كيرجعها، وإلا كيستعمل الترجمة
-  if (['ar', 'ma', 'en', 'fr'].includes(lang)) {
-     return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
-  }
+  if (lang === 'ma' && typeof obj === 'object' && obj['ar']) return <span>{obj['ar']}</span>;
+  if (lang === 'de' && typeof obj === 'object' && obj['de']) return <span>{obj['de']}</span>;
 
-  return <AutoTrans text={textDe} lang={lang} force={true} />;
+  return <AutoTrans text={textDe} lang={targetLang} force={true} />;
 }
 
 function HorenCard({ exam, userLang, showTranslation }) {
