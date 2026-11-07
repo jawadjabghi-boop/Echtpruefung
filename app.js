@@ -105,31 +105,33 @@ const EXAM_COUNTRIES = [
   { country: "Vietnam", ar: "فيتنام", flag: "🇻🇳", cities: "Hanoi, Ho Chi Minh", institutes: "Alpha Sprachschule, IBK Merseburg, IIK, Jacura Group, UNS, Sprachportal Akademie, SDI München" }
 ];
 
-// ✅ 7. الأيقونات العصرية
+// ✅ 7. الأيقونات العصرية الملونة
 const Icons = {
-  Home: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
-  Book: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
-  Headphones: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>,
-  Edit: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>,
-  Mic: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
-  Graduation: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
-  Menu: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>,
-  Moon: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
-  Sun: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>,
-  Settings: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
-  Translate: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>,
-  Play: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>,
-  Pause: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>,
-  Check: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
-  ArrowLeft: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>,
-  ArrowRight: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>,
-  Target: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
-  Practice: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
-  Clock: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-  Eye: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>,
-  X: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
-  Gift: () => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>,
-  Lock: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  Home: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  Book: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
+  Headphones: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>,
+  Edit: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>,
+  Mic: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
+  Graduation: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+  Menu: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>,
+  Moon: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
+  Sun: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>,
+  Settings: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+  Translate: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>,
+  Play: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill={color}><path d="M8 5v14l11-7z"/></svg>,
+  Pause: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill={color}><rect x="6" y="6" width="12" height="12" rx="2"/></svg>,
+  Check: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+  ArrowLeft: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>,
+  ArrowRight: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>,
+  Target: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
+  Practice: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
+  Clock: ({ color = "currentColor" }) => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+  Eye: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>,
+  X: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  Gift: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>,
+  Lock: ({ color = "currentColor" }) => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
+  Bell: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
+  Alert: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
 };
 
 const LogoImage = ({ size = 50 }) => (
@@ -150,12 +152,15 @@ const LogoImage = ({ size = 50 }) => (
 
 const globalTransCache = {};
 
+// ✅ 8. محسن الترجمة (AutoTrans) باش يخدم بسرعة وبسلاسة
 function AutoTrans({ text, lang, force = false }) {
   const [translated, setTranslated] = useState(text);
   
   useEffect(() => {
     if (!text) return;
-    if (!force && ['ar', 'ma', 'en', 'fr', 'de'].includes(lang)) {
+    
+    // يلا كانت اللغة هي العربية ولا الدارجة ولا الإنجليزية، وماكانش force، كيرجع النص كيف ما هو
+    if (!force && ['ar', 'ma', 'en'].includes(lang)) {
       setTranslated(text);
       return;
     }
@@ -166,6 +171,7 @@ function AutoTrans({ text, lang, force = false }) {
       return;
     }
 
+    // الترجمة الأوتوماتيكية
     fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${lang}&dt=t&q=${encodeURIComponent(text)}`)
       .then(res => res.json())
       .then(data => {
@@ -186,9 +192,13 @@ function SmartTrans({ obj, lang }) {
   const textDe = obj.de || obj.en || (obj.q ? obj.q : "") || (typeof obj === 'string' ? obj : "");
   
   if (typeof obj === 'object' && obj[lang]) return <span>{obj[lang]}</span>;
-  if (['ar', 'ma', 'en', 'fr'].includes(lang)) return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
+  
+  // يلا كانت اللغة موجودة فالنص، كيرجعها، وإلا كيستعمل الترجمة
+  if (['ar', 'ma', 'en', 'fr'].includes(lang)) {
+     return <span>{typeof obj === 'object' ? (obj[lang] || obj['en'] || obj['ar'] || textDe) : textDe}</span>;
+  }
 
-  return <AutoTrans text={textDe} lang={lang} />;
+  return <AutoTrans text={textDe} lang={lang} force={true} />;
 }
 
 function HorenCard({ exam, userLang, showTranslation }) {
@@ -264,7 +274,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
 
       <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
         <button onClick={toggleAudio} style={{ width: 56, height: 56, borderRadius: "50%", flexShrink: 0, background: isPlaying ? "var(--red)" : "#22C55E", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 20px rgba(34, 197, 94, 0.3)", transition: "all 0.2s" }}>
-          {isPlaying ? <Icons.Pause /> : <Icons.Play />}
+          {isPlaying ? <Icons.Pause color="#FFF" /> : <Icons.Play color="#FFF" />}
         </button>
         <div style={{ flex: 1 }}>
           <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, color: "var(--muted)", fontSize: "0.9em", marginBottom: 6 }}>
@@ -326,7 +336,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--blue)", fontWeight: 800, background: "rgba(37, 99, 235, 0.1)", padding: "10px 16px", borderRadius: 12, border: "none" }}>
-          <Icons.Eye /> {t("story_memo", userLang)}
+          <Icons.Eye color="var(--blue)" /> {t("story_memo", userLang)}
         </button>
         <div style={{ display: "flex", gap: 10 }}>
           {!done ? (
@@ -350,10 +360,10 @@ function HorenGateway({ onStart, userLang }) {
     <div style={{ paddingBottom: 100 }}>
       <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px", textAlign: "center" }}>Hören</h1>
       <div className="horen-gateway-card">
-        <div className="horen-gateway-icon"><Icons.Headphones /></div>
+        <div className="horen-gateway-icon"><Icons.Headphones color="var(--blue)" /></div>
         <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>{t("listen_title", userLang)}</h2>
         <p style={{ color: "var(--muted)", fontSize: "1em", margin: 0, lineHeight: 1.6 }}>{t("listen_desc", userLang)}</p>
-        <button className="horen-start-btn" onClick={onStart}><Icons.Play /> {t("start_now", userLang)}</button>
+        <button className="horen-start-btn" onClick={onStart}><Icons.Play color="#22C55E" /> {t("start_now", userLang)}</button>
       </div>
     </div>
   );
@@ -443,7 +453,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
 
       <div style={{ position: "sticky", top: 0, zIndex: 30, background: "var(--paper)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button onClick={onBack} className="btnI" style={{ width: 36, height: 36 }}><Icons.ArrowLeft /></button>
+          <button onClick={onBack} className="btnI" style={{ width: 36, height: 36 }}><Icons.ArrowLeft color="var(--text)" /></button>
           <div>
             <div className="de" style={{ fontWeight: 900, fontSize: "1em", lineHeight: 1.2 }}>{exam.title}</div>
             <div className="de" style={{ fontSize: ".7em", color: "var(--muted)", fontWeight: "bold" }}>{exam.type === "horen" ? "HÖREN" : "LESEN"} · {exam.sub.toUpperCase()}</div>
@@ -451,13 +461,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
            <div className="timer-badge" style={{ padding: '4px 10px', fontSize: '14px' }}>
-             <Icons.Clock /> {formatTime(timeLeft)}
+             <Icons.Clock color="var(--text)" /> {formatTime(timeLeft)}
            </div>
            <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? "var(--blue)" : "var(--text)", borderColor: showTranslation ? "var(--blue)" : "var(--line)" }}>
-            <Icons.Translate />
+            <Icons.Translate color={showTranslation ? "var(--blue)" : "var(--text)"} />
            </button>
            <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 36, height: 36 }}>
-            {dark ? <Icons.Sun /> : <Icons.Moon />}
+            {dark ? <Icons.Sun color="var(--text)" /> : <Icons.Moon color="var(--text)" />}
            </button>
         </div>
       </div>
@@ -465,8 +475,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
       <div style={{ margin: "10px 12px" }}>
         {exam.type !== "matching" && exam.type !== "horen" && (
           <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }}><Icons.Target /> {t("exam_mode", userLang)}</button>
-            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }}><Icons.Practice /> {t("practice_mode", userLang)}</button>
+            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }}><Icons.Target color={mode === "exam" ? "#FFF" : "var(--text)"} /> {t("exam_mode", userLang)}</button>
+            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }}><Icons.Practice color={mode === "practice" ? "#FFF" : "var(--text)"} /> {t("practice_mode", userLang)}</button>
           </div>
         )}
 
@@ -537,7 +547,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                   <button onClick={() => {
                     if (done !== null || isSel || isElse) return;
                     setExcluded(prev => { const n = {...prev}; if(!n[it.n]) n[it.n] = {}; n[it.n][ad.k] = !n[it.n][ad.k]; return n; });
-                  }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}><Icons.X /></button>
+                  }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}><Icons.X color={isExc ? "var(--red)" : "transparent"} /></button>
                   <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
                   <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
                     <span className="de">{it.de}</span>
@@ -596,14 +606,14 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
           <div className="sheet" onClick={e => e.stopPropagation()}>
             <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
               <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("gap_num", userLang)} ({modalGap})</h3>
-              <button className="btnI" onClick={() => setModalGap(null)}><Icons.X /></button>
+              <button className="btnI" onClick={() => setModalGap(null)}><Icons.X color="var(--text)" /></button>
             </div>
             <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {exam.items.find(x => x.n === modalGap).opts.map((opt, i) => (
                 <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? "var(--blue)" : "var(--line)", background: ans[modalGap] === opt ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[modalGap] === opt ? "var(--blue)" : "var(--text)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
                   <span style={{ opacity: 0.5, fontWeight: 900, marginRight: 12 }}>{String.fromCharCode(65 + i)}</span>
                   <span className="de" style={{fontSize:"1.05em", flex: 1}}>{opt}</span>
-                  {ans[modalGap] === opt && <span style={{ color: "var(--blue)", fontSize:"1.2em" }}><Icons.Check /></span>}
+                  {ans[modalGap] === opt && <span style={{ color: "var(--blue)", fontSize:"1.2em" }}><Icons.Check color="var(--blue)" /></span>}
                 </button>
               ))}
             </div>
@@ -616,7 +626,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
            <div className="sheet" onClick={e => e.stopPropagation()}>
              <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
                <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("choose_word_gap", userLang)} ({activeGap})</h3>
-               <button className="btnI" onClick={() => setActiveGap(null)}><Icons.X /></button>
+               <button className="btnI" onClick={() => setActiveGap(null)}><Icons.X color="var(--text)" /></button>
              </div>
              <div className="word-bank" style={{marginBottom:0, gridTemplateColumns: "1fr"}}>
                {exam.wordBank.map(w => {
@@ -640,7 +650,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
           {done !== null ? t("back_btn", userLang) : t("next_btn", userLang)}
         </button>
         <button className="btn-next-bar" onClick={done !== null ? onBack : onNext}>
-          <Icons.ArrowLeft />
+          <Icons.ArrowLeft color="#FFF" />
         </button>
       </div>
     </div>
@@ -724,7 +734,7 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
           <h1 className="de" style={{ margin: 0, fontSize: "2.5em", fontWeight: 900, color: "var(--ink)" }}>Schreiben</h1>
         </div>
         <div style={{ display: "flex", background: "var(--line)", borderRadius: 99, padding: 4, marginBottom: 20, width: "fit-content", margin: "0 auto 20px" }}>
-          <div style={{ background: "#22C55E", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
+          <div style={{ background: "#F59E0B", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
           <div style={{ color: "var(--muted)", padding: "10px 30px", fontWeight: 900 }}>B2</div>
         </div>
         <div style={{ position: "relative", marginBottom: 20 }}>
@@ -733,7 +743,8 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
         
         {PLACEHOLDER_LESSONS["Schreiben"].map((title, idx) => {
           const localExams = SCHREIBEN_DATA.filter(e => e.title === title);
-          const sbExams = supabaseLessons.filter(les => les.title === title || les.data?.title === title);
+          // ✅ الإصلاح: إلا كان الدرس موجود محلياً، ما غاديش نقلب على سوبابيز باش نتفادى التعارض
+          const sbExams = localExams.length > 0 ? [] : supabaseLessons.filter(les => les.title === title || les.data?.title === title);
           const totalVersions = localExams.length + sbExams.length;
           
           return (
@@ -757,7 +768,7 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
                   </span>
                 )}
               </div>
-              <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>B1</div>
+              <div style={{ display: "inline-block", background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>B1</div>
             </div>
           );
         })}
@@ -770,7 +781,7 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
       <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
           <button onClick={() => setResult(null)} className="btnI" style={{ width: 40, height: 40 }}>
-            <Icons.ArrowLeft />
+            <Icons.ArrowLeft color="var(--text)" />
           </button>
           <h2 style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{userLang === 'hi' ? 'संपादक पर वापस जाएं' : 'رجوع إلى المحرر'}</h2>
         </div>
@@ -784,7 +795,9 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
           </div>
         </div>
         <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, fontSize: "1.4em", fontWeight: 900, color: "var(--ink)" }}>⚠️ {userLang === 'hi' ? 'सामान्य मूल्यांकन' : 'التقييم العام'}</div>
+          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, fontSize: "1.4em", fontWeight: 900, color: "var(--ink)" }}>
+            <Icons.Alert color="var(--red)" /> {userLang === 'hi' ? 'सामान्य मूल्यांकन' : 'التقييم العام'}
+          </div>
           <p style={{ fontSize: "1.05em", lineHeight: 1.8, color: "var(--text)", marginBottom: 16 }}>{result.generalEval}</p>
           <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 16, padding: 16 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
@@ -797,18 +810,20 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
         <div className="card" style={{ padding: 20, marginBottom: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900 }}>
-              <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> {userLang === 'hi' ? 'आपका पाठ' : 'النص الخاص بك'}
+              <div style={{ width: 4, height: 24, background: "#F59E0B", borderRadius: 4 }}></div> {userLang === 'hi' ? 'आपका पाठ' : 'النص الخاص بك'}
             </div>
           </div>
           <div className="de" style={{ background: "var(--paper)", border: "1px solid var(--line)", padding: 16, borderRadius: 12, whiteSpace: "pre-wrap" }}>{userText}</div>
         </div>
         <div className="card" style={{ padding: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>
-            <div style={{ width: 4, height: 24, background: "#22C55E", borderRadius: 4 }}></div> {userLang === 'hi' ? 'त्रुटियों का विस्तृत विश्लेषण' : 'التحليل التفصيلي للأخطاء'}
+            <div style={{ width: 4, height: 24, background: "#F59E0B", borderRadius: 4 }}></div> {userLang === 'hi' ? 'त्रुटियों का विस्तृत विश्लेषण' : 'التحليل التفصيلي للأخطاء'}
           </div>
           {result.errors.length === 0 ? (
             <div style={{ textAlign: "center", padding: "40px 20px", border: "2px dashed var(--line)", borderRadius: 16 }}>
-              <div style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(221,0,0,0.1)", display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 16px", color: "var(--red)", fontSize: "1.5em", fontWeight: 900 }}>!</div>
+              <div style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(221,0,0,0.1)", display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 16px", color: "var(--red)" }}>
+                <Icons.Alert color="var(--red)" />
+              </div>
               <h3 style={{ margin: "0 0 8px", color: "var(--red)", fontSize: "1.3em" }}>{userLang === 'hi' ? 'दिखाने के लिए कोई त्रुटि नहीं' : 'لا توجد أخطاء للعرض'}</h3>
               <p style={{ margin: 0, color: "var(--muted)" }}>{userLang === 'hi' ? 'इस प्रयास में कोई त्रुटि नहीं मिली।' : 'لم يتم العثور على أخطاء في هذه المحاولة.'}</p>
             </div>
@@ -833,22 +848,22 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
       {isAnalyzing && (
         <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 999, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20 }}>
           <div style={{ position: "relative", marginBottom: 30 }}>
-             <div style={{ width: 120, height: 120, borderRadius: "50%", border: "4px solid rgba(34, 197, 94, 0.2)", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <Icons.Edit />
+             <div style={{ width: 120, height: 120, borderRadius: "50%", border: "4px solid rgba(245, 158, 11, 0.2)", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Icons.Edit color="#F59E0B" />
              </div>
-             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: "#22C55E", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
+             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: "#F59E0B", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
           </div>
           <h2 style={{ fontSize: "1.8em", fontWeight: 900, marginBottom: 10 }}>{userLang === 'hi' ? 'स्मार्ट सुधार' : 'جاري التصحيح الذكي'}</h2>
           <p style={{ color: "var(--muted)", marginBottom: 40 }}>{userLang === 'hi' ? 'हम उन्नत AI तकनीकों का उपयोग करके आपके पाठ की समीक्षा कर रहे हैं' : 'نقوم بمراجعة نصك باستخدام تقنيات AI المطورة'}</p>
           <div style={{ width: "100%", maxWidth: 300 }}>
             {[userLang === 'hi' ? "स्मार्ट सुधारक तैयार करना..." : "تحضير المصحح الذكي...", userLang === 'hi' ? "वाक्य संरचना का विश्लेषण..." : "تحليل بنية الجمل...", userLang === 'hi' ? "व्याकरण और शब्दावली की समीक्षा..." : "مراجعة القواعد والمفردات...", userLang === 'hi' ? "अंतिम रिपोर्ट तैयार करना..." : "توليد التقرير النهائي..."].map((step, idx) => (
-              <div key={idx} style={{ color: analyzeStep === idx + 1 ? "#22C55E" : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
+              <div key={idx} style={{ color: analyzeStep === idx + 1 ? "#F59E0B" : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
                 {analyzeStep === idx + 1 && "✨ "} {step}
               </div>
             ))}
           </div>
           <div style={{ width: "80%", height: 8, background: "var(--line)", borderRadius: 99, marginTop: 40, overflow: "hidden" }}>
-             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: "#22C55E", transition: "width 0.3s" }}></div>
+             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: "#F59E0B", transition: "width 0.3s" }}></div>
           </div>
         </div>
       )}
@@ -856,33 +871,33 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <button onClick={() => setSelected(null)} className="btnI" style={{ width: 40, height: 40 }}>
-            <Icons.ArrowLeft />
+            <Icons.ArrowLeft color="var(--text)" />
           </button>
           <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{selected.title}</h2>
         </div>
         
         <div className="timer-badge" style={{ padding: '6px 12px', fontSize: '15px' }}>
-          <Icons.Clock /> {formatTime(timeLeft)}
+          <Icons.Clock color="var(--text)" /> {formatTime(timeLeft)}
         </div>
       </div>
 
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
+          <div style={{ width: 6, height: 20, background: "#F59E0B", borderRadius: 4 }}></div>
           <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>SITUATION</span>
-          <span style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level || 'B1'}</span>
+          <span style={{ background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level || 'B1'}</span>
         </div>
         <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <Icons.Translate /> {t("trans_text", userLang)}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#F59E0B", fontWeight: 900 }}>
+            <Icons.Translate color="#F59E0B" /> {t("trans_text", userLang)}
           </div>
-          <button onClick={() => setShowTransText(!showTransText)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
+          <button onClick={() => setShowTransText(!showTransText)} style={{ background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
             {showTransText ? t("hide", userLang) : t("show", userLang)}
           </button>
         </div>
         {showTransText && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
+          <div style={{ background: "rgba(245, 158, 11, 0.05)", border: "1px solid rgba(245, 158, 11, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
             {selected.transText?.[userLang] || <AutoTrans text={selected.text} lang={userLang} force={true} />}
           </div>
         )}
@@ -890,27 +905,27 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
 
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#22C55E", borderRadius: 4 }}></div>
+          <div style={{ width: 6, height: 20, background: "#F59E0B", borderRadius: 4 }}></div>
           <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>AUFGABE</span>
           <span style={{ marginLeft: "auto", background: "var(--line)", color: "var(--muted)", padding: "4px 12px", borderRadius: 8, fontSize: "0.8em", fontWeight: 900 }}>150–180 {t("words_count", userLang)}</span>
         </div>
         <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task}</div>
         {selected.points?.map((pt, idx) => (
           <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
-            <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#22C55E", color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
+            <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#F59E0B", color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
             <div className="de" style={{ background: "var(--paper)", padding: "12px 16px", borderRadius: 12, flex: 1, border: "1px solid var(--line)" }}>{pt}</div>
           </div>
         ))}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#22C55E", fontWeight: 900 }}>
-            <Icons.Translate /> {t("trans_task", userLang)}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#F59E0B", fontWeight: 900 }}>
+            <Icons.Translate color="#F59E0B" /> {t("trans_task", userLang)}
           </div>
-          <button onClick={() => setShowTransTask(!showTransTask)} style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
+          <button onClick={() => setShowTransTask(!showTransTask)} style={{ background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
             {showTransTask ? t("hide", userLang) : t("show", userLang)}
           </button>
         </div>
         {showTransTask && (
-          <div style={{ background: "rgba(34, 197, 94, 0.05)", border: "1px solid rgba(34, 197, 94, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
+          <div style={{ background: "rgba(245, 158, 11, 0.05)", border: "1px solid rgba(245, 158, 11, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
             <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask?.[userLang] || <AutoTrans text={selected.task} lang={userLang} force={true} />}</div>
             {(selected.transPoints?.[userLang] || selected.transPoints?.['en'] || selected.transPoints?.['ar'] || []).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
           </div>
@@ -932,8 +947,8 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
       </div>
 
       <div className="bottom-bar" style={{ maxWidth: 400 }}>
-        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar">
-          <Icons.Edit /> {isAnalyzing ? (userLang === 'hi' ? 'सुधार हो रहा है...' : 'جاري التصحيح...') : t("ai_correct", userLang)}
+        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar" style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)", boxShadow: "0 4px 15px rgba(245, 158, 11, 0.3)" }}>
+          <Icons.Edit color="#FFF" /> {isAnalyzing ? (userLang === 'hi' ? 'सुधार हो रहा है...' : 'جاري التصحيح...') : t("ai_correct", userLang)}
         </button>
       </div>
     </div>
@@ -977,14 +992,14 @@ function AdminPanel({ userLang, onClose }) {
     <div style={{ padding: 20, paddingBottom: 100 }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
         <h2 style={{ margin: 0, fontSize: "1.5em", fontWeight: 900, display: "flex", alignItems: "center", gap: 8 }}>
-          <Icons.Lock /> {t("admin_panel", userLang)}
+          <Icons.Lock color="#F59E0B" /> {t("admin_panel", userLang)}
         </h2>
-        <button onClick={onClose} className="btnI"><Icons.X /></button>
+        <button onClick={onClose} className="btnI"><Icons.X color="var(--text)" /></button>
       </div>
 
       <div className="card" style={{ marginBottom: 20 }}>
         <h3 style={{ margin: "0 0 16px", fontWeight: 900, display: "flex", alignItems: "center", gap: 8 }}>
-          <Icons.Headphones /> {t("notifications", userLang)}
+          <Icons.Bell color="#2563EB" /> {t("notifications", userLang)}
         </h3>
         <input className="auth-input" placeholder={t("title_ar", userLang)} value={notifTitle} onChange={e => setNotifTitle(e.target.value)} />
         <textarea className="auth-input" rows={3} placeholder={t("message_ar", userLang)} value={notifMsg} onChange={e => setNotifMsg(e.target.value)} />
@@ -993,14 +1008,16 @@ function AdminPanel({ userLang, onClose }) {
 
       <div className="card">
         <h3 style={{ margin: "0 0 16px", fontWeight: 900, display: "flex", alignItems: "center", gap: 8 }}>
-          <Icons.Target /> {t("users", userLang)} ({users.length})
+          <Icons.Target color="#22C55E" /> {t("users", userLang)} ({users.length})
         </h3>
         {loading ? <p>Loading...</p> : users.map(u => (
           <div key={u.id} style={{ borderBottom: "1px solid var(--line)", padding: "12px 0", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
             <div>
               <div style={{ fontWeight: 900 }}>{u.email || u.unique_name}</div>
-              <div style={{ fontSize: "0.8em", color: "var(--muted)" }}>
-                {u.is_paid ? "✅ مخلص" : "❌ غير مخلص"} | {u.is_blocked ? "🚫 محظور" : "🟢 نشط"}
+              <div style={{ fontSize: "0.8em", color: "var(--muted)", display: "flex", alignItems: "center", gap: 8, marginTop: 4 }}>
+                {u.is_paid ? <span style={{color: 'var(--okc)', display: 'flex', alignItems: 'center', gap: 4}}><Icons.Check color="var(--okc)" /> مخلص</span> : <span style={{color: 'var(--red)', display: 'flex', alignItems: 'center', gap: 4}}><Icons.X color="var(--red)" /> غير مخلص</span>}
+                <span>|</span>
+                {u.is_blocked ? <span style={{color: 'var(--red)', display: 'flex', alignItems: 'center', gap: 4}}><Icons.Lock color="var(--red)" /> محظور</span> : <span style={{color: '#22C55E', display: 'flex', alignItems: 'center', gap: 4}}><Icons.Check color="#22C55E" /> نشط</span>}
               </div>
             </div>
             <div style={{ display: "flex", gap: 8 }}>
@@ -1186,10 +1203,14 @@ function App() {
     const localSchreiben = SCHREIBEN_DATA.filter(e => e.title === title);
     const freeMods = FREE_MODIFIED_LESSONS.filter(e => e.title === title && e.sub === sub);
     
-    const sbExams = supabaseLessons.filter(les => {
-      const lesTitle = les.title || les.data?.title;
-      return lesTitle === title;
-    }).map(les => les.data || les);
+    // ✅ الإصلاح هنا: إلا كان الدرس ديال Schreiben محلي، ما كنقلبوش فـ سوبابيز
+    let sbExams = [];
+    if (localSchreiben.length === 0) {
+      sbExams = supabaseLessons.filter(les => {
+        const lesTitle = les.title || les.data?.title;
+        return lesTitle === title;
+      }).map(les => les.data || les);
+    }
 
     let allVersions = [];
     if (localHoren.length > 0) allVersions = [...localHoren, ...sbExams];
@@ -1240,7 +1261,7 @@ function App() {
             <button type="submit" className="auth-btn">{t("login", userLang)}</button>
           </form>
           <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>{t("or", userLang)}</div>
-          <button className="auth-btn guest" onClick={handleGuest}><Icons.Home /> {t("guest", userLang)}</button>
+          <button className="auth-btn guest" onClick={handleGuest}><Icons.Home color="var(--ink)" /> {t("guest", userLang)}</button>
           <button onClick={() => wa("مرحباً، نسيت كلمة السر ديالي فـ EchtPrüfung.")} style={{ width: "100%", padding: "10px", background: "transparent", color: "var(--badc)", border: "none", fontWeight: 800, cursor: "pointer", fontSize: "0.95em", marginTop: 10 }}>هل نسيت كلمة السر؟</button>
         </div>
       </div>
@@ -1256,14 +1277,14 @@ function App() {
       <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
       <nav className={`side-menu ${isSideMenuOpen ? 'active' : ''}`}>
         <div className="side-menu-header"><div className="logo-circle">De</div><h2>EchtPrüfung</h2><p style={{fontSize: '0.8em', opacity: 0.8}}>{user.name}</p></div>
-        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B1'); go('lesen');}} className={`menu-item ${level === 'B1' ? 'active' : ''}`}><Icons.Book /> {t("b1_level", userLang)}</a>
-        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B2'); go('lesen');}} className={`menu-item ${level === 'B2' ? 'active' : ''}`}><Icons.Book /> {t("b2_level", userLang)}</a>
-        {isAdmin && <a href="#" onClick={(e) => {e.preventDefault(); go('admin');}} className={`menu-item ${view === 'admin' ? 'active' : ''}`}><Icons.Lock /> {t("admin_panel", userLang)}</a>}
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B1'); go('lesen');}} className={`menu-item ${level === 'B1' ? 'active' : ''}`}><Icons.Book color="#22C55E" /> {t("b1_level", userLang)}</a>
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B2'); go('lesen');}} className={`menu-item ${level === 'B2' ? 'active' : ''}`}><Icons.Book color="#22C55E" /> {t("b2_level", userLang)}</a>
+        {isAdmin && <a href="#" onClick={(e) => {e.preventDefault(); go('admin');}} className={`menu-item ${view === 'admin' ? 'active' : ''}`}><Icons.Lock color="#F59E0B" /> {t("admin_panel", userLang)}</a>}
       </nav>
 
       <div className="header">
         <div className="brand">
-          <button className="btnI" onClick={() => setIsSideMenuOpen(true)} style={{ marginRight: 8 }}><Icons.Menu /></button>
+          <button className="btnI" onClick={() => setIsSideMenuOpen(true)} style={{ marginRight: 8 }}><Icons.Menu color="var(--text)" /></button>
           <div className="logo"><LogoImage size={36} /></div>
           <div>
             <div className="header-title">EchtPrüfung</div>
@@ -1271,8 +1292,8 @@ function App() {
           </div>
         </div>
         <div style={{ display: "flex", gap: 6 }}>
-          <button className="btnI" onClick={() => setDark(!dark)}>{dark ? <Icons.Sun /> : <Icons.Moon />}</button>
-          <button className="btnI" onClick={() => setSettings(true)}><Icons.Settings /></button>
+          <button className="btnI" onClick={() => setDark(!dark)}>{dark ? <Icons.Sun color="#F59E0B" /> : <Icons.Moon color="#2563EB" />}</button>
+          <button className="btnI" onClick={() => setSettings(true)}><Icons.Settings color="var(--text)" /></button>
         </div>
       </div>
 
@@ -1280,7 +1301,7 @@ function App() {
         {view === "home" && (
           <>
             <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
-              {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: "#111", display: "flex", alignItems: "center", gap: 8 }}><Icons.Headphones /> {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
+              {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: "#111", display: "flex", alignItems: "center", gap: 8 }}><Icons.Bell color="#111" /> {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
               
@@ -1310,13 +1331,13 @@ function App() {
 
         {view === "lesen" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
-            {trialActive && !isPaid && <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))", border: "1.5px solid #22C55E", borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}><div style={{ color: "#22C55E" }}><Icons.Gift /></div><div style={{ flex: 1 }}><div style={{ fontWeight: 900, color: "#22C55E", fontSize: "1em" }}>{t("trial_active", userLang)}</div><div style={{ color: "var(--muted)", fontSize: "0.85em" }}>{trialCountdown} — جميع الدروس المدفوعة محلولة</div></div></div>}
+            <h1 className="de" style={{ textAlign: "center", color: "#22C55E", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
+            {trialActive && !isPaid && <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))", border: "1.5px solid #22C55E", borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}><div style={{ color: "#22C55E" }}><Icons.Gift color="#22C55E" /></div><div style={{ flex: 1 }}><div style={{ fontWeight: 900, color: "#22C55E", fontSize: "1em" }}>{t("trial_active", userLang)}</div><div style={{ color: "var(--muted)", fontSize: "0.85em" }}>{trialCountdown} — جميع الدروس المدفوعة محلولة</div></div></div>}
             <div style={{ marginBottom: 16 }}><input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} /></div>
             
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, background: "var(--card)", padding: 16, borderRadius: 24, border: "1px solid var(--line)", marginBottom: 20 }}>
-              {[{ id: "Prüfungen", icon: <Icons.Book /> }, { id: "Teile 1", icon: <Icons.Edit /> }, { id: "Teile 2", icon: <Icons.Edit /> }, { id: "Teile 3", icon: <Icons.Edit /> }, { id: "Sprach 1", icon: <Icons.Translate /> }, { id: "Sprach 2", icon: <Icons.Translate /> }].map(tab => (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: "14px 8px", borderRadius: 16, fontWeight: 900, fontSize: "0.85em", border: activeTab === tab.id ? "2px solid var(--blue)" : "2px solid transparent", background: activeTab === tab.id ? "rgba(37, 99, 235, 0.1)" : "transparent", color: activeTab === tab.id ? "var(--blue)" : "var(--muted)", transition: "all 0.2s", cursor: "pointer" }}><span style={{ fontSize: "1.6em" }}>{tab.icon}</span>{tab.id}</button>
+              {[{ id: "Prüfungen", icon: <Icons.Book color="#22C55E" /> }, { id: "Teile 1", icon: <Icons.Edit color="#22C55E" /> }, { id: "Teile 2", icon: <Icons.Edit color="#22C55E" /> }, { id: "Teile 3", icon: <Icons.Edit color="#22C55E" /> }, { id: "Sprach 1", icon: <Icons.Translate color="#22C55E" /> }, { id: "Sprach 2", icon: <Icons.Translate color="#22C55E" /> }].map(tab => (
+                <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: "14px 8px", borderRadius: 16, fontWeight: 900, fontSize: "0.85em", border: activeTab === tab.id ? "2px solid #22C55E" : "2px solid transparent", background: activeTab === tab.id ? "rgba(34, 197, 94, 0.1)" : "transparent", color: activeTab === tab.id ? "#22C55E" : "var(--muted)", transition: "all 0.2s", cursor: "pointer" }}><span style={{ fontSize: "1.6em" }}>{tab.icon}</span>{tab.id}</button>
               ))}
             </div>
             
@@ -1334,11 +1355,11 @@ function App() {
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <div>
                           <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
-                          <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div>
+                          <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
                            {totalVersions > 1 && <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} /></span>}
-                           <div style={{ color: "var(--blue)" }}><Icons.ArrowRight /></div>
+                           <div style={{ color: "#22C55E" }}><Icons.ArrowRight color="#22C55E" /></div>
                         </div>
                       </div>
                     </button>
@@ -1352,22 +1373,22 @@ function App() {
           <div style={{ padding: "20px 12px", paddingBottom: 100, direction: "rtl" }}>
             {!activeHorenTeil ? (
               <>
-                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: "#1e293b", marginBottom: 20, textAlign: "right" }}>Hören</h1>
+                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: "#8B5CF6", marginBottom: 20, textAlign: "right" }}>Hören</h1>
 
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
                   <div style={{ display: "flex", background: "#f1f5f9", borderRadius: 99, padding: 4, border: "1px solid #e2e8f0" }}>
-                    <button style={{ background: "#10B981", color: "white", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>B1</button>
+                    <button style={{ background: "#8B5CF6", color: "white", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>B1</button>
                     <button style={{ background: "transparent", color: "#64748b", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>B2</button>
                   </div>
                 </div>
 
                 <div style={{ display: "flex", background: "#ffffff", borderRadius: 20, padding: 8, marginBottom: 24, boxShadow: "0 4px 15px rgba(0,0,0,0.03)", border: "1px solid #e2e8f0" }}>
                   <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "transparent", color: "#64748b", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                    <Icons.Book />
+                    <Icons.Book color="#64748b" />
                     <span>الأكواد</span>
                   </button>
-                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "#0ea5e9", color: "white", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, boxShadow: "0 4px 12px rgba(14, 165, 233, 0.3)" }}>
-                    <Icons.Headphones />
+                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "#8B5CF6", color: "white", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, boxShadow: "0 4px 12px rgba(139, 92, 246, 0.3)" }}>
+                    <Icons.Headphones color="#FFF" />
                     <span>الجمل</span>
                   </button>
                 </div>
@@ -1375,14 +1396,14 @@ function App() {
                 <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
                   <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#ecfdf5", display: "flex", justifyContent: "center", alignItems: "center", color: "#10B981" }}>
-                        <Icons.Headphones />
+                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: "#8B5CF6" }}>
+                        <Icons.Headphones color="#8B5CF6" />
                       </div>
                       <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
                     </div>
                     <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 1</h2>
-                    <button onClick={() => setActiveHorenTeil("Teile 1")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#ecfdf5", color: "#10B981", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #10B981", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Play />
+                    <button onClick={() => setActiveHorenTeil("Teile 1")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#f5f3ff", color: "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #8B5CF6", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                      <Icons.Play color="#8B5CF6" />
                       ابدأ الآن
                     </button>
                   </div>
@@ -1390,7 +1411,7 @@ function App() {
                   <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #fef3c7", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
                       <div style={{ width: 60, height: 60, borderRadius: 20, background: "#fef3c7", display: "flex", justifyContent: "center", alignItems: "center", color: "#f59e0b" }}>
-                        <Icons.Lock />
+                        <Icons.Lock color="#f59e0b" />
                       </div>
                       <div style={{ display: "flex", gap: 8 }}>
                         <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
@@ -1399,21 +1420,21 @@ function App() {
                     </div>
                     <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#d97706" }}>Teil 2</h2>
                     <button onClick={() => wa(t("wa_upgrade_msg", userLang) + " - Hören Teil 2")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#fffbeb", color: "#d97706", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #f59e0b", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Lock />
+                      <Icons.Lock color="#d97706" />
                       فتح الوصول
                     </button>
                   </div>
 
                   <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#e0f2fe", display: "flex", justifyContent: "center", alignItems: "center", color: "#0ea5e9" }}>
-                        <Icons.Edit />
+                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: "#8B5CF6" }}>
+                        <Icons.Edit color="#8B5CF6" />
                       </div>
                       <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
                     </div>
                     <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 3</h2>
-                    <button onClick={() => setActiveHorenTeil("Teile 3")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#ecfdf5", color: "#10B981", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #10B981", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Play />
+                    <button onClick={() => setActiveHorenTeil("Teile 3")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#f5f3ff", color: "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #8B5CF6", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                      <Icons.Play color="#8B5CF6" />
                       ابدأ الآن
                     </button>
                   </div>
@@ -1423,7 +1444,7 @@ function App() {
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
                   <button onClick={() => setActiveHorenTeil(null)} className="btnI" style={{ width: 40, height: 40 }}>
-                    <Icons.ArrowLeft />
+                    <Icons.ArrowLeft color="var(--text)" />
                   </button>
                   <h2 className="de" style={{ margin: 0, fontSize: "1.8em", fontWeight: 900 }}>{activeHorenTeil}</h2>
                 </div>
@@ -1456,7 +1477,7 @@ function App() {
 
         {view === "pruefung" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>
+            <h1 className="de" style={{ textAlign: "center", color: "#EAB308", marginBottom: 16, fontSize: "2.2em" }}>
               <AutoTrans text="Zufällige Prüfungen" lang={userLang} force={true} />
             </h1>
             <div style={{ paddingBottom: 80 }}>
@@ -1466,12 +1487,12 @@ function App() {
                     <div style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>
                       <AutoTrans text={exam.title} lang={userLang} force={true} />
                     </div>
-                    <span style={{ background: "var(--gold)", color: "var(--ink)", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span>
+                    <span style={{ background: "#EAB308", color: "#111", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span>
                   </div>
                   <div style={{ color: "var(--muted)", fontSize: "0.95em", marginBottom: 16, lineHeight: 1.5 }}>
                     <AutoTrans text={exam.desc} lang={userLang} force={true} />
                   </div>
-                  <button style={{ width: "100%", padding: 12, borderRadius: 10, background: "rgba(245,184,46,0.1)", color: "var(--gold)", border: "1px solid var(--gold)", fontWeight: 900, cursor: "pointer" }}>
+                  <button style={{ width: "100%", padding: 12, borderRadius: 10, background: "rgba(234, 179, 8, 0.1)", color: "#EAB308", border: "1px solid #EAB308", fontWeight: 900, cursor: "pointer" }}>
                     <AutoTrans text="فتح الوصول" lang={userLang} force={true} />
                   </button>
                 </div>
@@ -1484,9 +1505,9 @@ function App() {
 
         {view === "sprechen" && (
           <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-             <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
+             <h1 className="de" style={{ textAlign: "center", color: "#EF4444", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
              <div className="card" style={{ textAlign: "center", padding: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-               <div style={{ color: "var(--red)" }}><Icons.Mic /></div>
+               <div style={{ color: "#EF4444" }}><Icons.Mic color="#EF4444" /></div>
                <h2 style={{ fontWeight: 900, color: "var(--muted)" }}>
                  <AutoTrans text="سيتم إضافته قريباً" lang={userLang} force={true} />
                </h2>
@@ -1497,12 +1518,12 @@ function App() {
 
       <nav className="nav">
         {[
-          { id: "home", label: t("home", userLang), icon: <Icons.Home /> }, 
-          { id: "lesen", label: t("lesen", userLang), icon: <Icons.Book /> }, 
-          { id: "horen", label: t("horen", userLang), icon: <Icons.Headphones /> }, 
-          { id: "schreiben", label: t("schreiben", userLang), icon: <Icons.Edit /> }, 
-          { id: "sprechen", label: t("sprechen", userLang), icon: <Icons.Mic /> }, 
-          { id: "pruefung", label: t("pruefung", userLang), icon: <Icons.Graduation /> }
+          { id: "home", label: t("home", userLang), icon: <Icons.Home color="#2563EB" /> }, 
+          { id: "lesen", label: t("lesen", userLang), icon: <Icons.Book color="#22C55E" /> }, 
+          { id: "horen", label: t("horen", userLang), icon: <Icons.Headphones color="#8B5CF6" /> }, 
+          { id: "schreiben", label: t("schreiben", userLang), icon: <Icons.Edit color="#F59E0B" /> }, 
+          { id: "sprechen", label: t("sprechen", userLang), icon: <Icons.Mic color="#EF4444" /> }, 
+          { id: "pruefung", label: t("pruefung", userLang), icon: <Icons.Graduation color="#EAB308" /> }
         ].map((item) => (
           <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)}><span className="ic">{item.icon}</span><span>{item.label}</span></button>
         ))}
@@ -1517,7 +1538,7 @@ function App() {
                 <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.9em' }}>{selectedExamGroup.length} <AutoTrans text="تعديلات لهذا الموضوع" lang={userLang} force={true} /></p>
               </div>
               <div style={{ background: '#10b981', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
-                <Icons.Book />
+                <Icons.Book color="#FFF" />
               </div>
             </div>
 
@@ -1536,7 +1557,7 @@ function App() {
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <span style={{ background: '#f1f5f9', color: '#64748b', padding: '4px 10px', borderRadius: 8, fontSize: '0.8em', fontWeight: 900 }}>B1</span>
-                      {isMod && <span style={{ color: '#f59e0b' }}><Icons.Lock /></span>}
+                      {isMod && <span style={{ color: '#f59e0b' }}><Icons.Lock color="#f59e0b" /></span>}
                     </div>
                   </button>
                 );
@@ -1562,7 +1583,7 @@ function App() {
                 <p style={{ margin: '4px 0 0', color: '#0369a1', fontSize: '0.9em' }}><AutoTrans text="مراكز الامتحانات المتاحة" lang={userLang} force={true} /></p>
               </div>
               <div style={{ background: '#0ea5e9', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
-                <Icons.Target />
+                <Icons.Target color="#FFF" />
               </div>
             </div>
             
@@ -1589,7 +1610,7 @@ function App() {
       {settings && (
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}><strong style={{fontSize:"1.3em"}}>{t("settings", userLang)}</strong><button className="btnI" onClick={() => setSettings(false)}><Icons.X /></button></div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}><strong style={{fontSize:"1.3em"}}>{t("settings", userLang)}</strong><button className="btnI" onClick={() => setSettings(false)}><Icons.X color="var(--text)" /></button></div>
             <div style={{ marginBottom: 20 }}>
               <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>{t("change_lang", userLang)}</span>
               <div className="lang-grid" style={{ maxHeight: 200 }}>{LANGS.map(lang => <button key={lang.c} onClick={() => { setUserLang(lang.c); localStorage.setItem("ep_lang", lang.c); }} className={`lang-btn ${userLang === lang.c ? "on" : ""}`} style={{ padding: "10px" }}><span style={{ fontSize: "1.2em" }}>{lang.f}</span><span style={{ fontSize: "0.85em" }}>{lang.n}</span></button>)}</div>
