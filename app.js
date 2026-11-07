@@ -12,7 +12,7 @@ const sb = supabase.createClient(supabaseUrl, supabaseKey);
 const { UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS } = window;
 const t = (key, lang) => (UI_TEXTS && UI_TEXTS[lang] && UI_TEXTS[lang][key]) || (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) || key;
 
-// ✅ لائحة الأسماء حسب Sahla (Teile 1, 2, 3, Sprach 1, 2, Schreiben, Hören)
+// ✅ لائحة الأسماء حسب Sahla
 const PLACEHOLDER_LESSONS = {
   "Lesen": {
     "Teile 1": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
@@ -22,9 +22,9 @@ const PLACEHOLDER_LESSONS = {
     "Sprach 2": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Petra", "Corina", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2."]
   },
   "Hören": {
-    "Teile 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
-    "Teile 2": ["Vorlesung", "Interview", "Radiobericht"],
-    "Teile 3": ["Gespräch im Büro", "Dialog im Alltag"]
+    "Teil 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
+    "Teil 2": ["Vorlesung", "Interview", "Radiobericht"],
+    "Teil 3": ["Gespräch im Büro", "Dialog im Alltag"]
   },
   "Schreiben": [
     "Urlaub Im Schwarzwald", "Eva - Traumberuf", "Sophie - Würzburg", "Nadja - Garten", 
@@ -41,6 +41,80 @@ const PLACEHOLDER_LESSONS = {
     "Teil 1: Präsentation", "Teil 2: Diskussion", "Teil 3: Problemlösung"
   ]
 };
+
+// ✅ الدروس المعدلة المجانية (ريتا وكارولين)
+const FREE_MODIFIED_LESSONS = [
+  {
+    id: "rita-t1-mod",
+    title: "Rita",
+    sub: "Teile 1",
+    level: "B1",
+    type: "headings",
+    desc: "المعدل",
+    options: [
+      { k: "a", de: "Schweizer sollen gesunder leben", ar: "يجب على السويسريين أن يعيشوا حياة أكثر صحة" },
+      { k: "b", de: "Neu im Trend: Jung und Gesund - mit dem Schokolade", ar: "الجديد في الموضة: الشباب والصحة - مع الشوكولاتة" },
+      { k: "c", de: "Heiraten kann zu mehr Kilos führen – das zeigt eine Studie", ar: "الزواج يمكن أن يؤدي إلى زيادة الوزن - هذا ما تظهره دراسة" },
+      { k: "d", de: "Japanische Studie: Vielschläfer leben länger", ar: "دراسة يابانية: الأشخاص الذين ينامون كثيراً يعيشون أطول" },
+      { k: "e", de: "Die Mehrheit der Schweizer treibt aktiv Sport", ar: "غالبية السويسريين يمارسون الرياضة بانتظام" },
+      { k: "f", de: "Statistik: Unverheiratete haben oft ein paar Kilos zu viel", ar: "إحصائيات: غير المتزوجين غالباً ما يعانون من زيادة الوزن" },
+      { k: "g", de: "Teures Essen für mehr Jugend und Schönheit", ar: "طعام باهظ الثمن من أجل شباب وجمال دائم" },
+      { k: "h", de: "USA: Nachfrage nach freuen Lebensmitteln geht zurück", ar: "الولايات المتحدة: تراجع الطلب على الأغذية المجانية" },
+      { k: "i", de: "Schokolade essen - jung bleiben", ar: "تناول الشوكولاتة - البقاء شاباً" },
+      { k: "j", de: "Weniger schlafen - länger leben", ar: "النوم أقل - العيش أطول" }
+    ],
+    items: [
+      { n: 1, c: "b", de: "Der Schokolade-Boom zeigt sich hierzulande nicht nur im hohen Verbrauch (jeder Schweizer isst fast 12 Kilo Schokolade im Jahr!), nein, er hat nun auch die Schönheitsindustrie erreicht...", ar: "يشهد قطاع التجميل في سويسرا توجهاً جديداً..." },
+      { n: 2, c: "c", de: "Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern...", ar: "تؤكد دراسة حديثة أن الأزواج الجدد..." },
+      { n: 3, c: "j", de: "Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung...", ar: "أفادت مجلة الصيدلية..." },
+      { n: 4, c: "a", de: "Nach dem Motto beschwingt und bewegt starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne...", ar: "أطلقت السلطات الصحية السويسرية..." },
+      { n: 5, c: "g", de: "Du bist,was du isst hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen...", ar: "تجاوز المفهوم التقليدي..." }
+    ]
+  },
+  {
+    id: "caroline-t1-mod",
+    title: "Caroline",
+    sub: "Teile 1",
+    level: "B1",
+    type: "headings",
+    desc: "المعدل",
+    options: [
+      { k: "a", de: "Familienbildung Schwerpunkt Beruf und Familie", ar: "التعليم الأسري مع التركيز على العمل والأسرة" },
+      { k: "b", de: "Demonstration gegen Fluglärm", ar: "مظاهرة ضد ضوضاء الطائرات" },
+      { k: "c", de: "Flughafen Frankfurt wird 10 Jahre", ar: "مطار فرانكفورت يحتفل بمرور 10 سنوات" },
+      { k: "d", de: "Flughafen Frankfurt beliebter Veranstaltungsort", ar: "مطار فرانكفورت وجهة مفضلة للفعاليات" },
+      { k: "e", de: "Experten gegen Vergrößerung des Flughafens", ar: "خبراء ضد توسيع المطار" },
+      { k: "f", de: "Info über den Flughafen und Arbeitsplätze", ar: "معلومات عن المطار وفرص العمل" },
+      { k: "g", de: "Neue Kurse: Spiele für Mütter und Kinder", ar: "دورات جديدة: ألعاب للأمهات والأطفال" },
+      { k: "h", de: "Umwelt und Flughafen: Ein Informationsabend der Bürger", ar: "البيئة والمطار: أمسية معلوماتية للمواطنين" },
+      { k: "i", de: "Neue Kurse für Kinder", ar: "دورات جديدة للأطفال" },
+      { k: "j", de: "Neue Kurse: Museumsführung für junge Väter", ar: "دورات جديدة: جولة في المتحف للآباء الشباب" }
+    ],
+    items: [
+      { n: 1, c: "h", de: "Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern...", ar: "تستمر أعمال التوسعة في مطار فرانكفورت..." },
+      { n: 2, c: "d", de: "Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen...", ar: "أصبح مطار فرانكفورت وجهة مفضلة للشركات..." },
+      { n: 3, c: "f", de: "Eine Bürgergruppe mit dem Namen Südliches Frankfurt lädt für Montag kommender Woche...", ar: "تعتزم مجموعة مواطنين تحت اسم جنوب فرانكفورت..." },
+      { n: 4, c: "a", de: "Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht...", ar: "يركز البرنامج الجديد لمركز التعليم العائلي الإنجيلي..." },
+      { n: 5, c: "i", de: "Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an...", ar: "تستعد مدرسة الشعب في دورنبيرن لإطلاق سلسلة من الدورات الجديدة..." }
+    ]
+  }
+];
+
+// ✅ لائحة الدول (من الملف PDF)
+const EXAM_COUNTRIES = [
+  { country: "Ägypten", ar: "مصر", flag: "🇪🇬", cities: "Kairo", institutes: "Vivat Lingua, SIS, AKF Sprachschule, Lingocare, WiPDaF, Westfalia Bildungszentrum" },
+  { country: "Indien", ar: "الهند", flag: "🇮🇳", cities: "Ahmedabad, Alappuzha, Bangalore, Chennai, Kerala, Chandigarh, Kochi, Kollam, Manimuthy, Prune, Trivandrum", institutes: "Sprachschule CAS, Vivat Lingua, Sprachenakademie Aachen, DEFA, Tandem, Lingualeaps, Speakeasy, ACZEPTA, Quadrigo, IIK, Dekra" },
+  { country: "Kirgisistan", ar: "قيرغيزستان", flag: "🇰🇬", cities: "Bischkek, Osch", institutes: "Volkshochschule im Landkreis Cham" },
+  { country: "Kolumbien", ar: "كولومبيا", flag: "🇨🇴", cities: "Bogota", institutes: "CDC Mexiko, C2 Barcelona Languages" },
+  { country: "Malaysia", ar: "ماليزيا", flag: "🇲🇾", cities: "Selangor", institutes: "Sprachenakademie Aachen" },
+  { country: "Marokko", ar: "المغرب", flag: "🇲🇦", cities: "Casablanca, Meknès, Tanger", institutes: "Atlas Bildungs Center, Prisma Bildungsplattform, IIK" },
+  { country: "Philippinen", ar: "الفلبين", flag: "🇵🇭", cities: "Davao", institutes: "Berlitz Deutschland" },
+  { country: "Tadschikistan", ar: "طاجيكستان", flag: "🇹🇯", cities: "Duschanbe", institutes: "bfz gGmbH, Bremer Volkshochschule" },
+  { country: "Tunesien", ar: "تونس", flag: "🇹🇳", cities: "Tunis", institutes: "Sprachenakademie Aachen" },
+  { country: "Türkei", ar: "تركيا", flag: "🇹🇷", cities: "Ankara, Istanbul, Adana", institutes: "Sprachportal, IFB" },
+  { country: "Usbekistan", ar: "أوزبكستان", flag: "🇺🇿", cities: "Taschkent, Fergana, Samarkand", institutes: "Berlitz, Bildung und Beruf" },
+  { country: "Vietnam", ar: "فيتنام", flag: "🇻🇳", cities: "Hanoi, Ho Chi Minh", institutes: "Alpha Sprachschule, IBK Merseburg, IIK, Jacura Group, UNS, Sprachportal Akademie, SDI München" }
+];
 
 const LogoImage = ({ size = 50 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -602,6 +676,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
     </div>
   );
 }
+
 function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa, onLessonClick }) {
   const [selected, setSelected] = useState(null);
   const [showTransText, setShowTransText] = useState(false);
@@ -673,9 +748,6 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
     setIsAnalyzing(false);
   };
 
-  const dynamicSchreiben = supabaseLessons.filter(les => (les.sub === "Schreiben" || les.data?.sub === "Schreiben"));
-  const displayLessons = dynamicSchreiben.length > 0 ? dynamicSchreiben.map(l => l.data || l) : SCHREIBEN_DATA;
-
   if (!selected) {
     return (
       <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
@@ -692,13 +764,16 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
         
         {PLACEHOLDER_LESSONS["Schreiben"].map((title, idx) => {
           const localExams = SCHREIBEN_DATA.filter(e => e.title === title);
-          const isMulti = localExams.length > 1;
+          const sbExams = supabaseLessons.filter(les => les.title === title || les.data?.title === title);
+          const totalVersions = localExams.length + sbExams.length;
           return (
-            <div key={idx} onClick={() => onLessonClick(title, "Schreiben", localExams)} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
+            <div key={idx} onClick={() => onLessonClick(title, "Schreiben")} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{title}</div>
-                {isMulti && (
-                  <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{localExams.length} تعديلات</span>
+                {totalVersions > 1 && (
+                  <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>
+                    {totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} />
+                  </span>
                 )}
               </div>
               <div style={{ display: "inline-block", background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>B1</div>
@@ -883,7 +958,6 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
     </div>
   );
 }
-
 function AdminPanel({ userLang, onClose }) {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -975,7 +1049,6 @@ function App() {
   const [results, setResults] = useState(() => { try { return JSON.parse(localStorage.getItem("ep_results") || "{}"); } catch (e) { return {}; } });
   const [searchQuery, setSearchQuery] = useState("");
   const [userLang, setUserLang] = useState(null); 
-  const [selectedExamTitle, setSelectedExamTitle] = useState(null);
   const [showHorenLessons, setShowHorenLessons] = useState(false);
   const [showHorenTrans, setShowHorenTrans] = useState(false);
   const [timeLeft, setTimeLeft] = useState(90 * 60);
@@ -984,8 +1057,10 @@ function App() {
   // ✅ States الجديدة
   const [supabaseLessons, setSupabaseLessons] = useState([]);
   const [activeTab, setActiveTab] = useState("Teile 1");
-  const [activeHorenTab, setActiveHorenTab] = useState("Teile 1");
+  const [activeHorenTab, setActiveHorenTab] = useState("Teil 1");
+  const [activeHorenTeil, setActiveHorenTeil] = useState(null);
   const [selectedExamGroup, setSelectedExamGroup] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setIsReady(true), 1500);
@@ -1112,28 +1187,29 @@ function App() {
   const go = (v) => { setView(v); setExam(null); setShowHorenLessons(false); setIsSideMenuOpen(false); window.scrollTo(0, 0); };
 
   // ✅ الدالة اللي كتحل الدروس (محلية أو من سوبابيز)
-  const handleLessonClick = async (title, sub, localExams) => {
-    if (localExams && localExams.length > 0) {
-      if (localExams.length > 1) {
-        setSelectedExamGroup(localExams); // كيطلع النافذة ديال (أصلي/معدل)
-      } else {
-        setExam(localExams[0]); // كيحل ديريكت
-        setTimeLeft(90*60);
-      }
-    } else {
-      // كيقلب على الدرس فـ سوبابيز
-      const safeSub = sub.toLowerCase().replace(/ /g, '');
-      const safeTitle = title.toLowerCase().replace(/ /g, '-');
-      const supabaseId = `${safeTitle}-${safeSub}`; 
+  const handleLessonClick = async (title, sub) => {
+    const localExams = EXAMS.filter(e => e.title === title && e.sub === sub);
+    const localHoren = HOREN_EXAMS.filter(e => e.title === title);
+    const localSchreiben = SCHREIBEN_DATA.filter(e => e.title === title);
+    const freeMods = FREE_MODIFIED_LESSONS.filter(e => e.title === title && e.sub === sub);
+    
+    const sbExams = supabaseLessons.filter(les => {
+      const lesTitle = les.title || les.data?.title;
+      return lesTitle === title;
+    }).map(les => les.data || les);
 
-      const { data, error } = await sb.from('premium_lessons').select('data').eq('id', supabaseId).single();
-      
-      if (error || !data) {
-        alert(`⚠️ الدرس "${title}" مازال ما تحطش فـ سوبابيز.`);
-      } else {
-        setExam(data.data);
-        setTimeLeft(90*60);
-      }
+    let allVersions = [];
+    if (localHoren.length > 0) allVersions = [...localHoren, ...sbExams];
+    else if (localSchreiben.length > 0) allVersions = [...localSchreiben, ...sbExams];
+    else allVersions = [...localExams, ...freeMods, ...sbExams];
+
+    if (allVersions.length === 0) {
+      alert(`⚠️ الدرس "${title}" مازال ما تحطش.`);
+    } else if (allVersions.length === 1) {
+      setExam(allVersions[0]);
+      setTimeLeft(90 * 60);
+    } else {
+      setSelectedExamGroup(allVersions);
     }
   };
 
@@ -1213,11 +1289,29 @@ function App() {
             {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: "#111" }}>📢 {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
+            
             <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
               <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}><LogoImage size={90} /></div>
               <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
               <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p><p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
               <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#F5B82E" }}>B2</span></div>
+            </div>
+          </div>
+        )}
+
+        {/* ✅ قسم الامتحانات الدولية (جديد) */}
+        {view === "home" && (
+          <div style={{ marginTop: 20 }}>
+            <h3 style={{ fontWeight: 900, fontSize: "1.3em", color: "var(--text)", marginBottom: 12 }}>
+              <AutoTrans text="الامتحانات الدولية" lang={userLang} force={true} />
+            </h3>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+              {EXAM_COUNTRIES.map((c, idx) => (
+                <button key={idx} onClick={() => setSelectedCountry(c)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "12px 8px", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16 }}>
+                  <span style={{ fontSize: "2em" }}>{c.flag}</span>
+                  <span style={{ fontWeight: 900, fontSize: "0.8em", color: "#1e293b" }}><AutoTrans text={c.ar} lang={userLang} force={true} /></span>
+                </button>
+              ))}
             </div>
           </div>
         )}
@@ -1239,16 +1333,19 @@ function App() {
                 ?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()))
                 .map((name, idx) => {
                   const localExams = EXAMS.filter(e => e.title === name && e.sub === activeTab && e.level === level);
-                  const isMulti = localExams.length > 1;
+                  const freeMods = FREE_MODIFIED_LESSONS.filter(e => e.title === name && e.sub === activeTab);
+                  const sbExams = supabaseLessons.filter(les => (les.title === name || les.data?.title === name) && (les.sub === activeTab || les.data?.sub === activeTab));
+                  const totalVersions = localExams.length + freeMods.length + sbExams.length;
+                  
                   return (
-                    <button key={idx} className="card" onClick={() => handleLessonClick(name, activeTab, localExams)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
+                    <button key={idx} className="card" onClick={() => handleLessonClick(name, activeTab)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                         <div>
                           <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
                           <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: "rgba(221,0,0,0.1)", color: "var(--red)", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div>
                         </div>
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
-                           {isMulti && <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{localExams.length} تعديلات</span>}
+                           {totalVersions > 1 && <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} /></span>}
                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
                         </div>
                       </div>
@@ -1260,25 +1357,104 @@ function App() {
         )}
 
         {view === "horen" && (
-          <div>
-            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Hören {level}</h1>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, background: "var(--card)", padding: 16, borderRadius: 24, border: "1px solid var(--line)", marginBottom: 20 }}>
-              {["Teile 1", "Teile 2", "Teile 3"].map(tab => (
-                <button key={tab} onClick={() => setActiveHorenTab(tab)} style={{ padding: "14px 8px", borderRadius: 16, fontWeight: 900, border: activeHorenTab === tab ? "2px solid var(--blue)" : "2px solid transparent", background: activeHorenTab === tab ? "rgba(37, 99, 235, 0.1)" : "transparent", color: activeHorenTab === tab ? "var(--blue)" : "var(--muted)" }}>🎧 {tab}</button>
-              ))}
-            </div>
-            
-            {PLACEHOLDER_LESSONS["Hören"][activeHorenTab]?.map((name, idx) => {
-              const localExams = HOREN_EXAMS.filter(e => e.title === name);
-              return (
-                <button key={idx} className="card" onClick={() => handleLessonClick(name, activeHorenTab, localExams)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          <div style={{ padding: "20px 12px", paddingBottom: 100, direction: "rtl" }}>
+            {!activeHorenTeil ? (
+              <>
+                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: "#1e293b", marginBottom: 20, textAlign: "right" }}>Hören</h1>
+
+                <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+                  <div style={{ display: "flex", background: "#f1f5f9", borderRadius: 99, padding: 4, border: "1px solid #e2e8f0" }}>
+                    <button style={{ background: "#10B981", color: "white", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>B1</button>
+                    <button style={{ background: "transparent", color: "#64748b", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>B2</button>
                   </div>
-                </button>
-              );
-            })}
+                </div>
+
+                <div style={{ display: "flex", background: "#ffffff", borderRadius: 20, padding: 8, marginBottom: 24, boxShadow: "0 4px 15px rgba(0,0,0,0.03)", border: "1px solid #e2e8f0" }}>
+                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "transparent", color: "#64748b", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    <span>الأكواد</span>
+                  </button>
+                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "#0ea5e9", color: "white", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, boxShadow: "0 4px 12px rgba(14, 165, 233, 0.3)" }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                    <span>الجمل</span>
+                  </button>
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+                  {/* Teil 1 Card (Open) */}
+                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#ecfdf5", display: "flex", justifyContent: "center", alignItems: "center", color: "#10B981" }}>
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>
+                      </div>
+                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
+                    </div>
+                    <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 1</h2>
+                    <button onClick={() => setActiveHorenTeil("Teile 1")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#ecfdf5", color: "#10B981", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #10B981", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                      ابدأ الآن
+                    </button>
+                  </div>
+
+                  {/* Teil 2 Card (PRO) */}
+                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #fef3c7", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#fef3c7", display: "flex", justifyContent: "center", alignItems: "center", color: "#f59e0b" }}>
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                      </div>
+                      <div style={{ display: "flex", gap: 8 }}>
+                        <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
+                        <span style={{ background: "#fef3c7", color: "#d97706", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>PRO</span>
+                      </div>
+                    </div>
+                    <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#d97706" }}>Teil 2</h2>
+                    <button onClick={() => wa(t("wa_upgrade_msg", userLang) + " - Hören Teil 2")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#fffbeb", color: "#d97706", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #f59e0b", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                      فتح الوصول
+                    </button>
+                  </div>
+
+                  {/* Teil 3 Card (Open) */}
+                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#e0f2fe", display: "flex", justifyContent: "center", alignItems: "center", color: "#0ea5e9" }}>
+                        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 20h9"></path><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path></svg>
+                      </div>
+                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
+                    </div>
+                    <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 3</h2>
+                    <button onClick={() => setActiveHorenTeil("Teile 3")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#ecfdf5", color: "#10B981", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #10B981", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                      ابدأ الآن
+                    </button>
+                  </div>
+                </div>
+              </>
+            ) : (
+              
+              /* إذا اختار شي Teil، كيبينو الدروس ديالو (الـ26 درس) */
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+                  <button onClick={() => setActiveHorenTeil(null)} className="btnI" style={{ width: 40, height: 40 }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                  </button>
+                  <h2 className="de" style={{ margin: 0, fontSize: "1.8em", fontWeight: 900 }}>{activeHorenTeil}</h2>
+                </div>
+
+                {HOREN_EXAMS.filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").map((ex) => (
+                  <button key={ex.id} className="card" onClick={() => { setExam(ex); setTimeLeft(90*60); }} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16 }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{ex.title}</div>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
+                    </div>
+                  </button>
+                ))}
+                
+                {HOREN_EXAMS.filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").length === 0 && (
+                   <p style={{ textAlign: "center", color: "var(--muted)", marginTop: 40 }}>لا توجد دروس في هذا القسم حالياً.</p>
+                )}
+              </div>
+            )}
           </div>
         )}
 
@@ -1313,7 +1489,7 @@ function App() {
           <div>
              <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
              {PLACEHOLDER_LESSONS["Sprechen"].map((name, idx) => (
-                <button key={idx} className="card" onClick={() => handleLessonClick(name, "Sprechen", [])} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
+                <button key={idx} className="card" onClick={() => handleLessonClick(name, "Sprechen")} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
                   <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
                 </button>
               ))}
@@ -1327,21 +1503,85 @@ function App() {
         ))}
       </nav>
 
-      {/* ✅ نافذة اختيار النسخة (أصلي / معدل) */}
+      {/* ✅ نافذة التعديلات المتاحة */}
       {selectedExamGroup && (
-        <div className="overlay" onClick={() => setSelectedExamGroup(null)}>
-          <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-              <h3 className="de" style={{ margin: 0, fontSize: "1.3em", fontWeight: 900 }}>{selectedExamGroup[0].title} - اختر النسخة</h3>
-              <button className="btnI" onClick={() => setSelectedExamGroup(null)}>✕</button>
+        <div className="overlay" onClick={() => setSelectedExamGroup(null)} style={{ direction: 'rtl' }}>
+          <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24, border: 'none' }}>
+            
+            {/* Header */}
+            <div style={{ background: '#f0fdf4', padding: '24px', borderBottom: '1px solid #dcfce7', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: '#1e293b' }}><AutoTrans text="التعديلات المتاحة" lang={userLang} force={true} /></h3>
+                <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.9em' }}>{selectedExamGroup.length} <AutoTrans text="تعديلات لهذا الموضوع" lang={userLang} force={true} /></p>
+              </div>
+              <div style={{ background: '#10b981', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
+                📄
+              </div>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-              {selectedExamGroup.map((ex, idx) => (
-                <button key={ex.id} className="btn ghost" style={{ padding: "16px", fontSize: "1.1em", display: "flex", justifyContent: "space-between", alignItems: "center", borderRadius: 14 }} onClick={() => { setExam(ex); setSelectedExamGroup(null); setTimeLeft(90*60); }}>
-                  <span className="de" style={{ fontWeight: 800 }}>{ex.desc || (idx === 0 ? "النسخة الأصلية" : `نسخة معدلة ${idx}`)}</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
-              ))}
+
+            {/* List */}
+            <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
+              {selectedExamGroup.map((ex, idx) => {
+                const isMod = ex.desc?.includes('معدل') || ex.id?.includes('-mod') || ex.title?.includes('المعدل');
+                const cleanTitle = ex.title.replace(' المعدل', '').replace(' (معدل)', '');
+                
+                return (
+                  <button key={ex.id || idx} onClick={() => { setExam(ex); setSelectedExamGroup(null); setTimeLeft(90*60); }} style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", background: '#fff', border: '1px solid #e2e8f0', borderRadius: 16 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <span style={{ background: '#dcfce7', color: '#15803d', width: 32, height: 32, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 900 }}>{idx + 1}</span>
+                      <span className="de" style={{ fontWeight: 800, fontSize: '1.1em', color: '#1e293b' }}>
+                        {cleanTitle} {isMod && <AutoTrans text="المعدل" lang={userLang} force={true} />}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <span style={{ background: '#f1f5f9', color: '#64748b', padding: '4px 10px', borderRadius: 8, fontSize: '0.8em', fontWeight: 900 }}>B1</span>
+                      {isMod && <span style={{ fontSize: '1.2em', color: '#f59e0b' }}>🔒</span>}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+
+            {/* Close Button */}
+            <div style={{ padding: '0 20px 20px' }}>
+              <button onClick={() => setSelectedExamGroup(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontWeight: 900, fontSize: '1em' }}>
+                <AutoTrans text="إغلاق" lang={userLang} force={true} />
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* ✅ نافذة الدول والمؤسسات (جديدة) */}
+      {selectedCountry && (
+        <div className="overlay" onClick={() => setSelectedCountry(null)} style={{ direction: 'rtl' }}>
+          <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24, border: 'none' }}>
+            <div style={{ background: '#e0f2fe', padding: '24px', borderBottom: '1px solid #bae6fd', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div>
+                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: '#0c4a6e' }}>{selectedCountry.flag} <AutoTrans text={selectedCountry.ar} lang={userLang} force={true} /></h3>
+                <p style={{ margin: '4px 0 0', color: '#0369a1', fontSize: '0.9em' }}><AutoTrans text="مراكز الامتحانات المتاحة" lang={userLang} force={true} /></p>
+              </div>
+              <div style={{ background: '#0ea5e9', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
+                🌍
+              </div>
+            </div>
+            
+            <div style={{ padding: 20 }}>
+              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, marginBottom: 12, border: '1px solid #e2e8f0' }}>
+                <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: 8 }}><AutoTrans text="المدن" lang={userLang} force={true} />:</div>
+                <div style={{ color: '#334155', fontSize: '0.95em' }}>{selectedCountry.cities}</div>
+              </div>
+              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, border: '1px solid #e2e8f0' }}>
+                <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: 8 }}><AutoTrans text="المعاهد والمراكز" lang={userLang} force={true} />:</div>
+                <div style={{ color: '#334155', fontSize: '0.95em', lineHeight: 1.6 }}>{selectedCountry.institutes}</div>
+              </div>
+            </div>
+
+            <div style={{ padding: '0 20px 20px' }}>
+              <button onClick={() => setSelectedCountry(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontWeight: 900, fontSize: '1em' }}>
+                <AutoTrans text="إغلاق" lang={userLang} force={true} />
+              </button>
             </div>
           </div>
         </div>
