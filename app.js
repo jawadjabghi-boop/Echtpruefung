@@ -22,9 +22,9 @@ const PLACEHOLDER_LESSONS = {
     "Sprach 2": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Petra", "Corina", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2."]
   },
   "Hören": {
-    "Teil 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
-    "Teil 2": ["Vorlesung", "Interview", "Radiobericht"],
-    "Teil 3": ["Gespräch im Büro", "Dialog im Alltag"]
+    "Teile 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
+    "Teile 2": ["Vorlesung", "Interview", "Radiobericht"],
+    "Teile 3": ["Gespräch im Büro", "Dialog im Alltag"]
   },
   "Schreiben": [
     "Urlaub Im Schwarzwald", "Eva - Traumberuf", "Sophie - Würzburg", "Nadja - Garten", 
@@ -37,9 +37,7 @@ const PLACEHOLDER_LESSONS = {
     "Anne - Geburtstag", "Paul - Ausflug", "Jakob - Nachbarn", "Emilia", 
     "Tobias", "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
   ],
-  "Sprechen": [
-    "Teil 1: Präsentation", "Teil 2: Diskussion", "Teil 3: Problemlösung"
-  ]
+  "Sprechen": []
 };
 
 // ✅ الدروس المعدلة المجانية (ريتا وكارولين)
@@ -766,8 +764,20 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
           const localExams = SCHREIBEN_DATA.filter(e => e.title === title);
           const sbExams = supabaseLessons.filter(les => les.title === title || les.data?.title === title);
           const totalVersions = localExams.length + sbExams.length;
+          
           return (
-            <div key={idx} onClick={() => onLessonClick(title, "Schreiben")} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
+            <div key={idx} onClick={() => {
+              if (localExams.length > 0) {
+                setSelected(localExams[0]);
+                setUserText("");
+                setResult(null);
+                setShowTransText(false);
+                setShowTransTask(false);
+                setTimeLeft(90 * 60);
+              } else {
+                onLessonClick(title, "Schreiben");
+              }
+            }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{title}</div>
                 {totalVersions > 1 && (
@@ -1285,35 +1295,35 @@ function App() {
 
       <main style={{ margin: "0 12px", paddingTop: 10 }}>
         {view === "home" && (
-          <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
-            {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: "#111" }}>📢 {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
-            <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
-            
-            <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
-              <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}><LogoImage size={90} /></div>
-              <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
-              <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p><p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
-              <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#F5B82E" }}>B2</span></div>
+          <>
+            <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
+              {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: "#111" }}>📢 {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
+              
+              <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
+                <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}><LogoImage size={90} /></div>
+                <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
+                <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p><p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#F5B82E" }}>B2</span></div>
+              </div>
             </div>
-          </div>
-        )}
 
-        {/* ✅ قسم الامتحانات الدولية (جديد) */}
-        {view === "home" && (
-          <div style={{ marginTop: 20 }}>
-            <h3 style={{ fontWeight: 900, fontSize: "1.3em", color: "var(--text)", marginBottom: 12 }}>
-              <AutoTrans text="الامتحانات الدولية" lang={userLang} force={true} />
-            </h3>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
-              {EXAM_COUNTRIES.map((c, idx) => (
-                <button key={idx} onClick={() => setSelectedCountry(c)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "12px 8px", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16 }}>
-                  <span style={{ fontSize: "2em" }}>{c.flag}</span>
-                  <span style={{ fontWeight: 900, fontSize: "0.8em", color: "#1e293b" }}><AutoTrans text={c.ar} lang={userLang} force={true} /></span>
-                </button>
-              ))}
+            {/* ✅ قسم الامتحانات الدولية */}
+            <div style={{ marginTop: 20 }}>
+              <h3 style={{ fontWeight: 900, fontSize: "1.3em", color: "var(--text)", marginBottom: 12 }}>
+                <AutoTrans text="الامتحانات الدولية" lang={userLang} force={true} />
+              </h3>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
+                {EXAM_COUNTRIES.map((c, idx) => (
+                  <button key={idx} onClick={() => setSelectedCountry(c)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "12px 8px", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16 }}>
+                    <span style={{ fontSize: "2em" }}>{c.flag}</span>
+                    <span style={{ fontWeight: 900, fontSize: "0.8em", color: "#1e293b" }}><AutoTrans text={c.ar} lang={userLang} force={true} /></span>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          </>
         )}
 
         {view === "lesen" && (
@@ -1432,7 +1442,7 @@ function App() {
               </>
             ) : (
               
-              /* إذا اختار شي Teil، كيبينو الدروس ديالو (الـ26 درس) */
+              /* إذا اختار شي Teil، كيبينو الدروس ديالو (الـ26 درس) فسكرول واحد */
               <div>
                 <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
                   <button onClick={() => setActiveHorenTeil(null)} className="btnI" style={{ width: 40, height: 40 }}>
@@ -1442,12 +1452,7 @@ function App() {
                 </div>
 
                 {HOREN_EXAMS.filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").map((ex) => (
-                  <button key={ex.id} className="card" onClick={() => { setExam(ex); setTimeLeft(90*60); }} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{ex.title}</div>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" strokeWidth="2.5"><path d="M9 18l6-6-6-6"/></svg>
-                    </div>
-                  </button>
+                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
                 ))}
                 
                 {HOREN_EXAMS.filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").length === 0 && (
@@ -1474,10 +1479,25 @@ function App() {
 
         {view === "pruefung" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Zufällige Prüfungen</h1>
+            <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>
+              <AutoTrans text="Zufällige Prüfungen" lang={userLang} force={true} />
+            </h1>
             <div style={{ paddingBottom: 80 }}>
               {PRUEFUNG_DATA.map(exam => (
-                <div key={exam.id} className="card" style={{ padding: 20, border: "1.5px solid var(--line)", marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => wa(t("wa_upgrade_msg", userLang) + " - " + exam.title)}><div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}><div style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>{exam.title}</div><span style={{ background: "var(--gold)", color: "var(--ink)", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span></div><div style={{ color: "var(--muted)", fontSize: "0.95em", marginBottom: 16, lineHeight: 1.5 }}>{exam.desc}</div><button style={{ width: "100%", padding: 12, borderRadius: 10, background: "rgba(245,184,46,0.1)", color: "var(--gold)", border: "1px solid var(--gold)", fontWeight: 900, cursor: "pointer" }}>فتح الوصول</button></div>
+                <div key={exam.id} className="card" style={{ padding: 20, border: "1.5px solid var(--line)", marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => wa(t("wa_upgrade_msg", userLang) + " - " + exam.title)}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+                    <div style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>
+                      <AutoTrans text={exam.title} lang={userLang} force={true} />
+                    </div>
+                    <span style={{ background: "var(--gold)", color: "var(--ink)", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span>
+                  </div>
+                  <div style={{ color: "var(--muted)", fontSize: "0.95em", marginBottom: 16, lineHeight: 1.5 }}>
+                    <AutoTrans text={exam.desc} lang={userLang} force={true} />
+                  </div>
+                  <button style={{ width: "100%", padding: 12, borderRadius: 10, background: "rgba(245,184,46,0.1)", color: "var(--gold)", border: "1px solid var(--gold)", fontWeight: 900, cursor: "pointer" }}>
+                    <AutoTrans text="فتح الوصول" lang={userLang} force={true} />
+                  </button>
+                </div>
               ))}
             </div>
           </div>
@@ -1486,13 +1506,14 @@ function App() {
         {view === "admin" && isAdmin && <AdminPanel userLang={userLang} onClose={() => go('home')} />}
 
         {view === "sprechen" && (
-          <div>
+          <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
              <h1 className="de" style={{ textAlign: "center", color: "var(--red)", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
-             {PLACEHOLDER_LESSONS["Sprechen"].map((name, idx) => (
-                <button key={idx} className="card" onClick={() => handleLessonClick(name, "Sprechen")} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
-                  <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
-                </button>
-              ))}
+             <div className="card" style={{ textAlign: "center", padding: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+               <div style={{ fontSize: "3em" }}>🎙️</div>
+               <h2 style={{ fontWeight: 900, color: "var(--muted)" }}>
+                 <AutoTrans text="سيتم إضافته قريباً" lang={userLang} force={true} />
+               </h2>
+             </div>
           </div>
         )}
       </main>
@@ -1553,7 +1574,7 @@ function App() {
         </div>
       )}
 
-      {/* ✅ نافذة الدول والمؤسسات (جديدة) */}
+      {/* ✅ نافذة الدول والمؤسسات */}
       {selectedCountry && (
         <div className="overlay" onClick={() => setSelectedCountry(null)} style={{ direction: 'rtl' }}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24, border: 'none' }}>
