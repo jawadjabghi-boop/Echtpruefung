@@ -1,19 +1,15 @@
 const { useState, useEffect, useRef } = React;
 
-// ✅ 1. إعدادات الواتساب
 const WA = "212680193427"; 
 const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
 
-// ✅ 2. إعدادات Supabase
 const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
 const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
 const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
-// ✅ 3. ربط البيانات
 const { UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS } = window;
 const t = (key, lang) => (UI_TEXTS && UI_TEXTS[lang] && UI_TEXTS[lang][key]) || (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) || key;
 
-// ✅ 4. لائحة الدروس (تم تصحيح سميات Schreiben باش تطابق data1.js)
 const PLACEHOLDER_LESSONS = {
   "Lesen": {
     "Teile 1": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
@@ -43,7 +39,6 @@ const PLACEHOLDER_LESSONS = {
   "Sprechen": []
 };
 
-// ✅ 5. الدروس المعدلة المجانية (كاملة بلا اختصار)
 const FREE_MODIFIED_LESSONS = [
   {
     id: "rita-t1-mod", title: "Rita", sub: "Teile 1", level: "B1", type: "headings", desc: "المعدل",
@@ -91,7 +86,6 @@ const FREE_MODIFIED_LESSONS = [
   }
 ];
 
-// ✅ 6. لائحة الدول
 const EXAM_COUNTRIES = [
   { country: "Ägypten", ar: "مصر", flag: "🇪🇬", cities: "Kairo", institutes: "Vivat Lingua, SIS, AKF Sprachschule, Lingocare, WiPDaF, Westfalia Bildungszentrum" },
   { country: "Indien", ar: "الهند", flag: "🇮🇳", cities: "Ahmedabad, Alappuzha, Bangalore, Chennai, Kerala, Chandigarh, Kochi, Kollam, Manimuthy, Prune, Trivandrum", institutes: "Sprachschule CAS, Vivat Lingua, Sprachenakademie Aachen, DEFA, Tandem, Lingualeaps, Speakeasy, ACZEPTA, Quadrigo, IIK, Dekra" },
@@ -107,7 +101,6 @@ const EXAM_COUNTRIES = [
   { country: "Vietnam", ar: "فيتنام", flag: "🇻🇳", cities: "Hanoi, Ho Chi Minh", institutes: "Alpha Sprachschule, IBK Merseburg, IIK, Jacura Group, UNS, Sprachportal Akademie, SDI München" }
 ];
 
-// ✅ 7. الأيقونات العصرية الملونة
 const Icons = {
   Home: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
   Book: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
@@ -154,34 +147,37 @@ const LogoImage = ({ size = 50 }) => (
 
 const globalTransCache = {};
 
-// ✅ 8. الترجمة السريعة (مع قاموس مصغر للكلمات الثابتة)
 const FAST_DICT = {
-  "المعدل": { en: "Modified", fr: "Modifié", hi: "संशोधित", id: "Dimodifikasi", tl: "Binago", fa: "اصلاح شده", sw: "Iliyorekebishwa", uz: "O'zgartirilgan", ne: "परिमार्जित" },
-  "تعديلات": { en: "Versions", fr: "Versions", hi: "संस्करण", id: "Versi", tl: "Mga Bersyon", fa: "نسخه ها", sw: "Matoleo", uz: "Versiyalar", ne: "संस्करणहरू" },
-  "إغلاق": { en: "Close", fr: "Fermer", hi: "बंद करें", id: "Tutup", tl: "Isara", fa: "بستن", sw: "Funga", uz: "Yopish", ne: "बन्द गर्नुहोस्" },
-  "مراكز الامتحانات المتاحة": { en: "Available Exam Centers", fr: "Centres d'examen disponibles", hi: "उपलब्ध परीक्षा केंद्र", id: "Pusat Ujian tersedia", tl: "Mga Available na Exam Center", fa: "مراکز آزمون موجود", sw: "Vituo vya Mitihani Vinavyopatikana", uz: "Mavjud imtihon markazlari", ne: "उपलब्ध परीक्षा केन्द्रहरू" },
-  "المدن": { en: "Cities", fr: "Villes", hi: "शहर", id: "Kota", tl: "Mga Lungsod", fa: "شهرها", sw: "Miji", uz: "Shaharlar", ne: "शहरहरू" },
-  "المعاهد والمراكز": { en: "Institutes and Centers", fr: "Instituts et centres", hi: "संस्थान और केंद्र", id: "Institut dan Pusat", tl: "Mga Institute at Center", fa: "موسسات و مراکز", sw: "Taasisi na Vituo", uz: "Institutlar va markazlar", ne: "संस्थान र केन्द्रहरू" },
-  "التعديلات المتاحة": { en: "Available Versions", fr: "Versions disponibles", hi: "उपलब्ध संस्करण", id: "Versi tersedia", tl: "Mga Available na Bersyon", fa: "نسخه های موجود", sw: "Matoleo Yanayopatikana", uz: "Mavjud versiyalar", ne: "उपलब्ध संस्करणहरू" },
-  "تعديلات لهذا الموضوع": { en: "Versions for this topic", fr: "Versions pour ce sujet", hi: "इस विषय के लिए संस्करण", id: "Versi untuk topik ini", tl: "Mga bersyon para sa paksang ito", fa: "نسخه ها برای این موضوع", sw: "Matoleo kwa mada hii", uz: "Ushbu mavzu uchun versiyalar", ne: "यो विषयको लागि संस्करणहरू" },
-  "فتح الوصول": { en: "Unlock Access", fr: "Déverrouiller", hi: "पहुँच अनलॉक करें", id: "Buka Akses", tl: "I-unlock ang Access", fa: "باز کردن دسترسی", sw: "Fungua Ufikiaji", uz: "Kirishni ochish", ne: "पहुँच अनलक गर्नुहोस्" }
+  "المعدل": { ar: "المعدل", en: "Modified", fr: "Modifié", hi: "संशोधित", id: "Dimodifikasi", tl: "Binago", fa: "اصلاح شده", sw: "Iliyorekebishwa", uz: "O'zgartirilgan", ne: "परिमार्जित" },
+  "تعديلات": { ar: "تعديلات", en: "Versions", fr: "Versions", hi: "संस्करण", id: "Versi", tl: "Mga Bersyon", fa: "نسخه ها", sw: "Matoleo", uz: "Versiyalar", ne: "संस्करणहरू" },
+  "إغلاق": { ar: "إغلاق", en: "Close", fr: "Fermer", hi: "बंद करें", id: "Tutup", tl: "Isara", fa: "بستن", sw: "Funga", uz: "Yopish", ne: "बन्द गर्नुहोस्" },
+  "مراكز الامتحانات المتاحة": { ar: "مراكز الامتحانات المتاحة", en: "Available Exam Centers", fr: "Centres d'examen disponibles", hi: "उपलब्ध परीक्षा केंद्र", id: "Pusat Ujian tersedia", tl: "Mga Available na Exam Center", fa: "مراکز آزمون موجود", sw: "Vituo vya Mitihani Vinavyopatikana", uz: "Mavjud imtihon markazlari", ne: "उपलब्ध परीक्षा केन्द्रहरू" },
+  "المدن": { ar: "المدن", en: "Cities", fr: "Villes", hi: "शहर", id: "Kota", tl: "Mga Lungsod", fa: "شهرها", sw: "Miji", uz: "Shaharlar", ne: "शहरहरू" },
+  "المعاهد والمراكز": { ar: "المعاهد والمراكز", en: "Institutes and Centers", fr: "Instituts et centres", hi: "संस्थान और केंद्र", id: "Institut dan Pusat", tl: "Mga Institute at Center", fa: "موسسات و مراکز", sw: "Taasisi na Vituo", uz: "Institutlar va markazlar", ne: "संस्थान र केन्द्रहरू" },
+  "التعديلات المتاحة": { ar: "التعديلات المتاحة", en: "Available Versions", fr: "Versions disponibles", hi: "उपलब्ध संस्करण", id: "Versi tersedia", tl: "Mga Available na Bersyon", fa: "نسخه های موجود", sw: "Matoleo Yanayopatikana", uz: "Mavjud versiyalar", ne: "उपलब्ध संस्करणहरू" },
+  "تعديلات لهذا الموضوع": { ar: "تعديلات لهذا الموضوع", en: "Versions for this topic", fr: "Versions pour ce sujet", hi: "इस विषय के लिए संस्करण", id: "Versi untuk topik ini", tl: "Mga bersyon para sa paksang ito", fa: "نسخه ها برای این موضوع", sw: "Matoleo kwa mada hii", uz: "Ushbu mavzu uchun versiyalar", ne: "यो विषयको लागि संस्करणहरू" },
+  "فتح الوصول": { ar: "فتح الوصول", en: "Unlock Access", fr: "Déverrouiller", hi: "पहुँच अनलॉक करें", id: "Buka Akses", tl: "I-unlock ang Access", fa: "باز کردن دسترسی", sw: "Fungua Ufikiaji", uz: "Kirishni ochish", ne: "पहुँच अनलक गर्नुहोस्" },
+  "سيتم إضافته قريباً": { ar: "سيتم إضافته قريباً", en: "Coming Soon", fr: "Bientôt disponible", hi: "जल्द ही आ रहा है", id: "Segera Hadir", tl: "Malapit na", fa: "به زودی اضافه می شود", sw: "Inakuja Hivi Karibuni", uz: "Tez orada qo'shiladi", ne: "चाँडै थपिनेछ" }
 };
 
 function AutoTrans({ text, lang, force = false }) {
   const targetLang = lang === 'ma' ? 'ar' : lang;
   const cacheKey = `${targetLang}_${text}`;
   
-  // جيب من الكاش أو القاموس دغيا
   const [translated, setTranslated] = useState(() => {
-    if (FAST_DICT[text] && FAST_DICT[text][targetLang]) return FAST_DICT[text][targetLang];
+    if (!text) return "";
+    if (targetLang === 'de' && !force) return text;
+    const safeText = text.trim();
+    if (FAST_DICT[safeText] && FAST_DICT[safeText][targetLang]) return FAST_DICT[safeText][targetLang];
     return globalTransCache[cacheKey] || text;
   });
 
   useEffect(() => {
     if (!text || targetLang === 'de') return;
     
-    if (FAST_DICT[text] && FAST_DICT[text][targetLang]) {
-      setTranslated(FAST_DICT[text][targetLang]);
+    const safeText = text.trim();
+    if (FAST_DICT[safeText] && FAST_DICT[safeText][targetLang]) {
+      setTranslated(FAST_DICT[safeText][targetLang]);
       return;
     }
     
@@ -204,7 +200,7 @@ function AutoTrans({ text, lang, force = false }) {
       .catch(() => {});
 
     return () => controller.abort();
-  }, [text, targetLang, cacheKey]);
+  }, [text, targetLang, cacheKey, force]);
 
   return <span>{translated}</span>;
 }
@@ -215,7 +211,6 @@ function SmartTrans({ obj, lang }) {
   const targetLang = lang === 'ma' ? 'ar' : lang;
   
   if (typeof obj === 'object' && obj[lang]) return <span>{obj[lang]}</span>;
-  if (lang === 'ma' && typeof obj === 'object' && obj['ar']) return <span>{obj['ar']}</span>;
   if (lang === 'de' && typeof obj === 'object' && obj['de']) return <span>{obj['de']}</span>;
 
   return <AutoTrans text={textDe} lang={targetLang} force={true} />;
@@ -762,10 +757,8 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
         </div>
         
         {PLACEHOLDER_LESSONS["Schreiben"].map((title, idx) => {
-          const localExams = SCHREIBEN_DATA.filter(e => e.title === title);
-          // ✅ الإصلاح: إلا كان الدرس موجود محلياً، ما غاديش نقلب على سوبابيز باش نتفادى التعارض
-          const sbExams = localExams.length > 0 ? [] : supabaseLessons.filter(les => les.title === title || les.data?.title === title);
-          const totalVersions = localExams.length + sbExams.length;
+          // ✅ الحل الحقيقي: البحث فقط في الداتا المحلية بمسح الفراغات
+          const localExams = SCHREIBEN_DATA.filter(e => e.title.trim() === title.trim());
           
           return (
             <div key={idx} onClick={() => {
@@ -777,16 +770,11 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
                 setShowTransTask(false);
                 setTimeLeft(90 * 60);
               } else {
-                onLessonClick(title, "Schreiben");
+                alert(`⚠️ الدرس "${title}" ماشي موجود فـ data1.js.`);
               }
             }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{title}</div>
-                {totalVersions > 1 && (
-                  <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>
-                    {totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} />
-                  </span>
-                )}
               </div>
               <div style={{ display: "inline-block", background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>B1</div>
             </div>
@@ -1217,15 +1205,25 @@ function App() {
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
   const go = (v) => { setView(v); setExam(null); setShowHorenLessons(false); setIsSideMenuOpen(false); window.scrollTo(0, 0); };
 
+  // ✅ الإصلاح هنا: إلا كان Schreiben، كنقلبو غير فـ data1.js، ما كنقلبوش فـ سوبابيز نهائياً
   const handleLessonClick = async (title, sub) => {
+    if (sub === "Schreiben") {
+      const localSchreiben = SCHREIBEN_DATA.filter(e => e.title.trim() === title.trim());
+      if (localSchreiben.length > 0) {
+        setExam(localSchreiben[0]);
+        setTimeLeft(90 * 60);
+      } else {
+        alert(`⚠️ الدرس "${title}" ماشي موجود فـ data1.js.`);
+      }
+      return; // خرج من الدالة، ما كملش لسوبابيز
+    }
+
     const localExams = EXAMS.filter(e => e.title === title && e.sub === sub);
     const localHoren = HOREN_EXAMS.filter(e => e.title === title);
-    const localSchreiben = SCHREIBEN_DATA.filter(e => e.title === title);
     const freeMods = FREE_MODIFIED_LESSONS.filter(e => e.title === title && e.sub === sub);
     
-    // ✅ الإصلاح هنا: إلا كان الدرس ديال Schreiben محلي، ما كنقلبوش فـ سوبابيز
     let sbExams = [];
-    if (localSchreiben.length === 0) {
+    if (localHoren.length === 0) {
       sbExams = supabaseLessons.filter(les => {
         const lesTitle = les.title || les.data?.title;
         return lesTitle === title;
@@ -1234,7 +1232,6 @@ function App() {
 
     let allVersions = [];
     if (localHoren.length > 0) allVersions = [...localHoren, ...sbExams];
-    else if (localSchreiben.length > 0) allVersions = [...localSchreiben, ...sbExams];
     else allVersions = [...localExams, ...freeMods, ...sbExams];
 
     if (allVersions.length === 0) {
