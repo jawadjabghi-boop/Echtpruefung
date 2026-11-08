@@ -10,7 +10,7 @@ const sb = supabase.createClient(supabaseUrl, supabaseKey);
 // ✅ ربط البيانات مع داتا B2
 const { 
   UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS,
-  B2_SCHREIBEN_DATA, B2_PRUEFUNG_DATA, B2_EXAMS, B2_HOREN_EXAMS, B2_PLACEHOLDER_LESSONS
+  B2_SCHREIBEN_DATA, B2_PRUEFUNG_DATA, B2_EXAMS, B2_HOREN_EXAMS, B2_PLACEHOLDER_LESSONS, B2_SPRECHEN_DATA
 } = window;
 
 const t = (key, lang) => (UI_TEXTS && UI_TEXTS[lang] && UI_TEXTS[lang][key]) || (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) || key;
@@ -41,7 +41,7 @@ const PLACEHOLDER_LESSONS = {
     "Anne - Geburtstag", "Paul - Ausflug", "Jakob - Nachbarn", "Emilia", 
     "Tobias", "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
   ],
-  "Sprechen": []
+  "Sprechen": { "Teile 1": [], "Teile 2": [], "Teile 3": [] } // سيتم تعبئتها من B2_PLACEHOLDER_LESSONS
 };
 
 const FREE_MODIFIED_LESSONS = [
@@ -377,21 +377,6 @@ function HorenCard({ exam, userLang, showTranslation, isB2 }) {
   );
 }
 
-function HorenGateway({ onStart, userLang, isB2 }) {
-  const themeColor = isB2 ? "#EC4899" : "#8B5CF6";
-  return (
-    <div style={{ paddingBottom: 100 }}>
-      <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px", textAlign: "center" }}>Hören</h1>
-      <div className="horen-gateway-card">
-        <div className="horen-gateway-icon" style={{ background: `${themeColor}15`, color: themeColor }}><Icons.Headphones color={themeColor} /></div>
-        <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>{t("listen_title", userLang)}</h2>
-        <p style={{ color: "var(--muted)", fontSize: "1em", margin: 0, lineHeight: 1.6 }}>{t("listen_desc", userLang)}</p>
-        <button className="horen-start-btn" onClick={onStart} style={{ background: `${themeColor}15`, color: themeColor, border: `1.5px solid ${themeColor}` }}><Icons.Play color={themeColor} /> {t("start_now", userLang)}</button>
-      </div>
-    </div>
-  );
-}
-
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
@@ -682,6 +667,74 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
     </div>
   );
 }
+
+function SprechenView({ userLang, level, supabaseSpeaking, onLessonClick }) {
+  const [activeTab, setActiveTab] = useState("Teile 1");
+  const [searchQuery, setSearchQuery] = useState("");
+  const isB2 = level === "B2";
+  const themeColor = isB2 ? "#14B8A6" : "#EF4444";
+
+  const placeholders = (isB2 ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS)["Sprechen"] || { "Teile 1": [], "Teile 2": [], "Teile 3": [] };
+  const tabs = Object.keys(placeholders);
+  const currentList = placeholders[activeTab] || [];
+
+  return (
+    <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+      <h1 className="de" style={{ textAlign: "center", color: themeColor, marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
+      <div style={{ marginBottom: 16 }}><input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${themeColor}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} /></div>
+      
+      <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 10, marginBottom: 16 }}>
+        {tabs.map(tab => (
+           <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "10px 20px", borderRadius: 12, fontWeight: 900, background: activeTab === tab ? themeColor : "var(--card)", color: activeTab === tab ? "#FFF" : "var(--muted)", border: `1px solid ${themeColor}`, whiteSpace: "nowrap" }}>{tab}</button>
+        ))}
+      </div>
+
+      {currentList.filter(n => n.toLowerCase().includes(searchQuery.toLowerCase())).map((title, idx) => (
+        <button key={idx} className="card" onClick={() => onLessonClick(title, "Sprechen")} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, border: `1px solid ${isB2 ? "#FBCFE8" : "var(--line)"}` }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <div>
+              <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div>
+              <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: `${themeColor}15`, color: themeColor, padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span></div>
+            </div>
+            <Icons.ArrowRight color={themeColor} />
+          </div>
+        </button>
+      ))}
+      {currentList.length === 0 && <p style={{ textAlign: "center", color: "var(--muted)", marginTop: 40 }}>لا توجد دروس في هذا القسم حالياً.</p>}
+    </div>
+  );
+}
+
+function SprechenDetailView({ lesson, onBack, userLang, level }) {
+  const [showTrans, setShowTrans] = useState(false);
+  const themeColor = level === "B2" ? "#14B8A6" : "#EF4444";
+  
+  return (
+    <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+        <button onClick={onBack} className="btnI" style={{ width: 40, height: 40 }}>
+          <Icons.ArrowLeft color="var(--text)" />
+        </button>
+        <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{lesson.title}</h2>
+      </div>
+      <div className="card" style={{ padding: 20 }}>
+        <div style={{ color: themeColor, fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>AUFGABE</div>
+        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, marginBottom: 24 }}>{lesson.aufgabe}</div>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, borderTop: "1px dashed var(--line)", paddingTop: 16 }}>
+          <div style={{ color: themeColor, fontWeight: 900, fontSize: "1.1em" }}>MUSTERLÖSUNG</div>
+          <button onClick={() => setShowTrans(!showTrans)} style={{ background: `${themeColor}15`, color: themeColor, padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>{showTrans ? "إخفاء" : "ترجمة"}</button>
+        </div>
+        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{lesson.text}</div>
+        {showTrans && (
+          <div style={{ background: `${themeColor}05`, border: `1px solid ${themeColor}40`, padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8 }}>
+            {lesson.transText?.[userLang] || <AutoTrans text={lesson.text} lang={userLang} force={true} />}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa, onLessonClick, level }) {
   const [selected, setSelected] = useState(null);
   const [showTransText, setShowTransText] = useState(false);
@@ -1080,6 +1133,7 @@ function App() {
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   
   const [supabaseLessons, setSupabaseLessons] = useState([]);
+  const [supabaseSpeaking, setSupabaseSpeaking] = useState([]); // ✅ جديد
   const [activeTab, setActiveTab] = useState("Teile 1");
   const [activeHorenTab, setActiveHorenTab] = useState("Teil 1");
   const [activeHorenTeil, setActiveHorenTeil] = useState(null);
@@ -1103,6 +1157,22 @@ function App() {
 
     sb.from('premium_lessons').select('*').then(({ data }) => {
       if (data) setSupabaseLessons(data);
+    });
+    
+    // ✅ جلب دروس Sprechen من سوبابيز
+    sb.from('b2_speaking_topics').select('*').then(({ data }) => {
+      if (data) setSupabaseSpeaking(prev => [...prev, ...data]);
+    });
+    sb.from('b1_speaking_topics').select('*').then(({ data }) => {
+      if (data) setSupabaseSpeaking(prev => [...prev, ...data]);
+    });
+    
+    // ✅ جلب أوديوهات B1 و B2
+    sb.from('b2_audio_lessons').select('*').then(({ data }) => {
+      if (data) setSupabaseLessons(prev => [...prev, ...data]);
+    });
+    sb.from('b1_audio_lessons').select('*').then(({ data }) => {
+      if (data) setSupabaseLessons(prev => [...prev, ...data]);
     });
 
     return () => clearTimeout(timer);
@@ -1234,6 +1304,22 @@ function App() {
       return;
     }
 
+    // ✅ معالجة Sprechen
+    if (sub === "Sprechen") {
+      const localSpk = (isB2 ? B2_SPRECHEN_DATA : []).filter(e => e.title.trim() === title.trim());
+      const sbSpk = supabaseSpeaking.filter(e => e.title.trim() === title.trim()).map(e => ({
+        id: e.id, title: e.title, aufgabe: e.aufgabe, text: e.text_content, type: "sprechen"
+      }));
+      const allSpk = [...localSpk.map(e => ({...e, type: "sprechen"})), ...sbSpk];
+
+      if (allSpk.length > 0) {
+        setExam(allSpk[0]); // Ghadi n affichiwha f SprechenDetailView
+      } else {
+        alert(`⚠️ الدرس "${title}" ماشي موجود فـ سوبابيز ولا فـ الداتا.`);
+      }
+      return;
+    }
+
     const localExams = dataLesen.filter(e => e.title === title && e.sub === sub);
     const localHoren = dataHoren.filter(e => e.title === title);
     const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => e.title === title && e.sub === sub);
@@ -1299,6 +1385,10 @@ function App() {
         </div>
       </div>
     );
+  }
+
+  if (exam && exam.type === "sprechen") {
+    return <SprechenDetailView lesson={exam} onBack={() => setExam(null)} userLang={userLang} level={level} />;
   }
 
   if (exam) {
@@ -1408,14 +1498,7 @@ function App() {
 
         {view === "horen" && (
           <div style={{ padding: "20px 12px", paddingBottom: 100, direction: "rtl" }}>
-            {level === "B2" && !activeHorenTeil ? (
-              <div style={{ paddingBottom: 100 }}>
-                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: "#EC4899", marginBottom: 20, textAlign: "right" }}>Hören B2</h1>
-                <div className="card" style={{ textAlign: "center", padding: 40 }}>
-                  <h2 style={{ color: "#EC4899" }}>يرجى إضافة دروس B2 في ملف b2_data.js</h2>
-                </div>
-              </div>
-            ) : !activeHorenTeil ? (
+            {!activeHorenTeil ? (
               <>
                 <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: level === "B2" ? "#EC4899" : "#8B5CF6", marginBottom: 20, textAlign: "right" }}>Hören {level}</h1>
 
@@ -1519,6 +1602,15 @@ function App() {
           />
         )}
 
+        {view === "sprechen" && (
+          <SprechenView 
+            userLang={userLang} 
+            level={level} 
+            supabaseSpeaking={supabaseSpeaking} 
+            onLessonClick={handleLessonClick} 
+          />
+        )}
+
         {view === "pruefung" && (
           <div>
             <h1 className="de" style={{ textAlign: "center", color: level === "B2" ? "#EC4899" : "#EAB308", marginBottom: 16, fontSize: "2.2em" }}>
@@ -1546,18 +1638,6 @@ function App() {
         )}
 
         {view === "admin" && isAdmin && <AdminPanel userLang={userLang} onClose={() => go('home')} />}
-
-        {view === "sprechen" && (
-          <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-             <h1 className="de" style={{ textAlign: "center", color: level === "B2" ? "#14B8A6" : "#EF4444", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
-             <div className="card" style={{ textAlign: "center", padding: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-               <div style={{ color: level === "B2" ? "#14B8A6" : "#EF4444" }}><Icons.Mic color={level === "B2" ? "#14B8A6" : "#EF4444"} /></div>
-               <h2 style={{ fontWeight: 900, color: "var(--muted)" }}>
-                 <AutoTrans text="سيتم إضافته قريباً" lang={userLang} force={true} />
-               </h2>
-             </div>
-          </div>
-        )}
       </main>
 
       <nav className="nav">
