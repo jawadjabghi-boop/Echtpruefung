@@ -7,7 +7,6 @@ const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
 const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
 const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
-// ✅ ربط البيانات مع داتا B2
 const { 
   UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS,
   B2_SCHREIBEN_DATA, B2_PRUEFUNG_DATA, B2_EXAMS, B2_HOREN_EXAMS, B2_PLACEHOLDER_LESSONS, B2_SPRECHEN_DATA
@@ -29,19 +28,17 @@ const PLACEHOLDER_LESSONS = {
     "Teile 3": ["Gespräch im Büro", "Dialog im Alltag"]
   },
   "Schreiben": [
-    "Urlaub Im Schwarzwald - Antwort An Petra", 
-    "Eva - Traumberuf Und Neuigkeiten", 
-    "Sophie - Würzburg", "Nadja - Garten", 
-    "Nicole - Probleme", "Andreas - Neuer Kollege", "Annika - Sommerurlaub", 
-    "Iris - Abschlussparty", "Caroline - Gastschülerin", "Vera - Arbeitsweg", 
+    "Urlaub Im Schwarzwald - Antwort An Petra", "Eva - Traumberuf Und Neuigkeiten", 
+    "Sophie - Würzburg", "Nadja - Garten", "Nicole - Probleme", "Andreas - Neuer Kollege", 
+    "Annika - Sommerurlaub", "Iris - Abschlussparty", "Caroline - Gastschülerin", "Vera - Arbeitsweg", 
     "Jennifer - Einladung", "Andreas - Neue Wohnung", "Thomas - Überraschungsausflug", 
     "Tamara - Treffen", "Jan - Urlaub", "Viktor - Urlaub", "Anna - Katze", 
     "Nora - Neue Wohnung", "Claudia - Zoobesuch", "Karla - Umzug", "Mara - Reise", 
-    "Annika - Urlaub 2", "Sonja - Musikfestival", "Rita - Hochzeit", 
-    "Anne - Geburtstag", "Paul - Ausflug", "Jakob - Nachbarn", "Emilia", 
-    "Tobias", "Naco", "Alicia", "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
+    "Annika - Urlaub 2", "Sonja - Musikfestival", "Rita - Hochzeit", "Anne - Geburtstag", 
+    "Paul - Ausflug", "Jakob - Nachbarn", "Emilia", "Tobias", "Naco", "Alicia", 
+    "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
   ],
-  "Sprechen": { "Teile 1": [], "Teile 2": [], "Teile 3": [] } // سيتم تعبئتها من B2_PLACEHOLDER_LESSONS
+  "Sprechen": { "Teile 1": [], "Teile 2": [], "Teile 3": [] }
 };
 
 const FREE_MODIFIED_LESSONS = [
@@ -137,21 +134,20 @@ const Icons = {
 const LogoImage = ({ size = 50 }) => (
   <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <defs>
-      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#111111" /><stop offset="100%" stopColor="#222222" /></linearGradient>
-      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#FFCE00" /><stop offset="100%" stopColor="#F5B82E" /></linearGradient>
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#0F172A" /><stop offset="100%" stopColor="#1E293B" /></linearGradient>
+      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#14B8A6" /><stop offset="100%" stopColor="#0D9488" /></linearGradient>
     </defs>
     <rect width="100" height="100" rx="24" fill="url(#bgGrad)" />
     <rect width="98" height="98" x="1" y="1" rx="23" stroke="rgba(255,255,255,0.1)" strokeWidth="2" fill="none" />
-    <rect x="18" y="28" width="36" height="10" rx="4" fill="#111111" />
-    <rect x="18" y="44" width="36" height="10" rx="4" fill="#DD0000" />
+    <rect x="18" y="28" width="36" height="10" rx="4" fill="#0D9488" />
+    <rect x="18" y="44" width="36" height="10" rx="4" fill="#BE123C" />
     <rect x="18" y="60" width="36" height="10" rx="4" fill="url(#goldGrad)" />
     <path d="M 54 70 L 54 30 L 70 30 C 84 30, 84 52, 70 52 L 54 52" stroke="url(#goldGrad)" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    <circle cx="80" cy="80" r="5" fill="#DD0000" />
+    <circle cx="80" cy="80" r="5" fill="#D97706" />
   </svg>
 );
 
 const globalTransCache = {};
-
 const FAST_DICT = {
   "المعدل": { ar: "المعدل", en: "Modified", fr: "Modifié", hi: "संशोधित", id: "Dimodifikasi", tl: "Binago", fa: "اصلاح شده", sw: "Iliyorekebishwa", uz: "O'zgartirilgan", ne: "परिमार्जित" },
   "تعديلات": { ar: "تعديلات", en: "Versions", fr: "Versions", hi: "संस्करण", id: "Versi", tl: "Mga Bersyon", fa: "نسخه ها", sw: "Matoleo", uz: "Versiyalar", ne: "संस्करणहरू" },
@@ -162,13 +158,16 @@ const FAST_DICT = {
   "التعديلات المتاحة": { ar: "التعديلات المتاحة", en: "Available Versions", fr: "Versions disponibles", hi: "उपलब्ध संस्करण", id: "Versi tersedia", tl: "Mga Available na Bersyon", fa: "نسخه های موجود", sw: "Matoleo Yanayopatikana", uz: "Mavjud versiyalar", ne: "उपलब्ध संस्करणहरू" },
   "تعديلات لهذا الموضوع": { ar: "تعديلات لهذا الموضوع", en: "Versions for this topic", fr: "Versions pour ce sujet", hi: "इस विषय के लिए संस्करण", id: "Versi untuk topik ini", tl: "Mga bersyon para sa paksang ito", fa: "نسخه ها برای این موضوع", sw: "Matoleo kwa mada hii", uz: "Ushbu mavzu uchun versiyalar", ne: "यो विषयको लागि संस्करणहरू" },
   "فتح الوصول": { ar: "فتح الوصول", en: "Unlock Access", fr: "Déverrouiller", hi: "पहुँच अनलॉक करें", id: "Buka Akses", tl: "I-unlock ang Access", fa: "باز کردن دسترسی", sw: "Fungua Ufikiaji", uz: "Kirishni ochish", ne: "पहुँच अनलक गर्नुहोस्" },
-  "سيتم إضافته قريباً": { ar: "سيتم إضافته قريباً", en: "Coming Soon", fr: "Bientôt disponible", hi: "जल्द ही आ रहा है", id: "Segera Hadir", tl: "Malapit na", fa: "به زودی اضافه می شود", sw: "Inakuja Hivi Karibuni", uz: "Tez orada qo'shiladi", ne: "चाँडै थपिनेछ" }
+  "سيتم إضافته قريباً": { ar: "سيتم إضافته قريباً", en: "Coming Soon", fr: "Bientôt disponible", hi: "जल्द ही आ रहा है", id: "Segera Hadir", tl: "Malapit na", fa: "به زودی اضافه می شود", sw: "Inakuja Hivi Karibuni", uz: "Tez orada qo'shiladi", ne: "चाँडै थपिनेछ" },
+  "محتوى مقفل": { ar: "محتوى مقفل", en: "Locked Content", fr: "Contenu verrouillé", hi: "लॉक किया गया", id: "Konten Terkunci", tl: "Naka-lock na Nilalaman", fa: "محتوای قفل شده", sw: "Maudhui Yamefungwa", uz: "Qulflangan tarkib", ne: "लक गरिएको सामग्री" },
+  "ترقية الحساب الآن": { ar: "ترقية الحساب الآن", en: "Upgrade Account Now", fr: "Mettre à niveau maintenant", hi: "अभी अपग्रेड करें", id: "Tingkatkan Akun Sekarang", tl: "I-upgrade ang Account Ngayon", fa: "ارتقاء حساب در حال حاضر", sw: "Boresha Akaunti Sasa", uz: "Hisobni hoziroq oshirish", ne: "खाता अपग्रेड गर्नुहोस्" },
+  "ليس الآن": { ar: "ليس الآن", en: "Not Now", fr: "Pas maintenant", hi: "अभी नहीं", id: "Tidak Sekarang", tl: "Hindi Ngayon", fa: "حالا نه", sw: "Sio Sasa", uz: "Hozir emas", ne: "अहिले होइन" },
+  "يتطلب باقة Pro": { ar: "يتطلب باقة Pro", en: "Requires Pro", fr: "Nécessite Pro", hi: "Pro आवश्यक है", id: "Membutuhkan Pro", tl: "Nangangailangan ng Pro", fa: "نیاز به نسخه حرفه ای", sw: "Inahitaji Pro", uz: "Pro talab qilinadi", ne: "प्रो आवश्यक छ" }
 };
 
 function AutoTrans({ text, lang, force = false }) {
   const targetLang = lang === 'ma' ? 'ar' : lang;
   const cacheKey = `${targetLang}_${text}`;
-  
   const [translated, setTranslated] = useState(() => {
     if (!text) return "";
     if (targetLang === 'de' && !force) return text;
@@ -179,20 +178,16 @@ function AutoTrans({ text, lang, force = false }) {
 
   useEffect(() => {
     if (!text || targetLang === 'de') return;
-    
     const safeText = text.trim();
     if (FAST_DICT[safeText] && FAST_DICT[safeText][targetLang]) {
       setTranslated(FAST_DICT[safeText][targetLang]);
       return;
     }
-    
     if (globalTransCache[cacheKey]) {
       setTranslated(globalTransCache[cacheKey]);
       return;
     }
-
     const controller = new AbortController();
-    
     fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`, { signal: controller.signal })
       .then(res => res.json())
       .then(data => {
@@ -203,7 +198,6 @@ function AutoTrans({ text, lang, force = false }) {
         }
       })
       .catch(() => {});
-
     return () => controller.abort();
   }, [text, targetLang, cacheKey, force]);
 
@@ -217,10 +211,8 @@ function SmartTrans({ obj, lang }) {
   
   if (typeof obj === 'object' && obj[lang]) return <span>{obj[lang]}</span>;
   if (lang === 'de' && typeof obj === 'object' && obj['de']) return <span>{obj['de']}</span>;
-
   return <AutoTrans text={textDe} lang={targetLang} force={true} />;
 }
-
 function HorenCard({ exam, userLang, showTranslation, isB2 }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
@@ -233,7 +225,7 @@ function HorenCard({ exam, userLang, showTranslation, isB2 }) {
   const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
   
-  const themeColor = isB2 ? "#EC4899" : "#8B5CF6"; // B2 Pink / B1 Purple
+  const themeColor = isB2 ? "#EC4899" : "#8B5CF6";
 
   useEffect(() => {
     return () => {
@@ -402,7 +394,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
   
   const isB2 = exam.level === "B2";
-  const themeColor = isB2 ? "#EC4899" : "#8B5CF6"; // B2 Pink / B1 Purple
+  const themeColor = isB2 ? "#EC4899" : "#8B5CF6";
 
   const usedElsewhere = (n, k) => {
     if ((exam.type !== "matching" && exam.type !== "headings") || k === "X") return false;
@@ -412,7 +404,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
   const pick = (it, k) => {
     if (done !== null) return;
     if (usedElsewhere(it.n, k)) return;
-
     if (ans[it.n] === k) {
       const newAns = { ...ans }; delete newAns[it.n]; setAns(newAns);
     } else {
@@ -534,7 +525,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         {exam.type === "matching" && exam.ads.map(ad => (
           <div key={ad.k} className="card" style={{ padding: 16 }}>
             <div style={{ borderBottom: "1px solid var(--line)", paddingBottom: 12, marginBottom: 12 }}>
-              <span className="de" style={{ color: "var(--red)", fontWeight: 900, fontSize: "1.1em" }}>ANZEIGE {ad.k}</span>
+              <span className="de" style={{ color: "var(--primary)", fontWeight: 900, fontSize: "1.1em" }}>ANZEIGE {ad.k}</span>
               <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
               <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4 }}>{ad.de}</div>
               {showTranslation && <div style={{ marginTop: 4, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={ad} lang={userLang} /></div>}
@@ -734,11 +725,11 @@ function SprechenDetailView({ lesson, onBack, userLang, level }) {
     </div>
   );
 }
-
 function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa, onLessonClick, level }) {
   const [selected, setSelected] = useState(null);
   const [showTransText, setShowTransText] = useState(false);
   const [showTransTask, setShowTransTask] = useState(false);
+  const [showSolution, setShowSolution] = useState(false);
   const [userText, setUserText] = useState("");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analyzeStep, setAnalyzeStep] = useState(0);
@@ -746,7 +737,7 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
   
   const [timeLeft, setTimeLeft] = useState(90 * 60); 
   const isB2 = level === "B2";
-  const themeColor = isB2 ? "#EC4899" : "#F59E0B"; // B2 Pink / B1 Orange
+  const themeColor = isB2 ? "#EC4899" : "#F59E0B";
 
   useEffect(() => {
     let timer;
@@ -785,26 +776,66 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
   };
 
   const finishAnalysis = () => {
-    const cleanText = userText.replace(/[^a-zA-ZäöüÄÖÜß\s]/g, '').trim();
-    const words = cleanText.split(/\s+/).filter(w => w.length > 0);
+    const text = userText.trim();
+    const words = text.split(/\s+/).filter(w => w.length > 0);
+    const wc = words.length;
+    const lowerText = text.toLowerCase();
     
-    const isGibberish = words.length < 10 || /(.)\1{3,}/.test(userText) || cleanText.length < 15;
+    // 1. تحليل النقطة (Content) - كيقلب على كلمات مفتاحية
+    let pointsCovered = 0;
+    if (lowerText.includes("weil") || lowerText.includes("grund") || lowerText.includes("entschieden")) pointsCovered++; 
+    if (lowerText.includes("problem") || lowerText.includes("leider") || lowerText.includes("schlecht")) pointsCovered++; 
+    if (lowerText.includes("service") || lowerText.includes("kontakt") || lowerText.includes("erreichen")) pointsCovered++; 
+    if (lowerText.includes("erwarte") || lowerText.includes("zurück") || lowerText.includes("entschädigung")) pointsCovered++; 
+    
+    // 2. فحص البنية (Structure) - التحية والخاتمة
+    const hasGreeting = /sehr geehrte|liebe|hallo/i.test(text);
+    const hasClosing = /mit freundlichen|herzliche|grüßen/i.test(text);
+    
+    // حساب النقطة النهائية من 45
+    let score = 0;
+    let contentFeedback = "";
+    let generalEval = "";
+    let errors = [];
 
-    if (isGibberish) {
-      setResult({
-        score: 0, maxScore: 45, contentScore: "0/5",
-        generalEval: userLang === 'hi' ? "नमस्ते, पाठ की सामग्री खाली है और यह वह नहीं है जो आवश्यक है। आपको जर्मन शब्दों के साथ एक वास्तविक प्रतिक्रिया लिखनी होगी।" : "سلام كَشْ بو، فمحتوى الرسالة خالي من المعلومات وهاداشي ماشي هو المطلوب. خصك تكتب رد حقيقي فيه كلمات ألمانية مفهومة.",
-        contentFeedback: userLang === 'hi' ? "आपने कार्य के किसी भी बिंदु का उल्लेख नहीं किया। कोई पठनीय सामग्री नहीं है।" : "ما ذكرت حتى نقطة من النقط المطلوبة فالمهمة. ما كاينش محتوى مقروء.",
-        errors: []
-      });
+    // حساب النقطة ديال المحتوى (Content) من 15
+    let contentScoreVal = pointsCovered * 3; 
+    if (wc < 100) contentScoreVal = Math.max(0, contentScoreVal - 5); 
+    
+    // حساب النقطة ديال البنية (Struktur) من 15
+    let structureScoreVal = 15;
+    if (!hasGreeting) { structureScoreVal -= 5; errors.push({ error: "Keine passende Anrede gefunden", fix: "Fügen Sie 'Sehr geehrte...' oder 'Liebe...' hinzu.", type: "Struktur" }); }
+    if (!hasClosing) { structureScoreVal -= 5; errors.push({ error: "Kein passender Gruß gefunden", fix: "Fügen Sie 'Mit freundlichen Grüßen' hinzu.", type: "Struktur" }); }
+    if (wc < 140 || wc > 200) { structureScoreVal -= 5; errors.push({ error: "Wortanzahl nicht im Rahmen", fix: "Die Aufgabe verlangt 150-180 Wörter.", type: "Wortanzahl" }); }
+
+    // حساب النقطة ديال اللغة (Sprache) من 15
+    let languageScoreVal = 15;
+    if (wc < 50) languageScoreVal = 5; 
+    if (/(.)\1{3,}/.test(text)) { languageScoreVal -= 5; errors.push({ error: "Wiederholte Zeichen", fix: "Vermeiden Sie Tippfehler wie 'aaaa'.", type: "Sprache" }); }
+
+    score = contentScoreVal + structureScoreVal + languageScoreVal;
+    if (score > 45) score = 45;
+    if (wc < 20) score = 5;
+
+    // التقييم العام
+    if (score >= 35) {
+      generalEval = "مجهود ممتاز! لقد قمت بتغطية معظم النقاط المطلوبة وبنية الرسالة صحيحة. استمر في التدريب للحصول على العلامة الكاملة.";
+    } else if (score >= 20) {
+      generalEval = "مجهود مقبول. لقد أجبت على بعض النقاط، ولكن ينقصك تغطية نقاط أخرى أو الالتزام بعدد الكلمات المطلوب (150-180).";
     } else {
-      setResult({
-        score: 35, maxScore: 45, contentScore: "4/5",
-        generalEval: userLang === 'hi' ? "अच्छा प्रयास! आपने अधिकांश आवश्यक बिंदुओं का उत्तर दिया है, लेकिन कुछ छोटी भाषाई त्रुटियां हैं।" : "مجهود جيد! لقد أجبت على معظم النقاط المطلوبة، ولكن هناك بعض الأخطاء اللغوية البسيطة.",
-        contentFeedback: userLang === 'hi' ? "आपने कार्य में अधिकांश आवश्यक बिंदुओं का उल्लेख किया है।" : "لقد ذكرت أغلب النقاط المطلوبة في المهمة.",
-        errors: [{ error: "Ich habe gehen", fix: "Ich bin gegangen", type: userLang === 'hi' ? "व्याकरण (Grammatik)" : "قواعد (Grammatik)" }]
-      });
+      generalEval = "يحتاج إلى تحسين. لم تقم بتغطية النقاط المطلوبة بشكل كافٍ، أو أن النص قصير جداً. يرجى قراءة المهمة جيداً والمحاولة مرة أخرى.";
     }
+
+    contentFeedback = `لقد قمت بتغطية ${pointsCovered} من أصل 4 نقاط مطلوبة.`;
+
+    setResult({
+      score,
+      maxScore: 45,
+      contentScore: `${contentScoreVal}/15`,
+      generalEval,
+      contentFeedback,
+      errors
+    });
     setIsAnalyzing(false);
   };
 
@@ -823,23 +854,27 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
         </div>
         
         {(isB2 ? B2_PLACEHOLDER_LESSONS["Schreiben"] : PLACEHOLDER_LESSONS["Schreiben"]).map((title, idx) => {
-          const localExams = (isB2 ? B2_SCHREIBEN_DATA : SCHREIBEN_DATA).filter(e => e.title.trim() === title.trim());
+          const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
+          const localExams = (isB2 ? B2_SCHREIBEN_DATA : SCHREIBEN_DATA).filter(e => norm(e.title) === norm(title));
+          const isMissing = localExams.length === 0;
           
           return (
             <div key={idx} onClick={() => {
-              if (localExams.length > 0) {
+              if (!isMissing) {
                 setSelected(localExams[0]);
                 setUserText("");
                 setResult(null);
                 setShowTransText(false);
                 setShowTransTask(false);
+                setShowSolution(false);
                 setTimeLeft(90 * 60);
               } else {
-                alert(`⚠️ الدرس "${title}" ماشي موجود فـ ${isB2 ? 'b2_data.js' : 'data1.js'}.`);
+                wa(t("wa_upgrade_msg", userLang) + " - " + title);
               }
             }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: `1px solid ${isB2 ? themeColor : "var(--line)"}` }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{title}</div>
+                {isMissing && <Icons.Lock color="var(--red)" />}
               </div>
               <div style={{ display: "inline-block", background: `${themeColor}15`, color: themeColor, padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{level}</div>
             </div>
@@ -1005,6 +1040,17 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
         )}
       </div>
 
+      {showSolution && (
+        <div className="card" style={{ padding: 20, marginBottom: 16, border: `1px solid ${themeColor}`, background: `${themeColor}05` }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 12, color: themeColor }}>
+            <Icons.Check color={themeColor} /> {userLang === 'hi' ? 'नमूना समाधान' : 'النموذج المقترح (Musterlösung)'}
+          </div>
+          <div className="de" style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, fontSize: "1.05em" }}>
+            {selected.modelSolution || (userLang === 'hi' ? 'इस पाठ के लिए अभी तक कोई समाधान नहीं जोड़ा गया है।' : 'لم يتم إضافة حل لهذا الدرس بعد.')}
+          </div>
+        </div>
+      )}
+
       <div className="card" style={{ padding: 0, overflow: "hidden", border: `1px solid ${isB2 ? themeColor : 'var(--line)'}` }}>
         <div className="keyboard-area" style={{ borderBottomColor: isB2 ? themeColor : 'var(--line)' }}>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
@@ -1020,7 +1066,10 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
       </div>
 
       <div className="bottom-bar" style={{ maxWidth: 400 }}>
-        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar" style={{ background: `linear-gradient(135deg, ${themeColor}, ${isB2 ? '#BE185D' : '#D97706'})`, boxShadow: `0 4px 15px ${themeColor}50` }}>
+        <button onClick={() => setShowSolution(!showSolution)} className="btn-prev-bar" style={{ background: 'var(--card)', border: `1px solid ${themeColor}`, color: themeColor, flex: 1, marginRight: 10 }}>
+          {showSolution ? (userLang === 'hi' ? "समाधान छिपाएं" : "إخفاء الحل") : (userLang === 'hi' ? "समाधान दिखाएं" : "عرض الحل")}
+        </button>
+        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar" style={{ background: `linear-gradient(135deg, ${themeColor}, ${isB2 ? '#BE185D' : '#D97706'})`, boxShadow: `0 4px 15px ${themeColor}50`, flex: 2 }}>
           <Icons.Edit color="#FFF" /> {isAnalyzing ? (userLang === 'hi' ? 'सुधार हो रहा है...' : 'جاري التصحيح...') : t("ai_correct", userLang)}
         </button>
       </div>
@@ -1107,7 +1156,6 @@ function AdminPanel({ userLang, onClose }) {
     </div>
   );
 }
-
 function App() {
   const [user, setUser] = useState(null);
   const [isPaid, setIsPaid] = useState(false);
@@ -1131,9 +1179,10 @@ function App() {
   const [showHorenTrans, setShowHorenTrans] = useState(false);
   const [timeLeft, setTimeLeft] = useState(90 * 60);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
+  const [lockedModal, setLockedModal] = useState(false); // نافذة المحتوى المقفل
   
   const [supabaseLessons, setSupabaseLessons] = useState([]);
-  const [supabaseSpeaking, setSupabaseSpeaking] = useState([]); // ✅ جديد
+  const [supabaseSpeaking, setSupabaseSpeaking] = useState([]); 
   const [activeTab, setActiveTab] = useState("Teile 1");
   const [activeHorenTab, setActiveHorenTab] = useState("Teil 1");
   const [activeHorenTeil, setActiveHorenTeil] = useState(null);
@@ -1159,7 +1208,6 @@ function App() {
       if (data) setSupabaseLessons(data);
     });
     
-    // ✅ جلب دروس Sprechen من سوبابيز
     sb.from('b2_speaking_topics').select('*').then(({ data }) => {
       if (data) setSupabaseSpeaking(prev => [...prev, ...data]);
     });
@@ -1167,7 +1215,6 @@ function App() {
       if (data) setSupabaseSpeaking(prev => [...prev, ...data]);
     });
     
-    // ✅ جلب أوديوهات B1 و B2
     sb.from('b2_audio_lessons').select('*').then(({ data }) => {
       if (data) setSupabaseLessons(prev => [...prev, ...data]);
     });
@@ -1293,51 +1340,52 @@ function App() {
     const dataHoren = isB2 ? B2_HOREN_EXAMS : HOREN_EXAMS;
     const dataSchreiben = isB2 ? B2_SCHREIBEN_DATA : SCHREIBEN_DATA;
 
+    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
+
     if (sub === "Schreiben") {
-      const localSchreiben = dataSchreiben.filter(e => e.title.trim() === title.trim());
+      const localSchreiben = dataSchreiben.filter(e => norm(e.title) === norm(title));
       if (localSchreiben.length > 0) {
         setExam(localSchreiben[0]);
         setTimeLeft(90 * 60);
       } else {
-        alert(`⚠️ الدرس "${title}" ماشي موجود.`);
+        if (!isPaid && !trialActive) setLockedModal(true);
+        else wa(t("wa_upgrade_msg", userLang) + " - " + title);
       }
       return;
     }
 
-    // ✅ معالجة Sprechen
     if (sub === "Sprechen") {
-      const localSpk = (isB2 ? B2_SPRECHEN_DATA : []).filter(e => e.title.trim() === title.trim());
-      const sbSpk = supabaseSpeaking.filter(e => e.title.trim() === title.trim()).map(e => ({
+      const localSpk = (isB2 ? B2_SPRECHEN_DATA : []).filter(e => norm(e.title) === norm(title));
+      const sbSpk = supabaseSpeaking.filter(e => norm(e.title) === norm(title)).map(e => ({
         id: e.id, title: e.title, aufgabe: e.aufgabe, text: e.text_content, type: "sprechen"
       }));
       const allSpk = [...localSpk.map(e => ({...e, type: "sprechen"})), ...sbSpk];
 
       if (allSpk.length > 0) {
-        setExam(allSpk[0]); // Ghadi n affichiwha f SprechenDetailView
+        setExam(allSpk[0]);
       } else {
-        alert(`⚠️ الدرس "${title}" ماشي موجود فـ سوبابيز ولا فـ الداتا.`);
+        if (!isPaid && !trialActive) setLockedModal(true);
+        else wa(t("wa_upgrade_msg", userLang) + " - " + title);
       }
       return;
     }
 
-    const localExams = dataLesen.filter(e => e.title === title && e.sub === sub);
-    const localHoren = dataHoren.filter(e => e.title === title);
-    const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => e.title === title && e.sub === sub);
+    const localExams = dataLesen.filter(e => norm(e.title) === norm(title) && e.sub === sub);
+    const localHoren = dataHoren.filter(e => norm(e.title) === norm(title));
+    const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => norm(e.title) === norm(title) && e.sub === sub);
     
-    let sbExams = [];
-    if (localHoren.length === 0 && !isB2) { 
-      sbExams = supabaseLessons.filter(les => {
-        const lesTitle = les.title || les.data?.title;
-        return lesTitle === title;
-      }).map(les => les.data || les);
-    }
+    let sbExams = supabaseLessons.filter(les => {
+      const lesTitle = les.title || les.data?.title;
+      return norm(lesTitle) === norm(title);
+    }).map(les => les.data || les);
 
     let allVersions = [];
     if (localHoren.length > 0) allVersions = [...localHoren, ...sbExams];
     else allVersions = [...localExams, ...freeMods, ...sbExams];
 
     if (allVersions.length === 0) {
-      alert(`⚠️ الدرس "${title}" مازال ما تحطش.`);
+      if (!isPaid && !trialActive) setLockedModal(true);
+      else wa(t("wa_upgrade_msg", userLang) + " - " + title);
     } else if (allVersions.length === 1) {
       setExam(allVersions[0]);
       setTimeLeft(90 * 60);
@@ -1399,7 +1447,7 @@ function App() {
     <div style={{ paddingBottom: 100 }}>
       <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
       <nav className={`side-menu ${isSideMenuOpen ? 'active' : ''}`}>
-        <div className="side-menu-header" style={{ background: level === "B2" ? "linear-gradient(135deg, #EC4899, #BE185D)" : "linear-gradient(135deg, #1e293b, #334155)" }}>
+        <div className="side-menu-header" style={{ background: level === "B2" ? "linear-gradient(135deg, #EC4899, #BE185D)" : "linear-gradient(135deg, #0F172A, #1E293B)" }}>
           <div className="logo-circle" style={{ background: level === "B2" ? "linear-gradient(135deg, #14B8A6, #0F766E)" : "linear-gradient(135deg, #DD0000, #FFCE00)" }}>De</div>
           <h2>EchtPrüfung {level}</h2>
           <p style={{fontSize: '0.8em', opacity: 0.8}}>{user.name}</p>
@@ -1435,8 +1483,8 @@ function App() {
               <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
                 <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}><LogoImage size={90} /></div>
                 <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
-                <div style={{ background: level === "B2" ? "rgba(20,184,166,0.2)" : "rgba(245,184,46,0.15)", border: `1px solid ${level === "B2" ? "#14B8A6" : "var(--gold)"}`, padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p><p className="de" style={{ margin: "6px 0 0", color: level === "B2" ? "#99F6E4" : "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#EC4899" }}>B2</span></div>
+                <div style={{ background: level === "B2" ? "rgba(20,184,166,0.2)" : "rgba(245,184,46,0.15)", border: `1px solid ${level === "B2" ? "#14B8A6" : "var(--gold)"}`, padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}><AutoTrans text={t("banner_title", userLang)} lang={userLang} force={true} /></p><p className="de" style={{ margin: "6px 0 0", color: level === "B2" ? "#99F6E4" : "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F172A" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#EC4899" }}>B2</span></div>
               </div>
             </div>
 
@@ -1470,15 +1518,22 @@ function App() {
             
             {(() => {
               const currentPlaceholder = level === "B2" ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS;
+              const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
               return currentPlaceholder["Lesen"]?.[activeTab]?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase())).map((name, idx) => {
                 const isB2 = level === "B2";
-                const localExams = (isB2 ? B2_EXAMS : EXAMS).filter(e => e.title === name && e.sub === activeTab && e.level === level);
-                const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => e.title === name && e.sub === activeTab);
-                const sbExams = !isB2 ? supabaseLessons.filter(les => (les.title === name || les.data?.title === name) && (les.sub === activeTab || les.data?.sub === activeTab)) : [];
+                const localExams = (isB2 ? B2_EXAMS : EXAMS).filter(e => norm(e.title) === norm(name) && e.sub === activeTab && e.level === level);
+                const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => norm(e.title) === norm(name) && e.sub === activeTab);
+                const sbExams = supabaseLessons.filter(les => norm(les.title || les.data?.title) === norm(name) && (les.sub === activeTab || les.data?.sub === activeTab)).map(les => les.data || les);
                 const totalVersions = localExams.length + freeMods.length + sbExams.length;
                 
                 return (
-                  <button key={idx} className="card" onClick={() => handleLessonClick(name, activeTab)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, border: `1px solid ${isB2 ? "#FBCFE8" : "var(--line)"}` }}>
+                  <button key={idx} className="card" onClick={() => {
+                    if (totalVersions === 0 && !isPaid && !trialActive) {
+                      setLockedModal(true);
+                    } else {
+                      handleLessonClick(name, activeTab);
+                    }
+                  }} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, border: `1px solid ${isB2 ? "#FBCFE8" : "var(--line)"}` }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <div>
                         <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
@@ -1486,7 +1541,9 @@ function App() {
                       </div>
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
                          {totalVersions > 1 && <span style={{ background: `${isB2 ? "#EC4899" : "#22C55E"}15`, color: isB2 ? "#EC4899" : "#22C55E", padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} /></span>}
-                         <div style={{ color: isB2 ? "#EC4899" : "#22C55E" }}><Icons.ArrowRight color={isB2 ? "#EC4899" : "#22C55E"} /></div>
+                         <div style={{ color: totalVersions === 0 && !isPaid && !trialActive ? "var(--red)" : (isB2 ? "#EC4899" : "#22C55E") }}>
+                           {totalVersions === 0 && !isPaid && !trialActive ? <Icons.Lock color="var(--red)" /> : <Icons.ArrowRight color={isB2 ? "#EC4899" : "#22C55E"} />}
+                         </div>
                       </div>
                     </div>
                   </button>
@@ -1545,9 +1602,9 @@ function App() {
                       </div>
                     </div>
                     <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#d97706" }}>Teil 2</h2>
-                    <button onClick={() => wa(t("wa_upgrade_msg", userLang) + " - Hören Teil 2")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#fffbeb", color: "#d97706", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #f59e0b", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                    <button onClick={() => { if(!isPaid && !trialActive) setLockedModal(true); else setActiveHorenTeil("Teile 2"); }} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#fffbeb", color: "#d97706", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #f59e0b", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
                       <Icons.Lock color="#d97706" />
-                      فتح الوصول
+                      {isPaid || trialActive ? "ابدأ الآن" : "فتح الوصول"}
                     </button>
                   </div>
 
@@ -1575,13 +1632,35 @@ function App() {
                   <h2 className="de" style={{ margin: 0, fontSize: "1.8em", fontWeight: 900 }}>{activeHorenTeil} {level}</h2>
                 </div>
 
-                {(level === "B2" ? B2_HOREN_EXAMS : HOREN_EXAMS).filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").map((ex) => (
-                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} isB2={level === "B2"} />
-                ))}
-                
-                {(level === "B2" ? B2_HOREN_EXAMS : HOREN_EXAMS).filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").length === 0 && (
-                   <p style={{ textAlign: "center", color: "var(--muted)", marginTop: 40 }}>لا توجد دروس في هذا القسم حالياً.</p>
-                )}
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {(() => {
+                    const currentPlaceholder = level === "B2" ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS;
+                    const hörenList = currentPlaceholder["Hören"]?.[activeHorenTeil] || [];
+                    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
+                    
+                    return hörenList.map((title, idx) => {
+                      const localHoren = (level === "B2" ? B2_HOREN_EXAMS : HOREN_EXAMS).filter(ex => norm(ex.title) === norm(title));
+                      const sbHoren = supabaseLessons.filter(les => norm(les.title || les.data?.title) === norm(title) && (les.part === activeHorenTeil || les.data?.sub === activeHorenTeil)).map(les => les.data || les);
+                      const allHoren = [...localHoren, ...sbHoren];
+                      
+                      if (allHoren.length > 0) {
+                        return allHoren.map((ex) => <HorenCard key={ex.id || Math.random()} exam={ex} userLang={userLang} showTranslation={showHorenTrans} isB2={level === "B2"} />);
+                      } else {
+                        return (
+                          <div key={idx} className="card" onClick={() => {
+                            if(!isPaid && !trialActive) setLockedModal(true);
+                            else wa(t("wa_upgrade_msg", userLang) + " - " + title);
+                          }} style={{ padding: 20, border: `1px solid ${level === "B2" ? "#FBCFE8" : "var(--line)"}`, cursor: "pointer", background: "var(--card)" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                              <div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>{title}</div>
+                              {!isPaid && !trialActive && <Icons.Lock color="var(--red)" />}
+                            </div>
+                          </div>
+                        );
+                      }
+                    });
+                  })()}
+                </div>
               </div>
             )}
           </div>
@@ -1618,7 +1697,7 @@ function App() {
             </h1>
             <div style={{ paddingBottom: 80 }}>
               {(level === "B2" ? B2_PRUEFUNG_DATA : PRUEFUNG_DATA).map(exam => (
-                <div key={exam.id} className="card" style={{ padding: 20, border: `1.5px solid ${level === "B2" ? "#EC4899" : "var(--line)"}`, marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => wa(t("wa_upgrade_msg", userLang) + " - " + exam.title)}>
+                <div key={exam.id} className="card" style={{ padding: 20, border: `1.5px solid ${level === "B2" ? "#EC4899" : "var(--line)"}`, marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => { if(!isPaid && !trialActive) setLockedModal(true); else wa(t("wa_upgrade_msg", userLang) + " - " + exam.title); }}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
                     <div style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>
                       <AutoTrans text={exam.title} lang={userLang} force={true} />
@@ -1671,8 +1750,19 @@ function App() {
                 const isMod = ex.desc?.includes('معدل') || ex.id?.includes('-mod') || ex.title?.includes('المعدل');
                 const cleanTitle = ex.title.replace(' المعدل', '').replace(' (معدل)', '');
                 
+                const isLocalFree = (B2_EXAMS || []).some(le => le.id === ex.id) || FREE_MODIFIED_LESSONS.some(fm => fm.id === ex.id);
+                const isLocked = !isLocalFree && !isPaid && !trialActive;
+
                 return (
-                  <button key={ex.id || idx} onClick={() => { setExam(ex); setSelectedExamGroup(null); setTimeLeft(90*60); }} style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", background: '#fff', border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}`, borderRadius: 16 }}>
+                  <button key={ex.id || idx} onClick={() => { 
+                    if (isLocked) {
+                      setLockedModal(true);
+                    } else {
+                      setExam(ex); 
+                      setSelectedExamGroup(null); 
+                      setTimeLeft(90*60); 
+                    }
+                  }} style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", background: '#fff', border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}`, borderRadius: 16 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                       <span style={{ background: level === "B2" ? '#FCE7F3' : '#dcfce7', color: level === "B2" ? '#BE185D' : '#15803d', width: 32, height: 32, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 900 }}>{idx + 1}</span>
                       <span className="de" style={{ fontWeight: 800, fontSize: '1.1em', color: '#1e293b' }}>
@@ -1681,7 +1771,7 @@ function App() {
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                       <span style={{ background: '#f1f5f9', color: '#64748b', padding: '4px 10px', borderRadius: 8, fontSize: '0.8em', fontWeight: 900 }}>{level}</span>
-                      {isMod && <span style={{ color: level === "B2" ? '#EC4899' : '#f59e0b' }}><Icons.Lock color={level === "B2" ? '#EC4899' : '#f59e0b'} /></span>}
+                      {isLocked && <span style={{ color: '#F59E0B' }}><Icons.Lock color="#F59E0B" /></span>}
                     </div>
                   </button>
                 );
@@ -1693,7 +1783,6 @@ function App() {
                 <AutoTrans text="إغلاق" lang={userLang} force={true} />
               </button>
             </div>
-
           </div>
         </div>
       )}
@@ -1727,6 +1816,29 @@ function App() {
                 <AutoTrans text="إغلاق" lang={userLang} force={true} />
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* نافذة المحتوى المقفل */}
+      {lockedModal && (
+        <div className="overlay" onClick={() => setLockedModal(false)} style={{ direction: 'rtl', zIndex: 9999 }}>
+          <div className="sheet" onClick={e => e.stopPropagation()} style={{ textAlign: "center", padding: "40px 24px", borderRadius: 28 }}>
+            <div style={{ width: 80, height: 80, background: "rgba(13, 148, 136, 0.1)", color: "var(--primary)", borderRadius: 24, display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 24px" }}>
+               <Icons.Target color="var(--primary)" />
+            </div>
+            <h2 style={{ fontSize: "1.6em", fontWeight: 900, margin: "0 0 12px", color: "var(--text)" }}>
+              <AutoTrans text="محتوى مقفل" lang={userLang} force={true} />
+            </h2>
+            <p style={{ color: "var(--muted)", margin: "0 0 32px", fontSize: "1.05em" }}>
+              <AutoTrans text="ترقية الحساب للوصول لهذه الميزة" lang={userLang} force={true} />
+            </p>
+            <button onClick={() => { setLockedModal(false); wa(t("wa_upgrade_msg", userLang)); }} style={{ width: "100%", padding: "16px", borderRadius: 16, background: "var(--primary)", color: "#FFF", fontWeight: 900, fontSize: "1.1em", border: "none", display: "flex", justifyContent: "center", alignItems: "center", gap: 8, boxShadow: "0 8px 20px rgba(13,148,136,0.3)", marginBottom: 16 }}>
+              <Icons.Lock color="#FFF" /> <AutoTrans text="ترقية الحساب الآن" lang={userLang} force={true} />
+            </button>
+            <button onClick={() => setLockedModal(false)} style={{ width: "100%", padding: "16px", borderRadius: 16, background: "transparent", color: "var(--muted)", fontWeight: 900, fontSize: "1em", border: "1px solid var(--line)", display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <AutoTrans text="ليس الآن" lang={userLang} force={true} />
+            </button>
           </div>
         </div>
       )}
