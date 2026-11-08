@@ -7,7 +7,12 @@ const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
 const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
 const sb = supabase.createClient(supabaseUrl, supabaseKey);
 
-const { UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS } = window;
+// ✅ ربط البيانات مع داتا B2
+const { 
+  UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS,
+  B2_SCHREIBEN_DATA, B2_PRUEFUNG_DATA, B2_EXAMS, B2_HOREN_EXAMS, B2_PLACEHOLDER_LESSONS
+} = window;
+
 const t = (key, lang) => (UI_TEXTS && UI_TEXTS[lang] && UI_TEXTS[lang][key]) || (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) || key;
 
 const PLACEHOLDER_LESSONS = {
@@ -216,7 +221,7 @@ function SmartTrans({ obj, lang }) {
   return <AutoTrans text={textDe} lang={targetLang} force={true} />;
 }
 
-function HorenCard({ exam, userLang, showTranslation }) {
+function HorenCard({ exam, userLang, showTranslation, isB2 }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -227,6 +232,8 @@ function HorenCard({ exam, userLang, showTranslation }) {
   const pts = 5;
   const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
+  
+  const themeColor = isB2 ? "#EC4899" : "#8B5CF6"; // B2 Pink / B1 Purple
 
   useEffect(() => {
     return () => {
@@ -284,11 +291,11 @@ function HorenCard({ exam, userLang, showTranslation }) {
   const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : userLang === 'hi' ? "गलत" : "";
 
   return (
-    <div className="card" style={{ padding: 20, marginBottom: 24, border: "1px solid var(--line)" }}>
+    <div className="card" style={{ padding: 20, marginBottom: 24, border: `1px solid ${themeColor}40` }}>
       <h3 className="de" style={{ fontSize: "1.3em", fontWeight: 900, margin: "0 0 16px", color: "var(--ink)" }}>{exam.title}</h3>
 
       <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
-        <button onClick={toggleAudio} style={{ width: 56, height: 56, borderRadius: "50%", flexShrink: 0, background: isPlaying ? "var(--red)" : "#22C55E", color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 8px 20px rgba(34, 197, 94, 0.3)", transition: "all 0.2s" }}>
+        <button onClick={toggleAudio} style={{ width: 56, height: 56, borderRadius: "50%", flexShrink: 0, background: isPlaying ? "var(--red)" : themeColor, color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 8px 20px ${themeColor}50`, transition: "all 0.2s" }}>
           {isPlaying ? <Icons.Pause color="#FFF" /> : <Icons.Play color="#FFF" />}
         </button>
         <div style={{ flex: 1 }}>
@@ -297,7 +304,7 @@ function HorenCard({ exam, userLang, showTranslation }) {
             <span>Audio Player</span>
           </div>
           <div style={{ height: 8, background: "var(--line)", borderRadius: 99, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: isPlaying ? "var(--red)" : "#22C55E", transition: isPlaying ? "width 60s linear" : "none" }} />
+            <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: isPlaying ? "var(--red)" : themeColor, transition: isPlaying ? "width 60s linear" : "none" }} />
           </div>
         </div>
       </div>
@@ -350,12 +357,12 @@ function HorenCard({ exam, userLang, showTranslation }) {
       </div>
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: "var(--blue)", fontWeight: 800, background: "rgba(37, 99, 235, 0.1)", padding: "10px 16px", borderRadius: 12, border: "none" }}>
-          <Icons.Eye color="var(--blue)" /> {t("story_memo", userLang)}
+        <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: themeColor, fontWeight: 800, background: `${themeColor}15`, padding: "10px 16px", borderRadius: 12, border: "none" }}>
+          <Icons.Eye color={themeColor} /> {t("story_memo", userLang)}
         </button>
         <div style={{ display: "flex", gap: 10 }}>
           {!done ? (
-            <button onClick={() => setDone(true)} style={{ background: "#22C55E", color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: "0 6px 15px rgba(34,197,94,0.3)", border: "none" }}>{t("check_btn", userLang)}</button>
+            <button onClick={() => setDone(true)} style={{ background: themeColor, color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: `0 6px 15px ${themeColor}50`, border: "none" }}>{t("check_btn", userLang)}</button>
           ) : (
             <div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / {total}</div>
           )}
@@ -370,15 +377,16 @@ function HorenCard({ exam, userLang, showTranslation }) {
   );
 }
 
-function HorenGateway({ onStart, userLang }) {
+function HorenGateway({ onStart, userLang, isB2 }) {
+  const themeColor = isB2 ? "#EC4899" : "#8B5CF6";
   return (
     <div style={{ paddingBottom: 100 }}>
       <h1 className="de" style={{ fontSize: "2.6em", fontWeight: 900, margin: "4px 0 14px", textAlign: "center" }}>Hören</h1>
       <div className="horen-gateway-card">
-        <div className="horen-gateway-icon"><Icons.Headphones color="var(--blue)" /></div>
+        <div className="horen-gateway-icon" style={{ background: `${themeColor}15`, color: themeColor }}><Icons.Headphones color={themeColor} /></div>
         <h2 style={{ fontSize: "1.5em", fontWeight: 900, margin: 0 }}>{t("listen_title", userLang)}</h2>
         <p style={{ color: "var(--muted)", fontSize: "1em", margin: 0, lineHeight: 1.6 }}>{t("listen_desc", userLang)}</p>
-        <button className="horen-start-btn" onClick={onStart}><Icons.Play color="#22C55E" /> {t("start_now", userLang)}</button>
+        <button className="horen-start-btn" onClick={onStart} style={{ background: `${themeColor}15`, color: themeColor, border: `1.5px solid ${themeColor}` }}><Icons.Play color={themeColor} /> {t("start_now", userLang)}</button>
       </div>
     </div>
   );
@@ -407,6 +415,9 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
   const pts = exam.type === "matching" ? 2.5 : (exam.type.includes("sprach") ? 1.5 : 5);
   const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
+  
+  const isB2 = exam.level === "B2";
+  const themeColor = isB2 ? "#EC4899" : "#8B5CF6"; // B2 Pink / B1 Purple
 
   const usedElsewhere = (n, k) => {
     if ((exam.type !== "matching" && exam.type !== "headings") || k === "X") return false;
@@ -478,8 +489,8 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
            <div className="timer-badge" style={{ padding: '4px 10px', fontSize: '14px' }}>
              <Icons.Clock color="var(--text)" /> {formatTime(timeLeft)}
            </div>
-           <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? "var(--blue)" : "var(--text)", borderColor: showTranslation ? "var(--blue)" : "var(--line)" }}>
-            <Icons.Translate color={showTranslation ? "var(--blue)" : "var(--text)"} />
+           <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? themeColor : "var(--text)", borderColor: showTranslation ? themeColor : "var(--line)" }}>
+            <Icons.Translate color={showTranslation ? themeColor : "var(--text)"} />
            </button>
            <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 36, height: 36 }}>
             {dark ? <Icons.Sun color="var(--text)" /> : <Icons.Moon color="var(--text)" />}
@@ -490,19 +501,19 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
       <div style={{ margin: "10px 12px" }}>
         {exam.type !== "matching" && exam.type !== "horen" && (
           <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }}><Icons.Target color={mode === "exam" ? "#FFF" : "var(--text)"} /> {t("exam_mode", userLang)}</button>
-            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }}><Icons.Practice color={mode === "practice" ? "#FFF" : "var(--text)"} /> {t("practice_mode", userLang)}</button>
+            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }} style={mode === "exam" ? { borderColor: themeColor, background: themeColor } : {}}><Icons.Target color={mode === "exam" ? "#FFF" : "var(--text)"} /> {t("exam_mode", userLang)}</button>
+            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }} style={mode === "practice" ? { borderColor: themeColor, background: themeColor } : {}}><Icons.Practice color={mode === "practice" ? "#FFF" : "var(--text)"} /> {t("practice_mode", userLang)}</button>
           </div>
         )}
 
-        {exam.type === "horen" && <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} />}
+        {exam.type === "horen" && <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} isB2={isB2} />}
 
         {exam.type === "mcq" && (
           <div className="card" style={{ padding: 20 }}>
             {exam.paragraphs.map((p, i) => (
               <div key={i} style={{ marginBottom: 16 }}>
                 <p className="de" style={{ lineHeight: 1.8, fontSize: "1.05em", margin: 0 }}>{p.de}</p>
-                {showTranslation && <div className="t2-ar"><SmartTrans obj={p} lang={userLang} /></div>}
+                {showTranslation && <div className="t2-ar" style={{ borderColor: themeColor }}><SmartTrans obj={p} lang={userLang} /></div>}
               </div>
             ))}
           </div>
@@ -517,7 +528,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                 const sel = ans[gapNum];
                 const isDone = done !== null;
                 
-                let content = <span className="inline-gap" onClick={() => { if(!isDone) { exam.type === "sprach2" ? setActiveGap(gapNum) : setModalGap(gapNum); } }}>{sel || `(${gapNum})`}</span>;
+                let content = <span className="inline-gap" style={{ borderColor: themeColor, color: themeColor }} onClick={() => { if(!isDone) { exam.type === "sprach2" ? setActiveGap(gapNum) : setModalGap(gapNum); } }}>{sel || `(${gapNum})`}</span>;
                 if (isDone) {
                   if (sel === it.c) content = <span className="sp1-correct">{sel}</span>;
                   else if (sel) content = <span style={{display:'inline-flex', gap:4}}><span className="sp1-wrong">{sel}</span><span className="sp1-correct">{it.c}</span></span>;
@@ -528,7 +539,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
               return <span key={i} className="de" style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
             })}
             {showTranslation && (
-              <div className="t2-ar" style={{ marginTop: 20 }}>
+              <div className="t2-ar" style={{ marginTop: 20, borderColor: themeColor }}>
                 {exam.transText ? <SmartTrans obj={exam.transText} lang={userLang} /> : <AutoTrans text={exam.text.replace(/\.{3,}\s*\(\d+\)\s*\.{3,}/g, " ___ ")} lang={userLang} force={true} />}
               </div>
             )}
@@ -549,7 +560,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
               const isExc = excluded[it.n]?.[ad.k];
               let st = { padding: 12, borderRadius: 12, background: "var(--paper)", opacity: 1, border: "2px solid transparent", marginBottom: 8, direction: "ltr", textAlign: "left", transition: "all 0.2s", cursor: (done !== null || isExc || isElse) ? "default" : "pointer" };
               
-              if (isSel) { st.background = "rgba(37, 99, 235, 0.1)"; st.borderColor = "var(--blue)"; st.color = "var(--blue)"; }
+              if (isSel) { st.background = `${themeColor}15`; st.borderColor = themeColor; st.color = themeColor; }
               else if (isElse) { st.opacity = 0.3; st.pointerEvents = "none"; }
               else if (isExc) { st.opacity = 0.3; st.textDecoration = "line-through"; st.pointerEvents = "none"; }
               
@@ -563,7 +574,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                     if (done !== null || isSel || isElse) return;
                     setExcluded(prev => { const n = {...prev}; if(!n[it.n]) n[it.n] = {}; n[it.n][ad.k] = !n[it.n][ad.k]; return n; });
                   }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}><Icons.X color={isExc ? "var(--red)" : "transparent"} /></button>
-                  <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? "var(--blue)" : "var(--muted)" }}>{it.n}</div>
+                  <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? themeColor : "var(--muted)" }}>{it.n}</div>
                   <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
                     <span className="de">{it.de}</span>
                     {showTranslation && <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={it} lang={userLang} /></div>}
@@ -580,7 +591,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
           return (
             <div key={it.n} className="card" style={{ padding: 16 }}>
               <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
-                <div className="letter" style={{ width: 36, height: 36, fontSize: "1.1em", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>{idx + 1}</div>
+                <div className="letter" style={{ width: 36, height: 36, fontSize: "1.1em", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", background: `${themeColor}15`, color: themeColor, border: `1px solid ${themeColor}` }}>{idx + 1}</div>
                 <div style={{ flex: 1 }}>
                   {exam.type === "headings" && (
                     <div style={{ lineHeight: 1.6, fontSize: "1.05em" }}>
@@ -598,7 +609,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
               </div>
               {(exam.type === "headings" ? exam.options : it.opts).map(o => (
                 <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isDone} style={{ padding: 14 }}>
-                  <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em" }}>{o.k}</div>
+                  <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em", background: ans[it.n] === o.k && !isDone ? themeColor : "var(--card)", color: ans[it.n] === o.k && !isDone ? "#FFF" : "var(--text)" }}>{o.k}</div>
                   <div className="de" style={{ flex: 1, textAlign: "left" }}>
                     {o.de}
                     {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={o} lang={userLang} /></div>}
@@ -625,10 +636,10 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
             </div>
             <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {exam.items.find(x => x.n === modalGap).opts.map((opt, i) => (
-                <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? "var(--blue)" : "var(--line)", background: ans[modalGap] === opt ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[modalGap] === opt ? "var(--blue)" : "var(--text)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
+                <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? themeColor : "var(--line)", background: ans[modalGap] === opt ? `${themeColor}15` : "var(--card)", color: ans[modalGap] === opt ? themeColor : "var(--text)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
                   <span style={{ opacity: 0.5, fontWeight: 900, marginRight: 12 }}>{String.fromCharCode(65 + i)}</span>
                   <span className="de" style={{fontSize:"1.05em", flex: 1}}>{opt}</span>
-                  {ans[modalGap] === opt && <span style={{ color: "var(--blue)", fontSize:"1.2em" }}><Icons.Check color="var(--blue)" /></span>}
+                  {ans[modalGap] === opt && <span style={{ color: themeColor, fontSize:"1.2em" }}><Icons.Check color={themeColor} /></span>}
                 </button>
               ))}
             </div>
@@ -647,7 +658,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                {exam.wordBank.map(w => {
                  const isUsed = Object.values(ans).includes(w.w) && ans[activeGap] !== w.w;
                  return (
-                   <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => pickSprach2(w.w)} style={{ padding: "14px", borderColor: ans[activeGap] === w.w ? "var(--blue)" : "var(--line)", background: ans[activeGap] === w.w ? "rgba(37,99,235,0.1)" : "var(--card)", color: ans[activeGap] === w.w ? "var(--blue)" : "var(--text)" }}>
+                   <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => pickSprach2(w.w)} style={{ padding: "14px", borderColor: ans[activeGap] === w.w ? themeColor : "var(--line)", background: ans[activeGap] === w.w ? `${themeColor}15` : "var(--card)", color: ans[activeGap] === w.w ? themeColor : "var(--text)" }}>
                      <span style={{ opacity: 0.5, marginRight: 10, fontWeight: 900, fontSize:"0.9em" }}>{w.k}</span> <span style={{fontSize:"1.05em"}}>{w.w}</span>
                    </button>
                  )
@@ -658,20 +669,20 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
       )}
 
       <div className="bottom-bar">
-        <button onClick={done !== null ? reset : finish} className="btn-prev-bar">
+        <button onClick={done !== null ? reset : finish} className="btn-prev-bar" style={done !== null ? { color: themeColor, borderColor: themeColor } : {}}>
           {done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}
         </button>
-        <button onClick={() => done !== null ? onBack() : onNext()} className="btn-correct-bar">
+        <button onClick={() => done !== null ? onBack() : onNext()} className="btn-correct-bar" style={{ background: themeColor, boxShadow: `0 4px 15px ${themeColor}50` }}>
           {done !== null ? t("back_btn", userLang) : t("next_btn", userLang)}
         </button>
-        <button className="btn-next-bar" onClick={done !== null ? onBack : onNext}>
+        <button className="btn-next-bar" onClick={done !== null ? onBack : onNext} style={{ background: themeColor }}>
           <Icons.ArrowLeft color="#FFF" />
         </button>
       </div>
     </div>
   );
 }
-function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa, onLessonClick }) {
+function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa, onLessonClick, level }) {
   const [selected, setSelected] = useState(null);
   const [showTransText, setShowTransText] = useState(false);
   const [showTransTask, setShowTransTask] = useState(false);
@@ -681,6 +692,8 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
   const [result, setResult] = useState(null);
   
   const [timeLeft, setTimeLeft] = useState(90 * 60); 
+  const isB2 = level === "B2";
+  const themeColor = isB2 ? "#EC4899" : "#F59E0B"; // B2 Pink / B1 Orange
 
   useEffect(() => {
     let timer;
@@ -746,19 +759,18 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
     return (
       <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h1 className="de" style={{ margin: 0, fontSize: "2.5em", fontWeight: 900, color: "var(--ink)" }}>Schreiben</h1>
+          <h1 className="de" style={{ margin: 0, fontSize: "2.5em", fontWeight: 900, color: "var(--ink)" }}>Schreiben {level}</h1>
         </div>
         <div style={{ display: "flex", background: "var(--line)", borderRadius: 99, padding: 4, marginBottom: 20, width: "fit-content", margin: "0 auto 20px" }}>
-          <div style={{ background: "#F59E0B", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
-          <div style={{ color: "var(--muted)", padding: "10px 30px", fontWeight: 900 }}>B2</div>
+          <div style={{ background: isB2 ? "#14B8A6" : "#22C55E", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
+          <div style={{ background: isB2 ? "#EC4899" : "transparent", color: isB2 ? "#FFF" : "var(--muted)", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B2</div>
         </div>
         <div style={{ position: "relative", marginBottom: 20 }}>
-          <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+          <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${isB2 ? themeColor : "var(--line)"}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
         </div>
         
-        {PLACEHOLDER_LESSONS["Schreiben"].map((title, idx) => {
-          // ✅ الحل الحقيقي: البحث فقط في الداتا المحلية بمسح الفراغات
-          const localExams = SCHREIBEN_DATA.filter(e => e.title.trim() === title.trim());
+        {(isB2 ? B2_PLACEHOLDER_LESSONS["Schreiben"] : PLACEHOLDER_LESSONS["Schreiben"]).map((title, idx) => {
+          const localExams = (isB2 ? B2_SCHREIBEN_DATA : SCHREIBEN_DATA).filter(e => e.title.trim() === title.trim());
           
           return (
             <div key={idx} onClick={() => {
@@ -770,13 +782,13 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
                 setShowTransTask(false);
                 setTimeLeft(90 * 60);
               } else {
-                alert(`⚠️ الدرس "${title}" ماشي موجود فـ data1.js.`);
+                alert(`⚠️ الدرس "${title}" ماشي موجود فـ ${isB2 ? 'b2_data.js' : 'data1.js'}.`);
               }
-            }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: "1px solid var(--line)" }}>
+            }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: `1px solid ${isB2 ? themeColor : "var(--line)"}` }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                 <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{title}</div>
               </div>
-              <div style={{ display: "inline-block", background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>B1</div>
+              <div style={{ display: "inline-block", background: `${themeColor}15`, color: themeColor, padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{level}</div>
             </div>
           );
         })}
@@ -794,11 +806,11 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
           <h2 style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{userLang === 'hi' ? 'संपादक पर वापस जाएं' : 'رجوع إلى المحرر'}</h2>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
-          <div style={{ width: 120, height: 120, borderRadius: "50%", border: "8px solid var(--line)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderTopColor: result.score === 0 ? "var(--red)" : "#22C55E" }}>
+          <div style={{ width: 120, height: 120, borderRadius: "50%", border: "8px solid var(--line)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderTopColor: result.score === 0 ? "var(--red)" : themeColor }}>
             <span style={{ fontSize: "2.5em", fontWeight: 900 }}>{result.score}</span>
             <span style={{ color: "var(--muted)", fontSize: "0.8em" }}>/ {result.maxScore} {userLang === 'hi' ? 'अंक' : 'نقطة'}</span>
           </div>
-          <div style={{ background: result.score < 20 ? "var(--red)" : "#22C55E", color: "#FFF", padding: "4px 16px", borderRadius: 20, fontWeight: 900, marginTop: 12, fontSize: "0.9em" }}>
+          <div style={{ background: result.score < 20 ? "var(--red)" : themeColor, color: "#FFF", padding: "4px 16px", borderRadius: 20, fontWeight: 900, marginTop: 12, fontSize: "0.9em" }}>
             {result.score < 20 ? (userLang === 'hi' ? 'अभ्यास की जरूरत है' : 'يحتاج لتدريب') : (userLang === 'hi' ? 'उत्कृष्ट' : 'ممتاز')}
           </div>
         </div>
@@ -818,14 +830,14 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
         <div className="card" style={{ padding: 20, marginBottom: 16 }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900 }}>
-              <div style={{ width: 4, height: 24, background: "#F59E0B", borderRadius: 4 }}></div> {userLang === 'hi' ? 'आपका पाठ' : 'النص الخاص بك'}
+              <div style={{ width: 4, height: 24, background: themeColor, borderRadius: 4 }}></div> {userLang === 'hi' ? 'आपका पाठ' : 'النص الخاص بك'}
             </div>
           </div>
           <div className="de" style={{ background: "var(--paper)", border: "1px solid var(--line)", padding: 16, borderRadius: 12, whiteSpace: "pre-wrap" }}>{userText}</div>
         </div>
         <div className="card" style={{ padding: 20 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>
-            <div style={{ width: 4, height: 24, background: "#F59E0B", borderRadius: 4 }}></div> {userLang === 'hi' ? 'त्रुटियों का विस्तृत विश्लेषण' : 'التحليل التفصيلي للأخطاء'}
+            <div style={{ width: 4, height: 24, background: themeColor, borderRadius: 4 }}></div> {userLang === 'hi' ? 'त्रुटियों का विस्तृत विश्लेषण' : 'التحليل التفصيلي للأخطاء'}
           </div>
           {result.errors.length === 0 ? (
             <div style={{ textAlign: "center", padding: "40px 20px", border: "2px dashed var(--line)", borderRadius: 16 }}>
@@ -856,22 +868,22 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
       {isAnalyzing && (
         <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 999, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20 }}>
           <div style={{ position: "relative", marginBottom: 30 }}>
-             <div style={{ width: 120, height: 120, borderRadius: "50%", border: "4px solid rgba(245, 158, 11, 0.2)", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <Icons.Edit color="#F59E0B" />
+             <div style={{ width: 120, height: 120, borderRadius: "50%", border: `4px solid ${themeColor}20`, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <Icons.Edit color={themeColor} />
              </div>
-             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: "#F59E0B", borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
+             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: themeColor, borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
           </div>
           <h2 style={{ fontSize: "1.8em", fontWeight: 900, marginBottom: 10 }}>{userLang === 'hi' ? 'स्मार्ट सुधार' : 'جاري التصحيح الذكي'}</h2>
           <p style={{ color: "var(--muted)", marginBottom: 40 }}>{userLang === 'hi' ? 'हम उन्नत AI तकनीकों का उपयोग करके आपके पाठ की समीक्षा कर रहे हैं' : 'نقوم بمراجعة نصك باستخدام تقنيات AI المطورة'}</p>
           <div style={{ width: "100%", maxWidth: 300 }}>
             {[userLang === 'hi' ? "स्मार्ट सुधारक तैयार करना..." : "تحضير المصحح الذكي...", userLang === 'hi' ? "वाक्य संरचना का विश्लेषण..." : "تحليل بنية الجمل...", userLang === 'hi' ? "व्याकरण और शब्दावली की समीक्षा..." : "مراجعة القواعد والمفردات...", userLang === 'hi' ? "अंतिम रिपोर्ट तैयार करना..." : "توليد التقرير النهائي..."].map((step, idx) => (
-              <div key={idx} style={{ color: analyzeStep === idx + 1 ? "#F59E0B" : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
+              <div key={idx} style={{ color: analyzeStep === idx + 1 ? themeColor : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
                 {analyzeStep === idx + 1 && "✨ "} {step}
               </div>
             ))}
           </div>
           <div style={{ width: "80%", height: 8, background: "var(--line)", borderRadius: 99, marginTop: 40, overflow: "hidden" }}>
-             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: "#F59E0B", transition: "width 0.3s" }}></div>
+             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: themeColor, transition: "width 0.3s" }}></div>
           </div>
         </div>
       )}
@@ -884,28 +896,28 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
           <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{selected.title}</h2>
         </div>
         
-        <div className="timer-badge" style={{ padding: '6px 12px', fontSize: '15px' }}>
-          <Icons.Clock color="var(--text)" /> {formatTime(timeLeft)}
+        <div className="timer-badge" style={{ padding: '6px 12px', fontSize: '15px', color: isB2 ? themeColor : 'var(--text)', borderColor: isB2 ? themeColor : 'var(--line)' }}>
+          <Icons.Clock color={isB2 ? themeColor : "var(--text)"} /> {formatTime(timeLeft)}
         </div>
       </div>
 
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#F59E0B", borderRadius: 4 }}></div>
+          <div style={{ width: 6, height: 20, background: themeColor, borderRadius: 4 }}></div>
           <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>SITUATION</span>
-          <span style={{ background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level || 'B1'}</span>
+          <span style={{ background: `${themeColor}15`, color: themeColor, padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level || level}</span>
         </div>
         <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#F59E0B", fontWeight: 900 }}>
-            <Icons.Translate color="#F59E0B" /> {t("trans_text", userLang)}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: themeColor, fontWeight: 900 }}>
+            <Icons.Translate color={themeColor} /> {t("trans_text", userLang)}
           </div>
-          <button onClick={() => setShowTransText(!showTransText)} style={{ background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
+          <button onClick={() => setShowTransText(!showTransText)} style={{ background: `${themeColor}15`, color: themeColor, padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
             {showTransText ? t("hide", userLang) : t("show", userLang)}
           </button>
         </div>
         {showTransText && (
-          <div style={{ background: "rgba(245, 158, 11, 0.05)", border: "1px solid rgba(245, 158, 11, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
+          <div style={{ background: `${themeColor}05`, border: `1px solid ${themeColor}40`, padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
             {selected.transText?.[userLang] || <AutoTrans text={selected.text} lang={userLang} force={true} />}
           </div>
         )}
@@ -913,49 +925,49 @@ function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trial
 
       <div className="card" style={{ padding: 20, marginBottom: 16 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: "#F59E0B", borderRadius: 4 }}></div>
+          <div style={{ width: 6, height: 20, background: themeColor, borderRadius: 4 }}></div>
           <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>AUFGABE</span>
           <span style={{ marginLeft: "auto", background: "var(--line)", color: "var(--muted)", padding: "4px 12px", borderRadius: 8, fontSize: "0.8em", fontWeight: 900 }}>150–180 {t("words_count", userLang)}</span>
         </div>
         <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task}</div>
         {selected.points?.map((pt, idx) => (
           <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
-            <div style={{ width: 30, height: 30, borderRadius: "50%", background: "#F59E0B", color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
+            <div style={{ width: 30, height: 30, borderRadius: "50%", background: themeColor, color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
             <div className="de" style={{ background: "var(--paper)", padding: "12px 16px", borderRadius: 12, flex: 1, border: "1px solid var(--line)" }}>{pt}</div>
           </div>
         ))}
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: "#F59E0B", fontWeight: 900 }}>
-            <Icons.Translate color="#F59E0B" /> {t("trans_task", userLang)}
+          <div style={{ display: "flex", alignItems: "center", gap: 8, color: themeColor, fontWeight: 900 }}>
+            <Icons.Translate color={themeColor} /> {t("trans_task", userLang)}
           </div>
-          <button onClick={() => setShowTransTask(!showTransTask)} style={{ background: "rgba(245, 158, 11, 0.1)", color: "#F59E0B", padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
+          <button onClick={() => setShowTransTask(!showTransTask)} style={{ background: `${themeColor}15`, color: themeColor, padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
             {showTransTask ? t("hide", userLang) : t("show", userLang)}
           </button>
         </div>
         {showTransTask && (
-          <div style={{ background: "rgba(245, 158, 11, 0.05)", border: "1px solid rgba(245, 158, 11, 0.2)", padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
+          <div style={{ background: `${themeColor}05`, border: `1px solid ${themeColor}40`, padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
             <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask?.[userLang] || <AutoTrans text={selected.task} lang={userLang} force={true} />}</div>
             {(selected.transPoints?.[userLang] || selected.transPoints?.['en'] || selected.transPoints?.['ar'] || []).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
           </div>
         )}
       </div>
 
-      <div className="card" style={{ padding: 0, overflow: "hidden" }}>
-        <div className="keyboard-area">
+      <div className="card" style={{ padding: 0, overflow: "hidden", border: `1px solid ${isB2 ? themeColor : 'var(--line)'}` }}>
+        <div className="keyboard-area" style={{ borderBottomColor: isB2 ? themeColor : 'var(--line)' }}>
           <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'].map(c => (
-              <button key={c} onClick={() => insertChar(c)} className="key-btn">{c}</button>
+              <button key={c} onClick={() => insertChar(c)} className="key-btn" style={{ borderColor: isB2 ? themeColor : 'var(--line)', color: isB2 ? themeColor : 'var(--text)' }}>{c}</button>
             ))}
           </div>
-          <div className="word-counter">
-            <span style={{ color: wordCount >= 150 && wordCount <= 180 ? "#22C55E" : "var(--muted)" }}>{wordCount}</span> / 150-180
+          <div className="word-counter" style={{ background: `${themeColor}15`, color: themeColor }}>
+            <span style={{ color: wordCount >= 150 && wordCount <= 180 ? themeColor : "var(--muted)" }}>{wordCount}</span> / 150-180
           </div>
         </div>
         <textarea value={userText} onChange={(e) => setUserText(e.target.value)} placeholder={userLang === 'hi' ? '...यहाँ अपना उत्तर लिखना शुरू करें' : '...ابدأ في كتابة إجابتك هنا'} className="de" style={{ width: "100%", minHeight: 250, padding: 20, border: "none", background: "var(--card)", color: "var(--text)", fontSize: "1.05em", lineHeight: 1.6, resize: "vertical", outline: "none" }}></textarea>
       </div>
 
       <div className="bottom-bar" style={{ maxWidth: 400 }}>
-        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar" style={{ background: "linear-gradient(135deg, #F59E0B, #D97706)", boxShadow: "0 4px 15px rgba(245, 158, 11, 0.3)" }}>
+        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar" style={{ background: `linear-gradient(135deg, ${themeColor}, ${isB2 ? '#BE185D' : '#D97706'})`, boxShadow: `0 4px 15px ${themeColor}50` }}>
           <Icons.Edit color="#FFF" /> {isAnalyzing ? (userLang === 'hi' ? 'सुधार हो रहा है...' : 'جاري التصحيح...') : t("ai_correct", userLang)}
         </button>
       </div>
@@ -1205,25 +1217,29 @@ function App() {
   const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
   const go = (v) => { setView(v); setExam(null); setShowHorenLessons(false); setIsSideMenuOpen(false); window.scrollTo(0, 0); };
 
-  // ✅ الإصلاح هنا: إلا كان Schreiben، كنقلبو غير فـ data1.js، ما كنقلبوش فـ سوبابيز نهائياً
   const handleLessonClick = async (title, sub) => {
+    const isB2 = level === "B2";
+    const dataLesen = isB2 ? B2_EXAMS : EXAMS;
+    const dataHoren = isB2 ? B2_HOREN_EXAMS : HOREN_EXAMS;
+    const dataSchreiben = isB2 ? B2_SCHREIBEN_DATA : SCHREIBEN_DATA;
+
     if (sub === "Schreiben") {
-      const localSchreiben = SCHREIBEN_DATA.filter(e => e.title.trim() === title.trim());
+      const localSchreiben = dataSchreiben.filter(e => e.title.trim() === title.trim());
       if (localSchreiben.length > 0) {
         setExam(localSchreiben[0]);
         setTimeLeft(90 * 60);
       } else {
-        alert(`⚠️ الدرس "${title}" ماشي موجود فـ data1.js.`);
+        alert(`⚠️ الدرس "${title}" ماشي موجود.`);
       }
-      return; // خرج من الدالة، ما كملش لسوبابيز
+      return;
     }
 
-    const localExams = EXAMS.filter(e => e.title === title && e.sub === sub);
-    const localHoren = HOREN_EXAMS.filter(e => e.title === title);
-    const freeMods = FREE_MODIFIED_LESSONS.filter(e => e.title === title && e.sub === sub);
+    const localExams = dataLesen.filter(e => e.title === title && e.sub === sub);
+    const localHoren = dataHoren.filter(e => e.title === title);
+    const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => e.title === title && e.sub === sub);
     
     let sbExams = [];
-    if (localHoren.length === 0) {
+    if (localHoren.length === 0 && !isB2) { 
       sbExams = supabaseLessons.filter(les => {
         const lesTitle = les.title || les.data?.title;
         return lesTitle === title;
@@ -1293,23 +1309,27 @@ function App() {
     <div style={{ paddingBottom: 100 }}>
       <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
       <nav className={`side-menu ${isSideMenuOpen ? 'active' : ''}`}>
-        <div className="side-menu-header"><div className="logo-circle">De</div><h2>EchtPrüfung</h2><p style={{fontSize: '0.8em', opacity: 0.8}}>{user.name}</p></div>
-        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B1'); go('lesen');}} className={`menu-item ${level === 'B1' ? 'active' : ''}`}><Icons.Book color="#22C55E" /> {t("b1_level", userLang)}</a>
-        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B2'); go('lesen');}} className={`menu-item ${level === 'B2' ? 'active' : ''}`}><Icons.Book color="#22C55E" /> {t("b2_level", userLang)}</a>
+        <div className="side-menu-header" style={{ background: level === "B2" ? "linear-gradient(135deg, #EC4899, #BE185D)" : "linear-gradient(135deg, #1e293b, #334155)" }}>
+          <div className="logo-circle" style={{ background: level === "B2" ? "linear-gradient(135deg, #14B8A6, #0F766E)" : "linear-gradient(135deg, #DD0000, #FFCE00)" }}>De</div>
+          <h2>EchtPrüfung {level}</h2>
+          <p style={{fontSize: '0.8em', opacity: 0.8}}>{user.name}</p>
+        </div>
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B1'); go('lesen');}} className={`menu-item ${level === 'B1' ? 'active' : ''}`} style={level === 'B1' ? { color: "#22C55E", borderRightColor: "#22C55E" } : {}}><Icons.Book color={level === 'B1' ? "#22C55E" : "var(--muted)"} /> {t("b1_level", userLang)}</a>
+        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B2'); go('lesen');}} className={`menu-item ${level === 'B2' ? 'active' : ''}`} style={level === 'B2' ? { color: "#EC4899", borderRightColor: "#EC4899" } : {}}><Icons.Book color={level === 'B2' ? "#EC4899" : "var(--muted)"} /> {t("b2_level", userLang)}</a>
         {isAdmin && <a href="#" onClick={(e) => {e.preventDefault(); go('admin');}} className={`menu-item ${view === 'admin' ? 'active' : ''}`}><Icons.Lock color="#F59E0B" /> {t("admin_panel", userLang)}</a>}
       </nav>
 
-      <div className="header">
+      <div className="header" style={{ borderBottomColor: level === "B2" ? "#EC4899" : "var(--line)" }}>
         <div className="brand">
           <button className="btnI" onClick={() => setIsSideMenuOpen(true)} style={{ marginRight: 8 }}><Icons.Menu color="var(--text)" /></button>
-          <div className="logo"><LogoImage size={36} /></div>
+          <div className="logo" style={{ background: level === "B2" ? "linear-gradient(135deg, #14B8A6, #0F766E)" : "var(--ink)" }}><LogoImage size={36} /></div>
           <div>
             <div className="header-title">EchtPrüfung</div>
             <div className="header-subtitle de"><span>Deutsch {level}</span> <span>•</span><span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</span><span>{LANGS.find(l => l.c === userLang)?.n}</span></div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 6 }}>
-          <button className="btnI" onClick={() => setDark(!dark)}>{dark ? <Icons.Sun color="#F59E0B" /> : <Icons.Moon color="#2563EB" />}</button>
+          <button className="btnI" onClick={() => setDark(!dark)}>{dark ? <Icons.Sun color={level === "B2" ? "#EC4899" : "#F59E0B"} /> : <Icons.Moon color={level === "B2" ? "#14B8A6" : "#2563EB"} />}</button>
           <button className="btnI" onClick={() => setSettings(true)}><Icons.Settings color="var(--text)" /></button>
         </div>
       </div>
@@ -1317,16 +1337,16 @@ function App() {
       <main style={{ margin: "0 12px", paddingTop: 10 }}>
         {view === "home" && (
           <>
-            <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: "1px solid var(--line)", boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
-              {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: "#111", display: "flex", alignItems: "center", gap: 8 }}><Icons.Bell color="#111" /> {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
+            <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: `1px solid ${level === "B2" ? "#EC4899" : "var(--line)"}`, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
+              {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: level === "B2" ? "rgba(236,72,153,0.9)" : "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: level === "B2" ? "#FFF" : "#111", display: "flex", alignItems: "center", gap: 8 }}><Icons.Bell color={level === "B2" ? "#FFF" : "#111"} /> {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: level === "B2" ? "#FCE7F3" : "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: level === "B2" ? "url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=formatps://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: level === "B2" ? "linear-gradient(to bottom, rgba(76,5,25,0.3) 0%, rgba(76,5,25,0.95) 100%)" : "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
               
               <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
                 <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}><LogoImage size={90} /></div>
                 <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
-                <div style={{ background: "rgba(245,184,46,0.15)", border: "1px solid var(--gold)", padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p><p className="de" style={{ margin: "6px 0 0", color: "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#F5B82E" }}>B2</span></div>
+                <div style={{ background: level === "B2" ? "rgba(20,184,166,0.2)" : "rgba(245,184,46,0.15)", border: `1px solid ${level === "B2" ? "#14B8A6" : "var(--gold)"}`, padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}>{t("banner_title", userLang)}</p><p className="de" style={{ margin: "6px 0 0", color: level === "B2" ? "#99F6E4" : "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
+                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F1B33" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#EC4899" }}>B2</span></div>
               </div>
             </div>
 
@@ -1336,7 +1356,7 @@ function App() {
               </h3>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
                 {EXAM_COUNTRIES.map((c, idx) => (
-                  <button key={idx} onClick={() => setSelectedCountry(c)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "12px 8px", background: "#fff", border: "1px solid #e2e8f0", borderRadius: 16 }}>
+                  <button key={idx} onClick={() => setSelectedCountry(c)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "12px 8px", background: "#fff", border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}`, borderRadius: 16 }}>
                     <span style={{ fontSize: "2em" }}>{c.flag}</span>
                     <span style={{ fontWeight: 900, fontSize: "0.8em", color: "#1e293b" }}><AutoTrans text={c.ar} lang={userLang} force={true} /></span>
                   </button>
@@ -1348,54 +1368,60 @@ function App() {
 
         {view === "lesen" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "#22C55E", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
-            {trialActive && !isPaid && <div style={{ background: "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))", border: "1.5px solid #22C55E", borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}><div style={{ color: "#22C55E" }}><Icons.Gift color="#22C55E" /></div><div style={{ flex: 1 }}><div style={{ fontWeight: 900, color: "#22C55E", fontSize: "1em" }}>{t("trial_active", userLang)}</div><div style={{ color: "var(--muted)", fontSize: "0.85em" }}>{trialCountdown} — جميع الدروس المدفوعة محلولة</div></div></div>}
-            <div style={{ marginBottom: 16 }}><input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: "1px solid var(--line)", background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} /></div>
+            <h1 className="de" style={{ textAlign: "center", color: level === "B2" ? "#EC4899" : "#22C55E", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
+            {trialActive && !isPaid && <div style={{ background: `linear-gradient(135deg, ${level === "B2" ? "rgba(236,72,153,0.15)" : "rgba(34,197,94,0.15)"}, rgba(34,197,94,0.05))`, border: `1.5px solid ${level === "B2" ? "#EC4899" : "#22C55E"}`, borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}><div style={{ color: level === "B2" ? "#EC4899" : "#22C55E" }}><Icons.Gift color={level === "B2" ? "#EC4899" : "#22C55E"} /></div><div style={{ flex: 1 }}><div style={{ fontWeight: 900, color: level === "B2" ? "#EC4899" : "#22C55E", fontSize: "1em" }}>{t("trial_active", userLang)}</div><div style={{ color: "var(--muted)", fontSize: "0.85em" }}>{trialCountdown} — جميع الدروس المدفوعة محلولة</div></div></div>}
+            <div style={{ marginBottom: 16 }}><input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${level === "B2" ? "#EC4899" : "var(--line)"}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} /></div>
             
             <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, background: "var(--card)", padding: 16, borderRadius: 24, border: "1px solid var(--line)", marginBottom: 20 }}>
-              {[{ id: "Prüfungen", icon: <Icons.Book color="#22C55E" /> }, { id: "Teile 1", icon: <Icons.Edit color="#22C55E" /> }, { id: "Teile 2", icon: <Icons.Edit color="#22C55E" /> }, { id: "Teile 3", icon: <Icons.Edit color="#22C55E" /> }, { id: "Sprach 1", icon: <Icons.Translate color="#22C55E" /> }, { id: "Sprach 2", icon: <Icons.Translate color="#22C55E" /> }].map(tab => (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: "14px 8px", borderRadius: 16, fontWeight: 900, fontSize: "0.85em", border: activeTab === tab.id ? "2px solid #22C55E" : "2px solid transparent", background: activeTab === tab.id ? "rgba(34, 197, 94, 0.1)" : "transparent", color: activeTab === tab.id ? "#22C55E" : "var(--muted)", transition: "all 0.2s", cursor: "pointer" }}><span style={{ fontSize: "1.6em" }}>{tab.icon}</span>{tab.id}</button>
+              {[{ id: "Prüfungen", icon: <Icons.Book color={level === "B2" ? "#EC4899" : "#22C55E"} /> }, { id: "Teile 1", icon: <Icons.Edit color={level === "B2" ? "#EC4899" : "#22C55E"} /> }, { id: "Teile 2", icon: <Icons.Edit color={level === "B2" ? "#EC4899" : "#22C55E"} /> }, { id: "Teile 3", icon: <Icons.Edit color={level === "B2" ? "#EC4899" : "#22C55E"} /> }, { id: "Sprach 1", icon: <Icons.Translate color={level === "B2" ? "#EC4899" : "#22C55E"} /> }, { id: "Sprach 2", icon: <Icons.Translate color={level === "B2" ? "#EC4899" : "#22C55E"} /> }].map(tab => (
+                <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: "14px 8px", borderRadius: 16, fontWeight: 900, fontSize: "0.85em", border: activeTab === tab.id ? `2px solid ${level === "B2" ? "#EC4899" : "#22C55E"}` : "2px solid transparent", background: activeTab === tab.id ? `${level === "B2" ? "#EC4899" : "#22C55E"}15` : "transparent", color: activeTab === tab.id ? (level === "B2" ? "#EC4899" : "#22C55E") : "var(--muted)", transition: "all 0.2s", cursor: "pointer" }}><span style={{ fontSize: "1.6em" }}>{tab.icon}</span>{tab.id}</button>
               ))}
             </div>
             
-            {level === "B2" ? <div className="card" style={{ textAlign: "center", padding: 40 }}><h2>{t("coming_soon", userLang)}</h2></div> : (
-              PLACEHOLDER_LESSONS["Lesen"][activeTab]
-                ?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase()))
-                .map((name, idx) => {
-                  const localExams = EXAMS.filter(e => e.title === name && e.sub === activeTab && e.level === level);
-                  const freeMods = FREE_MODIFIED_LESSONS.filter(e => e.title === name && e.sub === activeTab);
-                  const sbExams = supabaseLessons.filter(les => (les.title === name || les.data?.title === name) && (les.sub === activeTab || les.data?.sub === activeTab));
-                  const totalVersions = localExams.length + freeMods.length + sbExams.length;
-                  
-                  return (
-                    <button key={idx} className="card" onClick={() => handleLessonClick(name, activeTab)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12 }}>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <div>
-                          <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
-                          <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: "rgba(34, 197, 94, 0.1)", color: "#22C55E", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
-                           {totalVersions > 1 && <span style={{ background: "#e8f5e9", color: "#2e7d32", padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} /></span>}
-                           <div style={{ color: "#22C55E" }}><Icons.ArrowRight color="#22C55E" /></div>
-                        </div>
+            {(() => {
+              const currentPlaceholder = level === "B2" ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS;
+              return currentPlaceholder["Lesen"]?.[activeTab]?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase())).map((name, idx) => {
+                const isB2 = level === "B2";
+                const localExams = (isB2 ? B2_EXAMS : EXAMS).filter(e => e.title === name && e.sub === activeTab && e.level === level);
+                const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => e.title === name && e.sub === activeTab);
+                const sbExams = !isB2 ? supabaseLessons.filter(les => (les.title === name || les.data?.title === name) && (les.sub === activeTab || les.data?.sub === activeTab)) : [];
+                const totalVersions = localExams.length + freeMods.length + sbExams.length;
+                
+                return (
+                  <button key={idx} className="card" onClick={() => handleLessonClick(name, activeTab)} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, border: `1px solid ${isB2 ? "#FBCFE8" : "var(--line)"}` }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div>
+                        <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
+                        <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: `${isB2 ? "#EC4899" : "#22C55E"}15`, color: isB2 ? "#EC4899" : "#22C55E", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div>
                       </div>
-                    </button>
-                  );
-                })
-            )}
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+                         {totalVersions > 1 && <span style={{ background: `${isB2 ? "#EC4899" : "#22C55E"}15`, color: isB2 ? "#EC4899" : "#22C55E", padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} /></span>}
+                         <div style={{ color: isB2 ? "#EC4899" : "#22C55E" }}><Icons.ArrowRight color={isB2 ? "#EC4899" : "#22C55E"} /></div>
+                      </div>
+                    </div>
+                  </button>
+                );
+              });
+            })()}
           </div>
         )}
 
         {view === "horen" && (
           <div style={{ padding: "20px 12px", paddingBottom: 100, direction: "rtl" }}>
-            {!activeHorenTeil ? (
+            {level === "B2" && !activeHorenTeil ? (
+              <div style={{ paddingBottom: 100 }}>
+                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: "#EC4899", marginBottom: 20, textAlign: "right" }}>Hören B2</h1>
+                <div className="card" style={{ textAlign: "center", padding: 40 }}>
+                  <h2 style={{ color: "#EC4899" }}>يرجى إضافة دروس B2 في ملف b2_data.js</h2>
+                </div>
+              </div>
+            ) : !activeHorenTeil ? (
               <>
-                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: "#8B5CF6", marginBottom: 20, textAlign: "right" }}>Hören</h1>
+                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: level === "B2" ? "#EC4899" : "#8B5CF6", marginBottom: 20, textAlign: "right" }}>Hören {level}</h1>
 
                 <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
                   <div style={{ display: "flex", background: "#f1f5f9", borderRadius: 99, padding: 4, border: "1px solid #e2e8f0" }}>
-                    <button style={{ background: "#8B5CF6", color: "white", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>B1</button>
-                    <button style={{ background: "transparent", color: "#64748b", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>B2</button>
+                    <button style={{ background: level === "B2" ? "#14B8A6" : "#8B5CF6", color: "white", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>{level}</button>
                   </div>
                 </div>
 
@@ -1404,23 +1430,23 @@ function App() {
                     <Icons.Book color="#64748b" />
                     <span>الأكواد</span>
                   </button>
-                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "#8B5CF6", color: "white", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, boxShadow: "0 4px 12px rgba(139, 92, 246, 0.3)" }}>
+                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: level === "B2" ? "#14B8A6" : "#8B5CF6", color: "white", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, boxShadow: `0 4px 12px ${level === "B2" ? "#14B8A6" : "#8B5CF6"}50` }}>
                     <Icons.Headphones color="#FFF" />
                     <span>الجمل</span>
                   </button>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}`, boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: "#8B5CF6" }}>
-                        <Icons.Headphones color="#8B5CF6" />
+                      <div style={{ width: 60, height: 60, borderRadius: 20, background: level === "B2" ? "#FDF2F8" : "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: level === "B2" ? "#EC4899" : "#8B5CF6" }}>
+                        <Icons.Headphones color={level === "B2" ? "#EC4899" : "#8B5CF6"} />
                       </div>
-                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
+                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
                     </div>
                     <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 1</h2>
-                    <button onClick={() => setActiveHorenTeil("Teile 1")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#f5f3ff", color: "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #8B5CF6", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Play color="#8B5CF6" />
+                    <button onClick={() => setActiveHorenTeil("Teile 1")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: level === "B2" ? "#FDF2F8" : "#f5f3ff", color: level === "B2" ? "#EC4899" : "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: `1.5px solid ${level === "B2" ? "#EC4899" : "#8B5CF6"}`, display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                      <Icons.Play color={level === "B2" ? "#EC4899" : "#8B5CF6"} />
                       ابدأ الآن
                     </button>
                   </div>
@@ -1431,7 +1457,7 @@ function App() {
                         <Icons.Lock color="#f59e0b" />
                       </div>
                       <div style={{ display: "flex", gap: 8 }}>
-                        <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
+                        <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
                         <span style={{ background: "#fef3c7", color: "#d97706", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>PRO</span>
                       </div>
                     </div>
@@ -1444,14 +1470,14 @@ function App() {
 
                   <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: "#8B5CF6" }}>
-                        <Icons.Edit color="#8B5CF6" />
+                      <div style={{ width: 60, height: 60, borderRadius: 20, background: level === "B2" ? "#FDF2F8" : "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: level === "B2" ? "#EC4899" : "#8B5CF6" }}>
+                        <Icons.Edit color={level === "B2" ? "#EC4899" : "#8B5CF6"} />
                       </div>
-                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>B1</span>
+                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
                     </div>
                     <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 3</h2>
-                    <button onClick={() => setActiveHorenTeil("Teile 3")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#f5f3ff", color: "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #8B5CF6", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Play color="#8B5CF6" />
+                    <button onClick={() => setActiveHorenTeil("Teile 3")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: level === "B2" ? "#FDF2F8" : "#f5f3ff", color: level === "B2" ? "#EC4899" : "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: `1.5px solid ${level === "B2" ? "#EC4899" : "#8B5CF6"}`, display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
+                      <Icons.Play color={level === "B2" ? "#EC4899" : "#8B5CF6"} />
                       ابدأ الآن
                     </button>
                   </div>
@@ -1463,14 +1489,14 @@ function App() {
                   <button onClick={() => setActiveHorenTeil(null)} className="btnI" style={{ width: 40, height: 40 }}>
                     <Icons.ArrowLeft color="var(--text)" />
                   </button>
-                  <h2 className="de" style={{ margin: 0, fontSize: "1.8em", fontWeight: 900 }}>{activeHorenTeil}</h2>
+                  <h2 className="de" style={{ margin: 0, fontSize: "1.8em", fontWeight: 900 }}>{activeHorenTeil} {level}</h2>
                 </div>
 
-                {HOREN_EXAMS.filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").map((ex) => (
-                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} />
+                {(level === "B2" ? B2_HOREN_EXAMS : HOREN_EXAMS).filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").map((ex) => (
+                  <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={showHorenTrans} isB2={level === "B2"} />
                 ))}
                 
-                {HOREN_EXAMS.filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").length === 0 && (
+                {(level === "B2" ? B2_HOREN_EXAMS : HOREN_EXAMS).filter(ex => ex.sub === activeHorenTeil || activeHorenTeil === "Teile 1").length === 0 && (
                    <p style={{ textAlign: "center", color: "var(--muted)", marginTop: 40 }}>لا توجد دروس في هذا القسم حالياً.</p>
                 )}
               </div>
@@ -1489,27 +1515,28 @@ function App() {
             isAdmin={isAdmin} 
             wa={wa} 
             onLessonClick={handleLessonClick} 
+            level={level}
           />
         )}
 
         {view === "pruefung" && (
           <div>
-            <h1 className="de" style={{ textAlign: "center", color: "#EAB308", marginBottom: 16, fontSize: "2.2em" }}>
+            <h1 className="de" style={{ textAlign: "center", color: level === "B2" ? "#EC4899" : "#EAB308", marginBottom: 16, fontSize: "2.2em" }}>
               <AutoTrans text="Zufällige Prüfungen" lang={userLang} force={true} />
             </h1>
             <div style={{ paddingBottom: 80 }}>
-              {PRUEFUNG_DATA.map(exam => (
-                <div key={exam.id} className="card" style={{ padding: 20, border: "1.5px solid var(--line)", marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => wa(t("wa_upgrade_msg", userLang) + " - " + exam.title)}>
+              {(level === "B2" ? B2_PRUEFUNG_DATA : PRUEFUNG_DATA).map(exam => (
+                <div key={exam.id} className="card" style={{ padding: 20, border: `1.5px solid ${level === "B2" ? "#EC4899" : "var(--line)"}`, marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => wa(t("wa_upgrade_msg", userLang) + " - " + exam.title)}>
                   <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
                     <div style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>
                       <AutoTrans text={exam.title} lang={userLang} force={true} />
                     </div>
-                    <span style={{ background: "#EAB308", color: "#111", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span>
+                    <span style={{ background: level === "B2" ? "#EC4899" : "#EAB308", color: "#111", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span>
                   </div>
                   <div style={{ color: "var(--muted)", fontSize: "0.95em", marginBottom: 16, lineHeight: 1.5 }}>
                     <AutoTrans text={exam.desc} lang={userLang} force={true} />
                   </div>
-                  <button style={{ width: "100%", padding: 12, borderRadius: 10, background: "rgba(234, 179, 8, 0.1)", color: "#EAB308", border: "1px solid #EAB308", fontWeight: 900, cursor: "pointer" }}>
+                  <button style={{ width: "100%", padding: 12, borderRadius: 10, background: `${level === "B2" ? "#EC4899" : "#EAB308"}15`, color: level === "B2" ? "#EC4899" : "#EAB308", border: `1px solid ${level === "B2" ? "#EC4899" : "#EAB308"}`, fontWeight: 900, cursor: "pointer" }}>
                     <AutoTrans text="فتح الوصول" lang={userLang} force={true} />
                   </button>
                 </div>
@@ -1522,9 +1549,9 @@ function App() {
 
         {view === "sprechen" && (
           <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-             <h1 className="de" style={{ textAlign: "center", color: "#EF4444", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
+             <h1 className="de" style={{ textAlign: "center", color: level === "B2" ? "#14B8A6" : "#EF4444", marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
              <div className="card" style={{ textAlign: "center", padding: 40, display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
-               <div style={{ color: "#EF4444" }}><Icons.Mic color="#EF4444" /></div>
+               <div style={{ color: level === "B2" ? "#14B8A6" : "#EF4444" }}><Icons.Mic color={level === "B2" ? "#14B8A6" : "#EF4444"} /></div>
                <h2 style={{ fontWeight: 900, color: "var(--muted)" }}>
                  <AutoTrans text="سيتم إضافته قريباً" lang={userLang} force={true} />
                </h2>
@@ -1535,26 +1562,26 @@ function App() {
 
       <nav className="nav">
         {[
-          { id: "home", label: t("home", userLang), icon: <Icons.Home color="#2563EB" /> }, 
-          { id: "lesen", label: t("lesen", userLang), icon: <Icons.Book color="#22C55E" /> }, 
-          { id: "horen", label: t("horen", userLang), icon: <Icons.Headphones color="#8B5CF6" /> }, 
-          { id: "schreiben", label: t("schreiben", userLang), icon: <Icons.Edit color="#F59E0B" /> }, 
-          { id: "sprechen", label: t("sprechen", userLang), icon: <Icons.Mic color="#EF4444" /> }, 
-          { id: "pruefung", label: t("pruefung", userLang), icon: <Icons.Graduation color="#EAB308" /> }
+          { id: "home", label: t("home", userLang), icon: <Icons.Home color={level === "B2" ? "#14B8A6" : "#2563EB"} /> }, 
+          { id: "lesen", label: t("lesen", userLang), icon: <Icons.Book color={level === "B2" ? "#EC4899" : "#22C55E"} /> }, 
+          { id: "horen", label: t("horen", userLang), icon: <Icons.Headphones color={level === "B2" ? "#F59E0B" : "#8B5CF6"} /> }, 
+          { id: "schreiben", label: t("schreiben", userLang), icon: <Icons.Edit color={level === "B2" ? "#6366F1" : "#F59E0B"} /> }, 
+          { id: "sprechen", label: t("sprechen", userLang), icon: <Icons.Mic color={level === "B2" ? "#F43F5E" : "#EF4444"} /> }, 
+          { id: "pruefung", label: t("pruefung", userLang), icon: <Icons.Graduation color={level === "B2" ? "#EC4899" : "#EAB308"} /> }
         ].map((item) => (
-          <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)}><span className="ic">{item.icon}</span><span>{item.label}</span></button>
+          <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)} style={view === item.id ? { color: level === "B2" ? "#EC4899" : "#DD0000", background: `${level === "B2" ? "#EC4899" : "#DD0000"}15` } : {}}><span className="ic">{item.icon}</span><span>{item.label}</span></button>
         ))}
       </nav>
 
       {selectedExamGroup && (
         <div className="overlay" onClick={() => setSelectedExamGroup(null)} style={{ direction: 'rtl' }}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24, border: 'none' }}>
-            <div style={{ background: '#f0fdf4', padding: '24px', borderBottom: '1px solid #dcfce7', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ background: level === "B2" ? '#FDF2F8' : '#f0fdf4', padding: '24px', borderBottom: `1px solid ${level === "B2" ? "#FBCFE8" : "#dcfce7"}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: '#1e293b' }}><AutoTrans text="التعديلات المتاحة" lang={userLang} force={true} /></h3>
+                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: level === "B2" ? '#831843' : '#1e293b' }}><AutoTrans text="التعديلات المتاحة" lang={userLang} force={true} /></h3>
                 <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.9em' }}>{selectedExamGroup.length} <AutoTrans text="تعديلات لهذا الموضوع" lang={userLang} force={true} /></p>
               </div>
-              <div style={{ background: '#10b981', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
+              <div style={{ background: level === "B2" ? '#EC4899' : '#10b981', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
                 <Icons.Book color="#FFF" />
               </div>
             </div>
@@ -1565,16 +1592,16 @@ function App() {
                 const cleanTitle = ex.title.replace(' المعدل', '').replace(' (معدل)', '');
                 
                 return (
-                  <button key={ex.id || idx} onClick={() => { setExam(ex); setSelectedExamGroup(null); setTimeLeft(90*60); }} style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", background: '#fff', border: '1px solid #e2e8f0', borderRadius: 16 }}>
+                  <button key={ex.id || idx} onClick={() => { setExam(ex); setSelectedExamGroup(null); setTimeLeft(90*60); }} style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", background: '#fff', border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}`, borderRadius: 16 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <span style={{ background: '#dcfce7', color: '#15803d', width: 32, height: 32, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 900 }}>{idx + 1}</span>
+                      <span style={{ background: level === "B2" ? '#FCE7F3' : '#dcfce7', color: level === "B2" ? '#BE185D' : '#15803d', width: 32, height: 32, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 900 }}>{idx + 1}</span>
                       <span className="de" style={{ fontWeight: 800, fontSize: '1.1em', color: '#1e293b' }}>
                         {cleanTitle} {isMod && <AutoTrans text="المعدل" lang={userLang} force={true} />}
                       </span>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ background: '#f1f5f9', color: '#64748b', padding: '4px 10px', borderRadius: 8, fontSize: '0.8em', fontWeight: 900 }}>B1</span>
-                      {isMod && <span style={{ color: '#f59e0b' }}><Icons.Lock color="#f59e0b" /></span>}
+                      <span style={{ background: '#f1f5f9', color: '#64748b', padding: '4px 10px', borderRadius: 8, fontSize: '0.8em', fontWeight: 900 }}>{level}</span>
+                      {isMod && <span style={{ color: level === "B2" ? '#EC4899' : '#f59e0b' }}><Icons.Lock color={level === "B2" ? '#EC4899' : '#f59e0b'} /></span>}
                     </div>
                   </button>
                 );
@@ -1582,7 +1609,7 @@ function App() {
             </div>
 
             <div style={{ padding: '0 20px 20px' }}>
-              <button onClick={() => setSelectedExamGroup(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontWeight: 900, fontSize: '1em' }}>
+              <button onClick={() => setSelectedExamGroup(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}`, background: '#fff', color: level === "B2" ? '#EC4899' : '#64748b', fontWeight: 900, fontSize: '1em' }}>
                 <AutoTrans text="إغلاق" lang={userLang} force={true} />
               </button>
             </div>
@@ -1594,29 +1621,29 @@ function App() {
       {selectedCountry && (
         <div className="overlay" onClick={() => setSelectedCountry(null)} style={{ direction: 'rtl' }}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24, border: 'none' }}>
-            <div style={{ background: '#e0f2fe', padding: '24px', borderBottom: '1px solid #bae6fd', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div style={{ background: level === "B2" ? '#F0FDFA' : '#e0f2fe', padding: '24px', borderBottom: `1px solid ${level === "B2" ? "#CCFBF1" : "#bae6fd"}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: '#0c4a6e', display: "flex", alignItems: "center", gap: 8 }}>{selectedCountry.flag} <AutoTrans text={selectedCountry.ar} lang={userLang} force={true} /></h3>
-                <p style={{ margin: '4px 0 0', color: '#0369a1', fontSize: '0.9em' }}><AutoTrans text="مراكز الامتحانات المتاحة" lang={userLang} force={true} /></p>
+                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: level === "B2" ? '#134E4A' : '#0c4a6e', display: "flex", alignItems: "center", gap: 8 }}>{selectedCountry.flag} <AutoTrans text={selectedCountry.ar} lang={userLang} force={true} /></h3>
+                <p style={{ margin: '4px 0 0', color: level === "B2" ? '#0F766E' : '#0369a1', fontSize: '0.9em' }}><AutoTrans text="مراكز الامتحانات المتاحة" lang={userLang} force={true} /></p>
               </div>
-              <div style={{ background: '#0ea5e9', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
+              <div style={{ background: level === "B2" ? '#14B8A6' : '#0ea5e9', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
                 <Icons.Target color="#FFF" />
               </div>
             </div>
             
             <div style={{ padding: 20 }}>
-              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, marginBottom: 12, border: '1px solid #e2e8f0' }}>
+              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, marginBottom: 12, border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}` }}>
                 <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: 8 }}><AutoTrans text="المدن" lang={userLang} force={true} />:</div>
                 <div style={{ color: '#334155', fontSize: '0.95em' }}>{selectedCountry.cities}</div>
               </div>
-              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, border: '1px solid #e2e8f0' }}>
+              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}` }}>
                 <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: 8 }}><AutoTrans text="المعاهد والمراكز" lang={userLang} force={true} />:</div>
                 <div style={{ color: '#334155', fontSize: '0.95em', lineHeight: 1.6 }}>{selectedCountry.institutes}</div>
               </div>
             </div>
 
             <div style={{ padding: '0 20px 20px' }}>
-              <button onClick={() => setSelectedCountry(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: '1px solid #e2e8f0', background: '#fff', color: '#64748b', fontWeight: 900, fontSize: '1em' }}>
+              <button onClick={() => setSelectedCountry(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: `1px solid ${level === "B2" ? "#FBCFE8" : "#e2e8f0"}`, background: '#fff', color: level === "B2" ? '#EC4899' : '#64748b', fontWeight: 900, fontSize: '1em' }}>
                 <AutoTrans text="إغلاق" lang={userLang} force={true} />
               </button>
             </div>
@@ -1627,14 +1654,14 @@ function App() {
       {settings && (
         <div className="overlay" onClick={() => setSettings(false)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}><strong style={{fontSize:"1.3em"}}>{t("settings", userLang)}</strong><button className="btnI" onClick={() => setSettings(false)}><Icons.X color="var(--text)" /></button></div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}><strong style={{fontSize:"1.3em", color: level === "B2" ? '#EC4899' : 'var(--text)'}}>{t("settings", userLang)}</strong><button className="btnI" onClick={() => setSettings(false)}><Icons.X color="var(--text)" /></button></div>
             <div style={{ marginBottom: 20 }}>
               <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>{t("change_lang", userLang)}</span>
-              <div className="lang-grid" style={{ maxHeight: 200 }}>{LANGS.map(lang => <button key={lang.c} onClick={() => { setUserLang(lang.c); localStorage.setItem("ep_lang", lang.c); }} className={`lang-btn ${userLang === lang.c ? "on" : ""}`} style={{ padding: "10px" }}><span style={{ fontSize: "1.2em" }}>{lang.f}</span><span style={{ fontSize: "0.85em" }}>{lang.n}</span></button>)}</div>
+              <div className="lang-grid" style={{ maxHeight: 200 }}>{LANGS.map(lang => <button key={lang.c} onClick={() => { setUserLang(lang.c); localStorage.setItem("ep_lang", lang.c); }} className={`lang-btn ${userLang === lang.c ? "on" : ""}`} style={{ padding: "10px", borderColor: userLang === lang.c && level === "B2" ? '#EC4899' : 'var(--line)', color: userLang === lang.c && level === "B2" ? '#EC4899' : 'var(--text)' }}><span style={{ fontSize: "1.2em" }}>{lang.f}</span><span style={{ fontSize: "0.85em" }}>{lang.n}</span></button>)}</div>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}><span style={{fontWeight:900, fontSize:"1.1em"}}>{t("text_size", userLang)}</span><div style={{ display: "flex", gap: 10, alignItems: "center" }}><button className="btnI" onClick={() => setFs(Math.max(80, fs - 10))}>−</button><span style={{ minWidth: 48, textAlign: "center", fontWeight: 900, fontSize:"1.1em" }}>{fs}%</span><button className="btnI" onClick={() => setFs(Math.min(150, fs + 10))}>+</button></div></div>
             <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>{t("reset_size", userLang)}</button>
-            <div style={{ marginTop: 20, textAlign: "center" }}><button onClick={logout} className="btn ghost" style={{ color: "var(--red)", borderColor: "var(--red)" }}>{t("logout", userLang)}</button></div>
+            <div style={{ marginTop: 20, textAlign: "center" }}><button onClick={logout} className="btn ghost" style={{ color: level === "B2" ? '#EC4899' : 'var(--red)', borderColor: level === "B2" ? '#EC4899' : 'var(--red)' }}>{t("logout", userLang)}</button></div>
           </div>
         </div>
       )}
