@@ -183,9 +183,7 @@ window.B2_HOREN_EXAMS.push(
       { n: 5, c: "R", de: "Bei einem S-Bahn-Unglück München gab es zahlreiche Verletzte und einen hohen Sachenschaden.", ar: "في حادث قطار S-Bahn في ميونيخ، كان هناك العديد من المصابين وأضرار مادية كبيرة.", ma: "فحادث قطار S-Bahn فميونخ، كانو بزاف من المصابين وخسائر مادية كبيرة." }
     ],
     story: "في الانتخابات الأوروبية، حصلت الأحزاب CDU وCSU على ما يقارب نصف جميع الأصوات (fast die Hälfte). ارتفع سعر البنزين بسبب العوامل الدولية المؤثرة (internationaler Einflussfaktoren erhöht). وفي حادث قطار S-Bahn في ميونخ، كان هناك العديد من المصابين وأضرار مادية كبيرة (zahlreiche Verletzte und)."
-  }
-);
-  ,
+  },
   {
     id: "b2-horen-polizei-berlin", title: "Für die Polizei in Berlin", sub: "Teile 1", level: "B2", type: "horen",
     audio: [{ text: "Audio nicht verfügbar", pitch: 1.0, rate: 0.95 }],
