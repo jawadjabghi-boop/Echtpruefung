@@ -1,3 +1,9 @@
+// ==========================================
+// EchtPrüfung 2027 — app1.js (الجزء 1 من 2)
+// المكونات: Icons, LogoImage, AutoTrans, SmartTrans, HorenCard
+// البيانات: PLACEHOLDER_LESSONS, FREE_MODIFIED_LESSONS, EXAM_COUNTRIES
+// ==========================================
+
 const { useState, useEffect, useRef } = React;
 
 const WA = "212680193427"; 
@@ -128,7 +134,8 @@ const Icons = {
   Gift: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>,
   Rocket: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>,
   Bell: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
-  Alert: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+  Alert: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>,
+  Lock: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
 };
 
 const LogoImage = ({ size = 50 }) => (
@@ -374,9 +381,9 @@ function HorenCard({ exam, userLang, showTranslation, isB2 }) {
     </div>
   );
 }
-
 // ==========================================
-// الجزء 2 من app.js - المكونات الرئيسية والتطبيق
+// EchtPrüfung 2027 — app2.js (الجزء 2 من 2)
+// المكونات: ExamView, SprechenView, SprechenDetailView, SchreibenView, AdminPanel, App
 // ==========================================
 
 function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
@@ -508,7 +515,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         {(exam.type === "sprach1" || exam.type === "sprach2") && (
           <div className="card" style={{ fontSize: "1.1em", lineHeight: 2.2, padding: 20 }}>
             {exam.note && <div style={{ background: "var(--badbg)", color: "var(--badc)", padding: 10, borderRadius: 8, marginBottom: 16, fontSize: "0.9em", fontWeight: "bold" }}>{exam.note}</div>}
-            {/* هاد السطر هو اللي تصلح باش يقرا الفراغات بجوج الطرق */}
             {exam.text.split(/(?:\.{3,}\s*|__)\s*\((\d+)\)\s*(?:\.{3,}|__)/g).map((part, i) => {
               if (i % 2 === 1) {
                 const gapNum = parseInt(part);
@@ -1391,7 +1397,6 @@ function App() {
       return;
     }
 
-    // Logic for Lesen, Hören, Sprach 1, Sprach 2
     const localExams = dataLesen.filter(e => norm(e.title) === norm(title) && e.sub === sub);
     const localHoren = dataHoren.filter(e => norm(e.title) === norm(title) && e.sub === sub);
     const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => norm(e.title) === norm(title) && e.sub === sub);
@@ -1842,7 +1847,6 @@ function App() {
         </div>
       )}
 
-      {/* نافذة المحتوى المقفل */}
       {lockedModal && (
         <div className="overlay" onClick={() => setLockedModal(false)} style={{ direction: 'rtl', zIndex: 9999 }}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ textAlign: "center", padding: "40px 24px", borderRadius: 28 }}>
