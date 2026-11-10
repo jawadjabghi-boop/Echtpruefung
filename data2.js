@@ -407,13 +407,5 @@ window.EXAMS = [
       {n:4, c:"h", de:"Das erste deutsche Bücherdorf hat in Mühlbeck/Fredersdorf (Sachsen-Anhalt) seit Ende September seine Tore geöffnet. In acht Antiquariaten warten über 70.000 Bücher aus allen Bereichen der Literatur auf Interessenten. Das in reizvoller landschaftlicher Umgebung liegende Bücherdorf nahe Bitterfeld – unweit der A19 und des Flughafens Leipzig – ist aus allen Teilen Deutschlands leicht zu erreichen. Geöffnet sind die Antiquariate auch am Samstag und Sonntag.", ar:"افتتحت أول قرية كتب ألمانية أبوابها في ميلبيك/فريدرسدورف (ساكسونيا أنهالت) منذ نهاية سبتمبر. في ثمانية متاجر للكتب القديمة، ينتظر أكثر من 70,000 كتاب من جميع مجالات الأدب المهتمين. تقع قرية الكتب بالقرب من بيترفيلد في محيط طبيعي خلاب، ويمكن الوصول إليها بسهولة من جميع أنحاء ألمانيا. المتاجر مفتوحة أيضًا يومي السبت والأحد.", ma:"بلايص سياحية لمحبي الكتب (قرية الكتب)."},
       {n:5, c:"c", de:"Die Bregenzer Festspiele sind bemüht, die Vorstellungen auch bei zweifelhafter Witterung bzw. leichtem Regen auf der Seebühne abzuhalten, weshalb es zu Verzögerungen des Beginns oder zu Unterbrechungen kommen kann. Sollte die Seeaufführung nicht stattfinden können, wird eine halbszenische Version von Porgy and Bess im Festspielhaus gegeben. Wir empfehlen unseren Gästen, bei unsicherer Wetterlage regenfeste Kleidung zu bevorzugen und auf Schirme zu verzichten, da diese die Sicht beeinträchtigen.", ar:"تسعى مهرجانات بريجنز إلى إقامة العروض على مسرح البحيرة حتى في الأحوال الجوية غير المؤكدة أو المطر الخفيف، مما قد يؤدي إلى تأخير البداية أو انقطاعات. إذا تعذر إقامة العرض البحري، فسيتم تقديم نسخة نصف مسرحية من Porgy and Bess في قاعة المهرجان. نوصي ضيوفنا بتفضيل الملابس المقاومة للمطر والاستغناء عن المظلات لأنها تعيق الرؤية.", ma:"ملاحظة لزوار مهرجان بريغنتس."}
     ]
-  },
-  {
-    id:"vera-t2", title:"Vera", level:"B1", sub:"Teile 2", isPremium: true, type:"mcq",
-    paragraphs: [], items: [] 
-  },
-  {
-    id:"vera-t3", title:"Vera", level:"B1", sub:"Teile 3", isPremium: true, type:"mcq",
-    paragraphs: [], items: [] 
   }
 ];
