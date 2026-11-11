@@ -512,7 +512,6 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
               if (i % 2 === 1) {
                 const gapNum = parseInt(part);
                 const it = exam.items.find(x => x.n === gapNum);
-                if (!it) return <span key={i}>[Missing Gap {gapNum}]</span>;
                 const sel = ans[gapNum];
                 const isDone = done !== null;
                 
@@ -648,7 +647,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                <button className="btnI" onClick={() => setActiveGap(null)}><Icons.X color="var(--text)" /></button>
              </div>
              <div className="word-bank" style={{marginBottom:0, gridTemplateColumns: "1fr"}}>
-               {exam.wordBank?.map(w => {
+               {exam.wordBank.map(w => {
                  const isUsed = Object.values(ans).includes(w.w) && ans[activeGap] !== w.w;
                  return (
                    <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => pickSprach2(w.w)} style={{ padding: "14px", borderColor: ans[activeGap] === w.w ? themeColor : "var(--line)", background: ans[activeGap] === w.w ? `${themeColor}15` : "var(--card)", color: ans[activeGap] === w.w ? themeColor : "var(--text)" }}>
@@ -1324,8 +1323,8 @@ function App() {
       }]);
       if (insertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + insertError.message);
       
-      const userObj = { . };
-      setUser(userObj); localStorage.setItem("ep_user", JSON.stringify(userObj));
+      const userObj = { ...newData.user, name: uniqueName, isGuest: false };
+      setUser(userObj); loser", JSON.stringify(userObj));
     } else {
       await sb.from('profiles').update({ active_device_id: deviceId }).eq('id', data.user.id);
       const userObj = { ...data.user, name: uniqueName, isGuest: false };
@@ -1360,7 +1359,7 @@ function App() {
     const dataHoren = isB2 ? (B2_HOREN_EXAMS || []) : (HOREN_EXAMS || []);
     const dataSchreiben = isB2 ? (B2_SCHREIBEN_DATA || []) : (SCHREIBEN_DATA || []);
 
-    const norm = (s) => (s || "").toLowerCase().replace(/\(?معدل\)?/g, '').replace(/\s+/g, '').trim();
+    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
 
     if (sub === "Schreiben") {
       const localSchreiben = dataSchreiben.filter(e => norm(e.title) === norm(title));
@@ -1539,7 +1538,7 @@ function App() {
             
             {(() => {
               const currentPlaceholder = level === "B2" ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS;
-              const norm = (s) => (s || "").toLowerCase().replace(/\(?معدل\)?/g, '').replace(/\s+/g, '').trim();
+              const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
               return currentPlaceholder["Lesen"]?.[activeTab]?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase())).map((name, idx) => {
                 const isB2 = level === "B2";
                 const localExams = (isB2 ? B2_EXAMS : EXAMS).filter(e => norm(e.title) === norm(name) && e.sub === activeTab && e.level === level);
@@ -1657,7 +1656,7 @@ function App() {
                   {(() => {
                     const currentPlaceholder = level === "B2" ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS;
                     const hörenList = currentPlaceholder["Hören"]?.[activeHorenTeil] || [];
-                    const norm = (s) => (s || "").toLowerCase().replace(/\(?معدل\)?/g, '').replace(/\s+/g, '').trim();
+                    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
                     
                     return hörenList.map((title, idx) => {
                       const localHoren = (level === "B2" ? B2_HOREN_EXAMS : HOREN_EXAMS).filter(ex => norm(ex.title) === norm(title));
