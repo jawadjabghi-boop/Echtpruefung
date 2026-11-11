@@ -1,590 +1,732 @@
 /* =========================================================
-   EchtPrüfung 2027 — app.js (النسخة النهائية الكاملة)
+   EchtPrüfung 2027 — app.js
+   ترجمة أوتوماتيكية من Google + جميع الدروس ظاهرة
    ========================================================= */
 
-const { useState, useEffect, useRef } = React;
-const WA = "212680193427";
-const wa = (msg) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank");
+const { useState, useEffect, useRef, useMemo } = React;
 
-const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
-const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
-const sb = supabase.createClient(supabaseUrl, supabaseKey);
+const LANG_MAP = { ma: 'ar' };
+const getLang = (l) => LANG_MAP[l] || l || 'ar';
 
-const {
-  UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS,
-  B2_SCHREIBEN_DATA, B2_PRUEFUNG_DATA, B2_EXAMS, B2_HOREN_EXAMS,
-  B2_PLACEHOLDER_LESSONS
-} = window;
+// ================== Google Translate Cache ==================
+const gCache = {};
+const fetching = new Set();
 
-const B1_SPRECHEN_DATA = window.B1_SPRECHEN_DATA || [];
-const B2_SPRECHEN_DATA = window.B2_SPRECHEN_DATA || [];
-
-// ============= I18N =============
-const t = (key, lang) => {
-  const safeLang = lang === 'ma' ? 'ar' : lang;
-  if (UI_TEXTS && UI_TEXTS[safeLang] && UI_TEXTS[safeLang][key]) return UI_TEXTS[safeLang][key];
-  if (UI_TEXTS && UI_TEXTS.ar && UI_TEXTS.ar[key]) return UI_TEXTS.ar[key];
-  if (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) return UI_TEXTS.en[key];
-  return key;
-};
-
-const EXTRA = {
-  ar: { mod: "معدل", no_audio: "لا يوجد صوت", no_q: "هذا الدرس ما فيهش أسئلة دابا", check: "تصحيح", next: "التالي", back: "رجوع", close: "إغلاق", versions: "نسخ", locked_t: "محتوى مقفل", locked_m: "خاصك ترقية الحساب باش تفتح هاد المحتوى", upgrade: "ترقية الحساب الآن", later: "ليس الآن", correct: "صحيح", wrong: "خطأ", no_ans: "لم تجب", the_ans: "الجواب", empty: "ما كاين حتى شي درس فـ هاد القسم", search: "قلب على درس...", choose: "اختر النسخة", result: "النتيجة", show_tr: "إظهار الترجمة", hide_tr: "إخفاء الترجمة", exp: "توضيح", play: "تشغيل", pause: "إيقاف", memo: "قصة للحفظ", part: "الجزء", of: "من", prev: "السابق", schreiben_t: "كتب هنا جوابك...", wc: "كلمة", settings: "الإعدادات", lang_btn: "تغيير اللغة", fs: "حجم النص", reset_fs: "إعادة الحجم الأصلي", logout: "خروج", audio_none: "🔇 لا يوجد صوت" },
-  ma: { mod: "معدل", no_audio: "لا يوجد صوت", no_q: "هذا الدرس ما فيهش أسئلة دابا", check: "تصحيح", next: "التالي", back: "رجوع", close: "إغلاق", versions: "نسخ", locked_t: "محتوى مقفل", locked_m: "خاصك ترقية الحساب باش تفتح هاد المحتوى", upgrade: "ترقية الحساب الآن", later: "ليس الآن", correct: "صحيح", wrong: "خطأ", no_ans: "لم تجب", the_ans: "الجواب", empty: "ما كاين حتى شي درس فـ هاد القسم", search: "قلب على درس...", choose: "اختر النسخة", result: "النتيجة", show_tr: "إظهار الترجمة", hide_tr: "إخفاء الترجمة", exp: "توضيح", play: "تشغيل", pause: "إيقاف", memo: "قصة للحفظ", part: "الجزء", of: "من", prev: "السابق", schreiben_t: "كتب هنا جوابك...", wc: "كلمة", settings: "الإعدادات", lang_btn: "تغيير اللغة", fs: "حجم النص", reset_fs: "إعادة الحجم الأصلي", logout: "خروج", audio_none: "🔇 لا يوجد صوت" },
-  en: { mod: "Modified", no_audio: "No audio", no_q: "This lesson has no questions", check: "Check", next: "Next", back: "Back", close: "Close", versions: "Versions", locked_t: "Locked Content", locked_m: "Upgrade required to unlock", upgrade: "Upgrade Now", later: "Not Now", correct: "Correct", wrong: "Wrong", no_ans: "No answer", the_ans: "Answer", empty: "No lessons found", search: "Search...", choose: "Choose Version", result: "Result", show_tr: "Show Translation", hide_tr: "Hide Translation", exp: "Explanation", play: "Play", pause: "Pause", memo: "Story Memo", part: "Part", of: "of", prev: "Previous", schreiben_t: "Write here...", wc: "words", settings: "Settings", lang_btn: "Change Language", fs: "Text Size", reset_fs: "Reset Size", logout: "Logout", audio_none: "🔇 No audio" },
-  de: { mod: "Modifiziert", no_audio: "Kein Audio", no_q: "Keine Fragen", check: "Prüfen", next: "Weiter", back: "Zurück", close: "Schließen", versions: "Versionen", locked_t: "Gesperrt", locked_m: "Upgrade erforderlich", upgrade: "Upgrade", later: "Nicht jetzt", correct: "Richtig", wrong: "Falsch", no_ans: "Keine Antwort", the_ans: "Antwort", empty: "Keine Lektionen", search: "Suchen...", choose: "Version wählen", result: "Ergebnis", show_tr: "Übersetzung anzeigen", hide_tr: "Übersetzung verbergen", exp: "Erklärung", play: "Abspielen", pause: "Pause", memo: "Geschichte", part: "Teil", of: "von", prev: "Zurück", schreiben_t: "Schreibe hier...", wc: "Wörter", settings: "Einstellungen", lang_btn: "Sprache ändern", fs: "Textgröße", reset_fs: "Zurücksetzen", logout: "Ausloggen", audio_none: "🔇 Kein Audio" },
-  fr: { mod: "Modifié", no_audio: "Pas d'audio", no_q: "Pas de questions", check: "Vérifier", next: "Suivant", back: "Retour", close: "Fermer", versions: "Versions", locked_t: "Contenu verrouillé", locked_m: "Mise à niveau requise", upgrade: "Mettre à niveau", later: "Pas maintenant", correct: "Correct", wrong: "Faux", no_ans: "Pas de réponse", the_ans: "Réponse", empty: "Aucune leçon", search: "Rechercher...", choose: "Choisir version", result: "Résultat", show_tr: "Afficher traduction", hide_tr: "Cacher traduction", exp: "Explication", play: "Jouer", pause: "Pause", memo: "Mémo", part: "Partie", of: "sur", prev: "Précédent", schreiben_t: "Écrire ici...", wc: "mots", settings: "Paramètres", lang_btn: "Changer langue", fs: "Taille du texte", reset_fs: "Réinitialiser", logout: "Déconnexion", audio_none: "🔇 Pas d'audio" },
-  hi: { mod: "संशोधित", no_audio: "ऑडियो नहीं", no_q: "कोई प्रश्न नहीं", check: "जाँचें", next: "आगे", back: "वापस", close: "बंद करें", versions: "संस्करण", locked_t: "लॉक", locked_m: "अपग्रेड आवश्यक", upgrade: "अभी अपग्रेड करें", later: "अभी नहीं", correct: "सही", wrong: "गलत", no_ans: "कोई उत्तर नहीं", the_ans: "उत्तर", empty: "कोई पाठ नहीं", search: "खोजें...", choose: "संस्करण चुनें", result: "परिणाम", show_tr: "अनुवाद दिखाएं", hide_tr: "अनुवाद छिपाएं", exp: "स्पष्टीकरण", play: "चलाएं", pause: "रोकें", memo: "कहानी", part: "भाग", of: "में से", prev: "पिछला", schreiben_t: "यहाँ लिखें...", wc: "शब्द", settings: "सेटिंग्स", lang_btn: "भाषा बदलें", fs: "पाठ आकार", reset_fs: "रीसेट करें", logout: "लॉगआउट", audio_none: "🔇 ऑडियो नहीं" },
-  id: { mod: "Dimodifikasi", no_audio: "Tidak ada audio", no_q: "Tidak ada pertanyaan", check: "Periksa", next: "Berikutnya", back: "Kembali", close: "Tutup", versions: "Versi", locked_t: "Terkunci", locked_m: "Perlu upgrade", upgrade: "Upgrade Sekarang", later: "Tidak Sekarang", correct: "Benar", wrong: "Salah", no_ans: "Tidak ada jawaban", the_ans: "Jawaban", empty: "Tidak ada pelajaran", search: "Cari...", choose: "Pilih versi", result: "Hasil", show_tr: "Tampilkan Terjemahan", hide_tr: "Sembunyikan", exp: "Penjelasan", play: "Mainkan", pause: "Jeda", memo: "Cerita", part: "Bagian", of: "dari", prev: "Sebelumnya", schreiben_t: "Tulis di sini...", wc: "kata", settings: "Pengaturan", lang_btn: "Ubah Bahasa", fs: "Ukuran Teks", reset_fs: "Reset", logout: "Keluar", audio_none: "🔇 Tidak ada audio" },
-  tl: { mod: "Binago", no_audio: "Walang audio", no_q: "Walang tanong", check: "Tingnan", next: "Susunod", back: "Bumalik", close: "Isara", versions: "Mga Bersyon", locked_t: "Naka-lock", locked_m: "Kailangan ng upgrade", upgrade: "I-upgrade", later: "Hindi Ngayon", correct: "Tama", wrong: "Mali", no_ans: "Walang sagot", the_ans: "Sagot", empty: "Walang aralin", search: "Maghanap...", choose: "Pumili", result: "Resulta", show_tr: "Ipakita Salin", hide_tr: "Itago", exp: "Paliwanag", play: "I-play", pause: "I-pause", memo: "Kuwento", part: "Bahagi", of: "ng", prev: "Nakaraan", schreiben_t: "Isulat dito...", wc: "salita", settings: "Mga Setting", lang_btn: "Palitan Wika", fs: "Laki ng Teksto", reset_fs: "I-reset", logout: "Mag-logout", audio_none: "🔇 Walang audio" },
-  fa: { mod: "اصلاح شده", no_audio: "بدون صدا", no_q: "سوالی نیست", check: "بررسی", next: "بعدی", back: "بازگشت", close: "بستن", versions: "نسخه‌ها", locked_t: "قفل شده", locked_m: "نیاز به ارتقا", upgrade: "ارتقا", later: "الان نه", correct: "صحیح", wrong: "غلط", no_ans: "بدون پاسخ", the_ans: "پاسخ", empty: "درسی نیست", search: "جستجو...", choose: "انتخاب نسخه", result: "نتیجه", show_tr: "نمایش ترجمه", hide_tr: "مخفی کردن", exp: "توضیح", play: "پخش", pause: "توقف", memo: "داستان", part: "بخش", of: "از", prev: "قبلی", schreiben_t: "اینجا بنویسید...", wc: "کلمه", settings: "تنظیمات", lang_btn: "تغییر زبان", fs: "اندازه متن", reset_fs: "بازنشانی", logout: "خروج", audio_none: "🔇 بدون صدا" },
-  sw: { mod: "Iliyorekebishwa", no_audio: "Hakuna sauti", no_q: "Hakuna maswali", check: "Angalia", next: "Ifuatayo", back: "Rudi", close: "Funga", versions: "Matoleo", locked_t: "Imefungwa", locked_m: "Inahitaji kuboresha", upgrade: "Boresha", later: "Sio Sasa", correct: "Sahihi", wrong: "Makosa", no_ans: "Hakuna jibu", the_ans: "Jibu", empty: "Hakuna masomo", search: "Tafuta...", choose: "Chagua toleo", result: "Matokeo", show_tr: "Onyesha Tafsiri", hide_tr: "Ficha", exp: "Maelezo", play: "Cheza", pause: "Sitisha", memo: "Hadithi", part: "Sehemu", of: "ya", prev: "Iliyotangulia", schreiben_t: "Andika hapa...", wc: "maneno", settings: "Mipangilio", lang_btn: "Badilisha Lugha", fs: "Ukubwa wa Maandishi", reset_fs: "Weka Upya", logout: "Toka", audio_none: "🔇 Hakuna sauti" },
-  uz: { mod: "O'zgartirilgan", no_audio: "Ovoz yo'q", no_q: "Savollar yo'q", check: "Tekshirish", next: "Keyingi", back: "Orqaga", close: "Yopish", versions: "Versiyalar", locked_t: "Qulflangan", locked_m: "Yangilash kerak", upgrade: "Yangilash", later: "Hozir emas", correct: "To'g'ri", wrong: "Xato", no_ans: "Javob yo'q", the_ans: "Javob", empty: "Darslar yo'q", search: "Qidirish...", choose: "Versiyani tanlash", result: "Natija", show_tr: "Tarjimani ko'rsatish", hide_tr: "Yashirish", exp: "Tushuntirish", play: "Ijro etish", pause: "Pauza", memo: "Hikoya", part: "Qism", of: "dan", prev: "Oldingi", schreiben_t: "Bu yerga yozing...", wc: "so'z", settings: "Sozlamalar", lang_btn: "Tilni o'zgartirish", fs: "Matn hajmi", reset_fs: "Tiklash", logout: "Chiqish", audio_none: "🔇 Ovoz yo'q" },
-  ne: { mod: "परिमार्जित", no_audio: "अडियो छैन", no_q: "प्रश्नहरू छैनन्", check: "जाँच्नुहोस्", next: "अर्को", back: "फर्कनुहोस्", close: "बन्द", versions: "संस्करणहरू", locked_t: "लक", locked_m: "अपग्रेड आवश्यक", upgrade: "अपग्रेड", later: "अहिले होइन", correct: "सही", wrong: "गलत", no_ans: "उत्तर छैन", the_ans: "उत्तर", empty: "पाठहरू छैनन्", search: "खोज्नुहोस्...", choose: "संस्करण छान्नुहोस्", result: "नतिजा", show_tr: "अनुवाद देखाउनुहोस्", hide_tr: "लुकाउनुहोस्", exp: "स्पष्टीकरण", play: "चलाउनुहोस्", pause: "रोक्नुहोस्", memo: "कथा", part: "भाग", of: "को", prev: "अघिल्लो", schreiben_t: "यहाँ लेख्नुहोस्...", wc: "शब्द", settings: "सेटिङ", lang_btn: "भाषा परिवर्तन", fs: "पाठ आकार", reset_fs: "रिसेट", logout: "लगआउट", audio_none: "🔇 अडियो छैन" }
-};
-
-const tx = (key, lang) => {
-  const safeLang = lang === 'ma' ? 'ar' : lang;
-  if (EXTRA[safeLang] && EXTRA[safeLang][key]) return EXTRA[safeLang][key];
-  if (EXTRA.en && EXTRA.en[key]) return EXTRA.en[key];
-  return key;
-};
-
-const formatTitle = (title, lang) => {
-  if (!title) return '';
-  const modLabel = tx('mod', lang);
-  return String(title)
-    .replace(/\((\d+)\s*المعدل\)/g, `($1 ${modLabel})`)
-    .replace(/\(المعدل\)/g, `(${modLabel})`)
-    .replace(/(\d+)\s*المعدل/g, `$1 ${modLabel}`)
-    .replace(/المعدل/g, modLabel);
-};
-
-const norm = (s) => (s == null ? "" : String(s)).toLowerCase()
-  .replace(/(المعدل|معدل|تعديل)/g, "")
-  .replace(/[^\w\u0600-\u06FF]+/g, "").trim();
-
-// ============= PLACEHOLDER (B1) =============
-const PLACEHOLDER_LESSONS = {
-  "Lesen": {
-    "Teile 1": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
-    "Teile 2": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
-    "Teile 3": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
-    "Sprach 1": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Liebe Olivia."],
-    "Sprach 2": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Petra", "Corina", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2."]
-  },
-  "Hören": {
-    "Teile 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
-    "Teile 2": ["Vorlesung", "Interview", "Radiobericht"],
-    "Teile 3": ["Gespräch im Büro", "Dialog im Alltag"]
-  },
-  "Schreiben": [
-    "Urlaub Im Schwarzwald - Antwort An Petra", "Eva - Traumberuf Und Neuigkeiten",
-    "Sophie - Würzburg", "Nadja - Garten", "Nicole - Probleme", "Andreas - Neuer Kollege",
-    "Annika - Sommerurlaub", "Iris - Abschlussparty", "Caroline - Gastschülerin", "Vera - Arbeitsweg",
-    "Jennifer - Einladung", "Andreas - Neue Wohnung", "Thomas - Überraschungsausflug",
-    "Tamara - Treffen", "Jan - Urlaub", "Viktor - Urlaub", "Anna - Katze",
-    "Nora - Neue Wohnung", "Claudia - Zoobesuch", "Karla - Umzug", "Mara - Reise",
-    "Annika - Urlaub 2", "Sonja - Musikfestival", "Rita - Hochzeit", "Anne - Geburtstag",
-    "Paul - Ausflug", "Jakob - Nachbarn", "Emilia", "Tobias", "Naco", "Alicia",
-    "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
-  ],
-  "Sprechen": { "Teile 1": [], "Teile 2": [], "Teile 3": [] }
-};
-
-const FREE_MODIFIED_LESSONS = window.FREE_MODIFIED_LESSONS || [];
-
-// ============= ICONS =============
-const Icon = ({ d, color = "currentColor", size = 22 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d={d} />
-  </svg>
-);
-
-const Icons = {
-  Home: (p) => <Icon d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" {...p} />,
-  Book: (p) => <Icon d="M4 19.5A2.5 2.5 0 016.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" {...p} />,
-  Headphones: (p) => <Icon d="M3 18v-6a9 9 0 0118 0v6M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z" {...p} />,
-  Edit: (p) => <Icon d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z" {...p} />,
-  Mic: (p) => <Icon d="M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3zM19 10v2a7 7 0 01-14 0v-2M12 19v3" {...p} />,
-  Graduation: (p) => <Icon d="M22 10v6M2 10l10-5 10 5-10 5zM6 12v5c3 3 9 3 12 0v-5" {...p} />,
-  Menu: (p) => <Icon d="M4 6h16M4 12h16M4 18h16" {...p} />,
-  Moon: (p) => <Icon d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" size={18} {...p} />,
-  Sun: (p) => <Icon d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4M12 6a6 6 0 100 12 6 6 0 000-12z" size={18} {...p} />,
-  Settings: (p) => <Icon d="M12 15a3 3 0 100-6 3 3 0 000 6zM19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z" size={18} {...p} />,
-  Translate: (p) => <Icon d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4" size={18} {...p} />,
-  Play: (p) => <svg width="24" height="24" viewBox="0 0 24 24" fill={p.color || "currentColor"}><path d="M8 5v14l11-7z" /></svg>,
-  Pause: (p) => <svg width="24" height="24" viewBox="0 0 24 24" fill={p.color || "currentColor"}><rect x="6" y="6" width="12" height="12" rx="2" /></svg>,
-  Check: (p) => <Icon d="M20 6L9 17l-5-5" strokeWidth="3" {...p} />,
-  ArrowLeft: (p) => <Icon d="M15 18l-6-6 6-6" {...p} />,
-  ArrowRight: (p) => <Icon d="M9 18l6-6-6-6" {...p} />,
-  Target: (p) => <Icon d="M12 22a10 10 0 100-20 10 10 0 000 20zm0-6a4 4 0 100-8 4 4 0 000 8zm0-4a2 2 0 100 .01" {...p} />,
-  Practice: (p) => <Icon d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2zM22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z" {...p} />,
-  Clock: (p) => <Icon d="M12 6v6l4 2M12 22a10 10 0 100-20 10 10 0 000 20z" size={16} {...p} />,
-  Eye: (p) => <Icon d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zm11 3a3 3 0 100-6 3 3 0 000 6z" {...p} />,
-  X: (p) => <Icon d="M18 6L6 18M6 6l12 12" {...p} />,
-  Lock: (p) => <Icon d="M7 11V7a5 5 0 0110 0v4M3 11h18v11H3z" {...p} />,
-  Rocket: (p) => <Icon d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 00-2.91-.09zM12 15l-3-3a22 22 0 012-3.95A12.88 12.88 0 0122 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 01-4 2zM9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" {...p} />,
-  Gift: (p) => <Icon d="M20 12v10H4V12M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" {...p} />,
-  Alert: (p) => <Icon d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" {...p} />
-};
-
-// ============= LOGO =============
-const LogoImage = ({ size = 50 }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
-    <defs>
-      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#0F172A" /><stop offset="100%" stopColor="#1E293B" /></linearGradient>
-      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#14B8A6" /><stop offset="100%" stopColor="#0D9488" /></linearGradient>
-    </defs>
-    <rect width="100" height="100" rx="24" fill="url(#bgGrad)" />
-    <rect width="98" height="98" x="1" y="1" rx="23" stroke="rgba(255,255,255,0.1)" strokeWidth="2" fill="none" />
-    <rect x="18" y="28" width="36" height="10" rx="4" fill="#0D9488" />
-    <rect x="18" y="44" width="36" height="10" rx="4" fill="#BE123C" />
-    <rect x="18" y="60" width="36" height="10" rx="4" fill="url(#goldGrad)" />
-    <path d="M 54 70 L 54 30 L 70 30 C 84 30, 84 52, 70 52 L 54 52" stroke="url(#goldGrad)" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    <circle cx="80" cy="80" r="5" fill="#D97706" />
-  </svg>
-);
-
-// ============= AUTO-TRANSLATE =============
-const globalTransCache = {};
-const FAST_DICT = {
-  "المعدل": { ar: "المعدل", en: "Modified", fr: "Modifié", de: "Modifiziert", hi: "संशोधित", id: "Dimodifikasi", tl: "Binago", fa: "اصلاح شده", sw: "Iliyorekebishwa", uz: "O'zgartirilgan", ne: "परिमार्जित" }
-};
-
-function AutoTrans({ text, lang, force = false }) {
-  const targetLang = lang === 'ma' ? 'ar' : lang;
-  const cacheKey = `${targetLang}_${text}`;
-  const [translated, setTranslated] = useState(() => {
-    if (!text) return "";
-    if (targetLang === 'de' && !force) return text;
-    const safeText = String(text).trim();
-    if (FAST_DICT[safeText] && FAST_DICT[safeText][targetLang]) return FAST_DICT[safeText][targetLang];
-    return globalTransCache[cacheKey] || text;
+function GT({ text, lang }) {
+  const tl = getLang(lang);
+  const [out, setOut] = useState(() => {
+    if (!text || tl === 'de') return text;
+    return gCache[`${tl}_${text}`] || null;
   });
 
   useEffect(() => {
-    if (!text || targetLang === 'de') return;
-    const safeText = String(text).trim();
-    if (FAST_DICT[safeText] && FAST_DICT[safeText][targetLang]) {
-      setTranslated(FAST_DICT[safeText][targetLang]);
-      return;
-    }
-    if (globalTransCache[cacheKey]) {
-      setTranslated(globalTransCache[cacheKey]);
-      return;
-    }
-    const controller = new AbortController();
-    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`, { signal: controller.signal })
+    if (!text || tl === 'de') { setOut(text); return; }
+    const key = `${tl}_${text}`;
+    if (gCache[key]) { setOut(gCache[key]); return; }
+    if (fetching.has(key)) return;
+    fetching.add(key);
+    const ctrl = new AbortController();
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`, { signal: ctrl.signal })
       .then(r => r.json())
-      .then(data => {
-        if (data && data[0]) {
-          const result = data[0].map(item => item[0]).join('');
-          globalTransCache[cacheKey] = result;
-          setTranslated(result);
+      .then(d => {
+        if (d && d[0]) {
+          const r = d[0].map(x => x[0] || '').join('');
+          gCache[key] = r;
+          setOut(r);
         }
       })
-      .catch(() => {});
-    return () => controller.abort();
-  }, [text, targetLang, cacheKey, force]);
+      .catch(() => {})
+      .finally(() => { fetching.delete(key); });
+    return () => ctrl.abort();
+  }, [text, tl]);
 
-  return <span>{translated}</span>;
+  if (tl === 'de') return text;
+  return out !== null ? out : text;
 }
 
-function SmartTrans({ obj, lang }) {
-  if (!obj) return "";
-  const textDe = obj.de || obj.en || (obj.q || "") || (typeof obj === 'string' ? obj : "");
-  const targetLang = lang === 'ma' ? 'ar' : lang;
-  if (typeof obj === 'object' && obj[lang]) return <span>{obj[lang]}</span>;
-  if (lang === 'de' && typeof obj === 'object' && obj['de']) return <span>{obj['de']}</span>;
-  return <AutoTrans text={textDe} lang={targetLang} force={true} />;
+// SText: يعرض الترجمة اليدوية، وإلا Google
+function ST({ obj, lang, field }) {
+  if (!obj) return '';
+  if (typeof obj === 'string') return <GT text={obj} lang={lang} />;
+  const l = getLang(lang);
+  if (obj[l] && obj[l] !== obj.de) return obj[l];
+  if (l === 'ma' && obj.ar) return obj.ar;
+  const base = field ? (obj[field] || obj.de || obj.en) : (obj.de || obj.en || '');
+  if (!base) return '';
+  return <GT text={base} lang={lang} />;
 }
 
-// ============= GET DATA =============
-const getDataForLevel = (level, tab) => {
-  const isB2 = level === 'B2';
-  let src = [];
-  if (tab === 'Lesen') src = isB2 ? (B2_EXAMS || []) : [...(EXAMS || []), ...FREE_MODIFIED_LESSONS];
-  else if (tab === 'Hören') src = isB2 ? (B2_HOREN_EXAMS || []) : (HOREN_EXAMS || []);
-  else if (tab === 'Schreiben') src = isB2 ? (B2_SCHREIBEN_DATA || []) : (SCHREIBEN_DATA || []);
-  else if (tab === 'Sprechen') src = isB2 ? B2_SPRECHEN_DATA : B1_SPRECHEN_DATA;
-  return src;
+// QT: يعرض نص السؤال
+function QT({ item, lang }) {
+  if (!item) return '';
+  const l = getLang(lang);
+  const km = { ar: 'qar', ma: 'qma', en: 'qen', de: 'q' };
+  if (item[km[l]]) return item[km[l]];
+  const base = item.q || item.de || '';
+  if (!base) return '';
+  return <GT text={base} lang={lang} />;
+}
+
+// TT: يعرض عنوان مع ترجمة "معدل"
+function TT({ title, lang }) {
+  if (!title) return '';
+  const mod = tx('mod', lang);
+  const c = String(title)
+    .replace(/\((\d+)\s*المعدل\)/g, `($1 \u00A7)`)
+    .replace(/\(المعدل\)/g, `(\u00A7)`)
+    .replace(/(\d+)\s*المعدل/g, `$1 \u00A7`)
+    .replace(/المعدل/g, '\u00A7');
+  const parts = c.split('\u00A7');
+  return (
+    <>
+      {parts.map((p, i) => (
+        <React.Fragment key={i}>
+          <GT text={p} lang={lang} />
+          {i < parts.length - 1 && <span> {mod} </span>}
+        </React.Fragment>
+      ))}
+    </>
+  );
+}
+
+// ================== ترجمات UI ==================
+const EXTRA = {
+  ma: { lesen:"قراية", horen:"سماع", schreiben:"كتابة", sprechen:"هضرة", check:"تصحيح", back:"رجوع", reset:"إعادة", close:"إغلاق", show_tr:"إظهار الترجمة", hide_tr:"إخفاء الترجمة", play:"تشغيل", pause:"إيقاف", no_q:"ما كاينش أسئلة", no_audio:"ما كاينش صوت", memo:"قصة للحفظ", choose:"اختر النسخة", versions:"نسخ", empty:"ما كاين حتى شي درس", search:"قلب على درس...", result:"النتيجة", mod:"معدل", audio_none:"🔇 ما كاينش صوت", points:"المطلوب:", options:"الاختيارات:", word_bank:"بنك الكلمات:", pick_word:"اختر الكلمة", correct:"✓ صحيح", wrong:"✗ الجواب:", required:"المطلوب:", coming_soon:"🚧 قريباً", choose_lang:"ختار اللغة", all_lessons:"جميع الدروس", lessons:"درس" },
+  ar: { lesen:"قراءة", horen:"استماع", schreiben:"كتابة", sprechen:"تحدث", check:"تصحيح", back:"رجوع", reset:"إعادة", close:"إغلاق", show_tr:"إظهار الترجمة", hide_tr:"إخفاء الترجمة", play:"تشغيل", pause:"إيقاف", no_q:"لا توجد أسئلة", no_audio:"لا يوجد صوت", memo:"قصة للحفظ", choose:"اختر النسخة", versions:"نسخ", empty:"لا توجد دروس", search:"قلب على درس...", result:"النتيجة", mod:"معدل", audio_none:"🔇 لا يوجد صوت", points:"المطلوب:", options:"الخيارات:", word_bank:"بنك الكلمات:", pick_word:"اختر الكلمة", correct:"✓ صحيح", wrong:"✗ الجواب:", required:"المطلوب:", coming_soon:"🚧 قريباً", choose_lang:"اختر اللغة", all_lessons:"جميع الدروس", lessons:"درس" },
+  en: { lesen:"Reading", horen:"Listening", schreiben:"Writing", sprechen:"Speaking", check:"Check", back:"Back", reset:"Reset", close:"Close", show_tr:"Show translation", hide_tr:"Hide translation", play:"Play", pause:"Pause", no_q:"No questions", no_audio:"No audio", memo:"Story memo", choose:"Choose version", versions:"versions", empty:"No lessons", search:"Search...", result:"Result", mod:"Modified", audio_none:"🔇 No audio", points:"Required:", options:"Options:", word_bank:"Word bank:", pick_word:"Pick a word", correct:"✓ Correct", wrong:"✗ Answer:", required:"Required:", coming_soon:"🚧 Coming soon", choose_lang:"Choose language", all_lessons:"All lessons", lessons:"lessons" },
+  de: { lesen:"Lesen", horen:"Hören", schreiben:"Schreiben", sprechen:"Sprechen", check:"Prüfen", back:"Zurück", reset:"Erneut", close:"Schließen", show_tr:"Übersetzung anzeigen", hide_tr:"Übersetzung verbergen", play:"Abspielen", pause:"Pause", no_q:"Keine Fragen", no_audio:"Kein Audio", memo:"Geschichte", choose:"Version wählen", versions:"Versionen", empty:"Keine Lektionen", search:"Suchen...", result:"Ergebnis", mod:"Modifiziert", audio_none:"🔇 Kein Audio", points:"Punkte:", options:"Optionen:", word_bank:"Wortbank:", pick_word:"Wort wählen", correct:"✓ Richtig", wrong:"✗ Antwort:", required:"Erforderlich:", coming_soon:"🚧 Demnächst", choose_lang:"Sprache wählen", all_lessons:"Alle Lektionen", lessons:"Lektionen" },
+  fr: { lesen:"Lecture", horen:"Écoute", schreiben:"Écriture", sprechen:"Parler", check:"Vérifier", back:"Retour", reset:"Réinitialiser", close:"Fermer", show_tr:"Afficher traduction", hide_tr:"Cacher traduction", play:"Jouer", pause:"Pause", no_q:"Pas de questions", no_audio:"Pas d'audio", memo:"Mémo", choose:"Choisir version", versions:"versions", empty:"Aucune leçon", search:"Rechercher...", result:"Résultat", mod:"Modifié", audio_none:"🔇 Pas d'audio", points:"Points:", options:"Options :", word_bank:"Banque de mots :", pick_word:"Choisir mot", correct:"✓ Correct", wrong:"✗ Réponse :", required:"Requis :", coming_soon:"🚧 Bientôt", choose_lang:"Choisir langue", all_lessons:"Toutes les leçons", lessons:"leçons" },
+  hi: { lesen:"पढ़ना", horen:"सुनना", schreiben:"लिखना", sprechen:"बोलना", check:"जाँचें", back:"वापस", reset:"रीसेट", close:"बंद", show_tr:"अनुवाद दिखाएं", hide_tr:"अनुवाद छिपाएं", play:"चलाएं", pause:"रोकें", no_q:"कोई प्रश्न नहीं", no_audio:"ऑडियो नहीं", memo:"कहानी", choose:"संस्करण चुनें", versions:"संस्करण", empty:"कोई पाठ नहीं", search:"खोजें...", result:"परिणाम", mod:"संशोधित", audio_none:"🔇 ऑडियो नहीं", points:"अंक:", options:"विकल्प:", word_bank:"शब्द बैंक:", pick_word:"शब्द चुनें", correct:"✓ सही", wrong:"✗ उत्तर:", required:"आवश्यक:", coming_soon:"🚧 जल्द", choose_lang:"भाषा चुनें", all_lessons:"सभी पाठ", lessons:"पाठ" },
+  id: { lesen:"Membaca", horen:"Mendengar", schreiben:"Menulis", sprechen:"Berbicara", check:"Periksa", back:"Kembali", reset:"Ulang", close:"Tutup", show_tr:"Tampilkan terjemahan", hide_tr:"Sembunyikan", play:"Putar", pause:"Jeda", no_q:"Tidak ada pertanyaan", no_audio:"Tidak ada audio", memo:"Memo cerita", choose:"Pilih versi", versions:"versi", empty:"Tidak ada pelajaran", search:"Cari...", result:"Hasil", mod:"Dimodifikasi", audio_none:"🔇 Tidak ada audio", points:"Poin:", options:"Opsi:", word_bank:"Bank kata:", pick_word:"Pilih kata", correct:"✓ Benar", wrong:"✗ Jawaban:", required:"Diperlukan:", coming_soon:"🚧 Segera", choose_lang:"Pilih bahasa", all_lessons:"Semua pelajaran", lessons:"pelajaran" },
+  tl: { lesen:"Pagbasa", horen:"Pakikinig", schreiben:"Pagsulat", sprechen:"Pagsasalita", check:"Suriin", back:"Bumalik", reset:"I-reset", close:"Isara", show_tr:"Ipakita salin", hide_tr:"Itago salin", play:"I-play", pause:"I-pause", no_q:"Walang tanong", no_audio:"Walang audio", memo:"Kuwento", choose:"Pumili ng bersyon", versions:"mga bersyon", empty:"Walang aralin", search:"Maghanap...", result:"Resulta", mod:"Binago", audio_none:"🔇 Walang audio", points:"Puntos:", options:"Mga pagpipilian:", word_bank:"Bangko ng salita:", pick_word:"Pumili ng salita", correct:"✓ Tama", wrong:"✗ Sagot:", required:"Kailangan:", coming_soon:"🚧 Malapit na", choose_lang:"Pumili ng wika", all_lessons:"Lahat ng aralin", lessons:"aralin" },
+  fa: { lesen:"خواندن", horen:"شنیدن", schreiben:"نوشتن", sprechen:"صحبت", check:"بررسی", back:"بازگشت", reset:"بازنشانی", close:"بستن", show_tr:"نمایش ترجمه", hide_tr:"مخفی ترجمه", play:"پخش", pause:"توقف", no_q:"سوالی نیست", no_audio:"بدون صدا", memo:"داستان", choose:"انتخاب نسخه", versions:"نسخه‌ها", empty:"درسی نیست", search:"جستجو...", result:"نتیجه", mod:"اصلاح شده", audio_none:"🔇 بدون صدا", points:"امتیاز:", options:"گزینه‌ها:", word_bank:"بانک کلمات:", pick_word:"کلمه را انتخاب کنید", correct:"✓ صحیح", wrong:"✗ پاسخ:", required:"الزامی:", coming_soon:"🚧 به زودی", choose_lang:"زبان را انتخاب کنید", all_lessons:"همه درس‌ها", lessons:"درس" },
+  sw: { lesen:"Kusoma", horen:"Kusikiliza", schreiben:"Kuandika", sprechen:"Kuzungumza", check:"Angalia", back:"Rudi", reset:"Weka upya", close:"Funga", show_tr:"Onyesha tafsiri", hide_tr:"Ficha tafsiri", play:"Cheza", pause:"Sitisha", no_q:"Hakuna maswali", no_audio:"Hakuna sauti", memo:"Hadithi", choose:"Chagua toleo", versions:"matoleo", empty:"Hakuna masomo", search:"Tafuta...", result:"Matokeo", mod:"Iliyorekebishwa", audio_none:"🔇 Hakuna sauti", points:"Pointi:", options:"Chaguo:", word_bank:"Benki ya maneno:", pick_word:"Chagua neno", correct:"✓ Sahihi", wrong:"✗ Jibu:", required:"Inahitajika:", coming_soon:"🚧 Hivi karibuni", choose_lang:"Chagua lugha", all_lessons:"Masomo yote", lessons:"masomo" },
+  uz: { lesen:"O'qish", horen:"Tinglash", schreiben:"Yozish", sprechen:"Gapirish", check:"Tekshirish", back:"Orqaga", reset:"Tiklash", close:"Yopish", show_tr:"Tarjima ko'rsatish", hide_tr:"Tarjima yashirish", play:"Ijro etish", pause:"Pauza", no_q:"Savollar yo'q", no_audio:"Ovoz yo'q", memo:"Hikoya", choose:"Versiya tanlash", versions:"versiyalar", empty:"Darslar yo'q", search:"Qidirish...", result:"Natija", mod:"O'zgartirilgan", audio_none:"🔇 Ovoz yo'q", points:"Ballar:", options:"Variantlar:", word_bank:"So'z banki:", pick_word:"So'z tanlash", correct:"✓ To'g'ri", wrong:"✗ Javob:", required:"Talab:", coming_soon:"🚧 Tez orada", choose_lang:"Tilni tanlash", all_lessons:"Barcha darslar", lessons:"darslar" },
+  ne: { lesen:"पढ्नुहोस्", horen:"सुन्नुहोस्", schreiben:"लेख्नुहोस्", sprechen:"बोल्नुहोस्", check:"जाँच्नुहोस्", back:"फर्कनुहोस्", reset:"रिसेट", close:"बन्द", show_tr:"अनुवाद देखाउनुहोस्", hide_tr:"लुकाउनुहोस्", play:"चलाउनुहोस्", pause:"रोक्नुहोस्", no_q:"प्रश्नहरू छैनन्", no_audio:"अडियो छैन", memo:"कथा", choose:"संस्करण छान्नुहोस्", versions:"संस्करणहरू", empty:"पाठहरू छैनन्", search:"खोज्नुहोस्...", result:"नतिजा", mod:"परिमार्जित", audio_none:"🔇 अडियो छैन", points:"अंकहरू:", options:"विकल्पहरू:", word_bank:"शब्द बैंक:", pick_word:"शब्द छान्नुहोस्", correct:"✓ सही", wrong:"✗ उत्तर:", required:"आवश्यक:", coming_soon:"🚧 चाँडै", choose_lang:"भाषा छान्नुहोस्", all_lessons:"सबै पाठहरू", lessons:"पाठहरू" }
 };
 
-const findLocalVersions = (title, level, tab) => {
-  const clean = norm(title);
-  return getDataForLevel(level, tab).filter(e => {
-    const en = norm(e.title);
-    return en === clean || en.includes(clean) || clean.includes(en);
-  });
+const tx = (key, lang) => {
+  const l = lang || 'ar';
+  if (EXTRA[l] && EXTRA[l][key]) return EXTRA[l][key];
+  if (window.UI_TEXTS && window.UI_TEXTS[l] && window.UI_TEXTS[l][key]) return window.UI_TEXTS[l][key];
+  if (EXTRA['ar'] && EXTRA['ar'][key]) return EXTRA['ar'][key];
+  if (window.UI_TEXTS && window.UI_TEXTS['ar'] && window.UI_TEXTS['ar'][key]) return window.UI_TEXTS['ar'][key];
+  if (EXTRA.en && EXTRA.en[key]) return EXTRA.en[key];
+  if (window.UI_TEXTS && window.UI_TEXTS.en && window.UI_TEXTS.en[key]) return window.UI_TEXTS.en[key];
+  return key;
 };
 
-// Build list with grouping
-const buildListEntries = (level, tab, activeTeil, searchQuery) => {
+const norm = (s) => (s == null ? '' : String(s)).toLowerCase()
+  .replace(/(المعدل|معدل|تعديل)/g, '')
+  .replace(/[^\w\u0600-\u06FF]+/g, '').trim();
+
+// ================== ICONS ==================
+const Icon = ({ d, color='currentColor', size=22, fill='none' }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={d}/></svg>
+);
+const Icons = {
+  Back: (p) => <Icon d="M15 18l-6-6 6-6" {...p}/>,
+  Play: (p) => <svg width="24" height="24" viewBox="0 0 24 24" fill={p.color||'currentColor'}><path d="M8 5v14l11-7z"/></svg>,
+  Pause: (p) => <svg width="24" height="24" viewBox="0 0 24 24" fill={p.color||'currentColor'}><rect x="6" y="6" width="12" height="12" rx="2"/></svg>,
+  Translate: (p) => <Icon d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4" {...p}/>,
+  Moon: (p) => <Icon d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" {...p}/>,
+  Sun: (p) => <Icon d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4M12 6a6 6 0 100 12 6 6 0 000-12z" {...p}/>,
+  Eye: (p) => <Icon d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8zm11 3a3 3 0 100-6 3 3 0 000 6z" {...p}/>,
+  Alert: (p) => <Icon d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0zM12 9v4M12 17h.01" {...p}/>,
+  Book: (p) => <Icon d="M4 19.5A2.5 2.5 0 016.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" {...p}/>,
+  Headphones: (p) => <Icon d="M3 18v-6a9 9 0 0118 0v6M21 19a2 2 0 01-2 2h-1a2 2 0 01-2-2v-3a2 2 0 012-2h3zM3 19a2 2 0 002 2h1a2 2 0 002-2v-3a2 2 0 00-2-2H3z" {...p}/>,
+  Edit: (p) => <Icon d="M12 20h9M16.5 3.5a2.12 2.12 0 013 3L7 19l-4 1 1-4z" {...p}/>,
+  Mic: (p) => <Icon d="M12 2a3 3 0 00-3 3v7a3 3 0 006 0V5a3 3 0 00-3-3zM19 10v2a7 7 0 01-14 0v-2M12 19v3" {...p}/>
+};
+
+const Logo = ({ size=40 }) => (
+  <svg width={size} height={size} viewBox="0 0 100 100">
+    <rect width="100" height="100" rx="24" fill="#0F172A"/>
+    <rect x="18" y="28" width="36" height="10" rx="4" fill="#0D9488"/>
+    <rect x="18" y="44" width="36" height="10" rx="4" fill="#BE123C"/>
+    <rect x="18" y="60" width="36" height="10" rx="4" fill="#14B8A6"/>
+    <path d="M 54 70 L 54 30 L 70 30 C 84 30, 84 52, 70 52 L 54 52" stroke="#14B8A6" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+  </svg>
+);
+
+// ================== DATA ==================
+const getDataFor = (level, tab) => {
   const isB2 = level === 'B2';
-  const data = getDataForLevel(level, tab);
-  const phRaw = isB2 ? (B2_PLACEHOLDER_LESSONS || {}) : PLACEHOLDER_LESSONS;
-  const ph = phRaw[tab];
-  const phTitles = Array.isArray(ph) ? ph : ((ph && ph[activeTeil]) || []);
+  if (tab === 'Lesen') return isB2 ? (window.B2_EXAMS || []) : (window.EXAMS || []);
+  if (tab === 'Hören') return isB2 ? (window.B2_HOREN_EXAMS || []) : (window.HOREN_EXAMS || []);
+  if (tab === 'Schreiben') return isB2 ? (window.B2_SCHREIBEN_DATA || []) : (window.SCHREIBEN_DATA || []);
+  if (tab === 'Sprechen') return isB2 ? (window.B2_SPRECHEN_DATA || []) : (window.B1_SPRECHEN_DATA || []);
+  return [];
+};
 
-  // Filter data by activeTeil
-  const dataFiltered = data.filter(e => {
-    if (!activeTeil) return true;
-    if (e.sub === activeTeil) return true;
-    return norm(e.sub) === norm(activeTeil);
-  });
-
-  // Group data by base title
+const buildGroups = (level, tab, search='') => {
+  const data = getDataFor(level, tab);
   const groups = {};
-  dataFiltered.forEach(l => {
-    const key = norm(l.title);
+  data.forEach((exam, idx) => {
+    if (!exam) return;
+    const rawTitle = exam.title || exam.id || `درس ${idx + 1}`;
+    const key = norm(rawTitle) || `__empty_${idx}`;
     if (!groups[key]) {
-      const baseTitle = String(l.title)
+      const baseTitle = String(rawTitle)
         .replace(/\s*\(?\d*\s*المعدل\)?/g, '')
-        .replace(/\s*المعدل/g, '')
-        .trim();
-      groups[key] = { title: baseTitle, versions: [] };
+        .replace(/\s*المعدل/g, '').trim();
+      groups[key] = { title: baseTitle || rawTitle || `درس ${idx + 1}`, versions: [], key };
     }
-    groups[key].versions.push(l);
+    groups[key].versions.push(exam);
   });
-
-  // Add placeholder-only (locked) lessons
-  phTitles.forEach(t => {
-    const tn = norm(t);
-    const hasMatch = Object.keys(groups).some(k => k.includes(tn) || tn.includes(k));
-    if (!hasMatch) {
-      groups[tn] = { title: t, versions: [] };
-    }
-  });
-
   let entries = Object.values(groups);
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
+  if (search.trim()) {
+    const q = search.trim().toLowerCase();
     entries = entries.filter(e => e.title.toLowerCase().includes(q));
   }
-  return entries;
+  return entries.sort((a,b) => a.title.localeCompare(b.title, 'de'));
 };
 
-// ============= HOREN CARD =============
-function HorenCard({ exam, userLang, showTranslation, isB2 }) {
+// ================== EXAM VIEW ==================
+function ExamView({ exam, lang, onBack, dark, setDark }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(lang === 'ar' || lang === 'ma');
+  const [activeGap, setActiveGap] = useState(null);
+  const [modalGap, setModalGap] = useState(null);
   const [showStory, setShowStory] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [audioTime, setAudioTime] = useState(0);
-  const audioInterval = useRef(null);
+  const timerRef = useRef(null);
 
+  const isB2 = exam.level === 'B2';
+  const themeColor = isB2 ? '#0D9488' : '#8B5CF6';
   const items = exam.items || [];
-  const hasRealAudio = exam.audio && exam.audio.some(a => a.text && a.text !== "Audio nicht verfügbar");
-
-  if (items.length === 0) {
-    return (
-      <div className="card" style={{ padding: 20, textAlign: "center" }}>
-        <Icons.Alert color="var(--red)" />
-        <h3 style={{ marginTop: 12 }}>{tx('no_q', userLang)}</h3>
-        <p style={{ color: "var(--muted)" }}>{formatTitle(exam.title, userLang)}</p>
-      </div>
-    );
-  }
-
-  const pts = 5;
-  const total = items.length * pts;
-  const score = items.filter(it => ans[it.n] === it.c).length * pts;
-  const themeColor = isB2 ? "#0D9488" : "#8B5CF6";
+  const type = exam.type || (!items.length && exam.text ? 'schreiben' : 'mcq');
+  const canTranslate = getLang(lang) !== 'de';
 
   useEffect(() => () => {
-    clearInterval(audioInterval.current);
     if (window.speechSynthesis) window.speechSynthesis.cancel();
+    if (timerRef.current) clearInterval(timerRef.current);
   }, []);
 
-  const playAudio = (segments) => {
-    if (!hasRealAudio || !window.speechSynthesis) { setIsPlaying(false); return; }
-    window.speechSynthesis.cancel();
+  const pts = type === 'matching' ? 2.5 : (type.includes('sprach') ? 1.5 : 5);
+  const total = items.length * pts;
+  const score = items.filter(it => ans[it.n] === it.c).length * pts;
+
+  const pick = (n, k) => {
+    if (done) return;
+    setAns(prev => {
+      const next = { ...prev };
+      if (next[n] === k) delete next[n]; else next[n] = k;
+      return next;
+    });
+  };
+
+  const pickSprach2 = (word) => {
+    if (done) return;
+    let target = activeGap;
+    if (target === null) {
+      const firstEmpty = items.find(x => ans[x.n] === undefined);
+      target = firstEmpty ? firstEmpty.n : null;
+    }
+    if (target === null) return;
+    setAns(prev => {
+      const next = { ...prev };
+      Object.keys(next).forEach(k => { if (Number(k) !== target && next[k] === word) delete next[k]; });
+      next[target] = word;
+      return next;
+    });
+    const nextGap = items.find(x => x.n !== target && ans[x.n] === undefined);
+    setActiveGap(nextGap ? nextGap.n : null);
+  };
+
+  const finish = () => { setDone(true); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const reset = () => { setAns({}); setDone(false); setActiveGap(null); setModalGap(null); setShowStory(false); };
+
+  const toggleAudio = () => {
+    if (!exam.audio || !exam.audio.length) return;
+    if (isPlaying) {
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      if (timerRef.current) clearInterval(timerRef.current);
+      setIsPlaying(false); return;
+    }
+    const valid = exam.audio.filter(s => s.text && s.text !== 'Audio nicht verfügbar');
+    if (!valid.length) return;
+    setIsPlaying(true); setAudioTime(0);
+    timerRef.current = setInterval(() => setAudioTime(t => t + 1), 1000);
     let idx = 0;
-    const pickVoice = () => {
-      const voices = window.speechSynthesis.getVoices();
-      for (const p of ['de-DE', 'de_DE', 'de']) {
-        const v = voices.find(v => v.lang === p && /google|microsoft|premium/i.test(v.name));
-        if (v) return v;
-      }
-      return voices.find(v => v.lang && v.lang.startsWith('de')) || null;
-    };
     const playNext = () => {
-      if (idx >= segments.length) {
-        setIsPlaying(false);
-        clearInterval(audioInterval.current);
-        return;
-      }
-      const seg = segments[idx];
-      if (!seg.text || seg.text === "Audio nicht verfügbar") {
-        idx++;
-        setTimeout(playNext, 300);
-        return;
-      }
+      if (idx >= valid.length) { setIsPlaying(false); if (timerRef.current) clearInterval(timerRef.current); return; }
+      const seg = valid[idx];
       const u = new SpeechSynthesisUtterance(seg.text);
-      u.lang = 'de-DE';
-      const voice = pickVoice();
+      u.lang = 'de-DE'; u.rate = seg.rate || 0.92; u.pitch = seg.pitch || 1.0;
+      const voice = window.speechSynthesis.getVoices().find(v => v.lang.startsWith('de'));
       if (voice) u.voice = voice;
-      u.pitch = seg.pitch || 1.0;
-      u.rate = seg.rate || 0.92;
-      u.onend = () => { idx++; setTimeout(playNext, 300); };
-      u.onerror = () => { setIsPlaying(false); clearInterval(audioInterval.current); };
+      u.onend = () => { idx++; setTimeout(playNext, 250); };
+      u.onerror = () => { setIsPlaying(false); if (timerRef.current) clearInterval(timerRef.current); };
       window.speechSynthesis.speak(u);
     };
     playNext();
   };
 
-  const toggleAudio = () => {
-    if (!hasRealAudio) return;
-    if (isPlaying) {
-      window.speechSynthesis.cancel();
-      clearInterval(audioInterval.current);
-      setIsPlaying(false);
-      return;
+  const renderSprachText = () => {
+    const text = exam.text || '';
+    const regex = /\.{3,}\s*\((\d+)\)\s*\.{3,}|_{2,}\s*\((\d+)\)\s*_{2,}|\.{5}\s*\((\d+)\)\s*\.{5}/g;
+    const parts = [];
+    let lastIndex = 0, match, keyCounter = 0;
+    while ((match = regex.exec(text)) !== null) {
+      if (match.index > lastIndex) {
+        parts.push(<span key={'t_' + (keyCounter++)} className="de" style={{ whiteSpace: 'pre-wrap' }}>{text.slice(lastIndex, match.index)}</span>);
+      }
+      const gapNum = parseInt(match[1] || match[2] || match[3]);
+      const item = items.find(x => x.n === gapNum);
+      const sel = ans[gapNum];
+      if (!item) {
+        parts.push(<span key={'g_' + (keyCounter++)} style={{ background: 'var(--line)', padding: '2px 8px', borderRadius: 4, margin: '0 4px' }}>[{gapNum}]</span>);
+      } else if (done) {
+        const isC = sel === item.c;
+        parts.push(
+          <span key={'g_' + (keyCounter++)} style={{ display: 'inline-flex', gap: 4, margin: '0 4px', alignItems: 'center' }}>
+            {sel && <span className={isC ? 'sp1-correct' : 'sp1-wrong'}>{sel}</span>}
+            {!isC && <span className="sp1-correct">{item.c}</span>}
+          </span>
+        );
+      } else {
+        parts.push(
+          <button key={'g_' + (keyCounter++)} className="inline-gap" onClick={() => {
+            if (type === 'sprach2') setActiveGap(gapNum); else setModalGap(gapNum);
+          }} style={{ borderColor: themeColor, color: sel ? '#FFF' : themeColor, background: sel ? themeColor : undefined, borderBottomWidth: 2, borderBottomStyle: sel ? 'solid' : 'dashed', padding: '2px 10px', borderRadius: 6, margin: '0 4px', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.9em' }}>
+            {sel || `(${gapNum})`}
+          </button>
+        );
+      }
+      lastIndex = match.index + match[0].length;
     }
-    setIsPlaying(true);
-    setAudioTime(0);
-    audioInterval.current = setInterval(() => setAudioTime(p => p + 1), 1000);
-    playAudio(exam.audio || []);
+    if (lastIndex < text.length) {
+      parts.push(<span key={'t_' + (keyCounter++)} className="de" style={{ whiteSpace: 'pre-wrap' }}>{text.slice(lastIndex)}</span>);
+    }
+    return parts;
   };
 
-  const pickHoren = (n, c) => {
-    if (done) return;
-    setAns(p => ({ ...p, [n]: p[n] === c ? undefined : c }));
-  };
+  let body = null;
 
-  return (
-    <div className="card" style={{ padding: 20, marginBottom: 24, border: `1px solid ${themeColor}40` }}>
-      <h3 className="de" style={{ fontSize: "1.2em", fontWeight: 900, margin: "0 0 16px", color: "var(--ink)" }}>{formatTitle(exam.title, userLang)}</h3>
-
-      <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 14, borderRadius: 20, marginBottom: 20 }}>
-        <button onClick={toggleAudio} disabled={!hasRealAudio} style={{
-          width: 56, height: 56, borderRadius: "50%", flexShrink: 0,
-          background: !hasRealAudio ? "var(--line)" : (isPlaying ? "var(--red)" : themeColor),
-          color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center",
-          boxShadow: hasRealAudio ? `0 8px 20px ${themeColor}50` : "none",
-          cursor: !hasRealAudio ? "not-allowed" : "pointer"
-        }}>
-          {!hasRealAudio ? <span style={{ fontSize: 20 }}>🔇</span> : (isPlaying ? <Icons.Pause color="#FFF" /> : <Icons.Play color="#FFF" />)}
-        </button>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, color: "var(--muted)", fontSize: "0.9em", marginBottom: 6 }}>
-            <span style={{ direction: 'ltr' }}>{Math.floor(audioTime / 60)}:{(audioTime % 60).toString().padStart(2, '0')}</span>
-            <span>{hasRealAudio ? "Audio" : tx('audio_none', userLang)}</span>
-          </div>
-          <div style={{ height: 6, background: "var(--line)", borderRadius: 99, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: isPlaying ? "var(--red)" : themeColor, transition: isPlaying ? "width 60s linear" : "none" }} />
-          </div>
-        </div>
-      </div>
-
-      <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
-        <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "10px 0" }}>
-          <div style={{ width: 50, textAlign: "center" }}>R</div>
-          <div style={{ width: 50, textAlign: "center" }}>F</div>
-          <div style={{ flex: 1, paddingRight: 10 }}>AUSSAGE</div>
-        </div>
-        {items.map(it => {
-          const isR = ans[it.n] === "R";
-          const isF = ans[it.n] === "F";
-          let rC = "rf-circle", fC = "rf-circle";
-          if (done) {
-            if (it.c === "R") rC += " good"; else if (isR) rC += " bad"; else rC += " faded";
-            if (it.c === "F") fC += " good"; else if (isF) fC += " bad"; else fC += " faded";
-          } else {
-            if (isR) rC += " sel";
-            if (isF) fC += " sel";
-          }
-          const bg = done ? (ans[it.n] === it.c ? "var(--okbg)" : "var(--badbg)") : "var(--card)";
-          return (
-            <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "10px 0", background: bg }}>
-              <div style={{ width: 50, display: "flex", justifyContent: "center" }}><div className={rC} onClick={() => pickHoren(it.n, "R")} /></div>
-              <div style={{ width: 50, display: "flex", justifyContent: "center" }}><div className={fC} onClick={() => pickHoren(it.n, "F")} /></div>
-              <div style={{ flex: 1, fontSize: "0.9em", lineHeight: 1.5, paddingRight: 10 }}>
-                <span style={{ opacity: 0.5, marginLeft: 6, fontWeight: 900 }}>{it.n}</span>
-                <span className="de">{it.de}</span>
-                {showTranslation && (
-                  <div style={{ marginTop: 6, fontSize: "0.8em", color: "var(--muted)" }}>
-                    <SmartTrans obj={it} lang={userLang} />
-                  </div>
-                )}
+  if (type === 'horen') {
+    const hasAudio = exam.audio && exam.audio.some(a => a.text && a.text !== 'Audio nicht verfügbar');
+    body = (
+      <div>
+        <div className="card" style={{ padding: 20, marginBottom: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <button onClick={toggleAudio} disabled={!hasAudio} style={{ width: 64, height: 64, borderRadius: '50%', border: 'none', background: !hasAudio ? 'var(--line)' : (isPlaying ? '#BE123C' : themeColor), color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: !hasAudio ? 'not-allowed' : 'pointer' }}>
+              {!hasAudio ? <span style={{fontSize:24}}>🔇</span> : (isPlaying ? <Icons.Pause color="#FFF"/> : <Icons.Play color="#FFF"/>)}
+            </button>
+            <div style={{ flex: 1 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, fontSize: '0.9em', fontWeight: 'bold', color: 'var(--muted)' }}>
+                <span style={{ direction: 'ltr', fontFamily: 'monospace' }}>{String(Math.floor(audioTime/60)).padStart(2,'0')}:{String(audioTime%60).padStart(2,'0')}</span>
+                <span>{hasAudio ? '🎧 Audio' : tx('no_audio', lang)}</span>
+              </div>
+              <div style={{ height: 8, background: 'var(--line)', borderRadius: 99, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: isPlaying ? '100%' : '0%', background: themeColor, transition: isPlaying ? 'width 90s linear' : 'none' }}/>
               </div>
             </div>
-          );
-        })}
-      </div>
-
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: themeColor, fontWeight: 800, background: `${themeColor}15`, padding: "8px 14px", borderRadius: 12 }}>
-          <Icons.Eye color={themeColor} size={16} /> {tx('memo', userLang)}
-        </button>
-        <div>
-          {!done ? (
-            <button onClick={() => setDone(true)} style={{ background: themeColor, color: "#FFF", padding: "10px 22px", borderRadius: 12, fontWeight: 900 }}>
-              {tx('check', userLang)}
+          </div>
+        </div>
+        <div className="card" style={{ padding: 0, overflow: 'hidden', marginBottom: 20 }}>
+          <div style={{ display: 'flex', background: 'var(--paper)', borderBottom: '1px solid var(--line)', padding: '12px 0', fontWeight: 'bold', fontSize: '0.85em', color: 'var(--muted)' }}>
+            <div style={{ width: 50, textAlign: 'center' }}>R</div>
+            <div style={{ width: 50, textAlign: 'center' }}>F</div>
+            <div style={{ flex: 1, paddingRight: 16 }}>AUSSAGE</div>
+          </div>
+          {items.map(it => {
+            const isR = ans[it.n] === 'R', isF = ans[it.n] === 'F';
+            const rC = done ? (it.c === 'R' ? 'rf-circle good' : isR ? 'rf-circle bad' : 'rf-circle faded') : (isR ? 'rf-circle sel' : 'rf-circle');
+            const fC = done ? (it.c === 'F' ? 'rf-circle good' : isF ? 'rf-circle bad' : 'rf-circle faded') : (isF ? 'rf-circle sel' : 'rf-circle');
+            const bg = done ? (ans[it.n] === it.c ? 'var(--okbg)' : 'var(--badbg)') : 'transparent';
+            return (
+              <div key={it.n} style={{ display: 'flex', alignItems: 'center', borderBottom: '1px solid var(--line)', padding: '12px 0', background: bg }}>
+                <div style={{ width: 50, display: 'flex', justifyContent: 'center' }}><div className={rC} onClick={() => pick(it.n, 'R')}/></div>
+                <div style={{ width: 50, display: 'flex', justifyContent: 'center' }}><div className={fC} onClick={() => pick(it.n, 'F')}/></div>
+                <div style={{ flex: 1, paddingRight: 16 }}>
+                  <div style={{ fontWeight: 'bold', marginBottom: 4 }}>
+                    <span style={{ opacity: 0.5, marginLeft: 6 }}>{it.n}</span>
+                    <span>{it.de}</span>
+                  </div>
+                  {showTranslation && canTranslate && <div style={{ fontSize: '0.85em', color: 'var(--muted)', marginTop: 4 }}><ST obj={it} lang={lang} /></div>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        {items[0]?.story && (
+          <div style={{ marginBottom: 20 }}>
+            <button onClick={() => setShowStory(!showStory)} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '10px 16px', borderRadius: 12, background: `${themeColor}15`, color: themeColor, fontWeight: 'bold', border: 'none', cursor: 'pointer' }}>
+              <Icons.Eye/> {tx('memo', lang)}
             </button>
-          ) : (
-            <div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", fontSize: "1.1em" }}>{score} / {total}</div>
+            {showStory && <div className="t2-ar" style={{ marginTop: 12 }}>{items[0].story}</div>}
+          </div>
+        )}
+      </div>
+    );
+  } else if (type === 'mcq') {
+    body = (
+      <div>
+        {exam.paragraphs && exam.paragraphs.length > 0 && (
+          <div className="card" style={{ padding: 20, marginBottom: 20 }}>
+            {exam.paragraphs.map((p, i) => (
+              <div key={i} style={{ marginBottom: 14 }}>
+                <p className="de" style={{ lineHeight: 1.8, fontSize: '1.05em', margin: 0 }}>{p.de}</p>
+                {showTranslation && canTranslate && <div style={{ marginTop: 8, padding: 10, background: `${themeColor}10`, borderRight: `4px solid ${themeColor}`, borderRadius: 8, fontSize: '0.9em' }}><ST obj={p} lang={lang} /></div>}
+              </div>
+            ))}
+          </div>
+        )}
+        {items.map(it => (
+          <div key={it.n} className="card" style={{ padding: 16, marginBottom: 12 }}>
+            <div style={{ fontWeight: 'bold', marginBottom: 12 }}>{it.n}. <QT item={it} lang={lang} /></div>
+            {it.opts?.map(opt => {
+              const isSel = ans[it.n] === opt.k;
+              const isC = done && opt.k === it.c;
+              const isW = done && isSel && opt.k !== it.c;
+              return (
+                <button key={opt.k} onClick={() => pick(it.n, opt.k)} className={'opt'+(isSel?' sel':'')+(isC?' good':'')+(isW?' bad':'')+(done && !isC && !isSel?' faded':'')} style={{ marginBottom: 8, textAlign: 'left' }}>
+                  <span className="letter">{opt.k}</span>
+                  <span className="de" style={{ flex: 1 }}>{opt.de || opt}</span>
+                </button>
+              );
+            })}
+          </div>
+        ))}
+      </div>
+    );
+  } else if (type === 'headings') {
+    body = (
+      <div>
+        <div className="card" style={{ padding: 16, marginBottom: 20 }}>
+          <h3 style={{ margin: '0 0 12px', fontSize: '1em', color: themeColor }}>{tx('options', lang)}</h3>
+          {exam.options?.map(o => (
+            <div key={o.k} style={{ display: 'flex', gap: 10, padding: '8px 0', borderBottom: '1px dashed var(--line)' }}>
+              <span className="letter" style={{ minWidth: 32 }}>{o.k}</span>
+              <span className="de" style={{ flex: 1, fontSize: '0.9em' }}>{o.de}</span>
+            </div>
+          ))}
+        </div>
+        {items.map(it => (
+          <div key={it.n} className="card" style={{ padding: 16, marginBottom: 12 }}>
+            <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{it.n}.</div>
+            <p className="de" style={{ lineHeight: 1.7, fontSize: '0.95em', margin: '0 0 12px' }}>{it.de}</p>
+            {showTranslation && canTranslate && <div style={{ marginBottom: 12, padding: 10, background: `${themeColor}10`, borderRight: `4px solid ${themeColor}`, borderRadius: 8, fontSize: '0.9em' }}><ST obj={it} lang={lang} /></div>}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {exam.options?.map(o => {
+                const used = !done && Object.entries(ans).some(([id,v]) => Number(id) !== it.n && v === o.k);
+                const isSel = ans[it.n] === o.k;
+                return (
+                  <button key={o.k} onClick={() => !used && pick(it.n, o.k)} disabled={used} className={'opt'+(isSel?' sel':'')+(done && o.k === it.c?' good':'')+(done && isSel && o.k !== it.c?' bad':'')} style={{ padding: '8px 14px', width: 'auto', minWidth: 44, opacity: used ? 0.3 : 1 }}>
+                    <span style={{ fontWeight: 'bold' }}>{o.k}</span>
+                  </button>
+                );
+              })}
+            </div>
+            {done && <div style={{ marginTop: 10, fontSize: '0.85em', color: ans[it.n] === it.c ? 'var(--okc)' : 'var(--badc)', fontWeight: 'bold' }}>{ans[it.n] === it.c ? tx('correct', lang) : `${tx('wrong', lang)} ${it.c}`}</div>}
+          </div>
+        ))}
+      </div>
+    );
+  } else if (type === 'matching') {
+    body = (
+      <div>
+        {exam.ads?.map(ad => (
+          <div key={ad.k} className="card" style={{ padding: 16, marginBottom: 12 }}>
+            <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start', marginBottom: 10 }}>
+              <span className="letter" style={{ minWidth: 32, background: themeColor, color: '#FFF' }}>{ad.k}</span>
+              <div style={{ flex: 1 }}>
+                <div className="de" style={{ fontWeight: 'bold', marginBottom: 4 }}>{ad.t}</div>
+                <div className="de" style={{ fontSize: '0.88em', color: 'var(--muted)', whiteSpace: 'pre-wrap' }}>{ad.de}</div>
+                {showTranslation && canTranslate && <div style={{ marginTop: 6, fontSize: '0.85em' }}><ST obj={ad} lang={lang} /></div>}
+              </div>
+            </div>
+          </div>
+        ))}
+        <div style={{ height: 20 }}/>
+        {items.map(it => (
+          <div key={it.n} className="card" style={{ padding: 16, marginBottom: 12 }}>
+            <div style={{ fontWeight: 'bold', marginBottom: 8 }}>{it.n}. <ST obj={it} lang={lang} /></div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {exam.ads?.map(ad => {
+                const used = !done && ad.k !== 'X' && Object.entries(ans).some(([id,v]) => Number(id) !== it.n && v === ad.k);
+                const isSel = ans[it.n] === ad.k;
+                return (
+                  <button key={ad.k} onClick={() => !used && pick(it.n, ad.k)} disabled={used} className={'opt'+(isSel?' sel':'')+(done && ad.k === it.c?' good':'')+(done && isSel && ad.k !== it.c?' bad':'')} style={{ padding: '8px 14px', width: 'auto', minWidth: 44, opacity: used ? 0.3 : 1 }}>
+                    <span style={{ fontWeight: 'bold' }}>{ad.k}</span>
+                  </button>
+                );
+              })}
+              <button onClick={() => pick(it.n, 'X')} className={'opt'+(ans[it.n] === 'X'?' sel':'')+(done && it.c === 'X'?' good':'')} style={{ padding: '8px 14px', width: 'auto', minWidth: 44 }}><span style={{ fontWeight: 'bold' }}>X</span></button>
+            </div>
+            {done && <div style={{ marginTop: 10, fontSize: '0.85em', color: ans[it.n] === it.c ? 'var(--okc)' : 'var(--badc)', fontWeight: 'bold' }}>{ans[it.n] === it.c ? tx('correct', lang) : `${tx('wrong', lang)} ${it.c}`}</div>}
+          </div>
+        ))}
+      </div>
+    );
+  } else if (type === 'sprach1' || type === 'sprach2') {
+    body = (
+      <div>
+        {type === 'sprach2' && exam.wordBank && (
+          <div className="card" style={{ padding: 16, marginBottom: 16, position: 'sticky', top: 70, zIndex: 20 }}>
+            <div style={{ fontSize: '0.85em', fontWeight: 'bold', marginBottom: 8, color: 'var(--muted)' }}>{tx('word_bank', lang)}</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+              {exam.wordBank.map(w => {
+                const used = Object.values(ans).includes(w.w);
+                return (
+                  <button key={w.k} onClick={() => pickSprach2(w.w)} disabled={used || done} style={{ padding: '8px 12px', borderRadius: 8, border: `1.5px solid ${used?'var(--line)':themeColor}`, background: used ? 'var(--line)' : 'var(--card)', color: used ? 'var(--muted)' : 'var(--text)', opacity: used ? 0.5 : 1, cursor: used ? 'not-allowed' : 'pointer', fontWeight: 'bold', fontSize: '0.9em', textDecoration: used ? 'line-through' : 'none' }}>{w.w}</button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {exam.note && <div style={{ padding: 12, borderRadius: 8, background: 'var(--badbg)', color: 'var(--badc)', marginBottom: 12, fontWeight: 'bold' }}>{exam.note}</div>}
+        <div className="card" style={{ padding: 20, lineHeight: 2.4, fontSize: '1.05em' }}>{renderSprachText()}</div>
+        {showTranslation && canTranslate && <div className="t2-ar" style={{ marginTop: 16 }}><ST obj={exam} lang={lang} field="transText" /></div>}
+        {done && (
+          <div className="card" style={{ marginTop: 16, padding: 16 }}>
+            <h4 style={{ marginTop: 0 }}>{tx('result', lang)}:</h4>
+            {items.map(it => {
+              const isC = ans[it.n] === it.c;
+              return (
+                <div key={it.n} style={{ marginBottom: 8, color: isC ? 'var(--okc)' : 'var(--badc)' }}>
+                  <div><strong>{it.n}.</strong> {ans[it.n] || '—'} {isC ? '✓' : `✗ (${it.c})`}</div>
+                  {it.exp && <div style={{ fontSize: '0.85em', color: 'var(--muted)', fontStyle: 'italic', marginTop: 2, paddingRight: 12 }}>💡 {it.exp}</div>}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    );
+  } else if (type === 'schreiben' || type === 'sprechen' || (!items.length && exam.text)) {
+    const taskText = exam.task || exam.aufgabe || '';
+    const pointsRaw = exam.points || [];
+    body = (
+      <div className="card" style={{ padding: 20 }}>
+        <p className="de" style={{ whiteSpace: 'pre-wrap', lineHeight: 1.8, margin: 0 }}>{exam.text}</p>
+        {showTranslation && canTranslate && <div className="t2-ar" style={{ marginTop: 16 }}><ST obj={exam} lang={lang} field="transText" /></div>}
+        {taskText && <div style={{ marginTop: 20, padding: 14, background: `${themeColor}15`, borderRight: `4px solid ${themeColor}`, borderRadius: 8, lineHeight: 1.6 }}>{showTranslation && canTranslate ? <ST obj={exam} lang={lang} field="transTask" /> : taskText}</div>}
+        {pointsRaw.length > 0 && (
+          <div style={{ marginTop: 16 }}>
+            <h4 style={{ marginTop: 0 }}>{tx('points', lang)}</h4>
+            <ul style={{ margin: 0, paddingRight: 20 }}>
+              {pointsRaw.map((p, i) => {
+                const transPoints = exam.transPoints && exam.transPoints[getLang(lang)];
+                const transArr = Array.isArray(transPoints) ? transPoints : (exam.transPoints && exam.transPoints.ar);
+                const txt = (showTranslation && canTranslate && Array.isArray(transArr) && transArr[i]) ? transArr[i] : p;
+                return <li key={i} className="de" style={{ marginBottom: 6, lineHeight: 1.6 }}>{txt}</li>;
+              })}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  } else if (!items.length) {
+    body = <div className="card" style={{ padding: 30, textAlign: 'center' }}><Icons.Alert color="var(--red)"/><h3 style={{ marginTop: 12 }}>{tx('no_q', lang)}</h3></div>;
+  }
+
+  const headerMeta = [type.toUpperCase(), exam.sub, exam.level].filter(Boolean).join(' · ');
+
+  return (
+    <div style={{ paddingBottom: 100 }}>
+      <div className="header">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <button onClick={onBack} className="btnI"><Icons.Back color="var(--text)"/></button>
+          <div>
+            <div className="de" style={{ fontWeight: 900, fontSize: '0.95em' }}><TT title={exam.title || exam.id || ''} lang={lang} /></div>
+            <div style={{ fontSize: '0.7em', color: 'var(--muted)', fontWeight: 'bold' }}>{headerMeta}</div>
+          </div>
+        </div>
+        <div style={{ display: 'flex', gap: 6 }}>
+          {canTranslate && (
+            <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ color: showTranslation ? themeColor : 'var(--text)', borderColor: showTranslation ? themeColor : 'var(--line)' }}>
+              <Icons.Translate color={showTranslation ? themeColor : 'var(--text)'}/>
+            </button>
           )}
+          <button onClick={() => setDark(!dark)} className="btnI">{dark ? <Icons.Sun/> : <Icons.Moon/>}</button>
         </div>
       </div>
-      {showStory && (
-        <div className="t2-ar" style={{ marginTop: 14, fontSize: "0.95em" }}>
-          {items[0]?.story ? <SmartTrans obj={{de: items[0].story}} lang={userLang} /> : ''}
+      <div style={{ padding: '16px 12px' }}>{body}</div>
+
+      {modalGap !== null && (
+        <div className="overlay" onClick={() => setModalGap(null)}>
+          <div className="sheet" onClick={e => e.stopPropagation()}>
+            <h3>{tx('pick_word', lang)} ({modalGap})</h3>
+            <div style={{ display: 'grid', gap: 8, marginTop: 16 }}>
+              {items.find(x => x.n === modalGap)?.opts?.map(opt => (
+                <button key={opt} onClick={() => { pick(modalGap, opt); setModalGap(null); }} className="opt" style={{ justifyContent: 'center' }}>{opt}</button>
+              ))}
+            </div>
+            <button onClick={() => setModalGap(null)} className="btn" style={{ marginTop: 16 }}>{tx('close', lang)}</button>
+          </div>
+        </div>
+      )}
+
+      {items.length > 0 && (type === 'sprach1' || type === 'sprach2' || type === 'mcq' || type === 'headings' || type === 'matching') && (
+        <div className="bottom-bar">
+          <div style={{ fontWeight: 'bold', color: themeColor }}>{done ? `${tx('result', lang)}: ${score} / ${total}` : `${Object.keys(ans).length} / ${items.length}`}</div>
+          {!done ? <button onClick={finish} className="btn-correct-bar" style={{ background: themeColor }}>{tx('check', lang)}</button>
+            : <button onClick={reset} className="btn-prev-bar" style={{ background: themeColor, color: '#FFF' }}>{tx('reset', lang)}</button>}
         </div>
       )}
     </div>
   );
 }
 
-// ============= EXAM VIEW =============
-function ExamView({ exam, onBack, onSave, userLang, dark, setDark }) {
-  const [ans, setAns] = useState({});
-  const [done, setDone] = useState(null);
-  const [showTranslation, setShowTranslation] = useState(false);
-  const [excluded, setExcluded] = useState({});
-  const [modalGap, setModalGap] = useState(null);
-  const [activeGap, setActiveGap] = useState(null);
-  const [mode, setMode] = useState("exam");
+// ================== MAIN APP ==================
+function App() {
+  const [lang, setLang] = useState(() => { try { return localStorage.getItem('lang') || 'ar'; } catch(e) { return 'ar'; } });
+  const [dark, setDark] = useState(() => { try { return localStorage.getItem('dark') === '1'; } catch(e) { return false; } });
+  const [level, setLevel] = useState('B1');
+  const [tab, setTab] = useState('Lesen');
+  const [activeExam, setActiveExam] = useState(null);
+  const [search, setSearch] = useState('');
+  const [showVersions, setShowVersions] = useState(null);
+  const [showLangPicker, setShowLangPicker] = useState(false);
 
-  if (!exam) return null;
+  const LANGS_LIST = useMemo(() => {
+    const base = window.LANGS || [
+      { c:"ma", n:"الدارجة", f:"🇲🇦" }, { c:"ar", n:"العربية", f:"📜" },
+      { c:"en", n:"English", f:"🇬🇧" }, { c:"de", n:"Deutsch", f:"🇩🇪" },
+      { c:"fr", n:"Français", f:"🇫🇷" }, { c:"hi", n:"हिन्दी", f:"🇮🇳" },
+      { c:"id", n:"Indonesia", f:"🇮🇩" }, { c:"tl", n:"Filipino", f:"🇵🇭" },
+      { c:"fa", n:"فارسی", f:"🇮🇷" }, { c:"sw", n:"Kiswahili", f:"🇰🇪" },
+      { c:"uz", n:"O'zbek", f:"🇺🇿" }, { c:"ne", n:"नेपाली", f:"🇳🇵" }
+    ];
+    const hasDe = base.some(l => l.c === 'de');
+    return hasDe ? base : [...base, { c: 'de', n: 'Deutsch', f: '🇩🇪' }];
+  }, []);
 
-  const isB2 = exam.level === "B2";
-  const themeColor = isB2 ? "#0D9488" : "#8B5CF6";
-  const items = exam.items || [];
+  useEffect(() => {
+    document.body.classList.toggle('dark', dark);
+    try { localStorage.setItem('dark', dark ? '1' : '0'); } catch(e) {}
+  }, [dark]);
 
-  if (items.length === 0 && !exam.paragraphs?.length) {
-    return (
-      <div style={{ padding: 40, textAlign: "center" }}>
-        <Icons.Alert color="var(--red)" />
-        <h2 style={{ marginTop: 16 }}>{tx('no_q', userLang)}</h2>
-        <button className="btn" onClick={onBack} style={{ marginTop: 20 }}>{tx('back', userLang)}</button>
-      </div>
-    );
+  useEffect(() => {
+    try { localStorage.setItem('lang', lang); } catch(e) {}
+    document.documentElement.dir = (lang === 'ar' || lang === 'ma' || lang === 'fa') ? 'rtl' : 'ltr';
+  }, [lang]);
+
+  if (activeExam) {
+    return <ExamView exam={activeExam} lang={lang} onBack={() => setActiveExam(null)} dark={dark} setDark={setDark}/>;
   }
 
-  const pts = exam.type === "matching" ? 2.5 : (exam.type?.includes("sprach") ? 1.5 : 5);
-  const total = items.length * pts;
-  const score = items.filter(it => ans[it.n] === it.c).length * pts;
-
-  const usedElsewhere = (n, k) => {
-    if ((exam.type !== "matching" && exam.type !== "headings") || k === "X") return false;
-    return Object.entries(ans).some(([id, v]) => Number(id) !== n && v === k);
-  };
-
-  const pick = (it, k) => {
-    if (done !== null) return;
-    if (usedElsewhere(it.n, k)) return;
-    if (ans[it.n] === k) {
-      const na = { ...ans }; delete na[it.n]; setAns(na);
-    } else {
-      setAns({ ...ans, [it.n]: k });
-    }
-  };
-
-  const pickSprach2 = (w) => {
-    if (done !== null) return;
-    const target = activeGap !== null ? activeGap : (items.find(x => ans[x.n] === undefined) || {}).n;
-    if (!target) return;
-    const na = { ...ans, [target]: w };
-    Object.keys(na).forEach(k => { if (Number(k) !== target && na[k] === w) delete na[k]; });
-    setAns(na);
-    const next = items.find(x => x.n !== target && na[x.n] === undefined);
-    setActiveGap(next ? next.n : null);
-  };
-
-  const cls = (it, k) => {
-    const sel = ans[it.n];
-    const isDone = done !== null || (mode === "practice" && sel !== undefined);
-    if (isDone) {
-      if (k === it.c) return "opt good";
-      if (sel === k) return "opt bad";
-      return "opt faded";
-    }
-    if (sel === k) return "opt sel";
-    return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
-  };
-
-  const finish = () => {
-    setDone(score);
-    if (onSave) onSave(exam.id, score, total);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
+  const themeColor = level === 'B2' ? '#0D9488' : '#8B5CF6';
+  const groups = buildGroups(level, tab, search);
+  const TABS = [
+    { id: 'Lesen', icon: Icons.Book, label: tx('lesen', lang) },
+    { id: 'Hören', icon: Icons.Headphones, label: tx('horen', lang) },
+    { id: 'Schreiben', icon: Icons.Edit, label: tx('schreiben', lang) },
+    { id: 'Sprechen', icon: Icons.Mic, label: tx('sprechen', lang) }
+  ];
+  const currentLang = LANGS_LIST.find(l => l.c === lang) || LANGS_LIST[0];
 
   return (
-    <div style={{ paddingBottom: 120 }}>
-      <div style={{ position: "sticky", top: 0, zIndex: 30, background: "var(--paper)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button onClick={onBack} className="btnI" style={{ width: 36, height: 36 }}><Icons.ArrowLeft color="var(--text)" /></button>
+    <div style={{ minHeight: '100vh', paddingBottom: 80 }}>
+      <div className="header">
+        <div className="brand">
+          <Logo/>
           <div>
-            <div className="de" style={{ fontWeight: 900, fontSize: "0.95em" }}>{formatTitle(exam.title, userLang)}</div>
-            <div className="de" style={{ fontSize: ".7em", color: "var(--muted)", fontWeight: "bold" }}>{exam.type === "horen" ? "HÖREN" : "LESEN"} · {(exam.sub || "").toUpperCase()}</div>
+            <div className="header-title">EchtPrüfung</div>
+            <div className="header-subtitle">{level} · {tab}</div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
-          <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 36, height: 36, color: showTranslation ? themeColor : "var(--text)", borderColor: showTranslation ? themeColor : "var(--line)" }}>
-            <Icons.Translate color={showTranslation ? themeColor : "var(--text)"} />
+        <div style={{ display: 'flex', gap: 6 }}>
+          <button onClick={() => setShowLangPicker(true)} className="btnI" title={tx('choose_lang', lang)}>
+            <span style={{ fontSize: '1.1em' }}>{currentLang?.f || '🌐'}</span>
           </button>
-          <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 36, height: 36 }}>
-            {dark ? <Icons.Sun color="var(--text)" /> : <Icons.Moon color="var(--text)" />}
-          </button>
+          <button onClick={() => setDark(!dark)} className="btnI">{dark ? <Icons.Sun/> : <Icons.Moon/>}</button>
         </div>
       </div>
 
-      <div style={{ margin: "10px 12px" }}>
-        {exam.type !== "matching" && exam.type !== "horen" && (
-          <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }} style={mode === "exam" ? { borderColor: themeColor, background: themeColor } : {}}>{t("exam_mode", userLang)}</button>
-            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }} style={mode === "practice" ? { borderColor: themeColor, background: themeColor } : {}}>{t("practice_mode", userLang)}</button>
+      <div style={{ maxWidth: 720, margin: '0 auto', padding: '16px 12px' }}>
+        <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
+          {['B1', 'B2'].map(l => (
+            <button key={l} onClick={() => setLevel(l)} style={{ flex: 1, padding: 12, borderRadius: 12, border: 'none', background: level === l ? themeColor : 'var(--card)', color: level === l ? '#FFF' : 'var(--text)', fontWeight: 'bold', cursor: 'pointer', fontSize: '1em' }}>{l}</button>
+          ))}
+        </div>
+
+        <input type="text" placeholder={tx('search', lang)} value={search} onChange={e => setSearch(e.target.value)} style={{ width: '100%', padding: 12, borderRadius: 12, border: '1px solid var(--line)', background: 'var(--card)', color: 'var(--text)', fontFamily: 'inherit', marginBottom: 16, boxSizing: 'border-box' }}/>
+
+        <div style={{ marginBottom: 12, fontSize: '0.85em', color: 'var(--muted)', fontWeight: 'bold' }}>
+          {groups.length} {tx('lessons', lang)} · {level} · {tab}
+        </div>
+
+        {groups.length === 0 && (
+          <div className="card" style={{ padding: 30, textAlign: 'center', color: 'var(--muted)' }}>
+            {level === 'B2' && tab === 'Sprechen' ? tx('coming_soon', lang) : tx('empty', lang)}
           </div>
         )}
 
-        {exam.type === "horen" && <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} isB2={isB2} />}
-
-        {exam.type === "mcq" && (
-          <div className="card" style={{ padding: 20 }}>
-            {exam.paragraphs?.map((p, i) => (
-              <div key={i} style={{ marginBottom: 14 }}>
-                <p className="de" style={{ lineHeight: 1.8, fontSize: "1.05em", margin: 0 }}>{p.de}</p>
-                {showTranslation && <div className="t2-ar" style={{ borderColor: themeColor }}><SmartTrans obj={p} lang={userLang} /></div>}
+        {groups.map((g, i) => (
+          <div key={i} className="card" style={{ padding: 16, marginBottom: 10, cursor: 'pointer', borderLeft: `4px solid ${themeColor}` }} onClick={() => {
+            if (g.versions.length === 1) setActiveExam(g.versions[0]);
+            else setShowVersions(g);
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ flex: 1 }}>
+                <div className="de" style={{ fontWeight: 'bold', fontSize: '1.05em' }}><TT title={g.title} lang={lang} /></div>
+                <div style={{ fontSize: '0.8em', color: 'var(--muted)', marginTop: 4 }}>
+                  {g.versions.length > 0 && `${g.versions.length} ${tx('versions', lang)}`}
+                  {g.versions.length > 0 && g.versions[0].sub && ` · ${g.versions[0].sub}`}
+                </div>
               </div>
-            ))}
+              {g.versions.length > 1 && <span style={{ background: themeColor, color: '#FFF', padding: '4px 10px', borderRadius: 20, fontSize: '0.8em', fontWeight: 'bold' }}>{g.versions.length}</span>}
+            </div>
           </div>
-        )}
+        ))}
+      </div>
 
-        {(exam.type === "sprach1" || exam.type === "sprach2") && (
-          <div className="card" style={{ fontSize: "1.05em", lineHeight: 2.2, padding: 20 }}>
-            {exam.note && <div style={{ background: "var(--badbg)", color: "var(--badc)", padding: 10, borderRadius: 8, marginBottom: 14, fontSize: "0.9em", fontWeight: "bold" }}>{formatTitle(exam.note, userLang)}</div>}
-            {(exam.text || "").split(/(?:\.{3,}\s*|__)\s*\((\d+)\)\s*(?:\.{3,}|__)/g).map((part, i) => {
-              if (i % 2 === 1) {
-                const gn = parseInt(part);
-                const it = items.find(x => x.n === gn);
-                if (!it) return <span key={i}>[Gap {gn}]</span>;
-                const sel = ans[gn];
-                const isDone = done !== null;
-                let content = <span className="inline-gap" style={{ borderColor: themeColor, color: themeColor }} onClick={() => { if (!isDone) exam.type === "sprach2" ? setActiveGap(gn) : setModalGap(gn); }}>{sel || `(${gn})`}</span>;
-                if (isDone) {
-                  if (sel === it.c) content = <span className="sp1-correct">{sel}</span>;
-                  else if (sel) content = <span style={{ display: 'inline-flex', gap: 4 }}><span className="sp1-wrong">{sel}</span><span className="sp1-correct">{it.c}</span></span>;
-                  else content = <span className="sp1-correct">{it.c}</span>;
-                }
-                return <React.Fragment key={i}>{content}</React.Fragment>;
-              }
-              return <span key={i} className="de" style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
-            })}
-            {showTranslation && (
-              <div className="t2-ar" style={{ marginTop: 20, borderColor: themeColor }}>
-                {exam.transText ? <SmartTrans obj={exam.transText} lang={userLang} /> : <AutoTrans text={(exam.text || "").replace(/(?:\.{3,}\s*|__)\s*\(\d+\)\s*(?:\.{3,}|__)/g, " ___ ")} lang={userLang} force={true} />}
-              </div>
-            )}
+      <nav className="nav">
+        {TABS.map(t => {
+          const isA = tab === t.id;
+          return (
+            <button key={t.id} onClick={() => setTab(t.id)} className={isA ? 'on' : ''} style={{ color: isA ? themeColor : 'var(--muted)' }}>
+              <t.icon color={isA ? themeColor : 'var(--muted)'}/>
+              <span>{t.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      {showLangPicker && (
+        <div className="overlay" onClick={() => setShowLangPicker(false)}>
+          <div className="sheet" onClick={e => e.stopPropagation()}>
+            <h3 style={{ marginTop: 0 }}>🌐 {tx('choose_lang', lang)}</h3>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 10, marginTop: 16 }}>
+              {LANGS_LIST.map(L => (
+                <button key={L.c} onClick={() => { setLang(L.c); setShowLangPicker(false); }} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: 12, borderRadius: 12, border: `2px solid ${lang === L.c ? themeColor : 'var(--line)'}`, background: lang === L.c ? `${themeColor}15` : 'var(--card)', color: 'var(--text)', fontWeight: 'bold', cursor: 'pointer', textAlign: 'right' }}>
+                  <span style={{ fontSize: '1.3em' }}>{L.f}</span>
+                  <span style={{ flex: 1 }}>{L.n}</span>
+                  {lang === L.c && <span style={{ color: themeColor }}>✓</span>}
+                </button>
+              ))}
+            </div>
+            <button onClick={() => setShowLangPicker(false)} className="btn" style={{ marginTop: 16, background: 'var(--line)', color: 'var(--text)' }}>{tx('close', lang)}</button>
           </div>
-        )}
+        </div>
+      )}
 
-        {exam.type === "matching" && exam.ads?.map(ad => (
-          <div key={ad.k} className="card" style={{ padding: 16 }}>
-            <div style={{ borderBottom: "1px solid var(--line)", paddingBottom: 12, marginBottom: 12 }}>
-              <span className="de" style={{ color: "var(--primary)", fontWeight: 900, fontSize: "1.05em" }}>ANZEIGE {ad.k}</span>
-              <div className="de" style={{ fontWeight: 900, marginTop: 6 }}>{ad.t}</div>
-              <div className="de" style={{ fontSize: "0.9em", color: "var(--muted)", marginTop: 4 }}>{ad.de}</div>
-              {showTranslation && <div style={{ marginTop: 4, fontSize:
+      {showVersions && (
+        <div className="overlay" onClick={() => setShowVersions(null)}>
+          <div className="sheet" onClick={e => e.stopPropagation()}>
+            <h3 style={{ marginTop: 0 }}>{tx('choose', lang)}</h3>
+            <p style={{ color: 'var(--muted)', fontSize: '0.9em' }}><TT title={showVersions.title} lang={lang} /></p>
+            <div style={{ display: 'grid', gap: 8, marginTop: 16 }}>
+              {showVersions.versions.map((v, i) => (
+                <button key={i} onClick={() => { setActiveExam(v); setShowVersions(null); }} className="opt" style={{ justifyContent: 'space-between' }}>
+                  <span className="de"><TT title={v.title || v.id || ''} lang={lang} /></span>
+                  <span style={{ fontSize: '0.8em', color: 'var(--muted)' }}>{v.type || 'mcq'}</span>
+                </button>
+              ))}
+            </div>
+            <button onClick={() => setShowVersions(null)} className="btn" style={{ marginTop: 16, background: 'var(--line)', color: 'var(--text)' }}>{tx('close', lang)}</button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ================== LAUNCH ==================
+const rootEl = document.getElementById('root');
+if (rootEl) ReactDOM.createRoot(rootEl).render(<App/>);
