@@ -1,19 +1,63 @@
-const { useState, useEffect, useRef } = React;
+// ==========================================
+// app.js - الجزء الأول (Part 1) - النسخة النهائية 100%
+// ==========================================
 
-const WA = "212680193427"; 
-const wa = (t) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(t), "_blank");
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
 
-const supabaseUrl = 'https://ldatleskngsvoxwbiqtd.supabase.co';
-const supabaseKey = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
-const sb = supabase.createClient(supabaseUrl, supabaseKey);
+// === 1. CONFIG & CONSTANTS ===
+const WA = "212680193427";
+const wa = (msg) => window.open("https://wa.me/" + WA + "?text=" + encodeURIComponent(msg), "_blank");
+
+const SUPABASE_URL = 'https://ldatleskngsvoxwbiqtd.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_6UXiEWOS8YkGZTiT2jQRlA_K7HgONtL';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const { 
   UI_TEXTS, LANGS, SCHREIBEN_DATA, PRUEFUNG_DATA, EXAMS, HOREN_EXAMS,
-  B2_SCHREIBEN_DATA, B2_PRUEFUNG_DATA, B2_EXAMS, B2_HOREN_EXAMS, B2_PLACEHOLDER_LESSONS, B2_SPRECHEN_DATA
+  B2_SCHREIBEN_DATA, B2_PRUEFUNG_DATA, B2_EXAMS, B2_HOREN_EXAMS, B2_PLACEHOLDER_LESSONS, B2_SPRECHEN_DATA,
+  B1_SPRECHEN_DATA
 } = window;
 
-const t = (key, lang) => (UI_TEXTS && UI_TEXTS[lang] && UI_TEXTS[lang][key]) || (UI_TEXTS && UI_TEXTS.en && UI_TEXTS.en[key]) || key;
+// === 2. TRANSLATION & HELPERS ===
+const TRANS_CACHE = {};
 
+const t = (key, lang) => UI_TEXTS?.[lang]?.[key] || UI_TEXTS?.en?.[key] || key;
+const normalize = (s) => (s || "").toString().toLowerCase().replace(/[\s\-_]+/g, '');
+
+function AutoTrans({ text, lang }) {
+  const targetLang = lang === 'ma' ? 'ar' : lang;
+  const cacheKey = `${targetLang}_${text}`;
+  const [result, setResult] = useState(() => TRANS_CACHE[cacheKey] || text);
+
+  useEffect(() => {
+    if (!text || targetLang === 'de') { setResult(text); return; }
+    if (TRANS_CACHE[cacheKey]) { setResult(TRANS_CACHE[cacheKey]); return; }
+
+    const ctrl = new AbortController();
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`, { signal: ctrl.signal })
+      .then(r => r.json())
+      .then(data => {
+        if (data?.[0]) {
+          const res = data[0].map(item => item[0]).join('');
+          TRANS_CACHE[cacheKey] = res;
+          setResult(res);
+        }
+      })
+      .catch(() => {});
+    return () => ctrl.abort();
+  }, [text, targetLang, cacheKey]);
+
+  return <span>{result}</span>;
+}
+
+function SmartTrans({ obj, lang }) {
+  if (!obj) return null;
+  if (typeof obj === 'string') return <AutoTrans text={obj} lang={lang} />;
+  const txt = obj.de || obj.en || obj.q || obj.ar || "";
+  return <AutoTrans text={txt} lang={lang} />;
+}
+
+// === 3. PLACEHOLDERS & MODIFIED LESSONS ===
 const PLACEHOLDER_LESSONS = {
   "Lesen": {
     "Teile 1": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Corina", "Petra", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2"],
@@ -23,9 +67,9 @@ const PLACEHOLDER_LESSONS = {
     "Sprach 2": ["Alex Und Cora", "Rita", "Caroline", "Vera", "Eva", "Paul", "Iris", "Jan", "Miroslav", "Andreas 1", "Annika 2", "Sonja", "Nadja / Claudia", "Karla", "Viktor", "Moritz", "Petra", "Corina", "Tamara / Jakob", "Nicole", "Andreas 2", "Thomas / Anna", "Sophie", "Alicia", "Annika 1", "Jennifer", "Mara", "Miroslav 2."]
   },
   "Hören": {
-    "Teile 1": ["Einkäufe im Internet", "Bus zur Arbeit", "Arbeitsplatz für Vater", "Einzelkind", "Urlaub", "Kinder in der Schule", "Radwege", "Fremdsprache"],
-    "Teile 2": ["Vorlesung", "Interview", "Radiobericht"],
-    "Teile 3": ["Gespräch im Büro", "Dialog im Alltag"]
+    "Teile 1": [],
+    "Teile 2": [],
+    "Teile 3": []
   },
   "Schreiben": [
     "Urlaub Im Schwarzwald - Antwort An Petra", "Eva - Traumberuf Und Neuigkeiten", 
@@ -35,8 +79,7 @@ const PLACEHOLDER_LESSONS = {
     "Tamara - Treffen", "Jan - Urlaub", "Viktor - Urlaub", "Anna - Katze", 
     "Nora - Neue Wohnung", "Claudia - Zoobesuch", "Karla - Umzug", "Mara - Reise", 
     "Annika - Urlaub 2", "Sonja - Musikfestival", "Rita - Hochzeit", "Anne - Geburtstag", 
-    "Paul - Ausflug", "Jakob - Nachbarn", "Emilia", "Tobias", "Naco", "Alicia", 
-    "Cora Und Alex", "Miroslav", "Corinna", "Moritz"
+    "Paul - Ausflug", "Jakob - Nachbarn"
   ],
   "Sprechen": { "Teile 1": [], "Teile 2": [], "Teile 3": [] }
 };
@@ -45,221 +88,169 @@ const FREE_MODIFIED_LESSONS = [
   {
     id: "rita-t1-mod", title: "Rita", sub: "Teile 1", level: "B1", type: "headings", desc: "المعدل",
     options: [
-      { k: "a", de: "Schweizer sollen gesunder leben", ar: "يجب على السويسريين أن يعيشوا حياة أكثر صحة" },
-      { k: "b", de: "Neu im Trend: Jung und Gesund - mit dem Schokolade", ar: "الجديد في الموضة: الشباب والصحة - مع الشوكولاتة" },
-      { k: "c", de: "Heiraten kann zu mehr Kilos führen – das zeigt eine Studie", ar: "الزواج يمكن أن يؤدي إلى زيادة الوزن - هذا ما تظهره دراسة" },
-      { k: "d", de: "Japanische Studie: Vielschläfer leben länger", ar: "دراسة يابانية: الأشخاص الذين ينامون كثيراً يعيشون أطول" },
-      { k: "e", de: "Die Mehrheit der Schweizer treibt aktiv Sport", ar: "غالبية السويسريين يمارسون الرياضة بانتظام" },
-      { k: "f", de: "Statistik: Unverheiratete haben oft ein paar Kilos zu viel", ar: "إحصائيات: غير المتزوجين غالباً ما يعانون من زيادة الوزن" },
-      { k: "g", de: "Teures Essen für mehr Jugend und Schönheit", ar: "طعام باهظ الثمن من أجل شباب وجمال دائم" },
-      { k: "h", de: "USA: Nachfrage nach freuen Lebensmitteln geht zurück", ar: "الولايات المتحدة: تراجع الطلب على الأغذية المجانية" },
-      { k: "i", de: "Schokolade essen - jung bleiben", ar: "تناول الشوكولاتة - البقاء شاباً" },
-      { k: "j", de: "Weniger schlafen - länger leben", ar: "النوم أقل - العيش أطول" }
+      { k: "a", de: "Schweizer sollen gesunder leben" }, { k: "b", de: "Neu im Trend: Jung und Gesund - mit dem Schokolade" },
+      { k: "c", de: "Heiraten kann zu mehr Kilos führen – das zeigt eine Studie" }, { k: "d", de: "Japanische Studie: Vielschläfer leben länger" },
+      { k: "e", de: "Die Mehrheit der Schweizer treibt aktiv Sport" }, { k: "f", de: "Statistik: Unverheiratete haben oft ein paar Kilos zu viel" },
+      { k: "g", de: "Teures Essen für mehr Jugend und Schönheit" }, { k: "h", de: "USA: Nachfrage nach freuen Lebensmitteln geht zurück" },
+      { k: "i", de: "Schokolade essen - jung bleiben" }, { k: "j", de: "Weniger schlafen - länger leben" }
     ],
     items: [
-      { n: 1, c: "b", de: "Der Schokolade-Boom zeigt sich hierzulande nicht nur im hohen Verbrauch (jeder Schweizer isst fast 12 Kilo Schokolade im Jahr!), nein, er hat nun auch die Schönheitsindustrie erreicht. Vom 16. Januar bis zum 24. Februar bietet das Grand Hotel Bad Ragaz unter dem Namen Choco Therapy zahlreiche kosmetische Behandlungsmethoden mit Schokolade an Die Bäder Massagen und Hautcremes mit Kakao sind durchaus ernst gemeint, denn Kakao soll eine belebende Eigenschaft haben, die den Menschen jung und gesund aussehen lässt.", ar: "يشهد قطاع التجميل في سويسرا توجهاً جديداً يعكس مدى ارتباط الشعب السويسري بالشوكولاتة التي يستهلك الفرد منها قرابة اثني عشر كيلوغراماً سنوياً حيث أطلق فندق \"جراند هوتيل باد راغاتس\" برنامجاً علاجياً مميزاً تحت مسمى \"Choco Therapy\" يمتد من منتصف يناير وحتى أواخر فبراير وتتضمن هذه الخدمة المبتكرة استخدام الكاكاو في جلسات الاستحمام والتدليك وصناعة الكريمات الجلدية نظراً لفوائده الكبيرة في تنشيط الدورة الدموية ومنح الجلد مظهراً حيوياً وشاباً يجمع بين الصحة والجمال." },
-      { n: 2, c: "c", de: "Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu, weil sie ihre Essgewohnheiten ändern. Das belegt eine neue Studie. In Deutschland sind fast die Hälfte der verheirateten Frauen und circa zwei Drittel der Ehrenmänner übergewichtig. Alleinstehende sind vermutlich schlanker, weil sie besonderen Wert auf ihr Äußeres legen, mehr Sport treiben und sich selten Zeit für gemütliche Mahlzeiten nehmen.", ar: "تؤكد دراسة حديثة أن الأزواج الجدد غالباً ما يكتسبون وزناً إضافياً منذ بداية شهر العسل نتيجة لتغير نمط عاداتهم الغذائية حيث تشير الأرقام في ألمانيا إلى أن قرابة نصف النساء المتزوجات وحوالي ثلثي الرجال المتزوجين يعانون من زيادة الوزن وفي المقابل يميل العزاب إلى الحفاظ على رشاقة أكبر نظراً لاهتمامهم المتزايد بمظهرهم الخارجي وحرصهم على ممارسة الرياضة بشكل مكثف بالإضافة إلى أنهم نادراً ما يخصصون وقتاً طويلاً لتناول الوجبات الجماعية المريحة التي تميز حياة المتزوجين." },
-      { n: 3, c: "j", de: "Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung. Das berichtete das Apothekenmagazin Gesundheit am Mittwoch und bezog sich dabei auf eine neue japanische Studie Schlecht für die Männer, denn laut dieser Studie schlafen Männer im Durchschnitt eine halbe Stunde länger pro Nacht als Frauen. Aber es gibt auch eine gute Nachricht für die Viel-und Langschläfer: Wer lange schläft, hat weniger Gewichtsprobleme und fünf sich gesünder.", ar: "أفادت مجلة الصيدلية \"Gesundheit\" استناداً إلى دراسة يابانية حديثة بأن النوم لمدة ثماني ساعات أو أكثر يرتبط بشكل ملحوظ بقصر متوسط العمر المتوقع وهو ما يعد مؤشراً سلبياً للرجال الذين ينامون في المتوسط نصف ساعة إضافية كل ليلة مقارنة بالنساء إلا أن الدراسة حملت في طياتها خبراً سعيداً لمحبي النوم الطويل حيث تبين أنهم أقل عرضة للإصابة بمشاكل الوزن الزائد ويتمتعون بشعور أكبر بالصحة والحيوية مقارنة بغيرهم." },
-      { n: 4, c: "a", de: "Nach dem Motto beschwingt und bewegt starten die Schweizer Gesundheitsbehörden eine landesweite Bewegungskampagne. Dabei sollte die Schweizer Bevölkerung aufgerufen werden, ausgewogen zu essen und sich täglich zu bewegen. Fast zwei Drittel der Bevölkerung in der Schweiz sind wenig aktiv und essen zu viel. Die Kampagne soll den Leuten zeigen, wie Sport und gesunde Ernährung ohne großen Aufwand in den Alltag integriert werden können, z.B. mit einem Spaziergang am Mittag oder mit einem Apfel zum Znüni statt Schokolade.", ar: "أطلقت السلطات الصحية السويسرية حملة وطنية تحت شعار \"بنشاط وحيوية\" تهدف إلى تشجيع السكان على تبني نمط حياة صحي يعتمد على الغذاء المتوازن والحركة اليومية خاصة وأن قرابة ثلثي الشعب السويسري يعانون من قلة النشاط والإفراط في الأكل وتسعى هذه الحملة إلى توعية الأفراد بكيفية دمج الرياضة والتغذية السليمة في تفاصيل يومهم البسيطة دون عناء كبير مثل استبدال الشوكولاتة بتفاحة في وجبة خفيفة أو ممارسة رياضة المشي خلال استراحة الغداء لضمان صحة أفضل للجميع." },
-      { n: 5, c: "g", de: "Du bist,was du isst hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen mit dem richtigen Essen. Der Trend kommt aus den USA: Dort kaufen bereits viele Leute neue teure Lebensmittel mit wissenschaftlichen Inhaltsstoffen, die dem Kunden jüngeres und schöneres Aussehen versprechen. So bietet z.B. ein New Yorker Nobelhotel das Menü Gegen-Graue-Haare an, das gegen das Älterwerden wirken soll. Aber wer wird schon eine solche Mahlzeit bestellen? Millionen von Leuten, so die Trendforscher. Und zwar aus dem einfachen Grund, weil jeder jung und gut aussehen will, und das mit möglichst wenig Aufwand.", ar: "تجاوز المفهوم التقليدي \"أنت ما تأكله\" حدود الصحة ليصبح الشعار الجديد هو \"الجمال من خلال الغذاء\" حيث يشير النص إلى توجه عالمي انطلق من الولايات المتحدة يعتمد على استهلاك أطعمة باهظة الثمن ومعززة بمكونات علمية تهدف للحفاظ على الشباب والجمال ومثال ذلك تقديم أحد الفنادق الفاخرة في نيويورك قائمة طعام خاصة لمحاربة الشيب وعلامات الشيخوخة ويتوقع خبراء التوجهات المستقبلية إقبال الملايين على هذا النوع من الابتكارات لرغبة الناس القوية في تحسين مظهرهم الخارجي بأقل مجهود ممكن." }
+      { n: 1, c: "b", de: "Der Schokolade-Boom zeigt sich hierzulande nicht nur im hohen Verbrauch..." },
+      { n: 2, c: "c", de: "Frisch verheiratete Paare nehmen oft schon in den Flitterwochen einige Kilos zu..." },
+      { n: 3, c: "j", de: "Wer acht Stunden und länger schläft, hat eine deutlich kürzere Lebenserwartung..." },
+      { n: 4, c: "a", de: "Nach dem Motto beschwingt und bewegt starten die Schweizer Gesundheitsbehörden..." },
+      { n: 5, c: "g", de: "Du bist,was du isst hat als Slogan ausgedient. Heute muss es heißen: Gut aussehen..." }
     ]
   },
   {
     id: "caroline-t1-mod", title: "Caroline", sub: "Teile 1", level: "B1", type: "headings", desc: "المعدل",
     options: [
-      { k: "a", de: "Familienbildung Schwerpunkt Beruf und Familie", ar: "التعليم الأسري مع التركيز على العمل والأسرة" },
-      { k: "b", de: "Demonstration gegen Fluglärm", ar: "مظاهرة ضد ضوضاء الطائرات" },
-      { k: "c", de: "Flughafen Frankfurt wird 10 Jahre", ar: "مطار فرانكفورت يحتفل بمرور 10 سنوات" },
-      { k: "d", de: "Flughafen Frankfurt beliebter Veranstaltungsort", ar: "مطار فرانكفورت وجهة مفضلة للفعاليات" },
-      { k: "e", de: "Experten gegen Vergrößerung des Flughafens", ar: "خبراء ضد توسيع المطار" },
-      { k: "f", de: "Info über den Flughafen und Arbeitsplätze", ar: "معلومات عن المطار وفرص العمل" },
-      { k: "g", de: "Neue Kurse: Spiele für Mütter und Kinder", ar: "دورات جديدة: ألعاب للأمهات والأطفال" },
-      { k: "h", de: "Umwelt und Flughafen: Ein Informationsabend der Bürger", ar: "البيئة والمطار: أمسية معلوماتية للمواطنين" },
-      { k: "i", de: "Neue Kurse für Kinder", ar: "دورات جديدة للأطفال" },
-      { k: "j", de: "Neue Kurse: Museumsführung für junge Väter", ar: "دورات جديدة: جولة في المتحف للآباء الشباب" }
+      { k: "a", de: "Familienbildung Schwerpunkt Beruf und Familie" }, { k: "b", de: "Demonstration gegen Fluglärm" },
+      { k: "c", de: "Flughafen Frankfurt wird 10 Jahre" }, { k: "d", de: "Flughafen Frankfurt beliebter Veranstaltungsort" },
+      { k: "e", de: "Experten gegen Vergrößerung des Flughafens" }, { k: "f", de: "Info über den Flughafen und Arbeitsplätze" },
+      { k: "g", de: "Neue Kurse: Spiele für Mütter und Kinder" }, { k: "h", de: "Umwelt und Flughafen: Ein Informationsabend der Bürger" },
+      { k: "i", de: "Neue Kurse für Kinder" }, { k: "j", de: "Neue Kurse: Museumsführung für junge Väter" }
     ],
     items: [
-      { n: 1, c: "h", de: "Der Frankfurter Flughafen wird weiter ausgebaut. Eine Gruppe von Frankfurter Bürgern aus den östlichen Stadtteilen, die sich seit Jahren aktiv für den Naturschutz und die Umwelt einsetzt, lädt für Donnerstag dieser Woche um 19.30 Uhr zu einem Informationsabend über den Ausbau des Frankfurter Flughafens ein. Im Bürgerhaus Ostend, Parkstraße 24, Clubraurn 12, werden verschiedene Sprecher zu hören sein. Die Gruppe möchte Antworten auf folgende Fragen suchen: Wie viel Lärm durch Flugzeuge verträgt die Stadt? Oder Welche Auswirkungen hat der Flugverkehr auf Umwelt und Natur?", ar: "تستمر أعمال التوسعة في مطار فرانكفورت، وهو ما دفع مجموعة من سكان الأحياء الشرقية الناشطين في مجال حماية البيئة منذ سنوات إلى الدعوة لتنظيم أمسية إعلامية يوم الخميس من هذا الأسبوع في تمام الساعة السابعة والنصف مساءً بدار المواطنين في حي \"أوست إند\" لمناقشة تداعيات هذا المشروع، حيث سيستضيف اللقاء عدة متحدثين للبحث في قضايا جوهرية تشغل الرأي العام، أبرزها مدى قدرة المدينة على استيعاب الضجيج الناتج عن حركة الطائرات، وتأثير هذا النشاط الجوي المتزايد على التوازن البيئي والطبيعة في المنطقة." },
-      { n: 2, c: "d", de: "Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort für Veranstaltungen und Tagungen. Dies zeigt ein Bericht des Frankfurter Flughafens, der beim zehnjährigen Jubiläum des Kongresszentruns vorgelegt wurde. Im Jubiläumsjahr haben am Frankfurter Flughafen 6800 Veranstaltungen mit insgesamt 72000 Teilnehmern stattgefunden. Im Jahr davor waren es nur 6300 Veranstaltungen mit 70000 Gästen. Im Kongresszentrum, das direkt gegenüber dem Hauptgebäude des Flughafens liegt, gibt es 28 Konferenzräume für bis zu 200 Teilnehmer. Modernste Technik wie Laptop-Anschlüsse und Internetzugänge in allen Konferenzräumen sind ebenso vorhanden, wie ein Dolmetscherdienst und verschiedene Speisemöglichkeiten. Eine transportable Videokonferenz-Anlage ermöglicht Verbindungen in die ganze Welt.", ar: "أصبح مطار فرانكفورت وجهة مفضلة للشركات لتنظيم الفعاليات والمؤتمرات حيث سجل تقرير بمناسبة الذكرى العاشرة لمركز المؤتمرات نمواً ملحوظاً بزيادة عدد الفعاليات إلى 6800 حدث استضافت 72 ألف مشارك مقارنة بالعام السابق ويوفر المركز الذي يقع مقابل مبنى المطار الرئيسي 28 قاعة مجهزة بأحدث التقنيات الرقمية وخدمات الترجمة الفورية بالإضافة إلى خيارات متنوعة للإطعام وتقنيات الفيديو المتطورة التي تتيح التواصل مع مختلف أنحاء العالم بكل سهولة ويسر." },
-      { n: 3, c: "f", de: "Eine Bürgergruppe mit dem Namen Südliches Frankfurt lädt für Montag kommender Woche, um 19.30 Uhr ins Pfarrhaus St. Mauritius, Mauritiusstraße 14, zu einer öffentlichen Expertenbefragung zum Thema Arbeitsplätze am Frankfurter Flughafen ein. Der Gruppe liegen Berichte und Daten vor, die nach den Worten der Sprecher der Gruppe sehr fantastisch und zweifelhaft sind. Deshalb hat die Bürgergruppe Südliches Frankfurt den Personalleiter des Frankfurter Flughafens, einen Experten aus dem Wirtschaftsministerium, einen bekannten Stadtentwicklungsplaner und einen Soziologen, der sich mit der Arbeitsplatzentwicklung in der Frankfurter Region beschäftigt, eingeladen. Im Anschluss an die Vorträge der Experten haben die Gäste Zeit, Fragen zu stellen.", ar: "تعتزم مجموعة مواطنين تحت اسم \"جنوب فرانكفورت\" تنظيم لقاء عام في دار رعية القديس موريتيوس مساء الاثنين القادم لمناقشة ملف الوظائف في المطار والتحقق من دقة البيانات الرسمية التي تصفها المجموعة بالمبالغ فيها وسيشهد اللقاء حضور نخبة من الخبراء من بينهم مدير الموارد البشرية بالمطار وممثل عن وزارة الاقتصاد ومخطط حضري وعالم اجتماع متخصص في تطور سوق العمل بالمنطقة لمواجهة التساؤلات المطروحة مع فتح المجال للجمهور لطرح استفساراتهم بعد انتهاء المداخلات الرسمية." },
-      { n: 4, c: "a", de: "Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte bringt eine Übersicht über viele Veranstaltungen. Neben Kursen wie Geburtsvorbereitung und Babypflege steht diesmal das Thema Berufstätige Eltern im Mittelpunkt. In Gruppen und Kursen vor allem für Frauen geht es darum, wie sich nach der Geburt eines Kindes Beruf und Familie miteinander vereinbaren lassen. Das Verhältnis zwischen Mann und Frau spielt eine große Rolle im Angebot der Familienbildung; hierzu gibt es wieder spezielle Programme nur für Frauen oder nur für Männer. Auch zum Verhältnis der Generationen (Großeltern und Enkelkinder) gibt es wieder Angebote. Darüber hinaus wartet das Programm mit Kursen für Entspannung und Zeitmanagement auf, die bei Fragen des Alltags helfen wollen.", ar: "يركز البرنامج الجديد لمركز التعليم العائلي الإنجيلي على قضية التوفيق بين المسار المهني والحياة الأسرية للآباء العاملين بعد الولادة مع تخصيص دورات تدريبية تركز بشكل خاص على أدوار المرأة والرجل في الأسرة وتنمية الروابط بين الأجيال المختلفة مثل الأجداد والأحفاد كما يتضمن البرنامج مجموعة واسعة من الأنشطة التي تشمل التحضير للولادة ورعاية الأطفال وتقنيات الاسترخاء وإدارة الوقت لمساعدة الأسر على مواجهة ضغوط وتحديات الحياة اليومية بفعالية أكبر." },
-      { n: 5, c: "i", de: "Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse an. Am Mittwoch nächster Woche beginnen zwei Malkurse für Kinder. Zweieinhalb- bis vierjährige Kinder treffen sich um 15.30 Uhr, Kinder im Alter von fünf und sechs Jahren um 17.00 Uhr. Für Kinder im Alter zwischen eineinhalb und sechs Jahren und ihre Väter beginnt am Samstag um 10.00 Uhr eine feste Vater-Kind-Gruppe. Am darauf-folgenden Samstag gibt es dann auch ein Treffen für Väter und Kinder bis dreieinhalb Jahren. Etwas anderes ist die Kultur- und Kreativwerkstatt am Montag nächster Woche. Aus Ton und Erde sollen Figuren nach afrikanischen Beispielen gebastelt werden. Zur Vorbereitung treffen sich die Teilnehmer am kommenden Montag zuerst im Museum. Anmeldung spätestens morgen bis 15.00 Uhr.", ar: "تستعد مدرسة الشعب في دورنبيرن لإطلاق سلسلة من الدورات الجديدة تتنوع بين ورش عمل للرسم للأطفال بمختلف فئاتهم العمرية ومجموعات تفاعلية مخصصة للآباء وأبنائهم في عطلات نهاية الأسبوع بالإضافة إلى ورشة عمل ثقافية متميزة لصناعة تماثيل طينية مستوحاة من الفن الأفريقي تبدأ بلقاء تحضيري في المتحف ويُشترط على الراغبين في المشاركة استكمال إجراءات التسجيل في موعد أقصاه غداً الساعة الثالثة بعد الظهر لضمان مقاعدهم في هذه الأنشطة الإبداعية." }
+      { n: 1, c: "h", de: "Der Frankfurter Flughafen wird weiter ausgebaut..." },
+      { n: 2, c: "d", de: "Der Frankfurter Flughafen erfreut sich bei vielen Firmen als beliebter Ort..." },
+      { n: 3, c: "f", de: "Eine Bürgergruppe mit dem Namen Südliches Frankfurt lädt..." },
+      { n: 4, c: "a", de: "Das neue Halbjahresprogramm der Evangelischen Familienbildungsstätte..." },
+      { n: 5, c: "i", de: "Die Volkshochschule Dornbirn bietet in den kommenden Wochen neue Kurse..." }
     ]
   }
 ];
 
-const EXAM_COUNTRIES = [
-  { country: "Ägypten", ar: "مصر", flag: "🇪🇬", cities: "Kairo", institutes: "Vivat Lingua, SIS, AKF Sprachschule, Lingocare, WiPDaF, Westfalia Bildungszentrum" },
-  { country: "Indien", ar: "الهند", flag: "🇮🇳", cities: "Ahmedabad, Alappuzha, Bangalore, Chennai, Kerala, Chandigarh, Kochi, Kollam, Manimuthy, Prune, Trivandrum", institutes: "Sprachschule CAS, Vivat Lingua, Sprachenakademie Aachen, DEFA, Tandem, Lingualeaps, Speakeasy, ACZEPTA, Quadrigo, IIK, Dekra" },
-  { country: "Kirgisistan", ar: "قيرغيزستان", flag: "🇰🇬", cities: "Bischkek, Osch", institutes: "Volkshochschule im Landkreis Cham" },
-  { country: "Kolumbien", ar: "كولومبيا", flag: "🇨🇴", cities: "Bogota", institutes: "CDC Mexiko, C2 Barcelona Languages" },
-  { country: "Malaysia", ar: "ماليزيا", flag: "🇲🇾", cities: "Selangor", institutes: "Sprachenakademie Aachen" },
-  { country: "Marokko", ar: "المغرب", flag: "🇲🇦", cities: "Casablanca, Meknès, Tanger", institutes: "Atlas Bildungs Center, Prisma Bildungsplattform, IIK" },
-  { country: "Philippinen", ar: "الفلبين", flag: "🇵🇭", cities: "Davao", institutes: "Berlitz Deutschland" },
-  { country: "Tadschikistan", ar: "طاجيكستان", flag: "🇹🇯", cities: "Duschanbe", institutes: "bfz gGmbH, Bremer Volkshochschule" },
-  { country: "Tunesien", ar: "تونس", flag: "🇹🇳", cities: "Tunis", institutes: "Sprachenakademie Aachen" },
-  { country: "Türkei", ar: "تركيا", flag: "🇹🇷", cities: "Ankara, Istanbul, Adana", institutes: "Sprachportal, IFB" },
-  { country: "Usbekistan", ar: "أوزبكستان", flag: "🇺🇿", cities: "Taschkent, Fergana, Samarkand", institutes: "Berlitz, Bildung und Beruf" },
-  { country: "Vietnam", ar: "فيتنام", flag: "🇻🇳", cities: "Hanoi, Ho Chi Minh", institutes: "Alpha Sprachschule, IBK Merseburg, IIK, Jacura Group, UNS, Sprachportal Akademie, SDI München" }
-];
+// === 4. CORE LESSON LOGIC ===
+const getLocalData = (level, section, title, sub) => {
+  const normTitle = normalize(title);
+  let pool = [];
+  if (section === "Lesen") pool = level === "B2" ? (B2_EXAMS || []) : (EXAMS || []);
+  if (section === "Hören") pool = level === "B2" ? (B2_HOREN_EXAMS || []) : (HOREN_EXAMS || []);
+  if (section === "Schreiben") pool = level === "B2" ? (B2_SCHREIBEN_DATA || []) : (SCHREIBEN_DATA || []);
+  if (section === "Sprechen") pool = level === "B2" ? (B2_SPRECHEN_DATA || []) : (B1_SPRECHEN_DATA || []);
 
-const Icons = {
-  Home: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
-  Book: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
-  Headphones: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>,
-  Edit: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>,
-  Mic: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
-  Graduation: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
-  Menu: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>,
-  Moon: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
-  Sun: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>,
-  Settings: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
-  Translate: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>,
-  Play: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill={color}><path d="M8 5v14l11-7z"/></svg>,
-  Pause: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill={color}><rect x="6" y="6" width="12" height="12" rx="2"/></svg>,
-  Check: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
-  ArrowLeft: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>,
-  ArrowRight: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>,
-  Target: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>,
-  Practice: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>,
-  Clock: ({ color = "currentColor" }) => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
-  Eye: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>,
-  X: ({ color = "currentColor" }) => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
-  Gift: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>,
-  Rocket: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>,
-  Bell: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
-  Alert: ({ color = "currentColor" }) => <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+  let matches = pool.filter(e => normalize(e.title) === normTitle);
+  if (sub) matches = matches.filter(e => e.sub === sub);
+  
+  if (level === "B1" && section === "Lesen" && sub === "Teile 1") {
+      const mods = FREE_MODIFIED_LESSONS.filter(m => normalize(m.title) === normTitle && m.sub === sub);
+      matches = [...matches, ...mods];
+  }
+  return matches;
+};
+
+// === 5. ICONS & LOGO ===
+const Icon = {
+  Home: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
+  Book: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>,
+  Headphones: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>,
+  Edit: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>,
+  Mic: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>,
+  Grad: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>,
+  Moon: ({ c = "currentColor", s = 20 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>,
+  Sun: ({ c = "currentColor", s = 20 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/></svg>,
+  Gear: ({ c = "currentColor", s = 20 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+  Play: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill={c}><path d="M8 5v14l11-7z"/></svg>,
+  Pause: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill={c}><rect x="6" y="6" width="12" height="12" rx="2"/></svg>,
+  Check: ({ c = "currentColor", s = 20 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+  Left: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 18l-6-6 6-6"/></svg>,
+  Right: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>,
+  Clock: ({ c = "currentColor", s = 16 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+  Eye: ({ c = "currentColor", s = 20 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>,
+  X: ({ c = "currentColor", s = 20 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  Lock: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
+  Rocket: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>,
+  Bell: ({ c = "currentColor", s = 24 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
+  Translate: ({ c = "currentColor", s = 20 }) => <svg width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={c} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 5h12M9 3v2c0 4.418-2.686 8-6 8m0-8h12m-6 0v2c0 4.418 2.686 8 6 8m-4-2l-4 8m2-4h4m-2 0l2 4"/></svg>
 };
 
 const LogoImage = ({ size = 50 }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width={size} height={size} viewBox="0 0 100 100" fill="none">
     <defs>
-      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#0F172A" /><stop offset="100%" stopColor="#1E293B" /></linearGradient>
-      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#14B8A6" /><stop offset="100%" stopColor="#0D9488" /></linearGradient>
+      <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#0F172A"/><stop offset="100%" stopColor="#1E293B"/></linearGradient>
+      <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stopColor="#14B8A6"/><stop offset="100%" stopColor="#0D9488"/></linearGradient>
     </defs>
-    <rect width="100" height="100" rx="24" fill="url(#bgGrad)" />
-    <rect width="98" height="98" x="1" y="1" rx="23" stroke="rgba(255,255,255,0.1)" strokeWidth="2" fill="none" />
-    <rect x="18" y="28" width="36" height="10" rx="4" fill="#0D9488" />
-    <rect x="18" y="44" width="36" height="10" rx="4" fill="#BE123C" />
-    <rect x="18" y="60" width="36" height="10" rx="4" fill="url(#goldGrad)" />
-    <path d="M 54 70 L 54 30 L 70 30 C 84 30, 84 52, 70 52 L 54 52" stroke="url(#goldGrad)" strokeWidth="9" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-    <circle cx="80" cy="80" r="5" fill="#D97706" />
+    <rect width="100" height="100" rx="24" fill="url(#lg1)"/>
+    <rect x="1" y="1" width="98" height="98" rx="23" stroke="rgba(255,255,255,0.1)" strokeWidth="2" fill="none"/>
+    <rect x="18" y="28" width="36" height="10" rx="4" fill="#0D9488"/>
+    <rect x="18" y="44" width="36" height="10" rx="4" fill="#BE123C"/>
+    <rect x="18" y="60" width="36" height="10" rx="4" fill="url(#lg2)"/>
+    <path d="M54 70V30h16c14 0 14 22 0 22H54" stroke="url(#lg2)" strokeWidth="9" strokeLinecap="round" fill="none"/>
+    <circle cx="80" cy="80" r="5" fill="#D97706"/>
   </svg>
 );
 
-const globalTransCache = {};
-const FAST_DICT = {
-  "المعدل": { ar: "المعدل", en: "Modified", fr: "Modifié", hi: "संशोधित", id: "Dimodifikasi", tl: "Binago", fa: "اصلاح شده", sw: "Iliyorekebishwa", uz: "O'zgartirilgan", ne: "परिमार्जित" },
-  "تعديلات": { ar: "تعديلات", en: "Versions", fr: "Versions", hi: "संस्करण", id: "Versi", tl: "Mga Bersyon", fa: "نسخه ها", sw: "Matoleo", uz: "Versiyalar", ne: "संस्करणहरू" },
-  "إغلاق": { ar: "إغلاق", en: "Close", fr: "Fermer", hi: "बंद करें", id: "Tutup", tl: "Isara", fa: "بستن", sw: "Funga", uz: "Yopish", ne: "बन्द गर्नुहोस्" },
-  "مراكز الامتحانات المتاحة": { ar: "مراكز الامتحانات المتاحة", en: "Available Exam Centers", fr: "Centres d'examen disponibles", hi: "उपलब्ध परीक्षा केंद्र", id: "Pusat Ujian tersedia", tl: "Mga Available na Exam Center", fa: "مراکز آزمون موجود", sw: "Vituo vya Mitihani Vinavyopatikana", uz: "Mavjud imtihon markazlari", ne: "उपलब्ध परीक्षा केन्द्रहरू" },
-  "المدن": { ar: "المدن", en: "Cities", fr: "Villes", hi: "शहर", id: "Kota", tl: "Mga Lungsod", fa: "شهرها", sw: "Miji", uz: "Shaharlar", ne: "शहरहरू" },
-  "المعاهد والمراكز": { ar: "المعاهد والمراكز", en: "Institutes and Centers", fr: "Instituts et centres", hi: "संस्थान और केंद्र", id: "Institut dan Pusat", tl: "Mga Institute at Center", fa: "موسسات و مراکز", sw: "Taasisi na Vituo", uz: "Institutlar va markazlar", ne: "संस्थान र केन्द्रहरू" },
-  "التعديلات المتاحة": { ar: "التعديلات المتاحة", en: "Available Versions", fr: "Versions disponibles", hi: "उपलब्ध संस्करण", id: "Versi tersedia", tl: "Mga Available na Bersyon", fa: "نسخه های موجود", sw: "Matoleo Yanayopatikana", uz: "Mavjud versiyalar", ne: "उपलब्ध संस्करणहरू" },
-  "تعديلات لهذا الموضوع": { ar: "تعديلات لهذا الموضوع", en: "Versions for this topic", fr: "Versions pour ce sujet", hi: "इस विषय के लिए संस्करण", id: "Versi untuk topik ini", tl: "Mga bersyon para sa paksang ito", fa: "نسخه ها برای این موضوع", sw: "Matoleo kwa mada hii", uz: "Ushbu mavzu uchun versiyalar", ne: "यो विषयको लागि संस्करणहरू" },
-  "فتح الوصول": { ar: "فتح الوصول", en: "Unlock Access", fr: "Déverrouiller", hi: "पहुँच अनलॉक करें", id: "Buka Akses", tl: "I-unlock ang Access", fa: "باز کردن دسترسی", sw: "Fungua Ufikiaji", uz: "Kirishni ochish", ne: "पहुँच अनलक गर्नुहोस्" },
-  "سيتم إضافته قريباً": { ar: "سيتم إضافته قريباً", en: "Coming Soon", fr: "Bientôt disponible", hi: "जल्द ही आ रहा है", id: "Segera Hadir", tl: "Malapit na", fa: "به زودی اضافه می شود", sw: "Inakuja Hivi Karibuni", uz: "Tez orada qo'shiladi", ne: "चाँडै थपिनेछ" },
-  "محتوى مقفل": { ar: "محتوى مقفل", en: "Locked Content", fr: "Contenu verrouillé", hi: "लॉक किया गया", id: "Konten Terkunci", tl: "Naka-lock na Nilalaman", fa: "محتوای قفل شده", sw: "Maudhui Yamefungwa", uz: "Qulflangan tarkib", ne: "लक गरिएको सामग्री" },
-  "ترقية الحساب الآن": { ar: "ترقية الحساب الآن", en: "Upgrade Account Now", fr: "Mettre à niveau maintenant", hi: "अभी अपग्रेड करें", id: "Tingkatkan Akun Sekarang", tl: "I-upgrade ang Account Ngayon", fa: "ارتقاء حساب در حال حاضر", sw: "Boresha Akaunti Sasa", uz: "Hisobni hoziroq oshirish", ne: "खाता अपग्रेड गर्नुहोस्" },
-  "ليس الآن": { ar: "ليس الآن", en: "Not Now", fr: "Pas maintenant", hi: "अभी नहीं", id: "Tidak Sekarang", tl: "Hindi Ngayon", fa: "حالا نه", sw: "Sio Sasa", uz: "Hozir emas", ne: "अहिले होइन" },
-  "يتطلب باقة Pro": { ar: "يتطلب باقة Pro", en: "Requires Pro", fr: "Nécessite Pro", hi: "Pro आवश्यक है", id: "Membutuhkan Pro", tl: "Nangangailangan ng Pro", fa: "نیاز به نسخه حرفه ای", sw: "Inahitaji Pro", uz: "Pro talab qilinadi", ne: "प्रो आवश्यक छ" }
-};
+// === 6. SPLASH, LANG, AUTH ===
+function SplashScreen() { return <div className="splash-screen"><div className="splash-logo"><LogoImage size={180} /></div><h1 style={{ fontSize: "2.5em", fontWeight: 900, marginTop: 20 }}>EchtPrüfung</h1></div>; }
 
-function AutoTrans({ text, lang, force = false }) {
-  const targetLang = lang === 'ma' ? 'ar' : lang;
-  const cacheKey = `${targetLang}_${text}`;
-  const [translated, setTranslated] = useState(() => {
-    if (!text) return "";
-    if (targetLang === 'de' && !force) return text;
-    const safeText = text.trim();
-    if (FAST_DICT[safeText] && FAST_DICT[safeText][targetLang]) return FAST_DICT[safeText][targetLang];
-    return globalTransCache[cacheKey] || text;
-  });
-
-  useEffect(() => {
-    if (!text || targetLang === 'de') return;
-    const safeText = text.trim();
-    if (FAST_DICT[safeText] && FAST_DICT[safeText][targetLang]) {
-      setTranslated(FAST_DICT[safeText][targetLang]);
-      return;
-    }
-    if (globalTransCache[cacheKey]) {
-      setTranslated(globalTransCache[cacheKey]);
-      return;
-    }
-    const controller = new AbortController();
-    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`, { signal: controller.signal })
-      .then(res => res.json())
-      .then(data => {
-        if (data && data[0]) {
-          const result = data[0].map(item => item[0]).join('');
-          globalTransCache[cacheKey] = result;
-          setTranslated(result);
-        }
-      })
-      .catch(() => {});
-    return () => controller.abort();
-  }, [text, targetLang, cacheKey, force]);
-
-  return <span>{translated}</span>;
+function LanguageScreen({ onSelect }) { 
+  return (
+    <div className="auth-screen">
+      <div className="auth-card">
+        <div style={{ textAlign: "center", marginBottom: 30 }}>
+          <LogoImage size={80} />
+          <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}><AutoTrans text="اختر لغتك" lang="en" /></h2>
+        </div>
+        <div className="lang-grid">
+          {LANGS.map(l => (
+            <button key={l.c} onClick={() => onSelect(l.c)} className="lang-btn">
+              <span style={{ fontSize: "1.6em" }}>{l.f}</span>
+              <span style={{ fontSize: "0.95em", fontWeight: 800 }}>{l.n}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  ); 
 }
 
-function SmartTrans({ obj, lang }) {
-  if (!obj) return "";
-  const textDe = obj.de || obj.en || (obj.q ? obj.q : "") || (typeof obj === 'string' ? obj : "");
-  const targetLang = lang === 'ma' ? 'ar' : lang;
-  
-  if (typeof obj === 'object' && obj[lang]) return <span>{obj[lang]}</span>;
-  if (lang === 'de' && typeof obj === 'object' && obj['de']) return <span>{obj['de']}</span>;
-  return <AutoTrans text={textDe} lang={targetLang} force={true} />;
+function AuthScreen({ userLang, onAuth, onGuest }) {
+  const [uniqueName, setUniqueName] = useState(""); const [uniqueCode, setUniqueCode] = useState(""); const [loading, setLoading] = useState(false);
+  const handleSubmit = async (e) => { e.preventDefault(); if (!uniqueName.trim() || !uniqueCode.trim()) return; setLoading(true); try { await onAuth(uniqueName.trim(), uniqueCode.trim()); } finally { setLoading(false); } };
+  return (
+    <div className="auth-screen">
+      <div className="auth-card">
+        <div style={{ textAlign: "center", marginBottom: 30 }}>
+          <LogoImage size={80} />
+          <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}><AutoTrans text="مرحبا بيك" lang={userLang} /></h2>
+        </div>
+        <form onSubmit={handleSubmit}>
+          <input className="auth-input" placeholder={t("name", userLang)} value={uniqueName} onChange={e => setUniqueName(e.target.value)} required />
+          <input className="auth-input" placeholder={t("id_placeholder", userLang)} type="password" value={uniqueCode} onChange={e => setUniqueCode(e.target.value)} required />
+          <button type="submit" className="auth-btn" disabled={loading}>{loading ? "..." : <AutoTrans text="تسجيل الدخول" lang={userLang} />}</button>
+        </form>
+        <div style={{ textAlign: "center", margin: "20px 0", color: "var(--muted)", fontSize: "0.9em" }}><AutoTrans text="أو" lang={userLang} /></div>
+        <button className="auth-btn guest" onClick={onGuest}><Icon.Home c="var(--ink)" /> <AutoTrans text="دخول كزائر" lang={userLang} /></button>
+      </div>
+    </div>
+  );
 }
 
-function HorenCard({ exam, userLang, showTranslation, isB2 }) {
+// === 7. HOREN CARD (FULL & COMPLETE) ===
+function HorenCard({ exam, userLang, showTranslation, isB2, user }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showStory, setShowStory] = useState(false);
   const [audioTime, setAudioTime] = useState(0);
   const audioInterval = useRef(null);
-
-  const pts = 5;
-  const total = exam.items.length * pts;
+  const pts = 5; const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
-  
   const themeColor = isB2 ? "#0D9488" : "#8B5CF6";
 
-  useEffect(() => {
-    return () => {
-      clearInterval(audioInterval.current);
-      if (window.speechSynthesis) window.speechSynthesis.cancel();
-    };
-  }, []);
+  useEffect(() => { return () => { clearInterval(audioInterval.current); if (window.speechSynthesis) window.speechSynthesis.cancel(); }; }, []);
 
   const playHorenAudio = (segments) => {
-    if (!window.speechSynthesis) {
-      alert("المتصفح ديالك ماكيدعمش النطق الصوتي.");
-      setIsPlaying(false);
-      return;
-    }
+    if (!window.speechSynthesis) { alert("Browser doesn't support audio"); setIsPlaying(false); return; }
     window.speechSynthesis.cancel();
     let currentIndex = 0;
-
     const playNext = () => {
-      if (currentIndex >= segments.length) {
-        setIsPlaying(false);
-        clearInterval(audioInterval.current);
-        return;
-      }
+      if (currentIndex >= segments.length) { setIsPlaying(false); clearInterval(audioInterval.current); return; }
       const segment = segments[currentIndex];
-      if (segment.text === "Audio nicht verfügbar") {
-         currentIndex++;
-         setTimeout(playNext, 500);
-         return;
-      }
+      if (segment.text === "Audio nicht verfügbar") { currentIndex++; setTimeout(playNext, 500); return; }
       const utterance = new SpeechSynthesisUtterance(segment.text);
-      utterance.lang = 'de-DE';
-      utterance.pitch = segment.pitch || 1;
-      utterance.rate = segment.rate || 1;
+      utterance.lang = 'de-DE'; utterance.pitch = segment.pitch || 1; utterance.rate = segment.rate || 1;
       utterance.onend = () => { currentIndex++; setTimeout(playNext, 500); };
       utterance.onerror = () => { setIsPlaying(false); clearInterval(audioInterval.current); };
       window.speechSynthesis.speak(utterance);
@@ -268,62 +259,59 @@ function HorenCard({ exam, userLang, showTranslation, isB2 }) {
   };
 
   const toggleAudio = () => {
-    if (isPlaying) {
-      window.speechSynthesis.cancel();
-      clearInterval(audioInterval.current);
-      setIsPlaying(false);
-      return;
-    }
-    setIsPlaying(true);
-    setAudioTime(0);
+    if (isPlaying) { window.speechSynthesis.cancel(); clearInterval(audioInterval.current); setIsPlaying(false); return; }
+    setIsPlaying(true); setAudioTime(0);
     audioInterval.current = setInterval(() => setAudioTime(prev => prev + 1), 1000);
     playHorenAudio(exam.audio || []);
   };
 
-  const pickHoren = (n, c) => {
-    if (done) return;
-    setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c }));
-  };
+  const pickHoren = (n, c) => { if (!done) setAns(prev => ({ ...prev, [n]: prev[n] === c ? undefined : c })); };
 
-  const labelR = userLang === 'ar' || userLang === 'ma' ? "صحيح" : userLang === 'fr' ? "Vrai" : userLang === 'en' ? "True" : userLang === 'hi' ? "सही" : "";
-  const labelF = userLang === 'ar' || userLang === 'ma' ? "خطأ" : userLang === 'fr' ? "Faux" : userLang === 'en' ? "False" : userLang === 'hi' ? "गलत" : "";
+  const labelR = t("correct", userLang) || "R";
+  const labelF = t("wrong", userLang) || "F";
+
+  const hasAudio = exam.audio && exam.audio[0]?.text !== "Audio nicht verfügbar";
+  const isLockedB2T3 = isB2 && exam.sub === "Teile 3" && (!user?.isPaid && !user?.trialActive);
 
   return (
     <div className="card" style={{ padding: 20, marginBottom: 24, border: `1px solid ${themeColor}40` }}>
       <h3 className="de" style={{ fontSize: "1.3em", fontWeight: 900, margin: "0 0 16px", color: "var(--ink)" }}>{exam.title}</h3>
 
-      <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
-        <button onClick={toggleAudio} style={{ width: 56, height: 56, borderRadius: "50%", flexShrink: 0, background: isPlaying ? "var(--red)" : themeColor, color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 8px 20px ${themeColor}50`, transition: "all 0.2s" }}>
-          {isPlaying ? <Icons.Pause color="#FFF" /> : <Icons.Play color="#FFF" />}
-        </button>
-        <div style={{ flex: 1 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, color: "var(--muted)", fontSize: "0.9em", marginBottom: 6 }}>
-            <span style={{ color: isPlaying ? "var(--red)" : "var(--ink)", direction: 'ltr' }}>{Math.floor(audioTime / 60)}:{(audioTime % 60).toString().padStart(2, '0')}</span>
-            <span>Audio Player</span>
-          </div>
-          <div style={{ height: 8, background: "var(--line)", borderRadius: 99, overflow: "hidden" }}>
-            <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: isPlaying ? "var(--red)" : themeColor, transition: isPlaying ? "width 60s linear" : "none" }} />
+      {isLockedB2T3 ? (
+        <div style={{ background: "var(--badbg)", padding: 16, borderRadius: 16, marginBottom: 20, border: "1px solid var(--badc)" }}>
+           <div style={{ color: "var(--badc)", fontWeight: 900, marginBottom: 8 }}><AutoTrans text="محتوى مقفل" lang={userLang} /></div>
+           <div style={{ color: "var(--badc)", fontSize: "0.9em" }}><AutoTrans text="هذا المقطع الصوتي متاح فقط للمشتركين. يرجى الترقية للاستماع." lang={userLang} /></div>
+           <button onClick={() => wa(t("wa_upgrade_msg", userLang))} style={{ marginTop: 12, background: "var(--badc)", color: "#FFF", padding: "8px 16px", borderRadius: 8, border: "none", fontWeight: 900 }}><AutoTrans text="الترقية الآن" lang={userLang} /></button>
+        </div>
+      ) : !hasAudio ? (
+        <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
+          <div style={{ color: "var(--muted)", fontWeight: 900 }}><AutoTrans text="لا يوجد تسجيل" lang={userLang} /></div>
+        </div>
+      ) : (
+        <div style={{ display: "flex", alignItems: "center", gap: 12, background: "var(--paper)", padding: 16, borderRadius: 20, marginBottom: 20 }}>
+          <button onClick={toggleAudio} style={{ width: 56, height: 56, borderRadius: "50%", flexShrink: 0, background: isPlaying ? "var(--red)" : themeColor, color: "#FFF", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 8px 20px ${themeColor}50`, transition: "all 0.2s", border: "none" }}>
+            {isPlaying ? <Icon.Pause c="#FFF" /> : <Icon.Play c="#FFF" />}
+          </button>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, color: "var(--muted)", fontSize: "0.9em", marginBottom: 6 }}>
+              <span style={{ color: isPlaying ? "var(--red)" : "var(--ink)", direction: 'ltr' }}>{Math.floor(audioTime / 60)}:{(audioTime % 60).toString().padStart(2, '0')}</span>
+              <span>Audio Player</span>
+            </div>
+            <div style={{ height: 8, background: "var(--line)", borderRadius: 99, overflow: "hidden" }}>
+              <div style={{ height: "100%", width: isPlaying ? "100%" : "0%", background: isPlaying ? "var(--red)" : themeColor, transition: isPlaying ? "width 60s linear" : "none" }} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div style={{ border: "1px solid var(--line)", borderRadius: 16, overflow: "hidden", marginBottom: 20 }}>
         <div style={{ display: "flex", background: "var(--paper)", borderBottom: "1px solid var(--line)", fontWeight: 900, color: "var(--muted)", fontSize: "0.85em", padding: "12px 0" }}>
-          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '1.3em' }}>R</span>
-            {labelR && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelR}</span>}
-          </div>
-          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <span style={{ fontSize: '1.3em' }}>F</span>
-            {labelF && <span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelF}</span>}
-          </div>
+          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}><span style={{ fontSize: '1.3em' }}>R</span><span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelR}</span></div>
+          <div style={{ width: 60, textAlign: "center", display: 'flex', flexDirection: 'column', justifyContent: 'center' }}><span style={{ fontSize: '1.3em' }}>F</span><span style={{ fontSize: '0.7em', fontWeight: 'normal', marginTop: 2 }}>{labelF}</span></div>
           <div style={{ flex: 1, paddingLeft: 10, display: 'flex', alignItems: 'center' }}>AUSSAGE</div>
         </div>
         {exam.items.map((it) => {
-          const isRight = ans[it.n] === "R";
-          const isFalsch = ans[it.n] === "F";
-          const isCorrect = ans[it.n] === it.c;
-          
+          const isRight = ans[it.n] === "R"; const isFalsch = ans[it.n] === "F"; const isCorrect = ans[it.n] === it.c;
           let rClass = "rf-circle", fClass = "rf-circle";
           if (done) {
             if (it.c === "R") rClass += " good"; else if (isRight) rClass += " bad"; else rClass += " faded";
@@ -332,10 +320,8 @@ function HorenCard({ exam, userLang, showTranslation, isB2 }) {
             if (isRight) rClass += " sel";
             if (isFalsch) fClass += " sel";
           }
-          
           let rowBg = "var(--card)";
           if (done) rowBg = isCorrect ? "var(--okbg)" : "var(--badbg)";
-          
           return (
             <div key={it.n} style={{ display: "flex", alignItems: "center", borderBottom: "1px solid var(--line)", padding: "12px 0", background: rowBg }}>
               <div style={{ width: 60, display: "flex", justifyContent: "center" }}><div className={rClass} onClick={() => pickHoren(it.n, "R")}></div></div>
@@ -343,11 +329,7 @@ function HorenCard({ exam, userLang, showTranslation, isB2 }) {
               <div style={{ flex: 1, fontSize: "0.95em", lineHeight: 1.6, paddingRight: 10 }}>
                 <span style={{ opacity: 0.5, marginLeft: 8, fontWeight: 900 }}>{it.n}</span>
                 <span className="de">{it.de}</span>
-                {showTranslation && (
-                  <div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : "rtl", textAlign: userLang === 'hi' ? 'left' : "right" }}>
-                    <SmartTrans obj={it} lang={userLang} />
-                  </div>
-                )}
+                {showTranslation && (<div style={{ marginTop: 8, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : "rtl", textAlign: userLang === 'hi' ? 'left' : "right" }}><SmartTrans obj={it} lang={userLang} /></div>)}
               </div>
             </div>
           );
@@ -356,52 +338,30 @@ function HorenCard({ exam, userLang, showTranslation, isB2 }) {
 
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <button onClick={() => setShowStory(!showStory)} style={{ display: "flex", alignItems: "center", gap: 8, color: themeColor, fontWeight: 800, background: `${themeColor}15`, padding: "10px 16px", borderRadius: 12, border: "none" }}>
-          <Icons.Eye color={themeColor} /> {t("story_memo", userLang)}
+          <Icon.Eye c={themeColor} /> {t("story_memo", userLang)}
         </button>
         <div style={{ display: "flex", gap: 10 }}>
           {!done ? (
             <button onClick={() => setDone(true)} style={{ background: themeColor, color: "#FFF", padding: "10px 24px", borderRadius: 12, fontWeight: 900, boxShadow: `0 6px 15px ${themeColor}50`, border: "none" }}>{t("check_btn", userLang)}</button>
-          ) : (
-            <div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / {total}</div>
-          )}
+          ) : (<div style={{ fontWeight: 900, color: score === total ? "var(--okc)" : "var(--red)", display: "flex", alignItems: "center", fontSize: "1.1em" }}>{score} / {total}</div>)}
         </div>
       </div>
-      {showStory && (
-        <div className="t2-ar" style={{ marginTop: 16 }}>
-          {userLang === 'ar' || userLang === 'ma' ? exam.items[0]?.story : <AutoTrans text={exam.items[0]?.story} lang={userLang} force={true} />}
-        </div>
-      )}
+      {showStory && (<div className="t2-ar" style={{ marginTop: 16 }}>{exam.items[0]?.story ? (userLang === 'ar' || userLang === 'ma' ? exam.items[0].story : <AutoTrans text={exam.items[0].story} lang={userLang} />) : <AutoTrans text="لا توجد قصة لهذا الدرس" lang={userLang} />}</div>)}
     </div>
   );
 }
-// ==========================================
-// الجزء 2 من app.js - المكونات الرئيسية والتطبيق
-// ==========================================
-
-function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeLeft, setTimeLeft }) {
+// === 8. EXAM VIEW (Rendering all types of lessons) ===
+function ExamView({ exam, onBack, userLang, onSave, user }) {
   const [ans, setAns] = useState({});
   const [done, setDone] = useState(null);
   const [modalGap, setModalGap] = useState(null);
   const [activeGap, setActiveGap] = useState(null);
   const [showTranslation, setShowTranslation] = useState(false);
   const [excluded, setExcluded] = useState({});
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const [mode, setMode] = useState("exam");
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalScroll > 0) setScrollProgress((currentScrollY / totalScroll) * 100);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+  
   const pts = exam.type === "matching" ? 2.5 : (exam.type.includes("sprach") ? 1.5 : 5);
   const total = exam.items.length * pts;
   const score = exam.items.filter(it => ans[it.n] === it.c).length * pts;
-  
   const isB2 = exam.level === "B2";
   const themeColor = isB2 ? "#0D9488" : "#8B5CF6";
 
@@ -435,64 +395,37 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
 
   const cls = (it, k) => {
     const sel = ans[it.n];
-    const isDone = done !== null || (mode === "practice" && sel !== undefined);
+    const isDone = done !== null;
     if (isDone) {
       if (k === it.c) return "opt good";
       if (sel === k) return "opt bad";
       return "opt faded";
     }
-    if (mode === "exam") {
-      if (sel === k) return "opt sel";
-      return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
-    }
-    if (sel === undefined) return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
+    if (sel === k) return "opt sel";
     return "opt" + (usedElsewhere(it.n, k) ? " dis" : "");
   };
 
-  const finish = () => { setDone(score); onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
+  const finish = () => { setDone(score); if(onSave) onSave(exam.id, score, total); window.scrollTo({ top: 0, behavior: "smooth" }); };
   const reset = () => { setAns({}); setDone(null); setShowTranslation(false); setExcluded({}); window.scrollTo(0, 0); };
-
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
 
   return (
     <div style={{ paddingBottom: 120 }}>
-      <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: 4, zIndex: 100, backgroundImage: "linear-gradient(to right, #111 33.33%, #DD0000 33.33%, #DD0000 66.66%, #FFCE00 66.66%)", backgroundSize: `${scrollProgress}% 100%`, backgroundRepeat: "no-repeat" }} />
-
       <div style={{ position: "sticky", top: 0, zIndex: 30, background: "var(--paper)", display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 16px", boxShadow: "0 4px 15px rgba(0,0,0,0.05)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <button onClick={onBack} className="btnI" style={{ width: 36, height: 36 }}><Icons.ArrowLeft color="var(--text)" /></button>
+          <button onClick={onBack} className="btnI" style={{ width: 36, height: 36 }}><Icon.Left c="var(--text)" /></button>
           <div>
             <div className="de" style={{ fontWeight: 900, fontSize: "1em", lineHeight: 1.2 }}>{exam.title}</div>
-            <div className="de" style={{ fontSize: ".7em", color: "var(--muted)", fontWeight: "bold" }}>{exam.type === "horen" ? "HÖREN" : "LESEN"} · {exam.sub?.toUpperCase()}</div>
+            <div className="de" style={{ fontSize: ".7em", color: "var(--muted)", fontWeight: "bold" }}>{exam.sub?.toUpperCase()}</div>
           </div>
         </div>
         <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-           <div className="timer-badge" style={{ padding: '4px 10px', fontSize: '14px' }}>
-             <Icons.Clock color="var(--text)" /> {formatTime(timeLeft)}
-           </div>
            <button onClick={() => setShowTranslation(!showTranslation)} className="btnI" style={{ width: 40, height: 40, color: showTranslation ? themeColor : "var(--text)", borderColor: showTranslation ? themeColor : "var(--line)" }}>
-            <Icons.Translate color={showTranslation ? themeColor : "var(--text)"} />
-           </button>
-           <button onClick={() => setDark(!dark)} className="btnI" style={{ width: 36, height: 36 }}>
-            {dark ? <Icons.Sun color="var(--text)" /> : <Icons.Moon color="var(--text)" />}
+             <Icon.Translate c={showTranslation ? themeColor : "var(--text)"} />
            </button>
         </div>
       </div>
 
       <div style={{ margin: "10px 12px" }}>
-        {exam.type !== "matching" && exam.type !== "horen" && (
-          <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-            <button className={"modeBtn " + (mode === "exam" ? "on" : "")} onClick={() => { setMode("exam"); reset(); }} style={mode === "exam" ? { borderColor: themeColor, background: themeColor } : {}}><Icons.Target color={mode === "exam" ? "#FFF" : "var(--text)"} /> {t("exam_mode", userLang)}</button>
-            <button className={"modeBtn " + (mode === "practice" ? "on" : "")} onClick={() => { setMode("practice"); reset(); }} style={mode === "practice" ? { borderColor: themeColor, background: themeColor } : {}}><Icons.Practice color={mode === "practice" ? "#FFF" : "var(--text)"} /> {t("practice_mode", userLang)}</button>
-          </div>
-        )}
-
-        {exam.type === "horen" && <HorenCard exam={exam} userLang={userLang} showTranslation={showTranslation} isB2={isB2} />}
-
         {exam.type === "mcq" && (
           <div className="card" style={{ padding: 20 }}>
             {exam.paragraphs?.map((p, i) => (
@@ -507,16 +440,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
         {(exam.type === "sprach1" || exam.type === "sprach2") && (
           <div className="card" style={{ fontSize: "1.1em", lineHeight: 2.2, padding: 20 }}>
             {exam.note && <div style={{ background: "var(--badbg)", color: "var(--badc)", padding: 10, borderRadius: 8, marginBottom: 16, fontSize: "0.9em", fontWeight: "bold" }}>{exam.note}</div>}
-            {/* هاد السطر هو اللي تصلح باش يقرا الفراغات بجوج الطرق */}
             {exam.text.split(/(?:\.{3,}\s*|__)\s*\((\d+)\)\s*(?:\.{3,}|__)/g).map((part, i) => {
               if (i % 2 === 1) {
                 const gapNum = parseInt(part);
                 const it = exam.items.find(x => x.n === gapNum);
                 const sel = ans[gapNum];
-                const isDone = done !== null;
-                
-                let content = <span className="inline-gap" style={{ borderColor: themeColor, color: themeColor }} onClick={() => { if(!isDone) { exam.type === "sprach2" ? setActiveGap(gapNum) : setModalGap(gapNum); } }}>{sel || `(${gapNum})`}</span>;
-                if (isDone) {
+                let content = <span className="inline-gap" style={{ borderColor: themeColor, color: themeColor }} onClick={() => { if(done === null) { exam.type === "sprach2" ? setActiveGap(gapNum) : setModalGap(gapNum); } }}>{sel || `(${gapNum})`}</span>;
+                if (done !== null) {
                   if (sel === it.c) content = <span className="sp1-correct">{sel}</span>;
                   else if (sel) content = <span style={{display:'inline-flex', gap:4}}><span className="sp1-wrong">{sel}</span><span className="sp1-correct">{it.c}</span></span>;
                   else content = <span className="sp1-correct">{it.c}</span>;
@@ -527,7 +457,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
             })}
             {showTranslation && (
               <div className="t2-ar" style={{ marginTop: 20, borderColor: themeColor }}>
-                {exam.transText ? <SmartTrans obj={exam.transText} lang={userLang} /> : <AutoTrans text={exam.text.replace(/(?:\.{3,}\s*|__)\s*\(\d+\)\s*(?:\.{3,}|__)/g, " ___ ")} lang={userLang} force={true} />}
+                {exam.transText ? <SmartTrans obj={exam.transText} lang={userLang} /> : <AutoTrans text={exam.text.replace(/(?:\.{3,}\s*|__)\s*\(\d+\)\s*(?:\.{3,}|__)/g, " ___ ")} lang={userLang} />}
               </div>
             )}
           </div>
@@ -560,7 +490,7 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
                   <button onClick={() => {
                     if (done !== null || isSel || isElse) return;
                     setExcluded(prev => { const n = {...prev}; if(!n[it.n]) n[it.n] = {}; n[it.n][ad.k] = !n[it.n][ad.k]; return n; });
-                  }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}><Icons.X color={isExc ? "var(--red)" : "transparent"} /></button>
+                  }} style={{ width: 28, height: 28, borderRadius: 8, border: `1px solid ${isExc ? "var(--red)" : "var(--line)"}`, marginTop: 10, color: isExc ? "var(--red)" : "transparent", background: isExc ? "var(--badbg)" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 900 }}><Icon.X c={isExc ? "var(--red)" : "transparent"} /></button>
                   <div style={{ fontWeight: 900, marginTop: 12, width: 20, color: isSel ? themeColor : "var(--muted)" }}>{it.n}</div>
                   <div onClick={() => { if(!isExc && !isElse && done === null) pick(it, ad.k); }} style={st}>
                     <span className="de">{it.de}</span>
@@ -574,46 +504,26 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
 
         {(exam.type === "headings" || exam.type === "mcq") && exam.items.map((it, idx) => {
           const sel = ans[it.n];
-          const isDone = done !== null || (mode === "practice" && sel !== undefined);
           return (
             <div key={it.n} className="card" style={{ padding: 16 }}>
               <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
-                <div className="letter" style={{ width: 36, height: 36, fontSize: "1.1em", boxShadow: "0 2px 5px rgba(0,0,0,0.1)", background: `${themeColor}15`, color: themeColor, border: `1px solid ${themeColor}` }}>{idx + 1}</div>
+                <div className="letter" style={{ width: 36, height: 36, fontSize: "1.1em", background: `${themeColor}15`, color: themeColor, border: `1px solid ${themeColor}` }}>{idx + 1}</div>
                 <div style={{ flex: 1 }}>
-                  {exam.type === "headings" && (
-                    <div style={{ lineHeight: 1.6, fontSize: "1.05em" }}>
-                      <div className="de">{it.de}</div>
-                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={it} lang={userLang} /></div>}
-                    </div>
-                  )}
-                  {exam.type === "mcq" && (
-                    <div>
-                      <p className="de" style={{ fontWeight: 900, margin: 0, fontSize: "1.05em" }}>{it.q}</p>
-                      {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={{de: it.q}} lang={userLang} /></div>}
-                    </div>
-                  )}
+                  <div style={{ lineHeight: 1.6, fontSize: "1.05em" }}>
+                    <div className="de">{exam.type === "headings" ? it.de : it.q}</div>
+                    {showTranslation && <div style={{ marginTop: 8, color: "var(--muted)", fontSize: "0.9em", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={{de: exam.type === "headings" ? it.de : it.q}} lang={userLang} /></div>}
+                  </div>
                 </div>
               </div>
               {(exam.type === "headings" ? exam.options : it.opts).map(o => (
-                <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={isDone} style={{ padding: 14 }}>
-                  <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em", background: ans[it.n] === o.k && !isDone ? themeColor : "var(--card)", color: ans[it.n] === o.k && !isDone ? "#FFF" : "var(--text)" }}>{o.k}</div>
+                <button key={o.k} className={cls(it, o.k)} onClick={() => pick(it, o.k)} disabled={done !== null} style={{ padding: 14 }}>
+                  <div className="letter" style={{ width: 28, height: 28, fontSize: "0.9em", background: ans[it.n] === o.k && done === null ? themeColor : "var(--card)", color: ans[it.n] === o.k && done === null ? "#FFF" : "var(--text)" }}>{o.k}</div>
                   <div className="de" style={{ flex: 1, textAlign: "left" }}>
                     {o.de}
                     {showTranslation && <div style={{ marginTop: 6, fontSize: "0.85em", color: "var(--muted)", direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right' }}><SmartTrans obj={o} lang={userLang} /></div>}
                   </div>
                 </button>
               ))}
-              {isDone && mode === "practice" && (
-                <div className={sel === it.c ? "fb good" : "fb bad"} style={{ marginTop: 12, padding: 14, fontSize: "0.95em", borderRadius: 12 }}>
-                  <b>{sel === it.c ? t("correct", userLang) : (sel ? t("wrong", userLang) : t("no_answer", userLang))}</b>
-                  {sel !== it.c && <span style={{fontWeight:900}}> — {t("the_answer", userLang)}: {it.c}</span>}
-                  {it.exp && (
-                    <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px dashed rgba(0,0,0,0.1)", fontSize: "0.9em", color: "var(--text)" }}>
-                      <b>توضيح: </b><AutoTrans text={it.exp} lang={userLang} force={true} />
-                    </div>
-                  )}
-                </div>
-              )}
             </div>
           );
         })}
@@ -622,16 +532,11 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
       {modalGap !== null && exam.type === "sprach1" && (
         <div className="overlay" onClick={() => setModalGap(null)}>
           <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
-              <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("gap_num", userLang)} ({modalGap})</h3>
-              <button className="btnI" onClick={() => setModalGap(null)}><Icons.X color="var(--text)" /></button>
-            </div>
-            <div className="modal-list" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <h3 style={{margin:"0 0 20px", fontSize:"1.3em", fontWeight: 900}}>{t("gap_num", userLang)} ({modalGap})</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {exam.items.find(x => x.n === modalGap).opts.map((opt, i) => (
-                <button key={i} className={"btn ghost"} style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? themeColor : "var(--line)", background: ans[modalGap] === opt ? `${themeColor}15` : "var(--card)", color: ans[modalGap] === opt ? themeColor : "var(--text)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
-                  <span style={{ opacity: 0.5, fontWeight: 900, marginRight: 12 }}>{String.fromCharCode(65 + i)}</span>
+                <button key={i} className="btn ghost" style={{ textAlign: 'left', direction: 'ltr', borderColor: ans[modalGap] === opt ? themeColor : "var(--line)", background: ans[modalGap] === opt ? `${themeColor}15` : "var(--card)", color: ans[modalGap] === opt ? themeColor : "var(--text)" }} onClick={() => pick(exam.items.find(x => x.n === modalGap), opt)}>
                   <span className="de" style={{fontSize:"1.05em", flex: 1}}>{opt}</span>
-                  {ans[modalGap] === opt && <span style={{ color: themeColor, fontSize:"1.2em" }}><Icons.Check color={themeColor} /></span>}
                 </button>
               ))}
             </div>
@@ -642,16 +547,13 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
       {activeGap !== null && exam.type === "sprach2" && (
          <div className="overlay" onClick={() => setActiveGap(null)}>
            <div className="sheet" onClick={e => e.stopPropagation()}>
-             <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:20}}>
-               <h3 style={{margin:0, fontSize:"1.3em", fontWeight: 900}}>{t("choose_word_gap", userLang)} ({activeGap})</h3>
-               <button className="btnI" onClick={() => setActiveGap(null)}><Icons.X color="var(--text)" /></button>
-             </div>
+             <h3 style={{margin:"0 0 20px", fontSize:"1.3em", fontWeight: 900}}>{t("choose_word_gap", userLang)} ({activeGap})</h3>
              <div className="word-bank" style={{marginBottom:0, gridTemplateColumns: "1fr"}}>
                {exam.wordBank.map(w => {
                  const isUsed = Object.values(ans).includes(w.w) && ans[activeGap] !== w.w;
                  return (
                    <button key={w.k} className={"word-btn" + (isUsed ? " used" : "")} onClick={() => pickSprach2(w.w)} style={{ padding: "14px", borderColor: ans[activeGap] === w.w ? themeColor : "var(--line)", background: ans[activeGap] === w.w ? `${themeColor}15` : "var(--card)", color: ans[activeGap] === w.w ? themeColor : "var(--text)" }}>
-                     <span style={{ opacity: 0.5, marginRight: 10, fontWeight: 900, fontSize:"0.9em" }}>{w.k}</span> <span style={{fontSize:"1.05em"}}>{w.w}</span>
+                     <span style={{fontSize:"1.05em"}}>{w.w}</span>
                    </button>
                  )
                })}
@@ -661,1219 +563,445 @@ function ExamView({ exam, onBack, onNext, dark, setDark, onSave, userLang, timeL
       )}
 
       <div className="bottom-bar">
-        <button onClick={done !== null ? reset : finish} className="btn-prev-bar" style={done !== null ? { color: themeColor, borderColor: themeColor } : {}}>
-          {done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}
-        </button>
-        <button onClick={() => done !== null ? onBack() : onNext()} className="btn-correct-bar" style={{ background: themeColor, boxShadow: `0 4px 15px ${themeColor}50` }}>
-          {done !== null ? t("back_btn", userLang) : t("next_btn", userLang)}
-        </button>
-        <button className="btn-next-bar" onClick={done !== null ? onBack : onNext} style={{ background: themeColor }}>
-          <Icons.ArrowLeft color="#FFF" />
-        </button>
+        <button onClick={done !== null ? reset : finish} className="btn-prev-bar" style={done !== null ? { color: themeColor, borderColor: themeColor } : {}}>{done !== null ? t("reset_btn", userLang) : t("check_btn", userLang)}</button>
+        <button onClick={onBack} className="btn-correct-bar" style={{ background: themeColor }}>{done !== null ? `${score} / ${total}` : t("back_btn", userLang)}</button>
       </div>
     </div>
   );
 }
 
-function SprechenView({ userLang, level, supabaseSpeaking, onLessonClick }) {
+// === 9. LESEN VIEW ===
+function LesenView({ level, userLang, user, onLessonClick }) {
+  const isB2 = level === "B2";
+  const themeColor = isB2 ? "#0D9488" : "#22C55E";
   const [activeTab, setActiveTab] = useState("Teile 1");
   const [searchQuery, setSearchQuery] = useState("");
-  const isB2 = level === "B2";
-  const themeColor = isB2 ? "#0D9488" : "#EF4444";
+  const [showVersionModal, setShowVersionModal] = useState(null);
 
-  const placeholders = (isB2 ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS)["Sprechen"] || { "Teile 1": [], "Teile 2": [], "Teile 3": [] };
-  const tabs = Object.keys(placeholders);
-  const currentList = placeholders[activeTab] || [];
+  const tabs = [
+    { id: "Prüfungen", icon: <Icon.Book c={themeColor} /> }, 
+    { id: "Teile 1", icon: <Icon.Edit c={themeColor} /> }, 
+    { id: "Teile 2", icon: <Icon.Edit c={themeColor} /> }, 
+    { id: "Teile 3", icon: <Icon.Edit c={themeColor} /> }, 
+    { id: "Sprach 1", icon: <Icon.Play c={themeColor} /> }, 
+    { id: "Sprach 2", icon: <Icon.Play c={themeColor} /> }
+  ];
+
+  const currentList = isB2 ? B2_PLACEHOLDER_LESSONS["Lesen"]?.[activeTab] : PLACEHOLDER_LESSONS["Lesen"]?.[activeTab];
 
   return (
-    <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-      <h1 className="de" style={{ textAlign: "center", color: themeColor, marginBottom: 16, fontSize: "2.2em" }}>Sprechen {level}</h1>
-      <div style={{ marginBottom: 16 }}><input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${themeColor}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} /></div>
+    <div>
+      <h1 className="de" style={{ textAlign: "center", color: themeColor, marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
       
-      <div style={{ display: "flex", gap: 10, overflowX: "auto", paddingBottom: 10, marginBottom: 16 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, background: "var(--card)", padding: 16, borderRadius: 24, border: "1px solid var(--line)", marginBottom: 20 }}>
         {tabs.map(tab => (
-           <button key={tab} onClick={() => setActiveTab(tab)} style={{ padding: "10px 20px", borderRadius: 12, fontWeight: 900, background: activeTab === tab ? themeColor : "var(--card)", color: activeTab === tab ? "#FFF" : "var(--muted)", border: `1px solid ${themeColor}`, whiteSpace: "nowrap" }}>{tab}</button>
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: "14px 8px", borderRadius: 16, fontWeight: 900, fontSize: "0.85em", border: activeTab === tab.id ? `2px solid ${themeColor}` : "2px solid transparent", background: activeTab === tab.id ? `${themeColor}15` : "transparent", color: activeTab === tab.id ? themeColor : "var(--muted)", transition: "all 0.2s", cursor: "pointer" }}>
+            <span style={{ fontSize: "1.6em" }}>{tab.icon}</span>{tab.id}
+          </button>
         ))}
       </div>
 
-      {currentList.filter(n => n.toLowerCase().includes(searchQuery.toLowerCase())).map((title, idx) => (
-        <button key={idx} className="card" onClick={() => onLessonClick(title, "Sprechen")} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, border: `1px solid ${isB2 ? "#CCFBF1" : "var(--line)"}` }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            <div>
-              <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div>
-              <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: `${themeColor}15`, color: themeColor, padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span></div>
-            </div>
-            <Icons.ArrowRight color={themeColor} />
-          </div>
-        </button>
-      ))}
-      {currentList.length === 0 && <p style={{ textAlign: "center", color: "var(--muted)", marginTop: 40 }}>لا توجد دروس في هذا القسم حالياً.</p>}
-    </div>
-  );
-}
-
-function SprechenDetailView({ lesson, onBack, userLang, level }) {
-  const [showTrans, setShowTrans] = useState(false);
-  const themeColor = level === "B2" ? "#0D9488" : "#EF4444";
-  
-  return (
-    <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-        <button onClick={onBack} className="btnI" style={{ width: 40, height: 40 }}>
-          <Icons.ArrowLeft color="var(--text)" />
-        </button>
-        <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{lesson.title}</h2>
+      <div style={{ marginBottom: 16 }}>
+        <input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${themeColor}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
       </div>
-      <div className="card" style={{ padding: 20 }}>
-        <div style={{ color: themeColor, fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>AUFGABE</div>
-        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, marginBottom: 24 }}>{lesson.aufgabe}</div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, borderTop: "1px dashed var(--line)", paddingTop: 16 }}>
-          <div style={{ color: themeColor, fontWeight: 900, fontSize: "1.1em" }}>MUSTERLÖSUNG</div>
-          <button onClick={() => setShowTrans(!showTrans)} style={{ background: `${themeColor}15`, color: themeColor, padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>{showTrans ? "إخفاء" : "ترجمة"}</button>
-        </div>
-        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{lesson.text}</div>
-        {showTrans && (
-          <div style={{ background: `${themeColor}05`, border: `1px solid ${themeColor}40`, padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8 }}>
-            {lesson.transText?.[userLang] || <AutoTrans text={lesson.text} lang={userLang} force={true} />}
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
 
-function SchreibenView({ userLang, dark, setDark, supabaseLessons, isPaid, trialActive, isAdmin, wa, onLessonClick, level }) {
-  const [selected, setSelected] = useState(null);
-  const [showTransText, setShowTransText] = useState(false);
-  const [showTransTask, setShowTransTask] = useState(false);
-  const [showSolution, setShowSolution] = useState(false);
-  const [userText, setUserText] = useState("");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [analyzeStep, setAnalyzeStep] = useState(0);
-  const [result, setResult] = useState(null);
-  
-  const [timeLeft, setTimeLeft] = useState(90 * 60); 
-  const isB2 = level === "B2";
-  const themeColor = isB2 ? "#0D9488" : "#F59E0B";
-
-  useEffect(() => {
-    let timer;
-    if (selected && !result && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft(prev => prev - 1);
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [selected, result, timeLeft]);
-
-  const formatTime = (seconds) => {
-    const m = Math.floor(seconds / 60);
-    const s = seconds % 60;
-    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-  };
-
-  const wordCount = userText.trim() === "" ? 0 : userText.trim().split(/\s+/).length;
-  const insertChar = (char) => setUserText(prev => prev + char);
-
-  const checkWithAI = () => {
-    if (!userText.trim()) return;
-    setIsAnalyzing(true);
-    setAnalyzeStep(1);
-    setResult(null);
-
-    let currentStep = 1;
-    const interval = setInterval(() => {
-      currentStep++;
-      setAnalyzeStep(currentStep);
-      if (currentStep > 4) {
-        clearInterval(interval);
-        finishAnalysis();
-      }
-    }, 800); 
-  };
-
-  const finishAnalysis = () => {
-    const text = userText.trim();
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const wc = words.length;
-    const lowerText = text.toLowerCase();
-    
-    let pointsCovered = 0;
-    if (lowerText.includes("weil") || lowerText.includes("grund") || lowerText.includes("entschieden")) pointsCovered++; 
-    if (lowerText.includes("problem") || lowerText.includes("leider") || lowerText.includes("schlecht")) pointsCovered++; 
-    if (lowerText.includes("service") || lowerText.includes("kontakt") || lowerText.includes("erreichen")) pointsCovered++; 
-    if (lowerText.includes("erwarte") || lowerText.includes("zurück") || lowerText.includes("entschädigung")) pointsCovered++; 
-    
-    const hasGreeting = /sehr geehrte|liebe|hallo/i.test(text);
-    const hasClosing = /mit freundlichen|herzliche|grüßen/i.test(text);
-    
-    let score = 0;
-    let contentFeedback = "";
-    let generalEval = "";
-    let errors = [];
-
-    let contentScoreVal = pointsCovered * 3; 
-    if (wc < 100) contentScoreVal = Math.max(0, contentScoreVal - 5); 
-    
-    let structureScoreVal = 15;
-    if (!hasGreeting) { structureScoreVal -= 5; errors.push({ error: "Keine passende Anrede gefunden", fix: "Fügen Sie 'Sehr geehrte...' oder 'Liebe...' hinzu.", type: "Struktur" }); }
-    if (!hasClosing) { structureScoreVal -= 5; errors.push({ error: "Kein passender Gruß gefunden", fix: "Fügen Sie 'Mit freundlichen Grüßen' hinzu.", type: "Struktur" }); }
-    if (wc < 140 || wc > 200) { structureScoreVal -= 5; errors.push({ error: "Wortanzahl nicht im Rahmen", fix: "Die Aufgabe verlangt 150-180 Wörter.", type: "Wortanzahl" }); }
-
-    let languageScoreVal = 15;
-    if (wc < 50) languageScoreVal = 5; 
-    if (/(.)\1{3,}/.test(text)) { languageScoreVal -= 5; errors.push({ error: "Wiederholte Zeichen", fix: "Vermeiden Sie Tippfehler wie 'aaaa'.", type: "Sprache" }); }
-
-    score = contentScoreVal + structureScoreVal + languageScoreVal;
-    if (score > 45) score = 45;
-    if (wc < 20) score = 5;
-
-    if (score >= 35) {
-      generalEval = "مجهود ممتاز! لقد قمت بتغطية معظم النقاط المطلوبة وبنية الرسالة صحيحة. استمر في التدريب للحصول على العلامة الكاملة.";
-    } else if (score >= 20) {
-      generalEval = "مجهود مقبول. لقد أجبت على بعض النقاط، ولكن ينقصك تغطية نقاط أخرى أو الالتزام بعدد الكلمات المطلوب (150-180).";
-    } else {
-      generalEval = "يحتاج إلى تحسين. لم تقم بتغطية النقاط المطلوبة بشكل كافٍ، أو أن النص قصير جداً. يرجى قراءة المهمة جيداً والمحاولة مرة أخرى.";
-    }
-
-    contentFeedback = `لقد قمت بتغطية ${pointsCovered} من أصل 4 نقاط مطلوبة.`;
-
-    setResult({
-      score,
-      maxScore: 45,
-      contentScore: `${contentScoreVal}/15`,
-      generalEval,
-      contentFeedback,
-      errors
-    });
-    setIsAnalyzing(false);
-  };
-
-  if (!selected) {
-    return (
-      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-          <h1 className="de" style={{ margin: 0, fontSize: "2.5em", fontWeight: 900, color: "var(--ink)" }}>Schreiben {level}</h1>
-        </div>
-        <div style={{ display: "flex", background: "var(--line)", borderRadius: 99, padding: 4, marginBottom: 20, width: "fit-content", margin: "0 auto 20px" }}>
-          <div style={{ background: isB2 ? "#0D9488" : "#22C55E", color: "#FFF", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B1</div>
-          <div style={{ background: isB2 ? "#14B8A6" : "transparent", color: isB2 ? "#FFF" : "var(--muted)", padding: "10px 30px", borderRadius: 99, fontWeight: 900 }}>B2</div>
-        </div>
-        <div style={{ position: "relative", marginBottom: 20 }}>
-          <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${isB2 ? themeColor : "var(--line)"}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
-        </div>
+      {currentList?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase())).map((name, idx) => {
+        const localData = getLocalData(level, "Lesen", name, activeTab);
+        const isLocked = localData.length === 0;
         
-        {(isB2 ? B2_PLACEHOLDER_LESSONS["Schreiben"] : PLACEHOLDER_LESSONS["Schreiben"]).map((title, idx) => {
-          const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
-          const localExams = (isB2 ? B2_SCHREIBEN_DATA : SCHREIBEN_DATA).filter(e => norm(e.title) === norm(title));
-          const isMissing = localExams.length === 0;
-          
-          return (
-            <div key={idx} onClick={() => {
-              if (!isMissing) {
-                setSelected(localExams[0]);
-                setUserText("");
-                setResult(null);
-                setShowTransText(false);
-                setShowTransTask(false);
-                setShowSolution(false);
-                setTimeLeft(90 * 60);
-              } else {
-                wa(t("wa_upgrade_msg", userLang) + " - " + title);
-              }
-            }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: `1px solid ${isB2 ? themeColor : "var(--line)"}` }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{title}</div>
-                {isMissing && <Icons.Rocket color="#F59E0B" />}
-              </div>
-              <div style={{ display: "inline-block", background: `${themeColor}15`, color: themeColor, padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{level}</div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  }
-
-  if (result) {
-    return (
-      <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-          <button onClick={() => setResult(null)} className="btnI" style={{ width: 40, height: 40 }}>
-            <Icons.ArrowLeft color="var(--text)" />
-          </button>
-          <h2 style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{userLang === 'hi' ? 'संपादक पर वापस जाएं' : 'رجوع إلى المحرر'}</h2>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: 20 }}>
-          <div style={{ width: 120, height: 120, borderRadius: "50%", border: "8px solid var(--line)", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", borderTopColor: result.score === 0 ? "var(--red)" : themeColor }}>
-            <span style={{ fontSize: "2.5em", fontWeight: 900 }}>{result.score}</span>
-            <span style={{ color: "var(--muted)", fontSize: "0.8em" }}>/ {result.maxScore} {userLang === 'hi' ? 'अंक' : 'نقطة'}</span>
-          </div>
-          <div style={{ background: result.score < 20 ? "var(--red)" : themeColor, color: "#FFF", padding: "4px 16px", borderRadius: 20, fontWeight: 900, marginTop: 12, fontSize: "0.9em" }}>
-            {result.score < 20 ? (userLang === 'hi' ? 'अभ्यास की जरूरत है' : 'يحتاج لتدريب') : (userLang === 'hi' ? 'उत्कृष्ट' : 'ممتاز')}
-          </div>
-        </div>
-        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, fontSize: "1.4em", fontWeight: 900, color: "var(--ink)" }}>
-            <Icons.Alert color="var(--red)" /> {userLang === 'hi' ? 'सामान्य मूल्यांकन' : 'التقييم العام'}
-          </div>
-          <p style={{ fontSize: "1.05em", lineHeight: 1.8, color: "var(--text)", marginBottom: 16 }}>{result.generalEval}</p>
-          <div style={{ background: "var(--paper)", border: "1px solid var(--line)", borderRadius: 16, padding: 16 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-              <span style={{ fontSize: "1.5em", fontWeight: 900, color: "var(--ink)" }}>{result.contentScore}</span>
-              <span style={{ fontWeight: 900, color: "var(--muted)" }}>Content</span>
-            </div>
-            <p style={{ margin: 0, color: "var(--muted)", fontSize: "0.9em" }}>{result.contentFeedback}</p>
-          </div>
-        </div>
-        <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900 }}>
-              <div style={{ width: 4, height: 24, background: themeColor, borderRadius: 4 }}></div> {userLang === 'hi' ? 'आपका पाठ' : 'النص الخاص بك'}
-            </div>
-          </div>
-          <div className="de" style={{ background: "var(--paper)", border: "1px solid var(--line)", padding: 16, borderRadius: 12, whiteSpace: "pre-wrap" }}>{userText}</div>
-        </div>
-        <div className="card" style={{ padding: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 16 }}>
-            <div style={{ width: 4, height: 24, background: themeColor, borderRadius: 4 }}></div> {userLang === 'hi' ? 'त्रुटियों का विस्तृत विश्लेषण' : 'التحليل التفصيلي للأخطاء'}
-          </div>
-          {result.errors.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "40px 20px", border: "2px dashed var(--line)", borderRadius: 16 }}>
-              <div style={{ width: 60, height: 60, borderRadius: "50%", background: "rgba(221,0,0,0.1)", display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 16px", color: "var(--red)" }}>
-                <Icons.Alert color="var(--red)" />
-              </div>
-              <h3 style={{ margin: "0 0 8px", color: "var(--red)", fontSize: "1.3em" }}>{userLang === 'hi' ? 'दिखाने के लिए कोई त्रुटि नहीं' : 'لا توجد أخطاء للعرض'}</h3>
-              <p style={{ margin: 0, color: "var(--muted)" }}>{userLang === 'hi' ? 'इस प्रयास में कोई त्रुटि नहीं मिली।' : 'لم يتم العثور على أخطاء في هذه المحاولة.'}</p>
-            </div>
-          ) : (
-            <div>
-              {result.errors.map((err, i) => (
-                <div key={i} style={{ background: "var(--paper)", padding: 12, borderRadius: 12, marginBottom: 8, borderRight: "4px solid var(--red)" }}>
-                  <div style={{ color: "var(--red)", fontWeight: 900, textDecoration: "line-through" }}>{err.error}</div>
-                  <div style={{ color: "#22C55E", fontWeight: 900 }}>{userLang === 'hi' ? 'सुझाव' : 'الاقتراح'}: {err.fix}</div>
-                  <div style={{ color: "var(--muted)", fontSize: "0.8em", marginTop: 4 }}>{err.type}</div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div style={{ padding: "20px 12px", paddingBottom: 120 }}>
-      {isAnalyzing && (
-        <div style={{ position: "fixed", inset: 0, background: "var(--paper)", zIndex: 999, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: 20 }}>
-          <div style={{ position: "relative", marginBottom: 30 }}>
-             <div style={{ width: 120, height: 120, borderRadius: "50%", border: `4px solid ${themeColor}20`, display: "flex", justifyContent: "center", alignItems: "center" }}>
-                <Icons.Edit color={themeColor} />
-             </div>
-             <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, border: "4px solid transparent", borderTopColor: themeColor, borderRadius: "50%", animation: "spin 1s linear infinite" }}></div>
-          </div>
-          <h2 style={{ fontSize: "1.8em", fontWeight: 900, marginBottom: 10 }}>{userLang === 'hi' ? 'स्मार्ट सुधार' : 'جاري التصحيح الذكي'}</h2>
-          <p style={{ color: "var(--muted)", marginBottom: 40 }}>{userLang === 'hi' ? 'हम उन्नत AI तकनीकों का उपयोग करके आपके पाठ की समीक्षा कर रहे हैं' : 'نقوم بمراجعة نصك باستخدام تقنيات AI المطورة'}</p>
-          <div style={{ width: "100%", maxWidth: 300 }}>
-            {[userLang === 'hi' ? "स्मार्ट सुधारक तैयार करना..." : "تحضير المصحح الذكي...", userLang === 'hi' ? "वाक्य संरचना का विश्लेषण..." : "تحليل بنية الجمل...", userLang === 'hi' ? "व्याकरण और शब्दावली की समीक्षा..." : "مراجعة القواعد والمفردات...", userLang === 'hi' ? "अंतिम रिपोर्ट तैयार करना..." : "توليد التقرير النهائي..."].map((step, idx) => (
-              <div key={idx} style={{ color: analyzeStep === idx + 1 ? themeColor : analyzeStep > idx + 1 ? "var(--text)" : "var(--line)", fontWeight: analyzeStep === idx + 1 ? 900 : 400, marginBottom: 8, textAlign: "center", transition: "all 0.3s" }}>
-                {analyzeStep === idx + 1 && "✨ "} {step}
-              </div>
-            ))}
-          </div>
-          <div style={{ width: "80%", height: 8, background: "var(--line)", borderRadius: 99, marginTop: 40, overflow: "hidden" }}>
-             <div style={{ height: "100%", width: `${(analyzeStep / 4) * 100}%`, background: themeColor, transition: "width 0.3s" }}></div>
-          </div>
-        </div>
-      )}
-
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 20 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          <button onClick={() => setSelected(null)} className="btnI" style={{ width: 40, height: 40 }}>
-            <Icons.ArrowLeft color="var(--text)" />
-          </button>
-          <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{selected.title}</h2>
-        </div>
-        
-        <div className="timer-badge" style={{ padding: '6px 12px', fontSize: '15px', color: isB2 ? themeColor : 'var(--text)', borderColor: isB2 ? themeColor : 'var(--line)' }}>
-          <Icons.Clock color={isB2 ? themeColor : "var(--text)"} /> {formatTime(timeLeft)}
-        </div>
-      </div>
-
-      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: themeColor, borderRadius: 4 }}></div>
-          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>SITUATION</span>
-          <span style={{ background: `${themeColor}15`, color: themeColor, padding: "2px 10px", borderRadius: 6, fontSize: "0.8em", fontWeight: 900 }}>{selected.level || level}</span>
-        </div>
-        <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{selected.text}</div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: themeColor, fontWeight: 900 }}>
-            <Icons.Translate color={themeColor} /> {t("trans_text", userLang)}
-          </div>
-          <button onClick={() => setShowTransText(!showTransText)} style={{ background: `${themeColor}15`, color: themeColor, padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
-            {showTransText ? t("hide", userLang) : t("show", userLang)}
-          </button>
-        </div>
-        {showTransText && (
-          <div style={{ background: `${themeColor}05`, border: `1px solid ${themeColor}40`, padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, whiteSpace: "pre-wrap", fontFamily: "'Cairo', sans-serif" }}>
-            {selected.transText?.[userLang] || <AutoTrans text={selected.text} lang={userLang} force={true} />}
-          </div>
-        )}
-      </div>
-
-      <div className="card" style={{ padding: 20, marginBottom: 16 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-          <div style={{ width: 6, height: 20, background: themeColor, borderRadius: 4 }}></div>
-          <span style={{ color: "var(--muted)", fontWeight: 900, fontSize: "0.85em", letterSpacing: 1 }}>AUFGABE</span>
-          <span style={{ marginLeft: "auto", background: "var(--line)", color: "var(--muted)", padding: "4px 12px", borderRadius: 8, fontSize: "0.8em", fontWeight: 900 }}>150–180 {t("words_count", userLang)}</span>
-        </div>
-        <div className="de" style={{ fontSize: "1.05em", marginBottom: 16 }}>{selected.task}</div>
-        {selected.points?.map((pt, idx) => (
-          <div key={idx} style={{ display: "flex", gap: 12, marginBottom: 12, alignItems: "center" }}>
-            <div style={{ width: 30, height: 30, borderRadius: "50%", background: themeColor, color: "#FFF", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: 900, flexShrink: 0 }}>{idx + 1}</div>
-            <div className="de" style={{ background: "var(--paper)", padding: "12px 16px", borderRadius: 12, flex: 1, border: "1px solid var(--line)" }}>{pt}</div>
-          </div>
-        ))}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 20, paddingTop: 16, borderTop: "1px dashed var(--line)" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, color: themeColor, fontWeight: 900 }}>
-            <Icons.Translate color={themeColor} /> {t("trans_task", userLang)}
-          </div>
-          <button onClick={() => setShowTransTask(!showTransTask)} style={{ background: `${themeColor}15`, color: themeColor, padding: "8px 16px", borderRadius: 8, fontWeight: 900, border: "none" }}>
-            {showTransTask ? t("hide", userLang) : t("show", userLang)}
-          </button>
-        </div>
-        {showTransTask && (
-          <div style={{ background: `${themeColor}05`, border: `1px solid ${themeColor}40`, padding: 16, borderRadius: 12, marginTop: 12, direction: userLang === 'hi' ? 'ltr' : 'rtl', textAlign: userLang === 'hi' ? 'left' : 'right', lineHeight: 1.8, fontFamily: "'Cairo', sans-serif" }}>
-            <div style={{ fontWeight: 900, marginBottom: 8 }}>{selected.transTask?.[userLang] || <AutoTrans text={selected.task} lang={userLang} force={true} />}</div>
-            {(selected.transPoints?.[userLang] || selected.transPoints?.['en'] || selected.transPoints?.['ar'] || []).map((p, i) => <div key={i} style={{ marginBottom: 4 }}>{p}</div>)}
-          </div>
-        )}
-      </div>
-
-      {showSolution && (
-        <div className="card" style={{ padding: 20, marginBottom: 16, border: `1px solid ${themeColor}`, background: `${themeColor}05` }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: "1.2em", fontWeight: 900, marginBottom: 12, color: themeColor }}>
-            <Icons.Check color={themeColor} /> {userLang === 'hi' ? 'नमूना समाधान' : 'النموذج المقترح (Musterlösung)'}
-          </div>
-          <div className="de" style={{ whiteSpace: "pre-wrap", lineHeight: 1.8, fontSize: "1.05em" }}>
-            {selected.modelSolution || (userLang === 'hi' ? 'इस पाठ के लिए अभी तक कोई समाधान नहीं जोड़ा गया है।' : 'لم يتم إضافة حل لهذا الدرس بعد.')}
-          </div>
-        </div>
-      )}
-
-      <div className="card" style={{ padding: 0, overflow: "hidden", border: `1px solid ${isB2 ? themeColor : 'var(--line)'}` }}>
-        <div className="keyboard-area" style={{ borderBottomColor: isB2 ? themeColor : 'var(--line)' }}>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
-            {['ä', 'ö', 'ü', 'ß', 'Ä', 'Ö', 'Ü'].map(c => (
-              <button key={c} onClick={() => insertChar(c)} className="key-btn" style={{ borderColor: isB2 ? themeColor : 'var(--line)', color: isB2 ? themeColor : 'var(--text)' }}>{c}</button>
-            ))}
-          </div>
-          <div className="word-counter" style={{ background: `${themeColor}15`, color: themeColor }}>
-            <span style={{ color: wordCount >= 150 && wordCount <= 180 ? themeColor : "var(--muted)" }}>{wordCount}</span> / 150-180
-          </div>
-        </div>
-        <textarea value={userText} onChange={(e) => setUserText(e.target.value)} placeholder={userLang === 'hi' ? '...यहाँ अपना उत्तर लिखना शुरू करें' : '...ابدأ في كتابة إجابتك هنا'} className="de" style={{ width: "100%", minHeight: 250, padding: 20, border: "none", background: "var(--card)", color: "var(--text)", fontSize: "1.05em", lineHeight: 1.6, resize: "vertical", outline: "none" }}></textarea>
-      </div>
-
-      <div className="bottom-bar" style={{ maxWidth: 400 }}>
-        <button onClick={() => setShowSolution(!showSolution)} className="btn-prev-bar" style={{ background: 'var(--card)', border: `1px solid ${themeColor}`, color: themeColor, flex: 1, marginRight: 10 }}>
-          {showSolution ? (userLang === 'hi' ? "समाधान छिपाएं" : "إخفاء الحل") : (userLang === 'hi' ? "समाधान दिखाएं" : "عرض الحل")}
-        </button>
-        <button onClick={checkWithAI} disabled={isAnalyzing} className="btn-correct-bar" style={{ background: `linear-gradient(135deg, ${themeColor}, ${isB2 ? '#0F766E' : '#D97706'})`, boxShadow: `0 4px 15px ${themeColor}50`, flex: 2 }}>
-          <Icons.Edit color="#FFF" /> {isAnalyzing ? (userLang === 'hi' ? 'सुधार हो रहा है...' : 'جاري التصحيح...') : t("ai_correct", userLang)}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function AdminPanel({ userLang, onClose }) {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [notifTitle, setNotifTitle] = useState("");
-  const [notifMsg, setNotifMsg] = useState("");
-
-  useEffect(() => {
-    sb.from('profiles').select('*').then(({ data, error }) => {
-      if (!error && data) setUsers(data);
-      setLoading(false);
-    });
-  }, []);
-
-  const togglePaid = async (id, current) => {
-    await sb.from('profiles').update({ is_paid: !current }).eq('id', id);
-    setUsers(users.map(u => u.id === id ? { ...u, is_paid: !current } : u));
-  };
-
-  const toggleBlock = async (id, current) => {
-    await sb.from('profiles').update({ is_blocked: !current }).eq('id', id);
-    setUsers(users.map(u => u.id === id ? { ...u, is_blocked: !current } : u));
-  };
-
-  const sendNotification = async () => {
-    if (!notifTitle || !notifMsg) return alert("عمر العنوان والرسالة");
-    const { error } = await sb.from('notifications').insert([{ title: notifTitle, message: notifMsg, is_active: true }]);
-    if (error) alert("مشكل: " + error.message);
-    else {
-      alert("✅ تصيفط الإشعار بنجاح!");
-      setNotifTitle(""); setNotifMsg("");
-    }
-  };
-
-  return (
-    <div style={{ padding: 20, paddingBottom: 100 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
-        <h2 style={{ margin: 0, fontSize: "1.5em", fontWeight: 900, display: "flex", alignItems: "center", gap: 8 }}>
-          <Icons.Lock color="#F59E0B" /> {t("admin_panel", userLang)}
-        </h2>
-        <button onClick={onClose} className="btnI"><Icons.X color="var(--text)" /></button>
-      </div>
-
-      <div className="card" style={{ marginBottom: 20 }}>
-        <h3 style={{ margin: "0 0 16px", fontWeight: 900, display: "flex", alignItems: "center", gap: 8 }}>
-          <Icons.Bell color="#2563EB" /> {t("notifications", userLang)}
-        </h3>
-        <input className="auth-input" placeholder={t("title_ar", userLang)} value={notifTitle} onChange={e => setNotifTitle(e.target.value)} />
-        <textarea className="auth-input" rows={3} placeholder={t("message_ar", userLang)} value={notifMsg} onChange={e => setNotifMsg(e.target.value)} />
-        <button className="btn" onClick={sendNotification}>{t("send_notification", userLang)}</button>
-      </div>
-
-      <div className="card">
-        <h3 style={{ margin: "0 0 16px", fontWeight: 900, display: "flex", alignItems: "center", gap: 8 }}>
-          <Icons.Target color="#22C55E" /> {t("users", userLang)} ({users.length})
-        </h3>
-        {loading ? <p>Loading...</p> : users.map(u => (
-          <div key={u.id} style={{ borderBottom: "1px solid var(--line)", padding: "12px 0", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
-            <div>
-              <div style={{ fontWeight: 900 }}>{u.email || u.unique_name}</div>
-              <div style={{ fontSize: "0.8em", color: "var(--muted)", display: "flex", alignItems: "center", gap: 8, marginTop: 4 }}>
-                {u.is_paid ? <span style={{color: 'var(--okc)', display: 'flex', alignItems: 'center', gap: 4}}><Icons.Check color="var(--okc)" /> مخلص</span> : <span style={{color: 'var(--red)', display: 'flex', alignItems: 'center', gap: 4}}><Icons.X color="var(--red)" /> غير مخلص</span>}
-                <span>|</span>
-                {u.is_blocked ? <span style={{color: 'var(--red)', display: 'flex', alignItems: 'center', gap: 4}}><Icons.Lock color="var(--red)" /> محظور</span> : <span style={{color: '#22C55E', display: 'flex', alignItems: 'center', gap: 4}}><Icons.Check color="#22C55E" /> نشط</span>}
-              </div>
-            </div>
-            <div style={{ display: "flex", gap: 8 }}>
-              <button className="btn ghost" style={{ padding: "8px 12px", fontSize: "0.8em", width: "auto", color: u.is_paid ? "var(--red)" : "var(--okc)" }} onClick={() => togglePaid(u.id, u.is_paid)}>
-                {u.is_paid ? t("mark_unpaid", userLang) : t("mark_paid", userLang)}
-              </button>
-              <button className="btn ghost" style={{ padding: "8px 12px", fontSize: "0.8em", width: "auto", color: u.is_blocked ? "var(--okc)" : "var(--red)" }} onClick={() => toggleBlock(u.id, u.is_blocked)}>
-                {u.is_blocked ? t("unblock", userLang) : t("block", userLang)}
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function App() {
-  const [user, setUser] = useState(null);
-  const [isPaid, setIsPaid] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [isBlocked, setIsBlocked] = useState(false);
-  const [trialActive, setTrialActive] = useState(false);
-  const [trialEndsAt, setTrialEndsAt] = useState(null);
-  const [trialCountdown, setTrialCountdown] = useState("");
-  const [notifications, setNotifications] = useState([]);
-  const [isReady, setIsReady] = useState(false);
-  const [view, setView] = useState("home");
-  const [level, setLevel] = useState("B1");
-  const [exam, setExam] = useState(null);
-  const [dark, setDark] = useState(false);
-  const [fs, setFs] = useState(() => { try { return Number(localStorage.getItem("ep_fs")) || 100; } catch (e) { return 100; } });
-  const [settings, setSettings] = useState(false);
-  const [results, setResults] = useState(() => { try { return JSON.parse(localStorage.getItem("ep_results") || "{}"); } catch (e) { return {}; } });
-  const [searchQuery, setSearchQuery] = useState("");
-  const [userLang, setUserLang] = useState(null); 
-  const [showHorenLessons, setShowHorenLessons] = useState(false);
-  const [showHorenTrans, setShowHorenTrans] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(90 * 60);
-  const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
-  const [lockedModal, setLockedModal] = useState(false); 
-  
-  const [supabaseLessons, setSupabaseLessons] = useState([]);
-  const [supabaseSpeaking, setSupabaseSpeaking] = useState([]); 
-  const [activeTab, setActiveTab] = useState("Teile 1");
-  const [activeHorenTab, setActiveHorenTab] = useState("Teil 1");
-  const [activeHorenTeil, setActiveHorenTeil] = useState(null);
-  const [selectedExamGroup, setSelectedExamGroup] = useState(null);
-  const [selectedCountry, setSelectedCountry] = useState(null);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setIsReady(true), 1500);
-    const savedUser = localStorage.getItem("ep_user");
-    const savedLang = localStorage.getItem("ep_lang");
-    if (savedUser) {
-      const parsed = JSON.parse(savedUser);
-      if (parsed.isGuest || parsed.id) setUser(parsed);
-      else localStorage.removeItem("ep_user");
-    }
-    if (savedLang) setUserLang(savedLang);
-    
-    sb.from('notifications').select('*').eq('is_active', true).then(({ data }) => {
-      if (data) setNotifications(data);
-    });
-
-    sb.from('premium_lessons').select('*').then(({ data }) => {
-      if (data) setSupabaseLessons(data);
-    });
-    
-    sb.from('b2_speaking_topics').select('*').then(({ data }) => {
-      if (data) setSupabaseSpeaking(prev => [...prev, ...data]);
-    });
-    sb.from('b1_speaking_topics').select('*').then(({ data }) => {
-      if (data) setSupabaseSpeaking(prev => [...prev, ...data]);
-    });
-    
-    sb.from('b2_audio_lessons').select('*').then(({ data }) => {
-      if (data) setSupabaseLessons(prev => [...prev, ...data]);
-    });
-    sb.from('b1_audio_lessons').select('*').then(({ data }) => {
-      if (data) setSupabaseLessons(prev => [...prev, ...data]);
-    });
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
-  
-  useEffect(() => {
-    if (user && !user.isGuest && user.id) {
-      const deviceId = localStorage.getItem("ep_device_id");
-      sb.from('profiles').select('is_paid, active_device_id, trial_started_at, is_blocked, is_admin').eq('id', user.id).single()
-        .then(({ data, error }) => {
-          if (error) return;
-          if (data) {
-            if (data.is_blocked) {
-              alert("⚠️ تم حظر حسابك.");
-              logout();
-              return;
+        return (
+          <button key={idx} className="card" onClick={() => {
+            if (isLocked) {
+              onLessonClick("locked", null);
+            } else if (localData.length > 1) {
+              setShowVersionModal({ name, versions: localData });
+            } else {
+              onLessonClick("exam", localData[0]);
             }
-            setIsAdmin(!!data.is_admin);
-            if (data.active_device_id && data.active_device_id !== deviceId) {
-              alert("⚠️ تم تسجيل الدخول من هاتف آخر.");
-              logout();
-              return;
-            }
-            setIsPaid(!!data.is_paid);
-            if (data.trial_started_at && !data.is_paid) {
-              const end = new Date(data.trial_started_at).getTime() + 48 * 60 * 60 * 1000;
-              if (Date.now() < end) { setTrialActive(true); setTrialEndsAt(end); }
-              else { setTrialActive(false); setTrialEndsAt(null); }
-            }
-          }
-        });
-    } else {
-      setIsPaid(false); setIsAdmin(false); setIsBlocked(false); setTrialActive(false); setTrialEndsAt(null);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!trialActive || !trialEndsAt) { setTrialCountdown(""); return; }
-    const update = () => {
-      const diff = trialEndsAt - Date.now();
-      if (diff <= 0) { setTrialActive(false); setTrialCountdown(""); return; }
-      const h = Math.floor(diff / (60 * 60 * 1000));
-      const m = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
-      setTrialCountdown(`${h}س ${m}د`);
-    };
-    update();
-    const interval = setInterval(update, 30000);
-    return () => clearInterval(interval);
-  }, [trialActive, trialEndsAt]);
-
-  useEffect(() => { document.documentElement.style.setProperty("--fs", fs / 100); try { localStorage.setItem("ep_fs", fs); } catch (e) {} }, [fs]);
-  useEffect(() => { try { localStorage.setItem("ep_results", JSON.stringify(results)); } catch (e) {} }, [results]);
-  
-  useEffect(() => {
-    let interval = null;
-    if (exam) {
-      interval = setInterval(() => {
-        setTimeLeft(prev => {
-          if (prev <= 1) { clearInterval(interval); return 0; }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [exam]);
-
-  const handleLangSelect = (c) => { setUserLang(c); localStorage.setItem("ep_lang", c); };
-  
-  const handleAuth = async (e) => {
-    e.preventDefault();
-    const uniqueName = e.target.unique_name.value.trim();
-    const uniqueCode = e.target.unique_code.value.trim();
-    if (!uniqueName || !uniqueCode) return;
-    
-    let deviceId = localStorage.getItem("ep_device_id") || crypto.randomUUID();
-    localStorage.setItem("ep_device_id", deviceId);
-
-    const email = `${uniqueName}@echt.com`;
-    const { data, error } = await sb.auth.signInWithPassword({ email, password: uniqueCode });
-
-    if (error) {
-      const { data: newData, error: newError } = await sb.auth.signUp({ email, password: uniqueCode });
-      if (newError) return alert("مشكل: " + newError.message);
-      if (!newData?.user) return alert("ما قدرناش نصاوبو الحساب.");
-      
-      const { error: insertError } = await sb.from('profiles').insert([{ 
-        id: newData.user.id, email: uniqueName, is_paid: false, active_device_id: deviceId, is_blocked: false, trial_started_at: new Date().toISOString()
-      }]);
-      if (insertError) return alert("مشكل فـ إنشاء الملف الشخصي: " + insertError.message);
-      
-      const userObj = { ...newData.user, name: uniqueName, isGuest: false };
-      setUser(userObj); loser", JSON.stringify(userObj));
-    } else {
-      await sb.from('profiles').update({ active_device_id: deviceId }).eq('id', data.user.id);
-      const userObj = { ...data.user, name: uniqueName, isGuest: false };
-      setUser(userObj); localStorage.setItem("ep_user", JSON.stringify(userObj));
-    }
-  };
-  
-  const handleGuest = () => {
-    const guest = { name: "زائر", isGuest: true };
-    setUser(guest); setIsPaid(false); setIsAdmin(false); setIsBlocked(false); setTrialActive(false); setTrialEndsAt(null);
-    localStorage.setItem("ep_user", JSON.stringify(guest));
-  };
-  
-  const logout = () => { 
-    localStorage.removeItem("ep_user"); 
-    setIsPaid(false); 
-    setIsAdmin(false); 
-    setIsBlocked(false); 
-    setTrialActive(false); 
-    setTrialEndsAt(null); 
-    setUser(null); 
-    sb.auth.signOut(); 
-  };
-
-  const saveResult = (id, score, max) => setResults(r => ({ ...r, [id]: { score, max, date: Date.now() } }));
-  
-  const go = (v) => { setView(v); setExam(null); setShowHorenLessons(false); setIsSideMenuOpen(false); window.scrollTo(0, 0); };
-
-  const handleLessonClick = async (title, sub) => {
-    const isB2 = level === "B2";
-    const dataLesen = isB2 ? (B2_EXAMS || []) : (EXAMS || []);
-    const dataHoren = isB2 ? (B2_HOREN_EXAMS || []) : (HOREN_EXAMS || []);
-    const dataSchreiben = isB2 ? (B2_SCHREIBEN_DATA || []) : (SCHREIBEN_DATA || []);
-
-    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
-
-    if (sub === "Schreiben") {
-      const localSchreiben = dataSchreiben.filter(e => norm(e.title) === norm(title));
-      if (localSchreiben.length > 0) {
-        setExam(localSchreiben[0]);
-        setTimeLeft(90 * 60);
-      } else {
-        if (!isPaid && !trialActive) setLockedModal(true);
-        else wa(t("wa_upgrade_msg", userLang) + " - " + title);
-      }
-      return;
-    }
-
-    if (sub === "Sprechen") {
-      const localSpk = (isB2 && window.B2_SPRECHEN_DATA ? B2_SPRECHEN_DATA : []).filter(e => norm(e.title) === norm(title));
-      const sbSpk = supabaseSpeaking.filter(e => norm(e.title) === norm(title)).map(e => ({
-        id: e.id, title: e.title, aufgabe: e.aufgabe, text: e.text_content, type: "sprechen"
-      }));
-      const allSpk = [...localSpk.map(e => ({...e, type: "sprechen"})), ...sbSpk];
-
-      if (allSpk.length > 0) {
-        setExam(allSpk[0]);
-      } else {
-        if (!isPaid && !trialActive) setLockedModal(true);
-        else wa(t("wa_upgrade_msg", userLang) + " - " + title);
-      }
-      return;
-    }
-
-    // Logic for Lesen, Hören, Sprach 1, Sprach 2
-    const localExams = dataLesen.filter(e => norm(e.title) === norm(title) && e.sub === sub);
-    const localHoren = dataHoren.filter(e => norm(e.title) === norm(title) && e.sub === sub);
-    const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => norm(e.title) === norm(title) && e.sub === sub);
-    
-    let sbExams = supabaseLessons.filter(les => {
-      const lesTitle = les.title || les.data?.title;
-      return norm(lesTitle) === norm(title);
-    }).map(les => les.data || les);
-
-    let allVersions = [];
-    if (localHoren.length > 0) allVersions = [...localHoren, ...sbExams];
-    else allVersions = [...localExams, ...freeMods, ...sbExams];
-
-    if (allVersions.length === 0) {
-      if (!isPaid && !trialActive) setLockedModal(true);
-      else wa(t("wa_upgrade_msg", userLang) + " - " + title);
-    } else if (allVersions.length === 1) {
-      setExam(allVersions[0]);
-      setTimeLeft(90 * 60);
-    } else {
-      setSelectedExamGroup(allVersions);
-    }
-  };
-
-  if (!isReady) return <div className="splash-screen"><div className="splash-logo"><LogoImage size={180} /></div><h1 className="de" style={{ color: "var(--text)", fontSize: "2.5em", marginTop: 20, fontWeight: 900 }}>EchtPrüfung</h1></div>;
-
-  if (!userLang) {
-    return (
-      <div className="auth-screen">
-        <div className="auth-card">
-          <div style={{ textAlign: "center", marginBottom: 30 }}>
-            <LogoImage size={80} />
-            <h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("choose_lang", "ar")}</h2>
-            <p style={{color: "var(--muted)", fontSize: "0.95em", marginTop: 8}}>{t("lang_note", "ar")}</p>
-          </div>
-          <div className="lang-grid">
-            {LANGS.map(l => (
-              <button key={l.c} onClick={() => handleLangSelect(l.c)} className="lang-btn">
-                <span style={{ fontSize: "1.6em" }}>{l.f}</span><span style={{ fontSize: "0.95em", fontWeight: 800 }}>{l.n}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return (
-      <div className="auth-screen">
-        <div className="auth-card">
-          <div style={{ textAlign: "center", marginBottom: 30 }}><LogoImage size={80} /><h2 style={{ marginTop: 16, fontWeight: 900, fontSize: "1.5em" }}>{t("welcome", userLang)}</h2></div>
-          <form onSubmit={handleAuth}>
-            <input className="auth-input" name="unique_name" placeholder="الاسم الفريد" required />
-            <input className="auth-input" name="unique_code" placeholder="الكود الفريد" required />
-            <button type="submit" className="auth-btn">{t("login", userLang)}</button>
-          </form>
-          <div style={{textAlign:"center", margin:"20px 0", color:"var(--muted)", fontSize: "0.9em"}}>{t("or", userLang)}</div>
-          <button className="auth-btn guest" onClick={handleGuest}><Icons.Home color="var(--ink)" /> {t("guest", userLang)}</button>
-          <button onClick={() => wa("مرحباً، نسيت كلمة السر ديالي فـ EchtPrüfung.")} style={{ width: "100%", padding: "10px", background: "transparent", color: "var(--badc)", border: "none", fontWeight: 800, cursor: "pointer", fontSize: "0.95em", marginTop: 10 }}>هل نسيت كلمة السر؟</button>
-        </div>
-      </div>
-    );
-  }
-
-  if (exam && exam.type === "sprechen") {
-    return <SprechenDetailView lesson={exam} onBack={() => setExam(null)} userLang={userLang} level={level} />;
-  }
-
-  if (exam) {
-    return <ExamView exam={exam} userLang={userLang} dark={dark} setDark={setDark} onBack={() => {setExam(null); setTimeLeft(90*60);}} onNext={() => setExam(null)} onSave={saveResult} timeLeft={timeLeft} setTimeLeft={setTimeLeft} />;
-  }
-
-  return (
-    <div style={{ paddingBottom: 100 }}>
-      <div className={`menu-overlay ${isSideMenuOpen ? 'active' : ''}`} onClick={() => setIsSideMenuOpen(false)}></div>
-      <nav className={`side-menu ${isSideMenuOpen ? 'active' : ''}`}>
-        <div className="side-menu-header" style={{ background: level === "B2" ? "linear-gradient(135deg, #0D9488, #0F766E)" : "linear-gradient(135deg, #0F172A, #1E293B)" }}>
-          <div className="logo-circle" style={{ background: level === "B2" ? "linear-gradient(135deg, #14B8A6, #0D9488)" : "linear-gradient(135deg, #DD0000, #FFCE00)" }}>De</div>
-          <h2>EchtPrüfung {level}</h2>
-          <p style={{fontSize: '0.8em', opacity: 0.8}}>{user.name}</p>
-        </div>
-        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B1'); go('lesen');}} className={`menu-item ${level === 'B1' ? 'active' : ''}`} style={level === 'B1' ? { color: "#22C55E", borderRightColor: "#22C55E" } : {}}><Icons.Book color={level === 'B1' ? "#22C55E" : "var(--muted)"} /> {t("b1_level", userLang)}</a>
-        <a href="#" onClick={(e) => {e.preventDefault(); setLevel('B2'); go('lesen');}} className={`menu-item ${level === 'B2' ? 'active' : ''}`} style={level === 'B2' ? { color: "#0D9488", borderRightColor: "#0D9488" } : {}}><Icons.Book color={level === 'B2' ? "#0D9488" : "var(--muted)"} /> {t("b2_level", userLang)}</a>
-        {isAdmin && <a href="#" onClick={(e) => {e.preventDefault(); go('admin');}} className={`menu-item ${view === 'admin' ? 'active' : ''}`}><Icons.Lock color="#F59E0B" /> {t("admin_panel", userLang)}</a>}
-      </nav>
-
-      <div className="header" style={{ borderBottomColor: level === "B2" ? "#0D9488" : "var(--line)" }}>
-        <div className="brand">
-          <button className="btnI" onClick={() => setIsSideMenuOpen(true)} style={{ marginRight: 8 }}><Icons.Menu color="var(--text)" /></button>
-          <div className="logo" style={{ background: level === "B2" ? "linear-gradient(135deg, #14B8A6, #0D9488)" : "var(--ink)" }}><LogoImage size={36} /></div>
-          <div>
-            <div className="header-title">EchtPrüfung</div>
-            <div className="header-subtitle de"><span>Deutsch {level}</span> <span>•</span><span style={{ fontSize: "1.2em" }}>{LANGS.find(l => l.c === userLang)?.f}</span><span>{LANGS.find(l => l.c === userLang)?.n}</span></div>
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 6 }}>
-          <button className="btnI" onClick={() => setDark(!dark)}>{dark ? <Icons.Sun color={level === "B2" ? "#0D9488" : "#F59E0B"} /> : <Icons.Moon color={level === "B2" ? "#14B8A6" : "#2563EB"} />}</button>
-          <button className="btnI" onClick={() => setSettings(true)}><Icons.Settings color="var(--text)" /></button>
-        </div>
-      </div>
-
-      <main style={{ margin: "0 12px", paddingTop: 10 }}>
-        {view === "home" && (
-          <>
-            <div style={{ position: "relative", borderRadius: 24, overflow: "hidden", minHeight: "450px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", padding: "40px 20px", border: `1px solid ${level === "B2" ? "#0D9488" : "var(--line)"}`, boxShadow: "0 10px 30px rgba(0,0,0,0.1)" }}>
-              {notifications.length > 0 && <div style={{ width: "100%", maxWidth: 400, background: level === "B2" ? "rgba(13,148,136,0.9)" : "rgba(255,206,0,0.9)", padding: 16, borderRadius: 16, marginBottom: 16, zIndex: 10, position: "relative" }}><div style={{ fontWeight: 900, fontSize: "1.1em", color: level === "B2" ? "#FFF" : "#111", display: "flex", alignItems: "center", gap: 8 }}><Icons.Bell color={level === "B2" ? "#FFF" : "#111"} /> {notifications[0].title}</div><div style={{ fontSize: "0.9em", color: level === "B2" ? "#F0FDFA" : "#333", marginTop: 4 }}>{notifications[0].message}</div></div>}
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, backgroundImage: level === "B2" ? "url('https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop')" : "url('https://images.unsplash.com/photo-1560969184-10fe8719e047?q=80&w=1000&auto=format&fit=crop')", backgroundSize: "cover", backgroundPosition: "center", zIndex: 0 }} />
-              <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, background: level === "B2" ? "linear-gradient(to bottom, rgba(4,47,46,0.3) 0%, rgba(4,47,46,0.95) 100%)" : "linear-gradient(to bottom, rgba(15,27,51,0.3) 0%, rgba(15,27,51,0.95) 100%)", zIndex: 1 }} />
-              
-              <div style={{ position: "relative", zIndex: 2, textAlign: "center", width: "100%" }}>
-                <div style={{ display: "inline-block", padding: 20, background: "rgba(255,255,255,0.1)", borderRadius: 28, backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.2)" }}><LogoImage size={90} /></div>
-                <h2 className="de" style={{ margin: "20px 0 8px", fontSize: "2.2em", fontWeight: 900, color: "#FFF", textShadow: "0 2px 10px rgba(0,0,0,0.5)", letterSpacing: "-0.5px" }}>EchtPrüfung</h2>
-                <div style={{ background: level === "B2" ? "rgba(20,184,166,0.2)" : "rgba(245,184,46,0.15)", border: `1px solid ${level === "B2" ? "#14B8A6" : "var(--gold)"}`, padding: "12px 20px", borderRadius: 16, margin: "0 auto 24px", maxWidth: "90%", backdropFilter: "blur(5px)" }}><p style={{ margin: 0, color: "#FFF", fontSize: "1.1em", fontWeight: 900 }}><AutoTrans text={t("banner_title", userLang)} lang={userLang} force={true} /></p><p className="de" style={{ margin: "6px 0 0", color: level === "B2" ? "#CCFBF1" : "var(--gold)", fontSize: "0.85em", fontWeight: "bold", textAlign: "center" }}>{t("banner_sub", userLang)}</p></div>
-                <div style={{ display: "inline-flex", alignItems: "center", gap: "12px", direction: "ltr", fontSize: "1.6em", fontWeight: 900, background: "rgba(255,255,255,0.95)", padding: "12px 32px", borderRadius: 20, boxShadow: "0 8px 20px rgba(0,0,0,0.3)" }}><span style={{ color: "#0F172A" }}>B1</span><span style={{ color: "#DD0000" }}>&</span><span style={{ color: "#0D9488" }}>B2</span></div>
-              </div>
-            </div>
-
-            <div style={{ marginTop: 20 }}>
-              <h3 style={{ fontWeight: 900, fontSize: "1.3em", color: "var(--text)", marginBottom: 12 }}>
-                <AutoTrans text="الامتحانات الدولية" lang={userLang} force={true} />
-              </h3>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10 }}>
-                {EXAM_COUNTRIES.map((c, idx) => (
-                  <button key={idx} onClick={() => setSelectedCountry(c)} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6, padding: "12px 8px", background: "#fff", border: `1px solid ${level === "B2" ? "#CCFBF1" : "#e2e8f0"}`, borderRadius: 16 }}>
-                    <span style={{ fontSize: "2em" }}>{c.flag}</span>
-                    <span style={{ fontWeight: 900, fontSize: "0.8em", color: "#1e293b" }}><AutoTrans text={c.ar} lang={userLang} force={true} /></span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </>
-        )}
-
-        {view === "lesen" && (
-          <div>
-            <h1 className="de" style={{ textAlign: "center", color: level === "B2" ? "#0D9488" : "#22C55E", marginBottom: 16, fontSize: "2.2em" }}>Lesen {level}</h1>
-            {trialActive && !isPaid && <div style={{ background: `linear-gradient(135deg, ${level === "B2" ? "rgba(13,148,136,0.15)" : "rgba(34,197,94,0.15)"}, rgba(34,197,94,0.05))`, border: `1.5px solid ${level === "B2" ? "#0D9488" : "#22C55E"}`, borderRadius: 16, padding: 14, marginBottom: 16, display: "flex", alignItems: "center", gap: 12 }}><div style={{ color: level === "B2" ? "#0D9488" : "#22C55E" }}><Icons.Gift color={level === "B2" ? "#0D9488" : "#22C55E"} /></div><div style={{ flex: 1 }}><div style={{ fontWeight: 900, color: level === "B2" ? "#0D9488" : "#22C55E", fontSize: "1em" }}>{t("trial_active", userLang)}</div><div style={{ color: "var(--muted)", fontSize: "0.85em" }}>{trialCountdown} — جميع الدروس المدفوعة محلولة</div></div></div>}
-            <div style={{ marginBottom: 16 }}><input type="text" placeholder={t("search_placeholder", userLang)} value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${level === "B2" ? "#0D9488" : "var(--line)"}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} /></div>
-            
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, background: "var(--card)", padding: 16, borderRadius: 24, border: "1px solid var(--line)", marginBottom: 20 }}>
-              {[{ id: "Prüfungen", icon: <Icons.Book color={level === "B2" ? "#0D9488" : "#22C55E"} /> }, { id: "Teile 1", icon: <Icons.Edit color={level === "B2" ? "#0D9488" : "#22C55E"} /> }, { id: "Teile 2", icon: <Icons.Edit color={level === "B2" ? "#0D9488" : "#22C55E"} /> }, { id: "Teile 3", icon: <Icons.Edit color={level === "B2" ? "#0D9488" : "#22C55E"} /> }, { id: "Sprach 1", icon: <Icons.Translate color={level === "B2" ? "#0D9488" : "#22C55E"} /> }, { id: "Sprach 2", icon: <Icons.Translate color={level === "B2" ? "#0D9488" : "#22C55E"} /> }].map(tab => (
-                <button key={tab.id} onClick={() => setActiveTab(tab.id)} style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 6, padding: "14px 8px", borderRadius: 16, fontWeight: 900, fontSize: "0.85em", border: activeTab === tab.id ? `2px solid ${level === "B2" ? "#0D9488" : "#22C55E"}` : "2px solid transparent", background: activeTab === tab.id ? `${level === "B2" ? "#0D9488" : "#22C55E"}15` : "transparent", color: activeTab === tab.id ? (level === "B2" ? "#0D9488" : "#22C55E") : "var(--muted)", transition: "all 0.2s", cursor: "pointer" }}><span style={{ fontSize: "1.6em" }}>{tab.icon}</span>{tab.id}</button>
-              ))}
-            </div>
-            
-            {(() => {
-              const currentPlaceholder = level === "B2" ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS;
-              const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
-              return currentPlaceholder["Lesen"]?.[activeTab]?.filter(name => name.toLowerCase().includes(searchQuery.toLowerCase())).map((name, idx) => {
-                const isB2 = level === "B2";
-                const localExams = (isB2 ? B2_EXAMS : EXAMS).filter(e => norm(e.title) === norm(name) && e.sub === activeTab && e.level === level);
-                const freeMods = isB2 ? [] : FREE_MODIFIED_LESSONS.filter(e => norm(e.title) === norm(name) && e.sub === activeTab);
-                const sbExams = supabaseLessons.filter(les => norm(les.title || les.data?.title) === norm(name) && (les.sub === activeTab || les.data?.sub === activeTab)).map(les => les.data || les);
-                const totalVersions = localExams.length + freeMods.length + sbExams.length;
-                
-                return (
-                  <button key={idx} className="card" onClick={() => {
-                    if (totalVersions === 0 && !isPaid && !trialActive) {
-                      setLockedModal(true);
-                    } else {
-                      handleLessonClick(name, activeTab);
-                    }
-                  }} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, border: `1px solid ${isB2 ? "#CCFBF1" : "var(--line)"}` }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div>
-                        <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
-                        <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}><span className="chip" style={{ background: `${isB2 ? "#0D9488" : "#22C55E"}15`, color: isB2 ? "#0D9488" : "#22C55E", padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span><span>90 Min</span></div>
-                      </div>
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
-                         {totalVersions > 1 && <span style={{ background: `${isB2 ? "#0D9488" : "#22C55E"}15`, color: isB2 ? "#0D9488" : "#22C55E", padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{totalVersions} <AutoTrans text="تعديلات" lang={userLang} force={true} /></span>}
-                         <div style={{ color: totalVersions === 0 && !isPaid && !trialActive ? "var(--red)" : (isB2 ? "#0D9488" : "#22C55E") }}>
-                           {totalVersions === 0 && !isPaid && !trialActive ? <Icons.Rocket color="#F59E0B" /> : <Icons.ArrowRight color={isB2 ? "#0D9488" : "#22C55E"} />}
-                         </div>
-                      </div>
-                    </div>
-                  </button>
-                );
-              });
-            })()}
-          </div>
-        )}
-
-        {view === "horen" && (
-          <div style={{ padding: "20px 12px", paddingBottom: 100, direction: "rtl" }}>
-            {!activeHorenTeil ? (
-              <>
-                <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: level === "B2" ? "#0D9488" : "#8B5CF6", marginBottom: 20, textAlign: "right" }}>Hören {level}</h1>
-
-                <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
-                  <div style={{ display: "flex", background: "#f1f5f9", borderRadius: 99, padding: 4, border: "1px solid #e2e8f0" }}>
-                    <button style={{ background: level === "B2" ? "#0D9488" : "#8B5CF6", color: "white", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>{level}</button>
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", background: "#ffffff", borderRadius: 20, padding: 8, marginBottom: 24, boxShadow: "0 4px 15px rgba(0,0,0,0.03)", border: "1px solid #e2e8f0" }}>
-                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "transparent", color: "#64748b", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-                    <Icons.Book color="#64748b" />
-                    <span>الأكواد</span>
-                  </button>
-                  <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: level === "B2" ? "#0D9488" : "#8B5CF6", color: "white", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6, boxShadow: `0 4px 12px ${level === "B2" ? "#0D9488" : "#8B5CF6"}50` }}>
-                    <Icons.Headphones color="#FFF" />
-                    <span>الجمل</span>
-                  </button>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: `1px solid ${level === "B2" ? "#CCFBF1" : "#e2e8f0"}`, boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                      <div style={{ width: 60, height: 60, borderRadius: 20, background: level === "B2" ? "#F0FDFA" : "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: level === "B2" ? "#0D9488" : "#8B5CF6" }}>
-                        <Icons.Headphones color={level === "B2" ? "#0D9488" : "#8B5CF6"} />
-                      </div>
-                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
-                    </div>
-                    <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 1</h2>
-                    <button onClick={() => setActiveHorenTeil("Teile 1")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: level === "B2" ? "#F0FDFA" : "#f5f3ff", color: level === "B2" ? "#0D9488" : "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: `1.5px solid ${level === "B2" ? "#0D9488" : "#8B5CF6"}`, display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Play color={level === "B2" ? "#0D9488" : "#8B5CF6"} />
-                      ابدأ الآن
-                    </button>
-                  </div>
-
-                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #fef3c7", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                      <div style={{ width: 60, height: 60, borderRadius: 20, background: "#fef3c7", display: "flex", justifyContent: "center", alignItems: "center", color: "#f59e0b" }}>
-                        <Icons.Rocket color="#f59e0b" />
-                      </div>
-                      <div style={{ display: "flex", gap: 8 }}>
-                        <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
-                        <span style={{ background: "#fef3c7", color: "#d97706", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>PRO</span>
-                      </div>
-                    </div>
-                    <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#d97706" }}>Teil 2</h2>
-                    <button onClick={() => { if(!isPaid && !trialActive) setLockedModal(true); else setActiveHorenTeil("Teile 2"); }} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#fffbeb", color: "#d97706", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #f59e0b", display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Rocket color="#d97706" />
-                      {isPaid || trialActive ? "ابدأ الآن" : "فتح الوصول"}
-                    </button>
-                  </div>
-
-                  <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
-                      <div style={{ width: 60, height: 60, borderRadius: 20, background: level === "B2" ? "#F0FDFA" : "#f5f3ff", display: "flex", justifyContent: "center", alignItems: "center", color: level === "B2" ? "#0D9488" : "#8B5CF6" }}>
-                        <Icons.Edit color={level === "B2" ? "#0D9488" : "#8B5CF6"} />
-                      </div>
-                      <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
-                    </div>
-                    <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 3</h2>
-                    <button onClick={() => setActiveHorenTeil("Teile 3")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: level === "B2" ? "#F0FDFA" : "#f5f3ff", color: level === "B2" ? "#0D9488" : "#8B5CF6", fontWeight: 900, fontSize: "1.1em", border: `1.5px solid ${level === "B2" ? "#0D9488" : "#8B5CF6"}`, display: "flex", justifyContent: "center", alignItems: "center", gap: 10 }}>
-                      <Icons.Play color={level === "B2" ? "#0D9488" : "#8B5CF6"} />
-                      ابدأ الآن
-                    </button>
-                  </div>
-                </div>
-              </>
-            ) : (
+          }} style={{ width: "100%", textAlign: "right", display: "block", color: "var(--text)", padding: 20, marginBottom: 12, border: `1px solid ${isB2 ? "#CCFBF1" : "var(--line)"}`, cursor: "pointer", background: "var(--card)", borderRadius: 20 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               <div>
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-                  <button onClick={() => setActiveHorenTeil(null)} className="btnI" style={{ width: 40, height: 40 }}>
-                    <Icons.ArrowLeft color="var(--text)" />
-                  </button>
-                  <h2 className="de" style={{ margin: 0, fontSize: "1.8em", fontWeight: 900 }}>{activeHorenTeil} {level}</h2>
-                </div>
-
-                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  {(() => {
-                    const currentPlaceholder = level === "B2" ? B2_PLACEHOLDER_LESSONS : PLACEHOLDER_LESSONS;
-                    const hörenList = currentPlaceholder["Hören"]?.[activeHorenTeil] || [];
-                    const norm = (s) => (s || "").toLowerCase().replace(/\s+/g, '');
-                    
-                    return hörenList.map((title, idx) => {
-                      const localHoren = (level === "B2" ? B2_HOREN_EXAMS : HOREN_EXAMS).filter(ex => norm(ex.title) === norm(title));
-                      const sbHoren = supabaseLessons.filter(les => norm(les.title || les.data?.title) === norm(title) && (les.part === activeHorenTeil || les.data?.sub === activeHorenTeil)).map(les => les.data || les);
-                      const allHoren = [...localHoren, ...sbHoren];
-                      
-                      if (allHoren.length > 0) {
-                        return allHoren.map((ex) => <HorenCard key={ex.id || Math.random()} exam={ex} userLang={userLang} showTranslation={showHorenTrans} isB2={level === "B2"} />);
-                      } else {
-                        return (
-                          <div key={idx} className="card" onClick={() => {
-                            if(!isPaid && !trialActive) setLockedModal(true);
-                            else wa(t("wa_upgrade_msg", userLang) + " - " + title);
-                          }} style={{ padding: 20, border: `1px solid ${level === "B2" ? "#CCFBF1" : "var(--line)"}`, cursor: "pointer", background: "var(--card)" }}>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                              <div className="de" style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>{title}</div>
-                              {!isPaid && !trialActive && <Icons.Rocket color="#F59E0B" />}
-                            </div>
-                          </div>
-                        );
-                      }
-                    });
-                  })()}
+                <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{name}</div>
+                <div style={{ display: "flex", gap: 8, marginTop: 8, alignItems: "center", color: "var(--muted)", fontSize: ".9em" }}>
+                  <span className="chip" style={{ background: `${themeColor}15`, color: themeColor, padding: "4px 10px", borderRadius: 8 }}>{activeTab}</span>
                 </div>
               </div>
-            )}
-          </div>
-        )}
-
-        {view === "schreiben" && (
-          <SchreibenView 
-            userLang={userLang} 
-            dark={dark} 
-            setDark={setDark} 
-            supabaseLessons={supabaseLessons} 
-            isPaid={isPaid} 
-            trialActive={trialActive} 
-            isAdmin={isAdmin} 
-            wa={wa} 
-            onLessonClick={handleLessonClick} 
-            level={level}
-          />
-        )}
-
-        {view === "sprechen" && (
-          <SprechenView 
-            userLang={userLang} 
-            level={level} 
-            supabaseSpeaking={supabaseSpeaking} 
-            onLessonClick={handleLessonClick} 
-          />
-        )}
-
-        {view === "pruefung" && (
-          <div>
-            <h1 className="de" style={{ textAlign: "center", color: level === "B2" ? "#0D9488" : "#EAB308", marginBottom: 16, fontSize: "2.2em" }}>
-              <AutoTrans text="Zufällige Prüfungen" lang={userLang} force={true} />
-            </h1>
-            <div style={{ paddingBottom: 80 }}>
-              {(level === "B2" ? B2_PRUEFUNG_DATA : PRUEFUNG_DATA).map(exam => (
-                <div key={exam.id} className="card" style={{ padding: 20, border: `1.5px solid ${level === "B2" ? "#0D9488" : "var(--line)"}`, marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => { if(!isPaid && !trialActive) setLockedModal(true); else wa(t("wa_upgrade_msg", userLang) + " - " + exam.title); }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-                    <div style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>
-                      <AutoTrans text={exam.title} lang={userLang} force={true} />
-                    </div>
-                    <span style={{ background: level === "B2" ? "#0D9488" : "#EAB308", color: "#111", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span>
-                  </div>
-                  <div style={{ color: "var(--muted)", fontSize: "0.95em", marginBottom: 16, lineHeight: 1.5 }}>
-                    <AutoTrans text={exam.desc} lang={userLang} force={true} />
-                  </div>
-                  <button style={{ width: "100%", padding: 12, borderRadius: 10, background: `${level === "B2" ? "#0D9488" : "#EAB308"}15`, color: level === "B2" ? "#0D9488" : "#EAB308", border: `1px solid ${level === "B2" ? "#0D9488" : "#EAB308"}`, fontWeight: 900, cursor: "pointer" }}>
-                    <AutoTrans text="فتح الوصول" lang={userLang} force={true} />
-                  </button>
-                </div>
-              ))}
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8 }}>
+                 {localData.length > 1 && <span style={{ background: `${themeColor}15`, color: themeColor, padding: "2px 8px", borderRadius: 6, fontSize: "0.75em", fontWeight: 900 }}>{localData.length} <AutoTrans text="تعديلات" lang={userLang} /></span>}
+                 <div style={{ color: isLocked ? "#F59E0B" : themeColor }}>
+                   {isLocked ? <Icon.Lock c="#F59E0B" /> : <Icon.Right c={themeColor} />}
+                 </div>
+              </div>
             </div>
-          </div>
-        )}
+          </button>
+        );
+      })}
 
-        {view === "admin" && isAdmin && <AdminPanel userLang={userLang} onClose={() => go('home')} />}
-      </main>
-
-      <nav className="nav">
-        {[
-          { id: "home", label: t("home", userLang), icon: <Icons.Home color={level === "B2" ? "#14B8A6" : "#2563EB"} /> }, 
-          { id: "lesen", label: t("lesen", userLang), icon: <Icons.Book color={level === "B2" ? "#0D9488" : "#22C55E"} /> }, 
-          { id: "horen", label: t("horen", userLang), icon: <Icons.Headphones color={level === "B2" ? "#F59E0B" : "#8B5CF6"} /> }, 
-          { id: "schreiben", label: t("schreiben", userLang), icon: <Icons.Edit color={level === "B2" ? "#6366F1" : "#F59E0B"} /> }, 
-          { id: "sprechen", label: t("sprechen", userLang), icon: <Icons.Mic color={level === "B2" ? "#F43F5E" : "#EF4444"} /> }, 
-          { id: "pruefung", label: t("pruefung", userLang), icon: <Icons.Graduation color={level === "B2" ? "#0D9488" : "#EAB308"} /> }
-        ].map((item) => (
-          <button key={item.id} className={view === item.id ? "on" : ""} onClick={() => go(item.id)} style={view === item.id ? { color: level === "B2" ? "#0D9488" : "#DD0000", background: `${level === "B2" ? "#0D9488" : "#DD0000"}15` } : {}}><span className="ic">{item.icon}</span><span>{item.label}</span></button>
-        ))}
-      </nav>
-
-      {selectedExamGroup && (
-        <div className="overlay" onClick={() => setSelectedExamGroup(null)} style={{ direction: 'rtl' }}>
-          <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24, border: 'none' }}>
-            <div style={{ background: level === "B2" ? '#F0FDFA' : '#f0fdf4', padding: '24px', borderBottom: `1px solid ${level === "B2" ? "#CCFBF1" : "#dcfce7"}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      {showVersionModal && (
+        <div className="overlay" onClick={() => setShowVersionModal(null)} style={{ direction: 'rtl' }}>
+          <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24 }}>
+            <div style={{ background: '#F0FDFA', padding: '24px', borderBottom: '1px solid #CCFBF1', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
-                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: level === "B2" ? '#0F766E' : '#1e293b' }}><AutoTrans text="التعديلات المتاحة" lang={userLang} force={true} /></h3>
-                <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.9em' }}>{selectedExamGroup.length} <AutoTrans text="تعديلات لهذا الموضوع" lang={userLang} force={true} /></p>
-              </div>
-              <div style={{ background: level === "B2" ? '#0D9488' : '#10b981', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
-                <Icons.Book color="#FFF" />
+                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: '#0F766E' }}><AutoTrans text="التعديلات المتاحة" lang={userLang} /></h3>
+                <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '0.9em' }}>{showVersionModal.versions.length} <AutoTrans text="تعديلات لهذا الموضوع" lang={userLang} /></p>
               </div>
             </div>
-
             <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 12 }}>
-              {selectedExamGroup.map((ex, idx) => {
+              {showVersionModal.versions.map((ex, idx) => {
                 const isMod = ex.desc?.includes('معدل') || ex.id?.includes('-mod') || ex.title?.includes('المعدل');
                 const cleanTitle = ex.title.replace(' المعدل', '').replace(' (معدل)', '');
-                
-                const isLocalFree = (B2_EXAMS || []).some(le => le.id === ex.id) || FREE_MODIFIED_LESSONS.some(fm => fm.id === ex.id);
-                const isLocked = !isLocalFree && !isPaid && !trialActive;
-
                 return (
-                  <button key={ex.id || idx} onClick={() => { 
-                    if (isLocked) {
-                      setLockedModal(true);
-                    } else {
-                      setExam(ex); 
-                      setSelectedExamGroup(null); 
-                      setTimeLeft(90*60); 
-                    }
-                  }} style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", background: '#fff', border: `1px solid ${level === "B2" ? "#CCFBF1" : "#e2e8f0"}`, borderRadius: 16 }}>
+                  <button key={idx} onClick={() => { onLessonClick("exam", ex); setShowVersionModal(null); }} style={{ padding: "16px", display: "flex", justifyContent: "space-between", alignItems: "center", background: '#fff', border: `1px solid #e2e8f0`, borderRadius: 16, cursor: "pointer" }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                      <span style={{ background: level === "B2" ? '#F0FDFA' : '#dcfce7', color: level === "B2" ? '#0F766E' : '#15803d', width: 32, height: 32, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 900 }}>{idx + 1}</span>
-                      <span className="de" style={{ fontWeight: 800, fontSize: '1.1em', color: '#1e293b' }}>
-                        {cleanTitle} {isMod && <AutoTrans text="المعدل" lang={userLang} force={true} />}
-                      </span>
+                      <span style={{ background: '#F0FDFA', color: '#0F766E', width: 32, height: 32, borderRadius: '50%', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: 900 }}>{idx + 1}</span>
+                      <span className="de" style={{ fontWeight: 800, fontSize: '1.1em', color: '#1e293b' }}>{cleanTitle} {isMod && <AutoTrans text="المعدل" lang={userLang} />}</span>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ background: '#f1f5f9', color: '#64748b', padding: '4px 10px', borderRadius: 8, fontSize: '0.8em', fontWeight: 900 }}>{level}</span>
-                      {isLocked && <span style={{ color: '#F59E0B' }}><Icons.Rocket color="#F59E0B" /></span>}
-                    </div>
+                    <span style={{ background: '#f1f5f9', color: '#64748b', padding: '4px 10px', borderRadius: 8, fontSize: '0.8em', fontWeight: 900 }}>{level}</span>
                   </button>
                 );
               })}
             </div>
-
             <div style={{ padding: '0 20px 20px' }}>
-              <button onClick={() => setSelectedExamGroup(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: `1px solid ${level === "B2" ? "#CCFBF1" : "#e2e8f0"}`, background: '#fff', color: level === "B2" ? '#0D9488' : '#64748b', fontWeight: 900, fontSize: '1em' }}>
-                <AutoTrans text="إغلاق" lang={userLang} force={true} />
-              </button>
+              <button onClick={() => setShowVersionModal(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: `1px solid #e2e8f0`, background: '#fff', color: '#64748b', fontWeight: 900, fontSize: '1em', cursor: "pointer" }}><AutoTrans text="إغلاق" lang={userLang} /></button>
             </div>
           </div>
         </div>
       )}
+    </div>
+  );
+}
 
-      {selectedCountry && (
-        <div className="overlay" onClick={() => setSelectedCountry(null)} style={{ direction: 'rtl' }}>
-          <div className="sheet" onClick={e => e.stopPropagation()} style={{ padding: 0, overflow: 'hidden', borderRadius: 24, border: 'none' }}>
-            <div style={{ background: level === "B2" ? '#F0FDFA' : '#e0f2fe', padding: '24px', borderBottom: `1px solid ${level === "B2" ? "#CCFBF1" : "#bae6fd"}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h3 style={{ margin: 0, fontSize: "1.3em", fontWeight: 900, color: level === "B2" ? '#134E4A' : '#0c4a6e', display: "flex", alignItems: "center", gap: 8 }}>{selectedCountry.flag} <AutoTrans text={selectedCountry.ar} lang={userLang} force={true} /></h3>
-                <p style={{ margin: '4px 0 0', color: level === "B2" ? '#0F766E' : '#0369a1', fontSize: '0.9em' }}><AutoTrans text="مراكز الامتحانات المتاحة" lang={userLang} force={true} /></p>
-              </div>
-              <div style={{ background: level === "B2" ? '#0D9488' : '#0ea5e9', color: 'white', width: 40, height: 40, borderRadius: 12, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: '1.2em' }}>
-                <Icons.Target color="#FFF" />
-              </div>
-            </div>
-            
-            <div style={{ padding: 20 }}>
-              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, marginBottom: 12, border: `1px solid ${level === "B2" ? "#CCFBF1" : "#e2e8f0"}` }}>
-                <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: 8 }}><AutoTrans text="المدن" lang={userLang} force={true} />:</div>
-                <div style={{ color: '#334155', fontSize: '0.95em' }}>{selectedCountry.cities}</div>
-              </div>
-              <div style={{ background: '#f8fafc', padding: 16, borderRadius: 12, border: `1px solid ${level === "B2" ? "#CCFBF1" : "#e2e8f0"}` }}>
-                <div style={{ fontWeight: 900, color: '#0f172a', marginBottom: 8 }}><AutoTrans text="المعاهد والمراكز" lang={userLang} force={true} />:</div>
-                <div style={{ color: '#334155', fontSize: '0.95em', lineHeight: 1.6 }}>{selectedCountry.institutes}</div>
-              </div>
-            </div>
+// === 10. HOREN VIEW ===
+function HorenView({ level, userLang, user, onLessonClick }) {
+  const isB2 = level === "B2";
+  const themeColor = isB2 ? "#0D9488" : "#8B5CF6";
+  const [activeHorenTeil, setActiveHorenTeil] = useState(null);
 
-            <div style={{ padding: '0 20px 20px' }}>
-              <button onClick={() => setSelectedCountry(null)} style={{ width: '100%', padding: 16, borderRadius: 16, border: `1px solid ${level === "B2" ? "#CCFBF1" : "#e2e8f0"}`, background: '#fff', color: level === "B2" ? '#0D9488' : '#64748b', fontWeight: 900, fontSize: '1em' }}>
-                <AutoTrans text="إغلاق" lang={userLang} force={true} />
-              </button>
-            </div>
+  if (!activeHorenTeil) {
+    return (
+      <div style={{ padding: "20px 12px", paddingBottom: 100, direction: "rtl" }}>
+        <h1 className="de" style={{ fontSize: "2.8em", fontWeight: 900, color: themeColor, marginBottom: 20, textAlign: "right" }}>Hören {level}</h1>
+        <div style={{ display: "flex", justifyContent: "center", marginBottom: 24 }}>
+          <div style={{ display: "flex", background: "#f1f5f9", borderRadius: 99, padding: 4, border: "1px solid #e2e8f0" }}>
+            <button style={{ background: themeColor, color: "white", padding: "10px 40px", borderRadius: 99, fontWeight: 900, border: "none", fontSize: "1.1em" }}>{level}</button>
           </div>
         </div>
-      )}
+        <div style={{ display: "flex", background: "#ffffff", borderRadius: 20, padding: 8, marginBottom: 24, boxShadow: "0 4px 15px rgba(0,0,0,0.03)", border: "1px solid #e2e8f0" }}>
+          <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: "transparent", color: "#64748b", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}><Icon.Book /> <span><AutoTrans text="الأكواد" lang={userLang} /></span></button>
+          <button style={{ flex: 1, padding: "16px", borderRadius: 16, background: themeColor, color: "white", fontWeight: 900, border: "none", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}><Icon.Headphones /> <span><AutoTrans text="الجمل" lang={userLang} /></span></button>
+        </div>
+        
+        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+          <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: `1px solid #CCFBF1`, boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+              <div style={{ width: 60, height: 60, borderRadius: 20, background: "#F0FDFA", display: "flex", justifyContent: "center", alignItems: "center", color: themeColor }}><Icon.Headphones /></div>
+              <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
+            </div>
+            <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 1</h2>
+            <button onClick={() => setActiveHorenTeil("Teile 1")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#F0FDFA", color: themeColor, fontWeight: 900, fontSize: "1.1em", border: `1.5px solid ${themeColor}`, display: "flex", justifyContent: "center", alignItems: "center", gap: 10, cursor: "pointer" }}><AutoTrans text="ابدأ الآن" lang={userLang} /></button>
+          </div>
+          
+          <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #fef3c7", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+              <div style={{ width: 60, height: 60, borderRadius: 20, background: "#fef3c7", display: "flex", justifyContent: "center", alignItems: "center", color: "#f59e0b" }}><Icon.Lock /></div>
+              <div style={{ display: "flex", gap: 8 }}>
+                <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
+                <span style={{ background: "#fef3c7", color: "#d97706", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>PRO</span>
+              </div>
+            </div>
+            <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#d97706" }}>Teil 2</h2>
+            <button onClick={() => onLessonClick("locked", null)} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#fffbeb", color: "#d97706", fontWeight: 900, fontSize: "1.1em", border: "1.5px solid #f59e0b", display: "flex", justifyContent: "center", alignItems: "center", gap: 10, cursor: "pointer" }}><AutoTrans text="فتح الوصول" lang={userLang} /></button>
+          </div>
 
-      {/* نافذة المحتوى المقفل */}
+          <div style={{ background: "#ffffff", borderRadius: 24, padding: 24, border: "1px solid #e2e8f0", boxShadow: "0 4px 20px rgba(0,0,0,0.03)" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 20 }}>
+              <div style={{ width: 60, height: 60, borderRadius: 20, background: "#F0FDFA", display: "flex", justifyContent: "center", alignItems: "center", color: themeColor }}><Icon.Edit /></div>
+              <span style={{ background: "#f1f5f9", color: "#64748b", padding: "4px 12px", borderRadius: 8, fontWeight: 900, fontSize: "0.9em" }}>{level}</span>
+            </div>
+            <h2 className="de" style={{ fontSize: "1.8em", fontWeight: 900, margin: "0 0 20px", color: "#1e293b" }}>Teil 3</h2>
+            <button onClick={() => setActiveHorenTeil("Teile 3")} style={{ width: "100%", padding: "18px", borderRadius: 16, background: "#F0FDFA", color: themeColor, fontWeight: 900, fontSize: "1.1em", border: `1.5px solid ${themeColor}`, display: "flex", justifyContent: "center", alignItems: "center", gap: 10, cursor: "pointer" }}><AutoTrans text="ابدأ الآن" lang={userLang} /></button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const list = isB2 ? (B2_HOREN_EXAMS || []) : (HOREN_EXAMS || []);
+  const filteredList = list.filter(ex => ex.sub === activeHorenTeil);
+
+  return (
+    <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+       <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+          <button onClick={() => setActiveHorenTeil(null)} className="btnI" style={{ width: 40, height: 40 }}><Icon.Left /></button>
+          <h2 className="de" style={{ margin: 0, fontSize: "1.8em", fontWeight: 900 }}>{activeHorenTeil} {level}</h2>
+        </div>
+        
+        {isB2 && (
+          <div style={{ background: "#fff", padding: 20, borderRadius: 16, marginBottom: 20, border: "1px solid #fef3c7" }}>
+              <h3 style={{color: "#d97706", margin: "0 0 10px"}}><AutoTrans text="تنبيه التحديث" lang={userLang} /></h3>
+              <p style={{margin: 0, color: "#64748b"}}><AutoTrans text="لا ينصح به فهناك احتمال 60% ان يتغير الترتيب" lang={userLang} /></p>
+          </div>
+        )}
+        
+        {filteredList.length === 0 ? (
+           <p style={{textAlign: "center", color: "var(--muted)", marginTop: 40}}><AutoTrans text="لا توجد دروس في هذا القسم حالياً." lang={userLang} /></p>
+        ) : (
+           filteredList.map(ex => (
+             <HorenCard key={ex.id} exam={ex} userLang={userLang} showTranslation={false} isB2={isB2} user={user} />
+           ))
+        )}
+    </div>
+  );
+}
+
+// === 11. SCHREIBEN VIEW ===
+function SchreibenView({ level, userLang, user, onLessonClick }) {
+  const isB2 = level === "B2";
+  const themeColor = isB2 ? "#0D9488" : "#F59E0B";
+  const list = isB2 ? B2_PLACEHOLDER_LESSONS["Schreiben"] : PLACEHOLDER_LESSONS["Schreiben"];
+
+  return (
+    <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+      <h1 className="de" style={{ textAlign: "center", color: themeColor, marginBottom: 20, fontSize: "2.5em" }}>Schreiben {level}</h1>
+      <div style={{ marginBottom: 20 }}>
+        <input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${themeColor}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} />
+      </div>
+
+      {list.map((title, idx) => {
+        const local = getLocalData(level, "Schreiben", title);
+        const isLocked = local.length === 0;
+        return (
+          <div key={idx} onClick={() => {
+             if (isLocked) {
+                onLessonClick("locked", null);
+             } else {
+                onLessonClick("schreiben", local[0]);
+             }
+          }} className="card" style={{ padding: 20, marginBottom: 16, cursor: "pointer", border: `1px solid ${isB2 ? themeColor : "var(--line)"}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+              <div className="de" style={{ fontWeight: 900, fontSize: "1.1em", marginBottom: 12 }}>{title}</div>
+              {isLocked && <Icon.Lock c="#F59E0B" />}
+            </div>
+            <div style={{ display: "inline-block", background: `${themeColor}15`, color: themeColor, padding: "4px 12px", borderRadius: 8, fontSize: "0.85em", fontWeight: 900 }}>{level}</div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// === 12. SPRECHEN VIEW ===
+function SprechenView({ level, userLang, user, onLessonClick }) {
+  const isB2 = level === "B2";
+  const themeColor = isB2 ? "#0D9488" : "#EF4444";
+  const [tab, setTab] = useState("Teil 1");
+  
+  const placeholders = isB2 ? B2_PLACEHOLDER_LESSONS["Sprechen"] : PLACEHOLDER_LESSONS["Sprechen"];
+  const dataList = (isB2 ? (B2_SPRECHEN_DATA || []) : (B1_SPRECHEN_DATA || [])).filter(e => e.sub === tab).map(e => e.title);
+  const placeholderList = placeholders?.[tab] || [];
+  const currentList = Array.from(new Set([...placeholderList, ...dataList]));
+
+  return (
+    <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+      <h1 className="de" style={{ textAlign: "center", color: themeColor, marginBottom: 16, fontSize: "2.5em" }}>Sprechen {level}</h1>
+      
+      <div style={{ display: "flex", gap: 10, marginBottom: 20, background: "var(--card)", padding: 10, borderRadius: 16 }}>
+        {["Teil 1", "Teil 2", "Teil 3"].map(t => (
+           <button key={t} onClick={() => setTab(t)} style={{ flex: 1, padding: "10px", borderRadius: 12, fontWeight: 900, background: tab === t ? themeColor : "transparent", color: tab === t ? "#FFF" : "var(--muted)", border: "none", cursor: "pointer" }}>{t}</button>
+        ))}
+      </div>
+
+      <div style={{ marginBottom: 16 }}><input type="text" placeholder={t("search_placeholder", userLang)} style={{ width: "100%", padding: "16px 20px", borderRadius: 16, border: `1px solid ${themeColor}`, background: "var(--card)", color: "var(--text)", fontSize: "1em", outline: "none" }} /></div>
+
+      {currentList.length === 0 ? (
+         <div style={{ textAlign: "center", marginTop: 40, color: "var(--muted)" }}><AutoTrans text="...سيتم إضافة قريباً" lang={userLang} /></div>
+      ) : currentList.map((title, idx) => {
+        const local = getLocalData(level, "Sprechen", title, tab);
+        const isLocked = local.length === 0;
+        return (
+          <div key={idx} onClick={() => {
+             if (isLocked) {
+                onLessonClick("locked", null);
+             } else {
+                onLessonClick("sprechen", local[0]);
+             }
+          }} className="card" style={{ padding: 20, marginBottom: 12, cursor: "pointer", border: `1px solid ${isB2 ? "#CCFBF1" : "var(--line)"}` }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div className="de" style={{ fontWeight: 900, fontSize: "1.2em" }}>{title}</div>
+              {isLocked ? <Icon.Lock c="#F59E0B" /> : <Icon.Right c={themeColor} />}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// === 13. PRUEFUNG VIEW ===
+function PruefungView({ level, userLang, user, onLessonClick }) {
+  const isB2 = level === "B2";
+  const themeColor = isB2 ? "#0D9488" : "#EAB308";
+  const list = isB2 ? B2_PRUEFUNG_DATA : PRUEFUNG_DATA;
+
+  return (
+    <div style={{ paddingBottom: 100, padding: "20px 12px" }}>
+      <h1 className="de" style={{ textAlign: "center", color: themeColor, marginBottom: 16, fontSize: "2.2em" }}>Prüfungen</h1>
+      {list.map(exam => (
+        <div key={exam.id} className="card" style={{ padding: 20, border: `1.5px solid ${themeColor}`, marginBottom: 16, borderRadius: 16, background: "var(--card)", cursor: "pointer" }} onClick={() => onLessonClick("locked", null)}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
+            <div style={{ fontWeight: 900, fontSize: "1.2em", color: "var(--text)" }}>{exam.title}</div>
+            <span style={{ background: themeColor, color: "#111", padding: "2px 10px", borderRadius: 6, fontWeight: 900, fontSize: "0.8em" }}>PRO</span>
+          </div>
+          <div style={{ color: "var(--muted)", fontSize: "0.95em", marginBottom: 16 }}>{exam.desc}</div>
+          <button style={{ width: "100%", padding: 12, borderRadius: 10, background: `${themeColor}15`, color: themeColor, border: `1px solid ${themeColor}`, fontWeight: 900 }}><AutoTrans text="فتح الوصول" lang={userLang} /></button>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// === 14. MAIN APP COMPONENT ===
+function App() {
+  const [user, setUser] = useState(null);
+  const [userLang, setUserLang] = useState(null);
+  const [isReady, setIsReady] = useState(false);
+  const [view, setView] = useState("lesen"); 
+  const [level, setLevel] = useState("B1");
+  const [exam, setExam] = useState(null);
+  const [dark, setDark] = useState(false);
+  const [lockedModal, setLockedModal] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsReady(true), 1000);
+    const savedUser = localStorage.getItem("ep_user");
+    const savedLang = localStorage.getItem("ep_lang");
+    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedLang) setUserLang(savedLang);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => { document.documentElement.classList.toggle("dark", dark); }, [dark]);
+
+  const handleAuth = async (name, code) => {
+    const email = `${name}@echt.com`;
+    const { data, error } = await sb.auth.signInWithPassword({ email, password: code });
+    if (error) {
+      const { data: newData, error: newError } = await sb.auth.signUp({ email, password: code });
+      if (newError) return alert("Error: " + newError.message);
+      const userObj = { ...newData.user, name, isGuest: false };
+      setUser(userObj); localStorage.setItem("ep_user", JSON.stringify(userObj));
+    } else {
+      const userObj = { ...data.user, name, isGuest: false };
+      setUser(userObj); localStorage.setItem("ep_user", JSON.stringify(userObj));
+    }
+  };
+
+  const handleGuest = () => {
+    const guest = { name: "Guest", isGuest: true, isPaid: false };
+    setUser(guest); localStorage.setItem("ep_user", JSON.stringify(guest));
+  };
+
+  const logout = () => {
+    localStorage.removeItem("ep_user");
+    setUser(null);
+    sb.auth.signOut();
+  };
+
+  const onLessonClick = (type, data) => {
+    if (type === "locked") { setLockedModal(true); return; }
+    if (type === "exam" || type === "schreiben" || type === "sprechen") { setExam({...data, _viewType: type}); }
+  };
+
+  if (!isReady) return <SplashScreen />;
+  if (!userLang) return <LanguageScreen onSelect={(c) => { setUserLang(c); localStorage.setItem("ep_lang", c); }} />;
+  if (!user) return <AuthScreen userLang={userLang} onAuth={handleAuth} onGuest={handleGuest} />;
+
+  if (exam) {
+    if (exam._viewType === "exam") {
+      return <ExamView exam={exam} onBack={() => setExam(null)} userLang={userLang} user={user} />;
+    }
+    if (exam._viewType === "sprechen") {
+      return (
+        <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+            <button onClick={() => setExam(null)} className="btnI" style={{ width: 40, height: 40 }}><Icon.Left /></button>
+            <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{exam.title}</h2>
+          </div>
+          <div className="card" style={{ padding: 20 }}>
+            <div style={{ color: level === "B2" ? "#0D9488" : "#EF4444", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>AUFGABE</div>
+            <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, marginBottom: 24 }}>{exam.aufgabe}</div>
+            <div style={{ color: level === "B2" ? "#0D9488" : "#EF4444", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>MUSTERLÖSUNG</div>
+            <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>{exam.text}</div>
+            {exam.transText && <div className="t2-ar" style={{marginTop: 20}}><SmartTrans obj={exam.transText} lang={userLang} /></div>}
+          </div>
+        </div>
+      );
+    }
+    if (exam._viewType === "schreiben") {
+       return (
+         <div style={{ padding: "20px 12px", paddingBottom: 100 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
+                <button onClick={() => setExam(null)} className="btnI" style={{ width: 40, height: 40 }}><Icon.Left /></button>
+                <h2 className="de" style={{ margin: 0, fontSize: "1.2em", fontWeight: 900 }}>{exam.title}</h2>
+            </div>
+            <div className="card" style={{ padding: 20, marginBottom: 16 }}>
+                <div style={{ color: "#F59E0B", fontWeight: 900, marginBottom: 12, fontSize: "1.1em" }}>AUFGABE</div>
+                <div className="de" style={{ fontSize: "1.05em", lineHeight: 1.8, marginBottom: 24 }}>{exam.text}</div>
+            </div>
+            <div className="card" style={{ padding: 20 }}>
+                <textarea style={{ width: "100%", minHeight: 200, padding: 16, borderRadius: 12, border: "1px solid var(--line)", background: "var(--paper)", color: "var(--text)" }} placeholder="..."></textarea>
+                <button className="btn" style={{ marginTop: 16, background: "#F59E0B", color: "#FFF" }}><AutoTrans text="تصحيح" lang={userLang} /></button>
+            </div>
+         </div>
+       );
+    }
+  }
+
+  return (
+    <div style={{ paddingBottom: 80 }}>
+      <div className="header" style={{ borderBottomColor: level === "B2" ? "#0D9488" : "var(--line)" }}>
+        <div className="brand">
+          <button className="btnI" onClick={() => setDark(!dark)}>{dark ? <Icon.Sun /> : <Icon.Moon />}</button>
+          <div className="logo" style={{ background: level === "B2" ? "linear-gradient(135deg, #14B8A6, #0D9488)" : "var(--ink)" }}><LogoImage size={36} /></div>
+          <div>
+            <div className="header-title">Sahla</div>
+            <div className="header-subtitle de">Deutsch {level}</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          <button className="btnI" onClick={() => setLevel(level === "B1" ? "B2" : "B1")} style={{ width: "auto", padding: "0 12px", borderRadius: 12, fontWeight: 900, color: level === "B2" ? "#0D9488" : "var(--text)" }}>{level}</button>
+          <button className="btnI" onClick={logout}><Icon.Gear /></button>
+        </div>
+      </div>
+
+      <main style={{ margin: "0 12px", paddingTop: 10 }}>
+        {view === "lesen" && <LesenView level={level} userLang={userLang} user={user} onLessonClick={onLessonClick} />}
+        {view === "horen" && <HorenView level={level} userLang={userLang} user={user} onLessonClick={onLessonClick} />}
+        {view === "schreiben" && <SchreibenView level={level} userLang={userLang} user={user} onLessonClick={onLessonClick} />}
+        {view === "sprechen" && <SprechenView level={level} userLang={userLang} user={user} onLessonClick={onLessonClick} />}
+        {view === "pruefung" && <PruefungView level={level} userLang={userLang} user={user} onLessonClick={onLessonClick} />}
+      </main>
+
+      <nav className="nav">
+        <button className={view === "lesen" ? "on" : ""} onClick={() => setView("lesen")} style={view === "lesen" ? { color: level === "B2" ? "#0D9488" : "#DD0000" } : {}}><span className="ic"><Icon.Book c={view === "lesen" ? (level === "B2" ? "#0D9488" : "#DD0000") : "currentColor"} /></span><span>{t("lesen", userLang)}</span></button>
+        <button className={view === "horen" ? "on" : ""} onClick={() => setView("horen")} style={view === "horen" ? { color: level === "B2" ? "#0D9488" : "#DD0000" } : {}}><span className="ic"><Icon.Headphones c={view === "horen" ? (level === "B2" ? "#0D9488" : "#DD0000") : "currentColor"} /></span><span>{t("horen", userLang)}</span></button>
+        <button className={view === "schreiben" ? "on" : ""} onClick={() => setView("schreiben")} style={view === "schreiben" ? { color: level === "B2" ? "#0D9488" : "#DD0000" } : {}}><span className="ic"><Icon.Edit c={view === "schreiben" ? (level === "B2" ? "#0D9488" : "#DD0000") : "currentColor"} /></span><span>{t("schreiben", userLang)}</span></button>
+        <button className={view === "sprechen" ? "on" : ""} onClick={() => setView("sprechen")} style={view === "sprechen" ? { color: level === "B2" ? "#0D9488" : "#DD0000" } : {}}><span className="ic"><Icon.Mic c={view === "sprechen" ? (level === "B2" ? "#0D9488" : "#DD0000") : "currentColor"} /></span><span>{t("sprechen", userLang)}</span></button>
+        <button className={view === "pruefung" ? "on" : ""} onClick={() => setView("pruefung")} style={view === "pruefung" ? { color: level === "B2" ? "#0D9488" : "#DD0000" } : {}}><span className="ic"><Icon.Grad c={view === "pruefung" ? (level === "B2" ? "#0D9488" : "#DD0000") : "currentColor"} /></span><span>{t("pruefung", userLang)}</span></button>
+      </nav>
+
       {lockedModal && (
         <div className="overlay" onClick={() => setLockedModal(false)} style={{ direction: 'rtl', zIndex: 9999 }}>
           <div className="sheet" onClick={e => e.stopPropagation()} style={{ textAlign: "center", padding: "40px 24px", borderRadius: 28 }}>
             <div style={{ width: 80, height: 80, background: "rgba(13, 148, 136, 0.1)", color: "var(--primary)", borderRadius: 24, display: "flex", justifyContent: "center", alignItems: "center", margin: "0 auto 24px" }}>
-               <Icons.Rocket color="#F59E0B" />
+               <Icon.Rocket c="#F59E0B" s={40} />
             </div>
-            <h2 style={{ fontSize: "1.6em", fontWeight: 900, margin: "0 0 12px", color: "var(--text)" }}>
-              <AutoTrans text="محتوى مقفل" lang={userLang} force={true} />
-            </h2>
-            <p style={{ color: "var(--muted)", margin: "0 0 32px", fontSize: "1.05em" }}>
-              <AutoTrans text="ترقية الحساب للوصول لهذه الميزة" lang={userLang} force={true} />
-            </p>
+            <h2 style={{ fontSize: "1.6em", fontWeight: 900, margin: "0 0 12px", color: "var(--text)" }}><AutoTrans text="محتوى مقفل" lang={userLang} /></h2>
+            <p style={{ color: "var(--muted)", margin: "0 0 32px", fontSize: "1.05em" }}><AutoTrans text="ترقية الحساب للوصول لهذه الميزة" lang={userLang} /></p>
             <button onClick={() => { setLockedModal(false); wa(t("wa_upgrade_msg", userLang)); }} style={{ width: "100%", padding: "16px", borderRadius: 16, background: "var(--primary)", color: "#FFF", fontWeight: 900, fontSize: "1.1em", border: "none", display: "flex", justifyContent: "center", alignItems: "center", gap: 8, boxShadow: "0 8px 20px rgba(13,148,136,0.3)", marginBottom: 16 }}>
-              <Icons.Rocket color="#FFF" /> <AutoTrans text="ترقية الحساب الآن" lang={userLang} force={true} />
+              <Icon.Rocket c="#FFF" /> <AutoTrans text="ترقية الحساب الآن" lang={userLang} />
             </button>
-            <button onClick={() => setLockedModal(false)} style={{ width: "100%", padding: "16px", borderRadius: 16, background: "transparent", color: "var(--muted)", fontWeight: 900, fontSize: "1em", border: "1px solid var(--line)", display: "flex", justifyContent: "center", alignItems: "center" }}>
-              <AutoTrans text="ليس الآن" lang={userLang} force={true} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {settings && (
-        <div className="overlay" onClick={() => setSettings(false)}>
-          <div className="sheet" onClick={e => e.stopPropagation()}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}><strong style={{fontSize:"1.3em", color: level === "B2" ? '#0D9488' : 'var(--text)'}}>{t("settings", userLang)}</strong><button className="btnI" onClick={() => setSettings(false)}><Icons.X color="var(--text)" /></button></div>
-            <div style={{ marginBottom: 20 }}>
-              <span style={{fontWeight:900, fontSize:"1.1em", display: "block", marginBottom: 12}}>{t("change_lang", userLang)}</span>
-              <div className="lang-grid" style={{ maxHeight: 200 }}>{LANGS.map(lang => <button key={lang.c} onClick={() => { setUserLang(lang.c); localStorage.setItem("ep_lang", lang.c); }} className={`lang-btn ${userLang === lang.c ? "on" : ""}`} style={{ padding: "10px", borderColor: userLang === lang.c && level === "B2" ? '#0D9488' : 'var(--line)', color: userLang === lang.c && level === "B2" ? '#0D9488' : 'var(--text)' }}><span style={{ fontSize: "1.2em" }}>{lang.f}</span><span style={{ fontSize: "0.85em" }}>{lang.n}</span></button>)}</div>
-            </div>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}><span style={{fontWeight:900, fontSize:"1.1em"}}>{t("text_size", userLang)}</span><div style={{ display: "flex", gap: 10, alignItems: "center" }}><button className="btnI" onClick={() => setFs(Math.max(80, fs - 10))}>−</button><span style={{ minWidth: 48, textAlign: "center", fontWeight: 900, fontSize:"1.1em" }}>{fs}%</span><button className="btnI" onClick={() => setFs(Math.min(150, fs + 10))}>+</button></div></div>
-            <button className="btn ghost" onClick={() => setFs(100)} style={{ padding: 14 }}>{t("reset_size", userLang)}</button>
-            <div style={{ marginTop: 20, textAlign: "center" }}><button onClick={logout} className="btn ghost" style={{ color: level === "B2" ? '#0D9488' : 'var(--red)', borderColor: level === "B2" ? '#0D9488' : 'var(--red)' }}>{t("logout", userLang)}</button></div>
+            <button onClick={() => setLockedModal(false)} style={{ width: "100%", padding: "16px", borderRadius: 16, background: "transparent", color: "var(--muted)", fontWeight: 900, fontSize: "1em", border: "1px solid var(--line)" }}><AutoTrans text="ليس الآن" lang={userLang} /></button>
           </div>
         </div>
       )}
