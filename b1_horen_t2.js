@@ -645,4 +645,280 @@ window.SAHLA_DATA.b1.horen.teil2 = [
       {"n":10,"c":"R","de":"Herr Konrad glaubt, dass alles gut klappen wird.","ar":"يعتقد السيد كونراد أن كل شيء سيسير على ما يرام."}
     ]
   },
+  {
+    id: "h2_18",
+    order: 18,
+    title: "Herr Schütz / Taxifahrer",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Hörverstehen Teil 2. Sie hören nun ein Gespräch. Dazu sollen Sie 10 Aufgaben lösen. Sie hören das Gespräch zweimal. Mit den Beiträgen des Deutschlehrers Orhan Yiğit. Lesen Sie jetzt die Aufgaben 46 bis 55. Sie haben dazu 30 Sekunden Zeit.","pitch":1,"rate":0.95},
+      {"text":"Guten Tag, meine Damen und Herren. Heute möchte ich Ihnen von Herrn Schütz erzählen, einem Taxifahrer mit interessanten Erlebnissen. Obwohl er erst seit kurzer Zeit Taxi fährt, hat er schon viele Erfahrungen gesammelt. Fahrgäste erzählen ihm viel und er erhält oft wertvolle Tipps. Sport hilft ihm, sich zu entspannen.","pitch":1,"rate":0.95},
+      {"text":"Guten Tag, Herr Schütz. Vielen Dank, dass Sie sich Zeit für dieses Interview nehmen. Sie sind Taxifahrer, richtig?","pitch":0.9,"rate":1},
+      {"text":"Ja, genau. Ich fahre Taxi hier in der Stadt.","pitch":0.85,"rate":1},
+      {"text":"Manche sagen, dass Sie erst seit kurzer Zeit als Taxifahrer arbeiten. Stimmt das?","pitch":0.9,"rate":1},
+      {"text":"Nein, das ist nicht richtig. Ich bin schon seit mehreren Jahren als Taxifahrer tätig. Es ist ein Beruf, der mir gefällt, weil ich viele interessante Menschen treffe.","pitch":0.85,"rate":1},
+      {"text":"Das glaube ich. Und hatten Sie in Ihrer Zeit als Taxifahrer schon einmal Geschäftsleute als Kunden?","pitch":0.9,"rate":1},
+      {"text":"Nein, ehrlich gesagt nicht. In der Kleinstadt, in der ich früher gearbeitet habe, gab es kaum Geschäftsleute, die Taxi gefahren sind. Meistens waren es Rentner, Touristen oder Einheimische, die kurze Strecken fahren wollten.","pitch":0.85,"rate":1},
+      {"text":"Gibt es etwas, das Sie besonders überrascht hat? Ich habe gehört, dass Fahrgäste oft viel erzählen.","pitch":0.9,"rate":1},
+      {"text":"Ja, das ist richtig. Viele Menschen reden sehr offen mit mir, weil sie wissen, dass sie mich wahrscheinlich nie wiedersehen. Das ist interessant, weil ich manchmal Dinge erfahre, die ich sonst nie hören würde.","pitch":0.85,"rate":1},
+      {"text":"Und Männer sprechen eher über unpersönliche Dinge, oder?","pitch":0.9,"rate":1},
+      {"text":"Das kann ich so nicht bestätigen. Manche sprechen über Politik oder das Wetter, aber viele erzählen auch von ihren Problemen oder Erlebnissen.","pitch":0.85,"rate":1},
+      {"text":"Bekommen Sie manchmal Tipps von Ihren Fahrgästen?","pitch":0.9,"rate":1},
+      {"text":"Nein, das passiert eher selten. Natürlich gibt es ein paar freundliche Menschen, die mir etwas raten, aber meistens bleibt es bei einem netten Gespräch.","pitch":0.85,"rate":1},
+      {"text":"Wie entspannen Sie sich nach einem langen Arbeitstag? Stimmt es, dass Sie schwimmen gehen?","pitch":0.9,"rate":1},
+      {"text":"Nein, das ist falsch. Ich gehe lieber spazieren oder höre Musik, um mich zu entspannen. Schwimmen ist nicht so mein Ding.","pitch":0.85,"rate":1},
+      {"text":"Und Sport ist Ihnen generell wichtig?","pitch":0.9,"rate":1},
+      {"text":"Ja, absolut. Sport steht für mich an erster Stelle. Bewegung hilft mir, fit zu bleiben und den Stress abzubauen.","pitch":0.85,"rate":1},
+      {"text":"Sie haben sich bewusst entschieden, nur tagsüber zu fahren, richtig?","pitch":0.9,"rate":1},
+      {"text":"Ja, genau. Nachts zu fahren ist mir zu stressig. Ich fühle mich tagsüber sicherer und es gibt auch genug Kunden.","pitch":0.85,"rate":1},
+      {"text":"Einige Leute sagen, dass jüngere Taxifahrer weniger Angst haben, nachts zu fahren. Was denken Sie darüber?","pitch":0.9,"rate":1},
+      {"text":"Das ist nicht ganz richtig. Manche junge Fahrer sind vielleicht mutiger, aber auch sie müssen vorsichtig sein. Nachts kann es gefährlich werden, deshalb ist Vorsicht immer wichtig.","pitch":0.85,"rate":1},
+      {"text":"Sehr interessant. Vielen Dank für das Gespräch, Herr Schütz. Ich wünsche Ihnen weiterhin eine gute Fahrt.","pitch":0.9,"rate":1},
+      {"text":"Vielen Dank. Ihnen auch alles Gute.","pitch":0.85,"rate":1}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Herr Schütz arbeitet erst seit kurzer Zeit als Taxifahrer.","ar":"يعمل السيد شوتز كسائق تاكسي منذ فترة قصيرة فقط.","story":"في البلدة الصغيرة، لم يكن لدى السيد شوتز رجال أعمال كعملاء (keine Geschäftsleute als)، لذا قرر أن يقود التاكسي فقط خلال النهار (nur am Tag). الركاب يتحدثون كثيرًا لأنهم لا يعرفون سائق التاكسي (erzählen viel, weil)، وفي وقت الفراغ تأتي الرياضة في المقام الأول بالنسبة للسيد شوتز (an erster Stelle)."},
+      {"n":2,"c":"R","de":"In der Kleinstadt hatte Herr Schütz keine Geschäftsleute als Kunden.","ar":"في البلدة الصغيرة لم يكن لدى السيد شوتز رجال أعمال كزبائن."},
+      {"n":3,"c":"F","de":"Herr Schütz hat sich schon einmal in einen Fahrgast verliebt.","ar":"سبق أن وقع السيد شوتز في حب أحد الركاب."},
+      {"n":4,"c":"R","de":"Die Fahrgäste erzählen viel, weil sie den Taxifahrer nicht kennen.","ar":"يحكي الركاب كثيراً لأنهم لا يعرفون سائق التاكسي."},
+      {"n":5,"c":"F","de":"Männer sprechen oft über unpersönliche Dinge.","ar":"يتحدث الرجال غالباً عن أمور غير شخصية."},
+      {"n":6,"c":"F","de":"Herr Schütz bekommt von den Fahrgästen manchmal auch einen Tipp.","ar":"يحصل السيد شوتز أحياناً على نصيحة من الركاب."},
+      {"n":7,"c":"R","de":"In der Freizeit steht Sport für Herrn Schütz an erster Stelle.","ar":"في وقت الفراغ تأتي الرياضة في المرتبة الأولى بالنسبة للسيد شوتز."},
+      {"n":8,"c":"F","de":"Beim Schwimmen kann sich Herr Schütz von einem anstrengenden Tag erholen.","ar":"أثناء السباحة يمكن للسيد شوتز الاسترخاء بعد يوم عمل شاق."},
+      {"n":9,"c":"R","de":"Herr Schütz hat sich entschieden, nur am Tag Taxi zu fahren.","ar":"قرر السيد شوتز العمل بسيارة التاكسي نهاراً فقط."},
+      {"n":10,"c":"F","de":"Nach Meinung von Herrn Schütz haben jüngere Taxifahrer weniger Angst, nachts zu fahren.","ar":"بحسب رأي السيد شوتز يشعر السائقون الأصغر سناً بخوف أقل عند القيادة ليلاً."}
+    ]
+  },
+  {
+    id: "h2_19",
+    order: 19,
+    title: "Herr Schütz (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Hörverstehen Teil 2. Sie hören nun ein Gespräch. Dazu sollen Sie 10 Aufgaben lösen. Sie hören das Gespräch zweimal. Mit den Beiträgen des Deutschlehrers Orhan Yiğit. Lesen Sie jetzt die Aufgaben 46 bis 55. Sie haben dazu 30 Sekunden Zeit.","pitch":1,"rate":0.95},
+      {"text":"Guten Tag, meine Damen und Herren. Heute möchte ich Ihnen von Herrn Schütz erzählen, einem Taxifahrer mit interessanten Erlebnissen. Obwohl er erst seit kurzer Zeit Taxi fährt, hat er schon viele Erfahrungen gesammelt. Fahrgäste erzählen ihm viel und er erhält oft wertvolle Tipps. Sport hilft ihm, sich zu entspannen.","pitch":1,"rate":0.95},
+      {"text":"Guten Tag, Herr Schütz. Vielen Dank, dass Sie sich Zeit für dieses Interview nehmen. Sie sind Taxifahrer, richtig?","pitch":0.9,"rate":1},
+      {"text":"Ja, genau. Ich fahre Taxi hier in der Stadt.","pitch":0.85,"rate":1},
+      {"text":"Manche sagen, dass Sie erst seit kurzer Zeit als Taxifahrer arbeiten. Stimmt das?","pitch":0.9,"rate":1},
+      {"text":"Nein, das ist nicht richtig. Ich bin schon seit mehreren Jahren als Taxifahrer tätig. Es ist ein Beruf, der mir gefällt, weil ich viele interessante Menschen treffe.","pitch":0.85,"rate":1},
+      {"text":"Das glaube ich. Und hatten Sie in Ihrer Zeit als Taxifahrer schon einmal Geschäftsleute als Kunden?","pitch":0.9,"rate":1},
+      {"text":"Nein, ehrlich gesagt nicht. In der Kleinstadt, in der ich früher gearbeitet habe, gab es kaum Geschäftsleute, die Taxi gefahren sind. Meistens waren es Rentner, Touristen oder Einheimische, die kurze Strecken fahren wollten.","pitch":0.85,"rate":1},
+      {"text":"Gibt es etwas, das Sie besonders überrascht hat? Ich habe gehört, dass Fahrgäste oft viel erzählen.","pitch":0.9,"rate":1},
+      {"text":"Ja, das ist richtig. Viele Menschen reden sehr offen mit mir, weil sie wissen, dass sie mich wahrscheinlich nie wiedersehen. Das ist interessant, weil ich manchmal Dinge erfahre, die ich sonst nie hören würde.","pitch":0.85,"rate":1},
+      {"text":"Und Männer sprechen eher über unpersönliche Dinge, oder?","pitch":0.9,"rate":1},
+      {"text":"Das kann ich so nicht bestätigen. Manche sprechen über Politik oder das Wetter, aber viele erzählen auch von ihren Problemen oder Erlebnissen.","pitch":0.85,"rate":1},
+      {"text":"Bekommen Sie manchmal Tipps von Ihren Fahrgästen?","pitch":0.9,"rate":1},
+      {"text":"Nein, das passiert eher selten. Natürlich gibt es ein paar freundliche Menschen, die mir etwas raten, aber meistens bleibt es bei einem netten Gespräch.","pitch":0.85,"rate":1},
+      {"text":"Wie entspannen Sie sich nach einem langen Arbeitstag? Stimmt es, dass Sie schwimmen gehen?","pitch":0.9,"rate":1},
+      {"text":"Nein, das ist falsch. Ich gehe lieber spazieren oder höre Musik, um mich zu entspannen. Schwimmen ist nicht so mein Ding.","pitch":0.85,"rate":1},
+      {"text":"Und Sport ist Ihnen generell wichtig?","pitch":0.9,"rate":1},
+      {"text":"Ja, absolut. Sport steht für mich an erster Stelle. Bewegung hilft mir, fit zu bleiben und den Stress abzubauen.","pitch":0.85,"rate":1},
+      {"text":"Sie haben sich bewusst entschieden, nur tagsüber zu fahren, richtig?","pitch":0.9,"rate":1},
+      {"text":"Ja, genau. Nachts zu fahren ist mir zu stressig. Ich fühle mich tagsüber sicherer und es gibt auch genug Kunden.","pitch":0.85,"rate":1},
+      {"text":"Einige Leute sagen, dass jüngere Taxifahrer weniger Angst haben, nachts zu fahren. Was denken Sie darüber?","pitch":0.9,"rate":1},
+      {"text":"Das ist nicht ganz richtig. Manche junge Fahrer sind vielleicht mutiger, aber auch sie müssen vorsichtig sein. Nachts kann es gefährlich werden, deshalb ist Vorsicht immer wichtig.","pitch":0.85,"rate":1},
+      {"text":"Sehr interessant. Vielen Dank für das Gespräch, Herr Schütz. Ich wünsche Ihnen weiterhin eine gute Fahrt.","pitch":0.9,"rate":1},
+      {"text":"Vielen Dank. Ihnen auch alles Gute.","pitch":0.85,"rate":1}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Herr Schütz übt seinen Beruf erst seit kurzer Zeit aus.","ar":"يمارس السيد شوتز مهنته منذ فترة قصيرة فقط.","story":"في البلدة الصغيرة، لم يكن لدى السيد شوتز رجال أعمال كعملاء (keine Geschäftsleute als)، لكنه يروي الركاب الكثير عندما يعرفون سائق التاكسي لفترة طويلة (erzählen viel, wenn). في وقت الفراغ، يحتل الرياضة المرتبة الأولى بالنسبة للسيد شوتز (steht Sport für)، ونادرًا ما يعمل في النوبات الليلية الآن (noch selten Nachtschichten)."},
+      {"n":2,"c":"R","de":"In der Kleinstadt hatte Herr Schütz keine Geschäftsleute als Kunden.","ar":"في البلدة الصغيرة لم يكن لدى السيد شوتز رجال أعمال كزبائن."},
+      {"n":3,"c":"F","de":"Herr Schütz hat sich schon einmal in einen Fahrgast verliebt.","ar":"سبق أن وقع السيد شوتز في حب أحد الركاب."},
+      {"n":4,"c":"R","de":"Die Fahrgäste erzählen viel, wenn sie den Taxifahrer schon länger kennen.","ar":"يحكي الركاب كثيراً عندما يعرفون سائق التاكسي منذ فترة طويلة."},
+      {"n":5,"c":"F","de":"Herr Schütz unterhält sich mit weiblichen Fahrgästen nicht über persönliche Dinge.","ar":"لا يتحدث السيد شوتز مع الراكبات النساء عن أمور شخصية."},
+      {"n":6,"c":"F","de":"Herr Schütz bekommt von den Fahrgästen manchmal auch einen Tipp.","ar":"يحصل السيد شوتز أحياناً على نصيحة من الركاب."},
+      {"n":7,"c":"R","de":"In der Freizeit steht Sport für Herrn Schütz an erster Stelle.","ar":"في وقت الفراغ تأتي الرياضة في المرتبة الأولى بالنسبة للسيد شوتز."},
+      {"n":8,"c":"F","de":"Herr Schütz geht vor der Arbeit regelmäßig schwimmen.","ar":"يذهب السيد شوتز للسباحة بانتظام قبل العمل."},
+      {"n":9,"c":"R","de":"Herr Schütz macht nur noch selten Nachtschichten.","ar":"نادراً ما يعمل السيد شوتز الآن في المناوبات الليلية."},
+      {"n":10,"c":"F","de":"Herr Schütz meint, dass jüngere Kollegen bei der Nachtarbeit weniger Angst haben.","ar":"يرى السيد شوتز أن الزملاء الأصغر سناً يخافون بشكل أقل أثناء العمل الليلي."}
+    ]
+  },
+  {
+    id: "h2_20",
+    order: 20,
+    title: "Sportverein",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Der Sportverein plant eine große Feier.","ar":"يخطط النادي الرياضي لإقامة احتفال كبير.","story":"يخطط النادي الرياضي لإقامة احتفال كبير (eine große Feier)، حيث يتحدث الصحفي مع ممثلة للنادي الرياضي (Vertreterin des Sportvereins) حول تطور النادي. اليوم، يوجد في النادي نساء أكثر من الرجال (mehr Frauen als)، ويمكن للمرء ممارسة الرياضة في الهواء الطلق (Sport im Freien) وفي الصالة. اللافت أن بعض الأشخاص الذين تم تدريبهم في النادي (im Verein ausgebildet) يعملون هناك اليوم كمدرسين."},
+      {"n":2,"c":"R","de":"Der Journalist unterhält sich mit einer Vertreterin des Sportvereins.","ar":"يتحدث الصحفي مع ممثلة عن النادي الرياضي."},
+      {"n":3,"c":"F","de":"Viele Papiere aus den Anfängen des Vereins sind im Krieg verloren gegangen.","ar":"فُقدت الكثير من الوثائق من بدايات النادي خلال الحرب."},
+      {"n":4,"c":"F","de":"Der Verein veröffentlicht jedes Jahr eine Festzeitung.","ar":"يُصدر النادي كل سنة صحيفة احتفالية."},
+      {"n":5,"c":"F","de":"Der Verein hatte von Anfang an auch Frauen als Mitglieder.","ar":"ضمّ النادي منذ البداية نساءً أيضاً كأعضاء."},
+      {"n":6,"c":"R","de":"Heute gibt es im Verein mehr Frauen als Männer.","ar":"اليوم يوجد في النادي نساء أكثر من الرجال."},
+      {"n":7,"c":"R","de":"Im Verein kann man Sport im Freien und in der Halle treiben.","ar":"في النادي يمكن ممارسة الرياضة في الهواء الطلق وفي القاعة."},
+      {"n":8,"c":"F","de":"Die Mitglieder müssen die Kosten für ihren Verein alleine tragen.","ar":"يجب على الأعضاء تحمل تكاليف ناديهم بأنفسهم."},
+      {"n":9,"c":"F","de":"Der Sportverein bietet auch Schwimmkurse an.","ar":"يقدم النادي الرياضي أيضاً دورات في السباحة."},
+      {"n":10,"c":"R","de":"Einige Leute, die im Verein ausgebildet wurden, arbeiten dort heute als Lehrer.","ar":"بعض الأشخاص الذين تلقوا تدريباً في النادي يعملون فيه اليوم كمدربين."}
+    ]
+  },
+  {
+    id: "h2_21",
+    order: 21,
+    title: "Herr Thurcherr (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Herr Thurcherr ist Chef eines großen Reisebüros in Bern.","ar":"السيد تورشير مدير لوكالة سفر كبيرة في برن.","story":"السيد Thurcherr هو الشاف ديال وكالة أسفار كبيرة فبيرن (Chef eines großen)، وكل عام كيتقدمو عندو كثر من 100 واحد (über 100 Personen) للتدريب. كيقول بلي الخدمة فالوكالة كتعيّي (als stressig)، والخدامة بزاف المرات خاصهم يخدمو كثر من داكشي لي مبرمج (länger arbeiten als). الرحلات الدراسية فيها زيارات لأوطيلات مختلفة (in verschiedenen Hotels)، والوكالة خاصها تعوّض الخدامة ديالها على الأغلاط (für Fehler entschädigen)."},
+      {"n":2,"c":"R","de":"Jedes Jahr bewerben sich über 100 Personen um ein Praktikum im Reisebüro.","ar":"كل عام يتقدم أكثر من 100 شخص بطلب تدريب في وكالة السفر."},
+      {"n":3,"c":"F","de":"Praktikanten können während ihrer Ausbildung an Studienreisen teilnehmen.","ar":"يمكن للمتدربين المشاركة في رحلات دراسية أثناء فترة تدريبهم."},
+      {"n":4,"c":"R","de":"Herr Thurcherr empfindet die Arbeit in einem Reisebüro als stressig.","ar":"يشعر السيد تورشير بأن العمل في وكالة سفر متعب ومليء بالضغط."},
+      {"n":5,"c":"R","de":"Reisebüromitarbeiter müssen oft länger arbeiten als geplant.","ar":"يضطر موظفو وكالة السفر غالباً للعمل وقتاً أطول مما هو مخطط له."},
+      {"n":6,"c":"F","de":"Dieser Beruf bietet besonders gute Bezahlung.","ar":"توفر هذه المهنة أجراً جيداً بشكل خاص."},
+      {"n":7,"c":"R","de":"Studienreisen beinhalten Besuche in verschiedenen Hotels.","ar":"تشمل الرحلات الدراسية زيارات لفنادق مختلفة."},
+      {"n":8,"c":"F","de":"Der schriftliche Teil des Eignungstests prüft vor allem politisches Wissen.","ar":"يختبر الجزء الكتابي من اختبار الأهلية المعرفة السياسية بالأساس."},
+      {"n":9,"c":"F","de":"Jedes Jahr werden genau 50 junge Menschen zum Eignungstest zugelassen.","ar":"كل عام يُقبل بالضبط 50 شاباً لاجتياز اختبار الأهلية."},
+      {"n":10,"c":"R","de":"Das Reisebüro muss seine Mitarbeiter für Fehler entschädigen.","ar":"يجب على وكالة السفر تعويض موظفيها عن الأخطاء."}
+    ]
+  },
+  {
+    id: "h2_22",
+    order: 22,
+    title: "Frau Reiter / Lokführerin (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Frau Reiter ist die einzige Lokführerin in Deutschland.","ar":"السيدة رايتر هي قائدة القطار الوحيدة في ألمانيا.","story":"السيدة Reiter من بعد المدرسة دارت تكوين ديال تقنية فالإلكترونيك (Ausbildung zur Elektronikerin)، وواليديها كانو موافقين (Eltern waren mit) على الخدمة لي اختارت. بعض المرات خاصها تصلح شي حوايج (gelegentlich Reparaturen)، وبزاف المرات كتكون عيانة (oft müde) من الخدمة، ومن بعد بغات تكوّن سواق القطارات (Lokführer ausbilden)."},
+      {"n":2,"c":"F","de":"Sie wollte schon mit 10 Jahren Lokführerin werden.","ar":"أرادت أن تصبح قائدة قطار منذ سن العاشرة."},
+      {"n":3,"c":"R","de":"Nach der Schule absolvierte Frau Reiter eine Ausbildung zur Elektronikerin.","ar":"بعد المدرسة أنهت السيدة رايتر تكويناً مهنياً كفنية إلكترونيات."},
+      {"n":4,"c":"F","de":"Nach ihrer Ausbildung arbeitete Frau Reiter als Kfz-Mechanikerin.","ar":"بعد تكوينها المهني عملت السيدة رايتر كميكانيكية سيارات."},
+      {"n":5,"c":"R","de":"Frau Reiters Eltern waren mit der Berufswahl ihrer Tochter einverstanden.","ar":"كان والدا السيدة رايتر موافقين على اختيار ابنتهما المهني."},
+      {"n":6,"c":"R","de":"Frau Reiter muss gelegentlich Reparaturen durchführen.","ar":"تضطر السيدة رايتر أحياناً إلى القيام بإصلاحات."},
+      {"n":7,"c":"F","de":"Frau Reiter arbeitet gerne im Nachtdienst.","ar":"تحب السيدة رايتر العمل في الخدمة الليلية."},
+      {"n":8,"c":"R","de":"Frau Reiter ist oft müde von der Arbeit.","ar":"غالباً ما تكون السيدة رايتر متعبة من العمل."},
+      {"n":9,"c":"F","de":"Frau Reiters Ehemann hat normale Arbeitszeiten.","ar":"زوج السيدة رايتر لديه ساعات عمل عادية."},
+      {"n":10,"c":"R","de":"Frau Reiter möchte später einmal Lokführer ausbilden.","ar":"ترغب السيدة رايتر مستقبلاً في تدريب سائقي القطارات."}
+    ]
+  },
+  {
+    id: "h2_23",
+    order: 23,
+    title: "Frau Schäffer (1 المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Frau Schäffer hat von dem Verein kurz nach der Gründung zum ersten Mal gehört.","ar":"سمعت السيدة شيفر عن الجمعية لأول مرة بعد تأسيسها بوقت قصير.","story":"أعضاء الجمعية كيعرفو مزيان شغال الدار (über Hausarbeit gut)، والجمعية كتقترح حتى تنظيم الحفلات (Organisation von Festen) وكتهلا فالدراري والناس الكبار (Kinder und alte Menschen). وعلى حساب السيدة Schäfer، بزاف ديال العائلات كيتيقو (vertrauen viele Familien) فالخدامات ديال الجمعية كثر من غيرهم."},
+      {"n":2,"c":"F","de":"Die Mitglieder des Vereins kommen aus ganz Deutschland.","ar":"يأتي أعضاء الجمعية من جميع أنحاء ألمانيا."},
+      {"n":3,"c":"R","de":"Die Mitglieder des Vereins wissen über Hausarbeit gut Bescheid.","ar":"يعرف أعضاء الجمعية الكثير عن الأعمال المنزلية."},
+      {"n":4,"c":"F","de":"Im Verein werden oft Feste gefeiert.","ar":"تُقام في الجمعية احتفالات بشكل متكرر."},
+      {"n":5,"c":"R","de":"Der Verein bietet auch die Organisation von Festen an.","ar":"تقدم الجمعية أيضاً خدمة تنظيم الحفلات."},
+      {"n":6,"c":"R","de":"Der Verein kümmert sich auch um Kinder und alte Menschen.","ar":"تهتم الجمعية أيضاً بالأطفال وكبار السن."},
+      {"n":7,"c":"R","de":"Laut Frau Schäfer vertrauen viele Familien den Mitarbeiterinnen des Vereins mehr als anderen.","ar":"وفقاً للسيدة شيفر، تثق العديد من العائلات بموظفات الجمعية أكثر من غيرهن."},
+      {"n":8,"c":"F","de":"Vereinsmitglied kann nur werden, wer einen Beruf gelernt hat.","ar":"لا يمكن أن يصبح عضواً في الجمعية إلا من تعلّم مهنة."},
+      {"n":9,"c":"F","de":"Die Mitarbeiterinnen bekommen für ihre Arbeiten 10 Euro pro Stunde.","ar":"تحصل الموظفات مقابل أعمالهن على 10 يورو في الساعة."},
+      {"n":10,"c":"F","de":"Kunden mit wenig Geld zahlen für den Service nichts.","ar":"العملاء ذوو الدخل المحدود لا يدفعون شيئاً مقابل الخدمة."}
+    ]
+  },
+  {
+    id: "h2_24",
+    order: 24,
+    title: "Frau Schäffer (2 المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Der Journalist spricht mit der Gründerin des neuen Vereins.","ar":"يتحدث الصحفي مع مؤسسة الجمعية الجديدة.","story":"أعضاء الجمعية عندهم معرفة مزيانة فتسيير الدار (im Bereich Haushaltsführung)، ومن الخدمة ديال الجمعية حتى التخطيط والتنظيم (Planung und Durchführung) ديال الحفلات. السيدة Schäfer كتقول بلي الناس الكبار بعض المرات ما كيتيقوش فالجمعية (gelegentlich mit Misstrauen)، وباش تولي عضو خاصك تكون كملتي تكوين مهني (abgeschlossene Berufsausbildung)."},
+      {"n":2,"c":"F","de":"Die Personen im Verein stammen aus dem gesamten Bundesgebiet.","ar":"ينحدر الأشخاص في الجمعية من جميع أنحاء البلاد."},
+      {"n":3,"c":"R","de":"Die Vereinsmitglieder verfügen über gute Kenntnisse im Bereich Haushaltsführung.","ar":"يمتلك أعضاء الجمعية معرفة جيدة في مجال تدبير شؤون المنزل."},
+      {"n":4,"c":"F","de":"Innerhalb der Organisation finden häufig Feierlichkeiten statt.","ar":"تُقام احتفالات بشكل متكرر داخل المنظمة."},
+      {"n":5,"c":"R","de":"Zu den Aufgaben des Vereins zählt auch die Planung und Durchführung von Veranstaltungen.","ar":"تشمل مهام الجمعية أيضاً تخطيط وتنظيم الفعاليات."},
+      {"n":6,"c":"F","de":"Das Betreuungsangebot der Organisation umfasst sowohl Kinder als auch Seniorinnen und Senioren.","ar":"يشمل عرض الرعاية في المنظمة كلاً من الأطفال وكبار السن."},
+      {"n":7,"c":"R","de":"Nach Aussage von Frau Schäfer begegnen ältere Personen dem Verein gelegentlich mit Misstrauen.","ar":"بحسب قول السيدة شيفر يتعامل كبار السن أحياناً بشيء من عدم الثقة مع الجمعية."},
+      {"n":8,"c":"R","de":"Eine abgeschlossene Berufsausbildung ist Voraussetzung für die Mitgliedschaft.","ar":"يُعد إتمام التكوين المهني شرطاً أساسياً للعضوية."},
+      {"n":9,"c":"F","de":"Unabhängig von der ausgeführten Tätigkeit erhalten Beschäftigte einen festen Stundensatz von 10 Euro.","ar":"بغض النظر عن العمل المنجز يحصل الموظفون على أجر ثابت قدره 10 يورو في الساعة."},
+      {"n":10,"c":"F","de":"Für Personen mit geringen finanziellen Mitteln ist die Dienstleistung kostenfrei.","ar":"بالنسبة للأشخاص ذوي الإمكانيات المالية المحدودة تكون الخدمة مجانية."}
+    ]
+  },
+  {
+    id: "h2_25",
+    order: 25,
+    title: "Nordsee / Klassenfahrt (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Die Lehrerin fährt mit ihrer Klasse an die Nordsee.","ar":"تسافر المعلمة مع صفها إلى بحر الشمال.","story":"السيد Kühne ما وصلاتوش البرية ديال الأستاذة (Brief der Lehrerin). الرحلة المدرسية غادي يسيروها أستاذة وأستاذ (einer Lehrerin und einem Lehrer)، والأستاذة كتنصح الدراري ما يديوش كثر من شي 50 أورو (höchstens etwa 50 Euro) ديال المصروف. أما Katerina فعندها الاختيار: تمشي معاهم ولا تمشي مؤقتا لقسم آخر (vorübergehend in eine andere Klasse)."},
+      {"n":2,"c":"R","de":"Herr Kühne hat den Brief der Lehrerin nicht erhalten.","ar":"لم يتسلم السيد كونه رسالة المعلمة."},
+      {"n":3,"c":"F","de":"Die Klassenfahrt beginnt an einem Samstag.","ar":"تبدأ الرحلة المدرسية يوم السبت."},
+      {"n":4,"c":"F","de":"Herrn Kühnes Sohn Martin wird bei Busfahrten oft schlecht.","ar":"يشعر مارتن ابن السيد كونه بالغثيان غالباً أثناء ركوب الحافلة."},
+      {"n":5,"c":"F","de":"Die Fahrt mit dem Schiff dauert fünf bis sechs Stunden.","ar":"تستغرق الرحلة بالسفينة من خمس إلى ست ساعات."},
+      {"n":6,"c":"F","de":"Das Haus, in dem die Schülerinnen und Schüler wohnen, gehört zu einem Hotel.","ar":"المبنى الذي يقيم فيه التلاميذ والتلميذات تابع لفندق."},
+      {"n":7,"c":"R","de":"Die Klassenfahrt wird von einer Lehrerin und einem Lehrer geleitet.","ar":"تُشرف على الرحلة المدرسية معلمة ومعلم."},
+      {"n":8,"c":"R","de":"Die Lehrerin rät dazu, höchstens etwa 50 Euro Taschengeld mitzunehmen.","ar":"تنصح المعلمة بأخذ حوالي 50 يورو على الأكثر كمصروف جيب."},
+      {"n":9,"c":"R","de":"Katerina hat die Wahl, entweder mitzufahren oder vorübergehend in eine andere Klasse zu gehen.","ar":"لدى كاترينا الخيار إما أن تسافر معهم أو تنتقل مؤقتاً إلى قسم آخر."},
+      {"n":10,"c":"F","de":"Während der Klassenfahrt ist Rauchen nur mit Erlaubnis der Eltern erlaubt.","ar":"أثناء الرحلة المدرسية يُسمح بالتدخين فقط بإذن من الوالدين."}
+    ]
+  },
+  {
+    id: "h2_26",
+    order: 26,
+    title: "Touristen / Spielpark (2 المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Viele Touristen besuchen Kronstadt wegen der alten Stadtarchitektur.","ar":"يزور الكثير من السياح كرونشتات بسبب عمارتها القديمة.","story":"بزاف ديال السياح كيجيو ل Kronstadt على قبل المعمار القديم ديال المدينة (wegen der alten Stadtarchitektur). فال Mitmachpark الدراري كيديرو حوايج لي ما كيتخلاوش يديروهم فالدار (zu Hause oft nicht dürfen)، وكيقدرو يخدمو حتى بالأدوات (mit Werkzeugen arbeiten). حتى الدراري الصغار (jüngere Kinder) كيقدرو يبقاو بوحدهم فالپارك، والواليدين فهاد الوقت كيتمتعو بالمدينة (die Stadt genießen)."},
+      {"n":2,"c":"F","de":"Der Mitmachpark Kronstein besteht schon seit mehreren Jahren.","ar":"يوجد منتزه الأنشطة كرونشتاين منذ عدة سنوات."},
+      {"n":3,"c":"F","de":"In Kronstadt gibt es viele andere Angebote für Kinder in den Ferien.","ar":"في كرونشتات توجد عروض أخرى كثيرة للأطفال خلال العطل."},
+      {"n":4,"c":"R","de":"Im Mitmachpark dürfen die Kinder Dinge tun, die sie zu Hause oft nicht dürfen.","ar":"في منتزه الأنشطة يُسمح للأطفال بفعل أشياء لا يُسمح لهم بها غالباً في المنزل."},
+      {"n":5,"c":"R","de":"Die Kinder können im Park auch mit Werkzeugen arbeiten.","ar":"يمكن للأطفال في المنتزه العمل بالأدوات أيضاً."},
+      {"n":6,"c":"F","de":"Der Teich im Park ist für Kinder gefährlich und nicht zugänglich.","ar":"البركة الموجودة في المنتزه خطيرة على الأطفال ولا يمكن الوصول إليها."},
+      {"n":7,"c":"F","de":"Eltern müssen ihre Kinder im Park jederzeit begleiten.","ar":"يجب على الآباء مرافقة أطفالهم في المنتزه في كل وقت."},
+      {"n":8,"c":"R","de":"Auch jüngere Kinder können im Park allein bleiben.","ar":"يمكن حتى للأطفال الصغار البقاء بمفردهم في المنتزه."},
+      {"n":9,"c":"F","de":"Der Eintritt in den Mitmachpark ist momentan kostenpflichtig.","ar":"الدخول إلى منتزه الأنشطة مدفوع الأجر حالياً."},
+      {"n":10,"c":"R","de":"Während des Parkbesuchs können Eltern die Stadt genießen.","ar":"أثناء زيارة المنتزه يمكن للآباء الاستمتاع بالمدينة."}
+    ]
+  },
+  {
+    id: "h2_27",
+    order: 27,
+    title: "Herr Bachinger (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Herr Baschinger hat ein Buch über Väter geschrieben.","ar":"كتب السيد باشينغر كتاباً عن الآباء.","story":"السيد Baschinger كتب كتاب على الآباء (Buch über Väter)، وقدر يقنع الشاف ديالو بلا بزاف ديال الهضرة (ohne große Diskussionen). شغال الدار كانو ديجا من حياتو اليومية قبل ما يتزاد ولدو (vor der Geburt seines Sohnes)، وناوي يرجع للخدمة غير ملي ولدو يدخل للمدرسة (in die Schule kommt)."},
+      {"n":2,"c":"F","de":"Herr Baschinger hat vor etwa zehn Monaten geheiratet.","ar":"تزوج السيد باشينغر قبل حوالي عشرة أشهر."},
+      {"n":3,"c":"F","de":"Herr Baschinger ist der Meinung, dass Zeitungen häufiger über moderne Familien berichten sollten.","ar":"يرى السيد باشينغر أن الصحف ينبغي أن تكتب أكثر عن العائلات العصرية."},
+      {"n":4,"c":"R","de":"Herr Baschinger konnte seinen Chef ohne große Diskussionen überzeugen.","ar":"استطاع السيد باشينغر إقناع رئيسه دون نقاشات طويلة."},
+      {"n":5,"c":"R","de":"Hausarbeit gehörte bereits vor der Geburt seines Sohnes zu Herrn Baschingers Alltag.","ar":"كانت الأعمال المنزلية جزءاً من الحياة اليومية للسيد باشينغر حتى قبل ولادة ابنه."},
+      {"n":6,"c":"F","de":"Seine Kollegen haben seine Abwesenheit besonders stark gespürt.","ar":"شعر زملاؤه بغيابه بشكل كبير جداً."},
+      {"n":7,"c":"F","de":"Herr Baschinger musste sich mit vielen Vorurteilen auseinandersetzen.","ar":"اضطر السيد باشينغر للتعامل مع الكثير من الأحكام المسبقة."},
+      {"n":8,"c":"F","de":"Herr Baschinger wollte mit seinem Buch vor allem andere Väter erreichen.","ar":"أراد السيد باشينغر الوصول بكتابه إلى آباء آخرين بالأساس."},
+      {"n":9,"c":"R","de":"Herr Baschinger plant, erst wieder zu arbeiten, wenn sein Sohn in die Schule kommt.","ar":"يخطط السيد باشينغر للعودة إلى العمل فقط عندما يدخل ابنه المدرسة."},
+      {"n":10,"c":"F","de":"Teilzeitarbeit ist derzeit die beste Lösung für Herrn Baschinger.","ar":"العمل بدوام جزئي هو الحل الأفضل حالياً للسيد باشينغر."}
+    ]
+  },
   
