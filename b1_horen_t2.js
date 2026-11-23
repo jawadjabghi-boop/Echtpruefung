@@ -921,4 +921,96 @@ window.SAHLA_DATA.b1.horen.teil2 = [
       {"n":10,"c":"F","de":"Teilzeitarbeit ist derzeit die beste Lösung für Herrn Baschinger.","ar":"العمل بدوام جزئي هو الحل الأفضل حالياً للسيد باشينغر."}
     ]
   },
-  
+  {
+    id: "h2_28",
+    order: 28,
+    title: "Frau Wenger (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Frau Wenger träumte schon immer davon, Feuerwehrfrau zu werden.","ar":"كانت السيدة فينغر تحلم دائماً بأن تصبح امرأة إطفاء.","story":"السيدة Wenger وصاحبها ولات عندهم دابا هواية مشتركة (ein gemeinsames Hobby). المشاكل ديال المعدات كيتحلو وسط الفريق (im Team gelöst)، والتكوين ديال رجال المطافي كان قاصح بزاف (sehr intensiv)، وهي ديما موجودة (jederzeit bereit) باش تخرج لأي حالة مستعجلة."},
+      {"n":2,"c":"R","de":"Frau Wenger und ihr Freund haben jetzt ein gemeinsames Hobby.","ar":"أصبحت لدى السيدة فينغر وصديقها الآن هواية مشتركة."},
+      {"n":3,"c":"F","de":"Frau Wenger hat bereits einer Freundin geholfen, deren Wohnung in Flammen stand.","ar":"ساعدت السيدة فينغر بالفعل صديقة لها كانت شقتها تحترق."},
+      {"n":4,"c":"R","de":"Probleme mit der Ausrüstung werden im Team gelöst.","ar":"تُحل مشاكل المعدات ضمن الفريق."},
+      {"n":5,"c":"R","de":"Die Ausbildung der Feuerwehrleute war sehr intensiv.","ar":"كان تدريب رجال الإطفاء مكثفاً جداً."},
+      {"n":6,"c":"F","de":"Feuerwehruniformen passen oft nur Männern.","ar":"غالباً ما تناسب بدلات الإطفاء الرجال فقط."},
+      {"n":7,"c":"R","de":"Frau Wenger ist jederzeit bereit, zu einem Notfall auszurücken.","ar":"السيدة فينغر مستعدة في أي وقت للانطلاق إلى أي حالة طارئة."},
+      {"n":8,"c":"F","de":"Als Feuerwehrfrau hat Frau Wenger viele Unfälle miterlebt.","ar":"بصفتها عاملة إطفاء شهدت السيدة فينغر العديد من الحوادث."},
+      {"n":9,"c":"F","de":"Frau Wenger wünscht sich, anders behandelt zu werden als ihre männlichen Kollegen.","ar":"تتمنى السيدة فينغر أن تُعامل بشكل مختلف عن زملائها الرجال."},
+      {"n":10,"c":"F","de":"Interessierte können sich gerne an Frau Wenger wenden.","ar":"يمكن للمهتمين التواصل بكل سرور مع السيدة فينغر."}
+    ]
+  },
+  {
+    id: "h2_29",
+    order: 29,
+    title: "Deutschkurs (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Der Verein UKI hilft ausschließlich Menschen, die neu nach Österreich gekommen sind.","ar":"تساعد جمعية UKI حصرياً الأشخاص الذين قدموا حديثاً إلى النمسا.","story":"الدروس ديال العشية للناس لي خدامين كيدومو تسع شهور (dauern neun Monate)، وكاين كورس ديال الألمانية للشباب (Deutschkurs für Jugendliche) لي بغاو يقراو فمدرسة فالنمسا. الجمعية كتقدم حتى كورسات لي ماشي دروس ألمانية عادية (keinen klassischen Deutschunterricht)، والأساتذة ديال الألمانية كيديرو حتى مهام اجتماعية (zusätzlich soziale Aufgaben). المساعدين الاجتماعيين كيعاونو فالتواصل مع الإدارات (Kontakten mit Behörden)، وفالدرس كيوجدو طلبات الخدمة مجموعين (Bewerbungen gemeinsam vorbereitet)."},
+      {"n":2,"c":"F","de":"Die Angebote des Vereins richten sich besonders an Führungskräfte aus dem Ausland.","ar":"تتوجه عروض الجمعية بشكل خاص إلى المدراء والمسؤولين القادمين من الخارج."},
+      {"n":3,"c":"R","de":"Die Abendkurse für Berufstätige dauern neun Monate.","ar":"تستغرق الدورات المسائية للعاملين تسعة أشهر."},
+      {"n":4,"c":"R","de":"Es gibt einen Deutschkurs für Jugendliche, die eine Schule in Österreich besuchen möchten.","ar":"توجد دورة لغة ألمانية للشباب الذين يريدون الالتحاق بمدرسة في النمسا."},
+      {"n":5,"c":"R","de":"Der Verein bietet auch Kurse an, die keinen klassischen Deutschunterricht darstellen.","ar":"تقدم الجمعية أيضاً دورات لا تمثل دروس لغة ألمانية تقليدية."},
+      {"n":6,"c":"R","de":"Die Deutschlehrkräfte übernehmen zusätzlich soziale Aufgaben.","ar":"يتولى مدرسو اللغة الألمانية مهام اجتماعية إضافية أيضاً."},
+      {"n":7,"c":"R","de":"Sozialarbeiter helfen bei Kontakten mit Behörden.","ar":"يساعد الأخصائيون الاجتماعيون في التواصل مع الإدارات الرسمية."},
+      {"n":8,"c":"R","de":"Im Unterricht werden Bewerbungen gemeinsam vorbereitet.","ar":"في الدرس يتم تحضير طلبات التوظيف بشكل مشترك."},
+      {"n":9,"c":"F","de":"Frauen und Kinder nehmen zusammen an einem Deutschkurs teil.","ar":"تشارك النساء والأطفال معاً في دورة لغة ألمانية."},
+      {"n":10,"c":"F","de":"Neue gesetzliche Regelungen erschweren aktuell die Arbeit des Vereins.","ar":"القواعد القانونية الجديدة تصعّب حالياً عمل الجمعية."}
+    ]
+  },
+  {
+    id: "h2_30",
+    order: 30,
+    title: "Filmbühne (المعدل)",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Das Kino Freie Filmbühne befindet sich in Burgoberdorf.","ar":"تقع سينما Freie Filmbühne في بورغوبردورف.","story":"السينما Freie Filmbühne كاينة ف Burgoberdorf (befindet sich in Burgoberdorf) وغادي تتسد (wird geschlossen)، واخا هاد العام خدات لأول مرة جائزة رسمية (eine offizielle Auszeichnung). فبلاصتها مبرمجين ديور جداد ومكان ديال الترفيه (neue Wohnungen und ein Freizeitangebot)، حيت اليوم ما بقاوش بزاف ديال الناس (nicht mehr so viele Menschen) مهتمين بيها بحال فاللول."},
+      {"n":2,"c":"R","de":"Die Freie Filmbühne wird geschlossen.","ar":"سيتم إغلاق سينما Freie Filmbühne."},
+      {"n":3,"c":"R","de":"In diesem Jahr hat die Freie Filmbühne zum ersten Mal eine offizielle Auszeichnung erhalten.","ar":"في هذا العام حصلت سينما Freie Filmbühne لأول مرة على جائزة رسمية."},
+      {"n":4,"c":"F","de":"Das Gebäude, in dem die Freie Filmbühne heute ist, wurde früher für den Schulunterricht genutzt.","ar":"المبنى الذي توجد فيه السينما اليوم كان يُستخدم سابقاً للتدريس المدرسي."},
+      {"n":5,"c":"F","de":"In unmittelbarer Nähe des Kinos gibt es eine Möglichkeit, etwas zu trinken.","ar":"في الجوار المباشر للسينما توجد إمكانية لشرب شيء ما."},
+      {"n":6,"c":"R","de":"An der Stelle der heutigen Freien Filmbühne sind neue Wohnungen und ein Freizeitangebot geplant.","ar":"في مكان سينما Freie Filmbühne الحالية يُخطط لبناء شقق جديدة ومرفق ترفيهي."},
+      {"n":7,"c":"F","de":"Es wird wahrscheinlich zwei Jahre dauern, bis die neuen Gebäude fertig sind.","ar":"من المحتمل أن يستغرق الأمر عامين حتى تكتمل المباني الجديدة."},
+      {"n":8,"c":"R","de":"Heute interessieren sich nicht mehr so viele Menschen für die Freie Filmbühne wie zu Beginn.","ar":"اليوم لم يعد يهتم بالسينما عدد كبير من الناس كما كان في البداية."},
+      {"n":9,"c":"F","de":"Frau Imbach möchte, dass die Freie Filmbühne umzieht.","ar":"ترغب السيدة إمباخ في أن تنتقل السينما إلى مكان آخر."},
+      {"n":10,"c":"F","de":"Bis die Freie Filmbühne schließt, werden keine Filme mehr gezeigt.","ar":"حتى موعد إغلاق السينما لن يتم عرض أي أفلام بعد الآن."}
+    ]
+  },
+  {
+    id: "h2_31",
+    order: 31,
+    title: "Jasmins",
+    level: "B1",
+    sub: "Teile 2",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Beim JP-Morgan-Firmenlauf trifft man viele Kollegen zum ersten Mal.","ar":"في سباق الشركات JP-Morgan يلتقي المرء بالعديد من الزملاء لأول مرة.","story":"ف JP-Morgan-Firmenlauf كتتلاقى مع بزاف ديال الزملاء لأول مرة (viele Kollegen zum ersten Mal)، واللي كيجريو كيجيو من داخل البلاد وخارجها (aus dem In- und Ausland). حتى بنت Jasmin (Jasmins Tochter) شاركات فالسباق، و Jasmin من بعد أول سباق ديالها ما بقاتش كتحس براسها بوحدها (nicht mehr so allein)، والتيشورتات هوما العلامة لي كيتعرفو بيها (ein Erkennungszeichen)."},
+      {"n":2,"c":"R","de":"Die Läufer und Läuferinnen kommen aus dem In- und Ausland.","ar":"يأتي العداؤون والعداءات من داخل البلاد وخارجها."},
+      {"n":3,"c":"F","de":"Nur wer aktiv Sport treibt, kann beim JP-Morgan-Firmenlauf mitmachen.","ar":"فقط من يمارس الرياضة بنشاط يمكنه المشاركة في سباق JP-Morgan."},
+      {"n":4,"c":"R","de":"Jasmins Tochter war bei dem Lauf auch schon dabei.","ar":"شاركت ابنة ياسمين في السباق أيضاً من قبل."},
+      {"n":5,"c":"F","de":"Jasmin hat vor zwei Jahren zum ersten Mal am JP-Morgan-Firmenlauf teilgenommen.","ar":"شاركت ياسمين قبل عامين لأول مرة في سباق الشركات JP-Morgan."},
+      {"n":6,"c":"F","de":"Der JP-Morgan-Firmenlauf findet nur in Deutschland statt.","ar":"يُقام سباق الشركات JP-Morgan في ألمانيا فقط."},
+      {"n":7,"c":"R","de":"Jasmin hat sich nach ihrem ersten Lauf nicht mehr so allein gefühlt.","ar":"لم تعد ياسمين تشعر بالوحدة بعد أول سباق لها."},
+      {"n":8,"c":"F","de":"Die Chefs müssen bei dem Lauf auch dabei sein.","ar":"يجب على الرؤساء أن يشاركوا في السباق أيضاً."},
+      {"n":9,"c":"R","de":"Die T-Shirts sind ein Erkennungszeichen.","ar":"القمصان علامة تعريفية للتمييز."},
+      {"n":10,"c":"F","de":"Die Firmen müssen das Startgeld bezahlen.","ar":"يجب على الشركات دفع رسوم المشاركة."}
+    ]
+  }
+];
