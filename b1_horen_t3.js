@@ -428,4 +428,262 @@ window.SAHLA_DATA.b1.horen.teil3 = [
       {"n":5,"c":"R","de":"Das Flugzeug landet mit 20 Minuten Verspätung in Leipzig.","ar":"تهبط الطائرة في لايبزيغ بتأخير قدره 20 دقيقة."}
     ]
   },
-  
+  {
+    id: "h3_15",
+    order: 15,
+    title: "Nebels",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Hörverstehen Teil 3. Sie hören nun 5 kurze Texte. Dazu sollen Sie 5 Aufgaben lösen. Sie hören jeden Text zweimal. Entscheiden Sie beim Hören, ob die Aussagen 56 bis 60 richtig oder falsch sind. Markieren Sie Ihre Lösung auf dem Antwortbogen bei den Aufgaben 56 bis 60. Markieren Sie plus gleich richtig und minus gleich falsch auf dem Antwortbogen.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Nummer 56.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Achtung, Autofahrer. Trotz des Nebels ist die Autobahn Richtung München frei. Alle Strecken sind befahrbar, aber bitte fahren Sie vorsichtig. Die Sicht ist in manchen Bereichen eingeschränkt. Es gibt aktuell keine offiziellen Warnungen oder Sperrungen für München.","pitch":0.88,"rate":0.98,"voice":"male","sfxStart":"radio_news","sfxEnd":"radio_outro"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Achtung, Autofahrer. Trotz des Nebels ist die Autobahn Richtung München frei. Alle Strecken sind befahrbar, aber bitte fahren Sie vorsichtig. Die Sicht ist in manchen Bereichen eingeschränkt. Es gibt aktuell keine offiziellen Warnungen oder Sperrungen für München.","pitch":0.88,"rate":0.98,"voice":"male","sfxStart":"radio_news","sfxEnd":"radio_outro"},
+      {"text":"Nummer 57.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Heute Nachmittag gibt es eine besondere Lesung in der Buchabteilung des Kaufhauses Meier. Zu Gast ist der bekannte Autor Klaus Bernhard. Er liest aus seinem neuen Roman und beantwortet Fragen der Zuhörer. Beginn ist um 15 Uhr, der Eintritt ist frei.","pitch":1.12,"rate":0.98,"voice":"female","sfxStart":"store_chime","sfxEnd":"store_chime"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Heute Nachmittag gibt es eine besondere Lesung in der Buchabteilung des Kaufhauses Meier. Zu Gast ist der bekannte Autor Klaus Bernhard. Er liest aus seinem neuen Roman und beantwortet Fragen der Zuhörer. Beginn ist um 15 Uhr, der Eintritt ist frei.","pitch":1.12,"rate":0.98,"voice":"female","sfxStart":"store_chime","sfxEnd":"store_chime"},
+      {"text":"Nummer 58.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Reisende aufgepasst! Der Zug nach Wien fährt wie gewohnt vom Bahnsteig 3. Es gibt keine Änderungen im Fahrplan. Bitte seien Sie trotzdem pünktlich am Gleis, da der Zug direkt weiterfährt. Weitere Informationen finden Sie auf den Anzeigetafeln.","pitch":0.85,"rate":0.98,"voice":"male","sfxStart":"train_chime","sfxEnd":"train_chime"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Reisende aufgepasst! Der Zug nach Wien fährt wie gewohnt vom Bahnsteig 3. Es gibt keine Änderungen im Fahrplan. Bitte seien Sie trotzdem pünktlich am Gleis, da der Zug direkt weiterfährt. Weitere Informationen finden Sie auf den Anzeigetafeln.","pitch":0.85,"rate":0.98,"voice":"male","sfxStart":"train_chime","sfxEnd":"train_chime"},
+      {"text":"Nummer 59.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Für alle Besucher der Firma Riedel. Die Straßenbahnlinie 4 bringt Sie direkt in Richtung Königsplatz. Von dort aus erreichen Sie den Haupteingang in wenigen Minuten zu Fuß. Die Haltestelle ist gut ausgeschildert und barrierefrei zugänglich.","pitch":1.15,"rate":0.98,"voice":"female","sfxStart":"ad_jingle","sfxEnd":"ad_jingle"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Für alle Besucher der Firma Riedel. Die Straßenbahnlinie 4 bringt Sie direkt in Richtung Königsplatz. Von dort aus erreichen Sie den Haupteingang in wenigen Minuten zu Fuß. Die Haltestelle ist gut ausgeschildert und barrierefrei zugänglich.","pitch":1.15,"rate":0.98,"voice":"female","sfxStart":"ad_jingle","sfxEnd":"ad_jingle"},
+      {"text":"Nummer 60.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Die Praxis Dr. Klein ist ab Montag wieder geöffnet. Ab diesem Tag können telefonisch oder online neue Termine vereinbart werden. Wegen Renovierungsarbeiten war die Praxis für 2 Wochen geschlossen. Jetzt ist alles neu und bereit für die Patienten.","pitch":0.88,"rate":0.98,"voice":"male","sfxStart":"phone_beep","sfxEnd":"phone_end"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Die Praxis Dr. Klein ist ab Montag wieder geöffnet. Ab diesem Tag können telefonisch oder online neue Termine vereinbart werden. Wegen Renovierungsarbeiten war die Praxis für 2 Wochen geschlossen. Jetzt ist alles neu und bereit für die Patienten.","pitch":0.88,"rate":0.98,"voice":"male","sfxStart":"phone_beep","sfxEnd":"phone_end"},
+      {"text":"Ende des dritten Teils. Vorbereitet vom Deutschlehrer Orhan Yiğit.","pitch":1,"rate":0.95,"voice":"narrator"}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Wegen des Nebels sollte man heute nicht nach München fahren.","ar":"بسبب الضباب لا ينبغي السفر اليوم إلى ميونخ.","story":"في قسم الكتب، كان هناك مؤلف مشهور كضيف (berühmter Autor zu)، مما أثار حماس الزوار. للوصول إلى الشركة، يمكن استخدام الترام في اتجاه ساحة كونيغز (in Richtung Königsplatz) بسهولة. اعتبارًا من يوم الاثنين القادم (Ab nächsten Montag)، يمكن تحديد موعد مرة أخرى لزيارة المؤلف."},
+      {"n":2,"c":"R","de":"In der Buchabteilung ist ein berühmter Autor zu Gast.","ar":"يحل مؤلف مشهور ضيفاً في قسم الكتب."},
+      {"n":3,"c":"F","de":"Der Zug nach Wien fährt heute von einem anderen Bahnsteig ab.","ar":"يغادر القطار المتجه إلى فيينا اليوم من رصيف آخر."},
+      {"n":4,"c":"R","de":"Die Firma ist mit der Straßenbahn in Richtung Königsplatz zu erreichen.","ar":"يمكن الوصول إلى الشركة بالترام في اتجاه كونيغسبلاتز."},
+      {"n":5,"c":"R","de":"Ab nächsten Montag kann man wieder einen Termin vereinbaren.","ar":"ابتداءً من الاثنين القادم يمكن تحديد موعد من جديد."}
+    ]
+  },
+  {
+    id: "h3_16",
+    order: 16,
+    title: "Hauptbahnhof",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Die Linie 2 fährt zum Hauptbahnhof.","ar":"يتجه الخط رقم 2 إلى المحطة الرئيسية.","story":"أدرك سامي أن (Das Hallenbad schließt) اليوم في الساعة 21:00، فقرر الذهاب بسرعة. في طريقه، تذكر أنه يجب عليه البحث عن (Badezimmerspiegel finden Sie) في الطابق السفلي. بعد ذلك، قرر التغيير (Richtung Eilenburg umsteigen) للوصول إلى وجهته التالية."},
+      {"n":2,"c":"R","de":"Das Hallenbad schließt heute um 21:00 Uhr.","ar":"يُغلق المسبح المغطى اليوم في الساعة 21:00."},
+      {"n":3,"c":"F","de":"Sie können mit der S1 nach Hütteldorf fahren.","ar":"يمكنك السفر عبر خط S1 إلى هوتلدورف."},
+      {"n":4,"c":"R","de":"Badezimmerspiegel finden Sie im Untergeschoss.","ar":"تجد مرايا الحمام في الطابق السفلي."},
+      {"n":5,"c":"R","de":"Sie können gleich in Richtung Eilenburg umsteigen.","ar":"يمكنك تبديل القطار فوراً باتجاه آيلنبورغ."}
+    ]
+  },
+  {
+    id: "h3_17",
+    order: 17,
+    title: "Meissner",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Sie müssen Frau Meissner noch die Pläne für Ihr Wohnzimmer schicken.","ar":"لا يزال عليك إرسال مخططات غرفة المعيشة إلى السيدة مايسنر.","story":"اليوم، تُعرض أجهزة الكمبيوتر من شركة (Computer der Firma) هايبرسوفت بأسعار خاصة، بينما الطقس في فوسين-رويت (Wetter in Füssen-Reutte) يجعلها وجهة مثالية للتزلج مقارنة بغارميش."},
+      {"n":2,"c":"F","de":"Die Schnellbahn S7 hat den ganzen Tag über Verspätung.","ar":"يتأخر القطار السريع S7 طوال اليوم."},
+      {"n":3,"c":"R","de":"Den Kunden werden heute die Computer der Firma Hypersoft besonders günstig angeboten.","ar":"تُعرض اليوم حواسيب شركة Hypersoft للزبائن بأسعار مخفضة جداً."},
+      {"n":4,"c":"R","de":"Das Wetter in Füssen-Reutte ist zum Schifahren besser als in Garmisch.","ar":"الطقس في فوسن-رويته أفضل للتزلج مقارنة بغارميش."},
+      {"n":5,"c":"F","de":"Der Zug um 18:16 Uhr fährt direkt nach München.","ar":"يتجه القطار المنطلق في الساعة 18:16 مباشرة إلى ميونخ."}
+    ]
+  },
+  {
+    id: "h3_18",
+    order: 18,
+    title: "Ausbildung",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Es ist alles fertig. Sie brauchen nichts mehr mitzubringen.","ar":"كل شيء جاهز، ولا تحتاج لإحضار أي شيء إضافي.","story":"في يوم الجمعة، كانت (Praxis von Dr.) ترابر مغلقة بعد الظهر، بينما كانت المتحدثة تطلب (Geld für die) تدريب المعلمين. بعد ذلك، كان عليك مواصلة الرحلة بالحافلة بدءًا من (nächsten Haltestelle mit)."},
+      {"n":2,"c":"F","de":"Das Wetter bleibt heute Abend überall warm und trocken.","ar":"يبقى الطقس هذا المساء دافئاً وجافاً في كل مكان."},
+      {"n":3,"c":"R","de":"Am Freitagnachmittag ist die Praxis von Dr. Traber geschlossen.","ar":"عيادة د. ترابر مغلقة بعد ظهر يوم الجمعة."},
+      {"n":4,"c":"R","de":"Die Sprecherin bittet um Geld für die Ausbildung von Lehrern.","ar":"تطلب المتحدثة تبرعات مالية لتدريب المعلمين."},
+      {"n":5,"c":"R","de":"Sie müssen ab der nächsten Haltestelle mit dem Bus weiterfahren.","ar":"يجب عليك مواصلة الرحلة بالحافلة انطلاقاً من المحطة التالية."}
+    ]
+  },
+  {
+    id: "h3_19",
+    order: 19,
+    title: "Schillerstraße",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Das Büro ist in der Schillerstraße.","ar":"يقع المكتب في شارع شيلر.","story":"في يوم مشمس في جنوب بافاريا (Im Süden Bayerns)، قررت أن أزور المكتب الذي يقع في شارع شيلر (in der Schillerstraße) لإنهاء بعض الأعمال قبل أن أستمتع بالطقس الجميل في فترة ما بعد الظهر."},
+      {"n":2,"c":"F","de":"Der Film „Sommer\" läuft im Filmcasino.","ar":"يُعرض فيلم «صيف» في سينما Filmcasino."},
+      {"n":3,"c":"R","de":"Im Süden Bayerns wird es am Nachmittag schön und nicht sehr warm.","ar":"في جنوب بافاريا يكون الطقس جميلاً بعد الظهر وليس حاراً جداً."},
+      {"n":4,"c":"F","de":"Im Zugrestaurant können Sie auch Zeitungen kaufen.","ar":"في مطعم القطار يمكنك أيضاً شراء الصحف."},
+      {"n":5,"c":"F","de":"Damenröcke kosten heute 39 Euro.","ar":"تبلغ تكلفة التنانير النسائية اليوم 39 يورو."}
+    ]
+  },
+  {
+    id: "h3_20",
+    order: 20,
+    title: "Buchhandlung",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Das Buch kann erst morgen ab 9 Uhr in der Buchhandlung abgeholt werden.","ar":"لا يمكن استلام الكتاب من المكتبة إلا غداً ابتداءً من الساعة 9.","story":"في طريقك إلى الشركة الواقعة (in der Wilhelmstraße)، يمكنك التوقف لمشاهدة فيلم (Film von Rainer) بولكو الليلة في السينما."},
+      {"n":2,"c":"R","de":"Die Firma ist in der Wilhelmstraße.","ar":"تقع الشركة في شارع فيلهلم."},
+      {"n":3,"c":"R","de":"Sie können den Film von Rainer Bolkow heute Abend im Kino sehen.","ar":"يمكنك مشاهدة فيلم راينر بولكو الليلة في السينما."},
+      {"n":4,"c":"F","de":"Sie können eine Zeitung im Zugrestaurant kaufen.","ar":"يمكنك شراء صحيفة من مطعم القطار."},
+      {"n":5,"c":"F","de":"Vom Bahnhof zur Universität dauert es mit der U-Bahn und dem Bus nur 5 Minuten.","ar":"تستغرق الرحلة من المحطة إلى الجامعة بالمترو والحافلة 5 دقائق فقط."}
+    ]
+  },
+  {
+    id: "h3_21",
+    order: 21,
+    title: "Der Fahrer",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Hörverstehen Teil 3. Mit den Beiträgen des Deutschlehrers Orhan Yiğit. Sie hören nun 5 kurze Texte. Dazu sollen Sie 5 Aufgaben lösen. Sie hören jeden Text zweimal. Entscheiden Sie beim Hören, ob die Aussagen 56 bis 60 richtig oder falsch sind. Markieren Sie Ihre Lösung auf dem Antwortbogen bei den Aufgaben 56 bis 60. Markieren Sie plus gleich richtig und minus gleich falsch auf dem Antwortbogen.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Nummer 56. Sie sind im Einkaufszentrum. Über Lautsprecher wird eine kurze Ansage zu einem Auto gemacht.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Achtung! Der Fahrer des Fahrzeugs mit dem Kennzeichen HB-D 256 wird dringend gebeten, sofort ins Erdgeschoss zu kommen. Das Fahrzeug steht im Halteverbot und blockiert eine wichtige Ausfahrt. Bitte melden Sie sich umgehend an der Rezeption im Eingangsbereich. Es wird darum gebeten, das Fahrzeug schnellstmöglich umzuparken. Vielen Dank.","pitch":1.12,"rate":0.98,"voice":"female","sfxStart":"store_chime","sfxEnd":"store_chime"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Achtung! Der Fahrer des Fahrzeugs mit dem Kennzeichen HB-D 256 wird dringend gebeten, sofort ins Erdgeschoss zu kommen. Das Fahrzeug steht im Halteverbot und blockiert eine wichtige Ausfahrt. Bitte melden Sie sich umgehend an der Rezeption im Eingangsbereich. Es wird darum gebeten, das Fahrzeug schnellstmöglich umzuparken. Vielen Dank.","pitch":1.12,"rate":0.98,"voice":"female","sfxStart":"store_chime","sfxEnd":"store_chime"},
+      {"text":"Nummer 57. Sie erhalten eine Sprachnachricht von einer Möbelfirma. Es geht um eine Sofa-Lieferung.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Guten Tag, hier ist Ihre Möbelfirma. Die Lieferung des bestellten Sofas erfolgt nicht am Dienstag, sondern am Mittwoch zwischen 10 und 12 Uhr. Bitte stellen Sie sicher, dass jemand zu Hause ist, um die Ware entgegenzunehmen. Bei weiteren Fragen können Sie uns gerne anrufen oder eine Nachricht per E-Mail senden. Vielen Dank für Ihre Bestellung.","pitch":0.88,"rate":0.98,"voice":"male","sfxStart":"phone_beep","sfxEnd":"phone_end"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Guten Tag, hier ist Ihre Möbelfirma. Die Lieferung des bestellten Sofas erfolgt nicht am Dienstag, sondern am Mittwoch zwischen 10 und 12 Uhr. Bitte stellen Sie sicher, dass jemand zu Hause ist, um die Ware entgegenzunehmen. Bei weiteren Fragen können Sie uns gerne anrufen oder eine Nachricht per E-Mail senden. Vielen Dank für Ihre Bestellung.","pitch":0.88,"rate":0.98,"voice":"male","sfxStart":"phone_beep","sfxEnd":"phone_end"},
+      {"text":"Nummer 58. Sie checken in ein Hotel ein. An der Rezeption gibt es Informationen zur Umgebung.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Willkommen im Gasthof Lindner. Unser Hotel liegt direkt neben einer Tankstelle, was besonders für Autofahrer sehr praktisch ist. Sie können dort rund um die Uhr tanken oder Snacks kaufen. Auch eine kleine Werkstatt ist in der Nähe. Wir wünschen Ihnen einen angenehmen Aufenthalt und stehen für Fragen jederzeit an der Rezeption zur Verfügung.","pitch":1.15,"rate":0.98,"voice":"female","sfxStart":"hotel_bell","sfxEnd":"hotel_bell"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Willkommen im Gasthof Lindner. Unser Hotel liegt direkt neben einer Tankstelle, was besonders für Autofahrer sehr praktisch ist. Sie können dort rund um die Uhr tanken oder Snacks kaufen. Auch eine kleine Werkstatt ist in der Nähe. Wir wünschen Ihnen einen angenehmen Aufenthalt und stehen für Fragen jederzeit an der Rezeption zur Verfügung.","pitch":1.15,"rate":0.98,"voice":"female","sfxStart":"hotel_bell","sfxEnd":"hotel_bell"},
+      {"text":"Nummer 59. Sie sind im Kino. Vor dem Film wird das Programm kurz über Lautsprecher angesagt.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Hier ist Ihr Kinoprogramm. Der beliebte Film Komiker läuft jeden Tag um 20 Uhr im großen Saal. Die Vorstellung dauert etwa 90 Minuten. Tickets gibt es online oder an der Kasse. Kommen Sie bitte spätestens 15 Minuten vor Beginn. Wir wünschen Ihnen viel Vergnügen und freuen uns auf Ihren Besuch im Kino.","pitch":0.85,"rate":1,"voice":"male","sfxStart":"ad_jingle","sfxEnd":"ad_jingle"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Hier ist Ihr Kinoprogramm. Der beliebte Film Komiker läuft jeden Tag um 20 Uhr im großen Saal. Die Vorstellung dauert etwa 90 Minuten. Tickets gibt es online oder an der Kasse. Kommen Sie bitte spätestens 15 Minuten vor Beginn. Wir wünschen Ihnen viel Vergnügen und freuen uns auf Ihren Besuch im Kino.","pitch":0.85,"rate":1,"voice":"male","sfxStart":"ad_jingle","sfxEnd":"ad_jingle"},
+      {"text":"Nummer 60. Sie hören Radio. Es gibt eine Wetterwarnung.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Der Wetterdienst meldet für heute wechselhaftes Wetter. Am Nachmittag ziehen Wolken auf und am Abend wird mit starkem Regen gerechnet. Es besteht die Gefahr von Gewittern und starkem Wind. Besonders in den Abendstunden ist mit starkem Platzregen zu rechnen. Bitte informieren Sie sich regelmäßig über die aktuellen Wetterwarnungen im Radio oder Internet.","pitch":1.1,"rate":0.98,"voice":"female","sfxStart":"radio_news","sfxEnd":"radio_outro"},
+      {"text":"Sie hören den Text noch einmal.","pitch":1,"rate":0.95,"voice":"narrator"},
+      {"text":"Der Wetterdienst meldet für heute wechselhaftes Wetter. Am Nachmittag ziehen Wolken auf und am Abend wird mit starkem Regen gerechnet. Es besteht die Gefahr von Gewittern und starkem Wind. Besonders in den Abendstunden ist mit starkem Platzregen zu rechnen. Bitte informieren Sie sich regelmäßig über die aktuellen Wetterwarnungen im Radio oder Internet.","pitch":1.1,"rate":0.98,"voice":"female","sfxStart":"radio_news","sfxEnd":"radio_outro"},
+      {"text":"Ende des dritten Teils. Vorbereitet vom Deutschlehrer Orhan Yiğit.","pitch":1,"rate":0.95,"voice":"narrator"}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Der Fahrer des Wagens mit dem Kennzeichen HB-D 256 soll ins Erdgeschoss kommen.","ar":"يُرجى من سائق السيارة ذات اللوحة HB-D 256 الحضور إلى الطابق الأرضي.","story":"تلقى (Fahrer des Wagens) الذي يملك السيارة ذات اللوحة HB-D 256 دعوة للحضور إلى الطابق الأرضي، بينما كان يقيم في (Gasthof Lindner ist) بجوار محطة الوقود. بعد أن أنهى إجراءاته، انطلق ليحضر عرض الفيلم الكوميدي الذي يبدأ يومياً في الثامنة مساءً (Film Komiker läuft)."},
+      {"n":2,"c":"F","de":"Die Firma liefert das bestellte Sofa am Dienstag ab drei Uhr nachmittags.","ar":"تُوصل الشركة الأريكة المطلوبة يوم الثلاثاء ابتداءً من الساعة الثالثة بعد الظهر."},
+      {"n":3,"c":"R","de":"Der Gasthof Lindner ist neben einer Tankstelle.","ar":"يقع نُزل ليندنر بجانب محطة وقود."},
+      {"n":4,"c":"R","de":"Der Film Komiker läuft täglich um 20 Uhr.","ar":"يُعرض فيلم «كوميكر» يومياً في الساعة 20:00."},
+      {"n":5,"c":"F","de":"Das Wetter ist am Abend noch gut.","ar":"لا يزال الطقس جيداً في المساء."}
+    ]
+  },
+  {
+    id: "h3_22",
+    order: 22,
+    title: "Der Fahrer (المعدل)",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Der Fahrer des Wagens mit dem Kennzeichen HB-D 256 soll ins Erdgeschoss kommen.","ar":"يُرجى من سائق السيارة ذات اللوحة HB-D 256 الحضور إلى الطابق الأرضي.","story":"في مدينة هادئة، يُطلب من (Fahrer des Wagens) ذات اللوحة HB-D 256 القدوم إلى الطابق الأرضي فوراً. كان (Gasthof Lindner liegt) بجوار محطة الوقود القريبة، حيث يُعرض (Film Komiker wird) عدة مرات في اليوم، مما جعل الجميع في انتظار لحظات من الضحك."},
+      {"n":2,"c":"F","de":"Die Firma liefert das bestellte Sofa am Dienstagnachmittag zwischen drei und sechs Uhr liefern.","ar":"تُوصل الشركة الأريكة المطلوبة بعد ظهر الثلاثاء بين الساعة الثالثة والسادسة."},
+      {"n":3,"c":"R","de":"Der Gasthof Lindner liegt neben einer Tankstelle.","ar":"يقع نُزل ليندنر بجانب محطة وقود."},
+      {"n":4,"c":"R","de":"Der Film Komiker wird mehrmals am Tag gezeigt.","ar":"يُعرض فيلم «كوميكر» عدة مرات في اليوم."},
+      {"n":5,"c":"F","de":"Für den Abend wird kein Regen erwartet.","ar":"لا يُتوقع هطول أمطار في المساء."}
+    ]
+  },
+  {
+    id: "h3_23",
+    order: 23,
+    title: "Mannheim (1 المعدل)",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Der Zug nach Mannheim fährt um 13:14 Uhr ab.","ar":"يغادر القطار المتجه إلى مانهايم في الساعة 13:14.","story":"التران لي غادي ل Mannheim كيخرج مع 13:14 (um 13:14 Uhr)، و Katrin غادي تكون مسالية نهار 20 دجنبر (am 20. Dezember)."},
+      {"n":2,"c":"F","de":"Dr. Hoffmann ist im Urlaub.","ar":"الدكتور هوفمان في إجازة."},
+      {"n":3,"c":"F","de":"Sie können den Film „Das Leben ist schön“ schon um 18:15 Uhr im Central sehen.","ar":"يمكنك مشاهدة فيلم «الحياة جميلة» مبكراً في الساعة 18:15 في سينما Central."},
+      {"n":4,"c":"F","de":"Heute Abend beginnt es zu schneien.","ar":"سيبدأ تساقط الثلوج هذا المساء."},
+      {"n":5,"c":"R","de":"Katrin hätte am 20. Dezember Zeit.","ar":"لدى كاترين وقت فراغ في 20 ديسمبر."}
+    ]
+  },
+  {
+    id: "h3_24",
+    order: 24,
+    title: "Prag (المعدل)",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"F","de":"Ihr Flug nach Prag ist nicht pünktlich.","ar":"رحلتك إلى براغ ليست في موعدها المحدد.","story":"فالعربة ديال الماكلة (Im Speisewagen) تقدر تدخل للإنترنت، والطيارة غادي تنزل معطلة ف Dortmund (Verspätung in Dortmund)."},
+      {"n":2,"c":"R","de":"Im Speisewagen kann man ins Internet gehen.","ar":"في عربة الطعام يمكن الدخول إلى الإنترنت."},
+      {"n":3,"c":"F","de":"Montags bis freitags ab 8:00 Uhr kann man sich persönlich beraten lassen.","ar":"من الاثنين إلى الجمعة ابتداءً من الساعة 8:00 يمكن الحصول على استشارة شخصية."},
+      {"n":4,"c":"F","de":"Das Hörspiel „Katzen gehen in die Nacht“ wird morgen um 20:30 Uhr gesendet.","ar":"تُبث المسرحية الإذاعية «قطط تذهب في الليل» غداً في الساعة 20:30."},
+      {"n":5,"c":"R","de":"Das Flugzeug landet mit Verspätung in Dortmund.","ar":"تهبط الطائرة بتأخير في دورتموند."}
+    ]
+  },
+  {
+    id: "h3_25",
+    order: 25,
+    title: "Schillerstraße (المعدل)",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Das Büro liegt am Marktplatz.","ar":"يقع المكتب في ساحة السوق.","story":"البيرو كاين فساحة السوق (am Marktplatz)، وفالغرب الجو غادي يكون زوين العشية وماشي سخون بزاف (freundlich und nicht sehr warm)، والصايات ديال العيالات اليوم ب 39 أورو (kosten heute 39 Euro)."},
+      {"n":2,"c":"F","de":"Der Film „Sommer in der Stadt“ läuft im Apollo-Kino.","ar":"يُعرض فيلم «صيف في المدينة» في سينما Apollo."},
+      {"n":3,"c":"R","de":"Im Westen wird es am Nachmittag freundlich und nicht sehr warm.","ar":"في الغرب يصبح الطقس لطيفاً بعد الظهر وليس حاراً جداً."},
+      {"n":4,"c":"F","de":"Im Bordrestaurant können Sie auch Zeitungen kaufen.","ar":"في مطعم القطار يمكنك أيضاً شراء الصحف."},
+      {"n":5,"c":"R","de":"Damenröcke kosten heute 39 Euro.","ar":"تبلغ تكلفة التنانير النسائية اليوم 39 يورو."}
+    ]
+  },
+  {
+    id: "h3_26",
+    order: 26,
+    title: "Der Fahrer (الأساسي)",
+    level: "B1",
+    sub: "Teile 3",
+    type: "horen",
+    audio: [
+      {"text":"Audio nicht verfügbar","pitch":1,"rate":0.95}
+    ],
+    items: [
+      {"n":1,"c":"R","de":"Der Fahrer des Wagens mit dem Kennzeichen HB-BO 2929 soll ins Erdgeschoss kommen.","ar":"يُرجى من سائق السيارة ذات اللوحة HB-BO 2929 الحضور إلى الطابق الأرضي.","story":"الشيفور ديال الطوموبيل لي فيها النمرة HB-BO 2929 (HB-BO 2929) خاصو ينزل للطابق السفلي، والمطعم Gasthof Lindner كاين حدا محطة ديال ليصانص (neben einer Tankstelle)."},
+      {"n":2,"c":"F","de":"Die Firma liefert das bestellte Sofa am Dienstag ab drei Uhr nachmittags.","ar":"تُوصل الشركة الأريكة المطلوبة يوم الثلاثاء ابتداءً من الساعة الثالثة بعد الظهر."},
+      {"n":3,"c":"R","de":"Der Gasthof Lindner ist neben einer Tankstelle.","ar":"يقع نُزل ليندنر بجانب محطة وقود."},
+      {"n":4,"c":"F","de":"Der Film Komiker läuft täglich um 20 Uhr.","ar":"يُعرض فيلم «كوميكر» يومياً في الساعة 20:00."},
+      {"n":5,"c":"F","de":"Das Wetter ist am Abend noch gut.","ar":"لا يزال الطقس جيداً في المساء."}
+    ]
+  }
+];
