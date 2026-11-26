@@ -5175,4 +5175,748 @@ window.SAHLA_DATA.b2.lesen.teil1 = [
   }
  ]
 },
+{
+ "id": "6a301700c7e707ccff0c1e1e",
+ "order": 56,
+ "title": "Bäder - الرﺣﻠﺔ (المعدل)",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "note": "ملاحظة:التعديل موجود فقط في 2 عناوين وتم تغيير ترتيبهم",
+ "options": [
+  {
+   "k": "a",
+   "de": "Schaden an Kreuzfahrtschiff verhindert Weiterfahrt",
+   "ar": "أضرار في سفينة الرحلات البحرية تمنع مواصلة الرحلة"
+  },
+  {
+   "k": "b",
+   "de": "Bäder, Seen und Natur – im hessischen Paradies",
+   "ar": "حمامات، بحيرات وطبيعة - في جنة هيسن"
+  },
+  {
+   "k": "c",
+   "de": "Freiheit und Natur – nach sechs Wochen harter Arbeit",
+   "ar": "الحرية والطبيعة - بعد ستة أسابيع من العمل الشاق"
+  },
+  {
+   "k": "d",
+   "de": "Jugendliche arbeiten für Jugendliche",
+   "ar": "الشباب يعملون من أجل الشباب"
+  },
+  {
+   "k": "e",
+   "de": "E Von der Polizeiwache an die See – sichere Strände für Urlauber",
+   "ar": "من مركز الشرطة إلى البحر - شواطئ آمنة للمصطافين",
+   "mod": true
+  },
+  {
+   "k": "f",
+   "de": "Urlaub an deutschen Seen immer gefährlicher",
+   "ar": "الإجازة عند البحيرات الألمانية تزداد خطورة"
+  },
+  {
+   "k": "g",
+   "de": "Kinderarbeit in Deutschland: Jugendliche werden zur Arbeit gezwungen",
+   "ar": "عمالة الأطفال في ألمانيا: إجبار الشباب على العمل"
+  },
+  {
+   "k": "h",
+   "de": "Nach harter Arbeit durch nordische Gewässer",
+   "ar": "بعد عمل شاق عبر المياه الشمالية",
+   "mod": true
+  },
+  {
+   "k": "i",
+   "de": "Zu Gast bei den Fürsten",
+   "ar": "ضيف عند الأمراء"
+  },
+  {
+   "k": "j",
+   "de": "Wegen Niedrigwasser: vom Fluss auf die Straße",
+   "ar": "بسبب انخفاض منسوب المياه: من النهر إلى الطريق"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "b",
+   "de": "Entdecken Sie interessante Städte und Regionen. Im Herzen Deutschlands liegen wunderbare Landschaften, mit einem für deutsche Verhältnisse sehr milden Klima – und keine typischen „Touristenziele“. Von der Stadt Gießen ausgehend kann man in den hessischen Kreisen Bergstraße und Waldeck-Frankenberg viele Orte entdecken, die noch ein Geheimtipp sind. Vor allem gilt dies für den Kreis Waldeck-Frankenberg. Wer nicht gerade in Hessen wohnt, wird kaum wissen, wo diese Region eigentlich liegt. Es ist ein herrliches Stück Deutschland ohne besonders große Städte, eine Gegend, die Natur pur bietet. Daher wundert es nicht, dass man hier einige Kurorte findet wie Bad Arolsen oder Bad Wildungen oder den Luftkurort Edertal-Kleinern. Apropos Edertal: Der zwölf Quadratkilometer große Edersee gehört zu den vier schönen „blauen Augen“ des Kreises. Der Landkreis Waldeck-Frankenberg ist Hessens attraktivstes Umland. In der Region der Berge und Seen spürt man auch heute noch einen Hauch von Fürstlichkeit: Majestätisch erhebt sich über dem Edersee das Schloss Waldeck. Auch in Bad Arolsen, einer ehemaligen Residenzstadt, ist vieles noch vom früheren Adel geprägt. Unbedingt besuchen sollte man darüber hinaus das über 1000 Jahre alte Korbach wie auch die Fachwerkstadt Frankenberg.",
+   "summary": "ألمانيا فيها بلايص زوينين للسياحة بحال منطقة هسن لي فيها الطبيعة، البحيرات بحال إيدرسي، ومحطات استجمام. هاد المنطقة بعيدة على الزحام وفيها طابع تاريخي بحال القصور، وكتمثل فرصة باش تكتشف بلايص لي ماشي سياحية بزاف ومعروفة بالهدوء.",
+   "mod": true
+  },
+  {
+   "n": 2,
+   "c": "e",
+   "de": "Pferde waren schon immer Melanie Schilles Leidenschaft. „Und jetzt kann ich Hobby und Beruf miteinander verbinden“, freut sich die Beamtin aus Hannover. In diesem Jahr verstärkt sie die Strandwache an der Nordseeküste. Ihr Arbeitsplatz ist der Strand: Mit „Magnus“, einem 11-jährigen Pferd, patrouilliert sie dort, wo die Kleinen Sandburgen bauen, Urlauber bei einem Buch entspannen oder sich in die kühlen Fluten stürzen. Melanie Schille und ihr Hannoveraner sind eine Attraktion in dem Ferienort. Immer wieder wollen Gäste das Tier streicheln, von der Polizistin wissen, was sie hier macht. „Wir sorgen für mehr Sicherheit am Strand“, erklären Melanie Schille und Rüdiger Teichmann (42). Sie suchen im Watt nach Vermissten, klären über Gefahren auf, verhindern Diebstähle und Sachbeschädigungen. Nachweislich gingen die Delikte zurück, seit es die Streife hoch zu Ross gibt. Die Polizisten: „Wir sind in dem unwegsamen Gelände oft schneller am Einsatzort als die Kollegen per Fahrrad oder mit dem Auto. Außerdem schonen wir die Natur.“ Für sich persönlich sieht Melanie Schille noch einen großen Vorteil: „Es ist schön, mal keine Demonstration sichern zu müssen, stattdessen genieße ich die frische Luft mit fröhlichen Urlaubern.“ Nur eins vermisst die 22-Jährige, die mit Polizeipferd „Magnus“ auf einem Bauernhof Quartier bezogen hat, während ihres sechswöchigen Einsatzes: Freund Robert (23). Er fährt als Polizist in Hannover Streife – und wartet auf sie.",
+   "summary": "ميلاني شرطية كتخدم فالبحر فشمال ألمانيا، كتركب على عود باش تحافظ على الأمن وتحمي السياح. هاد المبادرة عاونات باش ينقصو الجرائم، وحيت كيمشيو فوق العود كيوصلو بزربة لبلايص لي واعرين، وفي نفس الوقت كيحافظو على الطبيعة.",
+   "mod": true
+  },
+  {
+   "n": 3,
+   "c": "h",
+   "de": "Ein neuer Urlaubstrend setzt sich durch: Statt faul am Strand zu liegen, wird man aktiv. Ein besonders beliebtes Ziel ist Schweden: So kann man am Ufer des Flusses Klarälven in der Provinz Värmland selbst ein Floß bauen. Das dauert drei bis sechs Stunden, anschließend macht man darauf Urlaub. „Das ist Abenteuerurlaub pur“, schwärmt Johan Bengtson, der mit seiner Frau und den drei Kindern zum zweiten Mal Floßferien macht. „Sich auf dem Fluss treiben lassen und in der Wildnis leben – dieses Gefühl ist super!“ Seit zehn Jahren veranstaltet Marie Junler von der Agentur Vildmark i Värmland die Holzfloßtrips. Wir haben die Bengtsons an ihrem ersten Urlaubstag begleitet. Mit dabei ist auch Veranstalterin Marie Junler, die der Familie hilft, das Floß zu bauen. Es ist ein herrlicher Sonnentag. In einer sanften Kurve des Flusses Klarälven steht Marie bis zu den Hüften im tiefblauen Wasser. Mit dicken grünen Seilen schnürt sie Holzstämme zusammen und gibt Kommandos: „Einer hält den Stamm, der andere knotet – den Seemannsknoten, wie wir ihn vorhin an Land geübt haben.“ Ohne einen Nagel werden 96 Baumstämme verzurrt – im Wasser, sonst wäre das Holz zu schwer. Mindestens zwei Erwachsene sind nötig, um ein Floß zu bauen, einer allein packt das nicht. Nach drei Stunden ist es geschafft: Das Urlaubsparadies der Bengtsons – es misst übrigens 6 mal 3 Meter und wiegt 2 Tonnen – treibt am Ufer. Noch schnell das Sonnenzelt befestigen, darunter Vorratskasten, Frischwassertank, Chemie-Klo, Küchenausrüstung, Zelt, Rettungsring, Schwimmwesten und das Paddel zum Steuern und Manövrieren verstauen – und ab geht’s.",
+   "summary": "كاين تريند جديد ديال العطل، فين الناس كيمشيو للسويد باش يبنيو طوافات ديال الخشب بيديهم. هادشي كياخد شوية ديال الجهد والعمل الجماعي حيت كيجمعو الخشب فوسط الما بلا مسامر، ومن بعد كيعيشو تجربة مغامرة وسط الطبيعة وفوق الواد.",
+   "mod": true
+  },
+  {
+   "n": 4,
+   "c": "d",
+   "de": "Von 9 bis 15 Uhr arbeitet Sebastian Keller (18) in einem Altenwohnheim in Hamburg-Altona: Er kümmert sich um die Essensausgabe, putzt die Küche und dann ist noch Zeit, um den Senioren vorzulesen oder mit ihnen Karten zu spielen. Zur selben Zeit putzen Rebecca (12) und Christiane (13) den Eingang des Hamburger „Michels“, der wohl bekanntesten Kirche der Stadt, und Friderike (17) füttert schon frühmorgens Kühe, Schweine und Hühner auf einem Bio-Bauernhof bei Wedel. „Endlich mal ein sinnvoller Job“, sagen die fünf übereinstimmend. Sie stehen stellvertretend für etwa 100.000 Jugendliche, die beim „Sozialen Tag“ mitgemacht haben. Hut ab! Und was mindestens ebenso beeindruckend ist: Der Verein „Hamburgs Schüler helfen“ (HSH) wurde von Jugendlichen im Jahr 2004 gegründet – und seitdem findet jedes Jahr im August der „Soziale Tag“ statt. Mit Behörden und Firmen haben Schüler aus Hamburg Verträge für einen Tag abgeschlossen. Die Schülerinnen und Schüler verdienen dann am „Sozialen Tag“ zwischen 6 und 8 Euro pro Stunde – aber nicht für sich selbst, sondern für andere. Denn der Verdienst wird gespendet. Die Jugendlichen wählen selbst ein Projekt aus, an das sie die Gelder spenden wollen. Einzige Bedingung: Es muss ein Projekt sein, von dem Jugendliche profitieren. Im letzten Jahr zum Beispiel wurde die Gesamtsumme von 1,2 Millionen Euro an das Projekt „Frieden für alle“ gespendet. Dessen Ziel ist es, Jugendliche in Kriegs- und Krisenregionen zu unterstützen, den Dialog unter Jugendlichen aus verschiedenen Ländern zu fördern und auch das Kennenlernen anderer Kulturen zu ermöglichen. Für Ralf Waldner (20) vom HSH steht fest: „Wir können und werden anderen auch in Zukunft helfen, das Engagement der Schülerinnen und Schüler in Hamburg ist in den letzten Jahren schließlich immer weiter gestiegen.“",
+   "summary": "فمدينة هامبورغ، كاينين شباب كيخدمو فواحد النهار سميتو 'اليوم الاجتماعي' فمجالات مختلفة. الفلوس لي كيربحوها كيتبرعو بيها لمشاريع لي كتعاون شباب خرين، بحال لي عايشين فمناطق الحروب والأزمات، باش يعاونوهم ويشجعو الحوار الثقافي.",
+   "mod": true
+  },
+  {
+   "n": 5,
+   "c": "j",
+   "de": "Die Windjacken waren schon eingepackt, die Koffer geschlossen. Thomas Meurer (64) und Wiebke Fuchs (62) aus Hannover freuten sich auf ihre Flusskreuzfahrt mit der „MS Eurostar“ von Potsdam nach Prag. Stattliche 2500 Euro kostete die Reise pro Person, und beide hatten lange gespart, um sich das leisten zu können. Doch aus der Kreuzfahrt wurde eine Bustour. Meurer berichtet, was er erlebt hat: „Wir waren am Abend auf das Schiff gegangen und hatten unsere Kabinen bezogen. Am nächsten Morgen ging es los. Aber schon bald machte das Schiff wieder fest und alle Gäste mussten von Bord.“ Wiebke Fuchs ergänzt: „Der Fluss hatte einfach zu wenig Wasser, da konnten wir mit dem großen Kreuzfahrtschiff nicht weiterfahren!“ Per Bus ging es nach Prag. Beide wollen nun einen Teil des Reisepreises zurück, aber der Veranstalter Hapag-Lloyd wehrt ab: „Das war höhere Gewalt, da kann man nichts machen.\"",
+   "summary": "واحد الكوبل كانو معولين يمشيو فباخرة سياحية من بوتسدام لبراغ. ولكن الرحلة حابسات فالبداية حيت الواد مافيهش الما كافي. فالتالي، الشركة كملات ليهم الطريق فالكار، ورفضات ترجع ليهم تعويض على الفلوس لي دفعو حيت قالت بلي هادشي قوة قاهرة.",
+   "mod": true
+  }
+ ]
+},
+{
+ "id": "6a3fd70e1379c5b5ba94c7e7",
+ "order": 57,
+ "title": "Computer / كمبيوتر",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Jeder kann Netzreporter werden",
+   "ar": "يمكن للجميع أن يصبح مراسلًا عبر الإنترنت"
+  },
+  {
+   "k": "b",
+   "de": "Historisches Wissen ohne Mühe",
+   "ar": "المعرفة التاريخية بدون جهد"
+  },
+  {
+   "k": "c",
+   "de": "Hotels online vermarkten",
+   "ar": "تسويق الفنادق عبر الإنترنت"
+  },
+  {
+   "k": "d",
+   "de": "Sprachen lernen per Computer",
+   "ar": "تعلم اللغات بواسطة الكمبيوتر"
+  },
+  {
+   "k": "e",
+   "de": "Neues Hotelangebot spart Geschäftsleuten Zeit",
+   "ar": "عرض فندقي جديد يوفر الوقت لرجال الأعمال"
+  },
+  {
+   "k": "f",
+   "de": "Verschenken Sie Ihr Geld nicht an den Staat!",
+   "ar": "لا تهدر أموالك للدولة!"
+  },
+  {
+   "k": "g",
+   "de": "Neuer Computerkurs an der Volkshochschule",
+   "ar": "دورة كمبيوتر جديدة في مركز التعليم الشعبي"
+  },
+  {
+   "k": "h",
+   "de": "Elektronischer Weg aus dem Steuerlabyrinth",
+   "ar": "طريق إلكتروني للخروج من متاهة الضرائب"
+  },
+  {
+   "k": "i",
+   "de": "Onlinebibliothek für Referate und Kurznachrichten",
+   "ar": "مكتبة إلكترونية للمقالات والرسائل القصيرة"
+  },
+  {
+   "k": "j",
+   "de": "Pädagogen gegen Internetdienste",
+   "ar": "المعلمون ضد خدمات الإنترنت"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "h",
+   "de": "„Auf meinen elektronischen Steuerberater kann ich mich hundertprozentig verlassen“, erklärt Rainer Wust, Inhaber einer kleinen Elektronikfirma in Hamburg. Die Steuererstattung, die er für das vergangene Jahr vom Finanzamt erhielt, stimmte völlig mit dem überein, was sein Steuersparprogramm ausgerechnet hatte. Immer mehr Deutsche sparen sich den teuren Gang zum Steuerberater und setzen auf Computerprogramme. Die Vorteile liegen auf der Hand: Am heimischen Rechner lassen sich alle steuerrelevanten Daten bequem in die richtigen Formulare eingeben und per Internet an das Finanzamt schicken. Das Programm fragt nach wichtigen Zahlen, kennt Steuerspartipps und hilft zuverlässig durch den Steuerdschungel – ohne Terminabsprachen und langwierige Sitzungen beim Steuerberater, wie das früher üblich war. In einigen Fällen muss man aber trotzdem noch Belege und andere Unterlagen beim Finanzamt einreichen – und zwar per herkömmlicher Post.",
+   "summary": "بزاف ديال الناس فألمانيا ولاو كيستعملو برامج الكمبيوتر باش يحسبو الضرائب ديالهم بلا ما يمشيو عند خبير الضرائب. هادشي كيوفر ليهم الوقت وكيخليهم يصيفطو المعلومات نيشان للضريبة عبر الأنترنت."
+  },
+  {
+   "n": 2,
+   "c": "e",
+   "de": "Kundenberaterin Sabine E. ist ständig auf Achse. Als Repräsentantin einer großen Plastikgeschirrfirma für Süddeutschland besucht sie Messen, Ausstellungen und Kunden, um den Verkauf anzukurbeln. Heute München, morgen Stuttgart, übermorgen Mainz – Sabine E. ist an das Leben einer modernen Geschäftsnomadin gewöhnt. Umso mehr schätzt sie den Service, den eine immer größere Zahl an Hotels Geschäftsreisenden wie ihr anbieten: das Hotelzimmer mit komplettem Büroservice. Dem Hotelgast stehen nicht nur Internetzugang und Telefon kostenlos zur Verfügung, er kann auch Kopien in Auftrag geben, Dokumente ausdrucken lassen oder schnell noch vom Zimmer aus ein Fax verschicken. „Für mich hat das viele Vorteile“, sagt Frau E. „Meine Aufträge und Abrechnungen kann ich jetzt oft schon während meiner Kundentermine in mein Notebook eintippen und dann am Abend per E-Mail versenden. Unterlagen kann ich auch zwischendurch ausdrucken und Verträge unterschreiben und verschicken. Das spart mir viel Zeit, die ich jetzt dafür nutze, um auch mal abends auszugehen und die Gastronomie der Stadt, in der ich mich gerade befinde, kennenzulernen.“",
+   "summary": "سابين كتسافر بزاف بحكم الخدمة ديالها. داكشي علاش كيعجبها ملي الفنادق كيوفروا خدمات ديال البيرو بحال الأنترنت، الفاكس والطباعة فابور. هادشي كيوفر ليها الوقت باش تخرج وتكتشف المدينة بالليل."
+  },
+  {
+   "n": 3,
+   "c": "j",
+   "de": "Ein Referat für den Geschichtsunterricht über Karl den Großen zur nächsten Woche – kein Problem. Mussten sich Schüler früher durch Berge von Sachbüchern kämpfen, Lexika wälzen und die Nachmittage in den Lesesälen der Bibliotheken verbringen, genügt heute ein Mausklick auf die Webseite eines Onlinediensts, der kostenlos oder für wenig Geld für Schüler fertige Referate zu fast jedem Thema liefert. Statt im staubigen Bibliothekssaal zu sitzen, entspannt sich der Schüler von heute im Schwimmbad vom Schulstress. Und trägt im Unterricht ein Referat vor, von dem er oft nicht einmal das Thema geschweige denn Details kennt, was spätestens bei Nachfragen der Lehrer schließlich auffällt. Die Praxis, fertige Referate per Internet anzubieten, stößt bei Lehrern und Schulpolitikern auf Kritik. Sie fordern deshalb einhellig Maßnahmen gegen die Anbieter, die zwar Schülern die Arbeit abnehmen, aber nichts zur Wissensvermittlung beitragen.",
+   "summary": "التلامذ دابا ما بقاوش كيمشيو للمكتبات باش يوجدو العروض ديالهم، ولاو كيجيبو عروض واجدة من الأنترنت. هادشي خلا الأساتذة والسياسيين ينتقدو هاد المواقع حيت ما كتعاونش التلامذ يتعلمو."
+  },
+  {
+   "n": 4,
+   "c": "a",
+   "de": "Wer könnte interessantere Meldungen aus allen Ecken des World Wide Web liefern als die Internetnutzer selbst? Deshalb sind auf vielen Nachrichtenportalen keine Nachrichtenprofis am Werk, sondern ganz normale Surfer, die selbst zu Onlinereportern werden. Das Prinzip solcher Seiten ist genial einfach: Wer irgendwo im Netz eine Meldung aufspürt, die auch andere Surfer interessieren könnte, schreibt eine kurze Zusammenfassung und reicht diese einfach ein. Dort wird dann vom Betreiber nur geprüft, ob der angegebene Link, also die Fundstelle im Netz, auch funktioniert und die Quelle seriös ist. Auf diese Weise können Falschmeldungen aussortiert werden. Nach erfolgreicher Prüfung wird aus dem Internetfundstück auch schon eine Nachricht. Wer die Meldungen liest, kann dann selbst an der Quelle überprüfen, ob er den Informationen vertraut.",
+   "summary": "فبزاف ديال المواقع الإخبارية، الناس العاديين يقدرو يوليو مراسلين. أي واحد لقى شي خبر مهم فالأنترنت يقدر يكتب خلاصة ويصيفطها، والموقع كيراجع غير واش المصدر موثوق قبل ما ينشرو."
+  },
+  {
+   "n": 5,
+   "c": "d",
+   "de": "Zu Beginn des Englischkurses fragt Verena Baum ihre Mitlernenden nach ihren Namen, wie es in einem Sprachkurs eben üblich ist. Doch statt auf einem harten Schulstuhl sitzt sie ganz bequem auf ihrem körpergerechten Schreibtischstuhl zu Hause vor ihrem PC. Vor zwei Jahren startete eine Sprachenschule vor den Toren von Frankfurt am Main auf Initiative einer pfiffigen Kursleiterin ein Pilotprojekt: Überall Englisch. Die Lernenden eignen sich ihre Sprachkenntnisse über ein Computerprogramm an, das extra für dieses Projekt entwickelt wurde. Per Internet treten sie in Dialog mit den anderen Kursteilnehmern und üben und kommunizieren gemeinsam auf Englisch. Alle sechs bis acht Wochen trifft man sich aber nach Möglichkeit an der Schule zum Austausch, zur Lernkontrolle und natürlich, um die Fragen zu beantworten, auf die der PC keine persönliche Antwort wusste. Für Verena Baum und die meisten anderen Teilnehmer an Überall Englisch war es zuerst ungewohnt, sich nicht in einem Kursraum zu treffen. Aber: „Das war eine tolle Erfahrung, und das Lernen hat großen Spaß gemacht.“",
+   "summary": "واحد المدرسة ديال اللغات دارت مشروع جديد باش الناس يتعلمو الإنجليزية فدارهم بالكمبيوتر. كيتواصلو مع بعضياتهم فالأنترنت، ومرة مرة كيتجمعو فالمدرسة باش يهضرو ويسولو الأسئلة لي ما يقدرش الكمبيوتر يجاوب عليها."
+  }
+ ]
+},
+{
+ "id": "6a3fd9ad1379c5b5ba94c7e9",
+ "order": 58,
+ "title": "Nordsee / بحر الشمال",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Beispiel Rhön: Das Land nutzen und die Natur erhalten",
+   "ar": "مثال من منطقة رون: استغلال الأرض والحفاظ على الطبيعة"
+  },
+  {
+   "k": "b",
+   "de": "Unser Tipp: Goethes Kochbuch",
+   "ar": "نصيحتنا: كتاب طهي غوته"
+  },
+  {
+   "k": "c",
+   "de": "Ältere Männer verlieren Kraft und Dynamik",
+   "ar": "الرجال الأكبر سناً يفقدون القوة والديناميكية"
+  },
+  {
+   "k": "d",
+   "de": "Beispiel Nordsee: Immer mehr einsame Menschen im Urlaub",
+   "ar": "مثال من بحر الشمال: تزايد عدد الأشخاص الوحيدين في الإجازات"
+  },
+  {
+   "k": "e",
+   "de": "Rhön-Verein bildet Bauern aus",
+   "ar": "جمعية رون تدرب المزارعين"
+  },
+  {
+   "k": "f",
+   "de": "Andere Stimme ab 70?",
+   "ar": "صوت مختلف بعد السبعين؟"
+  },
+  {
+   "k": "g",
+   "de": "Unser Gesundheits-Tipp: Nordsee!",
+   "ar": "نصيحتنا الصحية: بحر الشمال!"
+  },
+  {
+   "k": "h",
+   "de": "TENNIS FÜR ANFÄNGER",
+   "ar": "التنس للمبتدئين"
+  },
+  {
+   "k": "i",
+   "de": "Sport-Empfehlung: Schwimmen, Gehen, Radfahren",
+   "ar": "توصية رياضية: السباحة، المشي، ركوب الدراجات"
+  },
+  {
+   "k": "j",
+   "de": "Kochen und Reisen in Deutschland",
+   "ar": "الطبخ والسفر في ألمانيا"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "i",
+   "de": "Wer sportlich aktiv sein möchte, fragt sich zu Beginn oft, welche Sportart und welches Trainingspensum wohl richtig sind. Hier eine Empfehlung von Sporttherapeuten: Das ideale Trainingspensum besteht aus drei sportlichen Aktivitäten pro Woche, zwei „trockenen“ (z.B. Radfahren) und einer „nassen“ (Schwimmen). Für die Wahl der Sportarten gilt folgendes: Verzichten Sie als Anfänger auf Tennis und Squash, denn die schnellen, abrupten Bewegungen belasten Gelenke und Bänder sehr. Walking (zügiges Gehen), Radfahren und Schwimmen hingegen sind sehr empfehlenswerte Sportarten.",
+   "summary": "لي بغا يدير الرياضة كيتساءل أشنو يدير. الخبراء كينصحو بـ 3 المرات فالسيمانة: جوج ناشفين (بحال البسكلة) ووحدة فازكة (العومان). المبتدئين خاصهم يبعدو من التينس والسكواش حيت واعرين على المفاصل. المشي بالزربة، البسكلة، والعومان مزيانين بزاف."
+  },
+  {
+   "n": 2,
+   "c": "j",
+   "de": "Köstliches Deutschland (Südwest, 192 S., 19,50 Euro) – ein Buch, das zum Kochen und zum Reisen animieren will. Der Autor Udo Eckert hat sich Goethes Motto „Warum denn in die Ferne schweifen...“ zu eigen gemacht und sich auf einen kulinarischen Streifzug durch deutsche Regionen gemacht. Das Buch ist Bildband, solides Kochbuch und praktischer Gourmetführer gleichermaßen.",
+   "summary": "هاد الكتاب 'ألمانيا اللذيذة' كيشجع على الطياب والسفر. الكاتب أودو إيكرت دار جولة على الماكلة فالمناطق الألمانية. الكتاب فيه تصاور، وصفات ديال الطياب، ودليل للمأكولات."
+  },
+  {
+   "n": 3,
+   "c": "a",
+   "de": "Behutsame Landnutzung im Einklang mit der Natur hat die einmalige Landschaft der Rhön geschaffen. Wenn Sie mehr darüber wissen wollen, schreiben Sie uns oder schicken Sie uns diese Anzeige! Natur- und Lebensraum Rhön e.V., Georg-Meilinger-Str. 3, D-36115 Ehrenberg-Wüstensachsen",
+   "summary": "الاستعمال المعقول ديال الأرض مع المحافظة على الطبيعة هو لي خلق هاد المنظر الزوين ديال منطقة رون. لي بغا يعرف كثر، يراسل الجمعية ديالهم."
+  },
+  {
+   "n": 4,
+   "c": "g",
+   "de": "Allein in Salzluft, Sonne und Seewind bekommen Körper und Seele Aufwind. Nordsee – ein Klima, einzigartig und wie geschaffen für Gesundheit: mal sanft, mal rau. Auf jeden Fall belebend. Und eine Kur gibt zusätzlich Impulse. Mit den elementarsten Heilkräften der Natur. Sternstunden der Gesundheit. Informationen bei: 5-Sterne-Nordsee-Kur, Postfach 161 130, D-22510 Husum",
+   "summary": "غير بالهوا المالح ديال البحر والشمس، الجسم والروح كيرتاحو. الجو ديال بحر الشمال فريد ومزيان للصحة. العلاج تما كيعطي طاقة جديدة بقوة الطبيعة."
+  },
+  {
+   "n": 5,
+   "c": "f",
+   "de": "Dass die Stimme – vornehmlich von Männern – im Alter oft rauer klingt, liegt an altersbedingten Umbildungen des Stimmapparats im Kehlkopf. Die veränderte Stimme der Betroffenen verliert dadurch an Kraft und Dynamik und kann sich dann ungewohnt heiser oder rau anhören. Doch vor dem 70. Lebensjahr ist mit dieser natürlichen Stimmveränderung nicht zu rechnen.",
+   "summary": "الصوت ديال الرجال فاش كيكبرو كيولي حرش، وهادشي بسباب تغيرات فالحنجرة مع العمر. الصوت كيفقد القوة ديالو، ولكن هاد التغيير الطبيعي ما كيبدا يبان غالبا حتى كيفوتو 70 عام."
+  }
+ ]
+},
+{
+ "id": "6a403a131379c5b5ba94c7f1",
+ "order": 59,
+ "title": "Evolution /التطور",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Anzahl und Rolle der Arten noch unklar",
+   "ar": "عدد وأدوار الأنواع لا تزال غير واضحة"
+  },
+  {
+   "k": "b",
+   "de": "Veränderte Wanderwege von Zugvögeln",
+   "ar": "تغير مسارات هجرة الطيور المهاجرة"
+  },
+  {
+   "k": "c",
+   "de": "Wetterbedingungen könnten den Zerfall von Hochkulturen beschleunigt haben",
+   "ar": "قد تكون الظروف الجوية قد سرعت من انهيار الحضارات العريقة"
+  },
+  {
+   "k": "d",
+   "de": "Klimawandel erschwerte die Evolution",
+   "ar": "التغير المناخي أعاق التطور"
+  },
+  {
+   "k": "e",
+   "de": "Optimistische Projekte, um das Artensterben aufzuhalten",
+   "ar": "مشاريع متفائلة لوقف انقراض الأنواع"
+  },
+  {
+   "k": "f",
+   "de": "Störungen des biologischen Rhythmus von Zugvögeln",
+   "ar": "اضطرابات في الإيقاع البيولوجي للطيور المهاجرة"
+  },
+  {
+   "k": "g",
+   "de": "Der Mensch ist am Aussterben von Tierarten schuld",
+   "ar": "الإنسان مسؤول عن انقراض أنواع الحيوانات"
+  },
+  {
+   "k": "h",
+   "de": "Keine neuen Erkenntnisse über den Niedergang der Hochkultur",
+   "ar": "لا توجد معلومات جديدة حول تدهور الحضارة العريقة"
+  },
+  {
+   "k": "i",
+   "de": "Evolution durch klimatische Veränderungen begünstigt",
+   "ar": "التطور مدعوم بالتغيرات المناخية"
+  },
+  {
+   "k": "j",
+   "de": "Neue Studie belegt Verwandtschaft zwischen Säugetieren",
+   "ar": "دراسة جديدة تثبت القرابة بين الثدييات"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "f",
+   "de": "Die zunehmende Klimaveränderung macht sich bereits in der Tierwelt bemerkbar. So müssen Zugvögel ihre Eier früher legen, um sich an die wärmeren Frühjahrstemperaturen in ihren gewohnten Brutregionen anzupassen. Bei bestimmten Arten ist das Zugverhalten aber nicht nur abhängig vom Klima, sondern auch von anderen Reizen, wie zum Beispiel der Länge der Tage. Diesen Vogelarten fällt es besonders schwer, die Eiablage an die geänderten klimatischen Bedingungen anzupassen. Zugvögel, die eine besonders lange Strecke zwischen ihren Überwinterungsplätzen und den Brutstätten zurücklegen müssen, sind durch das Zusammenspiel von Temperaturänderung und anderen, unveränderten Außenbedingungen besonders leicht zu verwirren. Denn der Zeitpunkt für den Abflug aus den Überwinterungsregionen wird von Einflüssen bestimmt, die nichts mit der Temperatur zu tun haben. Einige Auslöser für die Wanderung sind auch genetisch bedingt. Die Tiere kehren in der Regel dann zurück, wenn es die meisten Insekten als Nahrung für ihren Nachwuchs gibt.",
+   "summary": "التغير المناخي بدا كيبان فالحيوانات. الطيور المهاجرة ولات كتبيض بكري باش تأقلم مع الحرارة. ولكن هاد الطيور كيصعاب عليها تأقلم حيت الهجرة ديالها مرتبطة حتى بطول النهار والجينات، وهادشي كيرونها فاش كتبغي ترجع لبلاصتها."
+  },
+  {
+   "n": 2,
+   "c": "i",
+   "de": "Das Klima hatte einen entscheidenden Einfluss auf die Entwicklung des Menschen, vermuten Wissenschaftler. Sie stellten einen Klimakalender des Menschen zusammen, demzufolge fünf dramatische Klimaänderungen zur Evolution des Menschen beigetragen haben. Die Klimawandlungen hätten diese drastisch beschleunigt. Die Notwendigkeit, sich an neue Umstände anzupassen, habe die Entwicklung des Gehirns beschleunigt und zum aufrechten Gang beigetragen. Auch die Entwicklung von verschiedenen Arbeitsgeräten sei teilweise durch den Klimawandel bedingt, denn die Veränderungen der Umweltbedingungen fielen zeitlich mit dem Erscheinen der ersten Vorfahren des Menschen in den betroffenen Gebieten zusammen. Sucht man nach einem Merkmal, das den Menschen vom Tierreich abhebt, so ist das vermutlich eine außerordentliche Unabhängigkeit gegenüber den Launen der Natur. Einer Hypothese zufolge war es das stetig wechselnde Klima, das den Mensch zum Menschen machte. Die ungewissen und sich ändernden Lebensbedingungen seien demnach während der letzten sechs Millionen Jahre der entscheidende Faktor in der Evolution des Menschen gewesen.",
+   "summary": "العلماء كيعتاقدو بلي المناخ كان عندو دور كبير فالتطور ديال الإنسان. التغيرات المناخية خلات الإنسان يطور الدماغ ديالو ويوقف على رجليه باش يتأقلم مع الظروف الجديدة. هاد التغيرات المستمرة هي لي ميزات الإنسان على الحيوانات."
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "Fast dreizehn Jahrhunderte lang blühte die Hochkultur der Maya, bis es zu ihrem Zusammenbruch kam. Fachleute diskutieren seit Jahrzehnten, was den plötzlichen Kollaps auslöste: Kriege, Hunger oder das Klima? Eine neue Studie spricht für Letzteres: Anhaltende Trockenheit führte demnach zum Untergang - zumindest indirekt. Rund um Christi Geburt entwickelte sich im Süden und Südosten Mexikos sowie in Teilen von Guatemala, Belize und Honduras die Hochkultur der Maya. In ihren Inschriften sind Kriege, Hochzeiten und Thronfolgen exakt festgehalten. Das Ende dieser Aufzeichnungen markiert auch den Beginn des Niedergangs: Zwischen dem 8. und dem 10. Jahrhundert wurden viele Städte aufgegeben und die Bevölkerung ging drastisch zurück. Für diesen Kollaps gibt es heute mehrere Erklärungen: Lange Zeit vermutete man vor allem blutige Auseinandersetzungen, Invasionen und soziale Konflikte dahinter, auch Epidemien und Naturkatastrophen standen als mögliche Auslöser zur Diskussion. Erst in den letzten zwanzig Jahren mehren sich die Stimmen, dass eine Veränderung des Klimas die Triebfeder für den Untergang der Hochkultur gewesen sein könnte.",
+   "summary": "حضارة المايا بقات مزدهرة قرون طويلة حتى طاحت فجأة. الخبراء كانو كيتساءلو واش السبب حروب ولا جوع. واحد الدراسة جديدة كتقول بلي الجفاف والتغير فالمناخ هوما لي كانو السبب الرئيسي فهاد الانهيار ديال هاد الحضارة الكبيرة."
+  },
+  {
+   "n": 4,
+   "c": "g",
+   "de": "Experten nehmen an, dass Tag für Tag rund 100 Tierarten aussterben. Sie gehen davon aus, dass innerhalb der nächsten 20 Jahre weltweit ein Viertel aller bislang bekannten Arten ausgestorben sein wird. Der Mensch treibt dieses Artensterben stark voran: Die Zerstörung von natürlichem Lebensraum, Umweltverschmutzung und Krankheiten gefährden Tiere und Pflanzen. Ohne das Einwirken des Menschen auf die verschiedenen Ökosysteme der ganzen Welt würden pro Jahr höchstens 25 Arten aussterben. Neben dem eigentlichen Verlust der jeweiligen Art hat das Aussterben der Tiere Folgen für das gesamte Ökosystem: Sein natürliches Gleichgewicht wird gestört. Wenn eine Art stirbt, sterben auch andere abhängige Arten.",
+   "summary": "الخبراء كيقولو بلي تقريبا 100 نوع ديال الحيوانات كينقارض كل نهار. الإنسان هو السبب الرئيسي فهادشي بسبب تدمير الطبيعة والتلوث. كون ماكانش الإنسان، كان غينقارضو غير 25 نوع فالعام كأقصى حد. هادشي كيخرب التوازن ديال الطبيعة كاملة."
+  },
+  {
+   "n": 5,
+   "c": "a",
+   "de": "Wie eng eine Art mit ihrem Lebensraum verbunden ist, zeigt sich oft erst, wenn sie nicht mehr da ist. War sie ein wichtiges Glied in der Nahrungskette, dann verschwinden plötzlich auch andere Lebewesen. Darüber, wie viele Arten es überhaupt gibt, gibt es unterschiedliche Schätzungen. Wissenschaftler gehen jedoch davon aus, dass der größte Teil noch gar nicht entdeckt ist. Das jetzige Tempo vorausgesetzt, würde es noch mehrere hundert Jahre dauern, bis alle Arten beschrieben sind. Wir kennen nur knapp zwei Millionen von geschätzten 30 Millionen Arten. Von sehr vielen Arten wissen wir nichts über ihre Rolle im Ökosystem – und schon gar nicht, in welcher Weise sie für den Menschen nützlich sein könnten. Aber immer mehr Lebensräume und damit Artenbestände werden ausgelöscht. Die Vereinten Nationen schätzen, dass täglich 130 Tier- und Pflanzenarten aussterben.",
+   "summary": "العلاقة بين الحيوانات والطبيعة ديالهم قوية بزاف. العلماء كيقولو بلي كاين أنواع كثار ديال الحيوانات مزال ما كتاشفناهاش، وحنا كنعرفو غير شوية منها. بزاف ديال هاد الأنواع ماعارفينش الدور ديالها فالطبيعة، والخطير هو أن الموائل ديالهم كتدمر وكينقارضو بسرعة."
+  }
+ ]
+},
+{
+ "id": "6a403bab1379c5b5ba94c7f3",
+ "order": 60,
+ "title": "Gedächtnis / ذاكرة",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Mehr Aufnahmefähigkeit durch Mnemotechnik",
+   "ar": "زيادة القدرة على الاستيعاب باستخدام تقنيات الذاكرة"
+  },
+  {
+   "k": "b",
+   "de": "Mit Mnemotechniken zum Erfolg",
+   "ar": "النجاح باستخدام تقنيات الذاكرة"
+  },
+  {
+   "k": "c",
+   "de": "Leichter lernen mit selbst gemachten Apps",
+   "ar": "التعلم بسهولة باستخدام تطبيقات مصنوعة ذاتيًا"
+  },
+  {
+   "k": "d",
+   "de": "Leichtes Lernen am Computer",
+   "ar": "التعلم بسهولة باستخدام الحاسوب"
+  },
+  {
+   "k": "e",
+   "de": "Brainfood: Power für Kopf und Körper",
+   "ar": "غذاء العقل: طاقة للجسم والعقل"
+  },
+  {
+   "k": "f",
+   "de": "Durch Faulenzen leichter lernen",
+   "ar": "التعلم بسهولة من خلال الاسترخاء"
+  },
+  {
+   "k": "g",
+   "de": "Lernen mit Kohlenhydraten",
+   "ar": "التعلم باستخدام الكربوهيدرات"
+  },
+  {
+   "k": "h",
+   "de": "Wie Sie Ihr Gedächtnis richtig trainieren",
+   "ar": "كيف تدرب ذاكرتك بشكل صحيح"
+  },
+  {
+   "k": "i",
+   "de": "Lernen ohne Anstrengung",
+   "ar": "التعلم بدون عناء"
+  },
+  {
+   "k": "j",
+   "de": "Mit Hirnjogging zur besseren Gedächtnisleistung",
+   "ar": "تحسين أداء الذاكرة من خلال تمارين العقل"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "a",
+   "de": "Das Kunstwort „Mnemo“-Technik tritt seit dem 19. Jahrhundert an die Stelle des Begriffes „Gedächtniskunst“. Sinn und Ziel der Mnemotechnik (aus dem Griechischen: „Gedächtnis“, „Erinnerung“) ist die reichhaltige Aufnahme von Informationen und deren gute Verarbeitung. Daraus kristallisiert sich ein bewusstes „sich Erinnern“ - und zwar auf Dauer! Vulgo „Eselsbrücken“ bauen, Reime bilden, innere Bilder entwickeln. Es handelt sich also um ein kluges Schema effektiven Lernens und Erinnerns. Eine wichtige Rolle dabei spielt die Assoziations-Technik. Will man sich eine Reihe verschiedener Dinge merken, ist es sinnvoll, sich diese bildhaft vorzustellen. Danach stellt man in Form einer lustigen oder schrecklichen Geschichte eine Verknüpfung her.",
+   "summary": "تقنية 'Mnemo' كتعاون على تخزين المعلومات لمدة طويلة والاستيعاب ديالها. الفكرة هي تصاوب روابط عقلية بحال صور خيالية، قوافي، أو تربط المعلومات بقصص مضحكة ولا مرعبة باش تعقل عليهم مزيان."
+  },
+  {
+   "n": 2,
+   "c": "i",
+   "de": "Stundenlanges Strebern? Das ist Geschichte. Lernen geht schneller und leichter, wenn man sich an sechs Tipps hält. Will man etwas Neues lernen, reichen wenige Minuten täglich pro Unterrichtsfach. Eine Anleitung nicht nur für Streber. Stundenlanges Lernen? Nein, danke, das kommt für die Schüler von Wilfried Helms nicht in Frage. „Wenige Minuten täglich reichen pro Unterrichtsfach, wenn man etwas Neues lernen will. Gerade wenn man Probleme in einem Fach hat, ist das genug“, sagt der Gründer des Lernzentrums „Mind Unlimited“. Einzige Bedingung: Wer wirklich etwas lernen und behalten will, braucht einen Überraschungseffekt - und ein Glücksgefühl. „Unser Gehirn ist im Grunde ein fauler Sack“, erklärt Helms, „deshalb lernt es nur, wenn es einen Grund hat.“ Das heißt, wenn es wachgerüttelt wird, weil eine neue Aufgabe verlangt wird. Das Wachrütteln von Schülerköpfen gelingt aber nur, wenn Eltern oder Lehrer eine gute Beziehung zu den Kindern haben. Denn erst die sorgt dafür, dass der Schüler nicht gleichgültig vor dem Stoff sitzt. Nur dann schüttet der Körper Stoffe aus, durch die sich das Gehirn aufs Büffeln einstellt. Das ist der Überraschungseffekt.",
+   "summary": "الحفاظة لساعات طويلة مابقاتش خدامة. دقايق قليلة فكل مادة كافية باش تتعلم مزيان بلا مجهود كبير. الشرط الوحيد هو خاص الدماغ يتفاجأ ويتحفز باش يشد المعلومات، وهادشي كيعتمد على علاقة مزيانة مع الأساتذة ولا الوالدين."
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "Wer ein digitales Quiz zusammenstellen wollte, brauchte noch vor kurzem viel Zeit und technisches Know-how. Doch das sind „Tempi passati“ - dank Michael Hielscher von der Pädagogischen Hochschule Bern. Ein Wort-Bild-Memory zu basteln, ist kinderleicht: Man tippt dazu einen Begriff ins Onlineformular ein. Danach sucht man ein passendes Bild im Wikimedia-Fundus, oder man lädt ein eigenes hoch. Und weiter geht es zum nächsten Begriff... Dank der kostenlosen Website Learningapps.org kann heute jedermann eigene Lerneinheiten erstellen und im Web publizieren. Noch vor zwei, drei Jahren musste man auf dem Weg zum eigenen Onlinequiz mehr Hürden nehmen: Es waren besondere Informatikkenntnisse erforderlich und oft war das mit viel Geld und Zeit verbunden. Zwar gibt es heute einige kostenlose E-Learning-Plattformen. Diese sind aber oft so umständlich zu bedienen, dass der Großteil der Lehrer und Kursleiter sie ignoriert.",
+   "summary": "شحال هادي، باش تصاوب كويز رقمي كان كيحتاج وقت وخبرة تقنية. دابا مع مواقع فابور بحال Learningapps.org، أي واحد يقدر يصاوب تطبيقات تعليمية ديالو بسهولة وبلا ما يحتاج يكون واعر فالمعلوماتيات."
+  },
+  {
+   "n": 4,
+   "c": "h",
+   "de": "Es ist eine Schwäche unseres Gehirns: Je älter man wird, desto schwerer wird es, sich Dinge zu merken. Viele Hirnjogging-Produkte versprechen eine bessere Gedächtnisleistung - viele davon sind jedoch nutzlos. Was aber hilft wirklich? Gedächtnisforscher wissen: Reines Auswendiglernen ist nicht genug. „Jeden Tag ein Kreuzworträtsel lösen heißt noch nicht, dass Sie sich den Einkaufzettel besser merken können.“, so Hans Georg Nehen, Professor an der Memory-Clinic in Essen. Sinnvoll seien andere einfache Übungen. „Wenn Sie an der roten Ampel stehen, gehen Sie in Gedanken Ihren Weg zurück. Wie viele Kreuzungen haben Sie passiert?“ Oder man stellt sich vor dem geistigen Auge vor, wie viele Kreuzungen noch kommen. „Schon eine geringe Trainingsdauer ist effizient“, betont Nehen, der auch dem Bundesverband Gedächtnistraining vorsitzt. Das sieht Markus Hofmann ähnlich: „Es aktiviert das Hirn, sich jeden Tag neuen geistigen Aufgaben zu stellen.“ Nicht immer dasselbe zu machen - das sei pures Gehirnjogging, sagt der Gedächtnistrainer aus München. „Putzen Sie sich mal mit links die Zähne, fahren Sie einen anderen Weg zur Arbeit, drehen Sie die Zeitung zum Lesen auf den Kopf oder dirigieren Sie bei Ihrer Lieblings-CD mit.“",
+   "summary": "ملي كنكبرو، كيولي صعيب نعقلو على الحوايج. الحفاظة بوحدها ما كافياش باش تدرب الذاكرة. الخبراء كينصحو بتمارين بسيطة فالحياة اليومية، بحال تغسل سنانك باليد ليسرية، تبدل طريق الخدمة، ولا تقلب الجريدة ملي تكون كتقرا باش تحفز دماغك."
+  },
+  {
+   "n": 5,
+   "c": "e",
+   "de": "Mit der richtigen Ernährung werden Sie zwar nicht schlauer, doch der Verzehr bestimmter Lebensmitteln soll die Konzentration und Leistungsfähigkeit steigern und Stress reduzieren. Blaubeeren, Nüsse, Avocados, Lachs und Hülsenfrüchte schmecken nicht nur unglaublich gut, sondern sind wahre Energielieferanten fürs Gehirn: Brainfood. Natürlich werden wir durch Lebensmittel nicht schlauer, die in ihnen steckenden Vitamine und Mineralstoffe können jedoch Leistungstiefs, Konzentrationsschwächen, Gereiztheit und Müdigkeit vorbeugen. Zuallererst gilt: viel trinken. Nur mit ausreichend Flüssigkeit sind ausreichende Sauerstoffversorgung und die Durchblutung von Kopf und Körper gewährleistet. Leichte Kopfschmerzen, Konzentrationsschwierigkeiten und Müdigkeit können erste Anzeichen für einen Flüssigkeitsmangel sein. Mindestens 2 Liter kalorienarmer Getränke sollten über den Tag verteilt getrunken werden: Am besten Wasser oder kalorienarme Säfte und Kräutertees. Mehr Kraft erhält der Kopf auch durch Zucker, der langsam ins Blut abgegeben wird, z.B. aus Kohlenhydraten, wie sie in Vollkornprodukten stecken. Auch die Kohlenhydrate aus Hülsenfrüchten werden erst aufgespalten und dann vom Körper aufgenommen, was für einen konstanten Blutzuckerspiegel sorgt.",
+   "summary": "الماكلة الصحية ما كتردكش ذكي، ولكن كتعاونك تركز وتعطيك طاقة بحال 'ماكلة الدماغ' (الفواكه الجافة، السلمون، لافوكا). شريب الما بزاف والسكريات البطيئة (النشويات) حتى هوما كيعطيو طاقة مستمرة للرأس والجسم باش تحارب العيا."
+  }
+ ]
+},
+{
+ "id": "6a403c9f1379c5b5ba94c7f5",
+ "order": 61,
+ "title": "Wohnen / الإقامة",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Experte sagt Wohnungsnot in Städten voraus",
+   "ar": "خبير يتوقع أزمة سكن في المدن"
+  },
+  {
+   "k": "b",
+   "de": "Selbstbestimmtes Leben im Alter für viele zu teuer",
+   "ar": "الحياة المستقلة في الشيخوخة مكلفة للكثيرين"
+  },
+  {
+   "k": "c",
+   "de": "Wie man zusätzlichen Wohnraum nutzen kann",
+   "ar": "كيفية الاستفادة من المساحات السكنية الإضافية"
+  },
+  {
+   "k": "d",
+   "de": "Hausbesitz schränkt in der Mobilität ein",
+   "ar": "امتلاك منزل يحد من القدرة على التنقل"
+  },
+  {
+   "k": "e",
+   "de": "Wohnentwürfe so divers wie die Menschen",
+   "ar": "تصاميم السكن متنوعة بقدر تنوع الناس"
+  },
+  {
+   "k": "f",
+   "de": "Ansprüche an Wohnflache altersabhängig",
+   "ar": "متطلبات المساحة السكنية تعتمد على العمر"
+  },
+  {
+   "k": "g",
+   "de": "Neuer Trend konnte fur Steigerung der Einwohnerzahl sorgen",
+   "ar": "اتجاه جديد قد يساهم في زيادة عدد السكان"
+  },
+  {
+   "k": "h",
+   "de": "Für leistbares Wohnen werden lange Wartezeiten akzeptiert",
+   "ar": "الانتظار الطويل مقبول للحصول على سكن ميسر"
+  },
+  {
+   "k": "i",
+   "de": "Landleben gibt neue Energie",
+   "ar": "الحياة الريفية تمنح طاقة جديدة"
+  },
+  {
+   "k": "j",
+   "de": "Wohnbedürfnisse der Jugend bisher vernachlässigt",
+   "ar": "احتياجات السكن لدى الشباب لم تحظ بالاهتمام الكافي حتى الآن"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "b",
+   "de": "Wer im Altes nicht mehr alleine ein eigenständiges und selbstbest führen möchte, begibt sich in Osterm metas Leben professionetien die Suche nach einer entsprechenden ung. Konventionell geführte Einrichtung und-residenzen haben alle haben allerdings dengiten Nachteil dass die dort evitenden Regeln Sie und Bewohner einschränken und diesen außerdem geboten werden, od Beschagu geboten werden. Für viele Altere beziehungsweise deren unmittelbare Angehörige ist zudem finanzielle Leistbarkeit ein ausschlaggebendes Thema denn die durchschnittliche Pension erlaubt allzu hohen Ausgaben. Eine günstigere Alternative bietet nun ein neues, aus einer Kooperation.",
+   "summary": "الناس لي كيكبرو فالسن مكيبقاوش قادرين يعيشو بوحدهم، وكيقلبو على مؤسسات. ولكن هاد المؤسسات كتقيد الحرية وغالية بزاف، حيت التقاعد مكيكفيش باش يخلصوها. داكشي علاش كيقلبو على بدائل رخص."
+  },
+  {
+   "n": 2,
+   "c": "j",
+   "de": "Als junger Mensch in Wien auf Wohnungssuche zu sein, ist allenfalls eine große Herausforderung Wer ein Studium an der Universität oder Fachhochschule aufnimmt oder gerade einen Ausbildungsplatz in der Hauptstadt Österreich erhalten hat, dem fehlen allzu oft die finanziellen Mittel, um ein halbwegsder annehmbares Quartern zu finden. Die antargichen Kosten, die bereits vor dem Einzug in die neue Wohnung fällig sind, können durch die geforderte Kaution von meist drei Bruttomonatsmieten sowie die Vermittlungsgebühren für Maklerbüros enorm hoch werden. Um eine günstige Gemeindewohnung beantragen zu können, muss man bereits mehrere Jahre in Wien hauptgemeldet sein, und auch dann ist Geduld ungebracht. Bei einer Anmeldung sind zudem gleich alle Suchkriterien festzulegen, also etwa Wunschbezirk und Quadratmeteranzahl. Für jene, die gerade die ersten selbstständigen Schritte tun, lässt sich allerdings die Zukunft kaum so genau vorausplanen, Gemeindewohnungen sind daher meist keine Option. Die Stadt Wien will nun in den kommenden Jahren zunehmend Wohnprojekte mit flexiblen Vertragsbedingungen und kurzen Kündigungsfristen fördern und sich damit stärker an der Situation junger Leute orientieren.",
+   "summary": "صعيب على الشباب والطلبة يلقاو سكن ففيينا حيت غالي، وكاين مصاريف ديال الضمانة والسمسار. سكن البلدية كيطلب تسنى بزاف، داكشي علاش المدينة غتبدا مشاريع بسكن مرن كيتناسب مع الوضعية ديال الشباب."
+  },
+  {
+   "n": 3,
+   "c": "e",
+   "de": "Wohnen wie immer? Laut Ansicht des renommierten Zukunftsforschers Adrian Gregorius wird sich in Innerhalb der nächsten paar Jahrzehnte ein Wandel in unseren Wohnkultur vollziehen, der durch die Bevölkerungszunahme in den Städten bedingt wird. Die Konzentration eines großen Anteils der Bevölkerung im Stadtgebiet sieht Gregorius - im deutlich wahrnehmbaren Gegensatz zum ungebremsten Landschaftsverbrauch in den umliegenden Regionen jedoch keineswegs grundsätzlich als Problem. Vielmehr sei das Leben in der Stadt, wenn es richtig geplant und umgesetzt werde, sowohl ressourcen-als auch energieschonend. Des Weiteren entfalle der klimaschädliche und stressige Berufsverkehr und eine private Autonutzung werde weitgehend überflüssig, da die gesamte städtische Infrastruktur vor Ort zur Verfügung stehe. Nicht nur die Dichte, sondern auch die veränderten Gesellschaftsstrukturen werden es daher erforderlich machen, das Konzept des Wohnens in privaten und flexibel gemeinschaftlich nutzbaren Räumen adäquat anzupassen sowie Naturflächen im Nahbereich neu zu gestalten. Einheitslösungen könne es dabei nicht geben, so der Zukunftsforscher. Unterschiedliche Lebens-, Bau- und Wohnformen müssten Vielfalt der Stadtbewohner Rechnung tragen.",
+   "summary": "خبير كيتوقع تغيير فثقافة السكن حيت المدن غتعمر. العيش فالمدينة مزيان للبيئة حيت كينقص طرونسبور وتلوث. خاص مساحات مشتركة ومتنوعة حيت الناس مختلفين ومكاينش حل واحد كيصلح لكلشي."
+  },
+  {
+   "n": 4,
+   "c": "g",
+   "de": "Dass sich die Menschen einmal danach sehnen würden, möglichst wenig Wohnfläche zur Verfügung zu haben, hätte wohl niemand vermutet. Eine neue, von den Vereinigten Staaten ausgehende Bewegung zielt nun darauf ab, sich von überflüssigen Materialien Dingen zu trennen und nur mehr das zu behalten, was auf einer Fläche von 15 bis 20 Quadratmetern Platz findet. Die sogenannten Tiny Houses, also kleinen Häuser, erfreuen sich auch in Österreich immer größerer Beliebtheit, da ihre Anschaffungskosten gering sind und sie bei Bedarf auch per LKW an einen anderen Standort gebracht werden können. Dadurch ist man als Besitzer eines solchen Eigenheims sehr flexibel, was die Wahl des Wohnorts anbelangt. Es bedarf nur eines kleinen Stellplatzes der für eine bestimmte Zeit gemietet oder gepachtet wird. Besonders vonseiten ländlicher Gemeinden, die stark vom Abzug Einheimischer betroffen sind, besteht großes Interesse daran, dass auf diese Art Personen in entlegeneren Ortschaften wieder ansässig werden. Deswegen wurden mancherorts oftmals auf Initiative der Bürgermeister - bereits Vermittlungsbörsen für Interessierte eingerichtet.",
+   "summary": "كاين تريند جديد ديال 'الديور الصغار' (Tiny Houses) لي فيهم 15-20 متر مربع. رخاص وتقدر تنقلهم فكاميو. هادشي خلى قرى فالعروبية لي خواو من السكان تستغل هاد التريند باش تجيب سكان جداد للمناطق ديالهم."
+  },
+  {
+   "n": 5,
+   "c": "f",
+   "de": "Wer hat insgeheim nicht jenen Tag herbeigesehnt, an dem die Kinder endlich selbstständig werden, eigenes Geld verdienen, das gemeinsame Zuhause verlassen und man das eigene Leben wieder in die Hand nehmen kann? Für viele Eltern ist jedoch das Fehlen des Nachwuchses in den heimischen vier Wänden letztendlich ein richtiger Schlag, der das Ende eines Lebensabschnitts signalisiert, in welchem man als Versorger gebraucht wurde. Zu alledem gesellt sich der Umstand, dass man sich des eigenen Älterwerdens zunehmend bewusst wird. Tatsächlich kommt nun also eine schwierige, oftmals zu Depressionen führende Phase der Umorientierung auf die Eltern zu. Um das Gefühl von Einsamkeit und Leere zu überwinden, entschließt sich so manches Paar zu dem durchaus radikalen Schritt, das nun für zwei ältere Personen viel zu große Heim zu veräußern und sich etwas Kleineres und Günstigeres zu suchen, das besser zu den neuen Gegebenheiten passt, anstatt die vorhandenen, nun freistehenden Räumlichkeiten im Familienheim umzugestalten oder für einen eventuellen Besuch der Kinder.",
+   "summary": "الوالدين كيفرحو ملي ولادهم كيستاقلو، ولكن ملي كيخويو الدار كيحسو بالفراغ والاكتئاب. باش يتجاوزو هادشي، بزاف كيقرو يبيعو دار العائلة الكبيرة لي ولات خاوية ويشريو وحدة صغيرة ورخيصة لي كتناسب العمر والاحتياجات ديالهم دابا."
+  }
+ ]
+},
+{
+ "id": "6a53bf895ba214d1df537e45",
+ "order": 62,
+ "title": "Lebensmodelle",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Alt und Jung vereint.",
+   "ar": "اتحاد الكبار والصغار."
+  },
+  {
+   "k": "b",
+   "de": "Wenn die Eltern Hilfe brauchen.",
+   "ar": "عندما يحتاج الوالدان إلى المساعدة."
+  },
+  {
+   "k": "c",
+   "de": "Patchwork: Reiz und Risiko.",
+   "ar": "العائلات المختلطة: الجاذبية والمخاطر."
+  },
+  {
+   "k": "d",
+   "de": "Weniger ist mehr.",
+   "ar": "الأقل هو الأكثر."
+  },
+  {
+   "k": "e",
+   "de": "Karrieretipps für junge Mütter.",
+   "ar": "نصائح مهنية للأمهات الشابات."
+  },
+  {
+   "k": "f",
+   "de": "Die Suche nach dem idealen Wohnort.",
+   "ar": "البحث عن مكان السكن المثالي."
+  },
+  {
+   "k": "g",
+   "de": "Gefahren der sozialen Medien für Kinder.",
+   "ar": "مخاطر وسائل التواصل الاجتماعي على الأطفال."
+  },
+  {
+   "k": "h",
+   "de": "Sportvereine als Treffpunkt für Singles.",
+   "ar": "الأندية الرياضية كمكان لقاء للعزاب."
+  },
+  {
+   "k": "i",
+   "de": "Finanzielle Planung für den Ruhestand.",
+   "ar": "التخطيط المالي للتقاعد."
+  },
+  {
+   "k": "j",
+   "de": "Die Rückkehr in den Beruf nach der Elternzeit.",
+   "ar": "العودة إلى العمل بعد إجازة الوالدين."
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "b",
+   "de": "Viele Menschen in der Mitte ihres Lebens stehen vor einer doppelten Belastung. Einerseits fordern die eigenen Kinder noch viel Aufmerksamkeit, andererseits werden die eigenen Eltern langsam gebrechlich. Wenn der Vater plötzlich nicht mehr alleine einkaufen kann oder die Mutter stürzt, müssen oft die Kinder die Organisation übernehmen. Das kostet nicht nur Zeit, sondern auch viel emotionale Kraft. Experten raten hier dazu, frühzeitig über professionelle Pflegedienste nachzudenken, um die eigene Familie zu entlasten und die Beziehung zu den Eltern nicht durch Überforderung zu belasten.",
+   "summary": "بزاف د الناس فمنتصف العمر كيعيشو ضغط مضاعف: مقابلين ولادهم الصغار وفنفس الوقت والديهم للي كبار وعياو. ملي الأب ما كيبقاش يقدر يتقد أولا الأم كطيح، خاص ولادهم يتكلفو بكلشي. هادشي كياخد الوقت والجهد النفسي، داكشي علاش الخبراء كينصحو يشوفو خدمات رعاية احترافية باش يخففو على راسهم."
+  },
+  {
+   "n": 2,
+   "c": "d",
+   "de": "Immer mehr Paare entscheiden sich heute für einen bewussten Verzicht auf Überfluss. Anstatt das Wochenende im Einkaufszentrum zu verbringen, entrümpeln sie gemeinsam die Wohnung oder verbringen Zeit in der Natur. Der Grundgedanke: Wer weniger besitzt, muss weniger aufräumen, reparieren und finanzieren. Das spart Zeit und Geld, was wiederum direkt der Familie zugutekommt. Besonders für Eltern mit kleinen Kindern kann diese Lebensweise helfen, den Alltagsstress deutlich zu reduzieren und den Fokus auf das Wesentliche zu legen – das Miteinander.",
+   "summary": "بزاف د الكوبلات دابا كيتخليو على كترت القش والمشتريات الزايدة. بلاصة ما يدوزو الويكاند فالروينة د الشوبينغ، كيجمعو دارهم وكيخرجو للطبيعة. الفكرة هي أنك يلا ملكتي أقل، غترون أقل وتخسر قل، وهادشي كينقص الستريس على العائلات لي عندهم دراري صغار."
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "Wenn zwei Menschen mit Kindern aus früheren Beziehungen eine neue Gemeinschaft bilden, ist das oft ein mutiger Schritt. Was in der Theorie schön klingt, erfordert in der Praxis viel Geduld und diplomatisches Geschick. Die Kinder müssen sich an neue Geschwister und neue Regeln gewöhnen, während die Erwachsenen versuchen, allen Bedürfnissen gerecht zu werden. Oft gibt es Konflikte um die Erziehung oder den Kontakt zu den Ex-Partnern. Psychologen betonen, dass es Zeit braucht, bis aus zwei Gruppen eine echte Einheit wird.",
+   "summary": "ملي جوج ناس مطلقين وعندهم ولاد من علاقات قديمة كيتجمعو باش يديرو عائلة جديدة (باتشورك)، هادي خطوة شجاعة ولكن صعيبة فالتطبيق. الدراري خاصهم يولفو خوت جداد وقواعد جداد، وكتوقع مشاكل على قبل التربية أولا التواصل مع الشريك القديم. هادشي كيطلب وقت باش تولي عائلة وحدة."
+  },
+  {
+   "n": 4,
+   "c": "a",
+   "de": "Früher war es ganz normal, dass mehrere Generationen in einem Haus lebten. Heute feiert dieses Konzept als „Mehrgenerationenhaus“ ein Comeback. Hier wohnen nicht zwangsläufig Verwandte zusammen, sondern oft auch fremde ältere Menschen und junge Familien. Die Senioren helfen bei der Kinderbetreuung oder geben Nachhilfe, während die Jüngeren schwere Einkäufe erledigen oder bei technischen Problemen helfen. Dieses Modell bietet eine solution gegen die Einsamkeit im Alter und hilft jungen Eltern, den Alltag ohne teure Babysitter zu bewältigen.",
+   "summary": "شحال هادي كان عادي يعيشو بزاف د الأجيال فدار واحدة، ودابا هاد الفكرة رجعات تحت سمية 'دار الأجيال المشتركة'. ماشي بالضرورة يكونو عائلة، كيقدرو يسكنو ناس كبار وعائلات شباب مع بعضياتهم. الكبار كيعاونو فالدراري والصغار كيقضيو ليهم الغراض بحال التقدية والمشاكل التقنية، وهادشي كيحارب العزلة عند الكبار وكيخفف على الوالدين."
+  },
+  {
+   "n": 5,
+   "c": "f",
+   "de": "Die Frage, wo die Kinder aufwachsen sollen, sorgt bei vielen Paaren für Diskussionen. In der Metropole sind die Wege kurz, die kulturellen Angebote groß und die Schulen vielfältig. Doch die Mieten sind hoch und es ist oft laut. Draußen im Grünen hingegen gibt es viel Platz und Sicherheit, aber man ist auf das Auto angewiesen und verbringt viel Zeit mit Pendeln zur Arbeit. Letztlich ist es eine Abwägung zwischen Lebensqualität im Freien und der praktischen Infrastruktur der Großstadt, die jede Familie individuell treffen muss.",
+   "summary": "البلاصة فين غيكبرو الدراري كتدير ديما نقاش بين الكوبلات. فالمدينة الكبيرة كلشي قريب وكاينين مدارس بزاف ولكن الكرا غالي والصداع. وفالعروبية أو الطبيعة كاين التيساع والأمان، ولكن خاصك ضروري الطوموبيل وضياع الوقت فالطريق للخدمة. فالتالي كل عائلة خاصها تختار بين الطبيعة أولا ليفراستريكتور ديال المدينة."
+  }
+ ]
+},
+{
+ "id": "6a96e6cfab4e500a2d1290db",
+ "order": 63,
+ "title": "Gesundheit / Symptomen",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Wetterbeschwerden: So gehen Sie mit Symptomen um",
+   "ar": "ألم الطقس: كيفاش تعامل مع الأعراض"
+  },
+  {
+   "k": "b",
+   "de": "Schlaflos? Wann Sie sich besser ärztlichen Rat holen sollten",
+   "ar": "ما كيجيكش النعاس؟ وقتاش خاصك تمشي تشوف الطبيب"
+  },
+  {
+   "k": "c",
+   "de": "Mögliche Gesundheitsrisiken durch Mikroplastik im Körper",
+   "ar": "المخاطر الصحية المحتملة ديال الميكروبلاستيك فالجسم"
+  },
+  {
+   "k": "d",
+   "de": "Mehr Schlaf, weniger Kilos",
+   "ar": "نعاس كتر، كيلوات أقل"
+  },
+  {
+   "k": "e",
+   "de": "Wie viel Schlaf ist gesund?",
+   "ar": "شحال ديال النعاس صحي؟"
+  },
+  {
+   "k": "f",
+   "de": "Powernap, joggen oder frische Luft? Was wirklich wach macht",
+   "ar": "قيلولة، جري، ولا هوا نقي؟ شنو لي كيفيقك بصح"
+  },
+  {
+   "k": "g",
+   "de": "Naschen statt schlafen? Warum wir spätabends oft snacken",
+   "ar": "السقاطة بلاصة النعاس؟ علاش كناكلو بزاف بالليل"
+  },
+  {
+   "k": "h",
+   "de": "Ursachen und Strategien gegen Tagesmüdigkeit",
+   "ar": "أسباب واستراتيجيات ضد العيا ديال النهار"
+  },
+  {
+   "k": "i",
+   "de": "Wenn das Wetter den Körper stresst",
+   "ar": "ملي الجو كيعي الجسم"
+  },
+  {
+   "k": "j",
+   "de": "Mikroplastik: Die unsichtbare Gefahr im Alltag",
+   "ar": "الميكروبلاستيك: الخطر الخفي فالحياة اليومية"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "f",
+   "de": "Viele Menschen kennen das: Um die Mittagszeit kommt plötzlich die große Müdigkeit und es fällt schwer, sich auf die Arbeit zu konzentrieren. Zum Glück hat die Schlafmedizinerin Charlotte Bruckner ein paar einfache Tipps, die helfen, wieder fitter zu werden: 1. Stehen Sie auf, gehen Sie ein paar Schritte oder machen Sie Gymnastik. Noch besser ist ein kurzer Spaziergang an der frischen Luft. 2. Eine kalte Dusche am Morgen und ein paar Spritzer Wasser ins Gesicht regen den Kreislauf an. 3. Lüften Sie regelmäßig, am besten stoßlüften. Der kühlere Luftstrom wirkt erfrischend. 4. Kaffee kann helfen; die Wirkung spüren wir nach 15 bis 30 Minuten. 5. Die effektivste Methode ist ein kurzes Nickerchen. Schlafen Sie nicht länger als 30 Minuten.",
+   "summary": "بزاف د الناس كيجيهم العيا فوقت الغدا. واحد الطبيبة عطات نصائح باش تفيق، بحال تتمشى شوية، تاخد دوش بارد، تهوي البيت، تشرب قهوة، ولا أحسن حاجة دير قيلولة خفيفة ما تفوتش 30 دقيقة."
+  },
+  {
+   "n": 2,
+   "c": "d",
+   "de": "Fühlen Sie sich morgens oft wie gerädert und greifen zu Süßem oder Fettigem? Damit sind Sie nicht allein. Zahlreiche Studien zeigen, dass Schlafmangel mit Heißhunger und Übergewicht zusammenhängt. Eine Untersuchung mit rund 70 Studierenden ergab: Wer vier bis fünf Stunden pro Nacht schläft, entwickelt deutlich mehr Appetit - vor allem auf Ungesundes. Schlafmangel beeinflusst die Hungerhormone Ghrelin und Leptin. Eine Studie aus den USA zeigte, dass Menschen, die ihre Schlafdauer verlängerten, weniger Kalorien zu sich nahmen und Gewicht verloren.",
+   "summary": "قلة النعاس كتخليك تفيق عيان وكتشهى الماكلة الحلوة والدهنية. الدراسات بينات بلي النعاس القليل كيزيد فالهرمونات ديال الجوع وكيعطيك الشهية للماكلة الخايبة، واللي كينعس مزيان كينقص الوزن."
+  },
+  {
+   "n": 3,
+   "c": "i",
+   "de": "Wenn die Temperaturen plötzlich stark schwanken, merken viele Menschen, dass sich ihr Körper nur schwer anpasst. Tatsächlich muss unser Organismus ständig daran arbeiten, die Körpertemperatur bei etwa 37 Grad zu halten. Gesunde Menschen spüren diese Anpassung oft gar nicht. Bei Wetterempfindlichen können Müdigkeit, Kopfschmerzen, Reizbarkeit oder Kreislaufprobleme auftreten. Besonders Menschen mit Rheuma oder Herz-Kreislauf-Problemen reagieren. Auch das Frühjahr ist belastend: Die Tage werden heller, die Melatoninproduktion sinkt und der Körper muss das Gleichgewicht zwischen Melatonin und Serotonin neu einstellen.",
+   "summary": "ملي الحرارة كتبدل بالزربة، الجسم كيلقى صعوبة باش يتأقلم. الناس لي حساسين للجو كيجيهم العيا، الحريق د الراس، والأعصاب. وحتى الربيع كيكون صعيب حيت الجسم خاصو يوازن بين الميلاتونين والسيروتونين."
+  },
+  {
+   "n": 4,
+   "c": "c",
+   "de": "Mikroplastik ist mittlerweile allgegenwärtig. Es befindet sich in Lebensmitteln, im Trinkwasser und sogar in der Luft. Forschende warnen vor möglichen gesundheitlichen Risiken. In einer neuen Studie wurden bei fast 800 Personen im Alter zwischen 20 und 80 Jahren verschiedene Proben untersucht und in unterschiedlichen Organen Mikroplastik gefunden. Besonders alarmierend war, dass ältere Menschen mit einem hohen Anteil an Mikroplastik häufiger an Erkrankungen von Leber oder Nieren litten. Die Wissenschaft beurteilt einen starken Anstieg als sehr bedenklich und empfiehlt verschiedene Maßnahmen, um die Aufnahme zu reduzieren: Wasser aus Glasflaschen trinken, Leitungswasser nutzen und Lebensmittel nicht in Plastikbehältern erhitzen.",
+   "summary": "الميكروبلاستيك ولى فكل بلاصة: فالماكلة، الما، وحتى فالهوا. دراسات جديدة لقاتو فأعضاء ديال بزاف د الناس، والناس الكبار لي عندهم نسبة طالعة كيمرضو بالكبدة والكلاوي. الخبراء كينصحو نشربو الما فقرع الدجاج ومانسخنوش الماكلة فالبلاستيك."
+  },
+  {
+   "n": 5,
+   "c": "b",
+   "de": "Sie liegen nachts lange wach und wälzen sich im Bett hin und her? Wenn das häufiger vorkommt, sollten Sie genauer hinsehen. Schlafstörungen sind weit verbreitet und können auf gesundheitliche Probleme hinweisen. Typische Warnzeichen sind, dass Sie sehr lange zum Einschlafen brauchen, nachts häufig aufwachen oder früh wach werden und nicht wieder einschlafen. Nächtliche Insomnie kann sich schnell auf den Alltag auswirken und zu Tagesmüdigkeit, Konzentrationsschwäche und Gereiztheit führen. Wenn die Schlafprobleme mindestens drei Nächte pro Woche und länger als drei Monate auftreten, spricht man von chronischer Insomnie. Häufige Auslöser sind psychische Erkrankungen, Angststörungen oder Suchterkrankungen. Im Gegensatz zu kurzfristigem schlechten Schlaf sollte anhaltende Insomnie ärztlich abgeklärt werden.",
+   "summary": "يلا كنتي كتبقى فايق بالليل ومكيجيكش النعاس بزاف د المرات، خاصك ترد البال. قلة النعاس المزمنة كتدير العيا فالدراسة والخدمة. الأسباب تقدر تكون نفسية، وهادشي خاصو استشارة ديال الطبيب."
+  }
+ ]
+},
  
