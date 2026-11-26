@@ -3761,4 +3761,1418 @@ window.SAHLA_DATA.b2.lesen.teil1 = [
   }
  ]
 },
+ {
+ "id": "6928d63e2a1fd213c2d78ba9",
+ "order": 41,
+ "title": "الانتخابات_و_المرأة_الروسية",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Der heutige Anteil von Frauen im Medizinstudium",
+   "ar": "النسبة الحالية للنساء في دراسة الطب"
+  },
+  {
+   "k": "b",
+   "de": "Die Frauen in der Französischen Revolution",
+   "ar": "النساء في الثورة الفرنسية"
+  },
+  {
+   "k": "c",
+   "de": "Eine Pionierin der akademischen Frauenausbildung",
+   "ar": "رائدة في تعليم المرأة الأكاديمي"
+  },
+  {
+   "k": "d",
+   "de": "Entwicklung des Frauenstimmrechts",
+   "ar": "تطور حق المرأة في التصويت"
+  },
+  {
+   "k": "e",
+   "de": "Frauen erreichen zunehmend bessere Noten im Studium",
+   "ar": "النساء يحققن تدريجياً درجات أفضل في الدراسة"
+  },
+  {
+   "k": "f",
+   "de": "Geschlechtsspezifische Entscheidungen an der Wahlurne",
+   "ar": "القرارات المتعلقة بالجنس عند صناديق الاقتراع"
+  },
+  {
+   "k": "g",
+   "de": "STUDENTINNEN AUF DER ÜBERHOLSPUR",
+   "ar": "الطالبات في المسار السريع"
+  },
+  {
+   "k": "h",
+   "de": "Umfrage verspricht Erfolg der grünen Wahlkandidatin",
+   "ar": "استطلاع يعد بنجاح المرشحة الخضراء في الانتخابات"
+  },
+  {
+   "k": "i",
+   "de": "Vorkämpferinnen für das Frauenwahlrecht",
+   "ar": "المناضلات من أجل حق المرأة في التصويت"
+  },
+  {
+   "k": "j",
+   "de": "Wieder Demonstrationen für freie Wahlen",
+   "ar": "مظاهرات جديدة من أجل انتخابات حرة"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "c",
+   "de": "In Russland 1843 als Tochter eines Bauern geboren, schafte es Nadeschda Suslowe ins Gymnasium. Mit 16 Jahren erhielt sie ihr Diplom als Hauslehrerin. Das war der höchste Abschluss, den eine Frau damals in Russland erreichen konnte. Doch Nadeschda wollte mehr. Die junge Frau wollte Ärztin werden.Weil es ihr in Russland aber nicht erlaubt war, eine Hochschule zu besuchen,ging sie ins Ausland. An der Universität Zürich konnten Frauen schon seit einigen Jahren Vorlesungen besuchen. Nadeschda Suslowe war die erste Frau, die sich ordentlich an der Universität einschreiben durtte, und gleichzeitig die erste Russin an der Züricher Universität. Am 14. Dezember 1867 machte die damals 24-Jahrige ihr Examen.Sie war die erste promovierte Ärztin in der Schweiz und in Russland. ,Ich bin die Erste, aber nicht die Letzte. Nach mir werden Tausende kommen. Davon war sie überzeugt, und sie sollte recht behalten. Nach ihrem Abschluss ging sie zurück nach Russland und gründete dort eine eigene Praxis für Frauen- und Kinderheilkunde.",
+   "summary": "ناديجدا سوسلوفا تولدات فـ1843 فروسيا فواحد العائلة ديال الفلاحة. مع 16 عام خداّت ديبلوم ديال معلمة فالدار، اللي كان أقصى حاجة توصل ليها المرأة فداك الوقت. ولكن هي بغات تولي طبيبة. حيث فروسيا ما كانوش كيسمحوا للنساء يقراو فالجامعة، مشات لزوريخ فسويسرا، اللي كانت كاتسمح بالنساء. تسجلات وولات أول روسية فالجامعة، وفـ1867 خداّت الدكتوراه، وولات أول طبيبة متخرجة رسمياً فسويسرا وروسيا. قالت: \"أنا الأولى، ولكن ماشي الأخيرة، من بعدي غادي يجي آلاف.\" من بعد رجعات لروسيا وفتحات عيادة خاصة بالنساء والأطفال."
+  },
+  {
+   "n": 2,
+   "c": "d",
+   "de": "Dass Frauen wählen und gewählt werden dürfen, ist heutzutage selbstverständlich. Doch das war nicht immer so. Überall auf der Welt mussten sie lange erbittert um ihr Wahlrecht streiten. In Europa war die Französin Olympe de Gouges eine der ersten Frauen die sich aktiv für das Wahlrecht der Bürgerinnen einsetzten. Sie forderte zu Zeiten der Französischen Revolution die rechtliche, politische und soziale Gleichstellung der Frau. Dies wurde zur Grundlage für die Einführung des Frauenwahlrechts in Europa. Frankreich gehörte allerdings nicht zu den ersten Ländern,in denen das Wahlrecht für Frauen realisiert wurde. Das geschah zuerst 1838 in der britischen Kolonie Pitcairn, einer Insel im südlichen Pazifik. Es folgten einzelne nordamerikanische Staaten, Neuseeland und Sudaustralien. In Europa erlangten die Frauen das Wahlrecht zuerst in Finnland, zu Beginn des 19. Jahrhunderts In Frankreich, dem Heimatland von Olympe de Gouges, wurde es erst 1944 eingeführt. Als eines der letzten europäischen Länder führte die Schweiz das Frauenwahlrecht 1971 ein - durch eine Volksabstimmung der männlichen Bevölkerung.",
+   "summary": "فالزمان ماكانوش العيالات عندهم الحق يصوتو، وكانو خاصهم يناضلو بزاف باش يحققوه. أول وحدة ف أوروبا اللي دعات لهاد الحق هي الفرنسية **Olympe de Gouges** فالثورة الفرنسية. أول بلاصة طبقوه فيها كانت جزيرة Pitcairn سنة 1838، ومن بعد نيوزيلندا وأستراليا. فأوروبا أول بلد عطى هاد الحق هو فنلندا، وفرنسا حتى 1944، أما سويسرا حتى 1971."
+  },
+  {
+   "n": 3,
+   "c": "f",
+   "de": "Das Wahlverhalten von Frauen hat sich in den letzten Jahrzehnten verändert: In den 50er Jahren wählten verheiratete Frauen oft noch so wie ihre Männer. Vor allem in der Mittelschicht zeigten sie eine deutliche Vorliebe für konservative Parteien. Die politischen Unruhen von 1968 hingegen hinterließen ihre Spuren im Wahlverhalten der Frauen. Sie wählten nun deutlich weniger konservativ und stimmten für Parteien, die sie in ihrem Anspruch auf Gleichberechtigung und Selbstständigkeit unterstützten.Auch heute wählen Männer und Frauen in vielen Ländern unterschiedlich. Frauen scheinen für radikale Parteien weniger Sympathie aufzubringen als Männer, während ihnen Gleichberechtigung ein großes Anliegen ist. Die Sorge um die Umwelt schlägt sich in einem höheren Anteil an Frauenstimmen für grüne Parteien nieder. Frauen wählen auch gerne Frauen. Deshalb geben sie ihre Stimmen bevorzugt Parteien, die mehr Kandidatinnen auf ihren Listen führen. Insgesamt scheint einiges darauf hinzudeuten, dass Frauen rationaler wählen als Männer.",
+   "summary": "فالخمسينات العيالات كانوا كيصوتو بحال رجالهم وكييميلو بزاف للأحزاب المحافظة. من بعد أحداث 1968 تبدلات العقليات وبداو العيالات كيميلو لأحزاب كيدافعو على المساواة والاستقلالية. دابا العيالات كيهتمو بزاف بالمساواة والبيئة، وكيصوتو بزاف على الأحزاب الخضرا وكيميلو يعطيو أصواتهم لليستات اللي فيها نساء بزاف. بصفة عامة العيالات كيبان كيصوتو بعقلانية أكثر من الرجال."
+  },
+  {
+   "n": 4,
+   "c": "g",
+   "de": "In den vergangenen Jahrzehnten hat sich das Geschlechterverhältnis bei Studierenden stark verändert. Nicht nur bei Studienanfängern sind Frauen in der Mehrzahl, sondern auch unter jenen, die ein Hochschulstudium abschließen. Doch das ist noch nicht alles: Weibliche Studierende absolvieren das Studium schneller als ihre Kommilitonen und schlieBen es auch häufiger erfolgreich ab. Allerdings ist die Erfolgs- und Abschlussquote nicht in allen Studienrichtungen gleich. Am größten ist der Abstand beim Musikstudium: Mehr als 70 Prozent der Frauen schließen es tatsächlich ab, während rund 50 Prozent der männlichen Studienanfänger es abbrechen. Unterschiedliche Erfolgsquoten der Geschlechter lassen sich an den meisten Universitäten beobachten; nur vereinzelt sind sie gleich hoch oder bei Männern sogar etwas höher. Warum das so ist, darüber können Wissenschaftlervorerst nur Vermutungen anstellen. Die höchsten Abschlussquoten erreichen übrigens die Universitäten, für die es eine Zugangsbeschränkung gibt.",
+   "summary": "فهاد السنين اللي فاتت تبدلات بزاف النسبة ديال الذكور والإناث فالجامعة. دابا العيالات ماشي غير كثار من الرجال فالمسجلين الجداد، ولكن حتى اللي كيساليو قرايتهم بنجاح. البنات كيساليو قرايتهم أسرع وكيتوفقو أكثر، خصوصا فالموسيقى اللي كيساليو فيها 70% من البنات مقابل غير النص ديال الدراري. هاد الفرق كيبان فبزاف ديال التخصصات، وقليل فين كيكونو متقاربين ولا الرجال أحسن. السبب مازال ما واضحش مزيان، غير تخمينات ديال العلماء."
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Suffragetten\" so nannte man Anfang des 19. Jahrhunderts die Frauen, die sich in Großbritannien für das allgemeine Frauenwahlrecht einsetzten. Der Begriff kommt von suffrage, was im Französischen und im Englischen Wahlrecht\" bedeutet. Emmeline Pånkhurstund ihre Töchter zählen zu den bekanntesten Persönlichkeiten der britischen Frauenbewegung. Sie setzten zunächst auf die Methode des passiven Widerstandes. Als der erhoffte Erfolg ausblieb und Gesetzesänderüngen abgelehnt wurden, griffen sie zu immer härteren Mitteln, bis hin zu Brand- und Bombenanschlägen. Pankhurst wurde immer wieder verhatet und eingesperrt, lhr Kampf für das Wahlrecht der Frauen wurde durch den Ersten Weltkrieg unterbrochen. Nach Kriegsende bekamen Frauen ab 21 Jahren das Recht, zur Parlamentswahl anzutreten. Selbst wählen durften sie allerdings erst ab 30. Dass Frauen dasselbe Wahlrecht Wie die Männer erhielten, erlebte Emmeline Pankhurst nicht mehr. Sie war drei Wochen vor dessen Einführung am 2. Juli 1928 gestorben.",
+   "summary": "فبريطانيا فبداية القرن 19 كانو كيسمّيو العيالات اللي كيناضلو على حق التصويت \"Suffragetten\". من بين المشهورين فهاد الحركة كانت Emmeline Pankhurst وبناتها. فالأول دارو مقاومة سلمية، ولكن ملي ما جاباش النتيجة بداو يستعملو وسائل قاصحة بحال الحرائق والانفجارات. فالأخير ومن بعد الحرب العالمية الأولى عطاو للعيالات حق يترشحو فالبرلمان من 21 عام، ولكن يصوتو حتى للي عندهم 30 عام. Emmeline ما عاشتش تشوف النهار اللي تساوا فيه العيالات مع الرجال فحق التصويت."
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78baa",
+ "order": 42,
+ "title": "Kein Zeit",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Keine Zeit für die Kinder",
+   "ar": "لا يوجد وقت للأطفال"
+  },
+  {
+   "k": "b",
+   "de": "Vorsicht vor zweifelhaften Kontaktagenturen!",
+   "ar": "احذر من وكالات الاتصال المشبوهة!"
+  },
+  {
+   "k": "c",
+   "de": "Liebe fürs Leben muss wachsen",
+   "ar": "الحب الحقيقي يحتاج إلى وقت للنمو"
+  },
+  {
+   "k": "d",
+   "de": "Mehr Zeit für Hobbys",
+   "ar": "المزيد من الوقت للهوايات"
+  },
+  {
+   "k": "e",
+   "de": "Partnervermittlungen generell empfehlenswert",
+   "ar": "وكالات الزواج موصى بها بشكل عام"
+  },
+  {
+   "k": "f",
+   "de": "Wer sucht, der findet",
+   "ar": "من يبحث يجد"
+  },
+  {
+   "k": "g",
+   "de": "Probleme bei der Kindererziehung",
+   "ar": "مشاكل في تربية الأطفال"
+  },
+  {
+   "k": "h",
+   "de": "Partnervermittlung per Telefon",
+   "ar": "الوساطة الزوجية عبر الهاتف"
+  },
+  {
+   "k": "i",
+   "de": "Wenn die Kinder aus dem Haus sind",
+   "ar": "عندما يغادر الأطفال المنزل"
+  },
+  {
+   "k": "j",
+   "de": "Zeitprobleme in der Familie",
+   "ar": "مشاكل الوقت في العائلة"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "j",
+   "de": "Die Krüger sind eine ganz normale Familie. Vater Bernd arbeitet 40 Stunden pro Woche in einer Versicherungs-agentur, Mutter Yvonne hat einen Teilzeitjob als Arzthelferin. Das Paar hat zwei Kinder. Tom ist neun, linda ist vier Jahre alt. Nach ihrer Arbeit holt Yvonne die beiden aus der Schule und dem Kindergarten ab. Dann geht sie einkaufen, sie wäscht, putzt und kocht, sie bringt Tom zum Fußballtraining oder Linda zum Turnen. Wenn Bernd abends nach Hause kommt, kontrolliert er noch Hausaufgaben oder besucht seinen alten Vater, der immer öfter seine Hilfe braucht. Bernd Krüger kann sich nicht erinnern, wann er das letzte Buch gelesen hat. Für Sport bleibt keine Zeit, Freunde treffen seine Frau und er eher selten. Und wenn dann ein langer Tag zu Ende geht und die beiden Kinder endlich schlafen, sitzen Bernd und Yvonne Krüger total müde auf der Couch. In vielen Familien ist es ähnlich. Vor allem Eltern befindet sich in der Gefahr, die Doppellast von Beruf und Familie nicht mehr tragen zu können. Was hilft, ist Zeitmanagement. Der Begriff ist allerdings missverständlich. Die Zeit lässt sich nicht managen. Wir können uns nur selbst managen.",
+   "summary": "هاد النص كيحكي على عائلة Krüger عايشين حياة عادية بحال بزاف دالناس: الراجل خدام بزاف فالوكالة، والمرأة خدامة بارطايـم وزايدة على هاد الشي كتسهر على الدار والأولاد. حياتهم كلها جري، ما بقا عندهمش وقت للراحة ولا للرياضة ولا حتى باش يشوفو صحابهم. فالآخر كيطيحو عيانين فالكنبة. النص كيبين بلي بزاف دالعائلات كيعانيو من هاد الضغط، والحل هو يتعلمو كيفاش ينظمُو راسهم ووقتهم مزيان، حيث الوقت فحد ذاتو ما يمكنش يتحكمُو فيه."
+  },
+  {
+   "n": 2,
+   "c": "b",
+   "de": "Der Wunsch nach der Zweisamkeit hat sich zu einem guten Geschäft entwickelt, denn gerade reiferen Alleinstehenden fällt es oft schwer, neue Partnerschaften herzustellen. Vermittlungsagenturen bieten ihre Dienste im Internet oder in den Tageszeitungen an. Neben vielen seriösen Firmen finden sich auf dem Markt aber auch zahlreiche Schwarze Schafe. Bei solchen Anbietern beginnen die Tricks bereits bei den Anzeigen in der Zeitung oder im Netz. Dort stellen Personen angeblich sich selbst vor. Ihre Beschreibung ist direkte auf die Wünsche älterer Singles zugeschnitten, oft genug auch schon mit ansprechendem „Originalfoto“. Wer die angegebene Telefonnummer wählt, muss dann plötzlich feststellen, es in Wirklichkeit mit einer Partnervermittlungsagentur zu tun zu haben. Und die gehen dann in der Regel schnell und aggressiv vor. Es wird ein Treffen vereinbart - und wenn man sich wirklich darauf einlassen möchte, heißt es schon hier: Aufgepasst! Wird nämlich ein neutraler Treffpunkt, beispielsweise ein Café vereinbart, verliert der Kunde sein 14-tägiges Widerrufs- bzw. Rücktrittsrecht, das ihm bei einem Hausbesuch zustehen und ihn von einem vielleicht zu schnell unterschriebenen Vertrag befreien würde.",
+   "summary": "هاد النص كيهضر على وكالات التعارف اللي ولات تجارة كبيرة خصوصاً عند الناس الكبار اللي صعيب عليهم يلقاو شريك حياة. كاين وكالات مزيانين، ولكن كاين بزاف ديال النصابين: كيديرو إعلانات فالجرايد ولا فالانترنت بصور ووصفات وهمية، ومن بعد كيتواصل معاهم الزبون كيلقا راسو قدام وكالة تعارف كتضغط عليه باش يوقع العقد. المشكل الكبير هو إلا تلاقاو فالخارج (بحال فقهيوة) الزبون كايضيع حقو فالتراجع اللي عندو إلا جاو لعندو للدار."
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "die Partnerschaft verläuft in Phasen. Fast jede Liebe beginnt mit einer Hochphase der Verliebtheit. Ist diese Phase vorüber, folgt eine Phase des satten Glücks, in der beide den Wunsch haben, mit diesem Menschen ein ganzes Leben zu verbringen. Fast alle Paare bin danach eine Zeit, in der der Alltag in die Beziehung eintritt. Man ist gezwungen, sich in einem realistischeren Licht zu sehen. In der folgenden Stress- und Streitphase geht es darum, die Bedingungen des Zusammenlebens festzulegen, Lösungen für Partnerschaft und Beruf zu inden. Bleibt ein Paar nach dieser schwierigen Phase zusammen, festigt sich die Partnerschaft in der fünften Phase weiter und wird ruhiger. Die Partner inden zu sich selbst, erlauben sich gegenseitig mehr freie Zeit und eigene Interessen. In der letzten Phase bildet sich, was man die Liebe fürs Leben nennen kann. In der Beziehung haben sich so viel Sicherheit und Vertrauen gebildet, dass die Beziehung eine feste Basis für die Zukunft hat.",
+   "summary": "هاد النص كيهضر على المراحل ديال العلاقة بين جوج: كتبدأ بالحب القوي ومرحلة العشق، من بعد كيجيو أيام السعادة والرغبة فالمشاركة ديال الحياة. مع الوقت كيدخل الروتين وكايبان الواقع، وهادشي كيجيب معاها مشاكل وخلافات خاصة فالتنظيم بين الحياة الزوجية والخدمة. إلا تجاوزو هاد المرحلة، العلاقة كترسى وكاتولي أهدأ، وكايعطيو لبعضهم الحرية والمساحة الشخصية. فالآخر كتكون الثقة كبيرة بزاف وكيبان الحب اللي كيدوم طول العمر."
+  },
+  {
+   "n": 4,
+   "c": "f",
+   "de": "Knapp 13 Millionen Singul-Haushalte - d.h. Haushalte von Alleinlebenden - gibt es in Deutschland, und das meist unfreiwillig. Fast jeder, der alleine lebt, wünscht sich der richtigen Partner. Doch wie und wo ist er oder sie zu finden? Oftmals stecken Singles in einer schwierigen Situation: Wer lange allein gelebt hat, wünscht sich zwar eine feste Bindung, gleichzeitig wächst aber auch die Angst davor. Dieses Wechselbad aus Wollen und Vorsichtig-Sein macht die Sache immer schwieriger - und nicht selten vergehen so die Jahre des Alleinseins. Zwar sollte man die Hoffnung nie aufgeben, den oder die Richtige irgendwann zufällig zu finden. Aber dass die Traumfrau auf einmal an die Tür klopft oder ganz plötzlich der Traumprinz auf einem weißen Schimmel um die Ecke reitet, ist ziemlich unwahrscheinlich: Deswegen lautet der Rat für alle Singles, ob es Ihnen gefällt oder nicht: Ausgehen, Ausgehen, Ausgehen.",
+   "summary": "هاد النص كيهضر على الناس اللي كايعيشو بوحدهم فألمانيا، حوالي 13 مليون. بزاف منهم باغيين يلقاو شريك حياتهم، ولكن الخوف من الارتباط وكترة السنوات بوحدهم كيصعب عليهم هاد المهمة. النص كينصح أي واحد بوحدو باش يخرج، يتعرف على الناس، ويشارك فأنشطة باش يزيد فرصو فاللقاء مع الشريك المناسب، حيت ماشي غالباً غادي يجي ليه صدفةً."
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Nach dem Abitur, zum Studium oder weil der Zeitpunkt einfach gekommen ist: Wenn die Kinder ausziehen, verändert sich viel, auch für die Eltern. Neben der Freude, endlich wieder Zeit und Raum für sich zu haben, entsteht auch eine Leere, die es nun zu füllen gilt. Erika Paxmann hat drei Kinder. Benni, Anna und Alina. Zwei ihrer Kinder sind schon ausgezogen, innerhalb von vier Monaten. Zurück blieben die Eltern und die 14-jährige Alina. Noch während die Kinder zu Hause wohnten, hat Erika Paxmann sich beruflich weitergebildet und sich neue Aufgaben gesucht. Trotzdem war sie traurig, als die Kinder auszogen. Die Selbständigkeit des Kindes bedeutet, dass auch die Eltern wieder ein unabhängiges Leben führen können. Die Ehepartner habe wieder mehr Zeit füreinander. Das kann auch bisher unbewusste Probleme an den Tag bringen. Viele Partner müssen sich erst wieder an ein Leben zu zweit gewöhnen. Hilfreich ist es, sich schon frühzeitig auf ein Leben „ohne“ Kinder einzustellen. Man kann sich z.B. beruflich fortbilden oder anderen eigenen Interessen nachgehen. Die Umstellung, wenn die Kinder ausziehen, ist dann nicht mehr so groß.",
+   "summary": "هاد النص كيهضر على الوقت اللي كيتخرج فيه الولاد من الدار بعد الباك أو باش يقراو، وكيفاش هادشي كيأثر على الوالدين. من جهة كاين الفرح حيث الوالدين كايوليو عندهم وقت لأنفسهم، ومن جهة أخرى كاينة فراغ وحزن على الولاد اللي مشاو. النص كينصح باش الوالدين يوجدو راسهم لهاد المرحلة من قبل، يقراو، يمارسو هواياتهم، ويقضيو وقت مع بعضهم باش يكون الانتقال أسهل ويستافدو من الحرية الجديدة."
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78bab",
+ "order": 43,
+ "title": "Kein Zeit (معدل)",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Terminduck schon bei Kindern",
+   "ar": "ضغط المواعيد حتى لدى الأطفال"
+  },
+  {
+   "k": "b",
+   "de": "Vorsicht vor zweifelhaften Kontaktagenturen!",
+   "ar": "احذر من وكالات التواصل المشبوهة!"
+  },
+  {
+   "k": "c",
+   "de": "Liebe fürs Leben muss wachsen",
+   "ar": "الحب الحقيقي يحتاج إلى الوقت لينمو"
+  },
+  {
+   "k": "d",
+   "de": "Kinder bleiben immer länger bei den Eltern wohnen",
+   "ar": "الأطفال يبقون لفترة أطول مع الوالدين"
+  },
+  {
+   "k": "e",
+   "de": "Partnervermittlungen generell empfehlenswert",
+   "ar": "التوصية العامة بخدمات التوفيق بين الشركاء"
+  },
+  {
+   "k": "f",
+   "de": "Aktive Partnersuche gegen das Alleinsein",
+   "ar": "البحث النشط عن شريك لمواجهة الوحدة",
+   "mod": true
+  },
+  {
+   "k": "g",
+   "de": "Probleme bei der Kindererziehung",
+   "ar": "مشاكل في تربية الأطفال"
+  },
+  {
+   "k": "h",
+   "de": "Partnervermittlung per Telefon",
+   "ar": "التوفيق بين الشركاء عبر الهاتف"
+  },
+  {
+   "k": "i",
+   "de": "Wenn die Kinder aus dem Haus sind",
+   "ar": "عندما يغادر الأطفال المنزل"
+  },
+  {
+   "k": "j",
+   "de": "Zeitprobleme in der Familie",
+   "ar": "مشكلات الوقت داخل الأسرة",
+   "mod": true
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "j",
+   "de": "Die Krüger sind eine ganz normale Familie. Vater Bernd arbeitet 40 Stunden pro Woche in einer Versicherungs-agentur, Mutter Yvonne hat einen Teilzeitjob als Arzthelferin. Das Paar hat zwei Kinder. Tom ist neun, linda ist vier Jahre alt. Nach ihrer Arbeit holt Yvonne die beiden aus der Schule und dem Kindergarten ab. Dann geht sie einkaufen, sie wäscht, putzt und kocht, sie bringt Tom zum Fußballtraining oder Linda zum Turnen. Wenn Bernd abends nach Hause kommt, kontrolliert er noch Hausaufgaben oder besucht seinen alten Vater, der immer öfter seine Hilfe braucht. Bernd Krüger kann sich nicht erinnern, wann er das letzte Buch gelesen hat. Für Sport bleibt keine Zeit, Freunde treffen seine Frau und er eher selten. Und wenn dann ein langer Tag zu Ende geht und die beiden Kinder endlich schlafen, sitzen Bernd und Yvonne Krüger total müde auf der Couch. In vielen Familien ist es ähnlich. Vor allem Eltern befindet sich in der Gefahr, die Doppellast von Beruf und Familie nicht mehr tragen zu können. Was hilft, ist Zeitmanagement. Der Begriff ist allerdings missverständlich. Die Zeit lässt sich nicht managen. Wir können uns nur selbst managen.",
+   "summary": "هاد النص كيحكي على عائلة Krüger عايشين حياة عادية بحال بزاف دالناس: الراجل خدام بزاف فالوكالة، والمرأة خدامة بارطايـم وزايدة على هاد الشي كتسهر على الدار والأولاد. حياتهم كلها جري، ما بقا عندهمش وقت للراحة ولا للرياضة ولا حتى باش يشوفو صحابهم. فالآخر كيطيحو عيانين فالكنبة. النص كيبين بلي بزاف دالعائلات كيعانيو من هاد الضغط، والحل هو يتعلمو كيفاش ينظمُو راسهم ووقتهم مزيان، حيث الوقت فحد ذاتو ما يمكنش يتحكمُو فيه.",
+   "mod": true
+  },
+  {
+   "n": 2,
+   "c": "b",
+   "de": "Der Wunsch nach der Zweisamkeit hat sich zu einem guten Geschäft entwickelt, denn gerade reiferen Alleinstehenden fällt es oft schwer, neue Partnerschaften herzustellen. Vermittlungsagenturen bieten ihre Dienste im Internet oder in den Tageszeitungen an. Neben vielen seriösen Firmen finden sich auf dem Markt aber auch zahlreiche Schwarze Schafe. Bei solchen Anbietern beginnen die Tricks bereits bei den Anzeigen in der Zeitung oder im Netz. Dort stellen Personen angeblich sich selbst vor. Ihre Beschreibung ist direkte auf die Wünsche älterer Singles zugeschnitten, oft genug auch schon mit ansprechendem „Originalfoto“. Wer die angegebene Telefonnummer wählt, muss dann plötzlich feststellen, es in Wirklichkeit mit einer Partnervermittlungsagentur zu tun zu haben. Und die gehen dann in der Regel schnell und aggressiv vor. Es wird ein Treffen vereinbart - und wenn man sich wirklich darauf einlassen möchte, heißt es schon hier: Aufgepasst! Wird nämlich ein neutraler Treffpunkt, beispielsweise ein Café vereinbart, verliert der Kunde sein 14-tägiges Widerrufs- bzw. Rücktrittsrecht, das ihm bei einem Hausbesuch zustehen und ihn von einem vielleicht zu schnell unterschriebenen Vertrag befreien würde.",
+   "summary": "هاد النص كيهضر على وكالات التعارف اللي ولات تجارة كبيرة خصوصاً عند الناس الكبار اللي صعيب عليهم يلقاو شريك حياة. كاين وكالات مزيانين، ولكن كاين بزاف ديال النصابين: كيديرو إعلانات فالجرايد ولا فالانترنت بصور ووصفات وهمية، ومن بعد كيتواصل معاهم الزبون كيلقا راسو قدام وكالة تعارف كتضغط عليه باش يوقع العقد. المشكل الكبير هو إلا تلاقاو فالخارج (بحال فقهيوة) الزبون كايضيع حقو فالتراجع اللي عندو إلا جاو لعندو للدار.",
+   "mod": true
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "Wie entsteht eine langfristige Beziehung? – Was viele nicht wissen: Die Partnerschaft verläuft in Phasen. Fast jede Liebe beginnt mit einer Hochphase der Verliebtheit. Ist diese Phase vorüber, folgt eine Phase des satten Glücks, in der beide den Wunsch haben, mit diesem Menschen ein ganzes Leben zu verbringen. Fast alle Paare erleben danach eine Zeit, in der der Alltag eintritt. Man ist gezwungen, sich in einem realistischeren Licht zu sehen. In der Folge entstehen Stress- und Streitphasen, die darum gehen, die Bedingungen des Zusammenlebens festzulegen. Lösungen für Partnerschaft und Beruf zu finden. Bleibt ein Paar nach dieser schwierigen Phase zusammen, festigt sich die Partnerschaft in der falschen Phase weiter und wird ruhiger. Die Partner finden zu sich selbst, erleben sich gegenseitig mehr frei. Zeit und gemeinsame Interessen. Die Beziehung endet letzten Endes nicht mehr als was man sich denkt. Die Beziehung hat sich so viel Vertrauen gebildet, dass die Beziehung eine feste Basis für die Zukunft hat",
+   "summary": "العلاقة طويلة المدى كدوز من مراحل. كتبدا غالباً بمرحلة الحب القوي، من بعد كيجّي الإحساس بالسعادة والاستقرار. منين كيدخل الروتين، كتطلع المشاكل والستريس وكيكون خاص التفاهم وتنظيم العيش. إلا صبرو على هاد المرحلة، العلاقة كترتاح وكيولي فيها الثقة والاستقرار للمستقبل.",
+   "mod": true
+  },
+  {
+   "n": 4,
+   "c": "f",
+   "de": "Knapp 13 Millionen Single-Haushalte gibt es in Deutschland, und das meist unfreiwillig. Fast jeder, der allein lebt, wünscht sich einen Partner. Doch wie und wo ist er oder sie zu finden? Oftmals stecken Singles in einer schwierigen Situation: Wer lange allein gelebt hat, wünscht sich zwar eine feste Bindung. gleichzeitig wächst aber auch die Angst davor. Dieses Wechselbad aus Wollen und Vorsichtig-Sein macht die Sache immer schwieriger - und nicht sollen vergehen so die Jahre des Alleinseins. Zwar sollte man die Hoffnung nie aufgeben, den oder die Richtige irgendwann zufällig zu finden. Aber dass die Traumfrau auf einmal an die Tür klopft oder plötzlich der Traumprinz auf einem weißen Schimmel um die Ecke reitet, ist unwahrscheinlich. Deswegen lautet der Rat für alle Singles: Ergreifen Sie die Initiative!",
+   "summary": "كاين تقريباً 13 مليون واحد ساكن بوحدو ف ألمانيا، وأغلبهم كيتمنوا يلقاو شريك حياتهم. اللي كيبقى بوحدو مدة طويلة كيولي باغي يرتبط ولكن ف نفس الوقت خايف، وهادشي كيصعب القضية. صعيب بزاف أن فارس الأحلام يجي يدق عليك فالباب غير هكاك وبلا مجهود. داكشي علاش النصيحة هي أن الواحد خاصو يدير المبادرة ويتحرك باش يلقى النصيب ديالو.",
+   "mod": true
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Nach dem Abitur, zum Studium oder weil der Zeitpunkt einfach gekommen ist: Wenn die Kinder ausziehen, verändert sich viel, auch für die Eltern. Neben der Freude, endlich wieder Zeit und Raum für sich zu haben, entsteht auch eine Leere, die es nun zu füllen gilt. Erika Paxmann hat drei Kinder. Benni, Anna und Alina. Zwei ihrer Kinder sind schon ausgezogen, innerhalb von vier Monaten. Zurück blieben die Eltern und die 14-jährige Alina. Noch während die Kinder zu Hause wohnten, hat Erika Paxmann sich beruflich weitergebildet und sich neue Aufgaben gesucht. Trotzdem war sie traurig, als die Kinder auszogen. Die Selbständigkeit des Kindes bedeutet, dass auch die Eltern wieder ein unabhängiges Leben führen können. Die Ehepartner habe wieder mehr Zeit füreinander. Das kann auch bisher unbewusste Probleme an den Tag bringen. Viele Partner müssen sich erst wieder an ein Leben zu zweit gewöhnen. Hilfreich ist es, sich schon frühzeitig auf ein Leben „ohne“ Kinder einzustellen. Man kann sich z.B. beruflich fortbilden oder anderen eigenen Interessen nachgehen. Die Umstellung, wenn die Kinder ausziehen, ist dann nicht mehr so groß.",
+   "summary": "هاد النص كيهضر على الوقت اللي كيتخرج فيه الولاد من الدار بعد الباك أو باش يقراو، وكيفاش هادشي كيأثر على الوالدين. من جهة كاين الفرح حيث الوالدين كايوليو عندهم وقت لأنفسهم، ومن جهة أخرى كاينة فراغ وحزن على الولاد اللي مشاو. النص كينصح باش الوالدين يوجدو راسهم لهاد المرحلة من قبل، يقراو، يمارسو هواياتهم، ويقضيو وقت مع بعضهم باش يكون الانتقال أسهل ويستافدو من الحرية الجديدة.",
+   "mod": true
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78bac",
+ "order": 44,
+ "title": "Limonade",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Limonade aus dem Wasserhahn",
+   "ar": "ليمونادة من صنبور الماء"
+  },
+  {
+   "k": "b",
+   "de": "Limonade ist moderner als Wasser",
+   "ar": "الليمونادة أكثر عصرية من الماء"
+  },
+  {
+   "k": "c",
+   "de": "Sommer bedeutet in Zukunft nicht unbedingt Sonne",
+   "ar": "الصيف في المستقبل لا يعني بالضرورة الشمس"
+  },
+  {
+   "k": "d",
+   "de": "Mehr Sauerstoff im Wasser macht müde Menschen fit",
+   "ar": "المزيد من الأكسجين في الماء يجعل الأشخاص المتعبين نشطين"
+  },
+  {
+   "k": "e",
+   "de": "Viel Wasser trinken - Gesundheit tanken",
+   "ar": "شرب الكثير من الماء - تعزيز الصحة"
+  },
+  {
+   "k": "f",
+   "de": "Frische Luft macht stark",
+   "ar": "الهواء النقي يقوي"
+  },
+  {
+   "k": "g",
+   "de": "Die Sonne macht Landwirten Probleme",
+   "ar": "الشمس تسبب مشاكل للمزارعين"
+  },
+  {
+   "k": "h",
+   "de": "Sprudel hausgemacht – Zeit des Flaschen-Tragens ist vorbei",
+   "ar": "المياه الغازية محلية الصنع - زمن حمل الزجاجات انتهى"
+  },
+  {
+   "k": "i",
+   "de": "Alarm: Nitrat im Regenwasser bedroht die Gesundheit",
+   "ar": "إنذار: النترات في مياه الأمطار تهدد الصحة"
+  },
+  {
+   "k": "j",
+   "de": "Vom Regen zum Mineralwasser",
+   "ar": "من المطر إلى المياه المعدنية"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "f",
+   "de": "Möchten Sie Kraft, Jugend und Gesundheit aus der Flasche? Dann suchen Sie bei Ihrem nächsten Einkauf im Supermarkt nach Sauerstoff-Mineralwasser. Für den etwas doppelten Preis eines normalen Mineralwassers erhalten Sie dann ein Getränk, von dem die Hersteller versprechen, dass es Ihnen - natürlich nur, wenn Sie es regelmäßig trinken - magische Kräfte verleiht. In einer Umfrage wurden Schülerinnen und Schüler in Bayern nach ihren Erfahrungen mit dem Sauerstoffkraftdrink befragt. Die meisten fanden, dass es nicht anders schmeckt als andere Mineralwässer auch. Das Deutsche Institut für Ernährungsforschung in Potsdam hält es für Unsinn, Wasser mit Sauerstoff anzureichern. Der menschliche Körper nimmt Sauerstoff hauptsächlich über die Atemluft auf, höchstens 0,3 % können auch über den Magen-Darm-Trakt aufgenommen werden. Möchten Sie immer noch Kraft, Jugend und Gesundheit? Dann gehen Sie doch einfach mehr an die frische Luft. Und die ist kostenlos.",
+   "summary": "هاد النص كيهضر على \"ماء معدني مع الأوكسجين\" اللي كيتباع فالسوبرماركات بثمن مضاعف وكايقولولك الشركات باللي يعطيك قوة وصحة وشباب إلا شربتيه بزاف. واحد الاستطلاع مع التلاميذ فبافاريا بيّن أنو المذاق ديالو بحال أي ماء معدني عادي. المعهد الألماني للتغذية فبوتسدام كيقول باللي هادشي غير خرافة، حيث الجسم كيأخذ الأوكسجين من التنفس وماشي من الماء (غير 0,3% ممكن يدخل من المعدة). والخلاصة: إلا بغيتي الصحة والشباب، خرّج تنفّس فلهواء الطلق، وهو مجاني."
+  },
+  {
+   "n": 2,
+   "c": "j",
+   "de": "Wenn es regnet, dann fließt das Regenwasser in den Erdboden, der es wie ein Schwamm aufsaugt. Langsam sickert das Wasser dann in immer tiefere Erdschichten, in dene es gefiltert und gereinigt wird. Aus dem Regenwasser ist Trinkwasser geworden. Schließlich sammelt es sich in einer Schicht aus Sandstein, wo es sich mit älterem Wasser vermischt. Mehrere tausend Jahre lang kann das Trinkwasser so in den Tiefen der Erde ruhen. Durch Brunnen, die bis in die tiefen Sandsteinschichten reichen, kann dann Mineralwasser gewonnen werden. 10,6 Milliarden Liter Mineralwasser sind im letzten Jahr in Deutschland verkauft und getrunken worden. Gesteinsschichten wie Ton oder Kalk schüten es seit Jahrtausenden vor Verunreinigungen. Jedoch gelangt in den letzen Jahrzehnten Nitrat durch übermäßige Düngung in der Landwirtschaft vermehrt in das Trinkwasser und stellt langfristig eine Gesundheitsbedrohung für die Menschen dar.",
+   "summary": "النص كيشرح كيفاش كيتحوّل مياه المطر لمياه شرب: كتنزل فالأرض، كتصفّى عبر الطبقات وكتخزن آلاف السنين فالرمال. من تما كيتجاب الماء المعدني عبر الآبار. فألمانيا كيشربو بزاف (أكثر من 10,6 مليار لتر فعام واحد). الصخور بحال الطين والكالك كيحميوه من الوسخ، ولكن فالعقود الأخيرة دخل النيتـرات بزاف بسبب الأسمدة ديال الفلاحة، وهادي ولات خطر صحي على المدى البعيد."
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "Nach den Unwettern der letzten Sommer sprechen Meteorologen in ganz Europa davon, dass sich das Klima weltweit dramatisch verändert. Stabile Sommer mit Sonnenschein pur von Juni bis August sollen selbst am Mittelmeer in Zukunft passé sein. Die durch Treibhausgase aufgeheizte Atmosphäre hat sich erwärmt, mehr Wasser verdunstet durch die höheren Temperaturen aus den Ozeanen und prasselt in extrem starken Unwettern mit Donner, Blitz und Hagel auf die Erde. Dort kann die Erde nicht mehr solche Mengen Wassers aufnehmen wie in kürzester Zeit fallen. Die Folge davon sind Überschwemmungen. Kurze Sonnenscheinperioden werden sich mit Unwetterfronten abwechseln und vielen Menschen den Badespaß an den Stränden nicht nur des Mittelmeeres gründlich verderben. Doch auch den Landwirten bereiten die stärkeren Unwetter Sorgen. Denn die starken Niederschläge mit Hagel zerstören nicht selten einen großen Teil der Ernte und bescheren so manchen landwirtschaftlichen Betrieben große inanzielle Probleme.",
+   "summary": "النص كيهضر على التغييرات المناخية اللي ولات واضحة فأوروبا: الصهد وتزايد الغازات الدفيئة خلى المحيطات يتبخر منهم الماء بزاف، ومن بعد كيطيح فشكل عواصف قوية فيها الرعد والبرد. النتيجة: الفيضانات وتخريب المحاصيل الفلاحية، الشي اللي كيدير مشاكل مالية كبيرة للفلاحة، وحتى السياحة غادي تتأثر حيت الصيف مايبقاش مستقر وحتى فالمتوسط الشمش غادي تتخلط مع العواصف."
+  },
+  {
+   "n": 4,
+   "c": "h",
+   "de": "Wozu noch Kästen mit Mineralwasserflaschen nach Hause schleppen, wenn es sich doch bequem zu Hause zubereiten lässt. Tatsächlich ist das Leitungswasser, das aus den Wasserhähnen in deutschen Wohnungen fließt, von guter bis sehr guter Qualität. Einzig das Prickeln auf der Zunge, das durch das Hinzufügen von Kohlensäure in viele Mineralwässer ensteht, fehlt bei dem Leitungswasser. Doch auch hier gibt es bereits eine preiswerte Möglichkeit, dies selbst zu zun: mit einer Sodamaschine. Damit lassen sich Sprudel und Limonaden selbst herstellen, ganz nach dem individuellen Geschmack des Nutzers: mal mit mehr, mal mit weniger Prickeln, mal süßer, mal fruchtiger. Und das Wasser kommt wie von selbst ins Haus, das Tragen und Stapeln von Getränkekästen ist für den cleveren Selbsthersteller Vergangenheit.",
+   "summary": "النص كيقول باللي ما بقاتش حاجة أنك تشري قراعي ديال الماء المعدني وتجرهم للدار، حيث ماء الروبيني فـ ألمانيا عندو جودة مزيانة. الفرق الوحيد هو الغاز اللي كيعطي داك الإحساس فالفم، ولكن حتى هادي ممكن تديرها فدارك بسوداماشين اللي كتخليك تصايب ماء غازي أو حتى ليموناد حسب ذوقك، بلا صداع ديال القراعي والسطولة."
+  },
+  {
+   "n": 5,
+   "c": "e",
+   "de": "Wasser ist zum Waschen da\" lautete ein deutscher Schlager Mitte der 1950er, in dem es weiter hieß: \"Auch zum Zähneputzen kann man es benutzen.\" Wasser zu trinken schien damals manchen Leuten nicht in die neue Wohlstandswelt zu passen. Süße Limonaden galten als besser als einfach nur Wasser. Dabei raten heute die meisten Ärzte zum Wassertrinken: \"Trinken Sie täglich mindestens 2,5 Liter davon\", steht auch in nahezu allen medizinischen Ratgebern von heute. Mineralwasser hat, wie man heute wieder weiß, durch seine mineralischen Inhaltsstoffe Natrium, Kalium, Magnesium, Calzium und Spurenelemente für den menschlichen Körper viele Vorteile: Es gleicht den Mineral- und Flüssigkeitsverlust beim Schwitzen aus, es fördert die Verdauung und das alles ohne den Körper belastenden Zucker und ohne Kalorien. Ob aus der Heimat oder - wie in den jetzt modischen Wasserbars - von der Insel Hawaii oder vom Südpol: Wasser ist wieder zum Trinken da.",
+   "summary": "النص كيهضر على كيفاش فالخمسينات كانو الناس كيشوفو الماء غير للغسيل وتنظيف السنان، وكانو كيفضلو يشربو ليموناد حلوة. دابا الأطباء كينصحو نشربو على الأقل 2.5 لتر ماء فالنهار، حيت فيه معادن مهمة بحال كالسيوم ومغنيزيوم وكيساعد فالهضم وكيعوض السوائل والمعادن اللي كنفقدوها، وبدون سكر ولا سعرات حرارية. اليوم الماء رجع ضروري للشرب، سواء المحلي أو حتى اللي جاي من بلايص بعاد."
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78bad",
+ "order": 45,
+ "title": "Limonade (1معدل)",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "note": "ملاحظة:التعديل موجود فقط في اجابه واحده وتم تغيير ترتيب العناوين",
+ "options": [
+  {
+   "k": "a",
+   "de": "Alarm: Nitrat im Regenwasser bedroht die Gesundheit",
+   "ar": "إنذار: النترات في مياه الأمطار تهدد الصحة"
+  },
+  {
+   "k": "b",
+   "de": "Die Sonne macht Landwirten Probleme",
+   "ar": "الشمس تسبب مشاكل للمزارعين"
+  },
+  {
+   "k": "c",
+   "de": "Frische Luft als wahre Energiequelle",
+   "ar": "الهواء النقي كمصدر حقيقي للطاقة",
+   "mod": true
+  },
+  {
+   "k": "d",
+   "de": "Limonade - als modernes Kultgetränk wieder im Trend",
+   "ar": "الليمونادة - كمشروب ثقافي عصري تعود للموضة"
+  },
+  {
+   "k": "e",
+   "de": "Limonade aus dem Wasserhahn",
+   "ar": "ليمونادة من صنبور المياه"
+  },
+  {
+   "k": "f",
+   "de": "Mehr Sauerstoff im Sprudel macht fit",
+   "ar": "المزيد من الأكسجين في المياه الغازية يعزز اللياقة"
+  },
+  {
+   "k": "g",
+   "de": "Sommer bedeutet in Zukunft nicht unbedingt Sonne",
+   "ar": "الصيف في المستقبل لا يعني بالضرورة الشمس"
+  },
+  {
+   "k": "h",
+   "de": "Sprudel hausgemacht – Zeit des Flaschen-Tragens ist vorbei",
+   "ar": "المياه الغازية محلية الصنع - انتهى زمن حمل الزجاجات"
+  },
+  {
+   "k": "i",
+   "de": "Viel Wasser trinken - Gesundheit tanken",
+   "ar": "شرب الكثير من الماء - تعزيز الصحة"
+  },
+  {
+   "k": "j",
+   "de": "Vom Regen zum Mineralwasser",
+   "ar": "من المطر إلى المياه المعدنية"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "c",
+   "de": "Möchten Sie Kraft, Jugend und Gesundheit aus der Flasche? Dann suchen Sie bei Ihrem nächsten Einkauf im Supermarkt nach Sauerstoff-Mineralwasser. Für den etwas doppelten Preis eines normalen Mineralwassers erhalten Sie dann ein Getränk, von dem die Hersteller versprechen, dass es Ihnen - natürlich nur, wenn Sie es regelmäßig trinken - magische Kräfte verleiht. In einer Umfrage wurden Schülerinnen und Schüler in Bayern nach ihren Erfahrungen mit dem Sauerstoffkraftdrink befragt. Die meisten fanden, dass es nicht anders schmeckt als andere Mineralwässer auch. Das Deutsche Institut für Ernährungsforschung in Potsdam hält es für Unsinn, Wasser mit Sauerstoff anzureichern. Der menschliche Körper nimmt Sauerstoff hauptsächlich über die Atemluft auf, höchstens 0,3 % können auch über den Magen-Darm-Trakt aufgenommen werden. Möchten Sie immer noch Kraft, Jugend und Gesundheit? Dann gehen Sie doch einfach mehr an die frische Luft. Und die ist kostenlos.",
+   "summary": "هاد النص كيهضر على \"ماء معدني مع الأوكسجين\" اللي كيتباع فالسوبرماركات بثمن مضاعف وكايقولولك الشركات باللي يعطيك قوة وصحة وشباب إلا شربتيه بزاف. واحد الاستطلاع مع التلاميذ فبافاريا بيّن أنو المذاق ديالو بحال أي ماء معدني عادي. المعهد الألماني للتغذية فبوتسدام كيقول باللي هادشي غير خرافة، حيث الجسم كيأخذ الأوكسجين من التنفس وماشي من الماء (غير 0,3% ممكن يدخل من المعدة). والخلاصة: إلا بغيتي الصحة والشباب، خرّج تنفّس فلهواء الطلق، وهو مجاني.",
+   "mod": true
+  },
+  {
+   "n": 2,
+   "c": "j",
+   "de": "Wenn es regnet, dann fließt das Regenwasser in den Erdboden, der es wie ein Schwamm aufsaugt. Langsam sickert das Wasser dann in immer tiefere Erdschichten, in dene es gefiltert und gereinigt wird. Aus dem Regenwasser ist Trinkwasser geworden. Schließlich sammelt es sich in einer Schicht aus Sandstein, wo es sich mit älterem Wasser vermischt. Mehrere tausend Jahre lang kann das Trinkwasser so in den Tiefen der Erde ruhen. Durch Brunnen, die bis in die tiefen Sandsteinschichten reichen, kann dann Mineralwasser gewonnen werden. 10,6 Milliarden Liter Mineralwasser sind im letzten Jahr in Deutschland verkauft und getrunken worden. Gesteinsschichten wie Ton oder Kalk schüten es seit Jahrtausenden vor Verunreinigungen. Jedoch gelangt in den letzen Jahrzehnten Nitrat durch übermäßige Düngung in der Landwirtschaft vermehrt in das Trinkwasser und stellt langfristig eine Gesundheitsbedrohung für die Menschen dar.",
+   "summary": "النص كيشرح كيفاش كيتحوّل مياه المطر لمياه شرب: كتنزل فالأرض، كتصفّى عبر الطبقات وكتخزن آلاف السنين فالرمال. من تما كيتجاب الماء المعدني عبر الآبار. فألمانيا كيشربو بزاف (أكثر من 10,6 مليار لتر فعام واحد). الصخور بحال الطين والكالك كيحميوه من الوسخ، ولكن فالعقود الأخيرة دخل النيتـرات بزاف بسبب الأسمدة ديال الفلاحة، وهادي ولات خطر صحي على المدى البعيد.",
+   "mod": true
+  },
+  {
+   "n": 3,
+   "c": "g",
+   "de": "Nach den Unwettern der letzten Sommer sprechen Meteorologen in ganz Europa davon, dass sich das Klima weltweit dramatisch verändert. Stabile Sommer mit Sonnenschein pur von Juni bis August sollen selbst am Mittelmeer in Zukunft passé sein. Die durch Treibhausgase aufgeheizte Atmosphäre hat sich erwärmt, mehr Wasser verdunstet durch die höheren Temperaturen aus den Ozeanen und prasselt in extrem starken Unwettern mit Donner, Blitz und Hagel auf die Erde. Dort kann die Erde nicht mehr solche Mengen Wassers aufnehmen wie in kürzester Zeit fallen. Die Folge davon sind Überschwemmungen. Kurze Sonnenscheinperioden werden sich mit Unwetterfronten abwechseln und vielen Menschen den Badespaß an den Stränden nicht nur des Mittelmeeres gründlich verderben. Doch auch den Landwirten bereiten die stärkeren Unwetter Sorgen. Denn die starken Niederschläge mit Hagel zerstören nicht selten einen großen Teil der Ernte und bescheren so manchen landwirtschaftlichen Betrieben große inanzielle Probleme.",
+   "summary": "النص كيهضر على التغييرات المناخية اللي ولات واضحة فأوروبا: الصهد وتزايد الغازات الدفيئة خلى المحيطات يتبخر منهم الماء بزاف، ومن بعد كيطيح فشكل عواصف قوية فيها الرعد والبرد. النتيجة: الفيضانات وتخريب المحاصيل الفلاحية، الشي اللي كيدير مشاكل مالية كبيرة للفلاحة، وحتى السياحة غادي تتأثر حيت الصيف مايبقاش مستقر وحتى فالمتوسط الشمش غادي تتخلط مع العواصف.",
+   "mod": true
+  },
+  {
+   "n": 4,
+   "c": "h",
+   "de": "Wozu noch Kästen mit Mineralwasserflaschen nach Hause schleppen, wenn es sich doch bequem zu Hause zubereiten lässt. Tatsächlich ist das Leitungswasser, das aus den Wasserhähnen in deutschen Wohnungen fließt, von guter bis sehr guter Qualität. Einzig das Prickeln auf der Zunge, das durch das Hinzufügen von Kohlensäure in viele Mineralwässer ensteht, fehlt bei dem Leitungswasser. Doch auch hier gibt es bereits eine preiswerte Möglichkeit, dies selbst zu zun: mit einer Sodamaschine. Damit lassen sich Sprudel und Limonaden selbst herstellen, ganz nach dem individuellen Geschmack des Nutzers: mal mit mehr, mal mit weniger Prickeln, mal süßer, mal fruchtiger. Und das Wasser kommt wie von selbst ins Haus, das Tragen und Stapeln von Getränkekästen ist für den cleveren Selbsthersteller Vergangenheit.",
+   "summary": "النص كيقول باللي ما بقاتش حاجة أنك تشري قراعي ديال الماء المعدني وتجرهم للدار، حيث ماء الروبيني فـ ألمانيا عندو جودة مزيانة. الفرق الوحيد هو الغاز اللي كيعطي داك الإحساس فالفم، ولكن حتى هادي ممكن تديرها فدارك بسوداماشين اللي كتخليك تصايب ماء غازي أو حتى ليموناد حسب ذوقك، بلا صداع ديال القراعي والسطولة.",
+   "mod": true
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Wasser ist zum Waschen da\" lautete ein deutscher Schlager Mitte der 1950er, in dem es weiter hieß: \"Auch zum Zähneputzen kann man es benutzen.\" Wasser zu trinken schien damals manchen Leuten nicht in die neue Wohlstandswelt zu passen. Süße Limonaden galten als besser als einfach nur Wasser. Dabei raten heute die meisten Ärzte zum Wassertrinken: \"Trinken Sie täglich mindestens 2,5 Liter davon\", steht auch in nahezu allen medizinischen Ratgebern von heute. Mineralwasser hat, wie man heute wieder weiß, durch seine mineralischen Inhaltsstoffe Natrium, Kalium, Magnesium, Calzium und Spurenelemente für den menschlichen Körper viele Vorteile: Es gleicht den Mineral- und Flüssigkeitsverlust beim Schwitzen aus, es fördert die Verdauung und das alles ohne den Körper belastenden Zucker und ohne Kalorien. Ob aus der Heimat oder - wie in den jetzt modischen Wasserbars - von der Insel Hawaii oder vom Südpol: Wasser ist wieder zum Trinken da.",
+   "summary": "النص كيهضر على كيفاش فالخمسينات كانو الناس كيشوفو الماء غير للغسيل وتنظيف السنان، وكانو كيفضلو يشربو ليموناد حلوة. دابا الأطباء كينصحو نشربو على الأقل 2.5 لتر ماء فالنهار، حيت فيه معادن مهمة بحال كالسيوم ومغنيزيوم وكيساعد فالهضم وكيعوض السوائل والمعادن اللي كنفقدوها، وبدون سكر ولا سعرات حرارية. اليوم الماء رجع ضروري للشرب، سواء المحلي أو حتى اللي جاي من بلايص بعاد.",
+   "mod": true
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78bae",
+ "order": 46,
+ "title": "Limonade (2معدل)",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "note": "ملاحظة:التعديل موجود فقط في اجابه واحده وتم تغيير ترتيب العناوين",
+ "options": [
+  {
+   "k": "a",
+   "de": "Vom Regen zum Mineralwasser",
+   "ar": "من المطر إلى المياه المعدنية"
+  },
+  {
+   "k": "b",
+   "de": "Viel Wasser trinken - Gesundheit tanken",
+   "ar": "شرب الكثير من الماء - تعزيز الصحة"
+  },
+  {
+   "k": "c",
+   "de": "Sprudel hausgemacht – Zeit des Flaschen-Tragens ist vorbei",
+   "ar": "المياه الغازية محلية الصنع – انتهى زمن حمل الزجاجات"
+  },
+  {
+   "k": "d",
+   "de": "Sommer bedeutet in Zukunft nicht unbedingt Sonne",
+   "ar": "الصيف في المستقبل لا يعني بالضرورة الشمس"
+  },
+  {
+   "k": "e",
+   "de": "Mehr Sauerstoff im Sprudel macht fit",
+   "ar": "المزيد من الأكسجين في المياه الغازية يعزز اللياقة"
+  },
+  {
+   "k": "f",
+   "de": "Limonade aus dem Wasserhahn",
+   "ar": "ليموناضة من صنبور الماء"
+  },
+  {
+   "k": "g",
+   "de": "Limonade - als modernes Kultgetränk wieder im Trend",
+   "ar": "ليموناضة - المشروب الثقافي الحديث يعود إلى الموضة"
+  },
+  {
+   "k": "h",
+   "de": "Frische Luft als wahre Energiequelle",
+   "ar": "الهواء النقي كمصدر حقيقي للطاقة",
+   "mod": true
+  },
+  {
+   "k": "i",
+   "de": "Die Sonne macht Landwirten Probleme",
+   "ar": "الشمس تسبب مشاكل للمزارعين"
+  },
+  {
+   "k": "j",
+   "de": "Alarm: Nitrat im Regenwasser bedroht die Gesundheit",
+   "ar": "إنذار: النترات في مياه الأمطار تهدد الصحة"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "h",
+   "de": "Möchten Sie Kraft, Jugend und Gesundheit aus der Flasche? Dann suchen Sie bei Ihrem nächsten Einkauf im Supermarkt nach Sauerstoff-Mineralwasser. Für den etwas doppelten Preis eines normalen Mineralwassers erhalten Sie dann ein Getränk, von dem die Hersteller versprechen, dass es Ihnen - natürlich nur, wenn Sie es regelmäßig trinken - magische Kräfte verleiht. In einer Umfrage wurden Schülerinnen und Schüler in Bayern nach ihren Erfahrungen mit dem Sauerstoffkraftdrink befragt. Die meisten fanden, dass es nicht anders schmeckt als andere Mineralwässer auch. Das Deutsche Institut für Ernährungsforschung in Potsdam hält es für Unsinn, Wasser mit Sauerstoff anzureichern. Der menschliche Körper nimmt Sauerstoff hauptsächlich über die Atemluft auf, höchstens 0,3 % können auch über den Magen-Darm-Trakt aufgenommen werden. Möchten Sie immer noch Kraft, Jugend und Gesundheit? Dann gehen Sie doch einfach mehr an die frische Luft. Und die ist kostenlos.",
+   "summary": "هاد النص كيهضر على \"ماء معدني مع الأوكسجين\" اللي كيتباع فالسوبرماركات بثمن مضاعف وكايقولولك الشركات باللي يعطيك قوة وصحة وشباب إلا شربتيه بزاف. واحد الاستطلاع مع التلاميذ فبافاريا بيّن أنو المذاق ديالو بحال أي ماء معدني عادي. المعهد الألماني للتغذية فبوتسدام كيقول باللي هادشي غير خرافة، حيث الجسم كيأخذ الأوكسجين من التنفس وماشي من الماء (غير 0,3% ممكن يدخل من المعدة). والخلاصة: إلا بغيتي الصحة والشباب، خرّج تنفّس فلهواء الطلق، وهو مجاني.",
+   "mod": true
+  },
+  {
+   "n": 2,
+   "c": "a",
+   "de": "Wenn es regnet, dann fließt das Regenwasser in den Erdboden, der es wie ein Schwamm aufsaugt. Langsam sickert das Wasser dann in immer tiefere Erdschichten, in dene es gefiltert und gereinigt wird. Aus dem Regenwasser ist Trinkwasser geworden. Schließlich sammelt es sich in einer Schicht aus Sandstein, wo es sich mit älterem Wasser vermischt. Mehrere tausend Jahre lang kann das Trinkwasser so in den Tiefen der Erde ruhen. Durch Brunnen, die bis in die tiefen Sandsteinschichten reichen, kann dann Mineralwasser gewonnen werden. 10,6 Milliarden Liter Mineralwasser sind im letzten Jahr in Deutschland verkauft und getrunken worden. Gesteinsschichten wie Ton oder Kalk schüten es seit Jahrtausenden vor Verunreinigungen. Jedoch gelangt in den letzen Jahrzehnten Nitrat durch übermäßige Düngung in der Landwirtschaft vermehrt in das Trinkwasser und stellt langfristig eine Gesundheitsbedrohung für die Menschen dar.",
+   "summary": "النص كيشرح كيفاش كيتحوّل مياه المطر لمياه شرب: كتنزل فالأرض، كتصفّى عبر الطبقات وكتخزن آلاف السنين فالرمال. من تما كيتجاب الماء المعدني عبر الآبار. فألمانيا كيشربو بزاف (أكثر من 10,6 مليار لتر فعام واحد). الصخور بحال الطين والكالك كيحميوه من الوسخ، ولكن فالعقود الأخيرة دخل النيتـرات بزاف بسبب الأسمدة ديال الفلاحة، وهادي ولات خطر صحي على المدى البعيد.",
+   "mod": true
+  },
+  {
+   "n": 3,
+   "c": "d",
+   "de": "Nach den Unwettern der letzten Sommer sprechen Meteorologen in ganz Europa davon, dass sich das Klima weltweit dramatisch verändert. Stabile Sommer mit Sonnenschein pur von Juni bis August sollen selbst am Mittelmeer in Zukunft passé sein. Die durch Treibhausgase aufgeheizte Atmosphäre hat sich erwärmt, mehr Wasser verdunstet durch die höheren Temperaturen aus den Ozeanen und prasselt in extrem starken Unwettern mit Donner, Blitz und Hagel auf die Erde. Dort kann die Erde nicht mehr solche Mengen Wassers aufnehmen wie in kürzester Zeit fallen. Die Folge davon sind Überschwemmungen. Kurze Sonnenscheinperioden werden sich mit Unwetterfronten abwechseln und vielen Menschen den Badespaß an den Stränden nicht nur des Mittelmeeres gründlich verderben. Doch auch den Landwirten bereiten die stärkeren Unwetter Sorgen. Denn die starken Niederschläge mit Hagel zerstören nicht selten einen großen Teil der Ernte und bescheren so manchen landwirtschaftlichen Betrieben große inanzielle Probleme.",
+   "summary": "النص كيهضر على التغييرات المناخية اللي ولات واضحة فأوروبا: الصهد وتزايد الغازات الدفيئة خلى المحيطات يتبخر منهم الماء بزاف، ومن بعد كيطيح فشكل عواصف قوية فيها الرعد والبرد. النتيجة: الفيضانات وتخريب المحاصيل الفلاحية، الشي اللي كيدير مشاكل مالية كبيرة للفلاحة، وحتى السياحة غادي تتأثر حيت الصيف مايبقاش مستقر وحتى فالمتوسط الشمش غادي تتخلط مع العواصف.",
+   "mod": true
+  },
+  {
+   "n": 4,
+   "c": "c",
+   "de": "Wozu noch Kästen mit Mineralwasserflaschen nach Hause schleppen, wenn es sich doch bequem zu Hause zubereiten lässt. Tatsächlich ist das Leitungswasser, das aus den Wasserhähnen in deutschen Wohnungen fließt, von guter bis sehr guter Qualität. Einzig das Prickeln auf der Zunge, das durch das Hinzufügen von Kohlensäure in viele Mineralwässer ensteht, fehlt bei dem Leitungswasser. Doch auch hier gibt es bereits eine preiswerte Möglichkeit, dies selbst zu zun: mit einer Sodamaschine. Damit lassen sich Sprudel und Limonaden selbst herstellen, ganz nach dem individuellen Geschmack des Nutzers: mal mit mehr, mal mit weniger Prickeln, mal süßer, mal fruchtiger. Und das Wasser kommt wie von selbst ins Haus, das Tragen und Stapeln von Getränkekästen ist für den cleveren Selbsthersteller Vergangenheit.",
+   "summary": "النص كيقول باللي ما بقاتش حاجة أنك تشري قراعي ديال الماء المعدني وتجرهم للدار، حيث ماء الروبيني فـ ألمانيا عندو جودة مزيانة. الفرق الوحيد هو الغاز اللي كيعطي داك الإحساس فالفم، ولكن حتى هادي ممكن تديرها فدارك بسوداماشين اللي كتخليك تصايب ماء غازي أو حتى ليموناد حسب ذوقك، بلا صداع ديال القراعي والسطولة.",
+   "mod": true
+  },
+  {
+   "n": 5,
+   "c": "b",
+   "de": "Wasser ist zum Waschen da\" lautete ein deutscher Schlager Mitte der 1950er, in dem es weiter hieß: \"Auch zum Zähneputzen kann man es benutzen.\" Wasser zu trinken schien damals manchen Leuten nicht in die neue Wohlstandswelt zu passen. Süße Limonaden galten als besser als einfach nur Wasser. Dabei raten heute die meisten Ärzte zum Wassertrinken: \"Trinken Sie täglich mindestens 2,5 Liter davon\", steht auch in nahezu allen medizinischen Ratgebern von heute. Mineralwasser hat, wie man heute wieder weiß, durch seine mineralischen Inhaltsstoffe Natrium, Kalium, Magnesium, Calzium und Spurenelemente für den menschlichen Körper viele Vorteile: Es gleicht den Mineral- und Flüssigkeitsverlust beim Schwitzen aus, es fördert die Verdauung und das alles ohne den Körper belastenden Zucker und ohne Kalorien. Ob aus der Heimat oder - wie in den jetzt modischen Wasserbars - von der Insel Hawaii oder vom Südpol: Wasser ist wieder zum Trinken da.",
+   "summary": "النص كيهضر على كيفاش فالخمسينات كانو الناس كيشوفو الماء غير للغسيل وتنظيف السنان، وكانو كيفضلو يشربو ليموناد حلوة. دابا الأطباء كينصحو نشربو على الأقل 2.5 لتر ماء فالنهار، حيت فيه معادن مهمة بحال كالسيوم ومغنيزيوم وكيساعد فالهضم وكيعوض السوائل والمعادن اللي كنفقدوها، وبدون سكر ولا سعرات حرارية. اليوم الماء رجع ضروري للشرب، سواء المحلي أو حتى اللي جاي من بلايص بعاد.",
+   "mod": true
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78baf",
+ "order": 47,
+ "title": "Auf Dem Weg",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Auf dem Weg zu internationalen Wettkämpfen",
+   "ar": "في الطريق إلى المنافسات الدولية"
+  },
+  {
+   "k": "b",
+   "de": "Durch Wassergymnastik Verspannungen lösen",
+   "ar": "التخلص من التوترات من خلال الجمباز المائي"
+  },
+  {
+   "k": "c",
+   "de": "Ein tierischer Lernspaß für alle",
+   "ar": "متعة تعليمية حيوانية للجميع"
+  },
+  {
+   "k": "d",
+   "de": "Fit und gesund auch nach der Pensionierung",
+   "ar": "البقاء نشيطاً وصحياً حتى بعد التقاعد"
+  },
+  {
+   "k": "e",
+   "de": "Gefahren beim Tauchen",
+   "ar": "مخاطر الغوص"
+  },
+  {
+   "k": "f",
+   "de": "Mit dem eigenen Pferd zu Olympia",
+   "ar": "إلى الأولمبياد مع الحصان الخاص"
+  },
+  {
+   "k": "g",
+   "de": "Muskeln wie ein Gewichtheber",
+   "ar": "عضلات كرافعي الأثقال"
+  },
+  {
+   "k": "h",
+   "de": "Neueröffnetes Internat für Jungen Sporttaucher",
+   "ar": "افتتاح مدرسة داخلية جديدة للغواصين الرياضيين الشباب"
+  },
+  {
+   "k": "i",
+   "de": "Schlank, fit und glücklich im Flug",
+   "ar": "نحيف، نشيط وسعيد أثناء الطيران"
+  },
+  {
+   "k": "j",
+   "de": "Sport treiben wie ein Fisch unter wasser",
+   "ar": "ممارسة الرياضة مثل السمكة تحت الماء"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "c",
+   "de": "Wir bieten Bewegungsförderung mit und auf Pferden zur Stärkung der körperlichen und geistigen Fitness. Ponys und Pferde stehen im Mittelpunkt dieses Programms. Sie zu beobachten, füttern, streicheln, putzen, führen oder reiten zu können, übt auf Teenies eine große Faszination aus. Spielerisch werden sie in Kontakt mit unseren Tieren gebracht und haben dann vielfältige Möglichkeiten, unter Anleitung Aufgaben für, mit oder auf den Pferden durchzuführen. Zudem können sie auf dem Gelände der Ranch weitere ungewohnte Bewegungs- und Wahrnehmungserfahrungen sammeln, z. B. auf dem Erlebnis-Parcour. Die Betreuung erfolgt durch einen Reitlehrer und qualifiziertes Personal. Unsere Sattel- und Kleiderkammer verfügt über alle notwendigen Utensilien. Selbstverständlich kann auch eigene Ausrüstung mitgebracht werden.",
+   "summary": "النص كيقدم واحد البرنامج ديال تنمية الحركة واللياقة البدنية والعقلية باستعمال الخيل والپوني. المراهقين كيكونو فالمركز ديال هاد التجربة: كيتفرجو فالحيوانات، كيعطيوهم الماكلة، كيداعبوهم، كينظفوهم، كيسوقوهم أو حتى كيركبو عليهم. بهاذ الطريقة كيتقربو من الخيل بطريقة ممتعة وتدريجية، وكيقدرو يديرو بزاف ديال الأنشطة معاهم وتحت إشراف مدرب ركوب الخيل وطاقم مؤهل. كاين حتى فضاءات فالمزرعة بحال المسار التجريبي اللي كيعطيهم تجارب جديدة فالحركة والإحساس. المعدات واللباس متوفرين، ولكن اللي عندو تجهيز خاص يقدر يجيبو معاه."
+  },
+  {
+   "n": 2,
+   "c": "a",
+   "de": "Die Schwimm- und Sportfreunde 1905 e.V. gehörten in den 70er und 80er Jahren zu den besten Vereinen im deutschen Schwimmsport. Auch noch zu Beginn der 90er Jahre stellte der Verein Schwimmer für die Nationalmannschaft, die bei Weltmeisterschaften oder Olympischen Spielen für Deutschland an den Start gingen. Seit 2010 versuchen die Schwimm- und Sportfreunde, wieder an alte Zeit anzuknüpfen. Mit idealen Voraussetzungen, nämlich der vereinseigenen 50-Meter-Bahn im Sportpark Nord, dem Stadion, der großen Mehrfachsporthalle über dem Bad, einem sehr gut eingerichteten Kraftraum und einer idealen Betreuung durch zwei ganztags angestellte Trainer, stellten sich in den letzten Jahren wieder Erfolge auf Landes- und Bundesebene ein. Die Sportler können auch das Teilzeitinternat zu nutzen. Dann wohnen und trainieren sie für eine Zeitlang zusammen, was den Jugendlichen ihren Tagesablauf sowie die Organisation von Schule und Training leichter macht.",
+   "summary": "هاد النص كيهضر على جمعية \"أصدقاء السباحة والرياضة 1905\" اللي كانت من أحسن الفرق فـ ألمانيا فـ السبعينات والثمانينات. حتى فالتسعينات كانوا كيعطيو سباحين للمنتخب الوطني. من 2010 بداو كيجتهدو باش يرجعو للمستوى ديالهم القديم، وبفضل المسبح الكبير اللي عندهم، القاعات الرياضية، الكوتشين بدوام كامل وحتى النظام ديال الداخلية الجزئية للشباب، رجعو يحققو نجاحات فالمستوى الجهوي والوطني."
+  },
+  {
+   "n": 3,
+   "c": "d",
+   "de": "In unserer modernen Studio bieten wir Ihnen alle Arten von Gesundheits-, Kraft-, und Fitnesstraining an. Wer selbst im Rentenalter noch einen durchtrainierten Körper haben möchte, der sollte schon in jungen Jahren das Ausdauertraining nicht vernachlässigen. Aber auch wer spät mit dem Sport beginnt, fühlt sich nach dem Training einfach besser. Um auch im Alter noch mit allen Problemen des Alltags klarzukommen, ist ein Ausdauertraining wirklich wichtig. Deshalb haben wir für Sie zum Beispiel moderne Trainingsgeräte, die Ihren Herzschlag kontrollieren. Auch bei Rückenschmerzen hilft das Fitnessstudio. Wer kennt sie nicht, die Rückenschmerzen. Acht von zehn Deutschen haben sie, aber sie werden beim Arzt selten richtig behandelt. Die Gründe für die Rückenprobleme liegen nämlich darin, dass die Muskeln nicht ausreichend trainiert sind. Wenn Sie bei uns trainieren, werden sie bald merken, dass die Schmerzen nachlassen und schließlich verschwinden. Sind sie neugierig geworden? Dann vereinbaren Sie doch ein Probetraining bei uns!",
+   "summary": "هاد النص كيقدّم عرض ديال واحد الستوديو ديال الفيتناس. كيقولو بلي التدريب مهم من الصغر باش تبقى صحتك زوينة حتى فالكبر، ولكن حتى اللي كيبدا متأخر كيستافد. خاصوماً التدريب كيساعد على التحمل ومفيد ضد وجع الظهر اللي كيعاني منو بزاف ديال الناس، حيث السبب الحقيقي هو ضعف العضلات. فالستوديو عندهم أجهزة عصرية كيراقبو بيها ضربات القلب، وكيعرضو حتى حصص تجربة للّي بغا يجرب."
+  },
+  {
+   "n": 4,
+   "c": "i",
+   "de": "Das Trampolin ist ein einzigartiges Trainingsgerät, das die Möglichkeit bietet, auch bei verschiedenen körperlichen Einschränkungen ein umfassendes Trainingsprogramm zu absolvieren. Die Übungen auf dem Trampolin haben vielfältige positive Effekte auf den Körper und den gesamten Organismus. Neben einer Gewichtsabnahme (der Kalorienverbrauch ist ähnlich hoch wie beim Joggen) und der Straffung des Körpergewebes werden Muskeln gelockert, Verspannungen lösen sich und der komplette Bewegungsapparat wird nicht so hart belastet wie bei herkömmlichen Sportarten. Ein weiterer wichtiger Effekt für den Körper ist die Unterstützung des Lymphflusses. Aber auch Geist und Seele werden positiv beeinflusst. Es bietet sich also an, auf hochwertigen Therapiegeräten unter fachkompetenter Anleitung Luftsprünge zu machen.",
+   "summary": "النص كيهضر على الترامبولين كأداة رياضية مميزة، اللي كتعطي فرصة حتى للّي عندهم مشاكل جسدية يديرو برنامج تدريبي كامل. القفز عليه كيساعد على نقصان الوزن بحال الجري، كيشد الجسم، كيرخي العضلات وكينقص التوتر بلا ما يضغط بزاف على العظام والمفاصل. كيساعد حتى فدوران اللمف فالجسم وكيأثر مزيان على النفسية والعقل. الأفضل يكون التدريب على أجهزة مخصصة وتحت إشراف مختصين."
+  },
+  {
+   "n": 5,
+   "c": "j",
+   "de": "Sporttauchen ist eine fantastische Natursportart. In den Vereinen und Tauchschulen des Verbandes Deutscher Sporttaucher wird das immer wieder faszinierende Sporttauchen mit verschiedenen Schwerpunkten angeboten. Dort wird auch Tauchfitness aufgebaut und regelmäßig trainiert. Sie können sich in allen Bereichen von gut geschulten Trainern ausbilden lassen und die Welt unter Wasser kennen lernen. Im Sporttauchen sollte man sich auf jeden Fall durch regelmäßiges Training “tauchfit” halten. Eine ausreichende Kondition unter Wasser ist sehr wichtig, denn untrainiert ist man als Sporttaucher ein Risiko für sich und andere. Ziel des Tauchtrainings ist ebenfalls das Lernen der richtigen Technik für das Atmen und das Beherrschen der Techniken für das Abtauchen. Eigentlich braucht man für das Tauchen nicht viel. Für das allgemeine Training reichen eine Tauchermaske, ein Schnorchel, mit dem man auch ohne Geräte Luft bekommt und Flossen, die wie Schuhe über die Füße gezogen werden. Alle anderen Tauchgeräte kann man in praktisch jedem Verein oder in einer der vielen Tauchschulen im In- und Ausland preiswert ausleihen.",
+   "summary": "النص كيهضر على الغطس الرياضي اللي كيعتابروه واحد الرياضة طبيعية زوينة بزاف. فالأندية ومدارس الغطس كيعلموك ويحضروك باللياقة اللازمة باش تكون \"tauchfit\"، حيث خاص الواحد يكون فصحة مزيانة ومايكونش خطر على راسو ولا على الآخرين. التدريب كيركز على التنفس الصحيح وتقنيات النزول تحت الماء. فالأصل ماكتحتاجش تجهيزات كثيرة: غير نظارات، سنوركل وفلّوس، والباقي تقدر تكريه من المدارس أو الأندية ديال الغطس."
+  }
+ ]
+},
+ {
+ "id": "6928d63e2a1fd213c2d78bb0",
+ "order": 48,
+ "title": "الألوان",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Farben in der Wohnung als Therapie",
+   "ar": "الألوان في المنزل كعلاج"
+  },
+  {
+   "k": "b",
+   "de": "Pflanzen machen den Wohnraum gesünder",
+   "ar": "النباتات تجعل المسكن أكثر صحة"
+  },
+  {
+   "k": "c",
+   "de": "Zimmerpflanzen sind selten krank",
+   "ar": "نادرًا ما تصاب النباتات المنزلية بالأمراض"
+  },
+  {
+   "k": "d",
+   "de": "Möbel als Energiequellen der Zukunft",
+   "ar": "الأثاث كمصادر للطاقة في المستقبل"
+  },
+  {
+   "k": "e",
+   "de": "Gesünder durch kräftige, leuchtende Farben in der Wohnung",
+   "ar": "الصحة من خلال الألوان القوية والمضيئة في المنزل"
+  },
+  {
+   "k": "f",
+   "de": "Farbberatung durch den Gärtner oder die Floristin",
+   "ar": "استشارة الألوان من البستاني أو بائعة الزهور"
+  },
+  {
+   "k": "g",
+   "de": "Wohnen in Harmonie mit den Kräften der Natur",
+   "ar": "السكن في تناغم مع قوى الطبيعة"
+  },
+  {
+   "k": "h",
+   "de": "Kräuter als Zimmerpflanzen",
+   "ar": "الأعشاب كنباتات منزلية"
+  },
+  {
+   "k": "i",
+   "de": "Kräuter bringen Farbe in Wohnräume",
+   "ar": "الأعشاب تضفي الألوان على المساحات السكنية"
+  },
+  {
+   "k": "j",
+   "de": "Zimmerpflanzen sorgen für gute Stimmung bei Menschen",
+   "ar": "النباتات المنزلية تساهم في تحسين المزاج لدى الناس"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "g",
+   "de": "Feng Shui – wörtlich: „Wind Wasser“ – ist die taoistische Lehre vom Leben im Einklang mit der Umgebung. Seit Jahrhunderten wird Feng Shui in China und anderen fernöstlichen Kulturen praktiziert, inzwischen ist es auch bei uns beliebt. Wohnen mit Feng Shui bedeutet ein Gleichgewicht herzustellen – beginnend bei der Auswahl des Grundstücks, der Anordnung von Türen und Fenstern und der Gestaltung der Wohnräume. Türen und Fenster leiten den Energiefluss wie Schleusen, die Position der Möbel lässt die positive Energie weiterströmen oder behindert sie. Wie man vorhandene Energie-Störungen durch einfaches Umstellen der Möbel beseitigen kann, zeigen Feng-Shui-erfahrene Innenarchitekten.",
+   "summary": "Feng Shui هي طريقة صينية قديمة كتعلم كيفاش نعيشو فالانسجام مع المحيط ديالنا. الهدف هو توازن الطاقة فالدار، من اختيار الأرض حتى ترتيب البيبان والنوافذ والأثاث. ترتيب الموكوبيل كيساعد الطاقة الإيجابية تمشي مزيان، والمختصين كيعلموك كيفاش تصلح أي مشاكل فالتدفق ديال الطاقة بسهولة."
+  },
+  {
+   "n": 2,
+   "c": "a",
+   "de": "Farben haben eine stärkere Wirkung auf Menschen, als viele vermuten. Der Einfluss der Farben ist sogar so groß, dass er für therapeutische Zwecke genutzt wird. Bei der farblichen Gestaltung einer neuen Wohnung sollte man zuerst einmal zurückhaltend sein. Ist der Raum nämlich in knalligem Rot oder blendendem Gelb gestrichen, müssen die Möbel und alle Gegenstände farblich darauf abgestimmt sein, da sonst eine unruhige oder aggressive Atmosphäre entstehen kann. Weiß gestrichene Wände stehen hingegen zwar in dem Ruf, langweilig zu sein, sie lassen sich aber mit allen Möbeln, Stoffen und Dekorationsgegenständen kombinieren und schaffen so leicht eine gemütliche und für das Auge ansprechende Atmosphäre.",
+   "summary": "الألوان عندها تأثير كبير على الناس وكتقدر تتستعمل حتى فالعلاج. ملي كتصاوب دار جديدة، حسن تبدا بألوان هادئة. الحيطان الحمرا أو الصفراء بزاف خاص كلشي يتناسب معاهم، وإلا غتولي الأجواء مضطربة أو عدوانية. الحيطان البيضا سهلة التركيب مع أي أثاث وكتعطي جو مريح للعين"
+  },
+  {
+   "n": 3,
+   "c": "b",
+   "de": "Ein allgemeingültiger Optimalwert wird von Fachleuten ungern benannt, da kaum ein Wert so hohen natürlichen Schwankungen unterliegt wie die Luftfeuchte. Witterung, Temperaturunterschiede, Wohngewohnheiten, alles sorgt für ständiges Auf und Ab. Als Mittelwert kann 40-60% angenommen werden. Die relative Luftfeuchtigkeit sollte in Wohnräumen nie dauerhaft unter 30% oder über 70% liegen. In den meisten Wohnräumen ist die Luft zu trocken. Die Luftfeuchtigkeit beträgt nur 20%. Besonders Zentralheizungen und Klimaanlagen trocknen die Luft aus und wirbeln Staub, Keime und Schadstoffe auf. Atemwegserkrankungen und Allergien sind oft die Folge. Auslöser sind meist Keime oder Bakterien, die bei trockener Luft gut gedeihen. Gegen üble Gerüche und zu hohe Lufttrockenheit helfen am besten Pflanzen. Sie geben Wasserdampf an die Umgebung ab und sorgen für ein gutes Raumklima.",
+   "summary": "الرطوبة فالدّيور خاصها تبقى بين 40% و 60%. إلا نزلت على 30% ولا طلعات على 70% كيدير مشاكل. فالأغلب الرطوبة قليلة بزاف (20%) بسبب السخانات والمكيفات اللي كينشفو الجو وكيطلعو الغبرة والجراثيم، وهذا كيقدر يسبب أمراض تنفسية وحساسيات. أحسن حل هو النباتات، حيث كيطلقو بخار للمحيط وكيعاونو يديرو جو صحي فالدار."
+  },
+  {
+   "n": 4,
+   "c": "h",
+   "de": "Frische Kräuter machen jedes Essen zum Genuss. Man braucht keinen großen Garten, um sich für den Eigenbedarf aromatische Gewürzpflanzen selbst ziehen zu können. Die meisten dieser Kräuter gedeihen nämlich auch im Blumentopf auf dem Balkon oder auf der Fensterbank. Dabei sind natürlich solche Pflanzen, die im Freien wachsen können, durch den Einfluss des Sonnenlichts aromatischer als solche, die nur hinter Glas wachsen können. Die Pflanzen im Zimmer brauchen auch mehr Pflege als ihre Kollegen an der frischen Luft. Wegen der Lufttrockenheit in den Wohnungen müssen sie z. B. viel häufiger gegossen werden als Freilandpflanzen, auch sind sie weniger widerstandsfähig gegen Schädlinge und Pflanzenkrankheiten.",
+   "summary": "الأعشاب الطرية كيعطيو نكهة زوينة فالماكلة وما كيحتاجوش جنان كبير، حتى فالقصرية فوق البالكون ولا الشرجم كيقدرو يكبرو. اللي كيكبرو فالخلا كيعطيو نكهة حسن حيت كيتعرضو للشمس. الأعشاب فالدار كيبغيو عناية أكثر: خاصهم السقي بزاف وحماية من الحشرات والأمراض."
+  },
+  {
+   "n": 5,
+   "c": "j",
+   "de": "Bei der Wohnraumgestaltung lässt sich viel erreichen mit der richtigen Auswahl der Zimmerpflanzen. Es müssen nicht nur grünblättrige Gummibäume oder Palmen sein, die einen Raum verschönern – vielfältige Blatt- und Blütenfarben machen selbst trostlos wirkende Räume farbenfroh und fröhlich. So können Blühpflanzen auf der Fensterbank auch im Herbst oder Winter die Bewohner in gute Laune versetzen. Grünpflanzen beruhigen zudem und man fühlt sich beim Anblick der Natur in der eigenen Wohnung einfach ruhiger und ausgeglichener. Bedenken Sie aber: Pflanzen müssen am richtigen Platz stehen, wenn man lange an ihnen Freude haben möchte. Viele Gärtnereien oder Blumengeschäfte bieten daher einen Beratungsservice an.",
+   "summary": "النباتات فالدار كتقدر تبدل الجو كامل: أوراقها الخضرة وزهورها الملونة كتعطي البهجة حتى فالشتاء. النباتات الخضراء كتهدي الأعصاب وكتخليك تحس بالراحة. باش تبقى النباتات زوينة وتعيش مدة طويلة، خاصها تتدار فالبلاصة الصحيحة، وبعض المحلات كيعطيو نصائح باش تعاونك."
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78bb1",
+ "order": 49,
+ "title": "Schlafzug",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Gute Laune durch Bewegung",
+   "ar": "تحسين المزاج من خلال الحركة"
+  },
+  {
+   "k": "b",
+   "de": "Durch Schlaf wird man klüger",
+   "ar": "النوم يجعلك أكثر ذكاءً"
+  },
+  {
+   "k": "c",
+   "de": "Energiesparen im Unterricht: Licht aus",
+   "ar": "توفير الطاقة في الفصل: إطفاء الأنوار"
+  },
+  {
+   "k": "d",
+   "de": "Professor plädiert für kürzere Arbeitszeiten",
+   "ar": "أستاذ يدعو إلى تقليل ساعات العمل"
+  },
+  {
+   "k": "e",
+   "de": "Gutes Licht fördert den Lernerfolg",
+   "ar": "الإضاءة الجيدة تعزز النجاح في التعلم"
+  },
+  {
+   "k": "f",
+   "de": "Macht frühes Aufstehen intelligenter",
+   "ar": "هل الاستيقاظ المبكر يجعلك أكثر ذكاءً؟"
+  },
+  {
+   "k": "g",
+   "de": "Energiesparverhalten bei Tieren",
+   "ar": "سلوك توفير الطاقة لدى الحيوانات"
+  },
+  {
+   "k": "h",
+   "de": "Im Dunkeln wandern – Tipps für nächtliche Touren",
+   "ar": "التنزه في الظلام - نصائح للجولات الليلية"
+  },
+  {
+   "k": "i",
+   "de": "Gründe, warum Menschen keinen Winterschlaf halten",
+   "ar": "أسباب عدم دخول البشر في سبات شتوي"
+  },
+  {
+   "k": "j",
+   "de": "Was unsere Wintermüdigkeit verursacht",
+   "ar": "ما الذي يسبب شعورنا بالتعب في الشتاء"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "g",
+   "de": "Wussten Sie, dass der längste dokumentierte Winterschlaf einer Fledermausart in Nordamerika beeindruckende 344 Tage dauerte? Forscher der University of Colorado haben herausgefunden, dass diese Tiere in extrem kalten Regionen fast ein ganzes Jahr ohne Nahrung überleben können – ein faszinierender Beweis für die Anpassungsfähigkeit der Natur. In der kalten Jahreszeit ziehen sich viele Tiere zurück und verfallen in den Winterschlaf. Dabei sinkt der Energieverbrauch drastisch: Herzschlag und Atmung verlangsamen sich erheblich, und die Körpertemperatur fällt spürbar. So können die Tiere monatelang ohne Nahrung auskommen. Besonders verbreitet ist dieses Verhalten bei Kleinsäugern wie Igeln, Fledermäusen oder Murmeltieren, die den Winter in geschützten Verstecken wie Höhlen, Erdlöchern oder Dachböden verbringen. Diese Strategie schützt nicht nur vor eisigen Temperaturen und knappen Futterquellen, sondern zeigt auch, wie genial die Natur Lösungen für extreme Bedingungen entwickelt hat. Manche Tiere wie das Eichhörnchen halten keinen echten Winterschlaf, sondern eine Winterruhe, bei der sie regelmäßig aufwachen, um Vorräte zu fressen.",
+   "summary": "واحد الدراسة فجامعة كولورادو لقات أن نوع من الخفافيش فمريكان دار أطول نوم شتوي ودام تقريباً عام كامل بلا ما ياكل! بزاف ديال الحيوانات كيفعلو نفس الشي فالبرد، كيهبط عندهم النبض والنفس ودرجة الحرارة باش يوفرُو الطاقة. بحال القنافد والمراميط كينعسو فالكهوف ولا الحفر، وهاد الطريقة كتحميهم من البرد والجوع. كاينين حتى حيوانات بحال السناجب اللي ما كينعسوش كاملين، غير كيرتاحو شوية وكيخرجو ياكلو من مخزونهم."
+  },
+  {
+   "n": 2,
+   "c": "e",
+   "de": "In Dänemark wurde vor einigen Jahren ein umfangreiches Schulprojekt durchgeführt, das die Auswirkungen von Tageslicht auf Kinder untersuchte. Dabei zeigte sich, dass Schülerinnen und Schüler in Räumen mit großen Fenstern und viel natürlichem Licht im Durchschnitt bessere Testergebnisse erzielten als Gleichaltrige in schlecht beleuchteten Klassenzimmern. Auch eine aktuelle Studie der Universität Lichtenberg bestätigt diesen Zusammenhang: Natürliches Licht wirkt sich positiv auf die Konzentrationsfähigkeit von Kindern aus. Helle, lichtdurchflutete Klassenräume sorgen dafür, dass Lernende länger aufmerksam bleiben und Informationen besser verarbeiten können. Die Wissenschaftler betonen zudem, dass ausreichend Sonnenlicht nicht nur die Leistungsfähigkeit steigert, sondern auch das allgemeine Wohlbefinden verbessert. In gut beleuchteten Räumen sind die Schülerinnen und Schüler ausgeglichener, weniger müde und insgesamt motivierter.",
+   "summary": "فدانمارك دارو مشروع فمدارس باش يشوفو تأثير ضوء النهار على التلاميذ، ولقاو باللي التلاميذ اللي كيقراو فأقسام عندهم الضوء الطبيعي بزاف كيديرو نتائج أحسن فالإمتحانات. حتى دراسة من جامعة ليختنبرغ أكدت هاد الشي، وقالت باللي الضوء الطبيعي كيعاون التلاميذ يركزو مزيان ويبقاو منتبهين، وكيرفع حتى المزاج والطاقة ديالهم، بحيث كيبقاو أقل تعب ومتحفزين أكثر."
+  },
+  {
+   "n": 3,
+   "c": "b",
+   "de": "Schon die alten Römer wussten, dass ausreichend Schlaf entscheidend für die Leistungsfähigkeit ist. In historischen Schriften findet man Hinweise darauf, dass Soldaten vor wichtigen Schlachten besonders viel Ruhezeit bekamen, um konzentrierter und belastbarer zu sein. Auch moderne Studien, etwa an der Universität von Kopenhagen, zeigen: Menschen, die regelmäßig zur gleichen Zeit ins Bett gehen, haben ein geringeres Risiko für Herz-Kreislauf-Erkrankungen. Ein geregelter Schlafrhythmus ist von zentraler Bedeutung für unsere Gesundheit. Während wir schlafen, bildet unser Körper das Hormon Melatonin, das für die Steuerung des Schlaf-Wach-Rhythmus zuständig ist. Dieses Hormon sorgt dafür, dass wir entspannen können und unterstützt eine tiefe, erholsame Nachtruhe. Gerät der Schlafrhythmus jedoch aus dem Gleichgewicht – etwa durch Schichtarbeit, zu spätes Zubettgehen oder häufige Nutzung elektronischer Geräte am Abend –, kann das zu Problemen führen. Wissenschaftler weisen darauf hin, dass Schlafstörungen nicht nur Müdigkeit am Tag verursachen, sondern langfristig auch das Immunsystem schwächen und das Risiko für Krankheiten erhöhen können.",
+   "summary": "الرومان القدام كانو كيعرفو أهمية النعاس الكافي باش يكون الإنسان مركز وقوي، خصوصاً قبل المعارك. حتى الدراسات الحديثة فجامعة كوبنهاغن بينات أن الناس اللي كينعسو فوقت منتظم عندهم صحة قلب أحسن. فاش كينعس الإنسان، الجسم كينتج هرمون الميلاتونين اللي كيساعد على الراحة والنعاس العميق. ولكن إلا تخربق النوم، بحال مع الخدمة الليلية ولا التليفون بالليل، كيقدر يسبب فالتعب وضعف المناعة وأمراض خطيرة مع الوقت."
+  },
+  {
+   "n": 4,
+   "c": "h",
+   "de": "Schon im Mittelalter unternahmen Menschen nächtliche Pilgerwege zu Klöstern oder Wallfahrtsorten, um Ruhe und Einkehr zu finden. In Japan gibt es bis heute die Tradition der „Yoru-no-sanpo“ – abendlicher Spaziergänge, die nicht nur spirituelle Bedeutung haben, sondern auch der Gesundheit dienen. Neuere Untersuchungen der Universität von Bergen zeigen zudem, dass schon 20 Minuten Bewegung im Dunkeln den Stresshormonspiegel im Körper deutlich senken können. In den letzten Jahren hat sich das nächtliche Wandern zu einem regelrechten Trend entwickelt. Immer mehr Naturfreunde machen sich nach Sonnenuntergang auf den Weg, um Wälder, Felder und Berge auf eine besondere Weise zu erleben. Gesundheitsexperten raten davon ab, diese Form der Freizeitgestaltung zu verbieten, da sie zahlreiche Vorteile für Körper und Geist bietet. Wer nachts wandert, baut Stress ab, trainiert Konzentration und Sinne und erlebt die Natur intensiver als am Tag. Zudem wird nachweislich die Ausschüttung von Melatonin gefördert – jenem Hormon, das unseren Schlaf-Wach-Rhythmus steuert und Schlafproblemen vorbeugen kann. Fachleute betonen jedoch, dass diese Form der Bewegung vor allem dann förderlich ist, wenn sie unter sicheren Bedingungen erfolgt, etwa auf gut markierten Wegen oder in geführten Gruppen.",
+   "summary": "من العصور الوسطى والناس كيديرو مسيرات ليلية نحو الأديرة باش يلقاو الهدوء والراحة. فاليابان ما زالين كيديرو \"يورونو سانبو\" أي جولات ليلية للصحة والروح. الدراسات بينات أن 20 دقيقة ديال المشي فالليل كتنقص التوتر بزاف. دابا ولا المشي الليلي موضة جديدة كيعجب محبي الطبيعة، حيت كيساعد على التركيز، كينقص الضغط، وكينشط هرمون الميلاتونين اللي كيعون على النعاس المزيان. ولكن خاص يتدار فطرق آمنة ومع مجموعات منظمة."
+  },
+  {
+   "n": 5,
+   "c": "j",
+   "de": "Schon die Weltgesundheitsorganisation (WHO) weist seit Jahren darauf hin, wie stark Tageslicht unsere innere Uhr beeinflusst. Studien zeigen, dass Beschäftigte, die in lichtdurchfluteten Büros arbeiten oder während der Mittagspause einen Spaziergang im Freien machen, produktiver sind und seltener krank werden. Besonders in skandinavischen Ländern, wo die Wintertage extrem kurz sind, werden deshalb Lichttherapien eingesetzt, um Müdigkeit, Konzentrationsprobleme und sogar depressive Verstimmungen zu lindern. Professor Dr. Markus Heller von der Universität Breisgau untersucht den Zusammenhang zwischen Arbeitszeiten, Sonnenlicht und der allgemeinen Gesundheit von Berufstätigen. Seine Ergebnisse belegen, dass Arbeitnehmer, die ihre Arbeitszeiten stärker am natürlichen Tagesrhythmus orientieren, deutlich weniger unter Schlafproblemen und chronischer Erschöpfung leiden. Auch ein täglicher Fuß- oder Radweg zur Arbeit – besonders, wenn er im Hellen stattfindet – wirkt sich positiv auf Körper und Psyche aus. Natürliches Licht reguliert den Hormonhaushalt, indem es die Ausschüttung von Melatonin und Serotonin beeinflusst, zwei Hormone, die maßgeblich für unser Wohlbefinden verantwortlich sind.",
+   "summary": "منظمة الصحة العالمية كتأكد أن ضوء النهار كينظم الساعة البيولوجية ديال الإنسان. الناس اللي خدامين فمكاتب مضواية مزيان أو كيديرو جولة فالهواء الطلق فالغداء كيتكون عندهم إنتاجية أكثر وكيمرضو أقل. فالدول اللي فيها نهار قصير بحال سكندينافيا كيديرو علاج بالضوء ضد التعب والاكتئاب. الدراسات بينات أن اللي كينظمو خدمتهم حسب ضوء النهار كينعسو مزيان ومكيحسوش بالإرهاق، وضوء الشمس كيساعد الجسم على تنظيم الهرمونات اللي كيعطيو إحساس بالراحة والمزاج الزوين."
+  }
+ ]
+},
+{
+ "id": "6928d63e2a1fd213c2d78bb2",
+ "order": 50,
+ "title": "Schlafzug (معدل)",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "note": "ملاحظة:التعديل الموجود في كل الاجابات تقريبا وكل النصوص",
+ "options": [
+  {
+   "k": "a",
+   "de": "Bewegung macht gute Laune",
+   "ar": "الحركة تحسن المزاج",
+   "mod": true
+  },
+  {
+   "k": "b",
+   "de": "Klug durch Schlaf",
+   "ar": "الذكاء من خلال النوم",
+   "mod": true
+  },
+  {
+   "k": "c",
+   "de": "Licht aus – Energiesparen im Klassenzimmer",
+   "ar": "إطفاء الأنوار - توفير الطاقة في الفصل الدراسي"
+  },
+  {
+   "k": "d",
+   "de": "Professor fordert kürzere Arbeitszeiten",
+   "ar": "أستاذ يطالب بتقليل ساعات العمل"
+  },
+  {
+   "k": "e",
+   "de": "Richtiges Licht fördert das Lernen",
+   "ar": "الإضاءة الصحيحة تعزز التعلم",
+   "mod": true
+  },
+  {
+   "k": "f",
+   "de": "Sind Frühaufsteher intelligenter?",
+   "ar": "هل الأشخاص الذين يستيقظون مبكرًا أكثر ذكاءً؟"
+  },
+  {
+   "k": "g",
+   "de": "Tiere im Energiesparmodus",
+   "ar": "الحيوانات في وضع توفير الطاقة",
+   "mod": true
+  },
+  {
+   "k": "h",
+   "de": "Wandern im Dunkeln – Tipps für Nachtwanderungen",
+   "ar": "التنزه في الظلام - نصائح للمشي الليلي"
+  },
+  {
+   "k": "i",
+   "de": "Warum Menschen keinen Winterschlaf halten",
+   "ar": "لماذا لا يدخل البشر في سبات شتوي"
+  },
+  {
+   "k": "j",
+   "de": "Was hinter unserer Wintermüdigkeit steckt",
+   "ar": "ما وراء تعبنا الشتوي",
+   "mod": true
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "g",
+   "de": "Viele Tiere können im Winter auf Sparflamme schalten: Igel, Eichhörnchen und viele andere Tiere können das. Wenn es draußen kalt wird, gehen sie nämlich in den Winterschlaf. Wäre es nicht schön, wenn wir die kalten Tage ebenfalls einfach verschlafen könnten? Ganz so gemütlich, wie man es sich vorstellt, ist der Winterschlaf jedoch nicht, erläutert der Biologe Carsten Ortner. Denn der Name täuscht: Mit Schlaf hat das eigentlich nichts zu tun, sondern der Winterschlaf ist ein Energiesparprogramm. In der Wildbahn können Tiere auf diese Weise Nahrungsknappheit überstehen. Ausgelöst wird das Verhalten durch die Lichtverhältnisse der kürzeren Tage. Die meisten Tiere wachen aber zwischendurch auf, um ein paar Vorräte zu fressen. Wichtig ist es, Tiere im Winterschlaf nicht zu stören, z. B. durch Bauarbeiten. „Das Aufwecken könnte ihnen schaden“, erklärt Carsten Ortner.",
+   "summary": "بزاف ديال الحيوانات كتقدر تدير واحد “وضعية اقتصاد الطاقة” ففصل الشتاء، بحال القنفذ والسنجاب وغيرهم. ملي كيبرد الجو وكينقص النهار، كيدخلو فـ البيات الشتوي. ولكن هاد البيات ماشي نوم مريح كيف كنظنو، وإنما واحد الطريقة باش الحيوان يوفر الطاقة ويتجاوز قلة الماكلة فالغابة. البيولوجي كارستن أورتنر كيقول بأن هاد السلوك كيتفعّل بسبب قلة الضوء فالأيام القصيرة. ومع ذلك، هاد الحيوانات كتفيق من مرة لمرة باش تاكل من المخزون ديالها. وكيشدد أورتنر على أن خاص ما نقيقوش الحيوانات فهاد الفترة، مثلاً بسبب أشغال البناء، حيت تفييقها يمكن يضر بصحتها بشكل كبير.",
+   "mod": true
+  },
+  {
+   "n": 2,
+   "c": "e",
+   "de": "Licht kann sich positiv auf die Gesundheit auswirken. Ein kurzer Urlaub in wärmeren Gefilden ist deshalb ein bewährtes Mittel gegen den Winterblues. Eine ähnliche Wirkung von Tageslicht und Wärme spielt sich aber auch im Alltag ab. Eine Studie der Pariser Sorbonne zeigte, dass Tageslicht nicht nur gut für die Gesundheit und das Wohlbefinden ist, sondern auch die Leistungsfähigkeit verbessern kann. Wenn die Schüler in Klassenräumen mit größeren Fenstern arbeiteten, steigerte sich ihre Leistung deutlich – weil die Menge an Tageslicht dann größer ist und die Sicht nach draußen besser. Deshalb, so die Forscher, sollte man immer versuchen, Tageslicht als wichtigste Lichtquelle in Schulen und Gebäuden zu nutzen. Zwar müsse dieses Licht durch Kunstlicht ergänzt werden, doch generell sei Sonnenlicht zu bevorzugen.",
+   "summary": "الضو الطبيعي عندو تأثير زوين على الصحة. حتى واحد العطلة قصيرة فشي بلاصة سخونة كتعاون ضدّ \"الويـنتر بلوز\" ديال البرد والشتاء. نفس الفكرة كاتوقع فالحياة اليومية: واحد الدراسة ديال جامعة السوربون فباريس لقات بّالضو ديال النهار كيزيد الراحة والصحة، وحتى القدرة على التركيز والخدمة. التلاميذ اللي قرّاو فالأقسام اللي فيهم شرجان كبار كانت النتائج ديالهم حسن، حيث كيدخل الضو بزاف وكيتشاف الخارج مزيان. الباحثين كيقولُو خاص المدارس والبنايات يعتمدوا على ضو الشمس قد ما يمكن، مع إضافة ضو صناعي غير كمساعدة، ولكن يبقى ضو الشمس هو الأفضل.",
+   "mod": true
+  },
+  {
+   "n": 3,
+   "c": "j",
+   "de": "Im Winter würden wir morgens am liebsten lange im Bett bleiben. Je kürzer die Tage, desto schwerer fällt uns das Aufstehen. Auch bei der Arbeit kommen wir nur langsam in die Gänge und fühlen uns oft antriebslos. „Das ist völlig normal“ , erklärt Christoph Jürgens, Professor für Chronobiologie. Müdigkeit und Schlafbedürfnis richten sich danach, wie viele Stunden es hell ist. Das Hormon Melatonin, das das Gehirn in der Dämmerung und Dunkelheit produziert, steuert den Wach- und Schlafrhythmus. Licht blockiert seine Produktion. Deshalb wird man im Herbst und Winter, wenn das Tageslicht schon am Nachmittag schwindet, müde – und erst am Vormittag richtig munter, nachdem die Sonne aufgegangen ist. „Die Menschen im Mittelalter folgten diesem natürlichen Programm des Körpers“ , erklärt Jürgens. Heute aber folgen wir nach der Uhr, nicht mehr nach der Sonne – künstliches Licht macht das möglich.",
+   "summary": "فصل الشتاء كيخلّي الناس بغاو يبقاو فالنعاس الصباح، وحيت النهار قصير و الضو قليل، كيولي الفياق ثقيل. حتى فخدمتنا كنحسو بالكسل وما عندناش الطاقة. هاد الشي عادي بزاف حسب البروفيسور كريستوف يورغنز، اللي كيشرح بلي النعاس كيتأثر بعدد ساعات النهار. الجسم كيصاوب هورمون سميتو ميلاتونين ملي كيكون الظلام، وهو اللي كيسَيِّر النوم والفيّاقة. ملي كيكون ضو، الجسم كحبس إنتاج هاد الهورمون. دابا فالخريف والشتا، حيث النهار كيقصّر وكيظلم بكري، كنولّيو نعساين بكري، وما كنفياقوش مزيان حتى كيطالع الضو الصبح. الناس فالعصور الوسطى كانوا كيتبعو هاد الإيقاع الطبيعي ديال الجسم. دابا حنا ما بقيناش كنمشيو مع الشمس، ولكن مع الساعة، وهاد الشي ممكن غير حيت كاين الضو الاصطناعي.",
+   "mod": true
+  },
+  {
+   "n": 4,
+   "c": "b",
+   "de": "Verfestigen sich gelernte Vokabeln, während wir schlafen? Ja, das funktioniert tatsächlich! Wer sich viel merken möchte, sollte auf regelmäßige Schlafzeiten achten, sagen Schlafforscher. Ob bei Säuglingen, Kindern oder Erwachsenen – im Schlaf prägen sich neue Informationen besser ein. „Mehrere Laborstudien zeigen bereits, dass das Schlafverhalten die geistige Leistungsfähigkeit stark beeinflusst“ , erklärt die Psychologin Maja Kühn von der Goethe-Universität Frankfurt. Zusammen mit Kollegen untersuchte sie, ob sich das Schlafverhalten auf die Denkleistung von Kindern im Schulalltag auswirkt. Das Ergebnis: Hatten die Schulkinder gut geschlafen, schnitten sie am nächsten Morgen bei Denkaufgaben deutlich besser ab. Besonders wichtig seien regelmäßige Schlafzeiten, auch das zeige die Studie von Maja Kühn.",
+   "summary": "واش كيتثبتو المفردات اللي كنقراوهم ملي كاننعسو؟ بالفعل إييه! الباحثين كيگولو بلي اللي باغي يحفظ مزيان خاصو ينعس بانتظام. سواء البيبيهات، الأطفال ولا الكبار، الدماغ كيثبّت المعلومات الجديدة مزيان فالنوم. الباحثة النفسية مايا كوين من جامعة فرانكفورت وّضحات بلي بزاف ديال الدراسات بيّنو أن النوم كيأثر بزاف على التركيز والذكاء. هي وفرقها دارو دراسة على التلاميذ باش يشوفو واش النوم كيأثر على الأداء ديالهم فالمدرسة. النتيجة: التلاميذ اللي نعسو مزيان دارو أحسن فتمارين التفكير فالصباح. الخلاصة: النوم الجيد وخصوصاً الانتظام فمواعيد النوم مهم بزاف باش يترسخ الحفظ وتقوى القدرة على التفكير.",
+   "mod": true
+  },
+  {
+   "n": 5,
+   "c": "a",
+   "de": "Kürzere Tage, dunkle Wolken, Nieselregen: Die kalte Jahreszeit kann ganz schön aufs Gemüt schlagen und für trübe Stimmung sorgen. Sich deshalb zuhause zu verkriechen, wäre aber eine schlechte Idee. Besser: Bewegung im Freien! Eine Studie des Bundesministeriums für Wirtschaft und Technologie zeigte, dass Bewegung an der frischen Luft gegen den „Winterblues“ hilft. 91 % der Befragten fühlten sich danach besser und zufriedener. Das Sonnenlicht hebt die Stimmung und Bewegung im Freien wirkt als echter Stimmungsaufheller. Körperliche Aktivität setzt Glückshormone frei, Stresshormone werden abgebaut. Deshalb hilft Wandern oder Spazierengehen im Winter besonders gut gegen schlechte Laune.",
+   "summary": "فاش كيولّي النهار قصير والجو غائم وكاين الشتا، بزاف ديال الناس كيحسو بالكآبة ديال الشتاء. ولكن الجلوس فالدّار ماشي حل. الأفضل هو الحركة فالخلا! دراسة ديال وزارة الاقتصاد والتكنولوجيا ف ألمانيا وْرّات بلي الرياضة فالهواء الطلق كتعاون بزاف ضدّ \"الاكتئاب الشتوي\". 91% من الناس اللي شاركو قالو بلي حساو براسهم مزيان من بعد. علاش؟ حيت ضو الشمس كيرفع المعنويات، والحركة برا كتطلق هرمونات السعادة وكتنقص هرمونات التوتر. لهذا، المشي ولا التمشية فالخلا ففصل الشتاء كيعالج المود الخايب بزاف.",
+   "mod": true
+  }
+ ]
+},
+{
+ "id": "69e27c6bc32de5f4d4c18676",
+ "order": 51,
+ "title": "Löwen اسود",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Der Berliner Zoo ist ein beliebter Ort für Führungen und Workshops.",
+   "ar": "حديقة حيوان برلين مكان شهير للجولات وورش العمل."
+  },
+  {
+   "k": "b",
+   "de": "Die Löwen sind sehr beliebt unter den Besuchern.",
+   "ar": "الأسود تحظى بشعبية كبيرة بين الزوار."
+  },
+  {
+   "k": "c",
+   "de": "Das Problem ist, dass Löwen Menschen angreifen.",
+   "ar": "المشكلة هي أن الأسود تهاجم البشر."
+  },
+  {
+   "k": "d",
+   "de": "Amerikanische Safari-Parks locken mit ihren Übernachtungspaketen.",
+   "ar": "تجذب حدائق السفاري الأمريكية بحزم الإقامة الخاصة بها."
+  },
+  {
+   "k": "e",
+   "de": "Löwen bringen Touristen in amerikanische Safari-Parks.",
+   "ar": "الأسود تجذب السياح إلى حدائق السفاري الأمريكية."
+  },
+  {
+   "k": "f",
+   "de": "Zum Schutz bedrohter Arten werden neue Schutzgebiete geschaffen.",
+   "ar": "يتم إنشاء محميات جديدة لحماية الأنواع المهددة بالانقراض."
+  },
+  {
+   "k": "g",
+   "de": "Mehr Bemühungen für den Tierschutz.",
+   "ar": "المزيد من الجهود لحماية الحيوانات."
+  },
+  {
+   "k": "h",
+   "de": "Löwen als Haustier.",
+   "ar": "الأسود كحيوانات أليفة."
+  },
+  {
+   "k": "i",
+   "de": "Planung für den Tierschutz.",
+   "ar": "التخطيط لحماية الحيوانات."
+  },
+  {
+   "k": "j",
+   "de": "Reiche Familien züchten exotische Tiere in Asien.",
+   "ar": "العائلات الثرية تربي الحيوانات الغريبة في آسيا."
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "b",
+   "de": "Der Berliner Zoo gehört zu den bekanntesten Tierparks in Deutschland und zieht jedes Jahr Tausende Besucher an. Besonders beliebt sind die Löwen, die im neu gestalteten Gehege leben. Viele Familien kommen am Wochenende, um die Tiere zu beobachten und mehr über ihr Verhalten zu lernen. Der Zoo bietet außerdem regelmäßig Führungen an, bei denen Besucher spannende Informationen über die Löwen und ihre Lebensweise erfahren. Kinder können an speziellen Workshops teilnehmen, in denen sie lernen, wie Löwen in der Wildnis leben und welche Gefahren ihnen drohen. So wird der Besuch für die ganze Familie zu einem besonderen Erlebnis.",
+   "summary": "حديقة الحيوانات فبرلين معروفة بزاف، والسبوعة تما عندهم شعبية كبيرة عند الزوار. العائلات كيجيو يشوفوهم وكاينين جولات وورشات للأطفال باش يتعلمو على حياة السبوعة."
+  },
+  {
+   "n": 2,
+   "c": "g",
+   "de": "In Südafrika gab es in den letzten Jahren immer wieder Konflikte zwischen Löwen und Menschen. Viele Einheimische hatten große Angst vor den Raubtieren, weil einige Angriffe auf Viehherden stattfanden. Um die Löwenpopulation besser zu schützen und gleichzeitig die Sicherheit der Menschen zu gewährleisten, hat die Regierung beschlossen, große Reservate einzurichten. Diese Schutzgebiete sollen verhindern, dass Löwen aussterben, und gleichzeitig mehr Touristen anziehen. In den Parks werden regelmäßig Ranger eingesetzt, die die Tiere beobachten und dafür sorgen, dass sie in ihrer natürlichen Umgebung ungestört leben können. So hofft man, den Artenschutz langfristig zu sichern.",
+   "summary": "فجنوب إفريقيا كانو مشاكل بين السبوعة والناس حيت كيهجمو على القطيع. باش يحميو السبوعة والناس، الحكومة دارت محميات كبار وكيعسو عليهم الحراس."
+  },
+  {
+   "n": 3,
+   "c": "e",
+   "de": "In den USA spielt der Tourismus eine wichtige Rolle, besonders in Regionen mit bekannten Zoos. Ein Beispiel ist ein großer Safari-Park, der Besucher aus dem ganzen Land anzieht. Die Löwen sind dort die Hauptattraktion und haben eine besondere Bedeutung für die Tourismusbranche. Studien zeigen, dass viele Reisende ihre Reisepläne extra wegen der Möglichkeit, Löwen aus nächster Nähe zu sehen, ändern. Der Park bietet sogar spezielle Übernachtungspakete in Lodges an, von denen man die Tiere direkt beobachten kann. Für die Region bedeutet das mehr Einnahmen, und für die Besucher wird der Aufenthalt zu einem unvergesslichen Erlebnis.",
+   "summary": "فميريكان، السبوعة هما الجذب الرئيسي فبعض حدائق السفاري. بزاف ديال السياح كيبدلو خططهم باش يشوفوهم عن قرب، وهادشي كيجيب أرباح كبيرة للمنطقة."
+  },
+  {
+   "n": 4,
+   "c": "h",
+   "de": "In einigen asiatischen Ländern investieren wohlhabende Familien viel Geld, um exotische Tiere wie Löwen und Leoparden zu halten. Oftmals besitzen sie riesige Paläste mit privaten Gärten, in denen diese Tiere gehalten werden. Während manche Züchter behaupten, damit einen Beitrag zum Artenschutz zu leisten, kritisieren Tierschutzorganisationen diese Praxis scharf. Sie weisen darauf hin, dass viele Tiere nicht artgerecht gehalten werden und unter dem Mangel an Bewegung und falscher Ernährung leiden. Trotzdem wächst die Nachfrage nach seltenen Tierarten weiter. Diese Entwicklung sorgt immer wieder für Diskussionen zwischen Befürwortern der privaten Zucht und Umweltschützern.",
+   "summary": "فبعض دول آسيا، العائلات الغنية كيربيو حيوانات غريبة بحال السبوعة فالقصور ديالهم. جمعيات الرفق بالحيوان كينتاقدو هادشي حيت الحيوانات مكتعيشش فبيئة طبيعية."
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Die internationale Tierschutzorganisation „Save the Wildlife“ hat kürzlich eine große Informationskampagne gestartet. Ziel ist es, Menschen weltweit über den richtigen Umgang mit Tieren aufzuklären. In mehreren Städten finden Workshops, Vorträge und Ausstellungen statt, in denen Experten erklären, wie Löwen und andere Wildtiere besser geschützt werden können. Außerdem sollen neue Schutzgebiete entstehen, um bedrohten Tierarten langfristig zu helfen. Die Organisation fordert auch eine bessere Ausbildung von Rangern und Tierpflegern, damit die Tiere in freier Wildbahn sicherer leben können. Mit diesen Maßnahmen hofft man, das Bewusstsein der Menschen für den Tierschutz zu stärken.",
+   "summary": "منظمة لحماية الحيوانات دارت حملة باش توعي الناس كيفاش يتعاملو مع الحيوانات. غادي يدارو محميات جداد وتدريب للحراس باش يحميو الحيوانات المهددة."
+  }
+ ]
+},
+{
+ "id": "69e52bb833f33a403f87859d",
+ "order": 52,
+ "title": "Fisch - السمك",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Das Geheimnis des schnellen Schwimmens",
+   "ar": "سر السباحة السريعة"
+  },
+  {
+   "k": "b",
+   "de": "Extremer Lebensraum",
+   "ar": "بيئة الحياة القاسية"
+  },
+  {
+   "k": "c",
+   "de": "Fische im Fokus der Forscher von der Technischen Universität in Berlin",
+   "ar": "الأسماك في بؤرة اهتمام الباحثين من الجامعة التقنية في برلين"
+  },
+  {
+   "k": "d",
+   "de": "Wie wird Technik in der Natur eingesetzt",
+   "ar": "كيف تُستخدم التقنية في الطبيعة"
+  },
+  {
+   "k": "e",
+   "de": "Bioniker erforschen die Wüstennatur",
+   "ar": "علماء البيونيك يدرسون طبيعة الصحراء"
+  },
+  {
+   "k": "f",
+   "de": "Ein Fisch in den Dünen",
+   "ar": "سمكة في الكثبان الرملية"
+  },
+  {
+   "k": "g",
+   "de": "Die Ursachen für den Wassermangel",
+   "ar": "أسباب نقص المياه"
+  },
+  {
+   "k": "h",
+   "de": "Rasante Flucht",
+   "ar": "الهروب السريع"
+  },
+  {
+   "k": "i",
+   "de": "Trinkwasser aus Nebel",
+   "ar": "مياه الشرب من الضباب"
+  },
+  {
+   "k": "j",
+   "de": "Auf der Suche nach verborgenen Details",
+   "ar": "البحث عن التفاصيل الخفية"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "b",
+   "de": "Willkommen in der Wüste. Die Sonne brennt gnadenlos. Endlose Weite. Nur Sand und Geröll, so weit das Auge reicht. Kein Baum, kein Strauch, kein noch so winziges Tier. Bilder wie diese kommen wohl den meisten in den Sinn, wenn sie an die Wüste denken. Doch diese Vorstellung stimmt nicht ganz. Denn so hart und lebensfeindlich die Bedingungen in der Wüste auch sind. Es gibt einige Überlebenskünstler, die es selbst hier schaffen, zu existieren. Um in der Wüste zu überleben, mussten sie sich im Laufe der Jahrmillionen perfekt an die harten Lebensbedingungen anpassen. Sie wurden zu ausgesprochenen Spezialisten. Zu Spezialisten, von denen Wissenschaftler jede Menge lernen können. Und so zieht es jedes Jahr Bioniker aus vielen Ländern der Erde in die entlegenen Wüsten der Welt. Auf der Suche nach kleinen, aber wirksamen Tricks für das Leben in einer extremen Umgebung.",
+   "summary": "الصحراء كتبان بحال شي بلاصة قاصحة ومافيهاش الحياة، ولكن كاينين كائنات قدرو يتأقلمو مع هاد الظروف. العلماء ديال البيونيك كيمشيو للصحراء باش يدرسو هاد الكائنات ويتعلمو منهم حيل للعيش فبيئات صعيبة."
+  },
+  {
+   "n": 2,
+   "c": "j",
+   "de": "Denn Bioniker entwickeln technische Anlagen nach dem Vorbild der Natur - der Begriff Bionik setzt sich zusammen aus den Wörtern „Biologie“ und „Technik“. Ihre Aufgabe: die Pflanzen und Tiere erst genau beobachten, kleinste Details entdecken und deren Geheimnisse lüften. Warum kann ein Gecko an der Wand hochlaufen? Wie kann ein Kolibri rückwärts fliegen? Wenn die Bioniker die Abläufe verstanden haben, fängt der größte Teil ihrer Arbeit erst an. Dann versuchen sie, aus dem Gelernten eine technische Anwendung zu entwickeln. Auch die besonderen Eigenschaften von Wüstentieren eignen sich dafür, wie die folgenden Beispiele zeigen.",
+   "summary": "البيونيك هو علم كيجمع بين البيولوجيا والتكنولوجيا. الباحثين كراقبو الحيوانات والنباتات بدقة باش يكتشفو الأسرار ديالهم وكيفاش كيخدمو، ومن بعد كيستعملو هاد المعرفة باش يطورو تطبيقات تقنية."
+  },
+  {
+   "n": 3,
+   "c": "f",
+   "de": "Der Sandfisch ist eigentlich gar kein Fisch, sondern eine kleine Echse. Doch seinen Namen hat er sich redlich verdient. Denn er kann ausgezeichnet schwimmen. Zwar nicht im Wasser, dafür aber umso besser im Sand der Sahara. Droht dem wenige Zentimeter großen Tier Gefahr, dann verschwindet es rasend schnell im Wüstensand, nur um Augenblicke später einige Meter entfernt wieder aufzutauchen. Was im Wasser jedes Kind beherrscht, scheint im Sand unmöglich. Doch nicht für den Sandfisch. Denn er hat ein winziges Geheimnis: Seine Haut erscheint nur auf den ersten Blick ganz glatt. Unter dem Mikroskop fanden Wissenschaftler der Technischen Universität (TU) Berlin winzige Grate auf seiner Haut, nur wenige Nanometer groß (ein Nanometer entspricht dem millionsten Teil eines Millimeters). Genau diese Grate verhindern, dass der Sand an der Haut des Sandfisches hängen bleibt. Die Forscher konnten es kaum glauben und bauten in ihrem Labor eine Oberfläche mit vergleichbarer Struktur nach. Und siehe da: an einer vollkommen glatten Oberfläche bleibt der Sand förmlich kleben, an der mit den kleinen Erhebungen findet er keinen Halt. Die Idee für eine technische Umsetzung dieser Oberfläche ließ nicht lange auf sich warten. So arbeiten die Forscher am „Institut für Bionik und Evolutionstechnik“ der TU Berlin etwa an besonderen Leitungsrohren. Mit einer „Sandfisch-Haut“ im Inneren können die Rohre ein für alle Mal vor einer Verstopfung bewahrt werden.",
+   "summary": "سمكة الرمل هي فالحقيقة سحلية كتعوم فالرمل ديال الصحراء. السر ديالها هو أن الجلد ديالها فيه تموجات صغيرة بزاف كتمنع الرمل يلصق فيه. العلماء فبرلين صاوبو مادة بحال هاد الجلد باش يطورو قوادس مكيتسدوش بالرمل."
+  },
+  {
+   "n": 4,
+   "c": "i",
+   "de": "Das größte Problem aller Wüstenbewohner ist die Wasserbeschaffung. In allen Wüsten der Erde herrscht fast ständig akuter Wassermangel. In vielen fällt jahrelang kein einziger Regentropfen vom Himmel. In einigen Regionen der Atacama-Wüste in Südamerika soll es seit mehreren hundert Jahren keinen Niederschlag mehr gegeben haben. Der Nebeltrinker-Käfer hat seine ganz eigene Strategie gegen den Wassermangel entwickelt. Er lebt in der Namib-Wüste im Südwesten Afrikas. Viele Tage im Jahr krabbelt er emsig die Sanddünen hinauf, macht eine Art Kopfstand und wartet auf den Nebel, der vom Atlantik her über den Rand der Wüste zieht. Dabei senkt er den Kopf und hebt sein Hinterteil in die Höhe. Die Flüssigkeit des Nebels kondensiert an seinem nur anderthalb Zentimeter langen Körper und läuft über eine kleine Vertiefung auf seinem Rücken direkt in sein Maul. Hier liegt die technische Anwendung auf der Hand: Wassergewinnung aus Nebel. Tatsächlich wird diese Methode auch schon einige Jahre genutzt. In der Nähe des Dorfes El Tofo in Chile wurden sogenannte Nebelnetze errichtet. Pro Nebeltag kondensieren hier bis zu 11.000 Liter frisches Wasser an den Netzen, eine stolze Ausbeute.",
+   "summary": "المشكل الكبير فالصحراء هو قلة الما. كاين واحد الخنفساء فالصحراء كتشرب من الضبابة، كتوقف على راسها والما كيتكثف على ضهرها وكيهبط لفمها. هاد التقنية استعملوها باش يصاوبو شبكات فالتشيلي كتجمع آلاف الليترات ديال الما من الضبابة."
+  },
+  {
+   "n": 5,
+   "c": "h",
+   "de": "Beispiel Nummer drei: die Räderspinne. Auch sie lebt in der Wüste Namib und wurde erst vor wenigen Jahren entdeckt. Die Wissenschaftler waren ziemlich verblüfft, als sie die ungewöhnliche Fluchtmethode des Achtbeiners sahen: einfach die Beine anwinkeln und dann wie ein Rad die Sanddünen hinunterrollen. Die Bioniker filmten die Spinne mehrmals und schauten sich das Video unzählige Male an. Dann war ihnen klar: Mit ihren Vorderbeinen stößt sich die Spinne während des Rollens immer wieder vom Boden ab. Dadurch kullert sie nicht einfach nur passiv den Abhang hinunter. Vielmehr kann sie durch diese Methode auf ihrer Flucht wieder ordentlich an Tempo zulegen. Doch welche technische Anwendung soll dabei herausspringen? Hier beweisen die Forscher Mut zur Vision: An der TU Berlin soll ein Mars-Auto entstehen, das im unwegsamen Gelände fahren kann.",
+   "summary": "العنكبوت العجلة كيعيش حتى هو فصحراء ناميب وعندو طريقة هرب غريبة: كيجمع رجليه وكيتبودر بحال الرويدة فوق الرمل. العلماء اكتشفو أنه كيدفع براسو باش يزيد السرعة. هاد الفكرة بغاو يستعملوها باش يصاوبو طوموبيل كتمشى فالمريخ."
+  }
+ ]
+},
+{
+ "id": "69ebf57ff9afccecd6b25e8c",
+ "order": 53,
+ "title": "Frauen Im Arbeitsmarket",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "note": "ملاحظة:هذا الموضوع تحط مؤخرا في تونس",
+ "options": [
+  {
+   "k": "a",
+   "de": "Schlechtere Chancen für Frauen am Arbeitsmarkt",
+   "ar": "فرص أقل للنساء في سوق العمل"
+  },
+  {
+   "k": "b",
+   "de": "Schnell essen macht dick",
+   "ar": "تناول الطعام بسرعة يؤدي إلى السمنة"
+  },
+  {
+   "k": "c",
+   "de": "Neue Broschüre: Studieren im Ausland",
+   "ar": "كتيب جديد: الدراسة في الخارج"
+  },
+  {
+   "k": "d",
+   "de": "Was tun nach der Schule? Neue Ausbildungsmöglichkeiten",
+   "ar": "ماذا تفعل بعد المدرسة؟ فرص تدريب جديدة"
+  },
+  {
+   "k": "e",
+   "de": "Initiative: Frauen für Männerberufe begeistern",
+   "ar": "مبادرة: تشجيع النساء على المهن الرجالية"
+  },
+  {
+   "k": "f",
+   "de": "Immer mehr Frauen machen Karriere im technischen Bereich",
+   "ar": "عدد متزايد من النساء يحققن النجاح في المجال التقني"
+  },
+  {
+   "k": "g",
+   "de": "Experiment in Florida: Schlank in zwölf Stunden",
+   "ar": "تجربة في فلوريدا: الرشاقة في اثنتي عشرة ساعة"
+  },
+  {
+   "k": "h",
+   "de": "Ernährungstipps kostenlos am Telefon",
+   "ar": "نصائح غذائية مجانية عبر الهاتف"
+  },
+  {
+   "k": "i",
+   "de": "Schweizer Frauen kämpfen für mehr Rechte im Beruf",
+   "ar": "نساء سويسرا يناضلن من أجل حقوق أكبر في العمل"
+  },
+  {
+   "k": "j",
+   "de": "Wissenschaftler warnen: Immer mehr dicke Mädchen in Österreich!",
+   "ar": "العلماء يحذرون: تزايد عدد الفتيات البدينات في النمسا!"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "a",
+   "de": "Ein hochwertiger Schulabschluss gilt gemeinhin als Schlüssel zum Berufsein- und -aufstieg. Das ist aber nur bedingt richtig, denn sonst hätten die Frauen auf dem Arbeitsmarkt längst die Nase vorn. Mehr als die Hälfte aller Absolventen an höheren Schulen ist weiblich. Trotz besserer Qualifikation haben Frauen aber das Nachsehen. Zu diesem Schluss kommt eine Untersuchung des städtischen Frauenreferates zur Ausbildungssituation von Frauen und Mädchen in Frankfurt. Eine Erklärung für die schlechte Lage von weiblichen Arbeitskräften ist aber auch die Tatsache, dass Frauen nach wie vor für Familie und Kindererziehung auf Karriere verzichten.",
+   "summary": "ففرانكفورت، واحد الدراسة بينات بلي العيالات واخا كيقراو مزيان وعندهم ديبلومات، عندهم حظوظ قل فسوق الشغل. هادشي راجع حيت الأغلبية كيسمحو فالكارير ديالهم على قبل العائلة وتربية الدراري."
+  },
+  {
+   "n": 2,
+   "c": "b",
+   "de": "Übergewicht könnte erheblich durch Krankheiten, aber auch durch falsche Essgewohnheiten bedingt sein. Psychiater der Universität Florida haben jetzt das schnelle Essen als mögliche Ursache für Fettleibigkeit entdeckt. Die Wissenschaftler untersuchten, was genau im Hirn bei der Nahrungsaufnahme passiert. Zu diesem Zweck bekamen Testpersonen nach einer zwölfstündigen Fastenzeit eine Zuckerlösung zu trinken. Zuerst zeigte sich verstärkte Gehirntätigkeit, ausgelöst durch Schlucken, Geruch und Geschmack. Dann, zehn Minuten später, signalisierte das Gehirn, dass der Körper genug habe. Bei Menschen, die zu schnell essen, ist dieses Signal stark verzögert. Daher dürfte das Sprichwort „Iss langsam, Kind!“ tatsächlich eine Weisheit sein.",
+   "summary": "أطباء نفسانيين فجامعة فلوريدا لقاو بلي الماكلة بالزربة كتسبب الغلد. الدماغ كيتعطل باش يصيفط إشارة الشبع للناس لي كياكلو بالزربة، داكشي علاش من الأحسن بنادم ياكل بشوية."
+  },
+  {
+   "n": 3,
+   "c": "h",
+   "de": "Wenn Sie mehr über richtige Ernährung und das ideale Gewicht wissen wollen, informieren Sie der Fonds „Gesundes Österreich“ und der Verein für Konsumenteninformation. Unter 0 810 810 27 werden gratis firmenunabhängige, wissenschaftlich fundierte Informationen über ausgewogene und gesunde Ernährung angeboten. Die Verantwortlichen reagieren damit auf den erschreckenden Trend, dass die Zahl der dicken Menschen, darunter vor allem Kinder, immer mehr zunimmt. In den vergangenen 15 Jahren habe sich die Zahl übergewichtiger Kinder und Jugendlichen mehr als verdoppelt. Bewegungsmangel und fettes Essen seien die Hauptgründe dafür.",
+   "summary": "صندوق النمسا للصحة دار واحد الرقم فابور باش يعطي نصائح على التغذية السليمة. هادشي جا كرد فعل على الزيادة الكبيرة فعدد الناس الغلاض، خصوصا الدراري الصغار، بسباب قلة الحركة والماكلة الميدمة."
+  },
+  {
+   "n": 4,
+   "c": "d",
+   "de": "Das Arbeitsamt Berlin hat seine beiden Informationshefte „Alternative zum Studium“ neu aufgelegt. Auf 200 Seiten zeigt die Behörde neue Ausbildungsmöglichkeiten für junge Frauen und Männer nach der Schule außerhalb der Universitäten. Ein Heft befasst sich mit betriebswirtschaftlichen Ausbildungen bzw. fremdsprachlichen Angeboten im sozialen Bereich, das andere mit dem technisch-naturwissenschaftlichen Bereich. Mit diesen Broschüren geht auch eine Informationswoche einher, die die hohe Zahl an Studienbewerbern in Deutschland reduzieren helfen und andere Wege einer guten Berufsausbildung für junge Leute aufzeigen soll.",
+   "summary": "مكتب الشغل فبرلين خرج كتيبات جديدة سميتها 'بديل على الجامعة'. هاد الكتيبات كتوري للشباب فرص التكوين المهني لي كاينة من بعد المدرسة، باش ينقصو من عدد الناس لي كيمشيو للجامعة ويوريوهم طرق خرى للنجاح."
+  },
+  {
+   "n": 5,
+   "c": "e",
+   "de": "Junge Frauen in der Schweiz sollen nun mehr Chancen für eine offene Berufswahl haben. Mit einer Motivationskampagne wollen die Fachleute zum Umdenken anregen und neue Horizonte öffnen. „Von wem würden Sie lieber Ihr Auto reparieren lassen?“ oder „Wem vertrauen Sie eher eine Herzoperation an?“, heißt es unter jeweils zwei Portraits einer Frau und eines Mannes. Die Plakate sollen für den „kleinen Unterschied“ im Kopf sensibilisieren, wonach Frauen nicht dasselbe zugetraut wird wie Männern. Immer noch ergreifen junge Frauen typische Frauenberufe wie Textilverkäuferin oder Sekretärin. Mit einem Internetwettbewerb soll das Thema „Frauen und Technik“ fokussiert werden, im Speziellen der Informationssektor, der in der Schweiz noch ganz in Männerhand ist.",
+   "summary": "فسويسرا دارو حملة باش يشجعو الشابات يختارو مهن لي عادة كيديروها الرجال، بحال التكنولوجيا. الهدف هو يبدلو العقلية لي كتقول بلي العيالات ميقدروش على نفس الخدمات ديال الرجال ويشجعوهم يزعمو على مجالات جديدة."
+  }
+ ]
+},
+{
+ "id": "69ebfcd5f9afccecd6b25e8f",
+ "order": 54,
+ "title": "Baby Tv / Kleinkindern Fernsehen",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "note": "ملاحظة:هذا الموضوع تحط مؤخرا في تونس",
+ "options": [
+  {
+   "k": "a",
+   "de": "Neue Richtlinie für Zertifizierung von Medikamenten für Kinder.",
+   "ar": "توجيه جديد لشهادات الأدوية للأطفال."
+  },
+  {
+   "k": "b",
+   "de": "Neue Verfahren in der Kinderheilkunde",
+   "ar": "أساليب جديدة في طب الأطفال"
+  },
+  {
+   "k": "c",
+   "de": "Gefahren zu hohen Fernsehkonsums bei Kindern",
+   "ar": "مخاطر الإفراط في مشاهدة التلفاز لدى الأطفال"
+  },
+  {
+   "k": "d",
+   "de": "ALTERNATIVE HEILVERFAHREN: WIE GUT SIND SIE WIRKLICH?",
+   "ar": "العلاجات البديلة: ما مدى فعاليتها حقًا؟"
+  },
+  {
+   "k": "e",
+   "de": "Naturkosmetik aus Geschwisterhand",
+   "ar": "مستحضرات التجميل الطبيعية من إنتاج الأشقاء"
+  },
+  {
+   "k": "f",
+   "de": "Kinder bekommen immer mehr Medikamente",
+   "ar": "الأطفال يتناولون المزيد من الأدوية"
+  },
+  {
+   "k": "g",
+   "de": "Studie: Schulkinder treiben zu wenig Sport",
+   "ar": "دراسة: الأطفال في المدارس لا يمارسون الرياضة بشكل كافٍ"
+  },
+  {
+   "k": "h",
+   "de": "SCHLECHTE NOTEN FÜRS BABY-TV",
+   "ar": "درجات سيئة لتلفاز الأطفال"
+  },
+  {
+   "k": "i",
+   "de": "Kinder und Jugendliche: Risikofaktor Übergewicht",
+   "ar": "الأطفال والمراهقون: السمنة كعامل خطر"
+  },
+  {
+   "k": "j",
+   "de": "NEUESTE FORSCHUNGSERGEBNISSE ZUR WIRKUNG VON GINSENG",
+   "ar": "أحدث نتائج الأبحاث حول تأثير الجينسنغ"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "h",
+   "de": "Fernsehen ist der Sprachentwicklung bei Kleinkindern nicht förderlich. Sie sind bunt und lustig, die Teletubbys, die am Bildschirm auch deutsche Kinder beglücken. Doch gute Sprachlehrer für Babys sind sie nicht- so das Ergebnis einer US-amerikanischen Studie. „Manche Eltern mögen davon träumen, dass ihre Kinder die ersten Worte beim Fernsehen lernen\", sagt eine Linguistin, „aber das funktioniert nicht.\" Die Kommunikationsexpertin hat 48 Kleinkinder im Alter von 5 bis 24 Monaten getestet. Zuerst bekamen sie Gegenstände zu Gesicht, für die sie noch keine Worte hatten - etwa einen Schraubenzieher. Für das gezeigte Objekt erfanden die Forscher dann ein Fantasiewort wie „Deet\". „Damit wollten wir sicherstellen, dass die Kinder den Begriff wirklich noch nie gehört hatten\", erklärt die Expertin. Dann wurde es fünfmal wiederholt-entweder in einem Teletubby-ähnlichen Video oder direkt von einer anwesenden Person. Nach kurzer Pause legten die Forscher ihren Probanden einige Gegenstände vor und forderten sie auf: „Zeig mir Deet.\" Babys, die das Wort direkt gelernt hatten, reagierten spätestens bei der dritten Wiederholung. Die jungen TV-Seher aber waren meist ratlos.",
+   "summary": "دراسة ميريكانية بينات باللي التلفزة ماكتعاونش الدراري الصغار يتعلمو يهدرو. الدراري كيتعلمو الكلمات حسن وبزربة ملي كيسمعوها من عند الناس مباشرة، ماشي من الشاشات والبرامج ديال الأطفال."
+  },
+  {
+   "n": 2,
+   "c": "a",
+   "de": "Pharmakologen am Universitätsklinikum Tübingen haben kürzlich bei einer Auswertung von 1,6 Millionen Rezeptverordnungen für Kinder und Jugendliche festgestellt, dass in gut 13 Prozent der Fälle das jeweils verschriebene Medikament gar nicht eigens für Kinder zugelassen war oder in einer für sie nicht getesteten Dosierung verwendet wurde. In Kinderkliniken sind etwa 50 Prozent, auf Intensivstationen für Neugeborene sogar bis zu 90 Prozent der verabreichten Medikamente nicht speziell für Kinder konzipiert. Noch bedenklicher: Je kleiner und je kränker ein Kind ist, desto mehr dieser „Off-Label\"-Verordnungen hat es zu erwarten. Besonders bei den in Kliniken behandelten, ernsthafteren Krankheiten aber können die Ärzte oft gar nicht anders, als für Kinder nicht getestete Medikamente zu verabreichen. Da Kinder vergleichsweise selten schwer erkranken, sind die aufwendigen Testverfahren zur Herstellung altersspezifischer Medikamente für die Hersteller häufig wirtschaftlich uninteressant. Glücklicherweise ändert sich dieser Zustand durch eine EU-Verordnung, die seit Januar 2007 gilt: Demnach müssen alle in der Entwicklung befindlichen Medikamente, die für Kinder und Jugendliche in Betracht kommen, auch an ihnen geprüft werden. Für bereits zugelassene Präparate gibt es finanzielle Anreize, sie nachträglich an jungen Altersgruppen zu erproben. Geprüfte Medikamente erhalten dann den Packungsaufdruck: Für Kinder geprüft.",
+   "summary": "بزاف ديال الأدوية اللي كيتعطاو للدراري الصغار ما مصايبينش ومامجربينش خصيصا ليهم. حيت التجارب غالية، الشركات مكيزعموش. ولكن دابا كاين قانون أوروبي جديد كيفرض على الشركات يجربو الدوايات على الدراري باش ياخدو المصادقة."
+  },
+  {
+   "n": 3,
+   "c": "d",
+   "de": "Alternative Heilverfahren können vor allem bei leichten Erkrankungen hilfreich sein. Dabei gilt es, Nützliches von Scharlatanerie zu unterscheiden. Viele sprechen noch von „alternativer\" Heilkunde. Doch inzwischen ist für die etwa 400 Heilverfahren jenseits der Schulmedizin der Ausdruck „Komplementärmedizin\" üblich geworden. Denn die Akupunkteure, Aromatherapeuten, anthroposophischen Mediziner, Pflanzenheilkundler, Homöopathen und viele andere begreifen ihre besonderen Methoden meist als Ergänzung der herkömmlichen Medizin und nicht als deren Ersatz. In dieser Funktion ist die Komplementärmedizin heute weithin akzeptiert. Auch in der Kinderheilkunde sind die Verfahren beliebt. Ob sie wirksam sind, lässt sich mithilfe klinischer Studien überprüfen. Die aber sind aufwendig und teuer, weshalb es oft an wissenschaftlichen Wirksamkeitsnachweisen mangelt. Sicher nachgewiesen ist vor allem die Wirksamkeit von Pflanzenpräparaten. Mehr Forschung auf dem Gebiet der Komplementärmedizin könnte verhindern, dass mancher vielleicht nützliche Behandlungsansatz den Schulmedizinern völlig aus dem Blick gerät. Und einige Ärzte sollten vielleicht darüber nachdenken, was ein Kenner jener Szene vor einiger Zeit auf einem Kongress des Berufsverbandes der Kinder- und Jugendärzte gesagt hat: Das Erfolgsgeheimnis der Anbieter nicht-konventioneller Methoden beruhe vor allem darauf, dass sie den Eltern das Gefühl vermittelten, „endlich einmal ernst genommen zu werden\".",
+   "summary": "الطب البديل ولا كيتستعمل بزاف كعلاج مكمل، خصوصا فالأمراض الخفيفة عند الدراري الصغار. واخا قلال الدراسات اللي كتبين الفعالية ديالو، الناس كيرتاحو ليه حيت كيحسو باللي الممارسين ديالو كيعطيوهم وقت كثر وكيسمعولهم."
+  },
+  {
+   "n": 4,
+   "c": "e",
+   "de": "Die eine liebt Flora und Fauna, die andere hat ein Händchen für Kommunikation und Marketing: Zusammen betreiben die Schwestern Henrike Rodemeier und Gesine Wischmann Deutschlands einzige Ginseng-Farm im niedersächsischen Bockhorn. Als studierte Agraringenieurin ist die 38-jährige Rodemeier für den Anbau zuständig. Die vier Jahre ältere Schwester vertreibt über ihre Firma Florafarm die aus den Wurzeln gewonnenen Arzneimittel. Zudem entwickelte die gelernte Pharmareferentin eine eigene Ginseng-Kosmetiklinie. Den Anfang hatte ihr Vater Heinrich Wischmann bereits vor 24 Jahren gemacht: Er gab die unrentable traditionelle Landwirtschaft auf und konzentrierte sich auf den Anbau von Ginsengwurzeln, die unter anderem das Immunsystem stärken und den Blutdruck regulieren. Trotz Ruhestand ist auch er noch auf der Farm aktiv. Doch die Zukunft gehört den Töchtern - die planen bereits eine Dependance.",
+   "summary": "جوج خواتات خدامين فمزرعة ديال الجينسينغ فألمانيا اللي بداها باهم هادي شحال. وحدة قارية الفلاحة ومقابلة الزراعة، والأخرى مقابلة البيع وتطوير مواد التجميل الطبيعية والأدوية من هاد النبتة."
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Kinder essen zu viel Fast Food, aber zu wenig Obst und Gemüse, so eine Expertin vom Deutschen Institut für Ernährungsmedizin und Diätetik (D.I.E.T.) in Bad Aachen. Nach Angabe der Deutschen Gesellschaft für Ernährung sind 10 bis 20 Prozent aller Schulkinder und Jugendlichen übergewichtig, Tendenz steigend. Übergewicht kann schon im frühen Alter zu Folgeerkrankungen wie Hypertonie, Fettstoffwechselstörungen, Diabetes oder Gallensteinleiden führen. Zu den Ursachen gehören eine oftmals zu hohe tägliche Energie- und Fettzufuhr und mangelnde Bewegung. Gerade bei einer genetischen Vorbelastung führt das zu einer Zunahme der Fettmasse des Körpers. Das D.I.E.T. rät daher allen Eltern, ihren Kindern von klein auf eine gesunde Kost zu bieten. Durch einen regelmäßigen Mahlzeitenrhythmus im Tagesablauf kann außerdem unkontrolliertes „Zwischendurchessen\" vermieden werden. Ein kompletter Verzicht auf Süßes ist aus psychologischen Gründen nicht empfehlenswert, ein vernünftiger Umgang mit Süßigkeiten muss erlernt werden. Durch vermehrte körperliche Aktivität wird der Energieverbrauch erhöht. Eltern sollten versuchen, bei ihren Kindern sportliche Interessen zu wecken und Hobbys zu fördern.",
+   "summary": "الدراري الصغار كياكلو بزاف الماكلة السريعة وماكيتحركوش بزاف، وهادشي كيخليهم يغلاضو ويتعرضو للأمراض. الخبراء كينصحو الوالدين يعطيو لولادهم ماكلة صحية، ينظمو ليهم وقت الماكيا، ويشجعوهم على الرياضة باش يحرقو الطاقة."
+  }
+ ]
+},
+{
+ "id": "69ed468f138fb31c73e8eec5",
+ "order": 55,
+ "title": "Bäder / الرﺣﻠﺔ",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Am Strand im Dienst – mehr Sicherheit für Urlauber",
+   "ar": "على الشاطئ في الخدمة - مزيد من الأمان للمصطافين"
+  },
+  {
+   "k": "b",
+   "de": "Bäder, Seen und Natur – im hessischen Paradies",
+   "ar": "حمامات، بحيرات وطبيعة - في الجنة الهيسية"
+  },
+  {
+   "k": "c",
+   "de": "Freiheit und Natur – nach sechs Wochen harter Arbeit",
+   "ar": "الحرية والطبيعة - بعد ستة أسابيع من العمل الشاق"
+  },
+  {
+   "k": "d",
+   "de": "Jugendliche arbeiten für Jugendliche",
+   "ar": "الشباب يعملون من أجل الشباب"
+  },
+  {
+   "k": "e",
+   "de": "Kinderarbeit in Deutschland: Jugendliche werden zur Arbeit gezwungen",
+   "ar": "عمالة الأطفال في ألمانيا: الشباب يُجبرون على العمل"
+  },
+  {
+   "k": "f",
+   "de": "Nach harter Arbeit durch nordische Gewässer",
+   "ar": "بعد العمل الشاق عبر المياه الشمالية"
+  },
+  {
+   "k": "g",
+   "de": "Schaden an Kreuzfahrtschiff verhindert Weiterfahrt",
+   "ar": "ضرر في سفينة الرحلات يمنع مواصلة الرحلة"
+  },
+  {
+   "k": "h",
+   "de": "Urlaub an deutschen Seen immer gefährlicher",
+   "ar": "الإجازة في البحيرات الألمانية تزداد خطورة"
+  },
+  {
+   "k": "i",
+   "de": "Wegen Niedrigwasser: vom Fluss auf die Straße",
+   "ar": "بسبب انخفاض منسوب المياه: من النهر إلى الطريق"
+  },
+  {
+   "k": "j",
+   "de": "Zu Gast bei den Fürsten",
+   "ar": "ضيف لدى الأمراء"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "b",
+   "de": "Entdecken Sie interessante Städte und Regionen. Im Herzen Deutschlands liegen wunderbare Landschaften, mit einem für deutsche Verhältnisse sehr milden Klima – und keine typischen „Touristenziele“. Von der Stadt Gießen ausgehend kann man in den hessischen Kreisen Bergstraße und Waldeck-Frankenberg viele Orte entdecken, die noch ein Geheimtipp sind. Vor allem gilt dies für den Kreis Waldeck-Frankenberg. Wer nicht gerade in Hessen wohnt, wird kaum wissen, wo diese Region eigentlich liegt. Es ist ein herrliches Stück Deutschland ohne besonders große Städte, eine Gegend, die Natur pur bietet. Daher wundert es nicht, dass man hier einige Kurorte findet wie Bad Arolsen oder Bad Wildungen oder den Luftkurort Edertal-Kleinern. Apropos Edertal: Der zwölf Quadratkilometer große Edersee gehört zu den vier schönen „blauen Augen“ des Kreises. Der Landkreis Waldeck-Frankenberg ist Hessens attraktivstes Umland. In der Region der Berge und Seen spürt man auch heute noch einen Hauch von Fürstlichkeit: Majestätisch erhebt sich über dem Edersee das Schloss Waldeck. Auch in Bad Arolsen, einer ehemaligen Residenzstadt, ist vieles noch vom früheren Adel geprägt. Unbedingt besuchen sollte man darüber hinaus das über 1000 Jahre alte Korbach wie auch die Fachwerkstadt Frankenberg.",
+   "summary": "ألمانيا فيها بلايص زوينين للسياحة بحال منطقة هسن لي فيها الطبيعة، البحيرات بحال إيدرسي، ومحطات استجمام. هاد المنطقة بعيدة على الزحام وفيها طابع تاريخي بحال القصور، وكتمثل فرصة باش تكتشف بلايص لي ماشي سياحية بزاف ومعروفة بالهدوء."
+  },
+  {
+   "n": 2,
+   "c": "a",
+   "de": "Pferde waren schon immer Melanie Schilles Leidenschaft. „Und jetzt kann ich Hobby und Beruf miteinander verbinden“, freut sich die Beamtin aus Hannover. In diesem Jahr verstärkt sie die Strandwache an der Nordseeküste. Ihr Arbeitsplatz ist der Strand: Mit „Magnus“, einem 11-jährigen Pferd, patrouilliert sie dort, wo die Kleinen Sandburgen bauen, Urlauber bei einem Buch entspannen oder sich in die kühlen Fluten stürzen. Melanie Schille und ihr Hannoveraner sind eine Attraktion in dem Ferienort. Immer wieder wollen Gäste das Tier streicheln, von der Polizistin wissen, was sie hier macht. „Wir sorgen für mehr Sicherheit am Strand“, erklären Melanie Schille und Rüdiger Teichmann (42). Sie suchen im Watt nach Vermissten, klären über Gefahren auf, verhindern Diebstähle und Sachbeschädigungen. Nachweislich gingen die Delikte zurück, seit es die Streife hoch zu Ross gibt. Die Polizisten: „Wir sind in dem unwegsamen Gelände oft schneller am Einsatzort als die Kollegen per Fahrrad oder mit dem Auto. Außerdem schonen wir die Natur.“ Für sich persönlich sieht Melanie Schille noch einen großen Vorteil: „Es ist schön, mal keine Demonstration sichern zu müssen, stattdessen genieße ich die frische Luft mit fröhlichen Urlaubern.“ Nur eins vermisst die 22-Jährige, die mit Polizeipferd „Magnus“ auf einem Bauernhof Quartier bezogen hat, während ihres sechswöchigen Einsatzes: Freund Robert (23). Er fährt als Polizist in Hannover Streife – und wartet auf sie.",
+   "summary": "ميلاني شرطية كتخدم فالبحر فشمال ألمانيا، كتركب على عود باش تحافظ على الأمن وتحمي السياح. هاد المبادرة عاونات باش ينقصو الجرائم، وحيت كيمشيو فوق العود كيوصلو بزربة لبلايص لي واعرين، وفي نفس الوقت كيحافظو على الطبيعة."
+  },
+  {
+   "n": 3,
+   "c": "f",
+   "de": "Ein neuer Urlaubstrend setzt sich durch: Statt faul am Strand zu liegen, wird man aktiv. Ein besonders beliebtes Ziel ist Schweden: So kann man am Ufer des Flusses Klarälven in der Provinz Värmland selbst ein Floß bauen. Das dauert drei bis sechs Stunden, anschließend macht man darauf Urlaub. „Das ist Abenteuerurlaub pur“, schwärmt Johan Bengtson, der mit seiner Frau und den drei Kindern zum zweiten Mal Floßferien macht. „Sich auf dem Fluss treiben lassen und in der Wildnis leben – dieses Gefühl ist super!“ Seit zehn Jahren veranstaltet Marie Junler von der Agentur Vildmark i Värmland die Holzfloßtrips. Wir haben die Bengtsons an ihrem ersten Urlaubstag begleitet. Mit dabei ist auch Veranstalterin Marie Junler, die der Familie hilft, das Floß zu bauen. Es ist ein herrlicher Sonnentag. In einer sanften Kurve des Flusses Klarälven steht Marie bis zu den Hüften im tiefblauen Wasser. Mit dicken grünen Seilen schnürt sie Holzstämme zusammen und gibt Kommandos: „Einer hält den Stamm, der andere knotet – den Seemannsknoten, wie wir ihn vorhin an Land geübt haben.“ Ohne einen Nagel werden 96 Baumstämme verzurrt – im Wasser, sonst wäre das Holz zu schwer. Mindestens zwei Erwachsene sind nötig, um ein Floß zu bauen, einer allein packt das nicht. Nach drei Stunden ist es geschafft: Das Urlaubsparadies der Bengtsons – es misst übrigens 6 mal 3 Meter und wiegt 2 Tonnen – treibt am Ufer. Noch schnell das Sonnenzelt befestigen, darunter Vorratskasten, Frischwassertank, Chemie-Klo, Küchenausrüstung, Zelt, Rettungsring, Schwimmwesten und das Paddel zum Steuern und Manövrieren verstauen – und ab geht’s.",
+   "summary": "كاين تريند جديد ديال العطل، فين الناس كيمشيو للسويد باش يبنيو طوافات ديال الخشب بيديهم. هادشي كياخد شوية ديال الجهد والعمل الجماعي حيت كيجمعو الخشب فوسط الما بلا مسامر، ومن بعد كيعيشو تجربة مغامرة وسط الطبيعة وفوق الواد."
+  },
+  {
+   "n": 4,
+   "c": "d",
+   "de": "Von 9 bis 15 Uhr arbeitet Sebastian Keller (18) in einem Altenwohnheim in Hamburg-Altona: Er kümmert sich um die Essensausgabe, putzt die Küche und dann ist noch Zeit, um den Senioren vorzulesen oder mit ihnen Karten zu spielen. Zur selben Zeit putzen Rebecca (12) und Christiane (13) den Eingang des Hamburger „Michels“, der wohl bekanntesten Kirche der Stadt, und Friderike (17) füttert schon frühmorgens Kühe, Schweine und Hühner auf einem Bio-Bauernhof bei Wedel. „Endlich mal ein sinnvoller Job“, sagen die fünf übereinstimmend. Sie stehen stellvertretend für etwa 100.000 Jugendliche, die beim „Sozialen Tag“ mitgemacht haben. Hut ab! Und was mindestens ebenso beeindruckend ist: Der Verein „Hamburgs Schüler helfen“ (HSH) wurde von Jugendlichen im Jahr 2004 gegründet – und seitdem findet jedes Jahr im August der „Soziale Tag“ statt. Mit Behörden und Firmen haben Schüler aus Hamburg Verträge für einen Tag abgeschlossen. Die Schülerinnen und Schüler verdienen dann am „Sozialen Tag“ zwischen 6 und 8 Euro pro Stunde – aber nicht für sich selbst, sondern für andere. Denn der Verdienst wird gespendet. Die Jugendlichen wählen selbst ein Projekt aus, an das sie die Gelder spenden wollen. Einzige Bedingung: Es muss ein Projekt sein, von dem Jugendliche profitieren. Im letzten Jahr zum Beispiel wurde die Gesamtsumme von 1,2 Millionen Euro an das Projekt „Frieden für alle“ gespendet. Dessen Ziel ist es, Jugendliche in Kriegs- und Krisenregionen zu unterstützen, den Dialog unter Jugendlichen aus verschiedenen Ländern zu fördern und auch das Kennenlernen anderer Kulturen zu ermöglichen. Für Ralf Waldner (20) vom HSH steht fest: „Wir können und werden anderen auch in Zukunft helfen, das Engagement der Schülerinnen und Schüler in Hamburg ist in den letzten Jahren schließlich immer weiter gestiegen.“",
+   "summary": "فمدينة هامبورغ، كاينين شباب كيخدمو فواحد النهار سميتو 'اليوم الاجتماعي' فمجالات مختلفة. الفلوس لي كيربحوها كيتبرعو بيها لمشاريع لي كتعاون شباب خرين، بحال لي عايشين فمناطق الحروب والأزمات، باش يعاونوهم ويشجعو الحوار الثقافي."
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Die Windjacken waren schon eingepackt, die Koffer geschlossen. Thomas Meurer (64) und Wiebke Fuchs (62) aus Hannover freuten sich auf ihre Flusskreuzfahrt mit der „MS Eurostar“ von Potsdam nach Prag. Stattliche 2500 Euro kostete die Reise pro Person, und beide hatten lange gespart, um sich das leisten zu können. Doch aus der Kreuzfahrt wurde eine Bustour. Meurer berichtet, was er erlebt hat: „Wir waren am Abend auf das Schiff gegangen und hatten unsere Kabinen bezogen. Am nächsten Morgen ging es los. Aber schon bald machte das Schiff wieder fest und alle Gäste mussten von Bord.“ Wiebke Fuchs ergänzt: „Der Fluss hatte einfach zu wenig Wasser, da konnten wir mit dem großen Kreuzfahrtschiff nicht weiterfahren!“ Per Bus ging es nach Prag. Beide wollen nun einen Teil des Reisepreises zurück, aber der Veranstalter Hapag-Lloyd wehrt ab: „Das war höhere Gewalt, da kann man nichts machen.\"",
+   "summary": "واحد الكوبل كانو معولين يمشيو فباخرة سياحية من بوتسدام لبراغ. ولكن الرحلة حابسات فالبداية حيت الواد مافيهش الما كافي. فالتالي، الشركة كملات ليهم الطريق فالكار، ورفضات ترجع ليهم تعويض على الفلوس لي دفعو حيت قالت بلي هادشي قوة قاهرة."
+  }
+ ]
+},
  
