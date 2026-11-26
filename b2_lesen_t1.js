@@ -5919,4 +5919,280 @@ window.SAHLA_DATA.b2.lesen.teil1 = [
   }
  ]
 },
- 
+{
+ "id": "6a96eb83ab4e500a2d1290e4",
+ "order": 64,
+ "title": "Das Alte Leben",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Das alte Leben hinter sich lassen - Ein Erfahrungsbericht.",
+   "ar": "تخلي حياتك القديمة موراك - تجربة شخصية."
+  },
+  {
+   "k": "b",
+   "de": "Familienurlaub ohne Stress - so kann es funktionieren!",
+   "ar": "عطلة عائلية بلا ستريس - هكا تقدر تصدق!"
+  },
+  {
+   "k": "c",
+   "de": "Gefährlicher Trend: Ein jugendliches Aussehen um jeden Preis.",
+   "ar": "موضة خطيرة: تبان صغير بأي ثمن."
+  },
+  {
+   "k": "d",
+   "de": "Gesichtspflege für zu Hause - So schützen Sie Ihre Haut richtig!",
+   "ar": "العناية بالوجه فالدار - هكا تحمي بشرتك مزيان!"
+  },
+  {
+   "k": "e",
+   "de": "Gesünder leben dank alternativer Heilmethode.",
+   "ar": "تعيش بصحة حسن بفضل طرق العلاج البديلة."
+  },
+  {
+   "k": "f",
+   "de": "Immer mehr Minderjährige greifen zu Kosmetik.",
+   "ar": "بزاف د القاصرين ولاو كيستعملو الماكياج."
+  },
+  {
+   "k": "g",
+   "de": "Monotonie hat Einfluss auf unser Zeitgefühl.",
+   "ar": "الروتين والملل كيأثر على كيفاش كنحسو بالوقت."
+  },
+  {
+   "k": "h",
+   "de": "Neues Programm zum Abnehmen verspricht langfristige Erfolge.",
+   "ar": "برنامج جديد ديال الريجيم كيوعد بنتائج كطول."
+  },
+  {
+   "k": "i",
+   "de": "Nützliche Expertentipps gegen die tägliche Langeweile.",
+   "ar": "نصائح مفيدة ديال الخبراء ضد الملل اليومي."
+  },
+  {
+   "k": "j",
+   "de": "Zu viele Minderjährige nehmen sich schlechte Vorbilder.",
+   "ar": "بزاف د القاصرين كياخدو قدوة خايبة."
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "f",
+   "de": "Make-up, Lidschatten, Lippenstift und mehr: Schon seit einigen Jahren warnt die Weltgesundheitsorganisation WHO vor den Risiken solcher Artikel für Kinder und Jugendliche. Viele Inhaltsstoffe sind für die empfindliche Kinderhaut ungeeignet und können Allergien oder gesundheitliche Schäden verursachen. Dennoch greifen immer mehr Kinder und Teenager zu kosmetischen Produkten. Die Medizinerin Anja Kaukholz sieht vor allem soziale Medien als Ursache. Influencer vermitteln, ein natürliches Aussehen reiche nicht aus. Eltern sollten Interesse nicht verbieten, aber erklären, dass der Wert eines Kindes nicht vom Aussehen abhängt, und geeignete natürliche Produkte auswählen.",
+   "summary": "منظمة الصحة العالمية كتحذر من استعمال الدراري الصغار والمراهقين للماكياج، حيت فيه مواد كتدير حساسية ومشاكل صحية للبشرة ديالهم. وخا هكاك، بزاف كيبقاو يستعملوه بسباب السوشيال ميديا والمؤثرين. الوالدين خاصهم يوعيو ولادهم بلي قيمتهم ماشي فشكلهم."
+  },
+  {
+   "n": 2,
+   "c": "e",
+   "de": "Essen macht gesund! Dies verspricht die ayurvedische Ernährungslehre, die sich besonders bei jungen Erwachsenen wachsender Beliebtheit erfreut. Das Erfolgsrezept: keine strenge Diät, sondern Aktivierung der körpereigenen Selbstheilungskräfte. Die Ärztin Aparna Kumar erstellt anhand von Gesundheitszustand, Alter und individuellen Bedürfnissen ganzheitliche Ernährungspläne. Hochwertige Lebensmittel, passende Mengen, Gewürze und Kräuter spielen eine zentrale Rolle. Die Ernährungsform soll auch bei Depressionen, chronischen Problemen oder Migräne helfen.",
+   "summary": "التغذية الأيورفيدية ولات مشهورة بزاف عند الشباب. هاد الطريقة ماشي ريجيم قاصح، ولكن كتحفز الجسم باش يداوي راسو براسو. كيعتمدو على ماكلة نقية، العطرية، والأعشاب، وهادشي كيعاون حتى فالاكتئاب والأمراض المزمنة بحال الشقيقة."
+  },
+  {
+   "n": 3,
+   "c": "g",
+   "de": "Können Sie sich erinnern, als sich sechs Wochen Sommerferien wie eine Ewigkeit anfühlten? Im Erwachsenenalter fragen wir uns oft, wie schnell ein Jahr vergangen ist. Die Biologin Dr. Juliane Simmermann erklärt dies mit Alltagsroutinen: Wiederholte Handlungen lassen wenig Neues geschehen und die Tage gefühlt schneller vorbeigehen. Routinen geben zwar Stabilität und Sicherheit, doch wer den Eindruck hat, sein Leben rase, sollte sie gelegentlich unterbrechen: einen anderen Weg zur Arbeit nehmen oder vor dem Schlafengehen spazieren gehen.",
+   "summary": "ملي كنا صغار كان كيبان لينا الصيف طويل، ولكن دابا كيكبر الواحد كيطير الوقت. السبب هو الروتين، حيت ملي كنبقاو نعاودو نفس الحاجة، الأيام كتدوز بالزربة. باش نهرسو هادشي، خاصنا نبدلو شوية من العادات ديالنا بحال نبدلو طريق الخدمة."
+  },
+  {
+   "n": 4,
+   "c": "a",
+   "de": "Arno Schneider hat geschafft, wovon viele träumen. Der 47-Jährige lebt mit seiner Frau Katharina und den Kindern Max und Tim auf Bali. Vor vier Jahren wanderte die Familie aus und bereut keinen Tag. Sie hat weniger Geld, aber einen besseren Alltag und entspannt bei Stress am Meer. Auslöser war die wachsende Unzufriedenheit mit Arnos früherem Beruf als Bäcker. Heute betreibt das Ehepaar auf Bali ein Café mit selbst gebackenem Kuchen.",
+   "summary": "أرنو حقق الحلم ديال بزاف د الناس، هاجر هو وعائلتو لبالي هادي ربع سنين. واخا عندهم فلوس قل، ولكن عايشين مرتاحين بلا ستريس قدام البحر. السبب كان هو أنه ماكانش عاجبو خدمتو القديمة كخباز، ودابا حالين قهوة فبالي."
+  },
+  {
+   "n": 5,
+   "c": "c",
+   "de": "Der Wunsch, jünger auszusehen, nimmt immer bizarrere Züge an. Bei privaten Treffen werden kosmetische Behandlungen bis hin zu Botox angeboten. Das Nervengift soll Falten reduzieren, kann bei falscher Anwendung jedoch irreparable Schäden und allergische Reaktionen verursachen. Häufig fehlen den Behandelnden medizinische Kenntnisse. Der Dermatologe Dr. Ulrich Brechschleid warnt: Für Schönheit sollte man nie die eigene Gesundheit aufs Spiel setzen.",
+   "summary": "الرغبة باش الواحد يبان صغير ولات كتاخد طرق غريبة. دابا ولاو كيديرو حقن البوتوكس فلقاءات خاصة. هاد المادة كتحيد التجاعيد ولكن يلا تدارت بطريقة غالطة كتدير أضرار خايبة، خصوصا أن اللي كيديروها ماعندهمش خبرة طبية. الطبيب كيحذر بلي ماخاصش نغامرو بصحتنا على قبل الجمال."
+  }
+ ]
+},
+{
+ "id": "6a3fd47d1379c5b5ba94c7e5",
+ "order": 65,
+ "title": "Wetter / الطقس",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Eine ungewöhnliche Geschenkidee",
+   "ar": "فكرة هدية غير تقليدية"
+  },
+  {
+   "k": "b",
+   "de": "Gut informiert mit neuer Wetter-App",
+   "ar": "مطلع جيدًا مع تطبيق الطقس الجديد"
+  },
+  {
+   "k": "c",
+   "de": "Heftiger Sturm sorgt für Verkehrschaos in Deutschland",
+   "ar": "عاصفة شديدة تسبب فوضى مرورية في ألمانيا"
+  },
+  {
+   "k": "d",
+   "de": "Junge Erfinder zeigen ihr Können",
+   "ar": "المخترعون الشباب يعرضون مهاراتهم"
+  },
+  {
+   "k": "e",
+   "de": "Kostenlose Wetter-Apps sind nicht empfehlenswert",
+   "ar": "تطبيقات الطقس المجانية غير موصى بها"
+  },
+  {
+   "k": "f",
+   "de": "Präzise Vorhersage von Stürmen durch neue Messinstrumente",
+   "ar": "توقع دقيق للعواصف بفضل أدوات قياس جديدة"
+  },
+  {
+   "k": "g",
+   "de": "Schüler erfinden App und gewinnen Wettbewerb",
+   "ar": "طلاب يخترعون تطبيقًا ويفوزون بمسابقة"
+  },
+  {
+   "k": "h",
+   "de": "Sturm richtet schwere Schäden an Flughäfen an",
+   "ar": "العاصفة تلحق أضرارًا جسيمة بالمطارات"
+  },
+  {
+   "k": "i",
+   "de": "Vorhersage von Stürmen ist schwierig",
+   "ar": "توقع العواصف أمر صعب"
+  },
+  {
+   "k": "j",
+   "de": "Warum Tiefs immer weibliche Namen haben",
+   "ar": "لماذا تحمل المنخفضات أسماء أنثوية دائمًا"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "a",
+   "de": "Kyrill, Friederike, Lothar oder Xaver – all dies sind Namen von Stürmen, die in Deutschland und Europa in den vergangenen Jahrzehnten für Schlagzeilen gesorgt haben. Aber wie kommen Stürme eigentlich zu ihren Namen? Die Antwort auf diese Frage findet man beim Institut für Meteorologie in Berlin. Hier werden bereits seit 1954 Namen für alle Hoch- und Tiefdruckgebiete vergeben, die das Wetter in Deutschland mitbestimmen. Zunächst hatten alle Tiefs weibliche Namen und alle Hochs männliche. Seit Ende der 90er-Jahre wird abgewechselt: In einigen Jahren tragen die Tiefs männliche Namen, in anderen weibliche. Seit 2002 haben alle Bürgerinnen und Bürger außerdem eine ganz besondere Möglichkeit: Sie können ein Hoch oder ein Tief „kaufen“, ihm einen Namen geben oder es sogar verschenken. Der Deutsche Wetterdienst und die Medien übernehmen diesen Namen dann und verwenden ihn in den Wetterberichten. So können sie einem lieben Menschen eine originelle Überraschung bereiten oder sich selbst eine Freude machen.",
+   "summary": "العواصف فالمانيا وأوروبا كيتسماو بأسماء بحال كيريل ولا فريدريكا. معهد الأرصاد الجوية فبرلين هو لي كيعطي هاد الأسماء من 1954. من 2002، الناس يقدرو يشريو اسم ديال شي عاصفة ولا ضغط جوي كهدية غير عادية لشي حد عزيز عليهم."
+  },
+  {
+   "n": 2,
+   "c": "d",
+   "de": "Der Jugendwettbewerb „Naturwissenschaft & Technik“ geht in die nächste Runde. Auch in diesem Jahr haben Schülerinnen und Schüler wieder die Möglichkeit, ihre Erfindungen der Öffentlichkeit zu präsentieren. Eine Jury bewertet die Wettbewerbsbeiträge und wählt die fünf besten aus. Auch das Publikum vor Ort darf abstimmen und einen „Publikumsliebling“ wählen. Insgesamt sind Sachpreise im Wert von 3000 Euro zu gewinnen, gesponsert von Unternehmen aus der Region. Teilnehmen können Schülerteams aller Schularten ab der fünften Klasse. Mit dabei ist diesmal auch ein Team des Thomas-Mann-Gymnasiums in Neustadt. Die Oberstufe hat eine neue Wetter-App entwickelt, mit der sie in diesem Jahr die Jury und das Publikum überzeugen möchte. Der Schulleiter des Thomas-Mann-Gymnasiums, Bernd Giesinger, ist stolz auf die Schülerinnen und Schüler: „Ich freue mich sehr über das Engagement dieser jungen Menschen, die ihre Zeit und Kreativität nutzen, um unsere gemeinsame Zukunft zu gestalten.“",
+   "summary": "مسابقة الشباب 'العلوم والتكنولوجيا' كتعطي فرصة للتلاميذ باش يبينو الاختراعات ديالهم. هاد المرة، واحد الفريق ديال ثانوية طوماس مان طورو تطبيق جديد للطقس وبغاو يقنعو بيه لجنة التحكيم والجمهور."
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "Am gestrigen Abend fegte Sturmtief Charlotte über Deutschland hinweg und legte große Teile des Landes lahm. Mit Spitzengeschwindigkeiten von 140 Kilometern pro Stunde sei Charlotte einer der stärksten Stürme der vergangenen Jahre, sagte Meteorologe Andreas Fischer. Insbesondere in Hessen, Nordrhein-Westfalen und im Saarland sind wegen umgestürzter Bäume unzählige Straßen und Bahnstrecken blockiert. Viele Züge konnten gestern nicht mehr weiterfahren und Hunderte Bahnreisende saßen zum Teil bis spät in die Nacht auf freier Strecke fest. In Hessen wurde der Bahnverkehr zeitweise komplett eingestellt. An den Flughäfen Frankfurt, Düsseldorf und Köln/Bonn kam es zu zahlreichen Verspätungen und Flugausfällen. Ankommende Maschinen wurden teilweise zu anderen Flughäfen umgeleitet. Von dort gestaltete sich die Weiterfahrt für viele Reisende allerdings ebenfalls sehr schwierig. Die Aufräumarbeiten laufen derzeit auf Hochtouren und werden noch einige Zeit in Anspruch nehmen. Im Moment ist es noch nicht absehbar, wie lange es dauern wird, bis alle Stecken wieder frei sind.",
+   "summary": "البارح بالليل، العاصفة شارلوت ضربات ألمانيا بقوة 140 كيلومتر فالساعة وحبسات الحركة فبزاف ديال المناطق. الأشجار طاحو وسدو الطرقان وسكك الحديد، وبزاف ديال التران طرو يحبسو والمسافرين حصلو."
+  },
+  {
+   "n": 4,
+   "c": "b",
+   "de": "Soll ich einen Pullover anziehen oder reicht ein T-Shirt? Muss man einen Schirm mitnehmen oder braucht man eine Sonnenbrille? Jedes Smartphone hat heutzutage eine vorinstallierte Wetter-App, aber genaue Wettervorhersagen liefern die meisten nicht. Es gibt aber gute Alternativen. Wer einen zuverlässigen Wetterdienst für sein Smartphone oder Tablet sucht, ist mit der neuen App Wetterwissen bestens beraten. Schon in der kostenlosen Version bietet die App umfangreiche Daten zur aktuellen Wetterlage, leicht verständliche Prognosen und Unwetterwarnungen. Der Regenradar zeigt Ihnen genau, wo sich Regenwolken bilden und ob diese in Ihre Richtung ziehen oder nicht. Für 1,99 Euro gibt es ein Premium-Abo mit zusätzlichen Wetter-Videos und Informationen zu Wintersport und Badewetter. Die App ist in der Premium-Version werbefrei, in der kostenlosen Version wird am unteren Rand Werbung eingeblendet, die viele Nutzer aber nicht als störend wahrnehmen. Die App punktet außerdem mit einem modernen Design und schafft es damit ganz klar in die Top 10 der Wetter-Apps.",
+   "summary": "بزاف ديال تطبيقات الطقس لي كتكون فالتلفونات ما كتعطيش توقعات دقيقة. ولكن كاين تطبيق جديد سميتو 'Wetterwissen' كيعطي معلومات مضبوطة وتحذيرات من العواصف. النسخة الفابور فيها إعلانات، والنسخة المدفوعة ب 1.99 يورو مافيهاش."
+  },
+  {
+   "n": 5,
+   "c": "i",
+   "de": "Zehn Jahre ist es her, dass sich aus einem scheinbar harmlosen Tiefdruckgebiet schnell und überraschend der gefährliche Sturm Tinka entwickelte, der in Norddeutschland immense Schäden anrichtete und als einer der teuersten Stürme in die Geschichte einging. Den Wetterdiensten wurde damals vorgeworfen, die Entwicklung des Tiefdruckgebietes nicht richtig berechnet und die Bevölkerung nicht rechtzeitig gewarnt zu haben. Obwohl die Messinstrumente immer präziser geworden sind, lassen sich manche Wetterereignisse wie zum Beispiel Gewitter und Stürme nur schwer vorhersagen. Ein Sturm kann von vielen Faktoren abhängig sein und entwickelt sich oft kurzfristig. Daher kann es passieren, dass die Prognosen völlig verschieden ausfallen, manchmal sogar auch ganz falsch sind. Um dies zu vermeiden, vergleichen Meteorologen möglichst viele Wetterlagen. Je mehr Übereinstimmungen es gibt, desto wahrscheinlicher ist es, dass ihre Prognose zutrifft. Mit einer Trefferquote von etwa 80 Prozent kann die Entwicklung eines Sturms inzwischen auch recht gut eingeschätzt werden – aber eben nicht zu 100 Prozent.",
+   "summary": "هادي 10 سنين، واحد العاصفة خطيرة سميتها تينكا ضربات شمال ألمانيا ودارت خسائر كبيرة، والناس لامو الأرصاد الجوية حيت ماحذروهمش بكري. واخا الآلات ديال القياس تطورات، العواصف والرعد صعيب يتوقعوهم 100% حيت كيتطورو بالزربة وكيتأثرو بعوامل بزاف."
+  }
+ ]
+},
+{
+ "id": "6a40081a1379c5b5ba94c7ed",
+ "order": 66,
+ "title": "Autos / السيارات",
+ "level": "B2",
+ "sub": "Teile 1",
+ "type": "headings",
+ "options": [
+  {
+   "k": "a",
+   "de": "Daumen hoch - aber gewusst wie!",
+   "ar": "إبهام للأعلى - لكن اعرف كيف!"
+  },
+  {
+   "k": "b",
+   "de": "Durch die Städte Osteuropas. Viel zu sehen für wenig Geld!",
+   "ar": "عبر مدن أوروبا الشرقية. الكثير لرؤيته بقليل من المال!"
+  },
+  {
+   "k": "c",
+   "de": "Was rastet, das rostet: Tipps für Stillstand und Bewegung.",
+   "ar": "ما يتوقف يصدأ: نصائح للجمود والحركة."
+  },
+  {
+   "k": "d",
+   "de": "Vom eigenen Wagen zum Car-Sharing. Autofahren damals und heute.",
+   "ar": "من السيارة الخاصة إلى مشاركة السيارات. قيادة السيارات في الماضي والحاضر."
+  },
+  {
+   "k": "e",
+   "de": "Tausch dich aus! Autos, Werkzeuge, Geräte & Co gemeinsam benützen.",
+   "ar": "تبادل! استخدام السيارات، الأدوات، الأجهزة وغيرها معًا."
+  },
+  {
+   "k": "f",
+   "de": "Mein rechter Platz ist frei... Wie berechenbar sind Mitfahrgelegenheiten?",
+   "ar": "مقعدي الأيمن شاغر... ما مدى إمكانية التنبؤ بفرص الركوب المشترك؟"
+  },
+  {
+   "k": "g",
+   "de": "Die 5 Gefahren des Autostoppens.",
+   "ar": "المخاطر الخمسة للتنقل بالتوقف."
+  },
+  {
+   "k": "h",
+   "de": "Preiswert durch die Welt - Reisearten im Vergleich.",
+   "ar": "بتكلفة منخفضة حول العالم - مقارنة أنواع الرحلات."
+  },
+  {
+   "k": "i",
+   "de": "Urlaub zu Hause, Urlaub bei Fremden? Oder: Auf dem Sofa durch die Welt.",
+   "ar": "إجازة في المنزل، إجازة عند الغرباء؟ أو: عبر العالم من الأريكة."
+  },
+  {
+   "k": "j",
+   "de": "Fast geschenkt: Autos, die man sich leisten kann",
+   "ar": "تقريبًا مجانًا: سيارات يمكن تحمل تكلفتها"
+  }
+ ],
+ "items": [
+  {
+   "n": 1,
+   "c": "i",
+   "de": "Wie wäre es, bei wildfremden Menschen einzuziehen und während der eigenen Reise dort zu übernachten? Wer nach unmittelbarer Bekanntschaft mit dem Reiseziel und seinen Gepflogenheiten lechzt, betreibt heute Couchsurfing. Private Gastgeber auf allen Kontinenten bieten im Internet eine Schlafgelegenheit an. Geben und Nehmen heißt das Prinzip des neuen Reisetrends: Wer bereits eine Couch in New York in Anspruch genommen hat, kann auch sein Sofa in St. Pölten für andere Touristen anbieten. Sechs Millionen Menschen weltweit wissen, wie sich so etwas anfühlt, denn sie alle sind Mitglieder bei www.couchsurfing.org, dem größten Online-Portal zur Vermittlung von kostenlosen Übernachtungsmöglichkeiten. Hier suchen Abenteuerlustige nach privaten Übernachtungsmöglichkeiten aus aller Welt. In über 100.000 Städten sind Couchsurfer angemeldet und dementsprechend ist die Wahrscheinlichkeit recht hoch, im Urlaub als Gast bei Fremden einzuziehen. Doch genau diesen Begriff vermeidet man auf der Homepage galant, aber bestimmt. Von „Fremden“ ist hier nicht die Rede, vielmehr von „Freunden, die du noch nicht getroffen hast“.",
+   "summary": "الكاوتش سيرفينج (Couchsurfing) هو تريند جديد فالسفر فين الناس كينعسو فديور ديال ناس برانيين فابور باش يتعرفو كثر على الثقافة ديال البلاد. الفكرة هي 'عطي وخذ'، والموقع ديالهم فيه الملايين ديال الأعضاء لي كيعتابرو هاد 'البرانيين' غير 'صحاب مزال ما تلاقيتيهمش'."
+  },
+  {
+   "n": 2,
+   "c": "f",
+   "de": "Darauf, zu einem Wildfremden ins Auto zu steigen, basiert die Geschäftsidee von Mitfahrplattformen im Internet. Ihr Prinzip: Wer mit dem Auto von A nach B fahren will und noch Plätze frei hat, sucht online oder via App nach Mitfahrern, um sein Auto zu füllen und sich die Benzinkosten zu teilen. Das dürfte funktionieren, denn solche Websites gibt es mittlerweile zuhauf. Neu sind Mitfahrbörsen nicht: Schon in den 1950ern wurde in Frankfurt am Main - ganz und gar offline - eine Mitfahrzentrale gegründet. Eigentlich wie Autostoppen, nur besser planbar. Mit dem Internet wurde die Organisation dann noch leichter. Heute weiß man vorab schon eine ganze Menge über die potenziellen Chauffeure: Sie haben Profile, auf denen sie nicht nur sich selbst, sondern auch ihr Auto präsentieren. Auch eine Ausweiskopie kann dem Profil beigefügt werden.",
+   "summary": "المنصات ديال مشاركة التوصيلات (Mitfahrplattformen) فكرتها هي أنك تركب مع شي حد غريب غادي لنفس البلاصة باش تقاسمو مصاريف المازوت. هاد الفكرة قديمة من الخمسينات، ولكن مع الأنترنت ولات ساهلة ومأمنة كثر حيت كتقدر تشوف البروفايل ديال الشيفور ومعلومات عليه قبل ما تركب."
+  },
+  {
+   "n": 3,
+   "c": "c",
+   "de": "Langes Stehen tut selten gut, das gilt auch für Autos. Bei wenig genutzten Fahrzeugen kann unter anderem Rost an Blech und Bremsen entstehen. Damit der Wagen nach längerer Standzeit nicht nur anspringt, sondern auch verlässlich läuft, ist Vorsorge nötig. Früher wurde empfohlen, das Auto vollzutanken, damit kein Rost im Tank entsteht. Dieser Ratschlag erübrigt sich schon seit längerer Zeit, denn seit Mitte der 80er Jahre haben Autos meist einen Kunststofftank. Während es bei älteren Autos empfehlenswert sein kann, die Batterie auszubauen, verursache dies bei neueren Modellen häufig Probleme mit der Elektronik. Besonders wichtig ist eine geeignete Unterstellmöglichkeit. Wenn es ein teures Fahrzeug ist, sollten Sie überlegen, einen Stellplatz zu mieten. Die Fachleute raten außerdem dazu, etwas mehr Luft in die Reifen zu pumpen, weil schon die Temperaturunterschiede den Druck deutlich sinken lassen können. Damit der Wagen in Form bleibt, gilt aber eigentlich das Motto „Fahren, fahren, fahren“. Wer sein Auto nicht selbst bewegt, kann dies andere für sich erledigen lassen. Solche Ersatz-Fahrer findet man auf Vermittlungsportalen im Internet.",
+   "summary": "الطوموبيلات لي كيبقاو واقفين بزاف كيقدر يشد فيهم الصدا وتخسر ليهم الفران. باش تحافظ عليها، خاصك دير ليها بلاصة مزيانة فين توقف، وتزيد شوية الريح فالروايض. أحسن حاجة باش تبقى الطوموبيل مزيانة هي تسوكها ديما، ولا تخلي شي حد آخر يسوكها ليك."
+  },
+  {
+   "n": 4,
+   "c": "e",
+   "de": "Es gibt einen neuen Trend, der nicht nur in Deutschland, sondern weltweit Einzug hält: „Nutzen statt Besitzen“ lautet er und umfasst so unterschiedliche Praktiken wie Wohnungstausch, Kleidertauschpartys, Autogemeinschaften, Gemeinschaftsgärten, Tauschringe für Werkzeuge, Drucker oder DVDs und vieles andere mehr. Das Internet macht's möglich: Tauschplattformen für Dinge, Wohnungen oder private Autos ermöglichen es, schnell und unkompliziert denjenigen zu finden, der (oder die) das hat, was ich brauche. Mit der Verbreitung digitaler Leih-, Miet- und Tauschmodelle entstehen neue Geschäftsformen, die sich auf einer neuen „Währung“ gründen: Vertrauen. Vertrauen, dass der andere meine Dinge gut behandelt und mich nicht hinters Licht führt, obwohl ich den anderen noch nie gesehen habe.",
+   "summary": "كاين واحد التريند جديد فالعالم سميتو 'الاستعمال بلاصت الامتلاك'. الناس ولاو كيتبادلو الديور، الحوايج، الطوموبيلات، والدوزان فمواقع خاصة بالتبادل. هادشي كلو مبني على عملة جديدة لي هي 'الثقة' فالآخرين واخا ما كنعرفوهومش."
+  },
+  {
+   "n": 5,
+   "c": "a",
+   "de": "Warum den teuren Zug oder Flieger nehmen, wenn es doch per Anhalter viel günstiger geht? Besonders junge Leute heben gerne den Daumen, um von A nach B zu kommen. Beim Autostoppen sollte man jedoch einige gesetzliche Regeln kennen. In Österreich ist Autostoppen auf Autobahnen oder Autostraßen - generell und unabhängig vom Alter - verboten. Auf Autobahn-Parkplätzen, Raststationen und an allen anderen Straßen ist an übersichtlichen Stellen das Autostoppen erlaubt. Es gilt jedoch, bundeslandspezifische Altersbestimmungen zu beachten. In Kärnten und Vorarlberg ist das Autostoppen unter 14, in der Steiermark unter 15 Jahren verboten. Wer im Ausland autostoppen will, sollte sich vorab mit rechtlichen Bestimmungen und landesüblichen Gewohnheiten vertraut machen. Beispielsweise setzen Autofahrer in manchen Ländern wie Rumänien, Indien und Mexiko eine Bezahlung voraus. In den USA, Kanada oder Australien kommt es auf den jeweiligen Bundesstaat an, ob Autostoppen erlaubt ist. In vielen afrikanischen Ländern wiederum ist Trampen selbstverständlich und ersetzt die oftmals fehlenden öffentlichen Verkehrsmittel.",
+   "summary": "الأوطوسطوب رخيص وكيستعملوه الشباب بزاف باش يسافرو. ولكن خاص الواحد يعرف القوانين، فبعض البلايص ممنوع ديرو فلوطوروت ولا كيكون مقنن بالعمر. فدول أخرى بحال رومانيا، الشيفور كيتسنى منك تخلصو، وفإفريقيا هو بديل لوسائل النقل العام."
+  }
+ ]
+}
+];
